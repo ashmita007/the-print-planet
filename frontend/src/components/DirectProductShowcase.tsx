@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { Search, Sparkles, ArrowRight, Layers, SlidersHorizontal, Package } from "lucide-react";
 import { Product, Category } from "@/lib/types";
@@ -18,6 +18,12 @@ export default function DirectProductShowcase({
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "name">("featured");
+  const [visibleLimit, setVisibleLimit] = useState<number>(16);
+
+  // Reset pagination when category or search changes
+  useEffect(() => {
+    setVisibleLimit(16);
+  }, [selectedCategory, searchQuery]);
 
   // Filter products based on active tab and search query
   const filteredProducts = useMemo(() => {
@@ -54,6 +60,8 @@ export default function DirectProductShowcase({
 
     return list;
   }, [products, selectedCategory, searchQuery, sortBy]);
+
+  const visibleProducts = filteredProducts.slice(0, visibleLimit);
 
   return (
     <section id="catalogue-section" className="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
@@ -159,7 +167,7 @@ export default function DirectProductShowcase({
           {/* Result Count & Sorting */}
           <div className="flex items-center justify-between w-full sm:w-auto gap-4 text-xs text-[#687586]">
             <span className="font-medium whitespace-nowrap">
-              Showing <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong> products
+              Showing <strong className="text-[#17365D] font-bold">{Math.min(visibleLimit, filteredProducts.length)}</strong> of <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong> products
             </span>
 
             <div className="flex items-center gap-2">
@@ -181,11 +189,29 @@ export default function DirectProductShowcase({
 
       {/* Product Cards Grid */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {visibleProducts.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+
+          {visibleLimit < filteredProducts.length && (
+            <div className="mt-10 text-center">
+              <button
+                type="button"
+                onClick={() => setVisibleLimit((prev) => prev + 16)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#17365D] hover:bg-[#102742] text-white font-bold text-xs tracking-wide transition-all shadow-md group"
+              >
+                <span>Load More Products (+16)</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <p className="text-[11px] text-[#687586] mt-2">
+                Showing {visibleProducts.length} of {filteredProducts.length} models
+              </p>
+            </div>
+          )}
+        </>
       ) : (
         <div className="bg-white border border-dashed border-[#DCE3EB] rounded-2xl p-12 text-center">
           <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />

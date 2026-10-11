@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MessageSquare, ArrowRight, Shield, Box } from "lucide-react";
@@ -21,6 +21,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const [imgSrc, setImgSrc] = useState(imageUrl);
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setImgSrc(imageUrl);
+    setHasError(false);
+  }, [imageUrl]);
 
   return (
     <>

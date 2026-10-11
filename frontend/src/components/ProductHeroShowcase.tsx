@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   ChevronRight,
   ChevronLeft,
-  CheckCircle2,
   Factory,
   Layers,
   Box,
@@ -25,30 +24,38 @@ export default function ProductHeroShowcase({
   flagshipProducts,
   totalProductsCount,
 }: ProductHeroShowcaseProps) {
+  // Take top 6 flagship items for the hero carousel stage
+  const heroProducts = flagshipProducts.slice(0, 6);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Fallback if empty
-  const activeProduct = flagshipProducts[activeIndex] || flagshipProducts[0];
-
-  // Auto-rotate every 6 seconds unless paused
-  useEffect(() => {
-    if (isPaused || flagshipProducts.length <= 1) return;
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % flagshipProducts.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [isPaused, flagshipProducts.length]);
-
-  if (!activeProduct) return null;
+  const activeProduct = heroProducts[activeIndex] || heroProducts[0];
 
   const imageUrl =
-    activeProduct.primary_image?.secure_url ||
-    (activeProduct.images && activeProduct.images.length > 0
+    activeProduct?.primary_image?.secure_url ||
+    (activeProduct?.images && activeProduct.images.length > 0
       ? activeProduct.images[0].secure_url
       : null) ||
     "/placeholder-product.svg";
+
+  const [heroImg, setHeroImg] = useState(imageUrl);
+
+  useEffect(() => {
+    setHeroImg(imageUrl);
+  }, [imageUrl]);
+
+  // Auto-rotate every 6 seconds unless paused
+  useEffect(() => {
+    if (isPaused || heroProducts.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % heroProducts.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isPaused, heroProducts.length]);
+
+  if (!activeProduct) return null;
 
   return (
     <section className="relative bg-[#102742] text-white overflow-hidden py-12 lg:py-16 border-b-4 border-[#E87832]">
@@ -141,7 +148,7 @@ export default function ProductHeroShowcase({
                     type="button"
                     onClick={() =>
                       setActiveIndex(
-                        (prev) => (prev - 1 + flagshipProducts.length) % flagshipProducts.length
+                        (prev) => (prev - 1 + heroProducts.length) % heroProducts.length
                       )
                     }
                     className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
@@ -150,12 +157,12 @@ export default function ProductHeroShowcase({
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <span className="text-[11px] font-mono font-bold text-slate-300 px-1">
-                    {activeIndex + 1}/{flagshipProducts.length}
+                    {activeIndex + 1}/{heroProducts.length}
                   </span>
                   <button
                     type="button"
                     onClick={() =>
-                      setActiveIndex((prev) => (prev + 1) % flagshipProducts.length)
+                      setActiveIndex((prev) => (prev + 1) % heroProducts.length)
                     }
                     className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
                     aria-label="Next product"
@@ -174,8 +181,9 @@ export default function ProductHeroShowcase({
                     className="block aspect-square bg-white rounded-xl p-4 overflow-hidden border border-white/20 shadow-md group relative"
                   >
                     <img
-                      src={imageUrl}
+                      src={heroImg}
                       alt={activeProduct.name}
+                      onError={() => setHeroImg("/placeholder-product.svg")}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-2 left-2 bg-[#17365D] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-xs">
@@ -256,13 +264,13 @@ export default function ProductHeroShowcase({
                 </div>
               </div>
 
-              {/* Thumbnails Row: Quick Jump between 5 Products */}
+              {/* Thumbnails Row: Quick Jump between 6 Products */}
               <div className="pt-4 border-t border-white/10">
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
                   Featured Factory Lines (Click to preview):
                 </div>
-                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-                  {flagshipProducts.slice(0, 6).map((prod, idx) => {
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                  {heroProducts.map((prod, idx) => {
                     const thumbImg =
                       prod.primary_image?.secure_url ||
                       (prod.images && prod.images.length > 0
@@ -289,7 +297,7 @@ export default function ProductHeroShowcase({
                           />
                         </div>
                         <span className="text-[10px] font-bold truncate max-w-full leading-tight">
-                          {prod.sku.replace("LAN-", "").replace("MCH-", "").replace("HLD-", "")}
+                          {prod.sku.replace("LAN-", "").replace("MCH-", "").replace("HLD-", "").replace("CRD-", "")}
                         </span>
                       </button>
                     );
