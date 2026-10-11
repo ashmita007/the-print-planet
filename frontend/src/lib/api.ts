@@ -71,6 +71,7 @@ export async function getProducts(params?: {
   featured?: boolean;
   ordering?: string;
   page?: number;
+  page_size?: number;
 }): Promise<PaginatedResponse<Product>> {
   try {
     const query = new URLSearchParams();
@@ -81,6 +82,7 @@ export async function getProducts(params?: {
     if (params?.featured) query.set('featured', 'true');
     if (params?.ordering) query.set('ordering', params.ordering);
     if (params?.page) query.set('page', params.page.toString());
+    if (params?.page_size) query.set('page_size', params.page_size.toString());
 
     const url = `${getApiUrl()}/api/v1/products/?${query.toString()}`;
     const res = await fetch(url, { next: { revalidate: 30 } });

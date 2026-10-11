@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
+from rest_framework.pagination import PageNumberPagination
 from .models import Category, Product, ProductImage
 from .serializers import (
     CategorySerializer,
@@ -20,6 +21,12 @@ from .serializers import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 24
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 
 # ==========================================
@@ -47,6 +54,7 @@ class CategoryDetailView(generics.RetrieveAPIView):
 class ProductListView(generics.ListAPIView):
     """List products with filtering, search, and pagination."""
     serializer_class = ProductListSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         qs = Product.objects.filter(is_active=True).select_related('category').prefetch_related('images')
@@ -108,7 +116,7 @@ class FeaturedProductsView(generics.ListAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        return Product.objects.filter(is_active=True, is_featured=True).select_related('category').prefetch_related('images')[:12]
+        return Product.objects.filter(is_active=True, is_featured=True).select_related('category').prefetch_related('images')[:24]
 
 
 class GlobalSearchView(APIView):
