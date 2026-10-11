@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #17365D;
+  --color-brand-deepNavy: #102742;
+  --color-brand-orange: #E87832;
+  --color-brand-bgMain: #FFFFFF;
+  --color-brand-bgAlt: #F5F7FA;
+  --color-brand-textMain: #263445;
+  --color-brand-textSecondary: #687586;
+  --color-brand-border: #DCE3EB;
+  --color-brand-success: #217A4B;
+  --color-brand-error: #C0392B;
+}
+
+:root {
+  --color-brand-navy: #17365D;
+  --color-brand-deepNavy: #102742;
+  --color-brand-orange: #E87832;
+  --color-brand-bgMain: #FFFFFF;
+  --color-brand-bgAlt: #F5F7FA;
+  --color-brand-textMain: #263445;
+  --color-brand-textSecondary: #687586;
+  --color-brand-border: #DCE3EB;
+  --color-brand-success: #217A4B;
+  --color-brand-error: #C0392B;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #263445;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F7FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Industrial focus rings */
+*:focus-visible {
+  outline: 2px solid #E87832;
+  outline-offset: 2px;
+}

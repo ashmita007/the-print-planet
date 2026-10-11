@@ -1,0 +1,41 @@
+name: the_print_planet_single
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: the_print_planet_single_app
+    ports:
+      - "80:80"
+      - "8080:80"
+    environment:
+      - PORT=80
+      - DJANGO_DEBUG=False
+      - DJANGO_SECRET_KEY=production-secret-single-unit-key-2026
+      - DJANGO_ALLOWED_HOSTS=*
+      - OWNER_USERNAME=admin
+      - OWNER_PASSWORD=AdminPass123!Secure
+      - OWNER_EMAIL=admin@theprintplanet.in
+      # Set Cloudinary credentials if cloud uploads desired:
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME:-}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY:-}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET:-}
+      # Optional external Postgres (if omitted, seamlessly runs on embedded SQLite):
+      - POSTGRES_HOST=${POSTGRES_HOST:-}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-the_print_planet}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - app_media:/app/backend/media
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:80/api/v1/categories/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  app_media:
+    name: the_print_planet_single_media

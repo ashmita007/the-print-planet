@@ -1,0 +1,169 @@
+import React from "react";
+import Link from "next/link";
+import { Phone, Mail, MapPin, ShieldCheck, Lock, ExternalLink } from "lucide-react";
+import { Category, SiteSettings } from "@/lib/types";
+
+interface FooterProps {
+  categories?: Category[];
+  settings?: SiteSettings;
+}
+
+export default function Footer({ categories = [], settings }: FooterProps) {
+  const businessName = settings?.business_name || "The Print Planet";
+  const tagline = settings?.tagline || "Industrial ID Card Solutions, Lanyards & Printing Machinery";
+  const phone = settings?.phone || "+91 98980 61569";
+  const email = settings?.email || "sales@theprintplanet.in";
+  const address = settings?.address || "Plot 42, Industrial Area Phase II, Ahmedabad, Gujarat, India - 380004";
+  const gst = settings?.gst_number || "24AWOPP8281E1Z4";
+  const footerText = settings?.footer_text || "The Print Planet is a premier industrial manufacturer and distributor of identification systems, satin lanyard rolls, rigid badge holders, metal attachments, card fusing machinery, and RFID solutions.";
+
+  return (
+    <footer className="bg-[#17365D] text-white pt-16 pb-12 border-t-4 border-[#E87832]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/15">
+          {/* Column 1: Company Profile */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#E87832] text-white flex items-center justify-center font-black text-xl">
+                P
+              </div>
+              <span className="font-extrabold text-xl tracking-tight text-white">
+                {businessName}
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {footerText}
+            </p>
+            <div className="pt-2">
+              <div className="inline-flex items-center gap-1.5 bg-[#102742] text-xs px-3 py-1.5 rounded text-slate-200 border border-white/10">
+                <ShieldCheck className="w-4 h-4 text-[#E87832]" />
+                <span>GST Registered: <strong className="text-white">{gst}</strong></span>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Key Product Categories */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#E87832] rounded-full inline-block" />
+              Catalogue Categories
+            </h3>
+            <ul className="space-y-2 text-xs text-slate-300">
+              {categories.slice(0, 7).map((c) => (
+                <li key={c.id}>
+                  <Link
+                    href={`/categories/${c.slug}`}
+                    className="hover:text-[#E87832] hover:underline transition-colors block truncate"
+                  >
+                    {c.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/products"
+                  className="text-[#E87832] font-semibold hover:underline block pt-1"
+                >
+                  View All Products &rarr;
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Quick Navigation */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#E87832] rounded-full inline-block" />
+              Corporate Information
+            </h3>
+            <ul className="space-y-2 text-xs text-slate-300">
+              <li>
+                <Link href="/" className="hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/products" className="hover:text-white transition-colors">
+                  Full Product Catalogue
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About Our Manufacturing
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  Contact Us & Bulk Enquiry
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Terms of Trade & Delivery
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Contact & Factory Headquarters */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#E87832] rounded-full inline-block" />
+              Industrial Sales Office
+            </h3>
+            <div className="flex items-start gap-2.5 text-xs text-slate-300">
+              <MapPin className="w-4 h-4 text-[#E87832] shrink-0 mt-0.5" />
+              <span>{address}</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs text-slate-300">
+              <Phone className="w-4 h-4 text-[#E87832] shrink-0" />
+              <a href={`tel:${phone.replace(/\s+/g, "")}`} className="hover:text-white transition-colors">
+                {phone}
+              </a>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs text-slate-300">
+              <Mail className="w-4 h-4 text-[#E87832] shrink-0" />
+              <a href={`mailto:${email}`} className="hover:text-white transition-colors">
+                {email}
+              </a>
+            </div>
+
+            <div className="pt-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2 px-3 rounded-lg text-xs font-bold transition-colors shadow-sm"
+              >
+                Request Custom Quotation
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Strip */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <p suppressHydrationWarning>© {new Date().getFullYear()} {businessName}. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms & Conditions
+            </Link>
+            <Link
+              href="/owner/login"
+              className="flex items-center gap-1 text-slate-300 hover:text-white transition-colors"
+            >
+              <Lock className="w-3 h-3 text-[#E87832]" />
+              <span>Owner Portal</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

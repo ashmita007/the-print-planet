@@ -1,0 +1,28 @@
+# Environment and Secrets
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/venv/
+backend/db.sqlite3
+backend/staticfiles/
+backend/media/*
+!backend/media/products/
+*.log
+
+# Node & Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo
+frontend/npm-debug.log*
+
+# OS Artifacts
+.DS_Store
+Thumbs.db

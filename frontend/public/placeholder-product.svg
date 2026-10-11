@@ -1,0 +1,26 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  <!-- Subtle Blueprint Grid -->
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E2E8F0" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="400" fill="url(#grid)" />
+  
+  <!-- Outer Badge Card -->
+  <rect x="80" y="80" width="240" height="240" rx="16" fill="white" stroke="#DCE3EB" stroke-width="2"/>
+  
+  <!-- Industrial Product Emblem -->
+  <circle cx="200" cy="180" r="48" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  
+  <!-- Identification Badge Icon -->
+  <path d="M185 152 H215 M180 162 H220 V205 H180 Z" stroke="#17365D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="200" cy="180" r="8" stroke="#E87832" stroke-width="2"/>
+  <path d="M190 196 C190 191 195 188 200 188 C205 188 210 191 210 196" stroke="#17365D" stroke-width="2" stroke-linecap="round"/>
+  <path d="M194 146 V152 M206 146 V152" stroke="#687586" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Brand Label -->
+  <text x="200" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#17365D" text-anchor="middle" letter-spacing="1">THE PRINT PLANET</text>
+  <text x="200" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="500" fill="#687586" text-anchor="middle">AUTHENTIC INDUSTRIAL ASSET</text>
+</svg>
