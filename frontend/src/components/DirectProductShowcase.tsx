@@ -56,7 +56,7 @@ export default function DirectProductShowcase({
   }, [products, selectedCategory, searchQuery, sortBy]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section id="catalogue-section" className="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
       {/* Header with Title and B2B Badge */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div>

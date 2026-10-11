@@ -1,37 +1,26 @@
 import React from "react";
 import Link from "next/link";
 import {
-  ShieldCheck,
-  Package,
-  Layers,
-  Settings,
-  ArrowRight,
-  Phone,
-  Mail,
   CheckCircle,
   Truck,
   Award,
   Factory,
-  Boxes,
-  Cpu,
-  Sparkles,
-  Palette,
-  CreditCard,
-  ArrowUpRight,
-  Wrench,
 } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
+import ProductHeroShowcase from "@/components/ProductHeroShowcase";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
 import {
   getCategories,
+  getFeaturedProducts,
   getProducts,
   getSiteSettings,
 } from "@/lib/api";
 
 export default async function HomePage() {
-  const [categories, productsData, machineryProducts, settings] = await Promise.all([
+  const [categories, productsData, featuredProducts, machineryProducts, settings] = await Promise.all([
     getCategories(),
     getProducts({ page_size: 65 }),
+    getFeaturedProducts(),
     getProducts({ category: "id-card-manufacturing-machines" }),
     getSiteSettings(),
   ]);
@@ -42,129 +31,11 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-16 pb-20">
-      {/* 1. Industrial Hero Section */}
-      <section className="relative bg-[#102742] text-white overflow-hidden py-16 lg:py-24 border-b-4 border-[#E87832]">
-        {/* Subtle geometric grid background */}
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
-          }}
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Industrial Proposition */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-[#E87832] text-xs font-bold tracking-wide uppercase border border-white/10">
-                <Factory className="w-3.5 h-3.5" />
-                Factory-Direct Identification Solutions
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-[1.15] text-balance">
-                Industrial ID Card Supplies,{" "}
-                <span className="text-[#E87832]">Lanyard Rolls</span> & Production Machinery.
-              </h1>
-
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
-                High-capacity manufacturing and wholesale distribution of single & double satin
-                lanyard rolls, frosted and crystal clear PVC holders, dog hooks, crimp clamps,
-                hydraulic card fusing machines, and smart card consumables.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Link
-                  href="/products"
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-6 py-3.5 rounded-xl font-bold text-sm tracking-wide transition-all shadow-md flex items-center gap-2 group"
-                >
-                  <span>Explore 60+ Reference Products</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-
-                <Link
-                  href="/contact"
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3.5 rounded-xl font-bold text-sm tracking-wide transition-all flex items-center gap-2"
-                >
-                  <span>Request Wholesale Quotation</span>
-                </Link>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-xs">
-                <div>
-                  <div className="font-extrabold text-white text-base">CR-80</div>
-                  <div className="text-slate-400 text-[11px]">ISO Standard Dimensions</div>
-                </div>
-                <div>
-                  <div className="font-extrabold text-white text-base">100m Rolls</div>
-                  <div className="text-slate-400 text-[11px]">Precision Continuous Length</div>
-                </div>
-                <div>
-                  <div className="font-extrabold text-white text-base">Same-Day</div>
-                  <div className="text-slate-400 text-[11px]">Bulk Dispatch Available</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Key Industrial Visuals / Quick Highlights */}
-            <div className="lg:col-span-5">
-              <div className="bg-[#17365D] border border-white/15 rounded-2xl p-6 shadow-2xl space-y-6">
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#E87832]">
-                    Wholesale Highlights
-                  </span>
-                  <span className="text-xs bg-[#217A4B] text-white font-semibold px-2 py-0.5 rounded">
-                    In Stock
-                  </span>
-                </div>
-
-                <div className="space-y-4 text-xs">
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <Layers className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-white text-sm">Color Satin Lanyard Rolls</h4>
-                      <p className="text-slate-300 text-xs mt-0.5">
-                        16mm & 20mm rolls in Royal Blue, Purple, Orange, Black, Yellow, and Red.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <Boxes className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-white text-sm">PVC Badge Holders (V & H)</h4>
-                      <p className="text-slate-300 text-xs mt-0.5">
-                        Semi-transparent & crystal clear models: V2, V4, H4, VS-T, C2T, and executive series.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <Cpu className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-white text-sm">Card Manufacturing Units</h4>
-                      <p className="text-slate-300 text-xs mt-0.5">
-                        DCT4500 automatic punch cutter, DCT150 A4+ hydraulic fusing laminator.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <Link
-                    href="/contact"
-                    className="block text-center py-2.5 rounded-lg bg-[#E87832] text-white font-bold text-xs hover:bg-[#d66b28] transition-colors"
-                  >
-                    Send Direct RFQ & Batch Specs
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 1. Product-First Industrial Hero Showcase */}
+      <ProductHeroShowcase
+        flagshipProducts={featuredProducts.length > 0 ? featuredProducts : productsData.results.slice(0, 6)}
+        totalProductsCount={productsData.count || productsData.results.length}
+      />
 
       {/* 2. Direct Industrial Products Showcase with Live Category Tabs & Search */}
       <DirectProductShowcase
