@@ -67,7 +67,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </h2>
 
         {results.products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {results.products.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

@@ -59,7 +59,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {machineryProducts.results.map((machine) => (
               <ProductCard key={machine.id} product={machine} />
             ))}
@@ -69,36 +69,36 @@ export default async function HomePage() {
 
       {/* 5. Custom Requirements & Bulk Order Callout */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-[#17365D] rounded-2xl text-white p-8 sm:p-12 shadow-xl border border-white/10 relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <span className="bg-[#E87832] text-white text-[11px] font-bold uppercase px-2.5 py-1 rounded">
+        <div className="bg-[#17365D] rounded-xl sm:rounded-2xl text-white p-5 sm:p-10 shadow-xl border border-white/10 relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            <div className="lg:col-span-8 space-y-3 sm:space-y-4">
+              <span className="bg-[#E87832] text-white text-[10px] sm:text-[11px] font-bold uppercase px-2.5 py-1 rounded">
                 Custom Dyeing & Print Service
               </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+              <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
                 Require Custom Widths, Pantone Matching, or Screen Printing?
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
                 We manufacture customized polyester ribbons in 12mm, 16mm, 20mm, and 25mm with
                 custom corporate colors, multi-color sublimation transfer, and branded dog hooks.
               </p>
-              <div className="flex flex-wrap gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 pt-2">
                 <Link
                   href="/contact"
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-6 py-3 rounded-xl font-bold text-xs tracking-wide transition-colors shadow-sm"
+                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 sm:py-3 rounded-xl font-bold text-xs tracking-wide transition-colors shadow-sm text-center"
                 >
                   Submit Custom Batch Specs
                 </Link>
                 <a
                   href={`tel:${phone.replace(/\s+/g, "")}`}
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-xl font-bold text-xs tracking-wide transition-colors"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2.5 sm:py-3 rounded-xl font-bold text-xs tracking-wide transition-colors text-center"
                 >
-                  Call Technical Support: {phone}
+                  Call Support: {phone}
                 </a>
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-[#102742] p-6 rounded-xl border border-white/10 text-xs space-y-3">
+            <div className="lg:col-span-4 bg-[#102742] p-4 sm:p-6 rounded-xl border border-white/10 text-xs space-y-2.5 sm:space-y-3">
               <h3 className="font-bold text-white text-sm border-b border-white/10 pb-2">
                 Wholesale Assurance
               </h3>
@@ -125,8 +125,8 @@ export default async function HomePage() {
 
       {/* 6. Company Introduction & Trust Strip */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white border border-[#DCE3EB] p-6 rounded-xl space-y-3 shadow-2xs">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="bg-white border border-[#DCE3EB] p-4 sm:p-6 rounded-xl space-y-2.5 sm:space-y-3 shadow-2xs">
             <div className="w-10 h-10 rounded-lg bg-[#F5F7FA] flex items-center justify-center text-[#17365D]">
               <Factory className="w-5 h-5" />
             </div>
@@ -137,7 +137,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white border border-[#DCE3EB] p-6 rounded-xl space-y-3 shadow-2xs">
+          <div className="bg-white border border-[#DCE3EB] p-4 sm:p-6 rounded-xl space-y-2.5 sm:space-y-3 shadow-2xs">
             <div className="w-10 h-10 rounded-lg bg-[#F5F7FA] flex items-center justify-center text-[#17365D]">
               <Award className="w-5 h-5" />
             </div>
@@ -148,7 +148,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white border border-[#DCE3EB] p-6 rounded-xl space-y-3 shadow-2xs">
+          <div className="bg-white border border-[#DCE3EB] p-4 sm:p-6 rounded-xl space-y-2.5 sm:space-y-3 shadow-2xs">
             <div className="w-10 h-10 rounded-lg bg-[#F5F7FA] flex items-center justify-center text-[#17365D]">
               <Truck className="w-5 h-5" />
             </div>
