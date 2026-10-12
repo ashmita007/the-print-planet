@@ -2,14 +2,22 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { Search, Sparkles, ArrowRight, Layers, SlidersHorizontal, Package } from "lucide-react";
+import { Search, Sparkles, ArrowRight, Layers, SlidersHorizontal, Package, ChevronDown } from "lucide-react";
 import { Product, Category } from "@/lib/types";
 import ProductCard from "./ProductCard";
+import SortModal, { SortOptionValue } from "./SortModal";
 
 interface DirectProductShowcaseProps {
   products: Product[];
   categories: Category[];
 }
+
+const SORT_LABELS: Record<SortOptionValue, string> = {
+  featured: "Featured First",
+  "price-asc": "Price: Low to High",
+  "price-desc": "Price: High to Low",
+  name: "Name A–Z",
+};
 
 export default function DirectProductShowcase({
   products,
@@ -17,7 +25,8 @@ export default function DirectProductShowcase({
 }: DirectProductShowcaseProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "name">("featured");
+  const [sortBy, setSortBy] = useState<SortOptionValue>("featured");
+  const [sortModalOpen, setSortModalOpen] = useState<boolean>(false);
   const [visibleLimit, setVisibleLimit] = useState<number>(16);
 
   // Reset pagination when category or search changes
@@ -171,17 +180,16 @@ export default function DirectProductShowcase({
             </span>
 
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <SlidersHorizontal className="w-3 h-3 text-[#687586] hidden sm:inline" />
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-white border border-[#DCE3EB] text-[11px] sm:text-xs font-medium text-[#263445] rounded-lg px-2 sm:px-2.5 py-1 sm:py-1.5 focus:outline-none focus:border-[#17365D]"
+              <button
+                type="button"
+                onClick={() => setSortModalOpen(true)}
+                className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F8FAFC] border border-[#DCE3EB] hover:border-[#17365D] text-[11px] sm:text-xs font-semibold text-[#263445] hover:text-[#17365D] rounded-lg sm:rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95"
+                aria-label="Open sort products modal"
               >
-                <option value="featured">Featured First</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name">Name A–Z</option>
-              </select>
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#E87832]" />
+                <span className="font-bold">{SORT_LABELS[sortBy]}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-[#687586]" />
+              </button>
             </div>
           </div>
         </div>
@@ -231,6 +239,15 @@ export default function DirectProductShowcase({
           </button>
         </div>
       )}
+
+      {/* Interactive Sort Modal (Bottom Sheet on Mobile, Centered on Desktop) */}
+      <SortModal
+        isOpen={sortModalOpen}
+        onClose={() => setSortModalOpen(false)}
+        currentSort={sortBy}
+        onSelectSort={setSortBy}
+        totalProductsCount={filteredProducts.length}
+      />
     </section>
   );
 }
