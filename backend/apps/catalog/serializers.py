@@ -98,6 +98,8 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
 
 class ProductWriteSerializer(serializers.ModelSerializer):
+    images = serializers.ListField(child=serializers.DictField(), required=False, write_only=True)
+
     class Meta:
         model = Product
         fields = [
@@ -106,9 +108,41 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             'color', 'minimum_order_quantity', 'price', 'price_display',
             'currency', 'price_visibility', 'is_featured', 'is_active',
             'display_order', 'seo_title', 'seo_description',
-            'reference_source_url', 'verification_status'
+            'reference_source_url', 'verification_status', 'images'
         ]
         read_only_fields = ['id']
         extra_kwargs = {
             'slug': {'required': False},
         }
+
+    def create(self, validated_data):
+        images_data = validated_data.pop('images', None)
+        product = super().create(validated_data)
+        if images_data:
+            self._save_images(product, images_data)
+        return product
+
+    def update(self, instance, validated_data):
+        images_data = validated_data.pop('images', None)
+        product = super().update(instance, validated_data)
+        if images_data is not None:
+            instance.images.all().delete()
+            self._save_images(instance, images_data)
+        return product
+
+    def _save_images(self, product, images_data):
+        has_primary = any(img.get('is_primary') or img.get('isPrimary') for img in images_data)
+        for i, img in enumerate(images_data):
+            url = img.get('secure_url') or img.get('url')
+            if url:
+                ProductImage.objects.create(
+                    product=product,
+                    secure_url=url,
+                    cloudinary_public_id=img.get('cloudinary_public_id') or img.get('public_id', ''),
+                    is_primary=bool(img.get('is_primary') or img.get('isPrimary')) or (not has_primary and i == 0),
+                    display_order=i,
+                    alt_text=img.get('alt_text', product.name)
+                )
+
+    def to_representation(self, instance):
+        return ProductDetailSerializer(instance, context=self.context).data
