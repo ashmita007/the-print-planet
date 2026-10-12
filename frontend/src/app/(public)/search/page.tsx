@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Search, Layers, Box } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { globalSearch } from "@/lib/api";
+import MobileFilterSortBar from "@/components/MobileFilterSortBar";
+import { globalSearch, getCategories } from "@/lib/api";
 
 interface SearchPageProps {
   searchParams: Promise<{
@@ -13,7 +14,10 @@ interface SearchPageProps {
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { q = "" } = await searchParams;
-  const results = q ? await globalSearch(q) : { products: [], categories: [] };
+  const [results, allCategories] = await Promise.all([
+    q ? globalSearch(q) : Promise.resolve({ products: [], categories: [] }),
+    getCategories(),
+  ]);
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8">
@@ -62,9 +66,18 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       {/* Matching Products */}
       <div className="space-y-4">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D]">
-          Matching Products ({results.products.length})
-        </h2>
+        <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-2 gap-2">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D]">
+            Matching Products ({results.products.length})
+          </h2>
+          <MobileFilterSortBar
+            categories={allCategories}
+            activeSearch={q}
+            totalCount={results.products.length}
+            basePath="/products"
+            buttonOnly={true}
+          />
+        </div>
 
         {results.products.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">

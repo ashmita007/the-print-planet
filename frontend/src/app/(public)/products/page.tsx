@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Filter, Layers, ArrowUpDown, Search, RotateCcw, Box } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import { getCategories, getProducts } from "@/lib/api";
 
 interface ProductsPageProps {
@@ -61,10 +62,20 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         </div>
       </div>
 
+      {/* Mobile-Only Filter & Sort Bar with Small Modal Trigger */}
+      <MobileFilterSortBar
+        categories={categories}
+        activeCategory={params.category}
+        activeOrdering={params.ordering}
+        activeSearch={params.search}
+        totalCount={productsData.count}
+        basePath="/products"
+      />
+
       {/* Main Layout: Filter Sidebar + Products Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Filter Sidebar */}
-        <aside className="lg:col-span-3 space-y-6 bg-[#F5F7FA] p-5 rounded-xl border border-[#DCE3EB]">
+        {/* Left Filter Sidebar (Desktop only) */}
+        <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-[#F5F7FA] p-5 rounded-xl border border-[#DCE3EB]">
           <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
             <span className="font-bold text-sm text-[#17365D] flex items-center gap-1.5">
               <Filter className="w-4 h-4 text-[#E87832]" /> Filter Catalogue

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
 
 interface CategoryPageProps {
@@ -81,10 +82,17 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
       {/* Products Grid */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
+        <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3 gap-2">
           <span className="text-xs font-bold text-[#687586]">
             Showing <strong className="text-[#17365D]">{productsData.results.length}</strong> products in {category.name}
           </span>
+          <MobileFilterSortBar
+            categories={allCategories}
+            activeCategory={slug}
+            totalCount={productsData.results.length}
+            basePath="/products"
+            buttonOnly={true}
+          />
         </div>
 
         {productsData.results.length > 0 ? (
