@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   X,
   CheckCircle,
@@ -22,6 +23,7 @@ interface EnquiryModalProps {
 }
 
 export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [fullName, setFullName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,6 +37,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll and listen for Escape key when open
   useEffect(() => {
@@ -54,7 +60,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,9 +101,9 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
     }`
   );
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -322,6 +328,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

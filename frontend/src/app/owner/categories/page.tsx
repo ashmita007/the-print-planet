@@ -17,12 +17,14 @@ import {
   ownerDeleteCategory,
 } from "@/lib/api";
 import { Category } from "@/lib/types";
+import ConfirmModal from "@/components/owner/ConfirmModal";
 
 export default function OwnerCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<{ id: number; name: string } | null>(null);
 
   // Form fields
   const [name, setName] = useState("");
@@ -105,14 +107,14 @@ export default function OwnerCategoriesPage() {
     }
   };
 
-  const handleDelete = async (id: number, catName: string) => {
-    if (confirm(`Delete category "${catName}"? Warning: Assigned products will have their category unlinked or removed.`)) {
-      const ok = await ownerDeleteCategory(id);
-      if (ok) {
-        fetchCats();
-      } else {
-        alert("Failed to delete category.");
-      }
+  const executeDelete = async () => {
+    if (!confirmDelete) return;
+    const ok = await ownerDeleteCategory(confirmDelete.id);
+    setConfirmDelete(null);
+    if (ok) {
+      fetchCats();
+    } else {
+      alert("Failed to delete category.");
     }
   };
 
@@ -302,7 +304,7 @@ export default function OwnerCategoriesPage() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleDelete(c.id, c.name)}
+                        onClick={() => setConfirmDelete({ id: c.id, name: c.name })}
                         className="p-1 text-slate-400 hover:text-red-600"
                         title="Delete category"
                       >
@@ -316,6 +318,18 @@ export default function OwnerCategoriesPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={!!confirmDelete}
+        title="Delete Catalogue Category"
+        message={`Are you sure you want to permanently delete "${confirmDelete?.name}"? Any linked products will have their category unlinked.`}
+        confirmLabel="Delete Category"
+        cancelLabel="Cancel"
+        isDestructive={true}
+        onConfirm={executeDelete}
+        onClose={() => setConfirmDelete(null)}
+      />
     </div>
   );
 }

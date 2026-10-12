@@ -12,9 +12,11 @@ import {
   FileText,
   Share2,
   CheckCircle,
+  ZoomIn,
 } from "lucide-react";
 import { Product } from "@/lib/types";
 import EnquiryModal from "./EnquiryModal";
+import ImageLightboxModal from "./ImageLightboxModal";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -22,6 +24,7 @@ interface ProductDetailClientProps {
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const formatImageUrl = (url?: string | null) => {
     if (!url) return "/placeholder-product.svg";
@@ -53,7 +56,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
         {/* Left Column: Image Gallery (5 Cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="relative w-full pt-[100%] bg-[#F8FAFC] rounded-2xl border border-[#DCE3EB] overflow-hidden shadow-xs">
+          <div
+            onClick={() => setLightboxOpen(true)}
+            className="relative w-full pt-[100%] bg-[#F8FAFC] rounded-2xl border border-[#DCE3EB] overflow-hidden shadow-xs cursor-zoom-in group"
+            title="Click to view full-screen image"
+          >
             {!imgError && selectedImage && !selectedImage.startsWith("/placeholder") ? (
               <img
                 src={selectedImage}
@@ -62,7 +69,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   setImgError(true);
                   setSelectedImage("/placeholder-product.svg");
                 }}
-                className="absolute inset-0 w-full h-full object-contain p-3 sm:p-6"
+                className="absolute inset-0 w-full h-full object-contain p-3 sm:p-6 group-hover:scale-105 transition-transform duration-300"
               />
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-slate-400">
@@ -72,7 +79,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             )}
 
             {/* Badges */}
-            <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            <div className="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
               {product.is_featured && (
                 <span className="bg-[#17365D] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded shadow-xs">
                   Featured Model
@@ -83,6 +90,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <Shield className="w-3 h-3" /> Specs Verified
                 </span>
               )}
+            </div>
+
+            {/* Tap to Zoom Badge */}
+            <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-xs text-[#17365D] border border-slate-200 text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 shadow-xs group-hover:bg-[#17365D] group-hover:text-white transition-colors">
+              <ZoomIn className="w-3 h-3" />
+              <span className="hidden sm:inline">Tap to Zoom</span>
             </div>
           </div>
 
@@ -267,6 +280,15 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           onClose={() => setModalOpen(false)}
         />
       )}
+
+      {/* Image Lightbox Modal */}
+      <ImageLightboxModal
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        images={imagesList.length > 0 ? imagesList : [selectedImage]}
+        initialIndex={Math.max(0, imagesList.indexOf(selectedImage))}
+        productName={product.name}
+      />
     </>
   );
 }

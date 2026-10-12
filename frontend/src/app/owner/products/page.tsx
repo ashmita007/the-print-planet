@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { ownerGetProducts, ownerDeleteProduct, ownerGetCategories } from "@/lib/api";
 import { Product, Category } from "@/lib/types";
+import ConfirmModal from "@/components/owner/ConfirmModal";
 
 export default function OwnerProductsListPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,6 +25,7 @@ export default function OwnerProductsListPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<{ id: number; name: string } | null>(null);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -51,16 +53,17 @@ export default function OwnerProductsListPage() {
     fetchProducts();
   };
 
-  const handleDelete = async (id: number, name: string) => {
-    if (confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) {
-      setDeletingId(id);
-      const success = await ownerDeleteProduct(id);
-      setDeletingId(null);
-      if (success) {
-        fetchProducts();
-      } else {
-        alert("Failed to delete product.");
-      }
+  const executeDelete = async () => {
+    if (!confirmDelete) return;
+    const { id } = confirmDelete;
+    setDeletingId(id);
+    const success = await ownerDeleteProduct(id);
+    setDeletingId(null);
+    setConfirmDelete(null);
+    if (success) {
+      fetchProducts();
+    } else {
+      alert("Failed to delete product.");
     }
   };
 
@@ -217,7 +220,7 @@ export default function OwnerProductsListPage() {
                           </Link>
                           <button
                             type="button"
-                            onClick={() => handleDelete(p.id, p.name)}
+                            onClick={() => setConfirmDelete({ id: p.id, name: p.name })}
                             disabled={deletingId === p.id}
                             className="p-1 text-slate-400 hover:text-red-600 disabled:opacity-50"
                             title="Delete Product"
@@ -267,6 +270,18 @@ export default function OwnerProductsListPage() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={!!confirmDelete}
+        title="Delete Industrial Product"
+        message={`Are you sure you want to permanently delete "${confirmDelete?.name}"? All associated technical specifications and media links will be removed.`}
+        confirmLabel={deletingId ? "Deleting..." : "Delete Permanently"}
+        cancelLabel="Cancel"
+        isDestructive={true}
+        onConfirm={executeDelete}
+        onClose={() => setConfirmDelete(null)}
+      />
     </div>
   );
 }
