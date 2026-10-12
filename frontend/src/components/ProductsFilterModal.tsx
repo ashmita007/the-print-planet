@@ -105,29 +105,29 @@ export default function ProductsFilterModal({
       aria-labelledby="filter-modal-title"
     >
       <div
-        className="bg-white rounded-2xl shadow-xl w-full max-w-[340px] max-h-[88vh] flex flex-col border border-[#DCE3EB] overflow-hidden animate-in zoom-in-95 duration-150"
+        className="bg-white rounded-2xl shadow-xl sm:shadow-2xl w-full max-w-[340px] sm:max-w-md md:max-w-lg max-h-[88vh] sm:max-h-[85vh] flex flex-col border border-[#DCE3EB] overflow-hidden animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Compact Modal Header */}
-        <div className="bg-[#102742] text-white px-4 py-3 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-[#E87832]" />
-            <h3 id="filter-modal-title" className="text-xs sm:text-sm font-bold tracking-tight">
+        {/* Responsive Modal Header */}
+        <div className="bg-[#102742] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#E87832]" />
+            <h3 id="filter-modal-title" className="text-xs sm:text-base font-bold tracking-tight">
               Filter & Sort
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 rounded-lg text-white/70 hover:text-white hover:bg-white/10 active:bg-white/20 flex items-center justify-center transition-colors"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-white/70 hover:text-white hover:bg-white/10 active:bg-white/20 flex items-center justify-center transition-colors"
             aria-label="Close filter dialog"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
-        {/* Scrollable Form Body */}
-        <form onSubmit={handleApply} className="p-4 space-y-4 overflow-y-auto flex-1 text-xs">
+        {/* Scrollable Form Body: tight on mobile, spacious on laptop */}
+        <form onSubmit={handleApply} className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 text-xs sm:text-sm">
           {/* Keyword Search */}
           <div className="space-y-1.5">
             <label className="block font-bold text-[#263445]">Keyword</label>
@@ -137,9 +137,9 @@ export default function ProductsFilterModal({
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
                 placeholder="Search models, sizes..."
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-3 py-2 text-base sm:text-xs text-[#263445] outline-none"
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl pl-8 sm:pl-9 pr-3 py-2 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
               />
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
@@ -149,7 +149,7 @@ export default function ProductsFilterModal({
             <select
               value={categoryVal}
               onChange={(e) => setCategoryVal(e.target.value)}
-              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-base sm:text-xs text-[#263445] outline-none"
+              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
             >
               <option value="">All Categories</option>
               {categories.map((c) => (
@@ -163,7 +163,7 @@ export default function ProductsFilterModal({
           {/* Sort By Radio Pills */}
           <div className="space-y-1.5">
             <label className="block font-bold text-[#263445]">Sort Order</label>
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
               {sortOptions.map((opt) => {
                 const isSelected = orderingVal === opt.val;
                 return (
@@ -171,7 +171,7 @@ export default function ProductsFilterModal({
                     key={opt.val}
                     type="button"
                     onClick={() => setOrderingVal(opt.val)}
-                    className={`p-2 rounded-lg text-left text-[11px] font-semibold transition-all border ${
+                    className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl text-left text-[11px] sm:text-xs font-semibold transition-all border ${
                       isSelected
                         ? "bg-[#17365D] text-white border-[#17365D] shadow-2xs"
                         : "bg-[#F8FAFC] text-[#263445] border-[#DCE3EB] hover:bg-slate-100"
@@ -185,12 +185,12 @@ export default function ProductsFilterModal({
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-2 border-t border-[#DCE3EB] space-y-2">
+          <div className="pt-2 sm:pt-4 border-t border-[#DCE3EB] space-y-2">
             <button
               type="submit"
-              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 rounded-lg font-bold text-xs transition-colors shadow-2xs flex items-center justify-center gap-1.5"
+              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-colors shadow-2xs flex items-center justify-center gap-1.5"
             >
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Apply Filters</span>
             </button>
 
@@ -198,9 +198,9 @@ export default function ProductsFilterModal({
               <button
                 type="button"
                 onClick={handleReset}
-                className="w-full py-1.5 text-center text-[11px] font-semibold text-[#C0392B] hover:underline flex items-center justify-center gap-1"
+                className="w-full py-1.5 sm:py-2 text-center text-[11px] sm:text-xs font-semibold text-[#C0392B] hover:underline flex items-center justify-center gap-1"
               >
-                <RotateCcw className="w-3 h-3" />
+                <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 <span>Reset All Filters</span>
               </button>
             )}
