@@ -49,48 +49,48 @@ export default function ConfirmModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/55 backdrop-blur-xs animate-in fade-in duration-150"
       onClick={onClose}
       role="alertdialog"
       aria-modal="true"
     >
       <div
-        className="bg-white rounded-t-2xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-[#DCE3EB] animate-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200 space-y-4"
+        className="bg-white rounded-2xl max-w-[320px] w-full p-4 shadow-xl border border-[#DCE3EB] animate-in zoom-in-95 duration-150 space-y-3"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-start gap-3.5">
+        <div className="flex items-start gap-3">
           <div
-            className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+            className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
               isDestructive
                 ? "bg-red-100 text-[#C0392B]"
                 : "bg-blue-100 text-[#17365D]"
             }`}
           >
-            <AlertTriangle className="w-5 h-5" />
+            <AlertTriangle className="w-4 h-4" />
           </div>
-          <div className="flex-1 min-w-0 pr-2">
-            <h3 className="text-base font-bold text-[#17365D] leading-snug">
+          <div className="flex-1 min-w-0 pr-1">
+            <h3 className="text-sm font-bold text-[#17365D] leading-snug">
               {title}
             </h3>
-            <p className="text-xs text-[#687586] mt-1 leading-relaxed">
+            <p className="text-[11px] text-[#687586] mt-0.5 leading-relaxed">
               {message}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
+            className="w-7 h-7 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center shrink-0"
             aria-label="Close"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="pt-2 flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 sm:justify-end">
+        <div className="pt-2 border-t border-[#DCE3EB] flex gap-2 justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-[#DCE3EB] text-[#263445] text-xs font-semibold hover:bg-[#F5F7FA] transition-colors"
+            className="flex-1 py-1.5 px-3 rounded-lg border border-[#DCE3EB] text-[#263445] text-xs font-semibold hover:bg-[#F5F7FA] transition-colors"
           >
             {cancelLabel}
           </button>
@@ -100,7 +100,7 @@ export default function ConfirmModal({
               onConfirm();
               onClose();
             }}
-            className={`w-full sm:w-auto px-5 py-2.5 rounded-xl text-white text-xs font-bold transition-colors shadow-sm ${
+            className={`flex-1 py-1.5 px-3 rounded-lg text-white text-xs font-bold transition-colors shadow-2xs ${
               isDestructive
                 ? "bg-[#C0392B] hover:bg-[#a93226]"
                 : "bg-[#17365D] hover:bg-[#102742]"
