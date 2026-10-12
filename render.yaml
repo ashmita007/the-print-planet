@@ -11,7 +11,7 @@ services:
   # All-in-one production container deployment
   # -----------------------------------------------------------------
   - type: web
-    name: the-print-planet-app
+    name: the-print-planet
     runtime: docker
     region: oregon
     plan: free

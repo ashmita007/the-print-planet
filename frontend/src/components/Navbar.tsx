@@ -166,6 +166,10 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-[#263445]">
+            <Link href="/" className="hover:text-[#E87832] transition-colors">
+              Home
+            </Link>
+
             {/* Products & Services Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button

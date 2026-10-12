@@ -16,12 +16,13 @@ import {
   getSiteSettings,
 } from "@/lib/api";
 
+export const revalidate = 60;
+
 export default async function HomePage() {
-  const [categories, productsData, featuredProducts, machineryProducts, settings] = await Promise.all([
+  const [categories, productsData, featuredProducts, settings] = await Promise.all([
     getCategories(),
     getProducts({ page_size: 65 }),
     getFeaturedProducts(),
-    getProducts({ category: "id-card-manufacturing-machines" }),
     getSiteSettings(),
   ]);
 
@@ -30,7 +31,9 @@ export default async function HomePage() {
   const businessName = settings?.business_name || "THE PRINT PLANET";
 
   const productsList = productsData?.results || [];
-  const machineryList = machineryProducts?.results || [];
+  const machineryList = productsList.filter(
+    (p) => p.category?.slug === "id-card-manufacturing-machines"
+  );
   const safeFeatured = featuredProducts?.length > 0 ? featuredProducts : productsList.slice(0, 6);
 
   return (
