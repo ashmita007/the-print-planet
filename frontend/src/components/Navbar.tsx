@@ -84,6 +84,14 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
           <div className="flex items-center gap-4 text-xs font-medium">
             <a
+              href={`mailto:${email}`}
+              className="hidden lg:flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5 text-[#E87832]" />
+              <span>{email}</span>
+            </a>
+            <span className="hidden lg:inline text-slate-500">|</span>
+            <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
               className="flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
             >
@@ -364,6 +372,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
             {/* Drawer Footer Actions */}
             <div className="p-4 border-t border-[#DCE3EB] bg-[#F5F7FA] space-y-2">
+              <a
+                href={`mailto:${email}`}
+                className="flex items-center justify-center gap-2 w-full py-2 rounded-lg border border-[#DCE3EB] bg-white text-[#17365D] text-xs font-bold"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#E87832]" />
+                {email}
+              </a>
               <a
                 href={`tel:${phone.replace(/\s+/g, "")}`}
                 className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-[#102742] text-white text-xs font-bold"
