@@ -55,10 +55,10 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
     }
   };
 
-  const businessName = settings?.business_name || "The Print Planet";
-  const phone = settings?.phone || "+91 98980 61569";
-  const email = settings?.email || "sales@theprintplanet.in";
-  const whatsapp = settings?.whatsapp || "+91 98980 61569";
+  const businessName = settings?.business_name || "THE PRINT PLANET";
+  const phone = settings?.phone || "+91 97418 08034";
+  const email = settings?.email || "theprintplanet01@gmail.com";
+  const whatsapp = settings?.whatsapp || "+91 97418 08034";
 
   return (
     <header className="w-full border-b border-[#DCE3EB] bg-white sticky top-0 z-50">
@@ -71,7 +71,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               Verified Industrial Manufacturer & Wholesaler
             </span>
             <span className="hidden sm:inline-block text-slate-400">|</span>
-            <span className="hidden sm:inline-block text-slate-300">Ahmedabad, Gujarat</span>
+            <span className="hidden sm:inline-block text-slate-300">Bengaluru, Karnataka</span>
             {settings?.gst_number && (
               <>
                 <span className="hidden md:inline-block text-slate-400">|</span>

@@ -152,14 +152,14 @@ class Command(BaseCommand):
 
         # 3. Configure Site Settings
         settings_obj = SiteSettings.get_settings()
-        settings_obj.business_name = "The Print Planet"
-        settings_obj.tagline = "Industrial ID Card Solutions, Lanyards & Printing Machinery"
-        settings_obj.phone = "+91 98980 61569"
-        settings_obj.whatsapp = "+91 98980 61569"
-        settings_obj.email = "sales@theprintplanet.in"
-        settings_obj.address = "Plot 42, Industrial Area Phase II, Ahmedabad, Gujarat, India - 380004"
-        settings_obj.gst_number = "24AWOPP8281E1Z4"
-        settings_obj.footer_text = "The Print Planet is a premier industrial manufacturer and distributor of identification systems, satin lanyard rolls, rigid badge holders, metal attachments, card fusing machinery, and RFID solutions."
+        settings_obj.business_name = "THE PRINT PLANET"
+        settings_obj.tagline = "Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions"
+        settings_obj.phone = "+91 97418 08034"
+        settings_obj.whatsapp = "+91 97418 08034"
+        settings_obj.email = "theprintplanet01@gmail.com"
+        settings_obj.address = "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town, Bengaluru (Bangalore) Urban, Bengaluru - 560079, Karnataka, India"
+        settings_obj.gst_number = "29AAQFT3909B1ZZ"
+        settings_obj.footer_text = "THE PRINT PLANET - Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B."
         settings_obj.save()
         self.stdout.write(self.style.SUCCESS("Configured default Site Settings."))
 
@@ -221,7 +221,7 @@ class Command(BaseCommand):
         # 5. Optional Owner Creation
         if options.get('create_owner') or os.environ.get('CREATE_DEFAULT_OWNER', '').lower() in ('true', '1'):
             owner_user = os.environ.get('OWNER_USERNAME', 'admin')
-            owner_email = os.environ.get('OWNER_EMAIL', 'owner@theprintplanet.in')
+            owner_email = os.environ.get('OWNER_EMAIL', 'shriaknth.yathnala@gmail.com')
             owner_pass = os.environ.get('OWNER_PASSWORD', 'AdminPass123!Secure')
 
             if not User.objects.filter(username=owner_user).exists():

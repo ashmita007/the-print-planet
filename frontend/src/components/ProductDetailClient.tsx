@@ -117,7 +117,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <span>Standard Factory Packaging</span>
             </div>
             <p className="text-slate-500 text-[11px] leading-relaxed">
-              Export-grade corrugated packaging with protective moisture wrapping. Bulk orders dispatched from Ahmedabad manufacturing hub.
+              Export-grade corrugated packaging with protective moisture wrapping. Bulk orders dispatched from Bengaluru manufacturing hub.
             </p>
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </button>
 
             <a
-              href={`https://wa.me/919898061569?text=${whatsappMessage}`}
+              href={`https://wa.me/919741808034?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#217A4B] hover:bg-[#1b633d] text-white py-3.5 px-6 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2"

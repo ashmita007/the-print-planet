@@ -7,12 +7,13 @@ import { getSiteSettings } from "@/lib/api";
 export default async function ContactPage() {
   const settings = await getSiteSettings();
 
-  const businessName = settings?.business_name || "The Print Planet";
-  const phone = settings?.phone || "+91 98980 61569";
-  const email = settings?.email || "sales@theprintplanet.in";
-  const address = settings?.address || "Plot 42, Industrial Area Phase II, Ahmedabad, Gujarat, India - 380004";
-  const gst = settings?.gst_number || "24AWOPP8281E1Z4";
-  const whatsapp = settings?.whatsapp || "+91 98980 61569";
+  const businessName = settings?.business_name || "THE PRINT PLANET";
+  const phone = settings?.phone || "+91 97418 08034";
+  const email = settings?.email || "theprintplanet01@gmail.com";
+  const address = settings?.address || "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town, Bengaluru (Bangalore) Urban, Bengaluru - 560079, Karnataka, India";
+  const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
+  const pan = "AAQFT3909B";
+  const whatsapp = settings?.whatsapp || "+91 97418 08034";
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-10">
@@ -83,6 +84,7 @@ export default async function ContactPage() {
               <div>
                 <strong className="text-[#263445] text-xs block mb-0.5">Verified Tax Details</strong>
                 <p className="text-[#687586]">GST Registration: <strong className="text-[#263445]">{gst}</strong></p>
+                <p className="text-[#687586]">PAN: <strong className="text-[#263445]">{pan}</strong></p>
               </div>
             </div>
           </div>

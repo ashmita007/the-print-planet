@@ -25,9 +25,9 @@ export default async function HomePage() {
     getSiteSettings(),
   ]);
 
-  const phone = settings?.phone || "+91 98980 61569";
-  const email = settings?.email || "sales@theprintplanet.in";
-  const businessName = settings?.business_name || "The Print Planet";
+  const phone = settings?.phone || "+91 97418 08034";
+  const email = settings?.email || "theprintplanet01@gmail.com";
+  const businessName = settings?.business_name || "THE PRINT PLANET";
 
   return (
     <div className="space-y-16 pb-20">

@@ -94,7 +94,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               </div>
               <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href={`https://wa.me/919898061569?text=${whatsappMessage}`}
+                  href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-[#217A4B] text-white text-xs font-bold py-2.5 px-4 rounded-lg hover:bg-[#1b633d] transition-colors"
@@ -233,7 +233,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               {/* Submit Button */}
               <div className="pt-2 flex items-center justify-between gap-3">
                 <a
-                  href={`https://wa.me/919898061569?text=${whatsappMessage}`}
+                  href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#217A4B] font-bold hover:underline flex items-center gap-1"

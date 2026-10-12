@@ -27,14 +27,14 @@ export default function EnquirySuccessPage() {
         <p className="text-[#687586]">Connect directly with our manufacturing desk:</p>
         <div className="pt-1 flex justify-center gap-4">
           <a
-            href="tel:+919898061569"
+            href="tel:+919741808034"
             className="font-bold text-[#17365D] hover:underline flex items-center gap-1"
           >
             <Phone className="w-3.5 h-3.5 text-[#E87832]" />
-            +91 98980 61569
+            +91 97418 08034
           </a>
           <a
-            href="https://wa.me/919898061569?text=Hello%2C%20following%20up%20on%20my%20website%20quotation%20enquiry."
+            href="https://wa.me/919741808034?text=Hello%2C%20following%20up%20on%20my%20website%20quotation%20enquiry."
             target="_blank"
             rel="noopener noreferrer"
             className="font-bold text-[#217A4B] hover:underline flex items-center gap-1"

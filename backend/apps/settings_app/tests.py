@@ -17,7 +17,7 @@ class SettingsApiTests(TestCase):
     def test_public_site_settings(self):
         response = self.client.get('/api/v1/site-settings/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['business_name'], 'The Print Planet')
+        self.assertEqual(response.data['business_name'], 'THE PRINT PLANET')
 
     def test_owner_can_update_site_settings(self):
         self.client.force_authenticate(user=self.owner)

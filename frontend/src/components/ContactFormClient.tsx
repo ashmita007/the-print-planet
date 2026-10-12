@@ -88,7 +88,7 @@ export default function ContactFormClient() {
             required
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="e.g. +91 98980 00000"
+            placeholder="e.g. +91 97418 00000"
             className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>

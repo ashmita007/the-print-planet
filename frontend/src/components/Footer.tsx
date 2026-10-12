@@ -9,13 +9,14 @@ interface FooterProps {
 }
 
 export default function Footer({ categories = [], settings }: FooterProps) {
-  const businessName = settings?.business_name || "The Print Planet";
-  const tagline = settings?.tagline || "Industrial ID Card Solutions, Lanyards & Printing Machinery";
-  const phone = settings?.phone || "+91 98980 61569";
-  const email = settings?.email || "sales@theprintplanet.in";
-  const address = settings?.address || "Plot 42, Industrial Area Phase II, Ahmedabad, Gujarat, India - 380004";
-  const gst = settings?.gst_number || "24AWOPP8281E1Z4";
-  const footerText = settings?.footer_text || "The Print Planet is a premier industrial manufacturer and distributor of identification systems, satin lanyard rolls, rigid badge holders, metal attachments, card fusing machinery, and RFID solutions.";
+  const businessName = settings?.business_name || "THE PRINT PLANET";
+  const tagline = settings?.tagline || "Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions";
+  const phone = settings?.phone || "+91 97418 08034";
+  const email = settings?.email || "theprintplanet01@gmail.com";
+  const address = settings?.address || "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town, Bengaluru (Bangalore) Urban, Bengaluru - 560079, Karnataka, India";
+  const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
+  const pan = "AAQFT3909B";
+  const footerText = settings?.footer_text || "Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions. ✱ Your Vision is Our Focus ✱";
 
   return (
     <footer className="bg-[#17365D] text-white pt-16 pb-12 border-t-4 border-[#E87832]">
@@ -31,13 +32,20 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 {businessName}
               </span>
             </div>
+            <p className="text-xs font-semibold text-[#E87832] tracking-wide">
+              ✱ Your Vision is Our Focus ✱
+            </p>
             <p className="text-xs text-slate-300 leading-relaxed">
               {footerText}
             </p>
-            <div className="pt-2">
-              <div className="inline-flex items-center gap-1.5 bg-[#102742] text-xs px-3 py-1.5 rounded text-slate-200 border border-white/10">
-                <ShieldCheck className="w-4 h-4 text-[#E87832]" />
-                <span>GST Registered: <strong className="text-white">{gst}</strong></span>
+            <div className="pt-2 space-y-1.5">
+              <div className="inline-flex items-center gap-1.5 bg-[#102742] text-xs px-3 py-1.5 rounded text-slate-200 border border-white/10 w-full">
+                <ShieldCheck className="w-4 h-4 text-[#E87832] shrink-0" />
+                <span>GSTIN: <strong className="text-white">{gst}</strong></span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 bg-[#102742] text-xs px-3 py-1.5 rounded text-slate-200 border border-white/10 w-full">
+                <ShieldCheck className="w-4 h-4 text-[#E87832] shrink-0" />
+                <span>PAN: <strong className="text-white">{pan}</strong></span>
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ import { getSiteSettings } from "@/lib/api";
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();
-  const businessName = settings?.business_name || "The Print Planet";
+  const businessName = settings?.business_name || "THE PRINT PLANET";
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-12">
@@ -22,9 +22,9 @@ export default async function AboutPage() {
             About {businessName}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Established as a dedicated production and wholesale distribution facility in Ahmedabad,
+            Established as a dedicated production and wholesale distribution facility in Bengaluru, Karnataka,
             specializing in high-capacity ID card identification products, premium satin rolls,
-            hardware fittings, and card fabrication machinery.
+            lens packaging, hardware fittings, and card fabrication machinery.
           </p>
         </div>
       </div>
@@ -90,9 +90,9 @@ export default async function AboutPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="p-6 bg-white border border-[#DCE3EB] rounded-xl space-y-2">
           <Factory className="w-6 h-6 text-[#17365D]" />
-          <h4 className="font-bold text-sm text-[#17365D]">Modern Ahmedabad Facility</h4>
+          <h4 className="font-bold text-sm text-[#17365D]">Modern Bengaluru Facility</h4>
           <p className="text-xs text-[#687586]">
-            Strategically located near major logistics corridors in Gujarat for expedited pan-India transit.
+            Strategically located in Rajajinagar Industrial Town, Bengaluru for expedited pan-India transit and logistics.
           </p>
         </div>
         <div className="p-6 bg-white border border-[#DCE3EB] rounded-xl space-y-2">
