@@ -9,16 +9,16 @@ export default async function AboutPage() {
   const businessName = settings?.business_name || "THE PRINT PLANET";
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-12">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
       <Breadcrumbs items={[{ label: "About Our Company" }]} />
 
       {/* Hero */}
-      <div className="bg-[#102742] text-white p-8 sm:p-12 rounded-2xl border-l-4 border-[#E87832]">
-        <div className="max-w-3xl space-y-3">
-          <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
+      <div className="bg-[#102742] text-white p-5 sm:p-12 rounded-xl sm:rounded-2xl border-l-4 border-[#E87832]">
+        <div className="max-w-3xl space-y-2 sm:space-y-3">
+          <span className="text-[11px] sm:text-xs font-bold text-[#E87832] uppercase tracking-wider">
             Industrial Manufacturer & Distributor
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-2xl sm:text-5xl font-black tracking-tight">
             About {businessName}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -30,7 +30,7 @@ export default async function AboutPage() {
       </div>
 
       {/* Industrial Mission & Production Capabilities */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
         <div className="space-y-4 text-xs sm:text-sm text-[#263445] leading-relaxed">
           <h2 className="text-xl sm:text-2xl font-bold text-[#17365D]">
             Engineering Precision in Identification Systems
@@ -56,7 +56,7 @@ export default async function AboutPage() {
           </div>
         </div>
 
-        <div className="bg-[#F5F7FA] p-6 sm:p-8 rounded-2xl border border-[#DCE3EB] space-y-4">
+        <div className="bg-[#F5F7FA] p-5 sm:p-8 rounded-xl sm:rounded-2xl border border-[#DCE3EB] space-y-4">
           <h3 className="font-bold text-sm text-[#17365D] uppercase tracking-wider">
             Core Production Standards
           </h3>

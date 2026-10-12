@@ -75,32 +75,32 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
 
         {/* Content Details */}
-        <div className="p-2.5 sm:p-4 flex flex-col flex-1 justify-between">
+        <div className="p-2 sm:p-3.5 flex flex-col flex-1 justify-between">
           <div>
             {/* Category Breadcrumb Pill */}
-            <div className="mb-1 sm:mb-1.5">
+            <div className="mb-1">
               <Link
                 href={`/categories/${product.category?.slug}`}
-                className="text-[10px] sm:text-[11px] font-semibold text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1"
+                className="text-[9px] sm:text-[11px] font-semibold text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1 block"
               >
                 {product.category?.name}
               </Link>
             </div>
 
             {/* Product Title */}
-            <h3 className="text-xs sm:text-sm font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 leading-tight sm:leading-snug min-h-[2rem] sm:min-h-[2.5rem]">
+            <h3 className="text-[11px] sm:text-xs md:text-sm font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 leading-snug min-h-[1.9rem] sm:min-h-[2.4rem]">
               <Link href={`/products/${product.slug}`}>{product.name}</Link>
             </h3>
 
             {/* Technical Highlights Badges */}
-            <div className="mt-2 sm:mt-3 flex flex-wrap gap-1 sm:gap-1.5">
+            <div className="mt-1.5 sm:mt-2.5 flex flex-wrap gap-1">
               {product.material && (
-                <span className="text-[9px] sm:text-[10px] bg-[#F5F7FA] text-[#263445] border border-[#DCE3EB] px-1.5 sm:px-2 py-0.5 rounded font-medium truncate max-w-full">
+                <span className="text-[8.5px] sm:text-[10px] bg-[#F5F7FA] text-[#263445] border border-[#DCE3EB] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
                   {product.material}
                 </span>
               )}
               {product.dimensions && (
-                <span className="text-[9px] sm:text-[10px] bg-[#F5F7FA] text-[#263445] border border-[#DCE3EB] px-1.5 sm:px-2 py-0.5 rounded font-medium truncate max-w-full">
+                <span className="hidden sm:inline-block text-[8.5px] sm:text-[10px] bg-[#F5F7FA] text-[#263445] border border-[#DCE3EB] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
                   {product.dimensions}
                 </span>
               )}
@@ -108,46 +108,46 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Price & Action Strip */}
-          <div className="mt-2.5 sm:mt-4 pt-2 sm:pt-3 border-t border-[#F5F7FA]">
-            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2 sm:mb-3 gap-0.5">
-              <div>
-                <span className="text-[8px] sm:text-[10px] uppercase font-bold text-[#687586] block">
+          <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2.5 border-t border-[#F5F7FA]">
+            <div className="flex items-baseline justify-between mb-1.5 sm:mb-2.5 gap-1">
+              <div className="min-w-0 flex-1">
+                <span className="hidden sm:block text-[8px] sm:text-[10px] uppercase font-bold text-[#687586]">
                   B2B Trade Price
                 </span>
                 {product.price_display ? (
-                  <span className="text-xs sm:text-sm font-extrabold text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-black text-[#17365D] block truncate">
                     {product.price_display}
                   </span>
                 ) : product.price ? (
-                  <span className="text-xs sm:text-sm font-extrabold text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-black text-[#17365D] block truncate">
                     ₹ {Number(product.price).toLocaleString("en-IN")}
                   </span>
                 ) : (
-                  <span className="text-[11px] sm:text-xs font-bold text-[#E87832] block">
+                  <span className="text-[10px] sm:text-xs font-bold text-[#E87832] block">
                     Price on Request
                   </span>
                 )}
               </div>
 
               {product.minimum_order_quantity && (
-                <span className="text-[9px] sm:text-[10px] text-slate-500 font-medium whitespace-nowrap">
-                  MOQ: {product.minimum_order_quantity}
+                <span className="text-[8.5px] sm:text-[10px] text-slate-500 font-semibold whitespace-nowrap shrink-0">
+                  MOQ {product.minimum_order_quantity}
                 </span>
               )}
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+            <div className="grid grid-cols-2 gap-1 sm:gap-2">
               <Link
                 href={`/products/${product.slug}`}
-                className="inline-flex items-center justify-center text-[11px] sm:text-xs font-semibold py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA] hover:border-[#17365D] transition-colors text-center"
+                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-semibold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA] hover:border-[#17365D] transition-colors text-center"
               >
                 Details
               </Link>
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center text-[11px] sm:text-xs font-bold py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg bg-[#E87832] hover:bg-[#d66b28] text-white transition-colors shadow-2xs text-center"
+                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg bg-[#E87832] hover:bg-[#d66b28] text-white transition-colors shadow-2xs text-center"
               >
                 Quote
               </button>

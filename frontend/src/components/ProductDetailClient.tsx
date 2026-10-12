@@ -50,7 +50,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
         {/* Left Column: Image Gallery (5 Cols) */}
         <div className="lg:col-span-5 space-y-4">
           <div className="relative w-full pt-[100%] bg-[#F8FAFC] rounded-2xl border border-[#DCE3EB] overflow-hidden shadow-xs">
@@ -62,7 +62,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   setImgError(true);
                   setSelectedImage("/placeholder-product.svg");
                 }}
-                className="absolute inset-0 w-full h-full object-contain p-6"
+                className="absolute inset-0 w-full h-full object-contain p-3 sm:p-6"
               />
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-slate-400">
@@ -198,11 +198,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
 
           {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-2">
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="flex-1 bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 px-6 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2"
+              className="flex-1 bg-[#E87832] hover:bg-[#d66b28] text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2"
             >
               <MessageSquare className="w-4 h-4" />
               <span>Request Factory Quotation</span>
@@ -212,7 +212,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               href={`https://wa.me/919741808034?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#217A4B] hover:bg-[#1b633d] text-white py-3.5 px-6 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2"
+              className="bg-[#217A4B] hover:bg-[#1b633d] text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
               <span>WhatsApp Trade Chat</span>

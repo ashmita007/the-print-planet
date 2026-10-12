@@ -67,15 +67,26 @@ export default function ProductHeroShowcase({
       <div className="absolute bottom-10 left-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+        {/* Mobile-Only Header: Short and Punchy */}
+        <div className="lg:hidden mb-3 text-center space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#E87832] text-[10px] font-bold tracking-wide uppercase border border-white/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B] animate-pulse" />
+            <span>Factory Direct Industrial Catalogue</span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+            Industrial ID Cards, Lanyards & Machinery
+          </h1>
+        </div>
+
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-5 lg:gap-12 items-center">
           {/* Left Column: Industrial Proposition & Quick Catalogs */}
-          <div className="lg:col-span-5 space-y-4 sm:space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/10">
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full">
+            <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/10">
               <span className="w-2 h-2 rounded-full bg-[#217A4B] animate-pulse" />
               <span>Factory-Direct Industrial Supplies</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight sm:leading-[1.12]">
+            <h1 className="hidden lg:block text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight sm:leading-[1.12]">
               Industrial ID Supplies,{" "}
               <span className="text-[#E87832]">Lanyard Rolls</span> & Card Machines.
             </h1>
@@ -121,11 +132,11 @@ export default function ProductHeroShowcase({
 
           {/* Right Column: PRODUCT-FIRST HERO SHOWCASE STAGE */}
           <div
-            className="lg:col-span-7"
+            className="lg:col-span-7 w-full"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="bg-[#17365D]/90 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-7 shadow-2xl relative overflow-hidden">
+            <div className="bg-[#17365D]/90 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-7 shadow-2xl relative overflow-hidden">
               {/* Top Banner inside Hero Card */}
               <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-white/10 gap-2">
                 <div className="flex items-center gap-1.5 sm:gap-2">
@@ -174,7 +185,7 @@ export default function ProductHeroShowcase({
                 <div className="sm:col-span-5 relative">
                   <Link
                     href={`/products/${activeProduct.slug}`}
-                    className="block aspect-[4/3] sm:aspect-square max-h-56 sm:max-h-none bg-white rounded-xl p-3 sm:p-4 overflow-hidden border border-white/20 shadow-md group relative"
+                    className="block aspect-square max-h-48 sm:max-h-none w-44 sm:w-full mx-auto bg-white rounded-xl p-2.5 sm:p-4 overflow-hidden border border-white/20 shadow-md group relative"
                   >
                     <img
                       src={heroImg}
@@ -265,7 +276,7 @@ export default function ProductHeroShowcase({
                 <div className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
                   Featured Factory Lines (Tap to switch):
                 </div>
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none sm:grid sm:grid-cols-6">
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none sm:grid sm:grid-cols-6 snap-x touch-pan-x">
                   {heroProducts.map((prod, idx) => {
                     const thumbImg =
                       prod.primary_image?.secure_url ||
@@ -279,20 +290,20 @@ export default function ProductHeroShowcase({
                         key={prod.id}
                         type="button"
                         onClick={() => setActiveIndex(idx)}
-                        className={`p-1.5 rounded-xl border transition-all text-left flex flex-col items-center shrink-0 w-24 sm:w-auto ${
+                        className={`p-1.5 rounded-xl border transition-all text-left flex flex-col items-center shrink-0 w-20 sm:w-auto snap-start ${
                           isSelected
                             ? "bg-white text-[#17365D] border-[#E87832] shadow-md ring-2 ring-[#E87832]"
                             : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/15"
                         }`}
                       >
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-lg p-1 overflow-hidden shrink-0 mb-1">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg p-1 overflow-hidden shrink-0 mb-1">
                           <img
                             src={thumbImg}
                             alt={prod.name}
                             className="w-full h-full object-contain"
                           />
                         </div>
-                        <span className="text-[9px] sm:text-[10px] font-bold truncate max-w-full leading-tight text-center">
+                        <span className="text-[8.5px] sm:text-[10px] font-bold truncate max-w-full leading-tight text-center">
                           {prod.sku.replace("LAN-", "").replace("MCH-", "").replace("HLD-", "").replace("CRD-", "")}
                         </span>
                       </button>

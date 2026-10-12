@@ -19,9 +19,9 @@ export default function Footer({ categories = [], settings }: FooterProps) {
   const footerText = settings?.footer_text || "Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions. ✱ Your Vision is Our Focus ✱";
 
   return (
-    <footer className="bg-[#17365D] text-white pt-16 pb-12 border-t-4 border-[#E87832]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/15">
+    <footer className="bg-[#17365D] text-white pt-10 sm:pt-16 pb-8 sm:pb-12 border-t-4 border-[#E87832]">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 pb-8 sm:pb-12 border-b border-white/15">
           {/* Column 1: Company Profile */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">

@@ -62,8 +62,8 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#DCE3EB] animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[92vh] overflow-y-auto border border-[#DCE3EB] animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="bg-[#102742] text-white px-6 py-4 flex items-center justify-between">
           <div>

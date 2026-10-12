@@ -16,7 +16,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const results = q ? await globalSearch(q) : { products: [], categories: [] };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8">
       <Breadcrumbs
         items={[
           { label: "Search Results" },
@@ -67,7 +67,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </h2>
 
         {results.products.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
             {results.products.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

@@ -63,26 +63,27 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   return (
     <header className="w-full border-b border-[#DCE3EB] bg-white sticky top-0 z-50">
       {/* Top Utility Contact Strip */}
-      <div className="bg-[#102742] text-white text-xs py-2 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-4 text-slate-300">
-            <span className="flex items-center gap-1.5 font-medium text-white">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#E87832]" />
-              Verified Industrial Manufacturer & Wholesaler
+      <div className="bg-[#102742] text-white text-[11px] sm:text-xs py-1 sm:py-2 px-3 sm:px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 text-slate-300 min-w-0">
+            <span className="flex items-center gap-1 font-medium text-white truncate">
+              <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E87832] shrink-0" />
+              <span className="hidden sm:inline">Verified Industrial Manufacturer & Wholesaler</span>
+              <span className="sm:hidden truncate">Verified Manufacturer</span>
             </span>
             <span className="hidden sm:inline-block text-slate-400">|</span>
-            <span className="hidden sm:inline-block text-slate-300">Bengaluru, Karnataka</span>
+            <span className="hidden md:inline-block text-slate-300">Bengaluru, Karnataka</span>
             {settings?.gst_number && (
               <>
-                <span className="hidden md:inline-block text-slate-400">|</span>
-                <span className="hidden md:inline-block text-slate-300">
+                <span className="hidden lg:inline-block text-slate-400">|</span>
+                <span className="hidden lg:inline-block text-slate-300">
                   GST: <span className="font-semibold text-white">{settings.gst_number}</span>
                 </span>
               </>
             )}
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-medium">
+          <div className="flex items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-medium shrink-0">
             <a
               href={`mailto:${email}`}
               className="hidden lg:flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
@@ -95,33 +96,34 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               href={`tel:${phone.replace(/\s+/g, "")}`}
               className="flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
             >
-              <Phone className="w-3.5 h-3.5 text-[#E87832]" />
-              <span>{phone}</span>
+              <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E87832]" />
+              <span className="hidden xs:inline">{phone}</span>
+              <span className="xs:hidden">Call</span>
             </a>
             <span className="text-slate-500">|</span>
             <Link
               href="/contact"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-2.5 py-0.5 rounded font-semibold text-[11px] tracking-wide transition-colors"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-2 sm:px-2.5 py-0.5 rounded font-semibold text-[10px] sm:text-[11px] tracking-wide transition-colors"
             >
-              Request Quote
+              Quote
             </Link>
           </div>
         </div>
       </div>
 
       {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-20 gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6">
+        <div className="flex items-center justify-between h-14 sm:h-20 gap-3">
           {/* Logo & Brand Identity */}
-          <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-lg bg-[#17365D] text-white flex items-center justify-center font-black text-xl tracking-tight shadow-sm group-hover:bg-[#102742] transition-colors">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#17365D] text-white flex items-center justify-center font-black text-lg sm:text-xl tracking-tight shadow-sm group-hover:bg-[#102742] transition-colors">
               P
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-xl leading-none text-[#17365D] tracking-tight">
+              <span className="font-extrabold text-base sm:text-xl leading-none text-[#17365D] tracking-tight">
                 THE PRINT PLANET
               </span>
-              <span className="text-[10px] uppercase font-semibold text-[#687586] tracking-wider mt-0.5">
+              <span className="text-[9px] sm:text-[10px] uppercase font-semibold text-[#687586] tracking-wider mt-0.5">
                 ID Systems & Machinery
               </span>
             </div>
@@ -249,16 +251,25 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
         </div>
 
         {/* Mobile Search Input Bar */}
-        <div className="pb-3 md:hidden">
+        <div className="pb-2.5 pt-0.5 md:hidden">
           <form onSubmit={handleSearchSubmit} className="relative w-full">
             <input
               type="text"
               placeholder="Search products, models, materials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] rounded-lg pl-9 pr-4 py-2 text-xs text-[#263445] outline-none"
+              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-7 py-1.5 text-xs text-[#263445] placeholder-[#687586] outline-none transition-all"
             />
-            <Search className="w-4 h-4 text-[#687586] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#687586] absolute left-2.5 top-1/2 -translate-y-1/2" />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-bold"
+              >
+                ✕
+              </button>
+            )}
           </form>
         </div>
       </div>
