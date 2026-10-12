@@ -11,20 +11,22 @@ import {
 } from './types';
 
 export const getApiUrl = (): string => {
+  let url = '';
   if (typeof window === 'undefined') {
     // Server-side inside Docker or Node (use 127.0.0.1 to avoid macOS IPv6 delay)
-    return process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+    url = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+  } else if (process.env.NEXT_PUBLIC_API_URL) {
+    // Client-side in browser
+    url = process.env.NEXT_PUBLIC_API_URL;
+  } else if (window.location && window.location.port === '3000') {
+    // If running on dev port 3000, default to backend port 8000
+    url = 'http://127.0.0.1:8000';
   }
-  // Client-side in browser
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
+
+  if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
   }
-  // If running on dev port 3000, default to backend port 8000
-  if (window.location && window.location.port === '3000') {
-    return 'http://127.0.0.1:8000';
-  }
-  // Single-unit deployment (Nginx reverse-proxy on same origin)
-  return '';
+  return url.replace(/\/$/, '');
 };
 
 // Helper for fetch with abort timeout to guarantee page never hangs

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,6 +50,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Render / Reverse Proxy SSL Header
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ROOT_URLCONF = 'config.urls'
 
@@ -79,37 +83,49 @@ def _is_postgres_ready(host, port):
     except (socket.timeout, ConnectionRefusedError, OSError):
         return False
 
-# Database configuration
-DB_ENGINE = os.environ.get('DB_ENGINE', 'django.db.backends.postgresql')
-DB_NAME = os.environ.get('POSTGRES_DB', os.environ.get('DB_NAME', 'the_print_planet'))
-DB_USER = os.environ.get('POSTGRES_USER', os.environ.get('DB_USER', 'postgres'))
-DB_PASSWORD = os.environ.get('POSTGRES_PASSWORD', os.environ.get('DB_PASSWORD', 'postgres'))
-DB_HOST = os.environ.get('POSTGRES_HOST', os.environ.get('DB_HOST', 'localhost'))
-DB_PORT = os.environ.get('POSTGRES_PORT', os.environ.get('DB_PORT', '5432'))
+# Database configuration: Render DATABASE_URL takes priority, then local Postgres, then SQLite
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
-# Automatically fallback to sqlite3 if postgres is not reachable or explicitly requested
-explicit_sqlite = os.environ.get('USE_SQLITE', '').lower() in ('true', '1')
-postgres_available = False if explicit_sqlite else _is_postgres_ready(DB_HOST, DB_PORT)
-
-if explicit_sqlite or not postgres_available:
+if DATABASE_URL:
+    import dj_database_url
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=(not DEBUG),
+        )
     }
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,
-            'PORT': DB_PORT,
-            'CONN_MAX_AGE': 60,
+    DB_ENGINE = os.environ.get('DB_ENGINE', 'django.db.backends.postgresql')
+    DB_NAME = os.environ.get('POSTGRES_DB', os.environ.get('DB_NAME', 'the_print_planet'))
+    DB_USER = os.environ.get('POSTGRES_USER', os.environ.get('DB_USER', 'postgres'))
+    DB_PASSWORD = os.environ.get('POSTGRES_PASSWORD', os.environ.get('DB_PASSWORD', 'postgres'))
+    DB_HOST = os.environ.get('POSTGRES_HOST', os.environ.get('DB_HOST', 'localhost'))
+    DB_PORT = os.environ.get('POSTGRES_PORT', os.environ.get('DB_PORT', '5432'))
+
+    explicit_sqlite = os.environ.get('USE_SQLITE', '').lower() in ('true', '1')
+    postgres_available = False if explicit_sqlite else _is_postgres_ready(DB_HOST, DB_PORT)
+
+    if explicit_sqlite or not postgres_available:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
         }
-    }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': DB_NAME,
+                'USER': DB_USER,
+                'PASSWORD': DB_PASSWORD,
+                'HOST': DB_HOST,
+                'PORT': DB_PORT,
+                'CONN_MAX_AGE': 60,
+            }
+        }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -156,7 +172,17 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
-# CORS Configuration
+# WhiteNoise static file storage in production
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage" if not DEBUG else "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# CORS & CSRF Configuration
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
@@ -164,6 +190,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:8000",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -172,17 +199,34 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
     "http://localhost:8080",
+    "https://*.onrender.com",
 ]
+
 csrf_env = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
 if csrf_env:
     CSRF_TRUSTED_ORIGINS.extend([o.strip() for o in csrf_env.split(',') if o.strip()])
 
-# Cloudinary Credentials
+cors_env = os.environ.get('CORS_ALLOWED_ORIGINS', '')
+if cors_env:
+    CORS_ALLOWED_ORIGINS.extend([o.strip() for o in cors_env.split(',') if o.strip()])
+
+# Cloudinary Configuration for Production Media Assets
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
 CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME', '')
 CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY', '')
 CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET', '')
 
-if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
+if CLOUDINARY_URL:
+    import cloudinary
+    import urllib.parse
+    # Set config directly via URL
+    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+    # Parse components for downstream code checking settings.CLOUDINARY_CLOUD_NAME
+    parsed = urllib.parse.urlparse(CLOUDINARY_URL)
+    CLOUDINARY_CLOUD_NAME = parsed.hostname or ''
+    CLOUDINARY_API_KEY = parsed.username or ''
+    CLOUDINARY_API_SECRET = parsed.password or ''
+elif CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
     import cloudinary
     cloudinary.config(
         cloud_name=CLOUDINARY_CLOUD_NAME,

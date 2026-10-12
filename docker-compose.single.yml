@@ -17,11 +17,13 @@ services:
       - OWNER_USERNAME=admin
       - OWNER_PASSWORD=AdminPass123!Secure
       - OWNER_EMAIL=admin@theprintplanet.in
-      # Set Cloudinary credentials if cloud uploads desired:
+      # Cloudinary CDN:
+      - CLOUDINARY_URL=${CLOUDINARY_URL:-}
       - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME:-}
       - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY:-}
       - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET:-}
-      # Optional external Postgres (if omitted, seamlessly runs on embedded SQLite):
+      # Database connection (DATABASE_URL or discrete Postgres variables):
+      - DATABASE_URL=${DATABASE_URL:-}
       - POSTGRES_HOST=${POSTGRES_HOST:-}
       - POSTGRES_PORT=${POSTGRES_PORT:-5432}
       - POSTGRES_DB=${POSTGRES_DB:-the_print_planet}

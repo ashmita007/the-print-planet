@@ -1,0 +1,58 @@
+databases:
+  - name: the-print-planet-db
+    databaseName: the_print_planet
+    user: printplanet
+    plan: free
+    region: oregon
+
+services:
+  # -----------------------------------------------------------------
+  # The Print Planet: Single-Unit Container (Django + Next.js + Nginx)
+  # All-in-one production container deployment
+  # -----------------------------------------------------------------
+  - type: web
+    name: the-print-planet-app
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/categories/
+    envVars:
+      # Render PostgreSQL managed connection string
+      - key: DATABASE_URL
+        fromDatabase:
+          name: the-print-planet-db
+          property: connectionString
+
+      # Django Core Settings
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "*"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://*.onrender.com"
+      - key: CORS_ALLOW_ALL_ORIGINS
+        value: "True"
+
+      # Cloudinary Media Storage (Set CLOUDINARY_URL in Render Dashboard)
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+      # Initial Superuser Account Creation
+      - key: CREATE_DEFAULT_OWNER
+        value: "True"
+      - key: OWNER_USERNAME
+        value: "admin"
+      - key: OWNER_EMAIL
+        value: "owner@theprintplanet.in"
+      - key: OWNER_PASSWORD
+        value: "AdminPass123!Secure"
