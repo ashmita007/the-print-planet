@@ -5,11 +5,16 @@ import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
+import Pagination from "@/components/Pagination";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
 
 interface CategoryPageProps {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams?: Promise<{
+    page?: string;
+    ordering?: string;
   }>;
 }
 
@@ -25,17 +30,26 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   };
 }
 
-export default async function CategoryDetailPage({ params }: CategoryPageProps) {
+export default async function CategoryDetailPage({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
+  const sParams = searchParams ? await searchParams : {};
+  const currentPage = sParams.page ? parseInt(sParams.page, 10) : 1;
+
   const [category, productsData, allCategories] = await Promise.all([
     getCategoryBySlug(slug),
-    getProducts({ category: slug }),
+    getProducts({
+      category: slug,
+      page: currentPage,
+      ordering: sParams.ordering,
+    }),
     getCategories(),
   ]);
 
   if (!category) {
     notFound();
   }
+
+  const totalPages = Math.ceil(productsData.count / 24);
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8">
@@ -106,6 +120,18 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
             No products currently active in this category.
           </div>
         )}
+
+        {/* Responsive Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalCount={productsData.count}
+          pageSize={24}
+          basePath={`/categories/${slug}`}
+          queryParams={{
+            ordering: sParams.ordering,
+          }}
+        />
       </section>
     </div>
   );

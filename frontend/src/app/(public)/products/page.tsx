@@ -4,6 +4,7 @@ import { Filter, Layers, ArrowUpDown, Search, RotateCcw, Box } from "lucide-reac
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
+import Pagination from "@/components/Pagination";
 import { getCategories, getProducts } from "@/lib/api";
 
 interface ProductsPageProps {
@@ -213,29 +214,21 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             </div>
           )}
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 pt-6">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pNum) => (
-                <Link
-                  key={pNum}
-                  href={`/products?${new URLSearchParams({
-                    ...(params.category ? { category: params.category } : {}),
-                    ...(params.search ? { search: params.search } : {}),
-                    ...(params.ordering ? { ordering: params.ordering } : {}),
-                    page: pNum.toString(),
-                  }).toString()}`}
-                  className={`w-9 h-9 rounded-lg text-xs font-bold flex items-center justify-center transition-colors ${
-                    currentPage === pNum
-                      ? "bg-[#17365D] text-white shadow-xs"
-                      : "bg-white border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA]"
-                  }`}
-                >
-                  {pNum}
-                </Link>
-              ))}
-            </div>
-          )}
+          {/* Proper Responsive Pagination */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalCount={productsData.count}
+            pageSize={24}
+            basePath="/products"
+            queryParams={{
+              category: params.category,
+              search: params.search,
+              ordering: params.ordering,
+              material: params.material,
+              color: params.color,
+            }}
+          />
         </section>
       </div>
     </div>

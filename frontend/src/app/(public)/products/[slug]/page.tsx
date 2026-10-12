@@ -52,11 +52,23 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
       {/* Related Products Section */}
       {product.related_products && product.related_products.length > 0 && (
-        <section className="pt-10 border-t border-[#DCE3EB] space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-[#17365D]">
-              Related Products in {product.category.name}
-            </h2>
+        <section className="pt-8 sm:pt-10 border-t border-[#DCE3EB] space-y-4 sm:space-y-6">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h2 className="text-base sm:text-xl font-bold text-[#17365D]">
+                Related Products in {product.category.name}
+              </h2>
+              <p className="text-[11px] sm:text-xs text-[#687586] mt-0.5">
+                Explore matching widths, alternative shades, and compatible fittings
+              </p>
+            </div>
+            <a
+              href={`/categories/${product.category.slug}`}
+              className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] hover:underline flex items-center gap-1 shrink-0"
+            >
+              <span>View Category</span>
+              <span>&rarr;</span>
+            </a>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
             {product.related_products.map((rel) => (
