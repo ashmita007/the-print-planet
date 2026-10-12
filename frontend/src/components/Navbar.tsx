@@ -38,6 +38,16 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   }, []);
 
   useEffect(() => {
+    if (mobileMenuOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setCategoriesDropdownOpen(false);
@@ -258,14 +268,14 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               placeholder="Search products, models, materials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-7 py-1.5 text-xs text-[#263445] placeholder-[#687586] outline-none transition-all"
+              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-7 py-2 text-base sm:text-xs text-[#263445] placeholder-[#687586] outline-none transition-all"
             />
             <Search className="w-3.5 h-3.5 text-[#687586] absolute left-2.5 top-1/2 -translate-y-1/2" />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-bold"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-bold p-1"
               >
                 ✕
               </button>
@@ -279,12 +289,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Overlay */}
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
             onClick={() => setMobileMenuOpen(false)}
           />
 
           {/* Drawer Content */}
-          <div className="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-2xl flex flex-col z-50">
+          <div className="fixed inset-y-0 right-0 w-[84vw] max-w-xs bg-white shadow-2xl flex flex-col z-50 animate-in slide-in-from-right duration-200">
             {/* Drawer Header */}
             <div className="p-4 border-b border-[#DCE3EB] flex items-center justify-between bg-[#102742] text-white">
               <div className="flex items-center gap-2">
@@ -296,7 +306,8 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1 rounded text-white/80 hover:text-white"
+                className="w-10 h-10 flex items-center justify-center rounded-xl text-white/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors"
+                aria-label="Close navigation menu"
               >
                 <X className="w-6 h-6" />
               </button>

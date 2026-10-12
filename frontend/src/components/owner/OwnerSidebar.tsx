@@ -52,6 +52,16 @@ export default function OwnerSidebar() {
     { label: "Store Identity & SEO", href: "/owner/settings", icon: Settings },
   ];
 
+  useEffect(() => {
+    if (mobileOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [mobileOpen]);
+
   return (
     <>
       {/* Mobile Bar */}
@@ -64,17 +74,26 @@ export default function OwnerSidebar() {
         </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-1 rounded text-white"
+          className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10"
+          aria-label="Toggle navigation"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
+      {/* Mobile Backdrop Overlay */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-xs transition-opacity animate-in fade-in"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
       {/* Sidebar Container */}
       <aside
         className={`${
           mobileOpen ? "block" : "hidden"
-        } lg:block w-64 bg-[#102742] text-white flex flex-col shrink-0 min-h-screen border-r border-[#17365D] z-40 fixed lg:static inset-y-0 left-0`}
+        } lg:block w-64 bg-[#102742] text-white flex flex-col shrink-0 min-h-screen border-r border-[#17365D] z-40 fixed lg:static inset-y-0 left-0 animate-in slide-in-from-left duration-200`}
       >
         {/* Brand Header */}
         <div className="p-6 border-b border-white/10 flex items-center justify-between">

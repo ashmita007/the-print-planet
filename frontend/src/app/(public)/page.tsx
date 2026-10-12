@@ -29,18 +29,22 @@ export default async function HomePage() {
   const email = settings?.email || "theprintplanet01@gmail.com";
   const businessName = settings?.business_name || "THE PRINT PLANET";
 
+  const productsList = productsData?.results || [];
+  const machineryList = machineryProducts?.results || [];
+  const safeFeatured = featuredProducts?.length > 0 ? featuredProducts : productsList.slice(0, 6);
+
   return (
     <div className="space-y-16 pb-20">
       {/* 1. Product-First Industrial Hero Showcase */}
       <ProductHeroShowcase
-        flagshipProducts={featuredProducts.length > 0 ? featuredProducts : productsData.results.slice(0, 6)}
-        totalProductsCount={productsData.count || productsData.results.length}
+        flagshipProducts={safeFeatured}
+        totalProductsCount={productsData?.count || productsList.length}
       />
 
       {/* 2. Direct Industrial Products Showcase with Live Category Tabs & Search */}
       <DirectProductShowcase
-        products={productsData.results}
-        categories={categories}
+        products={productsList}
+        categories={categories || []}
       />
 
       {/* 4. Industrial Machinery & Equipment Section */}
@@ -60,7 +64,7 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
-            {machineryProducts.results.map((machine) => (
+            {machineryList.map((machine) => (
               <ProductCard key={machine.id} product={machine} />
             ))}
           </div>

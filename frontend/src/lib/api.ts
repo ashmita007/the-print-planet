@@ -12,8 +12,8 @@ import {
 
 export const getApiUrl = (): string => {
   if (typeof window === 'undefined') {
-    // Server-side inside Docker or Node
-    return process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    // Server-side inside Docker or Node (use 127.0.0.1 to avoid macOS IPv6 delay)
+    return process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
   }
   // Client-side in browser
   if (process.env.NEXT_PUBLIC_API_URL) {
@@ -21,10 +21,25 @@ export const getApiUrl = (): string => {
   }
   // If running on dev port 3000, default to backend port 8000
   if (window.location && window.location.port === '3000') {
-    return 'http://localhost:8000';
+    return 'http://127.0.0.1:8000';
   }
   // Single-unit deployment (Nginx reverse-proxy on same origin)
   return '';
+};
+
+// Helper for fetch with abort timeout to guarantee page never hangs
+const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutMs = 6000): Promise<Response> => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, {
+      ...options,
+      signal: options.signal || controller.signal,
+    });
+    return res;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 };
 
 const getAuthHeaders = (): Record<string, string> => {
@@ -43,7 +58,7 @@ const getAuthHeaders = (): Record<string, string> => {
 
 export async function getCategories(): Promise<Category[]> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/categories/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/`, { next: { revalidate: 60 } });
     if (!res.ok) throw new Error(`Failed to fetch categories: ${res.status}`);
     return await res.json();
   } catch (err) {
@@ -54,7 +69,7 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/categories/${slug}/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${slug}/`, { next: { revalidate: 60 } });
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -85,7 +100,7 @@ export async function getProducts(params?: {
     if (params?.page_size) query.set('page_size', params.page_size.toString());
 
     const url = `${getApiUrl()}/api/v1/products/?${query.toString()}`;
-    const res = await fetch(url, { next: { revalidate: 30 } });
+    const res = await fetchWithTimeout(url, { next: { revalidate: 30 } });
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
     return await res.json();
   } catch (err) {
@@ -96,7 +111,7 @@ export async function getProducts(params?: {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/products/${slug}/`, { next: { revalidate: 30 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/${slug}/`, { next: { revalidate: 30 } });
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -107,7 +122,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/products/featured/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/featured/`, { next: { revalidate: 60 } });
     if (!res.ok) return [];
     return await res.json();
   } catch (err) {
@@ -118,7 +133,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 
 export async function globalSearch(q: string): Promise<{ products: Product[]; categories: Category[] }> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/search/?q=${encodeURIComponent(q)}`, { cache: 'no-store' });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/search/?q=${encodeURIComponent(q)}`, { cache: 'no-store' });
     if (!res.ok) return { products: [], categories: [] };
     return await res.json();
   } catch (err) {
@@ -174,7 +189,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   };
 
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/site-settings/`, { next: { revalidate: 120 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/site-settings/`, { next: { revalidate: 120 } });
     if (!res.ok) return fallback;
     return await res.json();
   } catch (err) {
@@ -184,7 +199,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
 export async function getHomePageSections(): Promise<HomePageSection[]> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/homepage-sections/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/homepage-sections/`, { next: { revalidate: 60 } });
     if (!res.ok) return [];
     return await res.json();
   } catch (err) {

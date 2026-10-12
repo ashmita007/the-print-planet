@@ -1,7 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import { X, CheckCircle, AlertCircle, Phone, MessageSquare, Building2, User, Mail } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import {
+  X,
+  CheckCircle,
+  AlertCircle,
+  Phone,
+  MessageSquare,
+  Building2,
+  User,
+  Mail,
+  Send,
+} from "lucide-react";
 import { Product } from "@/lib/types";
 import { submitEnquiry } from "@/lib/api";
 
@@ -18,11 +28,31 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   const [phone, setPhone] = useState("");
   const [quantity, setQuantity] = useState<string>("");
   const [message, setMessage] = useState(
-    product ? `Hello, please provide best wholesale quotation and delivery lead time for ${product.name} (SKU: ${product.sku}).` : ""
+    product
+      ? `Hello, please provide best wholesale quotation and delivery lead time for ${product.name} (SKU: ${product.sku}).`
+      : ""
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Lock body scroll and listen for Escape key when open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -58,91 +88,125 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Hello, I would like to enquire about: ${product ? product.name : "ID Card Supplies"}.\nQuantity: ${quantity || "Bulk"}\nName: ${fullName || ""}\nCompany: ${companyName || ""}`
+    `Hello, I would like to enquire about: ${
+      product ? product.name : "ID Card Supplies"
+    }.\nQuantity: ${quantity || "Bulk"}\nName: ${fullName || ""}\nCompany: ${
+      companyName || ""
+    }`
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[92vh] overflow-y-auto border border-[#DCE3EB] animate-in fade-in zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="bg-[#102742] text-white px-6 py-4 flex items-center justify-between">
-          <div>
-            <h2 className="text-base font-bold">Request Industrial Quotation</h2>
-            <p className="text-xs text-slate-300">
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-headline"
+    >
+      <div
+        className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-lg w-full max-h-[92dvh] sm:max-h-[88vh] flex flex-col border border-[#DCE3EB] overflow-hidden animate-in slide-in-from-bottom-8 sm:zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Mobile Pull Indicator Pill */}
+        <div className="bg-[#102742] pt-2 pb-0 flex justify-center sm:hidden">
+          <div className="w-12 h-1 bg-white/30 rounded-full" />
+        </div>
+
+        {/* Modal Sticky Header */}
+        <div className="bg-[#102742] text-white px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between shrink-0 border-b border-white/10">
+          <div className="min-w-0 pr-2">
+            <h2 id="modal-headline" className="text-sm sm:text-base font-bold truncate">
+              Request Industrial Quotation
+            </h2>
+            <p className="text-[11px] sm:text-xs text-slate-300 truncate mt-0.5">
               {product ? product.name : "Direct factory price & MOQ quote"}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-white/70 hover:text-white p-1 rounded-lg"
+            className="w-10 h-10 -mr-1 rounded-xl text-white/80 hover:text-white hover:bg-white/10 active:bg-white/20 flex items-center justify-center transition-colors shrink-0"
+            aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6">
+        {/* Modal Scrollable Content */}
+        <div className="p-4 sm:p-6 overflow-y-auto overscroll-contain flex-1">
           {isSuccess ? (
-            <div className="text-center py-6 space-y-4">
-              <CheckCircle className="w-16 h-16 text-[#217A4B] mx-auto" />
-              <div>
-                <h3 className="text-lg font-bold text-[#17365D]">Enquiry Received Successfully!</h3>
-                <p className="text-xs text-[#687586] mt-1.5 max-w-sm mx-auto">
-                  Our industrial sales team will review your requirements and provide a formal quotation within 2 business hours.
+            <div className="text-center py-6 sm:py-8 space-y-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto text-[#217A4B]">
+                <CheckCircle className="w-10 h-10" />
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-lg font-bold text-[#17365D]">
+                  Enquiry Received Successfully!
+                </h3>
+                <p className="text-xs text-[#687586] max-w-sm mx-auto leading-relaxed">
+                  Our industrial sales team will review your batch specifications and provide a
+                  formal proforma quotation within 2 business hours.
                 </p>
               </div>
-              <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="pt-3 flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
                 <a
                   href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#217A4B] text-white text-xs font-bold py-2.5 px-4 rounded-lg hover:bg-[#1b633d] transition-colors"
+                  className="bg-[#217A4B] hover:bg-[#1b633d] text-white text-xs font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
-                  Message Directly on WhatsApp
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>Message Directly on WhatsApp</span>
                 </a>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="border border-[#DCE3EB] text-[#263445] text-xs font-semibold py-2.5 px-4 rounded-lg hover:bg-[#F5F7FA]"
+                  className="border border-[#DCE3EB] text-[#263445] text-xs font-semibold py-3 px-4 rounded-xl hover:bg-[#F5F7FA] transition-colors"
                 >
                   Close Window
                 </button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+            <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>{errorMessage}</span>
+                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-[#C0392B]" />
+                  <span className="text-[11px] sm:text-xs leading-snug">{errorMessage}</span>
                 </div>
               )}
 
-              {/* Product mini bar if applicable */}
+              {/* Product Mini Identification Bar */}
               {product && (
-                <div className="bg-[#F5F7FA] p-3 rounded-lg border border-[#DCE3EB] flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    {product.primary_image && (
+                <div className="bg-[#F5F7FA] p-2.5 sm:p-3 rounded-xl border border-[#DCE3EB] flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    {product.primary_image ? (
                       <img
                         src={product.primary_image.secure_url}
                         alt={product.name}
-                        className="w-10 h-10 object-contain rounded bg-white border border-slate-200 p-0.5"
+                        className="w-10 h-10 object-contain rounded-lg bg-white border border-slate-200 p-0.5 shrink-0"
                       />
+                    ) : (
+                      <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-400 text-xs shrink-0">
+                        P
+                      </div>
                     )}
-                    <div>
-                      <p className="font-bold text-[#263445] line-clamp-1">{product.name}</p>
-                      <p className="font-mono text-[11px] text-[#687586]">SKU: {product.sku}</p>
+                    <div className="min-w-0">
+                      <p className="font-bold text-[#263445] text-xs truncate">{product.name}</p>
+                      <p className="font-mono text-[10px] text-[#687586] truncate">
+                        SKU: {product.sku}
+                      </p>
                     </div>
                   </div>
                   {product.price_display && (
-                    <span className="font-extrabold text-[#17365D] text-xs">
+                    <span className="font-extrabold text-[#17365D] text-xs shrink-0">
                       {product.price_display}
                     </span>
                   )}
                 </div>
               )}
 
+              {/* Contact Fields: Name & Company */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold text-[#263445] mb-1">
@@ -154,7 +218,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Ramesh Patel"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2.5 text-base sm:text-xs text-[#263445] outline-none transition-colors"
                   />
                 </div>
 
@@ -167,11 +231,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="e.g. Acme Cards Ltd"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2.5 text-base sm:text-xs text-[#263445] outline-none transition-colors"
                   />
                 </div>
               </div>
 
+              {/* Phone & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold text-[#263445] mb-1">
@@ -183,7 +248,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="e.g. +91 98765 43210"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2.5 text-base sm:text-xs text-[#263445] outline-none transition-colors"
                   />
                 </div>
 
@@ -197,11 +262,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="e.g. ramesh@acme.com"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2.5 text-base sm:text-xs text-[#263445] outline-none transition-colors"
                   />
                 </div>
               </div>
 
+              {/* Quantity */}
               <div>
                 <label className="block font-semibold text-[#263445] mb-1">
                   Estimated Quantity Needed
@@ -212,10 +278,11 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="e.g. 500 pcs / 50 rolls"
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-xs outline-none"
+                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2.5 text-base sm:text-xs text-[#263445] outline-none transition-colors"
                 />
               </div>
 
+              {/* Requirements & Message */}
               <div>
                 <label className="block font-semibold text-[#263445] mb-1">
                   Specifications & Additional Notes *
@@ -226,28 +293,29 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Detail colors, dimensions, delivery destination, or customization needs..."
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 text-xs outline-none resize-none"
+                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2.5 text-base sm:text-xs text-[#263445] outline-none resize-none transition-colors"
                 />
               </div>
 
-              {/* Submit Button */}
-              <div className="pt-2 flex items-center justify-between gap-3">
+              {/* Modal Action Buttons: Responsive mobile stack */}
+              <div className="pt-3 border-t border-[#DCE3EB]/60 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
                 <a
                   href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#217A4B] font-bold hover:underline flex items-center gap-1"
+                  className="w-full sm:w-auto order-2 sm:order-1 text-[#217A4B] bg-[#217A4B]/10 hover:bg-[#217A4B]/20 py-2.5 sm:py-2 px-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5" />
-                  Fast Quote via WhatsApp
+                  <span>Fast Quote via WhatsApp</span>
                 </a>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-bold transition-colors shadow-sm disabled:opacity-50"
+                  className="w-full sm:w-auto order-1 sm:order-2 bg-[#E87832] hover:bg-[#d66b28] active:bg-[#c55d1d] text-white py-3 sm:py-2.5 px-5 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
                 >
-                  {isSubmitting ? "Sending..." : "Submit Quotation Request"}
+                  <Send className="w-3.5 h-3.5" />
+                  <span>{isSubmitting ? "Submitting..." : "Submit Quotation Request"}</span>
                 </button>
               </div>
             </form>
