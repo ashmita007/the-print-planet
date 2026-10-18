@@ -104,23 +104,23 @@ export default function BulkImportPage() {
       {/* Step 1: Upload & Validate File */}
       <div className="bg-white p-6 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-4 text-xs">
         <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] border-b border-[#DCE3EB] pb-2">
-          Step 1: Select CSV or JSON Data File
+          Step 1: Select Excel (.xlsx), CSV, or JSON Data File
         </h2>
 
         <div className="border-2 border-dashed border-[#DCE3EB] rounded-xl p-8 text-center space-y-3 bg-[#F8FAFC]">
           <FileSpreadsheet className="w-10 h-10 text-[#17365D] mx-auto" />
           <div>
             <label className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-lg font-bold text-xs cursor-pointer inline-block transition-colors">
-              Choose Reference CSV / JSON File
+              Choose Excel (.xlsx) / CSV File
               <input
                 type="file"
-                accept=".csv,.json"
+                accept=".xlsx,.csv,.json"
                 onChange={handleFileChange}
                 className="hidden"
               />
             </label>
             <p className="text-[11px] text-slate-500 mt-2">
-              Supports reference data generated in <code className="bg-slate-200 px-1 py-0.5 rounded">data/reference-products.csv</code> or <code className="bg-slate-200 px-1 py-0.5 rounded">data/reference-products.json</code>
+              Supports client editable Excel workbook <code className="bg-slate-200 px-1 py-0.5 rounded">.xlsx</code>, <code className="bg-slate-200 px-1 py-0.5 rounded">.csv</code>, or <code className="bg-slate-200 px-1 py-0.5 rounded">.json</code>
             </p>
           </div>
 

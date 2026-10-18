@@ -350,20 +350,37 @@ class OwnerBulkImportValidateView(APIView):
         if 'file' in request.FILES:
             uploaded_file = request.FILES['file']
             filename = uploaded_file.name.lower()
-            content = uploaded_file.read().decode('utf-8', errors='ignore')
 
-            if filename.endswith('.json'):
+            if filename.endswith('.xlsx'):
+                try:
+                    import openpyxl
+                    wb = openpyxl.load_workbook(uploaded_file, data_only=True)
+                    ws = wb.active
+                    header_cells = [cell.value for cell in ws[1]]
+                    headers = [str(h or '').strip().lower().replace(' ', '_').replace('/', '_').replace('-', '_') for h in header_cells]
+                    for row in ws.iter_rows(min_row=2, values_only=True):
+                        if any(row):
+                            row_dict = {}
+                            for col_idx, val in enumerate(row):
+                                if col_idx < len(headers) and headers[col_idx]:
+                                    row_dict[headers[col_idx]] = val if val is not None else ''
+                            rows.append(row_dict)
+                except Exception as e:
+                    return Response({'error': f'Invalid Excel file: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+            elif filename.endswith('.json'):
+                content = uploaded_file.read().decode('utf-8', errors='ignore')
                 try:
                     data = json.loads(content)
                     rows = data.get('products', data) if isinstance(data, dict) else data
                 except Exception as e:
                     return Response({'error': f'Invalid JSON: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
             elif filename.endswith('.csv'):
+                content = uploaded_file.read().decode('utf-8', errors='ignore')
                 reader = csv.DictReader(io.StringIO(content))
                 for r in reader:
                     rows.append(r)
             else:
-                return Response({'error': 'Unsupported file format. Provide .csv or .json'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Unsupported file format. Provide .xlsx, .csv or .json'}, status=status.HTTP_400_BAD_REQUEST)
         elif 'products' in request.data:
             rows = request.data['products']
         else:
@@ -376,9 +393,26 @@ class OwnerBulkImportValidateView(APIView):
         existing_slugs = set(Product.objects.values_list('slug', flat=True))
 
         for idx, row in enumerate(rows):
-            name = (row.get('name') or '').strip()
-            sku = (row.get('sku') or '').strip()
-            cat_slug = (row.get('category_slug') or row.get('category') or '').strip()
+            name = (
+                str(row.get('client_revised_name') or '').strip() or
+                str(row.get('product_name') or '').strip() or
+                str(row.get('name') or '').strip() or
+                str(row.get('title') or '').strip()
+            )
+            sku = (str(row.get('sku') or row.get('item_code') or '')).strip()
+            cat_slug = (
+                str(row.get('category_slug') or '').strip() or
+                slugify(str(row.get('category_name') or '').strip()) or
+                slugify(str(row.get('category') or '').strip()) or
+                'general-supplies'
+            )
+            price_val = (
+                row.get('client_revised_price_(inr)') or
+                row.get('client_revised_price') or
+                row.get('trade_price_(inr)') or
+                row.get('trade_price') or
+                row.get('price')
+            )
 
             if not name:
                 errors.append({'row': idx + 1, 'sku': sku, 'error': 'Product name is required'})
@@ -395,7 +429,7 @@ class OwnerBulkImportValidateView(APIView):
                 'name': name,
                 'sku': sku or f"GEN-{idx+1:04d}",
                 'category_slug': cat_slug,
-                'price': row.get('price'),
+                'price': price_val,
                 'material': row.get('material'),
                 'dimensions': row.get('dimensions'),
                 'status': status_flag,
@@ -431,10 +465,19 @@ class OwnerBulkImportExecuteView(APIView):
 
         for item in rows:
             data = item.get('raw_data', item)
-            name = (data.get('name') or '').strip()
-            sku = (data.get('sku') or '').strip()
-            cat_name = (data.get('category_name') or 'General Supplies').strip()
-            cat_slug = (data.get('category_slug') or 'general-supplies').strip()
+            name = (
+                str(data.get('client_revised_name') or '').strip() or
+                str(data.get('product_name') or '').strip() or
+                str(data.get('name') or '').strip() or
+                str(data.get('title') or '').strip()
+            )
+            sku = (str(data.get('sku') or data.get('item_code') or '')).strip()
+            cat_name = str(data.get('category_name') or data.get('category') or 'General Supplies').strip()
+            cat_slug = (
+                str(data.get('category_slug') or '').strip() or
+                slugify(cat_name) or
+                'general-supplies'
+            )
 
             if not name:
                 continue
@@ -455,9 +498,16 @@ class OwnerBulkImportExecuteView(APIView):
                         existing_prod.short_description = data['short_description']
                     if data.get('description'):
                         existing_prod.description = data['description']
-                    if data.get('price') is not None and str(data.get('price')).strip():
+                    price_raw = (
+                        data.get('client_revised_price_(inr)') or
+                        data.get('client_revised_price') or
+                        data.get('trade_price_(inr)') or
+                        data.get('trade_price') or
+                        data.get('price')
+                    )
+                    if price_raw is not None and str(price_raw).strip():
                         try:
-                            existing_prod.price = float(str(data['price']).replace(',', ''))
+                            existing_prod.price = float(str(price_raw).replace(',', ''))
                         except ValueError:
                             pass
                     if data.get('material'):
@@ -475,9 +525,16 @@ class OwnerBulkImportExecuteView(APIView):
             else:
                 try:
                     price_val = None
-                    if data.get('price') is not None and str(data.get('price')).strip():
+                    price_raw = (
+                        data.get('client_revised_price_(inr)') or
+                        data.get('client_revised_price') or
+                        data.get('trade_price_(inr)') or
+                        data.get('trade_price') or
+                        data.get('price')
+                    )
+                    if price_raw is not None and str(price_raw).strip():
                         try:
-                            price_val = float(str(data['price']).replace(',', ''))
+                            price_val = float(str(price_raw).replace(',', ''))
                         except ValueError:
                             pass
 
@@ -504,11 +561,13 @@ class OwnerBulkImportExecuteView(APIView):
                     )
 
                     # Add image if provided
-                    img_url = data.get('image_url')
+                    img_url = data.get('image_url') or data.get('image')
+                    if not img_url and data.get('image_filename'):
+                        img_url = f"/media/products/{data.get('image_filename')}"
                     if img_url:
                         ProductImage.objects.create(
                             product=new_prod,
-                            secure_url=img_url,
+                            secure_url=str(img_url).strip(),
                             alt_text=name,
                             is_primary=True
                         )
