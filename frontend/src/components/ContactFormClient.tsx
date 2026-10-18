@@ -34,6 +34,18 @@ export default function ContactFormClient() {
     setIsSubmitting(false);
 
     if (res.success) {
+      if (typeof window !== "undefined") {
+        const waText = encodeURIComponent(
+          `🔔 *New Website Enquiry - The Print Planet*\n\n` +
+          `👤 *Name:* ${fullName}\n` +
+          `🏢 *Company:* ${companyName || 'Individual'}\n` +
+          `📱 *Phone:* ${phone}\n` +
+          `✉️ *Email:* ${email}\n` +
+          `🔢 *Order Quantity:* ${quantity || 'Bulk Inquiry'}\n` +
+          `📝 *Message:* ${message || 'Please connect for quotation.'}`
+        );
+        window.open(`https://wa.me/919741808034?text=${waText}`, "_blank");
+      }
       router.push("/enquiry/success");
     } else {
       setErrorMessage(res.error || "Submission failed. Please check required fields.");

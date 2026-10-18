@@ -1,5 +1,9 @@
+import os
+import json
 import logging
 import threading
+import urllib.request
+import urllib.parse
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
@@ -33,14 +37,14 @@ def build_enquiry_payload(enquiry_or_id):
         s_address = site_settings.address
     except Exception:
         b_name = "The Print Planet"
-        s_phone = "+91 91102 36815"
+        s_phone = "+91 97418 08034"
         s_email = "theprintplanet01@gmail.com"
         s_address = "Bengaluru, Karnataka, India"
 
     return {
         'id': enquiry.id,
         'full_name': enquiry.full_name,
-        'company_name': enquiry.company_name or 'N/A',
+        'company_name': enquiry.company_name or 'Individual',
         'email': enquiry.email,
         'phone': enquiry.phone,
         'product_name': prod_name,
@@ -54,10 +58,113 @@ def build_enquiry_payload(enquiry_or_id):
     }
 
 
+def _send_whatsapp_callmebot(text):
+    """
+    Dispatches automated WhatsApp message to owner phone via CallMeBot.
+    Phone: +919741808034
+    """
+    apikey = os.environ.get('CALLMEBOT_API_KEY', '').strip()
+    phone = os.environ.get('OWNER_WHATSAPP_PHONE', '919741808034').strip().replace('+', '')
+    if not apikey:
+        return False
+    try:
+        encoded_text = urllib.parse.quote(text)
+        url = f"https://api.callmebot.com/whatsapp.php?phone={phone}&text={encoded_text}&apikey={apikey}"
+        req = urllib.request.Request(url, headers={'User-Agent': 'ThePrintPlanet/1.0'})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            logger.info(f"Dispatched automated WhatsApp alert via CallMeBot: HTTP {resp.status}")
+            return True
+    except Exception as e:
+        logger.warning(f"Could not dispatch automated WhatsApp via CallMeBot: {e}")
+        return False
+
+
+def _send_email_via_https(to_email, subject, text, html):
+    """
+    Dispatches email via HTTPS REST API (Port 443) to bypass Render Free Tier SMTP port blocking.
+    Supports Resend, Brevo, or Web3Forms.
+    """
+    # 1. Resend API
+    resend_key = os.environ.get('RESEND_API_KEY', '').strip()
+    if resend_key:
+        try:
+            req = urllib.request.Request(
+                'https://api.resend.com/emails',
+                data=json.dumps({
+                    'from': os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>'),
+                    'to': [to_email],
+                    'subject': subject,
+                    'text': text,
+                    'html': html,
+                }).encode('utf-8'),
+                headers={
+                    'Authorization': f'Bearer {resend_key}',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'ThePrintPlanet/1.0'
+                }
+            )
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                logger.info(f"Dispatched email via Resend HTTPS API to {to_email}")
+                return True
+        except Exception as e:
+            logger.warning(f"Resend HTTPS dispatch failed: {e}")
+
+    # 2. Brevo (Sendinblue) API
+    brevo_key = os.environ.get('BREVO_API_KEY', '').strip()
+    if brevo_key:
+        try:
+            req = urllib.request.Request(
+                'https://api.brevo.com/v3/smtp/email',
+                data=json.dumps({
+                    'sender': {'name': 'The Print Planet', 'email': 'theprintplanet01@gmail.com'},
+                    'to': [{'email': to_email}],
+                    'subject': subject,
+                    'htmlContent': html,
+                    'textContent': text,
+                }).encode('utf-8'),
+                headers={
+                    'api-key': brevo_key,
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'ThePrintPlanet/1.0'
+                }
+            )
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                logger.info(f"Dispatched email via Brevo HTTPS API to {to_email}")
+                return True
+        except Exception as e:
+            logger.warning(f"Brevo HTTPS dispatch failed: {e}")
+
+    # 3. Web3Forms API
+    web3_key = os.environ.get('WEB3FORMS_ACCESS_KEY', '').strip()
+    if web3_key:
+        try:
+            req = urllib.request.Request(
+                'https://api.web3forms.com/submit',
+                data=json.dumps({
+                    'access_key': web3_key,
+                    'subject': subject,
+                    'email': to_email,
+                    'message': text,
+                }).encode('utf-8'),
+                headers={
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'ThePrintPlanet/1.0'
+                }
+            )
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                logger.info(f"Dispatched email via Web3Forms HTTPS API to {to_email}")
+                return True
+        except Exception as e:
+            logger.warning(f"Web3Forms HTTPS dispatch failed: {e}")
+
+    return False
+
+
 def _send_enquiry_emails_worker(payload):
     """
     Worker executed in a non-blocking background thread.
-    Uses purely in-memory data with zero DB queries, completely preventing SQLite concurrency locks.
+    Uses purely in-memory data with zero DB queries, preventing SQLite concurrency locks.
+    Dispatches via HTTPS REST APIs (Port 443) and falls back to SMTP.
     """
     if not payload:
         return
@@ -69,13 +176,13 @@ def _send_enquiry_emails_worker(payload):
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', '') or f"{business_name} <{owner_recipient}>"
         prod_name = payload.get('product_name', 'Industrial Wholesale Product')
         full_name = payload.get('full_name', 'Customer')
-        company_name = payload.get('company_name', 'N/A')
+        company_name = payload.get('company_name', 'Individual')
         email = payload.get('email', '')
         phone = payload.get('phone', '')
         requested_quantity = payload.get('requested_quantity', 1)
         source_page = payload.get('source_page', '/')
         message = payload.get('message', '')
-        site_phone = payload.get('site_phone', '+91 91102 36815')
+        site_phone = payload.get('site_phone', '+91 97418 08034')
         site_email = payload.get('site_email', 'theprintplanet01@gmail.com')
         site_address = payload.get('site_address', 'Bengaluru, Karnataka, India')
 
@@ -132,10 +239,18 @@ https://theprintplanet.co.in/owner/enquiries
 </body>
 </html>
 """
-        msg_owner = EmailMultiAlternatives(owner_subject, owner_text, from_email, [owner_recipient])
-        msg_owner.attach_alternative(owner_html, "text/html")
-        msg_owner.send(fail_silently=False)
-        logger.info(f"Successfully dispatched owner notification email for enquiry #{enquiry_id} to {owner_recipient}")
+        # Try HTTPS REST dispatch first (bypasses Render SMTP port blocking)
+        dispatched_https = _send_email_via_https(owner_recipient, owner_subject, owner_text, owner_html)
+
+        # Fallback to SMTP
+        if not dispatched_https:
+            try:
+                msg_owner = EmailMultiAlternatives(owner_subject, owner_text, from_email, [owner_recipient])
+                msg_owner.attach_alternative(owner_html, "text/html")
+                msg_owner.send(fail_silently=False)
+                logger.info(f"Dispatched owner notification email via SMTP for enquiry #{enquiry_id} to {owner_recipient}")
+            except Exception as e_smtp:
+                logger.warning(f"SMTP dispatch to owner failed: {e_smtp}")
 
         # 2. Confirmation Email to Customer
         if email and '@' in email:
@@ -182,19 +297,28 @@ Bengaluru, Karnataka, India
 </body>
 </html>
 """
-            msg_cust = EmailMultiAlternatives(cust_subject, cust_text, from_email, [email])
-            msg_cust.attach_alternative(cust_html, "text/html")
-            msg_cust.send(fail_silently=False)
-            logger.info(f"Successfully dispatched customer confirmation email to {email}")
+            dispatched_cust_https = _send_email_via_https(email, cust_subject, cust_text, cust_html)
+            if not dispatched_cust_https:
+                try:
+                    msg_cust = EmailMultiAlternatives(cust_subject, cust_text, from_email, [email])
+                    msg_cust.attach_alternative(cust_html, "text/html")
+                    msg_cust.send(fail_silently=False)
+                    logger.info(f"Dispatched customer confirmation email via SMTP to {email}")
+                except Exception as e_cust_smtp:
+                    logger.warning(f"SMTP dispatch to customer failed: {e_cust_smtp}")
+
+        # 3. Automated WhatsApp Dispatch via CallMeBot (if enabled)
+        wa_text = f"🔔 *New RFQ Enquiry - The Print Planet*\nCustomer: {full_name}\nPhone: {phone}\nEmail: {email}\nProduct: {prod_name}\nQty: {requested_quantity}\nMsg: {message}"
+        _send_whatsapp_callmebot(wa_text)
 
     except Exception as e:
-        logger.exception(f"Could not send enquiry email for enquiry #{enquiry_id}: {e}")
+        logger.exception(f"Could not complete enquiry notification worker for enquiry #{enquiry_id}: {e}")
 
 
 def trigger_enquiry_notifications(enquiry_or_id):
     """
     Extracts data safely in the caller's thread (avoiding SQLite concurrency lock),
-    then dispatches emails in a non-blocking background thread.
+    then dispatches emails and WhatsApp in a non-blocking background thread.
     """
     payload = build_enquiry_payload(enquiry_or_id)
     if payload:

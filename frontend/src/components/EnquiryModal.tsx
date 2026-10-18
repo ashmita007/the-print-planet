@@ -84,15 +84,33 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
     if (res.success) {
       setIsSuccess(true);
+      if (typeof window !== "undefined") {
+        const waText = encodeURIComponent(
+          `🔔 *New RFQ Enquiry - The Print Planet*\n\n` +
+          `👤 *Customer:* ${fullName}\n` +
+          `🏢 *Company:* ${companyName || 'Individual'}\n` +
+          `📱 *Phone:* ${phone}\n` +
+          `✉️ *Email:* ${email}\n` +
+          `📦 *Product:* ${product ? product.name : 'Wholesale Printing Supplies'}\n` +
+          `🔢 *Quantity:* ${quantity || 'Bulk Order'}\n` +
+          `📝 *Message:* ${message || 'Please provide quotation with dispatch timeline.'}`
+        );
+        window.open(`https://wa.me/919741808034?text=${waText}`, "_blank");
+      }
     } else {
       setErrorMessage(res.error || "Submission failed. Please retry.");
     }
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Hello, quotation enquiry for: ${
-      product ? product.name : "ID Card Supplies"
-    }.\nQuantity: ${quantity || "Bulk"}\nName: ${fullName || ""}`
+    `🔔 *New RFQ Enquiry - The Print Planet*\n\n` +
+    `👤 *Customer:* ${fullName || ''}\n` +
+    `🏢 *Company:* ${companyName || 'Individual'}\n` +
+    `📱 *Phone:* ${phone || ''}\n` +
+    `✉️ *Email:* ${email || ''}\n` +
+    `📦 *Product:* ${product ? product.name : 'Wholesale Printing Supplies'}\n` +
+    `🔢 *Quantity:* ${quantity || 'Bulk Order'}\n` +
+    `📝 *Message:* ${message || 'Please provide quotation with dispatch timeline.'}`
   );
 
   return createPortal(
