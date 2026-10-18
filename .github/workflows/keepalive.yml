@@ -1,0 +1,27 @@
+name: 24/7 Keep-Alive Shield
+
+on:
+  schedule:
+    # Trigger every 10 minutes to prevent Render Free Tier from spinning down after 15 min
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping Print Planet Production Endpoint
+        run: |
+          TARGET_URL="${{ secrets.RENDER_APP_URL || 'https://the-print-planet.onrender.com' }}"
+          echo "Sending keep-alive heartbeat to: ${TARGET_URL}/healthz"
+          
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "${TARGET_URL}/healthz" || echo "failed")
+          echo "Response HTTP Status: ${HTTP_STATUS}"
+          
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "SUCCESS: Service is active, healthy, and warmed up."
+          else
+            echo "WARNING: Received status ${HTTP_STATUS}, retrying with root..."
+            curl -s -o /dev/null -w "%{http_code}" --max-time 15 "${TARGET_URL}/" || true
+          fi

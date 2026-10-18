@@ -1,14 +1,7 @@
-databases:
-  - name: the-print-planet-db
-    databaseName: the_print_planet
-    user: printplanet
-    plan: free
-    region: oregon
-
 services:
   # -----------------------------------------------------------------
-  # The Print Planet: Single-Unit Container (Django + Next.js + Nginx)
-  # All-in-one production container deployment
+  # The Print Planet: Enterprise Single-Unit Container (Django + Next.js + Nginx)
+  # 100% Free Lifetime Deployment — Zero Cost & Permanent Database Architecture
   # -----------------------------------------------------------------
   - type: web
     name: the-print-planet
@@ -17,13 +10,13 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    healthCheckPath: /api/v1/categories/
+    healthCheckPath: /healthz
     envVars:
-      # Render PostgreSQL managed connection string
+      # Database Configuration:
+      # - Leave empty to run on Ultra-Fast Embedded SQLite WAL engine (Zero Cost & 0ms latency)
+      # - OR provide external Lifetime Free PostgreSQL (Supabase 500MB free / Aiven 5GB free)
       - key: DATABASE_URL
-        fromDatabase:
-          name: the-print-planet-db
-          property: connectionString
+        sync: false
 
       # Django Core Settings
       - key: DJANGO_DEBUG
@@ -37,7 +30,11 @@ services:
       - key: CORS_ALLOW_ALL_ORIGINS
         value: "True"
 
-      # Cloudinary Media Storage (Set CLOUDINARY_URL in Render Dashboard)
+      # Next.js Node Memory Optimization for 512MB Free Tier
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=160"
+
+      # Cloudinary Media Storage (Optional: Free 25GB Tier)
       - key: CLOUDINARY_URL
         sync: false
       - key: CLOUDINARY_CLOUD_NAME
@@ -47,7 +44,7 @@ services:
       - key: CLOUDINARY_API_SECRET
         sync: false
 
-      # Initial Superuser Account Creation
+      # Initial Superuser Account Creation (Auto-seeded on deployment)
       - key: CREATE_DEFAULT_OWNER
         value: "True"
       - key: OWNER_USERNAME

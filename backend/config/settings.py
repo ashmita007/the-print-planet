@@ -127,6 +127,28 @@ else:
             }
         }
 
+# High-Performance SQLite WAL Configuration for Enterprise Concurrency & Speed
+from django.db.backends.signals import connection_created
+from django.dispatch import receiver
+
+@receiver(connection_created)
+def configure_sqlite_pragmas(sender, connection, **kwargs):
+    """
+    Optimizes SQLite for zero-cost high concurrency:
+    - WAL (Write-Ahead Logging): non-blocking concurrent reads and writes
+    - synchronous=NORMAL: reduces disk fsync overhead safely
+    - cache_size=-64000: 64MB RAM cache for instant catalog & query reads
+    - mmap_size=268435456: 256MB memory mapping
+    - busy_timeout=5000: eliminates 'database is locked' errors under peak traffic
+    """
+    if connection.vendor == 'sqlite':
+        cursor = connection.cursor()
+        cursor.execute('PRAGMA journal_mode=WAL;')
+        cursor.execute('PRAGMA synchronous=NORMAL;')
+        cursor.execute('PRAGMA cache_size=-64000;')
+        cursor.execute('PRAGMA mmap_size=268435456;')
+        cursor.execute('PRAGMA busy_timeout=5000;')
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

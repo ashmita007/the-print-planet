@@ -45,7 +45,26 @@ owner_router.register(r'images', OwnerProductImageViewSet, basename='owner-image
 owner_router.register(r'enquiries', OwnerEnquiryViewSet, basename='owner-enquiries')
 owner_router.register(r'homepage-sections', OwnerHomePageSectionViewSet, basename='owner-homepage-sections')
 
+from django.http import JsonResponse
+from django.db import connection
+
+def health_check(request):
+    """Ultra-fast, zero-overhead health check endpoint for UptimeRobot and Render."""
+    db_ok = True
+    try:
+        connection.ensure_connection()
+    except Exception:
+        db_ok = False
+    return JsonResponse({
+        "status": "healthy" if db_ok else "degraded",
+        "service": "The Print Planet Enterprise",
+        "database": "connected" if db_ok else "error",
+    }, status=200 if db_ok else 503)
+
 urlpatterns = [
+    path('healthz', health_check, name='health-check'),
+    path('healthz/', health_check, name='health-check-slash'),
+    path('api/healthz', health_check, name='api-health-check'),
     path('admin/', admin.site.urls),
 
     # OpenAPI Schema & Docs
