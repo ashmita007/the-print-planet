@@ -516,8 +516,21 @@ class OwnerBulkImportExecuteView(APIView):
                         existing_prod.dimensions = data['dimensions']
                     if data.get('color'):
                         existing_prod.color = data['color']
-                    if data.get('specs'):
-                        existing_prod.specifications = data['specs'] if isinstance(data['specs'], dict) else json.loads(data['specs'])
+                    price_display_val = data.get('display_price_text') or data.get('price_display') or data.get('display_price')
+                    if price_display_val:
+                        existing_prod.price_display = price_display_val
+                    moq_val = data.get('minimum_order_quantity') or data.get('moq')
+                    if moq_val:
+                        existing_prod.minimum_order_quantity = moq_val
+                    specs_raw = data.get('specifications_(json)') or data.get('specifications_json') or data.get('specs') or data.get('specifications')
+                    if specs_raw:
+                        if isinstance(specs_raw, dict):
+                            existing_prod.specifications = specs_raw
+                        elif isinstance(specs_raw, str) and specs_raw.strip().startswith('{'):
+                            try:
+                                existing_prod.specifications = json.loads(specs_raw)
+                            except Exception:
+                                pass
                     existing_prod.save()
                     updated_count += 1
                 else:
@@ -538,11 +551,18 @@ class OwnerBulkImportExecuteView(APIView):
                         except ValueError:
                             pass
 
+                    price_display_val = data.get('display_price_text') or data.get('price_display') or data.get('display_price') or (f"₹ {price_raw}" if price_raw else '')
+                    moq_val = data.get('minimum_order_quantity') or data.get('moq')
                     specs_dict = {}
-                    if data.get('specs'):
-                        specs_dict = data['specs'] if isinstance(data['specs'], dict) else json.loads(data['specs'])
-                    elif data.get('specifications_json'):
-                        specs_dict = json.loads(data['specifications_json'])
+                    specs_raw = data.get('specifications_(json)') or data.get('specifications_json') or data.get('specs') or data.get('specifications')
+                    if specs_raw:
+                        if isinstance(specs_raw, dict):
+                            specs_dict = specs_raw
+                        elif isinstance(specs_raw, str) and specs_raw.strip().startswith('{'):
+                            try:
+                                specs_dict = json.loads(specs_raw)
+                            except Exception:
+                                pass
 
                     new_prod = Product.objects.create(
                         name=name,
@@ -554,7 +574,8 @@ class OwnerBulkImportExecuteView(APIView):
                         dimensions=data.get('dimensions'),
                         color=data.get('color'),
                         price=price_val,
-                        price_display=data.get('price_display'),
+                        price_display=price_display_val,
+                        minimum_order_quantity=moq_val,
                         specifications=specs_dict,
                         reference_source_url=data.get('url') or data.get('reference_source_url'),
                         verification_status=data.get('verification_status', 'verified')
