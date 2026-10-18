@@ -34,7 +34,27 @@ services:
       - key: NODE_OPTIONS
         value: "--max-old-space-size=160"
 
-      # Cloudinary Media Storage (Optional: Free 25GB Tier)
+      # Cloudflare R2 Media Storage (Recommended: 10GB Free Lifetime, $0 Egress Fees)
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        value: "the-print-planet"
+      - key: R2_ENDPOINT_URL
+        sync: false
+      - key: R2_PUBLIC_URL
+        sync: false
+
+      # Automated Email Notification System (Gmail / Brevo / Resend / SendGrid)
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: OWNER_NOTIFICATION_EMAIL
+        value: "theprintplanet01@gmail.com"
+
+      # Cloudinary Media Storage (Optional Secondary CDN)
       - key: CLOUDINARY_URL
         sync: false
       - key: CLOUDINARY_CLOUD_NAME

@@ -21,12 +21,15 @@ python manage.py collectstatic --noinput || true
 echo "-> Ensuring reference catalogue and default owner exist..."
 python manage.py seed_reference_data --create-owner || true
 
-# 5. Sync Media to Cloudinary CDN if credentials exist
-if [ -n "$CLOUDINARY_URL" ] || [ -n "$CLOUDINARY_CLOUD_NAME" ]; then
-    echo "-> Cloudinary credentials detected in environment, syncing media assets to CDN..."
+# 5. Sync Media to Cloudflare R2 or Cloudinary CDN if credentials exist
+if [ -n "$R2_ACCESS_KEY_ID" ] && [ -n "$R2_SECRET_ACCESS_KEY" ]; then
+    echo "-> Cloudflare R2 credentials detected, syncing media assets to Cloudflare R2..."
+    python manage.py sync_media_to_cloudflare_r2 || true
+elif [ -n "$CLOUDINARY_URL" ] || [ -n "$CLOUDINARY_CLOUD_NAME" ]; then
+    echo "-> Cloudinary credentials detected, syncing media assets to Cloudinary CDN..."
     python manage.py sync_media_to_cloudinary || true
 else
-    echo "-> Skipping Cloudinary media sync (credentials not provided in environment)."
+    echo "-> Using local high-speed Nginx media storage (zero cost, zero external service dependency)."
 fi
 
 echo "=== All services prepared! Launching supervisor (Django + Next.js + Nginx) ==="

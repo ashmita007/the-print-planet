@@ -220,8 +220,38 @@ class OwnerImageUploadView(APIView):
         if file_obj.content_type not in allowed_types:
             return Response({'error': f'Unsupported image type: {file_obj.content_type}'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Upload to Cloudinary if configured
-        if settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY and settings.CLOUDINARY_API_SECRET:
+        # 1. Upload to Cloudflare R2 if configured (Zero Cost & Unlimited Bandwidth)
+        if getattr(settings, 'R2_ACCESS_KEY_ID', '') and getattr(settings, 'R2_SECRET_ACCESS_KEY', '') and getattr(settings, 'R2_ENDPOINT_URL', ''):
+            try:
+                import boto3
+                from botocore.config import Config
+                s3_client = boto3.client(
+                    's3',
+                    endpoint_url=settings.R2_ENDPOINT_URL,
+                    aws_access_key_id=settings.R2_ACCESS_KEY_ID,
+                    aws_secret_access_key=settings.R2_SECRET_ACCESS_KEY,
+                    config=Config(signature_version='s3v4')
+                )
+                key = f"products/{file_obj.name}"
+                s3_client.upload_fileobj(
+                    file_obj,
+                    settings.R2_BUCKET_NAME,
+                    key,
+                    ExtraArgs={'ContentType': file_obj.content_type}
+                )
+                public_base = settings.R2_PUBLIC_URL or f"{settings.R2_ENDPOINT_URL.rstrip('/')}/{settings.R2_BUCKET_NAME}"
+                r2_url = f"{public_base}/{key}"
+                return Response({
+                    'secure_url': r2_url,
+                    'public_id': key,
+                    'storage': 'cloudflare_r2'
+                }, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                logger.error(f"Cloudflare R2 upload error: {e}")
+                return Response({'error': f"Cloudflare R2 upload failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # 2. Upload to Cloudinary if configured
+        elif settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY and settings.CLOUDINARY_API_SECRET:
             try:
                 import cloudinary.uploader
                 upload_result = cloudinary.uploader.upload(
@@ -236,20 +266,21 @@ class OwnerImageUploadView(APIView):
                     'public_id': upload_result.get('public_id'),
                     'format': upload_result.get('format'),
                     'width': upload_result.get('width'),
-                    'height': upload_result.get('height')
+                    'height': upload_result.get('height'),
+                    'storage': 'cloudinary'
                 }, status=status.HTTP_201_CREATED)
             except Exception as e:
                 logger.error(f"Cloudinary upload error: {e}")
                 return Response({'error': f"Cloudinary upload failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            # Fallback to local storage
+            # 3. Fallback to local storage (zero cost, served by Nginx)
             from django.core.files.storage import default_storage
             saved_path = default_storage.save(f"uploads/{file_obj.name}", file_obj)
             url = request.build_absolute_uri(settings.MEDIA_URL + saved_path)
             return Response({
                 'secure_url': url,
                 'public_id': saved_path,
-                'warning': 'Cloudinary credentials not configured; stored locally on server.'
+                'storage': 'local_nginx'
             }, status=status.HTTP_201_CREATED)
 
 

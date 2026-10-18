@@ -3,13 +3,18 @@ from rest_framework.response import Response
 from django.db.models import Q
 from .models import Enquiry
 from .serializers import EnquiryCreateSerializer, EnquiryDetailSerializer
+from .services import trigger_enquiry_notifications
 
 
 class PublicEnquiryCreateView(generics.CreateAPIView):
-    """Public customer enquiry submission endpoint."""
+    """Public customer enquiry submission endpoint with automated email alerts."""
     queryset = Enquiry.objects.all()
     serializer_class = EnquiryCreateSerializer
     permission_classes = [permissions.AllowAny]
+
+    def perform_create(self, serializer):
+        enquiry = serializer.save()
+        trigger_enquiry_notifications(enquiry.id)
 
 
 class OwnerEnquiryViewSet(viewsets.ModelViewSet):
