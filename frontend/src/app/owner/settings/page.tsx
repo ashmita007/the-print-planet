@@ -26,6 +26,7 @@ import {
 } from "@/lib/api";
 import { SiteSettings } from "@/lib/types";
 
+
 export default function OwnerSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [businessName, setBusinessName] = useState("");

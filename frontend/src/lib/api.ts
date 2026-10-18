@@ -279,12 +279,20 @@ export async function ownerGetDashboardStats(): Promise<{
   }
 }
 
-export async function ownerGetProducts(params?: { search?: string; category?: string; page?: number }): Promise<PaginatedResponse<Product>> {
+export async function ownerGetProducts(params?: {
+  search?: string;
+  category?: string;
+  status?: string;
+  page?: number;
+  page_size?: number;
+}): Promise<PaginatedResponse<Product>> {
   try {
     const q = new URLSearchParams();
     if (params?.search) q.set('search', params.search);
     if (params?.category) q.set('category', params.category);
+    if (params?.status) q.set('status', params.status);
     if (params?.page) q.set('page', params.page.toString());
+    if (params?.page_size) q.set('page_size', params.page_size.toString());
     const res = await fetch(`${getApiUrl()}/api/v1/owner/products/?${q.toString()}`, {
       headers: { ...getAuthHeaders() },
       cache: 'no-store',
@@ -293,6 +301,22 @@ export async function ownerGetProducts(params?: { search?: string; category?: st
     return await res.json();
   } catch {
     return { count: 0, next: null, previous: null, results: [] };
+  }
+}
+
+export async function ownerToggleProductStatus(id: number, isActive: boolean): Promise<boolean> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/products/${id}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+      },
+      body: JSON.stringify({ is_active: isActive }),
+    });
+    return res.ok;
+  } catch {
+    return false;
   }
 }
 
@@ -399,11 +423,18 @@ export async function ownerDeleteCategory(id: number): Promise<boolean> {
   }
 }
 
-export async function ownerGetEnquiries(params?: { status?: string; search?: string }): Promise<PaginatedResponse<Enquiry>> {
+export async function ownerGetEnquiries(params?: {
+  status?: string;
+  search?: string;
+  page?: number;
+  page_size?: number;
+}): Promise<PaginatedResponse<Enquiry>> {
   try {
     const q = new URLSearchParams();
     if (params?.status) q.set('status', params.status);
     if (params?.search) q.set('search', params.search);
+    if (params?.page) q.set('page', params.page.toString());
+    if (params?.page_size) q.set('page_size', params.page_size.toString());
     const res = await fetch(`${getApiUrl()}/api/v1/owner/enquiries/?${q.toString()}`, {
       headers: { ...getAuthHeaders() },
       cache: 'no-store',

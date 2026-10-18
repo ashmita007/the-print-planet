@@ -150,6 +150,7 @@ class GlobalSearchView(APIView):
 class OwnerProductViewSet(viewsets.ModelViewSet):
     """Owner product management ViewSet (CRUD, activate, deactivate)."""
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         qs = Product.objects.all().select_related('category').prefetch_related('images')
@@ -159,6 +160,11 @@ class OwnerProductViewSet(viewsets.ModelViewSet):
         q = self.request.query_params.get('search')
         if q:
             qs = qs.filter(Q(name__icontains=q) | Q(sku__icontains=q))
+        status_param = self.request.query_params.get('status')
+        if status_param == 'active':
+            qs = qs.filter(is_active=True)
+        elif status_param in ['hidden', 'inactive']:
+            qs = qs.filter(is_active=False)
         return qs.order_by('-id')
 
     def get_serializer_class(self):

@@ -23,20 +23,31 @@ import { AuthUser } from "@/lib/types";
 export default function OwnerSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    if (typeof window !== "undefined") {
+      const raw = localStorage.getItem("owner_user");
+      if (raw) {
+        try {
+          return JSON.parse(raw);
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  });
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     ownerGetMe().then((res) => {
-      if (res) setUser(res);
-      else {
-        // If not logged in and not on login page, push to login
-        if (pathname !== "/owner/login") {
-          router.push("/owner/login");
+      if (res) {
+        setUser(res);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("owner_user", JSON.stringify(res));
         }
       }
     });
-  }, [pathname, router]);
+  }, [pathname]);
 
   const handleLogout = async () => {
     await ownerLogout();

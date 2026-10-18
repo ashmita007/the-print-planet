@@ -19,6 +19,7 @@ import {
 import { Category } from "@/lib/types";
 import ConfirmModal from "@/components/owner/ConfirmModal";
 
+
 export default function OwnerCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);

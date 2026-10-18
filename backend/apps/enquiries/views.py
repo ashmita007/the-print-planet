@@ -1,6 +1,7 @@
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.response import Response
 from django.db.models import Q
+from apps.catalog.views import StandardResultsSetPagination
 from .models import Enquiry
 from .serializers import EnquiryCreateSerializer, EnquiryDetailSerializer
 from .services import trigger_enquiry_notifications
@@ -22,6 +23,7 @@ class OwnerEnquiryViewSet(viewsets.ModelViewSet):
     queryset = Enquiry.objects.all().select_related('product')
     serializer_class = EnquiryDetailSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         qs = super().get_queryset()

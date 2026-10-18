@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import ProductForm from "@/components/owner/ProductForm";
+
 
 export default function NewProductPage() {
   return (

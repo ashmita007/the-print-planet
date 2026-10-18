@@ -6,6 +6,7 @@ import ProductForm from "@/components/owner/ProductForm";
 import { ownerGetProduct } from "@/lib/api";
 import { Product } from "@/lib/types";
 
+
 export default function EditProductPage() {
   const params = useParams();
   const id = Number(params?.id);
