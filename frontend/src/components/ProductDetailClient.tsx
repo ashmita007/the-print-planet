@@ -68,13 +68,41 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
   };
 
-  // Extract key attributes
-  const rollLength = product.specifications?.["Roll Length"] || "100 m";
-  const rollWidth = product.dimensions || product.specifications?.["Lanyard Width"] || "20 mm";
-  const printType = product.specifications?.["Printing Type"] || "Screen / Sublimation Print";
-  const coreType = product.specifications?.["Core Type"] || "Plastic Core";
-  const material = product.material || product.specifications?.["Material"] || "Satin Polyester";
-  const color = product.color || product.specifications?.["Color"] || "Indian Orange";
+  // Dynamically extract top 4 highlight attributes for any category
+  const dynamicHighlights: { label: string; value: string }[] = [];
+  if (product.dimensions) {
+    dynamicHighlights.push({ label: "Dimensions / Format", value: product.dimensions });
+  }
+  if (product.material) {
+    dynamicHighlights.push({ label: "Material / Build", value: product.material });
+  }
+  if (product.color) {
+    dynamicHighlights.push({ label: "Color / Finish", value: product.color });
+  }
+  if (product.minimum_order_quantity) {
+    dynamicHighlights.push({ label: "Minimum Order", value: `${product.minimum_order_quantity} Units MOQ` });
+  }
+  if (product.specifications && typeof product.specifications === "object") {
+    for (const [k, v] of Object.entries(product.specifications)) {
+      if (dynamicHighlights.length >= 4) break;
+      if (v && typeof v === "string" && !dynamicHighlights.some((h) => h.label.toLowerCase() === k.toLowerCase())) {
+        dynamicHighlights.push({ label: k, value: v });
+      }
+    }
+  }
+  if (dynamicHighlights.length < 4 && product.category?.name) {
+    dynamicHighlights.push({ label: "Category", value: product.category.name });
+  }
+  if (dynamicHighlights.length < 4) {
+    dynamicHighlights.push({ label: "Supply Grade", value: "Industrial Heavy-Duty" });
+  }
+
+  const isMachine =
+    product.category?.slug?.includes("machine") ||
+    product.category?.name?.toLowerCase().includes("machine") ||
+    Boolean(product.specifications?.["Heating"]) ||
+    Boolean(product.specifications?.["Pressure"]) ||
+    Boolean(product.specifications?.["Output"]);
 
   return (
     <>
@@ -175,8 +203,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <div className="flex items-start gap-1.5 p-2 bg-white rounded-lg border border-[#DCE3EB]/80">
                 <Box className="w-3.5 h-3.5 text-[#17365D] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold text-[#263445]">Moisture Sealed</p>
-                  <p className="text-slate-500 text-[10px]">Export Shrink Wrap</p>
+                  <p className="font-bold text-[#263445]">{isMachine ? "Crate Packaging" : "Moisture Sealed"}</p>
+                  <p className="text-slate-500 text-[10px]">{isMachine ? "Heavy-Duty Wood Pallet" : "Export Shrink Wrap"}</p>
                 </div>
               </div>
               <div className="flex items-start gap-1.5 p-2 bg-white rounded-lg border border-[#DCE3EB]/80">
@@ -190,7 +218,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <Shield className="w-3.5 h-3.5 text-[#17365D] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-[#263445]">QC Inspected</p>
-                  <p className="text-slate-500 text-[10px]">Tensile & Color Fast</p>
+                  <p className="text-slate-500 text-[10px]">Verified Specifications</p>
                 </div>
               </div>
             </div>
@@ -245,8 +273,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
             {/* Short Tagline / Summary */}
             <p className="text-xs sm:text-sm text-[#687586] leading-relaxed">
-              {product.short_description ||
-                "Industrial-grade satin polyester lanyard roll for corporate ID cards, security passes, and event identification straps."}
+              {product.short_description || product.description ||
+                "Industrial-grade commercial supply engineered for professional ID card printing, lanyard manufacturing, and identification solutions."}
             </p>
           </div>
 
@@ -264,7 +292,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 ) : product.price ? (
                   <div className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
                     ₹ {Number(product.price).toLocaleString("en-IN")}
-                    <span className="text-xs font-semibold text-slate-500 ml-1">/ Roll</span>
+                    <span className="text-xs font-semibold text-slate-500 ml-1">/ Unit</span>
                   </div>
                 ) : (
                   <div className="text-xl font-extrabold text-[#E87832]">
@@ -283,41 +311,27 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <span className="text-sm sm:text-base font-extrabold text-[#263445] block">
                   {product.minimum_order_quantity
                     ? `${product.minimum_order_quantity} Units MOQ`
-                    : "1 Roll (Sample) / 50 Rolls (Carton)"}
+                    : "Commercial Batch Order"}
                 </span>
                 <span className="text-[10px] text-[#217A4B] font-bold block mt-0.5">
-                  Bulk tier pricing available for 10+ rolls
+                  Bulk trade tier discounts on high-volume lots
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Specifications 4-Grid */}
+          {/* Dynamic Highlights 4-Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 text-xs">
-            <div className="p-2.5 sm:p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl">
-              <span className="text-[10px] text-slate-400 font-bold uppercase block">Width</span>
-              <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
-                {rollWidth}
-              </span>
-            </div>
-            <div className="p-2.5 sm:p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl">
-              <span className="text-[10px] text-slate-400 font-bold uppercase block">Roll Length</span>
-              <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
-                {rollLength}
-              </span>
-            </div>
-            <div className="p-2.5 sm:p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl">
-              <span className="text-[10px] text-slate-400 font-bold uppercase block">Material</span>
-              <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
-                {material}
-              </span>
-            </div>
-            <div className="p-2.5 sm:p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl">
-              <span className="text-[10px] text-slate-400 font-bold uppercase block">Color</span>
-              <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
-                {color}
-              </span>
-            </div>
+            {dynamicHighlights.map((item, idx) => (
+              <div key={idx} className="p-2.5 sm:p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl">
+                <span className="text-[10px] text-slate-400 font-bold uppercase block truncate">
+                  {item.label}
+                </span>
+                <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
+                  {item.value}
+                </span>
+              </div>
+            ))}
           </div>
 
           {/* Call-to-Action Buttons */}
@@ -366,7 +380,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     : "border-transparent text-[#687586] hover:text-[#263445]"
                 }`}
               >
-                Overview & Printing
+                Overview & Applications
               </button>
               <button
                 type="button"
@@ -377,7 +391,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     : "border-transparent text-[#687586] hover:text-[#263445]"
                 }`}
               >
-                Hardware Compatibility
+                How It Works & Ordering
               </button>
               <button
                 type="button"
@@ -408,96 +422,85 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       </tr>
                       <tr className="bg-white">
                         <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Ribbon Width
+                          Category Sector
                         </td>
                         <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          {rollWidth}
+                          {product.category?.name || "General Catalog"}
                         </td>
                       </tr>
-                      <tr className="bg-[#F8FAFC]">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Roll Continuous Length
-                        </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          {rollLength} (Approx. 100 meters continuous)
-                        </td>
-                      </tr>
-                      <tr className="bg-white">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Material Formulation
-                        </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          100% Virgin High-Tenacity Polyester (Double/Single Satin Finish)
-                        </td>
-                      </tr>
-                      <tr className="bg-[#F8FAFC]">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Shade & Color Fastness
-                        </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          {color} (Reactive vat dyed • High wash and sweat fastness)
-                        </td>
-                      </tr>
-                      <tr className="bg-white">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Recommended Printing Method
-                        </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          {printType}
-                        </td>
-                      </tr>
-                      <tr className="bg-[#F8FAFC]">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Core & Winding
-                        </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          {coreType} (Standard rotary machine compatible)
-                        </td>
-                      </tr>
+                      {product.material && (
+                        <tr className="bg-[#F8FAFC]">
+                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
+                            Material / Construction
+                          </td>
+                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
+                            {product.material}
+                          </td>
+                        </tr>
+                      )}
+                      {product.dimensions && (
+                        <tr className="bg-white">
+                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
+                            Dimensions / Sheet Format
+                          </td>
+                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
+                            {product.dimensions}
+                          </td>
+                        </tr>
+                      )}
+                      {product.color && (
+                        <tr className="bg-[#F8FAFC]">
+                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
+                            Color / Surface Finish
+                          </td>
+                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
+                            {product.color}
+                          </td>
+                        </tr>
+                      )}
+                      {product.minimum_order_quantity && (
+                        <tr className="bg-white">
+                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
+                            Minimum Order Quantity
+                          </td>
+                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
+                            {product.minimum_order_quantity} Units
+                          </td>
+                        </tr>
+                      )}
 
                       {/* Dynamic Backend Specs */}
                       {product.specifications &&
-                        Object.entries(product.specifications)
-                          .filter(
-                            ([k]) =>
-                              ![
-                                "Roll Length",
-                                "Lanyard Width",
-                                "Printing Type",
-                                "Core Type",
-                                "Material",
-                                "Color",
-                              ].includes(k)
-                          )
-                          .map(([key, val], idx) => (
-                            <tr
-                              key={key}
-                              className={idx % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"}
-                            >
-                              <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                                {key}
-                              </td>
-                              <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                                {val}
-                              </td>
-                            </tr>
-                          ))}
+                        Object.entries(product.specifications).map(([key, val], idx) => (
+                          <tr
+                            key={key}
+                            className={idx % 2 === 0 ? "bg-[#F8FAFC]" : "bg-white"}
+                          >
+                            <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
+                              {key}
+                            </td>
+                            <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
+                              {String(val)}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
               </div>
             )}
 
-            {/* Tab 2: Overview & Printing Methods */}
+            {/* Tab 2: Overview & Applications */}
             {activeTab === "overview" && (
               <div className="space-y-3 text-xs text-[#263445] leading-relaxed">
                 <div className="bg-[#F8FAFC] p-4 rounded-xl border border-[#DCE3EB] space-y-2">
                   <h4 className="font-bold text-[#17365D] text-xs">
                     Industrial Application Overview
                   </h4>
-                  <p>
+                  <p className="whitespace-pre-line leading-relaxed">
                     {product.description ||
-                      "Manufactured specifically for ID card strap manufacturing, corporate lanyards, and institutional passes. The satin weave provides a high-density, flat surface that ensures sharp edge definition during screen printing."}
+                      product.short_description ||
+                      "Manufactured specifically for ID card printers, lanyard manufacturing, corporate security, and institutional badge manufacturing."}
                   </p>
                 </div>
 
@@ -505,30 +508,30 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl space-y-1">
                     <div className="flex items-center gap-1.5 font-bold text-[#17365D]">
                       <Printer className="w-3.5 h-3.5 text-[#E87832]" />
-                      <span>Screen Printing Compatibility</span>
+                      <span>Commercial Grade Engineering</span>
                     </div>
                     <p className="text-[11px] text-[#687586]">
-                      Accepts plastisol, solvent, and water-based screen printing inks with high color retention and zero bleed-through.
+                      Built to withstand high-volume continuous operation with high precision tolerances and repeatable outputs.
                     </p>
                   </div>
                   <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl space-y-1">
                     <div className="flex items-center gap-1.5 font-bold text-[#17365D]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#217A4B]" />
-                      <span>Dimensional Stability</span>
+                      <span>Certified Quality Compliance</span>
                     </div>
                     <p className="text-[11px] text-[#687586]">
-                      Calibrated 20 mm width fits standard machine feeding guides without curvature or edge fraying during high-speed cutting.
+                      Calibrated for ISO CR-80 standards and tested against physical, thermal, and electrical durability standards.
                     </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Tab 3: Hardware Compatibility */}
+            {/* Tab 3: How It Works & Ordering Workflow (DeltaCardz-style) */}
             {activeTab === "hardware" && (
               <div className="space-y-3 text-xs">
                 <p className="text-[#687586] text-[11px]">
-                  This 20 mm satin roll is dimensionally tailored for all industry-standard 20 mm ID card hardware and attachments:
+                  Direct factory supply workflow — from requirement enquiry to insured delivery in 5 simple steps:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5">
@@ -536,9 +539,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       01
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">20 mm Metal Dog Hooks & Oval Hooks</h5>
+                      <h5 className="font-bold text-[#17365D]">Pick Your Model or Material</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        Zinc-alloy and nickel-plated snap hooks for badge holding.
+                        Choose from fusing machines, cutters, lanyard printers, PVC sheets, holders, or RFID cards.
                       </p>
                     </div>
                   </div>
@@ -548,9 +551,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       02
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Safety Breakaway Clasps</h5>
+                      <h5 className="font-bold text-[#17365D]">Request a Factory Quotation</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        Mandatory OH&S safety release clips for industrial and hospital ID cords.
+                        Submit required quantity. Our sales desk replies within 1 working hour with GST-inclusive pricing.
                       </p>
                     </div>
                   </div>
@@ -560,9 +563,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       03
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Alligator & Bulldog Clips</h5>
+                      <h5 className="font-bold text-[#17365D]">Video Demo & Free Swatches</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        20 mm wide base clips for direct pocket and collar badge attachment.
+                        For machines: get video demo, power, and speed specs. For consumables: physical sample proofing.
                       </p>
                     </div>
                   </div>
@@ -572,9 +575,21 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       04
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Detachable Buckles & Crimp Rings</h5>
+                      <h5 className="font-bold text-[#17365D]">Confirm & Pay via GST Invoice</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        Side release plastic buckles and metal crimp clips for loop termination.
+                        Instant proforma on company letterhead. Pay securely via NEFT / RTGS / UPI with GST credit.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5 sm:col-span-2">
+                    <div className="w-7 h-7 rounded bg-[#F5F7FA] flex items-center justify-center font-bold text-[#217A4B] shrink-0 text-xs">
+                      05
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-[#17365D]">Pan-India Dispatch in 24–48 Hours</h5>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
+                        Dispatched via top cargo & couriers (DTDC, Blue Dart, VRL, TCI) with real-time tracking from our Bengaluru hub.
                       </p>
                     </div>
                   </div>
@@ -591,9 +606,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       <Box className="w-3.5 h-3.5 text-[#E87832]" /> Packaging Standards
                     </h5>
                     <ul className="space-y-1 text-[11px] text-[#687586] list-disc list-inside">
-                      <li>Each 100 m roll individually shrink-wrapped with moisture desiccant</li>
-                      <li>Master Carton: 50 rolls (5,000 meters total)</li>
-                      <li>Carton Dimensions: Approx. 45 × 35 × 30 cm (Heavy-duty 5-ply corrugated)</li>
+                      {isMachine ? (
+                        <>
+                          <li>Heavy-duty fumigated wooden box / plywood crate packaging</li>
+                          <li>Shock-absorbent foam lining with corrosion-inhibiting rust shield</li>
+                          <li>Pre-delivery testing certificate & operation manual included</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>Individually shrink-wrapped lots with moisture-absorbent desiccant</li>
+                          <li>Heavy-duty 5-ply export corrugated master cartons</li>
+                          <li>Corner-reinforced strapping for zero transit damage</li>
+                        </>
+                      )}
                     </ul>
                   </div>
 
@@ -620,10 +645,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#DCE3EB] p-2.5 px-3 flex items-center justify-between gap-2 shadow-xl animate-in slide-in-from-bottom-2">
         <div className="min-w-0 pr-1">
           <div className="text-base font-black text-[#17365D] truncate leading-none">
-            {product.price_display || `₹ ${product.price || 300}`}
+            {product.price_display || (product.price ? `₹ ${product.price}` : "Price on Request")}
           </div>
           <span className="text-[9px] font-mono text-slate-500 truncate block mt-0.5">
-            {product.sku} • 100m Roll
+            {product.sku} • {product.category?.name || "Direct Factory Supply"}
           </span>
         </div>
 
