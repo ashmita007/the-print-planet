@@ -55,44 +55,50 @@ export default function ProductHeroShowcase({
 
   return (
     <section className="relative bg-[#102742] text-white overflow-hidden py-8 sm:py-12 lg:py-16 border-b-4 border-[#E87832]">
-      {/* Background blueprint grid pattern */}
+      {/* Realistic technical blueprint grid */}
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
-          backgroundSize: "24px 24px",
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "32px 32px",
         }}
       />
-      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-[#E87832]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 relative z-10">
-        {/* Mobile-Only Header: Short and Punchy */}
-        <div className="lg:hidden mb-3 text-center space-y-1">
+        {/* Mobile Header: Direct, realistic B2B proposition */}
+        <div className="lg:hidden mb-4 text-left space-y-2">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#E87832] text-[10px] font-bold tracking-wide uppercase border border-white/10">
             <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B] animate-pulse" />
-            <span>Factory Direct Industrial Catalogue</span>
+            <span>Optical &amp; Industrial Manufacturing Supply</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
-            Industrial ID Cards, Lanyards & Machinery
+          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
+            Everything the Lens Industry Needs, Under One Roof:
+            <span className="block text-[#E87832] text-lg sm:text-xl font-bold mt-1">
+              PVC Cards, Optical Packaging &amp; Printing Solutions
+            </span>
           </h1>
+          <p className="text-xs text-slate-300 leading-relaxed pt-1">
+            CR-80 lens warranty cards, optical pouches, thermal/UV card printers, continuous lanyard rolls, and raw consumables.
+          </p>
         </div>
 
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-5 lg:gap-12 items-center">
-          {/* Left Column: Industrial Proposition & Quick Catalogs */}
+          {/* Left Column: Industrial Proposition & Quotation */}
           <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full">
-            <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/10">
+            <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/15">
               <span className="w-2 h-2 rounded-full bg-[#217A4B] animate-pulse" />
-              <span>Factory-Direct Industrial Supplies</span>
+              <span>Optical &amp; Industrial Manufacturing Supply</span>
             </div>
 
-            <h1 className="hidden lg:block text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight sm:leading-[1.12]">
-              Industrial ID Supplies,{" "}
-              <span className="text-[#E87832]">Lanyard Rolls</span> & Card Machines.
+            <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-black tracking-tight leading-[1.14] text-white">
+              Everything the <span className="text-[#E87832]">Lens Industry</span> Needs, Under One Roof:
+              <span className="block text-slate-100 font-extrabold text-xl sm:text-2xl lg:text-[1.6rem] mt-2 leading-snug">
+                PVC Cards, Optical Packaging &amp; Printing Solutions.
+              </span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-              Manufacturer trade supply of 100m single/double satin lanyard rolls, optical-grade CR-80 PVC holders, nickel-plated dog hooks, 13.56MHz RFID cards, and heavy-duty card cutters.
+            <p className="hidden lg:block text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
+              Direct factory manufacturer and trade distributor for optical labs, eyewear retail chains, and identification bureaus. High-grade CR-80 PVC lens warranty cards, optical envelopes &amp; pouches, card fusing machinery, lanyard rolls, and consumables at ex-factory wholesale prices.
             </p>
 
             {/* Quick Actions */}
@@ -106,26 +112,26 @@ export default function ProductHeroShowcase({
               </a>
 
               <Link
-                href="/contact"
+                href="/quote"
                 className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2.5 sm:py-3 rounded-xl font-bold text-xs tracking-wide transition-all flex items-center justify-center gap-2 text-center"
               >
-                <span>Request Custom Specs</span>
+                <span>Request Optical / B2B Quote</span>
               </Link>
             </div>
 
             {/* Technical Factory Standards */}
             <div className="pt-3 sm:pt-4 border-t border-white/10 grid grid-cols-3 gap-2 sm:gap-3 text-xs">
               <div>
-                <div className="font-extrabold text-white text-xs sm:text-base">CR-80 ISO</div>
-                <div className="text-slate-400 text-[9px] sm:text-[11px]">86 × 54 mm Standard</div>
+                <div className="font-extrabold text-white text-xs sm:text-sm">CR-80 ISO</div>
+                <div className="text-slate-400 text-[9px] sm:text-[10px]">85.6 × 54 mm Standard</div>
               </div>
               <div>
-                <div className="font-extrabold text-white text-xs sm:text-base">100m - 500m</div>
-                <div className="text-slate-400 text-[9px] sm:text-[11px]">Continuous Rolls</div>
+                <div className="font-extrabold text-white text-xs sm:text-sm">Optical Grade</div>
+                <div className="text-slate-400 text-[9px] sm:text-[10px]">UV &amp; Scratch Proof</div>
               </div>
               <div>
-                <div className="font-extrabold text-white text-xs sm:text-base">Dispatch</div>
-                <div className="text-slate-400 text-[9px] sm:text-[11px]">Same-Day Wholesale</div>
+                <div className="font-extrabold text-white text-xs sm:text-sm">Dispatch</div>
+                <div className="text-slate-400 text-[9px] sm:text-[10px]">24–48h Pan-India</div>
               </div>
             </div>
           </div>
