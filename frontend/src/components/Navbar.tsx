@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   Phone,
@@ -125,18 +126,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
         <div className="flex items-center justify-between h-14 sm:h-20 gap-3">
           {/* Logo & Brand Identity */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#17365D] text-white flex items-center justify-center font-black text-lg sm:text-xl tracking-tight shadow-sm group-hover:bg-[#102742] transition-colors">
-              P
-            </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-base sm:text-xl leading-none text-[#17365D] tracking-tight">
-                THE PRINT PLANET
-              </span>
-              <span className="text-[9px] sm:text-[10px] uppercase font-semibold text-[#687586] tracking-wider mt-0.5">
-                ID Systems & Machinery
-              </span>
-            </div>
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 group py-1">
+            <Image
+              src="/logo.png"
+              alt="The Print Planet"
+              width={200}
+              height={55}
+              className="h-9 sm:h-12 w-auto object-contain hover:opacity-95 transition-opacity"
+              priority
+            />
           </Link>
 
           {/* Search Box (Desktop & Tablet) */}
@@ -301,12 +299,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           <div className="fixed inset-y-0 right-0 w-[84vw] max-w-xs bg-white shadow-2xl flex flex-col z-50 animate-in slide-in-from-right duration-200">
             {/* Drawer Header */}
             <div className="p-4 border-b border-[#DCE3EB] flex items-center justify-between bg-[#102742] text-white">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded bg-[#E87832] flex items-center justify-center font-black text-white text-base">
-                  P
-                </div>
-                <span className="font-bold text-base tracking-tight">The Print Planet</span>
-              </div>
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="bg-white px-2 py-1 rounded-lg inline-block">
+                <Image
+                  src="/logo.png"
+                  alt="The Print Planet"
+                  width={140}
+                  height={38}
+                  className="h-7 w-auto object-contain"
+                />
+              </Link>
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}

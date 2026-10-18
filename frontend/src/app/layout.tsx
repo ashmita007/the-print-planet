@@ -40,6 +40,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "./",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -50,10 +59,10 @@ export const metadata: Metadata = {
       "Wholesale supplier of industrial satin lanyard rolls, rigid PVC ID card holders, clips, smart cards, and machinery. Fast dispatch across India.",
     images: [
       {
-        url: `${SITE_URL}/media/products/LAN-ROY-20M.png`,
+        url: `${SITE_URL}/logo.png`,
         width: 1200,
-        height: 630,
-        alt: "The Print Planet Wholesale Industrial ID Catalogue",
+        height: 600,
+        alt: "The Print Planet B2B Printing & ID Systems",
       },
     ],
   },
@@ -62,7 +71,7 @@ export const metadata: Metadata = {
     title: "The Print Planet | Wholesale ID Card Solutions & Lanyards",
     description:
       "Wholesale manufacturer of satin lanyards, ID card holders, RFID cards, and machinery with nationwide dispatch.",
-    images: [`${SITE_URL}/media/products/LAN-ROY-20M.png`],
+    images: [`${SITE_URL}/logo.png`],
   },
   robots: {
     index: true,
@@ -85,7 +94,7 @@ const jsonLdOrg = {
       "@id": `${SITE_URL}/#organization`,
       name: "The Print Planet",
       url: SITE_URL,
-      logo: `${SITE_URL}/media/products/LAN-ROY-20M.png`,
+      logo: `${SITE_URL}/logo.png`,
       description:
         "India's leading B2B wholesale manufacturer and supplier of satin lanyard rolls, ID holders, RFID cards, and card punching machines.",
       contactPoint: {

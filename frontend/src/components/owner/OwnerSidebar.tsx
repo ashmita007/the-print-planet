@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -96,17 +97,20 @@ export default function OwnerSidebar() {
         } lg:block w-64 bg-[#102742] text-white flex flex-col shrink-0 min-h-screen border-r border-[#17365D] z-40 fixed lg:static inset-y-0 left-0 animate-in slide-in-from-left duration-200`}
       >
         {/* Brand Header */}
-        <div className="p-6 border-b border-white/10 flex items-center justify-between">
-          <Link href="/owner/dashboard" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#E87832] flex items-center justify-center font-black text-white text-lg shadow-sm">
-              P
+        <div className="p-5 border-b border-white/10 flex items-center justify-between">
+          <Link href="/owner/dashboard" className="flex items-center gap-2">
+            <div className="bg-white px-2.5 py-1.5 rounded-lg inline-block shadow-xs">
+              <Image
+                src="/logo.png"
+                alt="The Print Planet"
+                width={130}
+                height={34}
+                className="h-6 w-auto object-contain"
+              />
             </div>
-            <div>
-              <span className="font-extrabold text-sm block tracking-tight">The Print Planet</span>
-              <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">
-                Owner Administration
-              </span>
-            </div>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+              Owner Panel
+            </span>
           </Link>
           <button
             onClick={() => setMobileOpen(false)}

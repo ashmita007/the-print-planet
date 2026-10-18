@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, ShieldCheck, Lock, ExternalLink } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
 
@@ -24,13 +25,14 @@ export default function Footer({ categories = [], settings }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 pb-8 sm:pb-12 border-b border-white/15">
           {/* Column 1: Company Profile */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#E87832] text-white flex items-center justify-center font-black text-xl">
-                P
-              </div>
-              <span className="font-extrabold text-xl tracking-tight text-white">
-                {businessName}
-              </span>
+            <div className="bg-white px-3 py-2 rounded-xl inline-block shadow-sm">
+              <Image
+                src="/logo.png"
+                alt={businessName}
+                width={170}
+                height={45}
+                className="h-8 sm:h-9 w-auto object-contain"
+              />
             </div>
             <p className="text-xs font-semibold text-[#E87832] tracking-wide">
               ✱ Your Vision is Our Focus ✱

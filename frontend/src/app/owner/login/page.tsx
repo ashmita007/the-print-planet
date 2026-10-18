@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Lock, User, AlertCircle, ArrowRight, ShieldCheck } from "lucide-react";
 import { ownerLogin } from "@/lib/api";
 
@@ -37,10 +38,16 @@ export default function OwnerLoginPage() {
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-[#DCE3EB] overflow-hidden">
       {/* Top Header */}
       <div className="bg-[#102742] text-white p-8 text-center space-y-2 border-b-4 border-[#E87832]">
-        <div className="w-12 h-12 rounded-xl bg-[#E87832] flex items-center justify-center font-black text-white text-2xl mx-auto shadow-md">
-          P
+        <div className="bg-white px-4 py-2.5 rounded-xl inline-block shadow-md mx-auto mb-2">
+          <Image
+            src="/logo.png"
+            alt="The Print Planet"
+            width={180}
+            height={48}
+            className="h-10 w-auto object-contain"
+            priority
+          />
         </div>
-        <h1 className="text-xl font-extrabold tracking-tight">The Print Planet</h1>
         <p className="text-xs text-slate-300">
           Industrial Owner Administration & Catalogue Portal
         </p>
