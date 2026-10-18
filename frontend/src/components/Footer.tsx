@@ -80,41 +80,56 @@ export default function Footer({ categories = [], settings }: FooterProps) {
             </ul>
           </div>
 
-          {/* Column 3: Quick Navigation */}
+          {/* Column 3: Quick Navigation (9 Core Sections) */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-2">
               <span className="w-2 h-2 bg-[#E87832] rounded-full inline-block" />
-              Corporate Information
+              Main Sections
             </h3>
-            <ul className="space-y-2 text-xs text-slate-300">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5 text-xs text-slate-300">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Home
+                <Link href="/" className="hover:text-[#E87832] transition-colors">
+                  1. Home
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="hover:text-white transition-colors">
-                  Full Product Catalogue
+                <Link href="/about" className="hover:text-[#E87832] transition-colors">
+                  2. About Us
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  About Our Manufacturing
+                <Link href="/products" className="hover:text-[#E87832] transition-colors">
+                  3. Products & Catalogue
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
-                  Contact Us & Bulk Enquiry
+                <Link href="/services" className="hover:text-[#E87832] transition-colors">
+                  4. Printing Services
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="hover:text-white transition-colors">
-                  Privacy Policy
+                <Link href="/gallery" className="hover:text-[#E87832] transition-colors">
+                  5. Portfolio & Gallery
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-white transition-colors">
-                  Terms of Trade & Delivery
+                <Link href="/industries" className="hover:text-[#E87832] transition-colors">
+                  6. Industries We Serve
+                </Link>
+              </li>
+              <li>
+                <Link href="/corporate" className="hover:text-[#E87832] transition-colors">
+                  7. Bulk & Corporate Orders
+                </Link>
+              </li>
+              <li>
+                <Link href="/quote" className="text-[#E87832] font-bold hover:underline">
+                  8. Request a Quote &rarr;
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#E87832] transition-colors">
+                  9. Contact Us
                 </Link>
               </li>
             </ul>

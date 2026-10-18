@@ -16,6 +16,14 @@ import {
   User,
   ArrowRight,
   ExternalLink,
+  Home,
+  Info,
+  Package,
+  Printer,
+  Sparkles,
+  Building2,
+  Briefcase,
+  FileText,
 } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
 import { getApiUrl } from "@/lib/api";
@@ -201,12 +209,16 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           </form>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-[#263445]">
-            <Link href="/" className="hover:text-[#E87832] transition-colors">
+          <nav className="hidden xl:flex items-center gap-4 2xl:gap-5 text-[13px] font-semibold text-[#263445]">
+            <Link href="/" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
               Home
             </Link>
 
-            {/* Products & Services Dropdown */}
+            <Link href="/about" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+              About Us
+            </Link>
+
+            {/* Products & Categories Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
@@ -215,10 +227,9 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   setCategoriesDropdownOpen(nextState);
                   if (nextState) fetchFreshCategories();
                 }}
-                className="flex items-center gap-1.5 py-2 hover:text-[#E87832] transition-colors focus:outline-none"
+                className="flex items-center gap-1 hover:text-[#E87832] transition-colors focus:outline-none whitespace-nowrap"
               >
-                <Layers className="w-4 h-4 text-[#17365D]" />
-                <span>Categories</span>
+                <span>Products</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${categoriesDropdownOpen ? "rotate-180" : ""}`} />
               </button>
 
@@ -261,32 +272,51 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       onClick={() => setCategoriesDropdownOpen(false)}
                       className="block text-center text-xs font-bold text-[#17365D] hover:text-[#E87832] py-1"
                     >
-                      View All Products &rarr;
+                      View All 85+ Products &rarr;
                     </Link>
                   </div>
                 </div>
               )}
             </div>
 
-            <Link href="/products" className="hover:text-[#E87832] transition-colors">
-              Full Catalogue
+            <Link href="/services" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+              Services
             </Link>
-            <Link href="/about" className="hover:text-[#E87832] transition-colors">
-              About Us
+
+            <Link href="/gallery" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+              Portfolio
             </Link>
-            <Link href="/contact" className="hover:text-[#E87832] transition-colors">
-              Contact & RFQ
+
+            <Link href="/industries" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+              Industries
+            </Link>
+
+            <Link href="/corporate" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+              Bulk Orders
+            </Link>
+
+            <Link href="/contact" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+              Contact
+            </Link>
+
+            {/* Request a Quote CTA Button */}
+            <Link
+              href="/quote"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs whitespace-nowrap flex items-center gap-1"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Request Quote</span>
             </Link>
 
             {/* Owner Portal Link */}
-            <div suppressHydrationWarning className="flex items-center">
+            <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
               {isOwnerLoggedIn ? (
                 <Link
                   href="/owner/dashboard"
-                  className="flex items-center gap-1.5 bg-[#17365D] text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-[#102742] transition-colors shadow-sm"
+                  className="flex items-center gap-1.5 bg-[#17365D] text-white px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-[#102742] transition-colors shadow-xs"
                 >
-                  <User className="w-3.5 h-3.5" />
-                  <span>Owner Dashboard</span>
+                  <User className="w-3 h-3" />
+                  <span>Dashboard</span>
                 </Link>
               ) : (
                 <Link
@@ -302,7 +332,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           </nav>
 
           {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -340,7 +370,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
       {/* Mobile Navigation Slide-over Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-50 xl:hidden">
           {/* Overlay */}
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
@@ -376,30 +406,74 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md font-semibold text-sm text-[#263445] hover:bg-[#F5F7FA]"
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
                 >
-                  Home
-                </Link>
-                <Link
-                  href="/products"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md font-semibold text-sm text-[#263445] hover:bg-[#F5F7FA]"
-                >
-                  Full Product Catalogue
+                  <Home className="w-4 h-4 text-[#17365D]" />
+                  <span>1. Home</span>
                 </Link>
                 <Link
                   href="/about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md font-semibold text-sm text-[#263445] hover:bg-[#F5F7FA]"
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
                 >
-                  About Company
+                  <Info className="w-4 h-4 text-[#17365D]" />
+                  <span>2. About Us</span>
+                </Link>
+                <Link
+                  href="/products"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                >
+                  <Package className="w-4 h-4 text-[#17365D]" />
+                  <span>3. Products & Catalogue</span>
+                </Link>
+                <Link
+                  href="/services"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                >
+                  <Printer className="w-4 h-4 text-[#17365D]" />
+                  <span>4. Services</span>
+                </Link>
+                <Link
+                  href="/gallery"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                >
+                  <Sparkles className="w-4 h-4 text-[#17365D]" />
+                  <span>5. Portfolio / Gallery</span>
+                </Link>
+                <Link
+                  href="/industries"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                >
+                  <Building2 className="w-4 h-4 text-[#17365D]" />
+                  <span>6. Industries We Serve</span>
+                </Link>
+                <Link
+                  href="/corporate"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                >
+                  <Briefcase className="w-4 h-4 text-[#17365D]" />
+                  <span>7. Bulk & Corporate Orders</span>
+                </Link>
+                <Link
+                  href="/quote"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-bold text-xs bg-orange-50 text-[#E87832] border border-orange-200"
+                >
+                  <FileText className="w-4 h-4 text-[#E87832]" />
+                  <span>8. Request a Quote</span>
                 </Link>
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md font-semibold text-sm text-[#263445] hover:bg-[#F5F7FA]"
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
                 >
-                  Request Quote & Contact
+                  <Phone className="w-4 h-4 text-[#17365D]" />
+                  <span>9. Contact Us</span>
                 </Link>
               </div>
 
