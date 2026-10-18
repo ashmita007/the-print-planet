@@ -305,8 +305,15 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
     if (!newCatName.trim()) return;
 
     setCreatingCat(true);
+    const generatedSlug = newCatName
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+
     const res = await ownerSaveCategory(null, {
       name: newCatName.trim(),
+      slug: generatedSlug,
       description: newCatDesc.trim() || undefined,
       is_active: true,
     });

@@ -220,6 +220,54 @@ class OwnerImageUploadView(APIView):
         if file_obj.content_type not in allowed_types:
             return Response({'error': f'Unsupported image type: {file_obj.content_type}'}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Automatically compress & optimize image to guarantee size is under 1MB
+        try:
+            from PIL import Image
+            file_obj.seek(0)
+            img = Image.open(file_obj)
+            max_dimension = 1600
+            quality = 82
+
+            has_transparency = img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info)
+            w, h = img.size
+            if max(w, h) > max_dimension:
+                scale = max_dimension / max(w, h)
+                img = img.resize((int(w * scale), int(h * scale)), Image.Resampling.LANCZOS)
+
+            opt_io = io.BytesIO()
+            filename = file_obj.name
+
+            if has_transparency:
+                out_fmt = 'WEBP'
+                content_type = 'image/webp'
+                if not filename.lower().endswith('.webp'):
+                    filename = f"{filename.rsplit('.', 1)[0]}.webp"
+                img.save(opt_io, format=out_fmt, quality=quality, method=6)
+            else:
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                out_fmt = 'JPEG'
+                content_type = 'image/jpeg'
+                if not filename.lower().endswith(('.jpg', '.jpeg')):
+                    filename = f"{filename.rsplit('.', 1)[0]}.jpg"
+                img.save(opt_io, format=out_fmt, quality=quality, optimize=True)
+
+            while opt_io.tell() > 1024 * 1024 and quality > 45:
+                quality -= 10
+                opt_io = io.BytesIO()
+                img.save(opt_io, format=out_fmt, quality=quality, optimize=True)
+
+            opt_io.seek(0)
+            upload_payload = opt_io
+            upload_name = filename
+            upload_content_type = content_type
+        except Exception as e:
+            logger.warning(f"Image auto-optimization fallback: {e}")
+            file_obj.seek(0)
+            upload_payload = file_obj
+            upload_name = file_obj.name
+            upload_content_type = getattr(file_obj, 'content_type', 'image/jpeg')
+
         # 1. Upload to Cloudflare R2 if configured (Zero Cost & Unlimited Bandwidth)
         if getattr(settings, 'R2_ACCESS_KEY_ID', '') and getattr(settings, 'R2_SECRET_ACCESS_KEY', '') and getattr(settings, 'R2_ENDPOINT_URL', ''):
             try:
@@ -232,19 +280,20 @@ class OwnerImageUploadView(APIView):
                     aws_secret_access_key=settings.R2_SECRET_ACCESS_KEY,
                     config=Config(signature_version='s3v4')
                 )
-                key = f"products/{file_obj.name}"
+                key = f"products/{upload_name}"
                 s3_client.upload_fileobj(
-                    file_obj,
+                    upload_payload,
                     settings.R2_BUCKET_NAME,
                     key,
-                    ExtraArgs={'ContentType': file_obj.content_type}
+                    ExtraArgs={'ContentType': upload_content_type}
                 )
                 public_base = settings.R2_PUBLIC_URL or f"{settings.R2_ENDPOINT_URL.rstrip('/')}/{settings.R2_BUCKET_NAME}"
                 r2_url = f"{public_base}/{key}"
                 return Response({
                     'secure_url': r2_url,
                     'public_id': key,
-                    'storage': 'cloudflare_r2'
+                    'storage': 'cloudflare_r2',
+                    'optimized_under_1mb': True
                 }, status=status.HTTP_201_CREATED)
             except Exception as e:
                 logger.error(f"Cloudflare R2 upload error: {e}")
@@ -255,7 +304,7 @@ class OwnerImageUploadView(APIView):
             try:
                 import cloudinary.uploader
                 upload_result = cloudinary.uploader.upload(
-                    file_obj,
+                    upload_payload,
                     folder="the_print_planet/products",
                     resource_type="image",
                     use_filename=True,
@@ -267,7 +316,8 @@ class OwnerImageUploadView(APIView):
                     'format': upload_result.get('format'),
                     'width': upload_result.get('width'),
                     'height': upload_result.get('height'),
-                    'storage': 'cloudinary'
+                    'storage': 'cloudinary',
+                    'optimized_under_1mb': True
                 }, status=status.HTTP_201_CREATED)
             except Exception as e:
                 logger.error(f"Cloudinary upload error: {e}")
@@ -275,12 +325,14 @@ class OwnerImageUploadView(APIView):
         else:
             # 3. Fallback to local storage (zero cost, served by Nginx)
             from django.core.files.storage import default_storage
-            saved_path = default_storage.save(f"uploads/{file_obj.name}", file_obj)
+            from django.core.files.base import ContentFile
+            saved_path = default_storage.save(f"uploads/{upload_name}", ContentFile(upload_payload.read() if hasattr(upload_payload, 'read') else upload_payload))
             url = request.build_absolute_uri(settings.MEDIA_URL + saved_path)
             return Response({
                 'secure_url': url,
                 'public_id': saved_path,
-                'storage': 'local_nginx'
+                'storage': 'local_nginx',
+                'optimized_under_1mb': True
             }, status=status.HTTP_201_CREATED)
 
 

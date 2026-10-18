@@ -75,9 +75,21 @@ export default function OwnerCategoriesPage() {
     setErrorMsg("");
   };
 
+  const handleNameChange = (val: string) => {
+    setName(val);
+    if (isCreating || !slug) {
+      setSlug(
+        val
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)+/g, "")
+      );
+    }
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name) {
+    if (!name.trim()) {
       setErrorMsg("Category name is required.");
       return;
     }
@@ -86,11 +98,16 @@ export default function OwnerCategoriesPage() {
     setErrorMsg("");
     setStatusMsg("");
 
+    const generatedSlug = (slug || name)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+
     const payload: Partial<Category> = {
-      name,
-      slug: slug || undefined,
-      description,
-      display_order: Number(displayOrder),
+      name: name.trim(),
+      slug: generatedSlug,
+      description: description.trim(),
+      display_order: Number(displayOrder) || 0,
       is_active: isActive,
     };
 
@@ -176,7 +193,7 @@ export default function OwnerCategoriesPage() {
                 type="text"
                 required
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="e.g. Color ID Card Lanyard Roll"
                 className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none"
               />
