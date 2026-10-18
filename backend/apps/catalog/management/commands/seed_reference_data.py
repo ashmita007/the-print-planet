@@ -17,19 +17,6 @@ class Command(BaseCommand):
         parser.add_argument('--init-owners-only', action='store_true', help='Initialize owners and site settings only, leaving database completely blank (0 categories, 0 products)')
 
     def handle(self, *args, **options):
-        # 0. Check wipe triggers
-        wipe_all = os.environ.get('WIPE_CATEGORIES', '').lower() in ('true', '1') or os.environ.get('WIPE_ALL_DATA', '').lower() in ('true', '1')
-        wipe_products = os.environ.get('WIPE_DUMMY_PRODUCTS', '').lower() in ('true', '1')
-
-        if wipe_all:
-            from django.core.management import call_command
-            self.stdout.write(self.style.WARNING("Wipe signal detected! Clearing all products and categories..."))
-            call_command('clear_dummy_products', include_categories=True, no_backup=True)
-        elif wipe_products:
-            from django.core.management import call_command
-            self.stdout.write(self.style.WARNING("WIPE_DUMMY_PRODUCTS=True detected! Clearing mock products..."))
-            call_command('clear_dummy_products', no_backup=True)
-
         init_owners_only = options.get('init_owners_only') or (
             os.environ.get('SEED_CATEGORIES', 'False').lower() not in ('true', '1') and
             os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
@@ -37,7 +24,7 @@ class Command(BaseCommand):
         categories_only = options.get('categories_only') or os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
 
         if init_owners_only:
-            mode_desc = "Blank Slate Mode (0 Categories, 0 Products, Owners Only)"
+            mode_desc = "Safe Production Mode (Preserves all client categories & products, updates owners & settings only)"
         elif categories_only:
             mode_desc = "Categories & Owners Only"
         else:
