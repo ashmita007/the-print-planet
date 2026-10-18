@@ -32,6 +32,7 @@ from apps.settings_app.views import (
     OwnerSiteSettingsView,
     OwnerHomePageSectionViewSet,
     OwnerDashboardStatsView,
+    OwnerCloudDatabaseSyncView,
 )
 from apps.authentication.views import (
     LoginView,
@@ -101,6 +102,7 @@ urlpatterns = [
     path('api/v1/owner/export/excel/', OwnerCatalogExportExcelView.as_view(), name='owner-export-excel'),
     path('api/v1/owner/backup/email/', OwnerDatabaseBackupEmailView.as_view(), name='owner-backup-email'),
     path('api/v1/owner/backup/download/', OwnerDatabaseBackupDownloadView.as_view(), name='owner-backup-download'),
+    path('api/v1/owner/backup/cloud/', OwnerCloudDatabaseSyncView.as_view(), name='owner-backup-cloud'),
     path('api/v1/owner/', include(owner_router.urls)),
 ]
 

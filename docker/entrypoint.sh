@@ -8,9 +8,12 @@ TARGET_PORT="${PORT:-80}"
 echo "-> Configuring Nginx to listen on port ${TARGET_PORT}..."
 sed -i "s/listen [0-9]\+;/listen ${TARGET_PORT};/g" /etc/nginx/conf.d/default.conf
 
-# 2. Database Migrations
-echo "-> Applying database migrations..."
+# 2. Restore Persistent SQLite Cloud Backup & Apply Migrations
 cd /app/backend
+echo "-> Checking Cloudinary for persistent SQLite database backup..."
+python manage.py sync_sqlite_cloud --restore || true
+
+echo "-> Applying database migrations..."
 python manage.py migrate --noinput
 
 # 3. Collect Static Files for Django Admin & API Docs

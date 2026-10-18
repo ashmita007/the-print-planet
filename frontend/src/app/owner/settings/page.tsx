@@ -15,6 +15,9 @@ import {
   Loader2,
   FileSpreadsheet,
   ShieldCheck,
+  CloudUpload,
+  CloudDownload,
+  RefreshCw,
 } from "lucide-react";
 import {
   getSiteSettings,
@@ -23,6 +26,7 @@ import {
   ownerTriggerDatabaseBackupEmail,
   ownerDownloadDatabaseBackup,
   ownerDownloadCatalogExcel,
+  ownerSyncCloudDatabase,
 } from "@/lib/api";
 import { SiteSettings } from "@/lib/types";
 
@@ -53,7 +57,38 @@ export default function OwnerSettingsPage() {
   const [backupEmailLoading, setBackupEmailLoading] = useState(false);
   const [backupDownloadLoading, setBackupDownloadLoading] = useState(false);
   const [exportCatalogLoading, setExportCatalogLoading] = useState(false);
+  const [cloudSyncLoading, setCloudSyncLoading] = useState(false);
+  const [cloudRestoreLoading, setCloudRestoreLoading] = useState(false);
   const [backupNotice, setBackupNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleCloudSync = async (action: 'backup' | 'restore') => {
+    if (action === 'restore') {
+      const confirmed = window.confirm(
+        "Are you sure you want to restore the database from cloud storage? This will sync your database with the latest cloud snapshot."
+      );
+      if (!confirmed) return;
+    }
+    if (action === 'backup') setCloudSyncLoading(true);
+    else setCloudRestoreLoading(true);
+    setBackupNotice(null);
+
+    const res = await ownerSyncCloudDatabase(action);
+    if (action === 'backup') setCloudSyncLoading(false);
+    else setCloudRestoreLoading(false);
+
+    if (res.success) {
+      setBackupNotice({
+        type: "success",
+        text: res.message || (action === 'backup' ? 'Database successfully backed up to Cloudinary cloud storage.' : 'Database successfully restored from cloud storage.'),
+      });
+      setTimeout(() => setBackupNotice(null), 6000);
+    } else {
+      setBackupNotice({
+        type: "error",
+        text: res.error || `Failed to ${action} database to cloud.`,
+      });
+    }
+  };
 
   const handleEmailBackup = async () => {
     setBackupEmailLoading(true);
@@ -382,6 +417,56 @@ export default function OwnerSettingsPage() {
             </button>
           </div>
         )}
+
+        {/* Cloud Auto-Persistence Block (Render Free Tier Safe) */}
+        <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border border-blue-200/90 rounded-xl p-4 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start sm:items-center gap-2.5">
+              <span className="p-2 bg-[#17365D] text-white rounded-lg shrink-0 mt-0.5 sm:mt-0">
+                <CloudUpload className="w-4 h-4" />
+              </span>
+              <div>
+                <h3 className="font-bold text-[#17365D] text-xs sm:text-sm flex items-center gap-2">
+                  Cloud Auto-Persistence (Free Render Container Fix)
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-[#17365D]">
+                    Active Cloudinary WAL
+                  </span>
+                </h3>
+                <p className="text-[11px] text-[#687586] mt-0.5">
+                  Your products, categories, and enquiries are automatically mirrored to secure cloud storage on every change, and auto-restored on boot.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => handleCloudSync('backup')}
+                disabled={cloudSyncLoading || cloudRestoreLoading}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#17365D] hover:bg-[#102742] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
+              >
+                {cloudSyncLoading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <CloudUpload className="w-3.5 h-3.5" />
+                )}
+                <span>{cloudSyncLoading ? "Syncing..." : "Sync to Cloud Now"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleCloudSync('restore')}
+                disabled={cloudSyncLoading || cloudRestoreLoading}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 text-[#17365D] border border-blue-300 rounded-lg font-bold text-xs transition-colors shadow-2xs disabled:opacity-50 cursor-pointer"
+              >
+                {cloudRestoreLoading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <CloudDownload className="w-3.5 h-3.5" />
+                )}
+                <span>{cloudRestoreLoading ? "Restoring..." : "Restore from Cloud"}</span>
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
           <div className="border border-[#DCE3EB] rounded-lg p-4 bg-[#F8FAFC] flex flex-col justify-between space-y-3">

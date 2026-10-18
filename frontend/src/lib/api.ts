@@ -589,3 +589,23 @@ export async function ownerDownloadCatalogExcel(): Promise<{ success: boolean; e
   }
 }
 
+export async function ownerSyncCloudDatabase(action: 'backup' | 'restore' = 'backup'): Promise<{
+  success: boolean;
+  message?: string;
+  size_kb?: number;
+  error?: string;
+}> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/backup/cloud/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify({ action }),
+    });
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.error || 'Failed to cloud sync database' };
+    return { success: true, ...data };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+

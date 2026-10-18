@@ -87,3 +87,21 @@ class OwnerDashboardStatsView(APIView):
             'recent_enquiries': EnquiryDetailSerializer(recent_enquiries, many=True).data,
             'recent_products': ProductListSerializer(recent_products, many=True).data,
         })
+
+
+class OwnerCloudDatabaseSyncView(APIView):
+    """Allows owner to manually trigger SQLite database backup or restore to/from Cloudinary."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def post(self, request):
+        action = request.data.get('action', 'backup')
+        from django.core.management import call_command
+        try:
+            if action == 'restore':
+                call_command('sync_sqlite_cloud', restore=True)
+                return Response({'status': 'success', 'message': 'Database successfully restored from Cloudinary!'})
+            else:
+                call_command('sync_sqlite_cloud', backup=True)
+                return Response({'status': 'success', 'message': 'Database successfully backed up to Cloudinary!'})
+        except Exception as e:
+            return Response({'status': 'error', 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
