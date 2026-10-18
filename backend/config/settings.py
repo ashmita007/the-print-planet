@@ -238,30 +238,46 @@ cors_env = os.environ.get('CORS_ALLOWED_ORIGINS', '')
 if cors_env:
     CORS_ALLOWED_ORIGINS.extend([o.strip() for o in cors_env.split(',') if o.strip()])
 
-# Cloudinary Configuration for Production Media Assets
-CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
-CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME', '')
-CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY', '')
-CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET', '')
+# Cloudinary Configuration for Production Media Assets (Sanitized & Resilient)
+raw_c_url = os.environ.get('CLOUDINARY_URL', '').strip().strip('"\'')
+if raw_c_url.startswith('CLOUDINARY_URL='):
+    raw_c_url = raw_c_url.split('CLOUDINARY_URL=', 1)[1].strip().strip('"\'')
 
-if CLOUDINARY_URL:
-    import cloudinary
-    import urllib.parse
-    # Set config directly via URL
-    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
-    # Parse components for downstream code checking settings.CLOUDINARY_CLOUD_NAME
-    parsed = urllib.parse.urlparse(CLOUDINARY_URL)
-    CLOUDINARY_CLOUD_NAME = parsed.hostname or ''
-    CLOUDINARY_API_KEY = parsed.username or ''
-    CLOUDINARY_API_SECRET = parsed.password or ''
-elif CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
-    import cloudinary
-    cloudinary.config(
-        cloud_name=CLOUDINARY_CLOUD_NAME,
-        api_key=CLOUDINARY_API_KEY,
-        api_secret=CLOUDINARY_API_SECRET,
-        secure=True
-    )
+if raw_c_url and raw_c_url.startswith('cloudinary://') and '@' in raw_c_url:
+    os.environ['CLOUDINARY_URL'] = raw_c_url
+    CLOUDINARY_URL = raw_c_url
+    try:
+        import cloudinary
+        import urllib.parse
+        cloudinary.config(cloudinary_url=raw_c_url)
+        parsed = urllib.parse.urlparse(raw_c_url)
+        CLOUDINARY_CLOUD_NAME = parsed.hostname or ''
+        CLOUDINARY_API_KEY = parsed.username or ''
+        CLOUDINARY_API_SECRET = parsed.password or ''
+    except Exception:
+        CLOUDINARY_URL = ''
+        CLOUDINARY_CLOUD_NAME = ''
+        CLOUDINARY_API_KEY = ''
+        CLOUDINARY_API_SECRET = ''
+else:
+    # Clean from os.environ so cloudinary module import does not raise ValueError on empty or malformed values
+    if 'CLOUDINARY_URL' in os.environ:
+        del os.environ['CLOUDINARY_URL']
+    CLOUDINARY_URL = ''
+    CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME', '').strip()
+    CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY', '').strip()
+    CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET', '').strip()
+    if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
+        try:
+            import cloudinary
+            cloudinary.config(
+                cloud_name=CLOUDINARY_CLOUD_NAME,
+                api_key=CLOUDINARY_API_KEY,
+                api_secret=CLOUDINARY_API_SECRET,
+                secure=True
+            )
+        except Exception:
+            pass
 
 # Cloudflare R2 Storage Configuration (10GB Lifetime Free, Zero Egress Cost)
 R2_ACCESS_KEY_ID = os.environ.get('R2_ACCESS_KEY_ID', os.environ.get('CLOUDFLARE_R2_ACCESS_KEY_ID', ''))
