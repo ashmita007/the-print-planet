@@ -491,3 +491,70 @@ export async function ownerUpdateSettings(data: Partial<SiteSettings>): Promise<
     return { success: false, error: err.message };
   }
 }
+
+export async function ownerTriggerDatabaseBackupEmail(recipient?: string): Promise<{
+  success: boolean;
+  message?: string;
+  recipient?: string;
+  filename?: string;
+  file_size_kb?: number;
+  error?: string;
+}> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/backup/email/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify(recipient ? { recipient } : {}),
+    });
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.error || 'Failed to email database backup' };
+    return { success: true, ...data };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+
+export async function ownerDownloadDatabaseBackup(): Promise<{ success: boolean; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/backup/download/`, {
+      method: 'GET',
+      headers: { ...getAuthHeaders() },
+    });
+    if (!res.ok) return { success: false, error: 'Failed to download database backup' };
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `The_Print_Planet_DB_Backup_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+
+export async function ownerDownloadCatalogExcel(): Promise<{ success: boolean; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/export/excel/`, {
+      method: 'GET',
+      headers: { ...getAuthHeaders() },
+    });
+    if (!res.ok) return { success: false, error: 'Failed to export catalogue' };
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'The_Print_Planet_Catalogue_and_Images.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+

@@ -13,8 +13,17 @@ import {
   Settings,
   ArrowRight,
   TrendingUp,
+  Mail,
+  Download,
+  Database,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
-import { ownerGetDashboardStats } from "@/lib/api";
+import {
+  ownerGetDashboardStats,
+  ownerTriggerDatabaseBackupEmail,
+  ownerDownloadDatabaseBackup,
+} from "@/lib/api";
 import { DashboardMetrics, Enquiry, Product } from "@/lib/types";
 
 export default function OwnerDashboardPage() {
@@ -22,6 +31,11 @@ export default function OwnerDashboardPage() {
   const [recentEnquiries, setRecentEnquiries] = useState<Enquiry[]>([]);
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Backup states
+  const [backupEmailLoading, setBackupEmailLoading] = useState(false);
+  const [backupDownloadLoading, setBackupDownloadLoading] = useState(false);
+  const [backupNotice, setBackupNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
     ownerGetDashboardStats().then((data) => {
@@ -34,16 +48,80 @@ export default function OwnerDashboardPage() {
     });
   }, []);
 
+  const handleEmailBackup = async () => {
+    setBackupEmailLoading(true);
+    setBackupNotice(null);
+    const res = await ownerTriggerDatabaseBackupEmail();
+    setBackupEmailLoading(false);
+    if (res.success) {
+      setBackupNotice({
+        type: "success",
+        text: `Full database backup successfully emailed to ${res.recipient} (${res.file_size_kb} KB).`,
+      });
+      setTimeout(() => setBackupNotice(null), 6000);
+    } else {
+      setBackupNotice({
+        type: "error",
+        text: res.error || "Failed to dispatch email backup.",
+      });
+    }
+  };
+
+  const handleDownloadBackup = async () => {
+    setBackupDownloadLoading(true);
+    setBackupNotice(null);
+    const res = await ownerDownloadDatabaseBackup();
+    setBackupDownloadLoading(false);
+    if (res.success) {
+      setBackupNotice({
+        type: "success",
+        text: "Full database Excel backup downloaded successfully.",
+      });
+      setTimeout(() => setBackupNotice(null), 5000);
+    } else {
+      setBackupNotice({
+        type: "error",
+        text: res.error || "Failed to download backup.",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="py-20 text-center text-xs text-[#687586]">
-        Loading live owner metrics from PostgreSQL...
+        Loading live owner metrics...
       </div>
     );
   }
 
   return (
     <div className="space-y-8">
+      {/* Notice Banner */}
+      {backupNotice && (
+        <div
+          className={`p-4 rounded-xl border text-xs font-semibold flex items-center justify-between shadow-xs ${
+            backupNotice.type === "success"
+              ? "bg-green-50 border-green-200 text-[#217A4B]"
+              : "bg-red-50 border-red-200 text-red-700"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            {backupNotice.type === "success" ? (
+              <CheckCircle className="w-4 h-4 shrink-0 text-[#217A4B]" />
+            ) : (
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+            )}
+            <span>{backupNotice.text}</span>
+          </div>
+          <button
+            onClick={() => setBackupNotice(null)}
+            className="text-xs opacity-60 hover:opacity-100"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Page Title & Quick Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -54,6 +132,34 @@ export default function OwnerDashboardPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={handleEmailBackup}
+            disabled={backupEmailLoading}
+            title="Generate multi-sheet Excel backup and email to theprintplanet01@gmail.com"
+            className="bg-[#217A4B] hover:bg-[#1a623c] text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+          >
+            {backupEmailLoading ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Mail className="w-3.5 h-3.5" />
+            )}
+            <span>{backupEmailLoading ? "Emailing Backup..." : "Email DB Backup"}</span>
+          </button>
+
+          <button
+            onClick={handleDownloadBackup}
+            disabled={backupDownloadLoading}
+            title="Direct download full database as .xlsx"
+            className="bg-white border border-[#DCE3EB] hover:bg-[#F5F7FA] text-[#17365D] px-3.5 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs disabled:opacity-50 cursor-pointer"
+          >
+            {backupDownloadLoading ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5" />
+            )}
+            <span>Download DB (.xlsx)</span>
+          </button>
+
           <Link
             href="/owner/products/new"
             className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs"
@@ -61,6 +167,7 @@ export default function OwnerDashboardPage() {
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add Product</span>
           </Link>
+
           <Link
             href="/owner/import"
             className="bg-[#17365D] hover:bg-[#102742] text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs"

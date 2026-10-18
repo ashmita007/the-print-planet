@@ -16,7 +16,8 @@ import {
   getSiteSettings,
 } from "@/lib/api";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function HomePage() {
   const [categories, productsData, featuredProducts, settings] = await Promise.all([

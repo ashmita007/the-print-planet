@@ -673,3 +673,83 @@ class OwnerCatalogExportExcelView(APIView):
         )
         response['Content-Disposition'] = 'attachment; filename="The_Print_Planet_Catalogue_and_Images.xlsx"'
         return response
+
+
+from apps.catalog.management.commands.backup_database_email import generate_full_database_excel_bytes
+from django.core.mail import EmailMessage
+from datetime import datetime
+from apps.settings_app.models import SiteSettings
+from apps.enquiries.models import Enquiry
+
+class OwnerDatabaseBackupEmailView(APIView):
+    """Owner endpoint to generate full database Excel backup and email it to owner."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def post(self, request):
+        try:
+            excel_bytes = generate_full_database_excel_bytes()
+            now_str = datetime.now().strftime('%Y-%m-%d_%H-%M')
+            filename = f"The_Print_Planet_DB_Backup_{now_str}.xlsx"
+
+            site_settings = SiteSettings.get_settings()
+            recipient = (
+                request.data.get('recipient') or
+                getattr(settings, 'OWNER_NOTIFICATION_EMAIL', '') or
+                site_settings.email or
+                'theprintplanet01@gmail.com'
+            )
+            from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', '') or f"{site_settings.business_name} <{recipient}>"
+
+            subject = f"📦 [Database Backup] The Print Planet - {now_str}"
+            body = f"""
+Hello,
+
+Attached is your complete automated database backup for The Print Planet.
+
+Backup Summary:
+- Products: {Product.objects.count()} active items
+- Categories: {Category.objects.count()} categories
+- Enquiries: {Enquiry.objects.count()} customer leads
+- Date Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+- Backup File: {filename} ({round(len(excel_bytes) / 1024, 1)} KB)
+
+Best Regards,
+The Print Planet Automated Backup Shield
+"""
+            email = EmailMessage(
+                subject=subject,
+                body=body,
+                from_email=from_email,
+                to=[recipient],
+            )
+            email.attach(filename, excel_bytes, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            email.send(fail_silently=False)
+
+            return Response({
+                'message': f'Database backup successfully sent to {recipient}',
+                'recipient': recipient,
+                'filename': filename,
+                'file_size_kb': round(len(excel_bytes) / 1024, 1)
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': f'Failed to email backup: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class OwnerDatabaseBackupDownloadView(APIView):
+    """Owner endpoint to download full database Excel backup directly in browser."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def get(self, request):
+        try:
+            excel_bytes = generate_full_database_excel_bytes()
+            now_str = datetime.now().strftime('%Y-%m-%d_%H-%M')
+            filename = f"The_Print_Planet_DB_Backup_{now_str}.xlsx"
+            response = HttpResponse(
+                excel_bytes,
+                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+        except Exception as e:
+            return Response({'error': f'Failed to generate backup: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

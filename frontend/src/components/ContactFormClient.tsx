@@ -72,7 +72,7 @@ export default function ContactFormClient() {
             type="text"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
-            placeholder="e.g. Delta ID Solutions Pvt Ltd"
+            placeholder="e.g. Apex Corporate Solutions Pvt Ltd"
             className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
