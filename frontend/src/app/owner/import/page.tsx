@@ -108,31 +108,31 @@ export default function BulkImportPage() {
           Step 1: Select Excel (.xlsx), CSV, or JSON Data File
         </h2>
 
-        <div className="border-2 border-dashed border-[#DCE3EB] rounded-xl p-8 text-center space-y-3 bg-[#F8FAFC]">
-          <FileSpreadsheet className="w-10 h-10 text-[#17365D] mx-auto" />
+        <label className="border-2 border-dashed border-[#DCE3EB] hover:border-[#17365D] hover:bg-[#F0F4F8] rounded-2xl p-8 text-center space-y-3 bg-[#F8FAFC] transition-all cursor-pointer block select-none group">
+          <input
+            type="file"
+            accept=".xlsx,.csv,.json"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          <FileSpreadsheet className="w-10 h-10 text-[#17365D] mx-auto group-hover:scale-110 transition-transform" />
           <div>
-            <label className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-lg font-bold text-xs cursor-pointer inline-block transition-colors">
-              Choose Excel (.xlsx) / CSV File
-              <input
-                type="file"
-                accept=".xlsx,.csv,.json"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-            </label>
+            <span className="bg-[#17365D] group-hover:bg-[#102742] text-white px-5 py-2.5 rounded-xl font-bold text-xs inline-block transition-colors shadow-xs">
+              Choose Excel (.xlsx) / CSV / JSON File
+            </span>
             <p className="text-[11px] text-slate-500 mt-2">
-              Supports client editable Excel workbook <code className="bg-slate-200 px-1 py-0.5 rounded">.xlsx</code>, <code className="bg-slate-200 px-1 py-0.5 rounded">.csv</code>, or <code className="bg-slate-200 px-1 py-0.5 rounded">.json</code>
+              Click anywhere in this box or select your client editable Excel workbook <code className="bg-slate-200 px-1 py-0.5 rounded">.xlsx</code>, <code className="bg-slate-200 px-1 py-0.5 rounded">.csv</code>, or <code className="bg-slate-200 px-1 py-0.5 rounded">.json</code>
             </p>
           </div>
 
           {selectedFile && (
             <div className="pt-2">
-              <span className="font-bold text-[#17365D]">
+              <span className="font-bold text-[#17365D] bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg inline-block">
                 Selected: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
               </span>
             </div>
           )}
-        </div>
+        </label>
 
         {selectedFile && !validationResult && (
           <button

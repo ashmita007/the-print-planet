@@ -253,11 +253,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
     setSpecsList([...specsList, ...newItems]);
   };
 
-  // Handle Image Uploads
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const [isDragging, setIsDragging] = useState(false);
 
+  // Handle Image Uploads
+  const processImageFile = async (file: File) => {
     setUploadingImage(true);
     setErrorMsg("");
     const res = await ownerUploadImage(file);
@@ -270,6 +269,23 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       ]);
     } else {
       setErrorMsg(res.error || "Image upload failed. Ensure image is under 10MB.");
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      await processImageFile(file);
+      e.target.value = "";
+    }
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      await processImageFile(file);
     }
   };
 
@@ -868,26 +884,46 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             {/* Upload Modes */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               {/* Cloudinary Drag-and-Drop / File input */}
-              <div className="p-4 border-2 border-dashed border-[#DCE3EB] hover:border-[#17365D] rounded-xl text-center space-y-2 bg-[#F8FAFC] transition-colors">
-                <Upload className="w-6 h-6 text-[#17365D] mx-auto" />
+              <label
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragging(true);
+                }}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={handleDrop}
+                className={`p-5 border-2 border-dashed rounded-xl text-center space-y-2 transition-all cursor-pointer block select-none group ${
+                  isDragging
+                    ? "border-[#E87832] bg-orange-50/50 scale-[1.01]"
+                    : "border-[#DCE3EB] hover:border-[#17365D] hover:bg-[#F0F4F8] bg-[#F8FAFC]"
+                }`}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  disabled={uploadingImage}
+                />
+                <Upload
+                  className={`w-7 h-7 mx-auto transition-transform group-hover:scale-110 ${
+                    isDragging ? "text-[#E87832]" : "text-[#17365D]"
+                  }`}
+                />
                 <div>
-                  <label className="font-bold text-[#17365D] cursor-pointer hover:underline block">
+                  <span className="font-bold text-[#17365D] block text-xs group-hover:text-[#E87832] transition-colors">
                     Upload from Device (Cloudinary)
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
-                  </label>
-                  <p className="text-[11px] text-slate-500 mt-0.5">JPG, PNG, WebP up to 10MB</p>
+                  </span>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    Click anywhere or drop JPG, PNG, WebP up to 10MB
+                  </p>
                 </div>
                 {uploadingImage && (
-                  <p className="text-[#E87832] font-semibold flex items-center justify-center gap-1">
-                    <RefreshCw className="w-3 h-3 animate-spin" /> Uploading to Cloudinary...
-                  </p>
+                  <div className="pt-1 text-[#E87832] font-semibold flex items-center justify-center gap-1.5 text-xs animate-in fade-in">
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    <span>Uploading asset to Cloudinary CDN...</span>
+                  </div>
                 )}
-              </div>
+              </label>
 
               {/* Direct Image URL input */}
               <div className="p-4 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl space-y-2 flex flex-col justify-between">
