@@ -33,6 +33,7 @@ export default function OwnerCategoriesPage() {
   const [description, setDescription] = useState("");
   const [displayOrder, setDisplayOrder] = useState(0);
   const [isActive, setIsActive] = useState(true);
+  const [parentId, setParentId] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -54,6 +55,7 @@ export default function OwnerCategoriesPage() {
     setName("");
     setSlug("");
     setDescription("");
+    setParentId(null);
     setDisplayOrder(categories.length + 1);
     setIsActive(true);
     setErrorMsg("");
@@ -65,6 +67,7 @@ export default function OwnerCategoriesPage() {
     setName(cat.name);
     setSlug(cat.slug);
     setDescription(cat.description || "");
+    setParentId(cat.parent || null);
     setDisplayOrder(cat.display_order);
     setIsActive(cat.is_active);
     setErrorMsg("");
@@ -73,6 +76,7 @@ export default function OwnerCategoriesPage() {
   const cancelForm = () => {
     setIsCreating(false);
     setEditingCategory(null);
+    setParentId(null);
     setErrorMsg("");
   };
 
@@ -104,10 +108,11 @@ export default function OwnerCategoriesPage() {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)+/g, "");
 
-    const payload: Partial<Category> = {
+    const payload: any = {
       name: name.trim(),
       slug: generatedSlug,
       description: description.trim(),
+      parent: parentId || null,
       display_order: Number(displayOrder) || 0,
       is_active: isActive,
     };
@@ -193,7 +198,7 @@ export default function OwnerCategoriesPage() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div>
               <label className="block font-semibold text-[#263445] mb-1">Category Name *</label>
               <input
@@ -202,8 +207,26 @@ export default function OwnerCategoriesPage() {
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="e.g. Color ID Card Lanyard Roll"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none text-xs"
               />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-[#263445] mb-1">Parent Sector (Optional)</label>
+              <select
+                value={parentId || ""}
+                onChange={(e) => setParentId(e.target.value ? Number(e.target.value) : null)}
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none text-xs"
+              >
+                <option value="">None (Top-Level Main Sector)</option>
+                {categories
+                  .filter((c) => !c.parent && c.id !== editingCategory?.id)
+                  .map((par) => (
+                    <option key={par.id} value={par.id}>
+                      {par.name}
+                    </option>
+                  ))}
+              </select>
             </div>
 
             <div>
@@ -213,7 +236,7 @@ export default function OwnerCategoriesPage() {
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
                 placeholder="color-id-card-lanyard-roll"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none font-mono"
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none font-mono text-xs"
               />
             </div>
 
@@ -223,7 +246,7 @@ export default function OwnerCategoriesPage() {
                 type="number"
                 value={displayOrder}
                 onChange={(e) => setDisplayOrder(parseInt(e.target.value, 10) || 0)}
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none text-xs"
               />
             </div>
           </div>
@@ -296,8 +319,24 @@ export default function OwnerCategoriesPage() {
                   <td className="py-3 px-4 text-center font-bold text-slate-400">
                     {c.display_order}
                   </td>
-                  <td className="py-3 px-4 font-bold text-[#17365D]">
-                    {c.name}
+                  <td className="py-3 px-4 text-[#17365D]">
+                    {c.parent ? (
+                      <span className="flex items-center gap-1.5 pl-4 text-slate-700 font-medium">
+                        <span className="text-slate-400">↳</span>
+                        <span>{c.name}</span>
+                        <span className="text-[10px] text-slate-400 font-normal">
+                          (in {categories.find((p) => p.id === c.parent)?.name})
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1.5 text-[#17365D] font-extrabold">
+                        <Layers className="w-3.5 h-3.5 text-[#E87832]" />
+                        <span>{c.name}</span>
+                        <span className="text-[9px] bg-blue-100 text-[#17365D] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                          Main Sector
+                        </span>
+                      </span>
+                    )}
                   </td>
                   <td className="py-3 px-4 font-mono text-slate-500 text-[11px]">
                     {c.slug}

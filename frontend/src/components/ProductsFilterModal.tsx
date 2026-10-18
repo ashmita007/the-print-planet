@@ -151,12 +151,32 @@ export default function ProductsFilterModal({
               onChange={(e) => setCategoryVal(e.target.value)}
               className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
             >
-              <option value="">All Categories</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.slug}>
-                  {c.name}
-                </option>
-              ))}
+              <option value="">All Wholesale Categories</option>
+              {(categories.filter((c) => !c.parent).length > 0
+                ? categories.filter((c) => !c.parent)
+                : categories
+              ).map((mainCat) => {
+                const childSubs = categories.filter((c) => c.parent === mainCat.id);
+                if (childSubs.length === 0) {
+                  return (
+                    <option key={mainCat.id} value={mainCat.slug}>
+                      {mainCat.name} ({mainCat.products_count})
+                    </option>
+                  );
+                }
+                return (
+                  <optgroup key={mainCat.id} label={`── ${mainCat.name} ──`}>
+                    <option value={mainCat.slug}>
+                      All {mainCat.name} ({mainCat.products_count})
+                    </option>
+                    {childSubs.map((sub) => (
+                      <option key={sub.id} value={sub.slug}>
+                        ↳ {sub.name} ({sub.products_count})
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
             </select>
           </div>
 

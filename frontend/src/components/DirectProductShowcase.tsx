@@ -119,9 +119,19 @@ export default function DirectProductShowcase({
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
-    // Category filter
+    // Category filter (matches direct slug or child subcategories)
     if (selectedCategory !== "all") {
-      list = list.filter((p) => p.category?.slug === selectedCategory);
+      const selectedCatObj = categories.find((c) => c.slug === selectedCategory);
+      const childCatIds = selectedCatObj
+        ? categories.filter((c) => c.parent === selectedCatObj.id).map((c) => c.id)
+        : [];
+
+      list = list.filter((p) => {
+        if (!p.category) return false;
+        if (p.category.slug === selectedCategory) return true;
+        if (childCatIds.includes(p.category.id)) return true;
+        return false;
+      });
     }
 
     // Search query filter
@@ -258,7 +268,10 @@ export default function DirectProductShowcase({
                 </span>
               </button>
 
-              {categories.map((cat) => (
+              {(categories.filter((c) => !c.parent).length > 0
+                ? categories.filter((c) => !c.parent)
+                : categories
+              ).map((cat) => (
                 <button
                   key={cat.id}
                   type="button"
@@ -270,7 +283,7 @@ export default function DirectProductShowcase({
                       block: "nearest",
                     });
                   }}
-                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     selectedCategory === cat.slug
                       ? "bg-[#17365D] text-white shadow-xs"
                       : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"

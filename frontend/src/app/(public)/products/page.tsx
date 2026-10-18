@@ -113,36 +113,75 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             </button>
           </form>
 
-          {/* Categories Filter List */}
+          {/* Hierarchical Categories Filter List */}
           <div>
-            <label className="block text-xs font-bold text-[#263445] mb-2">Category Filter</label>
-            <div className="space-y-1 max-h-72 overflow-y-auto pr-1 text-xs">
+            <label className="block text-xs font-bold text-[#263445] mb-2 flex items-center justify-between">
+              <span>Category Sector</span>
+              <span className="text-[10px] text-slate-400 font-semibold">{categories.length} lines</span>
+            </label>
+            <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1 text-xs">
               <Link
                 href={`/products${params.search ? `?search=${encodeURIComponent(params.search)}` : ""}`}
-                className={`flex items-center justify-between px-2.5 py-1.5 rounded-md transition-colors ${
+                className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-colors ${
                   !params.category ? "bg-[#17365D] text-white font-bold" : "text-[#263445] hover:bg-white"
                 }`}
               >
-                <span>All Categories</span>
-                <span className="text-[10px] opacity-75">All</span>
+                <span>All Wholesale Products</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded ${!params.category ? "bg-white/20 text-white" : "bg-slate-200"}`}>
+                  {productsData.count}
+                </span>
               </Link>
-              {categories.map((c) => {
-                const isSelected = params.category === c.slug;
+
+              {(categories.filter((c) => !c.parent).length > 0
+                ? categories.filter((c) => !c.parent)
+                : categories
+              ).map((mainCat) => {
+                const isMainSelected = params.category === mainCat.slug;
+                const childSubs = categories.filter((c) => c.parent === mainCat.id);
+                const hasSelectedChild = childSubs.some((s) => s.slug === params.category);
+
                 return (
-                  <Link
-                    key={c.id}
-                    href={`/products?category=${c.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
-                    className={`flex items-center justify-between px-2.5 py-1.5 rounded-md transition-colors ${
-                      isSelected
-                        ? "bg-[#17365D] text-white font-bold"
-                        : "text-[#263445] hover:bg-white"
-                    }`}
-                  >
-                    <span className="truncate pr-2">{c.name}</span>
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded ${isSelected ? "bg-white/20" : "bg-slate-200"}`}>
-                      {c.products_count}
-                    </span>
-                  </Link>
+                  <div key={mainCat.id} className="space-y-1 pt-1">
+                    <Link
+                      href={`/products?category=${mainCat.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
+                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-colors ${
+                        isMainSelected
+                          ? "bg-[#17365D] text-white font-bold"
+                          : hasSelectedChild
+                          ? "bg-slate-200/70 text-[#17365D] font-bold"
+                          : "text-[#17365D] font-bold hover:bg-white"
+                      }`}
+                    >
+                      <span className="truncate pr-1">{mainCat.name}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded shrink-0 ${isMainSelected ? "bg-white/20 text-white" : "bg-slate-200"}`}>
+                        {mainCat.products_count}
+                      </span>
+                    </Link>
+
+                    {childSubs.length > 0 && (
+                      <div className="pl-3 border-l-2 border-slate-200 space-y-0.5 py-0.5 ml-2">
+                        {childSubs.map((sub) => {
+                          const isSubSelected = params.category === sub.slug;
+                          return (
+                            <Link
+                              key={sub.id}
+                              href={`/products?category=${sub.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
+                              className={`flex items-center justify-between px-2 py-1 rounded text-[11px] transition-colors ${
+                                isSubSelected
+                                  ? "bg-[#E87832] text-white font-bold"
+                                  : "text-slate-600 hover:text-[#17365D] hover:bg-white"
+                              }`}
+                            >
+                              <span className="truncate pr-1">{sub.name}</span>
+                              <span className={`text-[9px] px-1 py-0.2 rounded shrink-0 ${isSubSelected ? "bg-white/20 text-white" : "text-slate-400"}`}>
+                                {sub.products_count}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>

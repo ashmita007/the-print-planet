@@ -235,44 +235,75 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
               {/* Mega Dropdown Menu */}
               {categoriesDropdownOpen && (
-                <div className="absolute top-full left-0 w-80 bg-white border border-[#DCE3EB] rounded-lg shadow-xl py-2 mt-1 z-50">
-                  <div className="px-4 py-2 border-b border-[#F5F7FA] bg-[#F5F7FA] flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider">
-                      Product Catalogue
+                <div className="absolute top-full left-0 w-[640px] bg-white border border-[#DCE3EB] rounded-2xl shadow-2xl py-3 mt-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="px-5 py-2.5 border-b border-[#F5F7FA] bg-[#F5F7FA] flex items-center justify-between rounded-t-2xl">
+                    <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-[#E87832]" /> Wholesale Product Lines
                     </span>
-                    <span className="text-[10px] text-slate-400 font-semibold">
-                      {liveCategories.length} Lines
+                    <span className="text-[10px] text-slate-500 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200">
+                      6 Core Sectors • 180+ Products
                     </span>
                   </div>
-                  <div className="max-h-[420px] overflow-y-auto py-1">
-                    {liveCategories.length === 0 ? (
-                      <div className="px-4 py-4 text-center text-xs text-slate-500">
-                        <p className="font-semibold text-slate-700">All Wholesale Categories</p>
-                        <p className="text-[11px] text-slate-400 mt-1">Explore our complete printing supplies catalogue below</p>
-                      </div>
-                    ) : (
-                      liveCategories.map((cat) => (
-                        <Link
-                          key={cat.id}
-                          href={`/categories/${cat.slug}`}
-                          onClick={() => setCategoriesDropdownOpen(false)}
-                          className="flex items-center justify-between px-4 py-2 text-xs hover:bg-[#F5F7FA] hover:text-[#E87832] transition-colors border-b border-slate-50 last:border-b-0"
+
+                  <div className="max-h-[460px] overflow-y-auto p-3 grid grid-cols-2 gap-3">
+                    {(liveCategories.filter((c) => !c.parent).length > 0
+                      ? liveCategories.filter((c) => !c.parent)
+                      : liveCategories.slice(0, 6)
+                    ).map((mainCat) => {
+                      const subs = liveCategories.filter((c) => c.parent === mainCat.id);
+                      return (
+                        <div
+                          key={mainCat.id}
+                          className="p-3 rounded-xl bg-slate-50/70 hover:bg-[#F5F7FA] border border-slate-100 transition-colors"
                         >
-                          <span className="font-medium text-[#263445]">{cat.name}</span>
-                          <span className="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
-                            {cat.products_count || 0}
-                          </span>
-                        </Link>
-                      ))
-                    )}
+                          <Link
+                            href={`/products?category=${mainCat.slug}`}
+                            onClick={() => setCategoriesDropdownOpen(false)}
+                            className="flex items-center justify-between text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors mb-1.5"
+                          >
+                            <span className="truncate pr-1">{mainCat.name}</span>
+                            <span className="text-[10px] text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0">
+                              {mainCat.products_count || 0}
+                            </span>
+                          </Link>
+                          {subs.length > 0 && (
+                            <div className="space-y-1 pl-2 border-l-2 border-slate-200">
+                              {subs.slice(0, 4).map((sub) => (
+                                <Link
+                                  key={sub.id}
+                                  href={`/products?category=${sub.slug}`}
+                                  onClick={() => setCategoriesDropdownOpen(false)}
+                                  className="block text-[11px] text-slate-600 hover:text-[#E87832] truncate transition-colors"
+                                >
+                                  {sub.name}
+                                </Link>
+                              ))}
+                              {subs.length > 4 && (
+                                <Link
+                                  href={`/products?category=${mainCat.slug}`}
+                                  onClick={() => setCategoriesDropdownOpen(false)}
+                                  className="block text-[10px] font-bold text-[#E87832] hover:underline pt-0.5"
+                                >
+                                  +{subs.length - 4} more subcategories &rarr;
+                                </Link>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="p-2 border-t border-[#DCE3EB] bg-[#F8FAFC]">
+
+                  <div className="p-2.5 border-t border-[#DCE3EB] bg-[#F8FAFC] flex items-center justify-between px-4 rounded-b-2xl">
+                    <span className="text-[11px] text-slate-500">
+                      Looking for custom batch sizes or GST invoicing?
+                    </span>
                     <Link
                       href="/products"
                       onClick={() => setCategoriesDropdownOpen(false)}
-                      className="block text-center text-xs font-bold text-[#17365D] hover:text-[#E87832] py-1"
+                      className="text-xs font-bold text-[#17365D] hover:text-[#E87832] flex items-center gap-1"
                     >
-                      View All 85+ Products &rarr;
+                      <span>View All 180+ Products &rarr;</span>
                     </Link>
                   </div>
                 </div>

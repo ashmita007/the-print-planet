@@ -22,7 +22,7 @@ export const revalidate = 0;
 export default async function HomePage() {
   const [categories, productsData, featuredProducts, settings] = await Promise.all([
     getCategories(),
-    getProducts({ page_size: 65 }),
+    getProducts({ page_size: 200 }),
     getFeaturedProducts(),
     getSiteSettings(),
   ]);
@@ -33,7 +33,11 @@ export default async function HomePage() {
 
   const productsList = productsData?.results || [];
   const machineryList = productsList.filter(
-    (p) => p.category?.slug === "id-card-manufacturing-machines"
+    (p) =>
+      p.category?.slug === "machines" ||
+      p.category?.slug === "id-card-manufacturing-machines" ||
+      p.category?.slug?.includes("machine") ||
+      (p as any).category?.parent_slug === "machines"
   );
   const safeFeatured = featuredProducts?.length > 0 ? featuredProducts : productsList.slice(0, 6);
 
