@@ -110,6 +110,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
   const [newCatName, setNewCatName] = useState("");
   const [newCatDesc, setNewCatDesc] = useState("");
   const [creatingCat, setCreatingCat] = useState(false);
+  const [catFeedback, setCatFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   // Core Product details
   const [name, setName] = useState(initialProduct?.name || "");
@@ -321,6 +322,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
     if (!newCatName.trim()) return;
 
     setCreatingCat(true);
+    setCatFeedback(null);
     const generatedSlug = newCatName
       .trim()
       .toLowerCase()
@@ -336,13 +338,30 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
     setCreatingCat(false);
 
     if (res.success && res.data) {
-      setCategories((prev) => [...prev, res.data!]);
-      setCategoryId(res.data.id);
+      const createdCategory = res.data;
+      setCategories((prev) => {
+        const filtered = prev.filter((c) => String(c.id) !== String(createdCategory.id));
+        return [...filtered, createdCategory];
+      });
+      setCategoryId(String(createdCategory.id));
       setNewCatName("");
       setNewCatDesc("");
       setShowCatCreator(false);
+      setCatFeedback({
+        type: "success",
+        message: `Category "${createdCategory.name}" created and assigned!`,
+      });
+      setTimeout(() => setCatFeedback(null), 4000);
+
+      // Notify Navbar, products page, and other components in real-time
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("categoryUpdated", { detail: createdCategory }));
+      }
     } else {
-      setErrorMsg(res.error || "Failed to create category");
+      setCatFeedback({
+        type: "error",
+        message: res.error || "Failed to create category",
+      });
     }
   };
 
@@ -370,6 +389,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       name: name.trim(),
       sku: sku.trim().toUpperCase(),
       category: Number(categoryId),
+      category_id: Number(categoryId),
       short_description: shortDesc.trim(),
       description: desc.trim(),
       material: material.trim() || null,
@@ -521,7 +541,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 </div>
 
                 <select
-                  value={categoryId}
+                  value={String(categoryId)}
                   onChange={(e) => setCategoryId(e.target.value)}
                   className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none font-medium text-[#263445]"
                 >
@@ -529,11 +549,30 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     -- Select Verified Category --
                   </option>
                   {categories.map((c) => (
-                    <option key={c.id} value={c.id}>
+                    <option key={c.id} value={String(c.id)}>
                       {c.name} ({c.products_count || 0} models)
                     </option>
                   ))}
                 </select>
+
+                {catFeedback && (
+                  <div
+                    className={`mt-2 p-2.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-all ${
+                      catFeedback.type === "success"
+                        ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                        : "bg-red-50 text-red-800 border border-red-200"
+                    }`}
+                  >
+                    <span>{catFeedback.message}</span>
+                    <button
+                      type="button"
+                      onClick={() => setCatFeedback(null)}
+                      className="text-xs hover:opacity-75"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                )}
 
                 {/* Inline Quick Category Creator */}
                 {showCatCreator && (

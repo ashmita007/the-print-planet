@@ -84,6 +84,16 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     primary_image = serializers.SerializerMethodField()
     related_products = serializers.SerializerMethodField()
 
+    def to_internal_value(self, data):
+        mutable_data = data.copy() if hasattr(data, 'copy') else dict(data)
+        if 'category' in mutable_data and 'category_id' not in mutable_data:
+            cat_val = mutable_data.get('category')
+            if isinstance(cat_val, dict) and 'id' in cat_val:
+                mutable_data['category_id'] = cat_val['id']
+            elif cat_val is not None:
+                mutable_data['category_id'] = cat_val
+        return super().to_internal_value(mutable_data)
+
     class Meta:
         model = Product
         fields = [
@@ -134,8 +144,24 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             'slug': {'required': False},
         }
 
+    def to_internal_value(self, data):
+        mutable_data = data.copy() if hasattr(data, 'copy') else dict(data)
+        if 'category_id' in mutable_data and 'category' not in mutable_data:
+            mutable_data['category'] = mutable_data['category_id']
+        elif 'category' in mutable_data and isinstance(mutable_data['category'], dict):
+            mutable_data['category'] = mutable_data['category'].get('id')
+        return super().to_internal_value(mutable_data)
+
     def create(self, validated_data):
         images_data = validated_data.pop('images', None)
+        if not validated_data.get('slug'):
+            base_slug = slugify(validated_data.get('name', 'product')) or 'product'
+            slug = base_slug
+            idx = 1
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{idx}"
+                idx += 1
+            validated_data['slug'] = slug
         product = super().create(validated_data)
         if images_data:
             self._save_images(product, images_data)

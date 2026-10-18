@@ -60,7 +60,7 @@ const getAuthHeaders = (): Record<string, string> => {
 
 export async function getCategories(): Promise<Category[]> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to fetch categories: ${res.status}`);
     return await res.json();
   } catch (err) {
@@ -71,7 +71,7 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${slug}/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${slug}/`, { cache: 'no-store' });
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {

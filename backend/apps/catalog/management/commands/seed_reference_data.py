@@ -17,18 +17,17 @@ class Command(BaseCommand):
         parser.add_argument('--init-owners-only', action='store_true', help='Initialize owners and site settings only, leaving database completely blank (0 categories, 0 products)')
 
     def handle(self, *args, **options):
-        init_owners_only = options.get('init_owners_only') or (
-            os.environ.get('SEED_CATEGORIES', 'False').lower() not in ('true', '1') and
-            os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
-        )
-        categories_only = options.get('categories_only') or os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
+        existing_cat_count = Category.objects.filter(is_active=True).count()
+        categories_only = options.get('categories_only') or (existing_cat_count <= 1) or os.environ.get('SEED_CATEGORIES', 'True').lower() in ('true', '1')
+        seed_products = os.environ.get('SEED_PRODUCTS', 'False').lower() in ('true', '1')
+        init_owners_only = options.get('init_owners_only') and not categories_only and not seed_products
 
-        if init_owners_only:
-            mode_desc = "Safe Production Mode (Preserves all client categories & products, updates owners & settings only)"
+        if seed_products:
+            mode_desc = "Full Reference Catalogue"
         elif categories_only:
             mode_desc = "Categories & Owners Only"
         else:
-            mode_desc = "Full Reference Catalogue"
+            mode_desc = "Safe Production Mode"
 
         self.stdout.write(self.style.NOTICE(f"Starting database initialization ({mode_desc})..."))
 

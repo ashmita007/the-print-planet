@@ -22,12 +22,12 @@ echo "-> Initializing database essentials (Site Settings, Owner Accounts)..."
 if [ "$SEED_PRODUCTS" = "True" ] || [ "$SEED_PRODUCTS" = "true" ]; then
     echo "-> SEED_PRODUCTS=True: Seeding full catalogue with reference products..."
     python manage.py seed_reference_data --create-owner || true
-elif [ "$SEED_CATEGORIES" = "True" ] || [ "$SEED_CATEGORIES" = "true" ]; then
-    echo "-> SEED_CATEGORIES=True: Seeding standard reference categories..."
-    python manage.py seed_reference_data --categories-only --create-owner || true
-else
-    echo "-> Blank Slate Mode: Initializing owners & site settings with ZERO categories and ZERO products..."
+elif [ "$SEED_CATEGORIES" = "False" ] || [ "$SEED_CATEGORIES" = "false" ]; then
+    echo "-> Blank Slate Mode: Initializing owners & site settings with ZERO categories..."
     python manage.py seed_reference_data --init-owners-only --create-owner || true
+else
+    echo "-> Ensuring standard wholesale categories and owner accounts exist..."
+    python manage.py seed_reference_data --categories-only --create-owner || true
 fi
 
 # 5. Sync Media to Cloudflare R2 or Cloudinary CDN if credentials exist

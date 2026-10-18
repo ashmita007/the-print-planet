@@ -182,6 +182,37 @@ class OwnerCategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     pagination_class = None
 
+    def create(self, request, *args, **kwargs):
+        name = request.data.get('name', '').strip()
+        slug = request.data.get('slug', '').strip()
+        if not slug and name:
+            from django.utils.text import slugify
+            slug = slugify(name) or 'category'
+
+        # Check if identical category already exists by name or slug
+        if name:
+            existing = Category.objects.filter(Q(name__iexact=name) | Q(slug=slug)).first()
+            if existing:
+                serializer = self.get_serializer(existing)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+        # Ensure slug is strictly unique
+        base_slug = slug or 'category'
+        unique_slug = base_slug
+        idx = 1
+        while Category.objects.filter(slug=unique_slug).exists():
+            unique_slug = f"{base_slug}-{idx}"
+            idx += 1
+
+        mutable_data = request.data.copy()
+        mutable_data['slug'] = unique_slug
+        mutable_data['is_active'] = True
+        serializer = self.get_serializer(data=mutable_data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class OwnerProductImageViewSet(viewsets.ModelViewSet):
     """Owner product image management ViewSet."""

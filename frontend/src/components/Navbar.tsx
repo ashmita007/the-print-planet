@@ -18,6 +18,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
+import { getApiUrl } from "@/lib/api";
 
 interface NavbarProps {
   categories?: Category[];
@@ -30,7 +31,44 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isOwnerLoggedIn, setIsOwnerLoggedIn] = useState(false);
+  const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      setLiveCategories(categories);
+    }
+  }, [categories]);
+
+  const fetchFreshCategories = async () => {
+    try {
+      const res = await fetch(`${getApiUrl()}/api/v1/categories/`, {
+        cache: "no-store",
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setLiveCategories(data);
+        }
+      }
+    } catch {
+      // retain existing liveCategories on network failure
+    }
+  };
+
+  useEffect(() => {
+    fetchFreshCategories();
+    const handleCategoryUpdate = () => {
+      fetchFreshCategories();
+    };
+    window.addEventListener("categoryUpdated", handleCategoryUpdate);
+    window.addEventListener("focus", handleCategoryUpdate);
+    return () => {
+      window.removeEventListener("categoryUpdated", handleCategoryUpdate);
+      window.removeEventListener("focus", handleCategoryUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -172,7 +210,11 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                onClick={() => setCategoriesDropdownOpen(!categoriesDropdownOpen)}
+                onClick={() => {
+                  const nextState = !categoriesDropdownOpen;
+                  setCategoriesDropdownOpen(nextState);
+                  if (nextState) fetchFreshCategories();
+                }}
                 className="flex items-center gap-1.5 py-2 hover:text-[#E87832] transition-colors focus:outline-none"
               >
                 <Layers className="w-4 h-4 text-[#17365D]" />
@@ -183,25 +225,35 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               {/* Mega Dropdown Menu */}
               {categoriesDropdownOpen && (
                 <div className="absolute top-full left-0 w-80 bg-white border border-[#DCE3EB] rounded-lg shadow-xl py-2 mt-1 z-50">
-                  <div className="px-4 py-2 border-b border-[#F5F7FA] bg-[#F5F7FA]">
+                  <div className="px-4 py-2 border-b border-[#F5F7FA] bg-[#F5F7FA] flex items-center justify-between">
                     <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider">
                       Product Catalogue
                     </span>
+                    <span className="text-[10px] text-slate-400 font-semibold">
+                      {liveCategories.length} Lines
+                    </span>
                   </div>
                   <div className="max-h-[420px] overflow-y-auto py-1">
-                    {categories.map((cat) => (
-                      <Link
-                        key={cat.id}
-                        href={`/categories/${cat.slug}`}
-                        onClick={() => setCategoriesDropdownOpen(false)}
-                        className="flex items-center justify-between px-4 py-2 text-xs hover:bg-[#F5F7FA] hover:text-[#E87832] transition-colors border-b border-slate-50 last:border-b-0"
-                      >
-                        <span className="font-medium text-[#263445]">{cat.name}</span>
-                        <span className="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
-                          {cat.products_count}
-                        </span>
-                      </Link>
-                    ))}
+                    {liveCategories.length === 0 ? (
+                      <div className="px-4 py-4 text-center text-xs text-slate-500">
+                        <p className="font-semibold text-slate-700">All Wholesale Categories</p>
+                        <p className="text-[11px] text-slate-400 mt-1">Explore our complete printing supplies catalogue below</p>
+                      </div>
+                    ) : (
+                      liveCategories.map((cat) => (
+                        <Link
+                          key={cat.id}
+                          href={`/categories/${cat.slug}`}
+                          onClick={() => setCategoriesDropdownOpen(false)}
+                          className="flex items-center justify-between px-4 py-2 text-xs hover:bg-[#F5F7FA] hover:text-[#E87832] transition-colors border-b border-slate-50 last:border-b-0"
+                        >
+                          <span className="font-medium text-[#263445]">{cat.name}</span>
+                          <span className="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
+                            {cat.products_count || 0}
+                          </span>
+                        </Link>
+                      ))
+                    )}
                   </div>
                   <div className="p-2 border-t border-[#DCE3EB] bg-[#F8FAFC]">
                     <Link
@@ -357,7 +409,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   Categories
                 </p>
                 <div className="space-y-0.5">
-                  {categories.map((c) => (
+                  {liveCategories.map((c) => (
                     <Link
                       key={c.id}
                       href={`/categories/${c.slug}`}
@@ -366,7 +418,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     >
                       <span className="truncate pr-2">{c.name}</span>
                       <span className="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
-                        {c.products_count}
+                        {c.products_count || 0}
                       </span>
                     </Link>
                   ))}

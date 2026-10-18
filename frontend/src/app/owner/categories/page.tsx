@@ -119,6 +119,9 @@ export default function OwnerCategoriesPage() {
       setStatusMsg(`Category ${editingCategory ? "updated" : "created"} successfully!`);
       cancelForm();
       fetchCats();
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("categoryUpdated"));
+      }
       setTimeout(() => setStatusMsg(""), 3000);
     } else {
       setErrorMsg(res.error || "Failed to save category.");
@@ -131,6 +134,9 @@ export default function OwnerCategoriesPage() {
     setConfirmDelete(null);
     if (ok) {
       fetchCats();
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("categoryUpdated"));
+      }
     } else {
       alert("Failed to delete category.");
     }
