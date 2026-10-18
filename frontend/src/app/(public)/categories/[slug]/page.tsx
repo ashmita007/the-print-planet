@@ -18,15 +18,43 @@ interface CategoryPageProps {
   }>;
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://the-print-planet.onrender.com";
+
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const category = await getCategoryBySlug(slug);
   if (!category) {
     return { title: "Category Not Found | The Print Planet" };
   }
+  const title = category.seo_title || `${category.name} | The Print Planet`;
+  const desc = category.seo_description || category.description || `Wholesale trade supply of ${category.name}. High industrial grade materials.`;
+
   return {
-    title: `${category.seo_title || category.name} | The Print Planet`,
-    description: category.seo_description || category.description,
+    title,
+    description: desc,
+    alternates: {
+      canonical: `${SITE_URL}/categories/${category.slug}`,
+    },
+    openGraph: {
+      title,
+      description: desc,
+      url: `${SITE_URL}/categories/${category.slug}`,
+      type: "website",
+      images: [
+        {
+          url: `${SITE_URL}/media/products/LAN-ROY-20M.png`,
+          width: 1200,
+          height: 630,
+          alt: category.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: desc,
+      images: [`${SITE_URL}/media/products/LAN-ROY-20M.png`],
+    },
   };
 }
 
@@ -51,8 +79,29 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
   const totalPages = Math.ceil(productsData.count / 24);
 
+  const categoryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: category.name,
+    description: category.description,
+    url: `${SITE_URL}/categories/${category.slug}`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: (productsData.results || []).map((p, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        url: `${SITE_URL}/products/${p.slug}`,
+        name: p.name,
+      })),
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+      />
       <Breadcrumbs
         items={[
           { label: "Product Catalogue", href: "/products" },

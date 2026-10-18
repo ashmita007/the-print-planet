@@ -18,6 +18,7 @@ from apps.catalog.views import (
     OwnerImageUploadView,
     OwnerBulkImportValidateView,
     OwnerBulkImportExecuteView,
+    OwnerCatalogExportExcelView,
 )
 from apps.enquiries.views import (
     PublicEnquiryCreateView,
@@ -95,6 +96,7 @@ urlpatterns = [
     path('api/v1/owner/images/upload/', OwnerImageUploadView.as_view(), name='owner-image-upload'),
     path('api/v1/owner/import/validate/', OwnerBulkImportValidateView.as_view(), name='owner-import-validate'),
     path('api/v1/owner/import/execute/', OwnerBulkImportExecuteView.as_view(), name='owner-import-execute'),
+    path('api/v1/owner/export/excel/', OwnerCatalogExportExcelView.as_view(), name='owner-export-excel'),
     path('api/v1/owner/', include(owner_router.urls)),
 ]
 

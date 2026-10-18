@@ -6,6 +6,14 @@ import ProductCard from "@/components/ProductCard";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import { getProductBySlug } from "@/lib/api";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://the-print-planet.onrender.com";
+
+const getAbsoluteImageUrl = (url?: string) => {
+  if (!url) return `${SITE_URL}/media/products/LAN-ROY-20M.png`;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+};
+
 interface ProductPageProps {
   params: Promise<{
     slug: string;
@@ -18,13 +26,33 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   if (!product) {
     return { title: "Product Not Found | The Print Planet" };
   }
+
+  const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
+
   return {
-    title: `${product.seo_title || product.name} | The Print Planet`,
+    title: product.seo_title || `${product.name} | The Print Planet`,
     description: product.seo_description || product.short_description || product.description,
+    alternates: {
+      canonical: `${SITE_URL}/products/${product.slug}`,
+    },
     openGraph: {
+      title: `${product.name} | The Print Planet`,
+      description: product.short_description || product.description,
+      url: `${SITE_URL}/products/${product.slug}`,
+      images: [
+        {
+          url: imgUrl,
+          width: 800,
+          height: 800,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
       title: product.name,
-      description: product.description,
-      images: product.primary_image ? [product.primary_image.secure_url] : [],
+      description: product.short_description || product.description,
+      images: [imgUrl],
     },
   };
 }
@@ -37,8 +65,39 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: getAbsoluteImageUrl(product.primary_image?.secure_url),
+    description: product.short_description || product.description,
+    sku: product.sku,
+    brand: {
+      "@type": "Brand",
+      name: "The Print Planet",
+    },
+    category: product.category?.name,
+    offers: {
+      "@type": "Offer",
+      url: `${SITE_URL}/products/${product.slug}`,
+      priceCurrency: product.currency || "INR",
+      price: product.price ? product.price.toString() : "0.00",
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: {
+        "@type": "Organization",
+        name: "The Print Planet",
+      },
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+
       <Breadcrumbs
         items={[
           { label: "Product Catalogue", href: "/products" },
@@ -58,21 +117,14 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               <h2 className="text-base sm:text-xl font-bold text-[#17365D]">
                 Related Products in {product.category.name}
               </h2>
-              <p className="text-[11px] sm:text-xs text-[#687586] mt-0.5">
-                Explore matching widths, alternative shades, and compatible fittings
+              <p className="text-xs sm:text-sm text-[#4E6178]">
+                Frequently purchased together for bulk institutional & trade supply
               </p>
             </div>
-            <a
-              href={`/categories/${product.category.slug}`}
-              className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] hover:underline flex items-center gap-1 shrink-0"
-            >
-              <span>View Category</span>
-              <span>&rarr;</span>
-            </a>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
-            {product.related_products.map((rel) => (
-              <ProductCard key={rel.id} product={rel} />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {product.related_products.map((relProduct) => (
+              <ProductCard key={relProduct.id} product={relProduct} />
             ))}
           </div>
         </section>

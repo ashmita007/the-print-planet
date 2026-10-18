@@ -11,6 +11,7 @@ import {
   ExternalLink,
   Shield,
   FileSpreadsheet,
+  Download,
 } from "lucide-react";
 import { ownerGetProducts, ownerDeleteProduct, ownerGetCategories } from "@/lib/api";
 import { Product, Category } from "@/lib/types";
@@ -67,6 +68,34 @@ export default function OwnerProductsListPage() {
     }
   };
 
+  const handleExportExcel = async () => {
+    try {
+      const token = localStorage.getItem("owner_token");
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "";
+      const res = await fetch(`${backendUrl}/api/v1/owner/export/excel/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      if (!res.ok) {
+        alert("Failed to export Excel. Please try again.");
+        return;
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "The_Print_Planet_Catalogue_and_Images.xlsx";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Export error:", err);
+      alert("An error occurred while generating the Excel export.");
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Title & Actions */}
@@ -79,6 +108,13 @@ export default function OwnerProductsListPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={handleExportExcel}
+            className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export Excel</span>
+          </button>
           <Link
             href="/owner/products/new"
             className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs"
