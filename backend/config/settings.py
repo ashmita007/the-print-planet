@@ -287,18 +287,18 @@ R2_ENDPOINT_URL = os.environ.get('R2_ENDPOINT_URL', os.environ.get('CLOUDFLARE_R
 R2_PUBLIC_URL = os.environ.get('R2_PUBLIC_URL', os.environ.get('CLOUDFLARE_R2_PUBLIC_URL', '')).rstrip('/')
 
 # Email Notification System for Customer Inquiries & RFQs
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'theprintplanet01@gmail.com').strip()
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'nriurdkdovafflgk').strip()
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
 
 if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
+    EMAIL_BACKEND = 'apps.enquiries.email_backend.CertifiEmailBackend'
 else:
-    # Safe console backend for development / when SMTP credentials are not yet configured
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'The Print Planet <theprintplanet01@gmail.com>')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'The Print Planet <{EMAIL_HOST_USER}>')
 OWNER_NOTIFICATION_EMAIL = os.environ.get('OWNER_NOTIFICATION_EMAIL', 'theprintplanet01@gmail.com')
 

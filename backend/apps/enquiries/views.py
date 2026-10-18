@@ -15,7 +15,7 @@ class PublicEnquiryCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         enquiry = serializer.save()
-        trigger_enquiry_notifications(enquiry.id)
+        trigger_enquiry_notifications(enquiry)
 
 
 class OwnerEnquiryViewSet(viewsets.ModelViewSet):
