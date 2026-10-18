@@ -64,12 +64,26 @@ services:
       - key: CLOUDINARY_API_SECRET
         sync: false
 
-      # Initial Superuser Account Creation (Auto-seeded on deployment)
+      # Initial Superuser Account Creation
       - key: CREATE_DEFAULT_OWNER
         value: "True"
       - key: OWNER_USERNAME
         value: "admin"
       - key: OWNER_EMAIL
-        value: "owner@theprintplanet.in"
+        value: "theprintplanet01@gmail.com"
       - key: OWNER_PASSWORD
         value: "AdminPass123!Secure"
+
+      # Client Owner Account (Second Admin)
+      - key: CLIENT_USERNAME
+        sync: false
+      - key: CLIENT_EMAIL
+        sync: false
+      - key: CLIENT_PASSWORD
+        sync: false
+
+      # Product Catalog Seeding Control (Default False = 0 fake products)
+      - key: SEED_PRODUCTS
+        value: "False"
+      - key: WIPE_DUMMY_PRODUCTS
+        sync: false

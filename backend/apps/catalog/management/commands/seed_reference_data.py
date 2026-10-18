@@ -13,9 +13,12 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--create-owner', action='store_true', help='Create default owner account if not exists')
         parser.add_argument('--download-images', action='store_true', help='Download remote reference images into local media/products directory')
+        parser.add_argument('--categories-only', action='store_true', help='Seed categories, site settings, and owners only, skipping mock products')
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.NOTICE("Starting database seeding..."))
+        categories_only = options.get('categories_only') or os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
+        mode_desc = "Clean Production Categories & Owners" if categories_only else "Full Reference Catalogue"
+        self.stdout.write(self.style.NOTICE(f"Starting database seeding ({mode_desc})..."))
 
         # Find reference-products.json
         candidate_paths = [
@@ -58,97 +61,105 @@ class Command(BaseCommand):
             status_text = "Created" if created else "Updated"
             self.stdout.write(f"  Category: {cat['name']} [{status_text}]")
 
-        # 2. Seed Products
-        products_created = 0
-        products_updated = 0
-        # Prepare local media products directory
-        from django.conf import settings as dj_settings
-        media_products_dir = Path(dj_settings.MEDIA_ROOT) / 'products'
-        media_products_dir.mkdir(parents=True, exist_ok=True)
+        # Check if wiping dummy products is requested
+        if os.environ.get('WIPE_DUMMY_PRODUCTS', '').lower() in ('true', '1'):
+            from django.core.management import call_command
+            self.stdout.write(self.style.WARNING("WIPE_DUMMY_PRODUCTS=True detected! Wiping mock products from database..."))
+            call_command('clear_dummy_products', no_backup=True)
 
-        for p in products_data:
-            cat_obj = category_map.get(p['category_slug'])
-            if not cat_obj:
-                cat_obj, _ = Category.objects.get_or_create(
-                    slug=p['category_slug'],
-                    defaults={'name': p['category_name']}
-                )
-                category_map[p['category_slug']] = cat_obj
+        # 2. Seed Products (Only when not in categories_only mode)
+        if not categories_only:
+            products_created = 0
+            products_updated = 0
+            from django.conf import settings as dj_settings
+            media_products_dir = Path(dj_settings.MEDIA_ROOT) / 'products'
+            media_products_dir.mkdir(parents=True, exist_ok=True)
 
-            base_slug = p['slug']
-            slug = base_slug
-            idx = 1
-            while Product.objects.filter(slug=slug).exclude(sku=p['sku']).exists():
-                slug = f"{base_slug}-{idx}"
-                idx += 1
+            for p in products_data:
+                cat_obj = category_map.get(p['category_slug'])
+                if not cat_obj:
+                    cat_obj, _ = Category.objects.get_or_create(
+                        slug=p['category_slug'],
+                        defaults={'name': p['category_name']}
+                    )
+                    category_map[p['category_slug']] = cat_obj
 
-            prod_obj, created = Product.objects.update_or_create(
-                sku=p['sku'],
-                defaults={
-                    'name': p['name'],
-                    'slug': slug,
-                    'category': cat_obj,
-                    'short_description': p.get('short_description', ''),
-                    'description': p.get('description', ''),
-                    'specifications': p.get('specs', {}),
-                    'material': p.get('material'),
-                    'dimensions': p.get('dimensions'),
-                    'color': p.get('color'),
-                    'minimum_order_quantity': p.get('minimum_order_quantity'),
-                    'price': p.get('price'),
-                    'price_display': p.get('price_display'),
-                    'currency': p.get('currency', 'INR'),
-                    'is_featured': p.get('is_featured', False),
-                    'is_active': True,
-                    'reference_source_url': p.get('url'),
-                    'verification_status': p.get('verification_status', 'verified'),
-                    'seo_title': f"{p['name']} | The Print Planet",
-                    'seo_description': f"Wholesale supplier of {p['name']}. Technical specs, bulk MOQ, and competitive B2B quotation.",
-                }
-            )
+                base_slug = p['slug']
+                slug = base_slug
+                idx = 1
+                while Product.objects.filter(slug=slug).exclude(sku=p['sku']).exists():
+                    slug = f"{base_slug}-{idx}"
+                    idx += 1
 
-            # Associate Image (Prefer Local Disk Asset, Fallback to Remote)
-            img_url = None
-            sku = p.get('sku')
-            local_matches = list(media_products_dir.glob(f"{sku}.*")) if media_products_dir.exists() else []
-            if local_matches and local_matches[0].stat().st_size > 0:
-                img_url = f"/media/products/{local_matches[0].name}"
-            elif p.get('image_url'):
-                img_url = p.get('image_url')
-                if options.get('download_images'):
-                    try:
-                        import ssl, urllib.request
-                        ctx = ssl.create_default_context()
-                        ctx.check_hostname = False
-                        ctx.verify_mode = ssl.CERT_NONE
-                        ext = img_url.split('.')[-1].split('?')[0] or 'png'
-                        dest_file = media_products_dir / f"{sku}.{ext}"
-                        req = urllib.request.Request(img_url, headers={'User-Agent': 'Mozilla/5.0'})
-                        with urllib.request.urlopen(req, context=ctx, timeout=8) as resp:
-                            dest_file.write_bytes(resp.read())
-                        img_url = f"/media/products/{dest_file.name}"
-                    except Exception as err:
-                        self.stdout.write(self.style.WARNING(f"Could not download image for {sku}: {err}"))
-
-            if img_url:
-                ProductImage.objects.update_or_create(
-                    product=prod_obj,
+                prod_obj, created = Product.objects.update_or_create(
+                    sku=p['sku'],
                     defaults={
-                        'secure_url': img_url,
-                        'alt_text': p['name'],
-                        'is_primary': True,
-                        'display_order': 0,
+                        'name': p['name'],
+                        'slug': slug,
+                        'category': cat_obj,
+                        'short_description': p.get('short_description', ''),
+                        'description': p.get('description', ''),
+                        'specifications': p.get('specs', {}),
+                        'material': p.get('material'),
+                        'dimensions': p.get('dimensions'),
+                        'color': p.get('color'),
+                        'minimum_order_quantity': p.get('minimum_order_quantity'),
+                        'price': p.get('price'),
+                        'price_display': p.get('price_display'),
+                        'currency': p.get('currency', 'INR'),
+                        'is_featured': p.get('is_featured', False),
+                        'is_active': True,
+                        'reference_source_url': p.get('url'),
+                        'verification_status': p.get('verification_status', 'verified'),
+                        'seo_title': f"{p['name']} | The Print Planet",
+                        'seo_description': f"Wholesale supplier of {p['name']}. Technical specs, bulk MOQ, and competitive B2B quotation.",
                     }
                 )
 
-            if created:
-                products_created += 1
-            else:
-                products_updated += 1
+                # Associate Image (Prefer Local Disk Asset, Fallback to Remote)
+                img_url = None
+                sku = p.get('sku')
+                local_matches = list(media_products_dir.glob(f"{sku}.*")) if media_products_dir.exists() else []
+                if local_matches and local_matches[0].stat().st_size > 0:
+                    img_url = f"/media/products/{local_matches[0].name}"
+                elif p.get('image_url'):
+                    img_url = p.get('image_url')
+                    if options.get('download_images'):
+                        try:
+                            import ssl, urllib.request
+                            ctx = ssl.create_default_context()
+                            ctx.check_hostname = False
+                            ctx.verify_mode = ssl.CERT_NONE
+                            ext = img_url.split('.')[-1].split('?')[0] or 'png'
+                            dest_file = media_products_dir / f"{sku}.{ext}"
+                            req = urllib.request.Request(img_url, headers={'User-Agent': 'Mozilla/5.0'})
+                            with urllib.request.urlopen(req, context=ctx, timeout=8) as resp:
+                                dest_file.write_bytes(resp.read())
+                            img_url = f"/media/products/{dest_file.name}"
+                        except Exception as err:
+                            self.stdout.write(self.style.WARNING(f"Could not download image for {sku}: {err}"))
 
-        self.stdout.write(self.style.SUCCESS(
-            f"Successfully seeded {len(categories_data)} categories and {products_created + products_updated} products ({products_created} created, {products_updated} updated)."
-        ))
+                if img_url:
+                    ProductImage.objects.update_or_create(
+                        product=prod_obj,
+                        defaults={
+                            'secure_url': img_url,
+                            'alt_text': p['name'],
+                            'is_primary': True,
+                            'display_order': 0,
+                        }
+                    )
+
+                if created:
+                    products_created += 1
+                else:
+                    products_updated += 1
+
+            self.stdout.write(self.style.SUCCESS(
+                f"Successfully seeded {len(categories_data)} categories and {products_created + products_updated} products ({products_created} created, {products_updated} updated)."
+            ))
+        else:
+            self.stdout.write(self.style.NOTICE("Skipping product seeding (Clean Production Mode enabled)."))
 
         # 3. Configure Site Settings
         settings_obj = SiteSettings.get_settings()
@@ -194,7 +205,6 @@ class Command(BaseCommand):
                 display_order=3,
                 is_active=True
             )
-            s3.featured_products.set(Product.objects.filter(is_featured=True)[:8])
 
             s4 = HomePageSection.objects.create(
                 section_type='machinery',
@@ -203,40 +213,52 @@ class Command(BaseCommand):
                 display_order=4,
                 is_active=True
             )
-            machinery_cat = Category.objects.filter(slug='id-card-manufacturing-machines').first()
-            if machinery_cat:
-                s4.featured_products.set(Product.objects.filter(category=machinery_cat))
 
             self.stdout.write(self.style.SUCCESS("Configured default HomePage Sections."))
 
-        # Ensure flagship models are marked as featured for homepage showcase
-        flagship_skus = [
-            'LAN-ROY-20M', 'LAN-ORA-20M', 'LAN-PUR-20M', 'LAN-BLA-20M',
-            'HLD-V2', 'HLD-H4', 'HLD-VST', 'HLD-C2T',
-            'HOK-SIDELEVE-08', 'HOK-LANYARDS-01',
-            'MCH-DCT150', 'MCH-DCT4500', 'CRD-MF1K-WHT'
-        ]
-        Product.objects.filter(sku__in=flagship_skus).update(is_featured=True)
+        if not categories_only:
+            flagship_skus = [
+                'LAN-ROY-20M', 'LAN-ORA-20M', 'LAN-PUR-20M', 'LAN-BLA-20M',
+                'HLD-V2', 'HLD-H4', 'HLD-VST', 'HLD-C2T',
+                'HOK-SIDELEVE-08', 'HOK-LANYARDS-01',
+                'MCH-DCT150', 'MCH-DCT4500', 'CRD-MF1K-WHT'
+            ]
+            Product.objects.filter(sku__in=flagship_skus).update(is_featured=True)
 
-        # 5. Optional Owner Creation
-        if options.get('create_owner') or os.environ.get('CREATE_DEFAULT_OWNER', '').lower() in ('true', '1'):
+        # 5. Dual Owner & Client Superuser Creation
+        if options.get('create_owner') or os.environ.get('CREATE_DEFAULT_OWNER', 'True').lower() in ('true', '1'):
+            # Owner 1 (Developer / Primary Admin)
             owner_user = os.environ.get('OWNER_USERNAME', 'admin')
-            owner_email = os.environ.get('OWNER_EMAIL', 'shriaknth.yathnala@gmail.com')
+            owner_email = os.environ.get('OWNER_EMAIL', 'theprintplanet01@gmail.com')
             owner_pass = os.environ.get('OWNER_PASSWORD', 'AdminPass123!Secure')
 
-            if not User.objects.filter(username=owner_user).exists():
-                user = User.objects.create_superuser(
-                    username=owner_user,
-                    email=owner_email,
-                    password=owner_pass
-                )
-                self.stdout.write(self.style.SUCCESS(f"Created default owner user '{owner_user}'."))
-            else:
-                self.stdout.write(f"Owner user '{owner_user}' already exists.")
+            u1, created1 = User.objects.get_or_create(username=owner_user)
+            u1.email = owner_email
+            u1.is_staff = True
+            u1.is_superuser = True
+            u1.set_password(owner_pass)
+            u1.save()
+            action_text1 = "Created" if created1 else "Updated credentials for"
+            self.stdout.write(self.style.SUCCESS(f"{action_text1} primary owner '{owner_user}'."))
 
-        # 6. Seed Sample B2B Enquiries
+            # Owner 2 (Client / Business Owner)
+            client_user = os.environ.get('CLIENT_USERNAME', '')
+            client_email = os.environ.get('CLIENT_EMAIL', '')
+            client_pass = os.environ.get('CLIENT_PASSWORD', '')
+
+            if client_user and client_pass:
+                u2, created2 = User.objects.get_or_create(username=client_user)
+                u2.email = client_email
+                u2.is_staff = True
+                u2.is_superuser = True
+                u2.set_password(client_pass)
+                u2.save()
+                action_text2 = "Created" if created2 else "Updated credentials for"
+                self.stdout.write(self.style.SUCCESS(f"{action_text2} client owner '{client_user}'."))
+
+        # 6. Seed Sample B2B Enquiries (Only in demo/reference mode)
         from apps.enquiries.models import Enquiry
-        if not Enquiry.objects.exists():
+        if not categories_only and not Enquiry.objects.exists():
             royal_blue = Product.objects.filter(sku='LAN-ROY-20M').first()
             v2_holder = Product.objects.filter(sku='HLD-V2').first()
             rfid_card = Product.objects.filter(sku='CRD-MF1K-WHT').first()

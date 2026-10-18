@@ -17,9 +17,15 @@ python manage.py migrate --noinput
 echo "-> Collecting static files for WhiteNoise/Nginx..."
 python manage.py collectstatic --noinput || true
 
-# 4. Seed Reference Catalog & Owner Admin Account
-echo "-> Ensuring reference catalogue and default owner exist..."
-python manage.py seed_reference_data --create-owner || true
+# 4. Initialize Database (Categories, Site Settings, Owner Accounts)
+echo "-> Initializing database essentials (Categories, Site Settings, Owner Accounts)..."
+if [ "$SEED_PRODUCTS" = "True" ] || [ "$SEED_PRODUCTS" = "true" ]; then
+    echo "-> SEED_PRODUCTS=True: Seeding full catalogue with reference products..."
+    python manage.py seed_reference_data --create-owner || true
+else
+    echo "-> Clean Production Mode (SEED_PRODUCTS=False): Initializing categories & owners only (ZERO mock products)..."
+    python manage.py seed_reference_data --categories-only --create-owner || true
+fi
 
 # 5. Sync Media to Cloudflare R2 or Cloudinary CDN if credentials exist
 if [ -n "$R2_ACCESS_KEY_ID" ] && [ -n "$R2_SECRET_ACCESS_KEY" ]; then
