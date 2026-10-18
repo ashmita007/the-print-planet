@@ -302,3 +302,8 @@ else:
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'The Print Planet <{EMAIL_HOST_USER}>')
 OWNER_NOTIFICATION_EMAIL = os.environ.get('OWNER_NOTIFICATION_EMAIL', 'theprintplanet01@gmail.com')
 
+# Brevo (Sendinblue) HTTPS API (Port 443 - Bypasses Render Free Port Restrictions)
+BREVO_API_KEY = os.environ.get('BREVO_API_KEY', '').strip()
+BREVO_SENDER_EMAIL = os.environ.get('BREVO_SENDER_EMAIL', 'theprintplanet01@gmail.com').strip()
+
+

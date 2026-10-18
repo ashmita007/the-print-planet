@@ -84,8 +84,16 @@ def _send_email_via_https(to_email, subject, text, html):
     Dispatches email via HTTPS REST API (Port 443) to bypass Render Free Tier SMTP port blocking.
     Supports Resend, Brevo, or Web3Forms.
     """
+    ssl_context = None
+    try:
+        import ssl
+        import certifi
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        ssl_context = None
+
     # 1. Resend API
-    resend_key = os.environ.get('RESEND_API_KEY', '').strip()
+    resend_key = os.environ.get('RESEND_API_KEY', getattr(settings, 'RESEND_API_KEY', '')).strip()
     if resend_key:
         try:
             req = urllib.request.Request(
@@ -103,20 +111,24 @@ def _send_email_via_https(to_email, subject, text, html):
                     'User-Agent': 'ThePrintPlanet/1.0'
                 }
             )
-            with urllib.request.urlopen(req, timeout=8) as resp:
+            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
                 logger.info(f"Dispatched email via Resend HTTPS API to {to_email}")
                 return True
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode('utf-8', errors='ignore')
+            logger.error(f"Resend HTTPS dispatch HTTP {e.code}: {err_msg}")
         except Exception as e:
             logger.warning(f"Resend HTTPS dispatch failed: {e}")
 
     # 2. Brevo (Sendinblue) API
-    brevo_key = os.environ.get('BREVO_API_KEY', '').strip()
+    brevo_key = os.environ.get('BREVO_API_KEY', getattr(settings, 'BREVO_API_KEY', '')).strip()
     if brevo_key:
         try:
+            sender_email = os.environ.get('BREVO_SENDER_EMAIL', getattr(settings, 'BREVO_SENDER_EMAIL', 'theprintplanet01@gmail.com')).strip()
             req = urllib.request.Request(
                 'https://api.brevo.com/v3/smtp/email',
                 data=json.dumps({
-                    'sender': {'name': 'The Print Planet', 'email': 'theprintplanet01@gmail.com'},
+                    'sender': {'name': 'The Print Planet', 'email': sender_email},
                     'to': [{'email': to_email}],
                     'subject': subject,
                     'htmlContent': html,
@@ -128,14 +140,17 @@ def _send_email_via_https(to_email, subject, text, html):
                     'User-Agent': 'ThePrintPlanet/1.0'
                 }
             )
-            with urllib.request.urlopen(req, timeout=8) as resp:
+            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
                 logger.info(f"Dispatched email via Brevo HTTPS API to {to_email}")
                 return True
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode('utf-8', errors='ignore')
+            logger.error(f"Brevo HTTPS dispatch HTTP {e.code}: {err_msg}")
         except Exception as e:
             logger.warning(f"Brevo HTTPS dispatch failed: {e}")
 
     # 3. Web3Forms API
-    web3_key = os.environ.get('WEB3FORMS_ACCESS_KEY', '').strip()
+    web3_key = os.environ.get('WEB3FORMS_ACCESS_KEY', getattr(settings, 'WEB3FORMS_ACCESS_KEY', '')).strip()
     if web3_key:
         try:
             req = urllib.request.Request(
@@ -151,9 +166,12 @@ def _send_email_via_https(to_email, subject, text, html):
                     'User-Agent': 'ThePrintPlanet/1.0'
                 }
             )
-            with urllib.request.urlopen(req, timeout=8) as resp:
+            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
                 logger.info(f"Dispatched email via Web3Forms HTTPS API to {to_email}")
                 return True
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode('utf-8', errors='ignore')
+            logger.error(f"Web3Forms HTTPS dispatch HTTP {e.code}: {err_msg}")
         except Exception as e:
             logger.warning(f"Web3Forms HTTPS dispatch failed: {e}")
 
