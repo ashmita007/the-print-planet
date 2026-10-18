@@ -38,13 +38,13 @@ export default function OwnerLoginPage() {
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-[#DCE3EB] overflow-hidden">
       {/* Top Header */}
       <div className="bg-[#102742] text-white p-8 text-center space-y-2 border-b-4 border-[#E87832]">
-        <div className="bg-white px-4 py-2.5 rounded-xl inline-block shadow-md mx-auto mb-2">
+        <div className="bg-white px-5 py-3 rounded-xl inline-block shadow-md mx-auto mb-2">
           <Image
             src="/logo.png"
             alt="The Print Planet"
-            width={180}
-            height={48}
-            className="h-10 w-auto object-contain"
+            width={240}
+            height={70}
+            className="h-14 sm:h-16 w-auto object-contain"
             priority
           />
         </div>

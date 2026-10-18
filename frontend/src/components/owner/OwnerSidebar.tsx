@@ -99,13 +99,13 @@ export default function OwnerSidebar() {
         {/* Brand Header */}
         <div className="p-5 border-b border-white/10 flex items-center justify-between">
           <Link href="/owner/dashboard" className="flex items-center gap-2">
-            <div className="bg-white px-2.5 py-1.5 rounded-lg inline-block shadow-xs">
+            <div className="bg-white px-3 py-2 rounded-lg inline-block shadow-xs">
               <Image
                 src="/logo.png"
                 alt="The Print Planet"
-                width={130}
-                height={34}
-                className="h-6 w-auto object-contain"
+                width={160}
+                height={45}
+                className="h-8 sm:h-9 w-auto object-contain"
               />
             </div>
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">

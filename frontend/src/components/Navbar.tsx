@@ -124,15 +124,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
-        <div className="flex items-center justify-between h-14 sm:h-20 gap-3">
+        <div className="flex items-center justify-between h-16 sm:h-24 gap-3">
           {/* Logo & Brand Identity */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group py-1">
             <Image
               src="/logo.png"
               alt="The Print Planet"
-              width={200}
-              height={55}
-              className="h-9 sm:h-12 w-auto object-contain hover:opacity-95 transition-opacity"
+              width={260}
+              height={85}
+              className="h-11 sm:h-16 md:h-18 w-auto object-contain hover:opacity-95 transition-opacity"
               priority
             />
           </Link>
@@ -299,13 +299,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           <div className="fixed inset-y-0 right-0 w-[84vw] max-w-xs bg-white shadow-2xl flex flex-col z-50 animate-in slide-in-from-right duration-200">
             {/* Drawer Header */}
             <div className="p-4 border-b border-[#DCE3EB] flex items-center justify-between bg-[#102742] text-white">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="bg-white px-2 py-1 rounded-lg inline-block">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="bg-white px-3 py-1.5 rounded-lg inline-block shadow-sm">
                 <Image
                   src="/logo.png"
                   alt="The Print Planet"
-                  width={140}
-                  height={38}
-                  className="h-7 w-auto object-contain"
+                  width={180}
+                  height={50}
+                  className="h-9 sm:h-10 w-auto object-contain"
                 />
               </Link>
               <button

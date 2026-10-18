@@ -25,13 +25,13 @@ export default function Footer({ categories = [], settings }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 pb-8 sm:pb-12 border-b border-white/15">
           {/* Column 1: Company Profile */}
           <div className="space-y-4">
-            <div className="bg-white px-3 py-2 rounded-xl inline-block shadow-sm">
+            <div className="bg-white px-4 py-2.5 rounded-xl inline-block shadow-sm">
               <Image
                 src="/logo.png"
                 alt={businessName}
-                width={170}
-                height={45}
-                className="h-8 sm:h-9 w-auto object-contain"
+                width={220}
+                height={60}
+                className="h-11 sm:h-13 w-auto object-contain"
               />
             </div>
             <p className="text-xs font-semibold text-[#E87832] tracking-wide">
