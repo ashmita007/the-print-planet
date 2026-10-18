@@ -24,8 +24,6 @@ python manage.py collectstatic --noinput || true
 echo "-> Checking and initializing database catalogue & owner accounts..."
 python manage.py seed_reference_data --create-owner || true
 
-# 4b. Ensure latest populated database is mirrored to Cloudinary
-python manage.py sync_sqlite_cloud --backup || true
 
 
 # 5. Sync Media to Cloudflare R2 or Cloudinary CDN if credentials exist
