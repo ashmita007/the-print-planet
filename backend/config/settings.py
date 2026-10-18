@@ -222,6 +222,12 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1",
     "http://localhost:8080",
     "https://*.onrender.com",
+    "https://theprintplanet.co.in",
+    "https://*.theprintplanet.co.in",
+    "http://theprintplanet.co.in",
+    "http://*.theprintplanet.co.in",
+    "https://theprintplanet.in",
+    "https://*.theprintplanet.in",
 ]
 
 csrf_env = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
