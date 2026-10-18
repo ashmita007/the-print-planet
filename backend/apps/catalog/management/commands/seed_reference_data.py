@@ -14,52 +14,73 @@ class Command(BaseCommand):
         parser.add_argument('--create-owner', action='store_true', help='Create default owner account if not exists')
         parser.add_argument('--download-images', action='store_true', help='Download remote reference images into local media/products directory')
         parser.add_argument('--categories-only', action='store_true', help='Seed categories, site settings, and owners only, skipping mock products')
+        parser.add_argument('--init-owners-only', action='store_true', help='Initialize owners and site settings only, leaving database completely blank (0 categories, 0 products)')
 
     def handle(self, *args, **options):
+        # 0. Check wipe triggers
+        wipe_all = os.environ.get('WIPE_CATEGORIES', '').lower() in ('true', '1') or os.environ.get('WIPE_ALL_DATA', '').lower() in ('true', '1')
+        wipe_products = os.environ.get('WIPE_DUMMY_PRODUCTS', '').lower() in ('true', '1')
+
+        if wipe_all:
+            from django.core.management import call_command
+            self.stdout.write(self.style.WARNING("Wipe signal detected! Clearing all products and categories..."))
+            call_command('clear_dummy_products', include_categories=True, no_backup=True)
+        elif wipe_products:
+            from django.core.management import call_command
+            self.stdout.write(self.style.WARNING("WIPE_DUMMY_PRODUCTS=True detected! Clearing mock products..."))
+            call_command('clear_dummy_products', no_backup=True)
+
+        init_owners_only = options.get('init_owners_only') or (
+            os.environ.get('SEED_CATEGORIES', 'False').lower() not in ('true', '1') and
+            os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
+        )
         categories_only = options.get('categories_only') or os.environ.get('SEED_PRODUCTS', 'False').lower() not in ('true', '1')
-        mode_desc = "Clean Production Categories & Owners" if categories_only else "Full Reference Catalogue"
-        self.stdout.write(self.style.NOTICE(f"Starting database seeding ({mode_desc})..."))
 
-        # Find reference-products.json
-        candidate_paths = [
-            Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'reference-products.json',
-            Path(__file__).resolve().parent.parent.parent.parent / 'data' / 'reference-products.json',
-            Path('/Users/kashinath/Desktop/the_print_planet/data/reference-products.json'),
-            Path('/app/data/reference-products.json'),
-        ]
-        json_path = None
-        for p in candidate_paths:
-            if p.exists():
-                json_path = p
-                break
+        if init_owners_only:
+            mode_desc = "Blank Slate Mode (0 Categories, 0 Products, Owners Only)"
+        elif categories_only:
+            mode_desc = "Categories & Owners Only"
+        else:
+            mode_desc = "Full Reference Catalogue"
 
-        if not json_path:
-            self.stdout.write(self.style.ERROR(f"Data file not found in candidates: {[str(p) for p in candidate_paths]}"))
-            return
+        self.stdout.write(self.style.NOTICE(f"Starting database initialization ({mode_desc})..."))
 
-        with open(json_path, 'r', encoding='utf-8') as f:
-            catalog_data = json.load(f)
-
-        categories_data = catalog_data.get('categories', [])
-        products_data = catalog_data.get('products', [])
-
-        # 1. Seed Categories
         category_map = {}
-        for cat in categories_data:
-            cat_obj, created = Category.objects.update_or_create(
-                slug=cat['slug'],
-                defaults={
-                    'name': cat['name'],
-                    'description': cat.get('description', ''),
-                    'display_order': cat.get('display_order', 0),
-                    'is_active': True,
-                    'seo_title': f"{cat['name']} - Wholesale ID Supplies | The Print Planet",
-                    'seo_description': f"Buy {cat['name']} in bulk. High quality industrial materials, competitive trade prices.",
-                }
-            )
-            category_map[cat['slug']] = cat_obj
-            status_text = "Created" if created else "Updated"
-            self.stdout.write(f"  Category: {cat['name']} [{status_text}]")
+        if not init_owners_only:
+            # Find reference-products.json
+            candidate_paths = [
+                Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'reference-products.json',
+                Path(__file__).resolve().parent.parent.parent.parent / 'data' / 'reference-products.json',
+                Path('/Users/kashinath/Desktop/the_print_planet/data/reference-products.json'),
+                Path('/app/data/reference-products.json'),
+            ]
+            json_path = None
+            for p in candidate_paths:
+                if p.exists():
+                    json_path = p
+                    break
+
+            if json_path:
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    catalog_data = json.load(f)
+                categories_data = catalog_data.get('categories', [])
+                for cat in categories_data:
+                    cat_obj, created = Category.objects.update_or_create(
+                        slug=cat['slug'],
+                        defaults={
+                            'name': cat['name'],
+                            'description': cat.get('description', ''),
+                            'display_order': cat.get('display_order', 0),
+                            'is_active': True,
+                            'seo_title': f"{cat['name']} - Wholesale ID Supplies | The Print Planet",
+                            'seo_description': f"Buy {cat['name']} in bulk. High quality industrial materials, competitive trade prices.",
+                        }
+                    )
+                    category_map[cat['slug']] = cat_obj
+                    status_text = "Created" if created else "Updated"
+                    self.stdout.write(f"  Category: {cat['name']} [{status_text}]")
+        else:
+            self.stdout.write(self.style.NOTICE("Skipping category seeding (Blank Slate Mode: client will create custom categories)."))
 
         # Check if wiping dummy products is requested
         if os.environ.get('WIPE_DUMMY_PRODUCTS', '').lower() in ('true', '1'):
@@ -67,8 +88,8 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING("WIPE_DUMMY_PRODUCTS=True detected! Wiping mock products from database..."))
             call_command('clear_dummy_products', no_backup=True)
 
-        # 2. Seed Products (Only when not in categories_only mode)
-        if not categories_only:
+        # 2. Seed Products (Only when not in blank slate or categories_only mode)
+        if not init_owners_only and not categories_only:
             products_created = 0
             products_updated = 0
             from django.conf import settings as dj_settings
