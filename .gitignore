@@ -10,7 +10,7 @@ __pycache__/
 *.so
 .Python
 backend/venv/
-backend/db.sqlite3
+# backend/db.sqlite3 (Pre-seeded clean database committed for Docker standalone deployment)
 backend/staticfiles/
 backend/media/*
 !backend/media/products/
