@@ -60,13 +60,13 @@ class ProductListView(generics.ListAPIView):
     def get_queryset(self):
         qs = Product.objects.filter(is_active=True).select_related('category').prefetch_related('images')
         
-        # Category filter (by slug or id)
+        # Category filter (by slug or id - includes child subcategories)
         cat = self.request.query_params.get('category')
         if cat:
             if cat.isdigit():
-                qs = qs.filter(category_id=cat)
+                qs = qs.filter(Q(category_id=cat) | Q(category__parent_id=cat))
             else:
-                qs = qs.filter(category__slug=cat)
+                qs = qs.filter(Q(category__slug=cat) | Q(category__parent__slug=cat))
 
         # Keyword search
         q = self.request.query_params.get('search') or self.request.query_params.get('q')

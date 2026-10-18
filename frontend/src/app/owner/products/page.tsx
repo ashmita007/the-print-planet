@@ -269,6 +269,81 @@ export default function OwnerProductsListPage() {
         </div>
       </div>
 
+      {/* Visibility Status Tabs (All / Active / Disabled Section) */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-[#DCE3EB] pb-3">
+        <button
+          type="button"
+          onClick={() => {
+            setSelectedStatus("");
+            setCurrentPage(1);
+          }}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all ${
+            selectedStatus === ""
+              ? "bg-[#17365D] text-white shadow-xs"
+              : "bg-white text-slate-600 hover:bg-slate-100 border border-[#DCE3EB]"
+          }`}
+        >
+          <Package className="w-3.5 h-3.5" />
+          <span>All Catalogue</span>
+          <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+            selectedStatus === "" ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+          }`}>
+            {totalCount}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setSelectedStatus("active");
+            setCurrentPage(1);
+          }}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all ${
+            selectedStatus === "active"
+              ? "bg-emerald-700 text-white shadow-xs"
+              : "bg-white text-slate-600 hover:bg-slate-100 border border-[#DCE3EB]"
+          }`}
+        >
+          <Eye className={`w-3.5 h-3.5 ${selectedStatus === "active" ? "text-emerald-200" : "text-emerald-600"}`} />
+          <span>Active (Public Store)</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setSelectedStatus("hidden");
+            setCurrentPage(1);
+          }}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all ${
+            selectedStatus === "hidden"
+              ? "bg-amber-600 text-white shadow-xs ring-2 ring-amber-400/50"
+              : "bg-white text-slate-600 hover:bg-amber-50 hover:text-amber-800 border border-[#DCE3EB]"
+          }`}
+        >
+          <EyeOff className={`w-3.5 h-3.5 ${selectedStatus === "hidden" ? "text-white" : "text-amber-600"}`} />
+          <span>Disabled Products Section</span>
+          <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+            selectedStatus === "hidden" ? "bg-white/20 text-white" : "bg-amber-100 text-amber-700"
+          }`}>
+            Disabled
+          </span>
+        </button>
+      </div>
+
+      {selectedStatus === "hidden" && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 animate-in fade-in">
+          <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h3 className="text-xs font-bold text-amber-900">
+              Disabled Products Management Section
+            </h3>
+            <p className="text-xs text-amber-700 leading-relaxed">
+              These products are currently <strong>disabled and hidden</strong> from your public website, categories, and customer search results. You can inspect or edit their details, or click the status toggle switch on any item to instantly re-enable it for your live public store.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Filter / Search Toolbar */}
       <div className="bg-white p-4 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 text-xs">

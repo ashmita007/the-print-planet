@@ -17,7 +17,11 @@ class CategorySerializer(serializers.ModelSerializer):
         ]
 
     def get_products_count(self, obj):
-        return obj.products.filter(is_active=True).count()
+        from django.db.models import Q
+        return Product.objects.filter(
+            Q(category=obj) | Q(category__parent=obj),
+            is_active=True
+        ).count()
 
     def create(self, validated_data):
         if not validated_data.get('slug'):
