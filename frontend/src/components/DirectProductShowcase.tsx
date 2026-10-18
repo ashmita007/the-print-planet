@@ -1,8 +1,18 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Search, Sparkles, ArrowRight, Layers, SlidersHorizontal, Package, ChevronDown } from "lucide-react";
+import {
+  Search,
+  Sparkles,
+  ArrowRight,
+  Layers,
+  SlidersHorizontal,
+  Package,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Product, Category } from "@/lib/types";
 import ProductCard from "./ProductCard";
 import SortModal, { SortOptionValue } from "./SortModal";
@@ -28,6 +38,77 @@ export default function DirectProductShowcase({
   const [sortBy, setSortBy] = useState<SortOptionValue>("featured");
   const [sortModalOpen, setSortModalOpen] = useState<boolean>(false);
   const [visibleLimit, setVisibleLimit] = useState<number>(16);
+
+  // Category horizontal scroll controls
+  const categoryScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Drag-to-scroll state
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftStartRef = useRef(0);
+
+  const checkScroll = useCallback(() => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    const hasOverflow = el.scrollWidth > el.clientWidth;
+    setCanScrollLeft(hasOverflow && el.scrollLeft > 5);
+    setCanScrollRight(hasOverflow && el.scrollLeft < el.scrollWidth - el.clientWidth - 5);
+  }, []);
+
+  useEffect(() => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+
+    checkScroll();
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll, { passive: true });
+
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [checkScroll, categories.length]);
+
+  const scrollCategory = (direction: "left" | "right") => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    const offset = direction === "left" ? -240 : 240;
+    el.scrollBy({ left: offset, behavior: "smooth" });
+  };
+
+  // Convert vertical mouse wheel to horizontal scroll inside category row
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    if (e.deltaY !== 0 && el.scrollWidth > el.clientWidth) {
+      el.scrollLeft += e.deltaY;
+    }
+  };
+
+  // Desktop mouse drag-to-scroll
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - el.offsetLeft;
+    scrollLeftStartRef.current = el.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    el.scrollLeft = scrollLeftStartRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDraggingRef.current = false;
+  };
 
   // Reset pagination when category or search changes
   useEffect(() => {
@@ -84,8 +165,8 @@ export default function DirectProductShowcase({
           <h2 className="text-xl sm:text-3xl font-extrabold text-[#17365D] tracking-tight">
             Explore Factory Products Directly
           </h2>
-          <p className="text-[11px] sm:text-sm text-[#687586] mt-1 max-w-xl">
-            Real manufacturer stock with live specifications, authentic photos, trade pricing, and direct RFQ batch quotation.
+          <p className="text-xs sm:text-sm text-[#687586] mt-1 max-w-2xl leading-relaxed">
+            Instant B2B pricing, technical specifications, and factory quotations for ID card rolls, holders, clips, and machinery.
           </p>
         </div>
 
@@ -100,53 +181,112 @@ export default function DirectProductShowcase({
 
       {/* Control Bar: Category Tabs + Quick Search + Sorting */}
       <div className="bg-[#F5F7FA] border border-[#DCE3EB] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-5 sm:mb-8 space-y-3 sm:space-y-4">
-        {/* Category Pills (Smooth Swipe on Mobile) */}
+        {/* Category Pills Header with Scroll Controls */}
         <div>
-          <div className="text-[10px] sm:text-[11px] font-bold text-[#687586] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-[#E87832]" />
-            <span>Select Category Line:</span>
-          </div>
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none snap-x touch-pan-x">
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("all")}
-              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 snap-start ${
-                selectedCategory === "all"
-                  ? "bg-[#17365D] text-white shadow-xs"
-                  : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"
-              }`}
-            >
-              <span>All Products</span>
-              <span
-                className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                  selectedCategory === "all" ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
-                }`}
-              >
-                {products.length}
-              </span>
-            </button>
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[10px] sm:text-[11px] font-bold text-[#687586] uppercase tracking-wider flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-[#E87832]" />
+              <span>Select Category Line:</span>
+            </div>
 
-            {categories.map((cat) => (
+            {/* Left / Right Arrow Buttons for Desktop & Tablet */}
+            {(canScrollLeft || canScrollRight) && (
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => scrollCategory("left")}
+                  disabled={!canScrollLeft}
+                  className="p-1 rounded-lg border border-[#DCE3EB] bg-white hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
+                  aria-label="Scroll categories left"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5 text-[#17365D]" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollCategory("right")}
+                  disabled={!canScrollRight}
+                  className="p-1 rounded-lg border border-[#DCE3EB] bg-white hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
+                  aria-label="Scroll categories right"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-[#17365D]" />
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Category Horizontal Track with Edge Gradients & Mouse Drag */}
+          <div className="relative">
+            {canScrollLeft && (
+              <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#F5F7FA] to-transparent pointer-events-none z-10" />
+            )}
+            {canScrollRight && (
+              <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#F5F7FA] to-transparent pointer-events-none z-10" />
+            )}
+
+            <div
+              ref={categoryScrollRef}
+              onWheel={handleWheel}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUpOrLeave}
+              onMouseLeave={handleMouseUpOrLeave}
+              className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 scrollbar-thin scroll-smooth select-none cursor-grab active:cursor-grabbing"
+            >
               <button
-                key={cat.id}
                 type="button"
-                onClick={() => setSelectedCategory(cat.slug)}
-                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 snap-start ${
-                  selectedCategory === cat.slug
+                onClick={(e) => {
+                  setSelectedCategory("all");
+                  (e.currentTarget as HTMLElement).scrollIntoView({
+                    behavior: "smooth",
+                    inline: "center",
+                    block: "nearest",
+                  });
+                }}
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 ${
+                  selectedCategory === "all"
                     ? "bg-[#17365D] text-white shadow-xs"
                     : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"
                 }`}
               >
-                <span>{cat.name}</span>
+                <span>All Products</span>
                 <span
                   className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                    selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
+                    selectedCategory === "all" ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
                   }`}
                 >
-                  {cat.products_count}
+                  {products.length}
                 </span>
               </button>
-            ))}
+
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={(e) => {
+                    setSelectedCategory(cat.slug);
+                    (e.currentTarget as HTMLElement).scrollIntoView({
+                      behavior: "smooth",
+                      inline: "center",
+                      block: "nearest",
+                    });
+                  }}
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 ${
+                    selectedCategory === cat.slug
+                      ? "bg-[#17365D] text-white shadow-xs"
+                      : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"
+                  }`}
+                >
+                  <span>{cat.name}</span>
+                  <span
+                    className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                      selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
+                    }`}
+                  >
+                    {cat.products_count}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -166,7 +306,8 @@ export default function DirectProductShowcase({
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-bold"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-bold p-1"
+                aria-label="Clear search query"
               >
                 ✕
               </button>
@@ -183,7 +324,7 @@ export default function DirectProductShowcase({
               <button
                 type="button"
                 onClick={() => setSortModalOpen(true)}
-                className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F8FAFC] border border-[#DCE3EB] hover:border-[#17365D] text-[11px] sm:text-xs font-semibold text-[#263445] hover:text-[#17365D] rounded-lg sm:rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95"
+                className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F8FAFC] border border-[#DCE3EB] hover:border-[#17365D] text-[11px] sm:text-xs font-semibold text-[#263445] hover:text-[#17365D] rounded-lg sm:rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
                 aria-label="Open sort products modal"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-[#E87832]" />
@@ -209,7 +350,7 @@ export default function DirectProductShowcase({
               <button
                 type="button"
                 onClick={() => setVisibleLimit((prev) => prev + 16)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#17365D] hover:bg-[#102742] text-white font-bold text-xs tracking-wide transition-all shadow-md group"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#17365D] hover:bg-[#102742] text-white font-bold text-xs tracking-wide transition-all shadow-md group cursor-pointer"
               >
                 <span>Load More Products (+16)</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -233,7 +374,7 @@ export default function DirectProductShowcase({
               setSelectedCategory("all");
               setSearchQuery("");
             }}
-            className="px-4 py-2 rounded-lg bg-[#17365D] text-white text-xs font-bold hover:bg-[#102742] transition-colors"
+            className="px-4 py-2 rounded-lg bg-[#17365D] text-white text-xs font-bold hover:bg-[#102742] transition-colors cursor-pointer"
           >
             Reset Filters
           </button>
