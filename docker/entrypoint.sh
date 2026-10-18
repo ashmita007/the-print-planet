@@ -20,18 +20,13 @@ python manage.py migrate --noinput
 echo "-> Collecting static files for WhiteNoise/Nginx..."
 python manage.py collectstatic --noinput || true
 
-# 4. Initialize Database (Site Settings, Owner Accounts, Optional Categories)
-echo "-> Initializing database essentials (Site Settings, Owner Accounts)..."
-if [ "$SEED_PRODUCTS" = "True" ] || [ "$SEED_PRODUCTS" = "true" ]; then
-    echo "-> SEED_PRODUCTS=True: Seeding full catalogue with reference products..."
-    python manage.py seed_reference_data --create-owner || true
-elif [ "$SEED_CATEGORIES" = "False" ] || [ "$SEED_CATEGORIES" = "false" ]; then
-    echo "-> Blank Slate Mode: Initializing owners & site settings with ZERO categories..."
-    python manage.py seed_reference_data --init-owners-only --create-owner || true
-else
-    echo "-> Ensuring standard wholesale categories and owner accounts exist..."
-    python manage.py seed_reference_data --categories-only --create-owner || true
-fi
+# 4. Initialize Database (Ensures 63 wholesale products exist if database is empty; never deletes custom data)
+echo "-> Checking and initializing database catalogue & owner accounts..."
+python manage.py seed_reference_data --create-owner || true
+
+# 4b. Ensure latest populated database is mirrored to Cloudinary
+python manage.py sync_sqlite_cloud --backup || true
+
 
 # 5. Sync Media to Cloudflare R2 or Cloudinary CDN if credentials exist
 if [ -n "$R2_ACCESS_KEY_ID" ] && [ -n "$R2_SECRET_ACCESS_KEY" ]; then

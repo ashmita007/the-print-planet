@@ -17,65 +17,52 @@ class Command(BaseCommand):
         parser.add_argument('--init-owners-only', action='store_true', help='Initialize owners and site settings only, leaving database completely blank (0 categories, 0 products)')
 
     def handle(self, *args, **options):
-        existing_cat_count = Category.objects.filter(is_active=True).count()
-        categories_only = options.get('categories_only') or (existing_cat_count <= 1) or os.environ.get('SEED_CATEGORIES', 'True').lower() in ('true', '1')
-        seed_products = os.environ.get('SEED_PRODUCTS', 'False').lower() in ('true', '1')
-        init_owners_only = options.get('init_owners_only') and not categories_only and not seed_products
+        self.stdout.write(self.style.NOTICE("Starting database initialization (Safe Permanent Mode)..."))
 
-        if seed_products:
-            mode_desc = "Full Reference Catalogue"
-        elif categories_only:
-            mode_desc = "Categories & Owners Only"
-        else:
-            mode_desc = "Safe Production Mode"
+        # Find reference-products.json
+        candidate_paths = [
+            Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'reference-products.json',
+            Path(__file__).resolve().parent.parent.parent.parent / 'data' / 'reference-products.json',
+            Path('/Users/kashinath/Desktop/the_print_planet/data/reference-products.json'),
+            Path('/app/data/reference-products.json'),
+        ]
+        json_path = None
+        for p in candidate_paths:
+            if p.exists():
+                json_path = p
+                break
 
-        self.stdout.write(self.style.NOTICE(f"Starting database initialization ({mode_desc})..."))
+        catalog_data = {}
+        if json_path:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                catalog_data = json.load(f)
+
+        categories_data = catalog_data.get('categories', [])
+        products_data = catalog_data.get('products', [])
 
         category_map = {}
-        if not init_owners_only:
-            # Find reference-products.json
-            candidate_paths = [
-                Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'reference-products.json',
-                Path(__file__).resolve().parent.parent.parent.parent / 'data' / 'reference-products.json',
-                Path('/Users/kashinath/Desktop/the_print_planet/data/reference-products.json'),
-                Path('/app/data/reference-products.json'),
-            ]
-            json_path = None
-            for p in candidate_paths:
-                if p.exists():
-                    json_path = p
-                    break
+        for cat in categories_data:
+            cat_obj, created = Category.objects.update_or_create(
+                slug=cat['slug'],
+                defaults={
+                    'name': cat['name'],
+                    'description': cat.get('description', ''),
+                    'display_order': cat.get('display_order', 0),
+                    'is_active': True,
+                    'seo_title': f"{cat['name']} - Wholesale ID Supplies | The Print Planet",
+                    'seo_description': f"Buy {cat['name']} in bulk. High quality industrial materials, competitive trade prices.",
+                }
+            )
+            category_map[cat['slug']] = cat_obj
+            status_text = "Created" if created else "Preserved"
+            self.stdout.write(f"  Category: {cat['name']} [{status_text}]")
 
-            if json_path:
-                with open(json_path, 'r', encoding='utf-8') as f:
-                    catalog_data = json.load(f)
-                categories_data = catalog_data.get('categories', [])
-                for cat in categories_data:
-                    cat_obj, created = Category.objects.update_or_create(
-                        slug=cat['slug'],
-                        defaults={
-                            'name': cat['name'],
-                            'description': cat.get('description', ''),
-                            'display_order': cat.get('display_order', 0),
-                            'is_active': True,
-                            'seo_title': f"{cat['name']} - Wholesale ID Supplies | The Print Planet",
-                            'seo_description': f"Buy {cat['name']} in bulk. High quality industrial materials, competitive trade prices.",
-                        }
-                    )
-                    category_map[cat['slug']] = cat_obj
-                    status_text = "Created" if created else "Updated"
-                    self.stdout.write(f"  Category: {cat['name']} [{status_text}]")
-        else:
-            self.stdout.write(self.style.NOTICE("Skipping category seeding (Blank Slate Mode: client will create custom categories)."))
-
-        # Check if wiping dummy products is requested
-        if os.environ.get('WIPE_DUMMY_PRODUCTS', '').lower() in ('true', '1'):
-            from django.core.management import call_command
-            self.stdout.write(self.style.WARNING("WIPE_DUMMY_PRODUCTS=True detected! Wiping mock products from database..."))
-            call_command('clear_dummy_products', no_backup=True)
-
-        # 2. Seed Products (Only when not in blank slate or categories_only mode)
-        if not init_owners_only and not categories_only:
+        # 2. Seed Products ONLY if catalogue is empty (never overwrite or delete existing custom products)
+        existing_products_count = Product.objects.count()
+        if existing_products_count > 0:
+            self.stdout.write(self.style.SUCCESS(f"Preserving existing catalogue: {existing_products_count} products currently active. ZERO products deleted."))
+        elif products_data:
+            self.stdout.write(self.style.NOTICE(f"Initial catalogue empty. Seeding {len(products_data)} wholesale products..."))
             products_created = 0
             products_updated = 0
             from django.conf import settings as dj_settings
@@ -165,8 +152,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(
                 f"Successfully seeded {len(categories_data)} categories and {products_created + products_updated} products ({products_created} created, {products_updated} updated)."
             ))
-        else:
-            self.stdout.write(self.style.NOTICE("Skipping product seeding (Clean Production Mode enabled)."))
 
         # 3. Configure Site Settings
         settings_obj = SiteSettings.get_settings()
@@ -223,14 +208,13 @@ class Command(BaseCommand):
 
             self.stdout.write(self.style.SUCCESS("Configured default HomePage Sections."))
 
-        if not categories_only:
-            flagship_skus = [
-                'LAN-ROY-20M', 'LAN-ORA-20M', 'LAN-PUR-20M', 'LAN-BLA-20M',
-                'HLD-V2', 'HLD-H4', 'HLD-VST', 'HLD-C2T',
-                'HOK-SIDELEVE-08', 'HOK-LANYARDS-01',
-                'MCH-DCT150', 'MCH-DCT4500', 'CRD-MF1K-WHT'
-            ]
-            Product.objects.filter(sku__in=flagship_skus).update(is_featured=True)
+        flagship_skus = [
+            'LAN-ROY-20M', 'LAN-ORA-20M', 'LAN-PUR-20M', 'LAN-BLA-20M',
+            'HLD-V2', 'HLD-H4', 'HLD-VST', 'HLD-C2T',
+            'HOK-SIDELEVE-08', 'HOK-LANYARDS-01',
+            'MCH-DCT150', 'MCH-DCT4500', 'CRD-MF1K-WHT'
+        ]
+        Product.objects.filter(sku__in=flagship_skus).update(is_featured=True)
 
         # 5. Dual Owner & Client Superuser Creation
         if options.get('create_owner') or os.environ.get('CREATE_DEFAULT_OWNER', 'True').lower() in ('true', '1'):
@@ -263,9 +247,9 @@ class Command(BaseCommand):
                 action_text2 = "Created" if created2 else "Updated credentials for"
                 self.stdout.write(self.style.SUCCESS(f"{action_text2} client owner '{client_user}'."))
 
-        # 6. Seed Sample B2B Enquiries (Only in demo/reference mode)
+        # 6. Seed Sample B2B Enquiries (Only if no enquiries exist)
         from apps.enquiries.models import Enquiry
-        if not categories_only and not Enquiry.objects.exists():
+        if not Enquiry.objects.exists():
             royal_blue = Product.objects.filter(sku='LAN-ROY-20M').first()
             v2_holder = Product.objects.filter(sku='HLD-V2').first()
             rfid_card = Product.objects.filter(sku='CRD-MF1K-WHT').first()
