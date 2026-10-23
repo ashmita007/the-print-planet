@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    google: "OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg",
     other: {
       "msvalidate.01": process.env.BING_SITE_VERIFICATION || "",
     },
@@ -208,6 +208,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg" />
         <link rel="icon" href="/favicon.ico" />
         <script
           type="application/ld+json"
