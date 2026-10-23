@@ -97,12 +97,14 @@ const jsonLdOrg = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Organization", "WholesaleStore"],
+      "@type": ["Organization", "LocalBusiness", "WholesaleStore"],
       "@id": `${SITE_URL}/#organization`,
       name: "The Print Planet",
       alternateName: [
         "Print Planet",
         "The Print Planet India",
+        "The Print Planet Bengaluru",
+        "Print Planet Bengaluru",
         "print planet co in",
         "theprintplanet.co.in",
         "ThePrintPlanet"
@@ -111,23 +113,41 @@ const jsonLdOrg = {
       logo: `${SITE_URL}/logo.png`,
       image: `${SITE_URL}/logo.png`,
       description:
-        "India's premier B2B wholesale manufacturer and supplier of satin lanyard rolls, ID holders, RFID cards, and card punching machinery.",
+        "India's premier B2B wholesale manufacturer and supplier of satin lanyard rolls, PVC ID card holders, dog hooks, RFID smart cards, and card punching machinery.",
       telephone: "+919741808034",
       email: "theprintplanet01@gmail.com",
+      taxID: "29AAQFT3909B1ZZ",
       priceRange: "₹₹",
       currenciesAccepted: "INR",
       paymentAccepted: "Cash, NEFT, RTGS, UPI, Bank Transfer",
       address: {
         "@type": "PostalAddress",
+        streetAddress: "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town",
+        addressLocality: "Bengaluru",
+        addressRegion: "Karnataka",
+        postalCode: "560079",
         addressCountry: "IN",
       },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 12.9880,
+        longitude: 77.5385,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "09:30",
+          closes: "19:00",
+        },
+      ],
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "sales",
         telephone: "+919741808034",
         email: "theprintplanet01@gmail.com",
         areaServed: "IN",
-        availableLanguage: ["English", "Hindi"],
+        availableLanguage: ["English", "Hindi", "Kannada"],
       },
     },
     {
