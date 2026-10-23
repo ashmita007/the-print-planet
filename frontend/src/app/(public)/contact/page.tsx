@@ -1,8 +1,27 @@
 import React from "react";
+import { Metadata } from "next";
 import { Phone, Mail, MapPin, ShieldCheck, Clock, MessageSquare } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactFormClient from "@/components/ContactFormClient";
 import { getSiteSettings } from "@/lib/api";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
+
+export const metadata: Metadata = {
+  title: "Contact The Print Planet Bengaluru | Sales Desk & Factory Quotation",
+  description:
+    "Contact The Print Planet sales and technical support in Rajajinagar Bengaluru. Call +91 97418 08034 or email theprintplanet01@gmail.com for wholesale pricing, factory visits, and bulk quotations.",
+  alternates: {
+    canonical: `${SITE_URL}/contact`,
+  },
+  openGraph: {
+    title: "Contact The Print Planet Bengaluru | Sales Desk & Factory Quotation",
+    description: "Official contact portal of The Print Planet. Factory sales desk, Rajajinagar Bengaluru.",
+    url: `${SITE_URL}/contact`,
+    siteName: "The Print Planet",
+    type: "website",
+  },
+};
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();

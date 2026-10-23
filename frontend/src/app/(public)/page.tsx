@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { Metadata } from "next";
 import {
   CheckCircle,
   Truck,
@@ -25,6 +26,17 @@ import {
   getProducts,
   getSiteSettings,
 } from "@/lib/api";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
+
+export const metadata: Metadata = {
+  title: "Print Planet — The Print Planet™ | Wholesale ID Card Solutions & Lanyards India",
+  description:
+    "Official website of The Print Planet (theprintplanet.co.in). India's leading B2B factory manufacturer and wholesale supplier of satin lanyard rolls, PVC ID card holders, dog hooks, RFID smart cards, and card cutting machinery with pan-India dispatch.",
+  alternates: {
+    canonical: SITE_URL,
+  },
+};
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;

@@ -1,8 +1,27 @@
 import React from "react";
 import Link from "next/link";
+import { Metadata } from "next";
 import { Factory, ShieldCheck, Truck, Users, Award, CheckCircle } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getSiteSettings } from "@/lib/api";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
+
+export const metadata: Metadata = {
+  title: "About The Print Planet | India's Leading ID Cards & Lanyards Manufacturer",
+  description:
+    "Learn about The Print Planet (theprintplanet.co.in), based in Rajajinagar Bengaluru. Dedicated high-capacity manufacturing facility for satin lanyard rolls, rigid PVC ID card holders, RFID access cards, and card machinery.",
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: "About The Print Planet | India's Leading ID Cards & Lanyards Manufacturer",
+    description: "Dedicated B2B production and wholesale distribution facility in Bengaluru, Karnataka.",
+    url: `${SITE_URL}/about`,
+    siteName: "The Print Planet",
+    type: "website",
+  },
+};
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();

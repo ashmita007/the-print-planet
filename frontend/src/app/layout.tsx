@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "The Print Planet | Wholesale ID Card Solutions, Lanyard Rolls & Machinery India",
+    default: "Print Planet — The Print Planet™ | Wholesale ID Card Solutions & Lanyards India",
     template: "%s | The Print Planet",
   },
   description:
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "The Print Planet",
-    title: "The Print Planet | Wholesale ID Card Solutions, Lanyard Rolls & Machinery India",
+    title: "Print Planet — The Print Planet™ | Wholesale ID Card Solutions & Lanyards India",
     description:
       "Official website of The Print Planet. India's leading wholesale manufacturer of industrial satin lanyard rolls, rigid PVC ID card holders, clips, smart cards, and machinery. Fast dispatch across India.",
     images: [
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Print Planet | Wholesale ID Card Solutions, Lanyard Rolls & Machinery India",
+    title: "Print Planet — The Print Planet™ | Wholesale ID Card Solutions & Lanyards India",
     description:
       "Wholesale manufacturer of satin lanyards, ID card holders, RFID cards, and machinery with nationwide dispatch.",
     images: [`${SITE_URL}/logo.png`],

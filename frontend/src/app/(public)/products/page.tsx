@@ -1,11 +1,30 @@
 import React from "react";
 import Link from "next/link";
+import { Metadata } from "next";
 import { Filter, Layers, ArrowUpDown, Search, RotateCcw, Box } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { getCategories, getProducts } from "@/lib/api";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
+
+export const metadata: Metadata = {
+  title: "Wholesale Products Catalogue | The Print Planet India",
+  description:
+    "Complete wholesale catalogue of The Print Planet (theprintplanet.co.in). Buy satin lanyard rolls, rigid PVC ID card holders, RFID cards, dog hooks, and card punching machinery at direct factory prices with pan-India delivery.",
+  alternates: {
+    canonical: `${SITE_URL}/products`,
+  },
+  openGraph: {
+    title: "Wholesale Products Catalogue | The Print Planet India",
+    description: "Factory direct catalog of satin lanyards, ID holders, RFID cards, and machinery.",
+    url: `${SITE_URL}/products`,
+    siteName: "The Print Planet",
+    type: "website",
+  },
+};
 
 interface ProductsPageProps {
   searchParams: Promise<{
