@@ -26,9 +26,13 @@ services:
       - key: DJANGO_ALLOWED_HOSTS
         value: "*"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://*.onrender.com"
+        value: "https://theprintplanet.co.in,https://*.theprintplanet.co.in,https://*.onrender.com"
       - key: CORS_ALLOW_ALL_ORIGINS
         value: "True"
+
+      # Next.js Production Canonical Domain Configuration
+      - key: NEXT_PUBLIC_SITE_URL
+        value: "https://theprintplanet.co.in"
 
       # Next.js Node Memory Optimization for 512MB Free Tier
       - key: NODE_OPTIONS

@@ -18,7 +18,7 @@ interface CategoryPageProps {
   }>;
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://the-print-planet.onrender.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   if (!category) {
     return { title: "Category Not Found | The Print Planet" };
   }
-  const title = category.seo_title || `${category.name} | The Print Planet`;
-  const desc = category.seo_description || category.description || `Wholesale trade supply of ${category.name}. High industrial grade materials.`;
+  const title = category.seo_title || `${category.name} Wholesale Manufacturer & Supplier | The Print Planet India`;
+  const desc = category.seo_description || category.description || `Wholesale trade supply of ${category.name} from The Print Planet (theprintplanet.co.in). High industrial grade materials, bulk trade pricing, and pan-India dispatch.`;
 
   return {
     title,
@@ -40,12 +40,13 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       description: desc,
       url: `${SITE_URL}/categories/${category.slug}`,
       type: "website",
+      siteName: "The Print Planet",
       images: [
         {
           url: `${SITE_URL}/media/products/LAN-ROY-20M.png`,
           width: 1200,
           height: 630,
-          alt: category.name,
+          alt: `${category.name} - The Print Planet`,
         },
       ],
     },
@@ -81,19 +82,48 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
   const categoryJsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: category.name,
-    description: category.description,
-    url: `${SITE_URL}/categories/${category.slug}`,
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: (productsData.results || []).map((p, idx) => ({
-        "@type": "ListItem",
-        position: idx + 1,
-        url: `${SITE_URL}/products/${p.slug}`,
-        name: p.name,
-      })),
-    },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${SITE_URL}/categories/${category.slug}#collection`,
+        name: `${category.name} - The Print Planet`,
+        description: category.description,
+        url: `${SITE_URL}/categories/${category.slug}`,
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: (productsData.results || []).map((p, idx) => ({
+            "@type": "ListItem",
+            position: idx + 1,
+            url: `${SITE_URL}/products/${p.slug}`,
+            name: p.name,
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/categories/${category.slug}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Categories",
+            item: `${SITE_URL}/categories`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: category.name,
+            item: `${SITE_URL}/categories/${category.slug}`,
+          },
+        ],
+      },
+    ],
   };
 
   const parentCategory = category.parent ? allCategories.find((c) => c.id === category.parent) : null;

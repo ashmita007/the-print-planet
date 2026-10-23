@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getCategories, getProducts } from '@/lib/api';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://the-print-planet.onrender.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://theprintplanet.co.in';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date();

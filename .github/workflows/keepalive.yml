@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Ping Print Planet Production Endpoint
         run: |
-          TARGET_URL="${{ secrets.RENDER_APP_URL || 'https://the-print-planet.onrender.com' }}"
+          TARGET_URL="${{ secrets.RENDER_APP_URL || 'https://theprintplanet.co.in' }}"
           echo "Sending keep-alive heartbeat to: ${TARGET_URL}/healthz"
           
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "${TARGET_URL}/healthz" || echo "failed")

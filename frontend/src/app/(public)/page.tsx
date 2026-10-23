@@ -338,6 +338,113 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 7. Frequently Asked Questions (FAQ) Section - High Search Intent & Buyer Assurance */}
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 pt-4 pb-12">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "What products does The Print Planet manufacture and supply wholesale?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Print Planet (theprintplanet.co.in) is India's leading B2B wholesale manufacturer of premium satin lanyard rolls, rigid PVC ID card holders, dog hooks, alligator clips, RFID smart access cards, and card manufacturing machinery including ID card die cutters and fusing machines."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How can I purchase or request a quotation from The Print Planet?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can select any product from our online catalogue at theprintplanet.co.in, click 'Request Quotation', or directly connect with our sales engineers via WhatsApp or phone at +91 97418 08034 for immediate price quotes within 1 working hour."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Does The Print Planet deliver wholesale orders across India?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, The Print Planet ships pan-India to all states and union territories using reliable logistics partners like DTDC, Blue Dart, VRL, and TCI with moisture-proof export packaging and live tracking."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you provide formal GST invoices for businesses?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, 100% of wholesale transactions are accompanied by official GST tax invoices for input tax credit (ITC) and full corporate tax compliance."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Can I get custom-printed lanyards with company branding?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we specialize in custom satin sublimation printing, screen printing, and heat transfer ribbons in 12mm, 16mm, 20mm, and 25mm with exact Pantone color matching."
+                  }
+                }
+              ]
+            }),
+          }}
+        />
+
+        <div className="bg-[#F8FAFC] border border-[#DCE3EB] rounded-2xl p-6 sm:p-10 space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#E87832] bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
+              Buyer Questions &amp; Support
+            </span>
+            <h2 className="text-xl sm:text-3xl font-black text-[#17365D]">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <p className="text-xs sm:text-sm text-[#4E6178]">
+              Everything you need to know about purchasing wholesale ID card supplies from The Print Planet.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
+              <h3 className="font-bold text-sm text-[#17365D]">
+                What products does The Print Planet manufacture?
+              </h3>
+              <p className="text-xs text-[#4E6178] leading-relaxed">
+                We manufacture and supply satin lanyard rolls, vertical/horizontal PVC ID card holders, lanyard metal hooks, RFID cards, and industrial ID card cutting and fusing machines.
+              </p>
+            </div>
+
+            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
+              <h3 className="font-bold text-sm text-[#17365D]">
+                How do I order or get bulk wholesale rates?
+              </h3>
+              <p className="text-xs text-[#4E6178] leading-relaxed">
+                Simply click &quot;Request Quote&quot; on any product page, use our online quotation portal, or contact our sales desk directly at +91 97418 08034 for fast 1-hour pricing.
+              </p>
+            </div>
+
+            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
+              <h3 className="font-bold text-sm text-[#17365D]">
+                Does The Print Planet deliver across India?
+              </h3>
+              <p className="text-xs text-[#4E6178] leading-relaxed">
+                Yes, we provide nationwide door delivery across all Indian cities and industrial hubs via DTDC, Blue Dart, VRL Logistics, and TCI with real-time dispatch tracking.
+              </p>
+            </div>
+
+            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
+              <h3 className="font-bold text-sm text-[#17365D]">
+                Are GST tax invoices provided?
+              </h3>
+              <p className="text-xs text-[#4E6178] leading-relaxed">
+                Yes, every wholesale consignment is billed with a 100% tax-compliant GST invoice on company letterhead so your business can claim full Input Tax Credit (ITC).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

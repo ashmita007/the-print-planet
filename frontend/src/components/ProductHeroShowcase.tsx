@@ -69,16 +69,16 @@ export default function ProductHeroShowcase({
         <div className="lg:hidden mb-4 text-left space-y-2">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#E87832] text-[10px] font-bold tracking-wide uppercase border border-white/10">
             <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B] animate-pulse" />
-            <span>Optical &amp; Industrial Manufacturing Supply</span>
+            <span>The Print Planet • Factory Direct Supply</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
-            Everything the Lens Industry Needs, Under One Roof:
+            The Print Planet — Wholesale ID Card Solutions &amp; Lanyards:
             <span className="block text-[#E87832] text-lg sm:text-xl font-bold mt-1">
-              PVC Cards, Optical Packaging &amp; Printing Solutions
+              Satin Lanyard Rolls, PVC Holders &amp; Machinery
             </span>
           </h1>
           <p className="text-xs text-slate-300 leading-relaxed pt-1">
-            CR-80 lens warranty cards, optical pouches, thermal/UV card printers, continuous lanyard rolls, and raw consumables.
+            Official portal of The Print Planet (theprintplanet.co.in). Premium satin lanyard rolls, rigid PVC ID card holders, dog hooks, RFID smart cards, and manufacturing machines.
           </p>
         </div>
 
@@ -87,18 +87,18 @@ export default function ProductHeroShowcase({
           <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full">
             <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/15">
               <span className="w-2 h-2 rounded-full bg-[#217A4B] animate-pulse" />
-              <span>Optical &amp; Industrial Manufacturing Supply</span>
+              <span>The Print Planet • Factory Direct Supply</span>
             </div>
 
             <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-black tracking-tight leading-[1.14] text-white">
-              Everything the <span className="text-[#E87832]">Lens Industry</span> Needs, Under One Roof:
+              The Print Planet — <span className="text-[#E87832]">Wholesale ID Cards</span>, Lanyard Rolls &amp; Machinery.
               <span className="block text-slate-100 font-extrabold text-xl sm:text-2xl lg:text-[1.6rem] mt-2 leading-snug">
-                PVC Cards, Optical Packaging &amp; Printing Solutions.
+                India&apos;s Leading Factory Manufacturer for ID Bureaus &amp; Optical Labs.
               </span>
             </h1>
 
             <p className="hidden lg:block text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-              Direct factory manufacturer and trade distributor for optical labs, eyewear retail chains, and identification bureaus. High-grade CR-80 PVC lens warranty cards, optical envelopes &amp; pouches, card fusing machinery, lanyard rolls, and consumables at ex-factory wholesale prices.
+              Direct factory manufacturer and wholesale trade distributor. Premium satin lanyard rolls, rigid PVC ID card holders, dog hooks, RFID smart access cards, card cutting machines, and laminators at ex-factory wholesale prices with pan-India dispatch.
             </p>
 
             {/* Quick Actions */}

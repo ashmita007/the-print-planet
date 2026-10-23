@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://the-print-planet.onrender.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const viewport: Viewport = {
   themeColor: "#17365D",
@@ -13,21 +13,28 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "The Print Planet | Wholesale ID Card Solutions & Lanyards",
+    default: "The Print Planet | Wholesale ID Card Solutions, Lanyard Rolls & Machinery India",
     template: "%s | The Print Planet",
   },
   description:
-    "Leading Indian B2B wholesale manufacturer of premium satin lanyard rolls, vertical/horizontal PVC ID card holders, dog hooks, RFID access cards, and card manufacturing machinery.",
+    "Official website of The Print Planet (theprintplanet.co.in). India's leading B2B factory manufacturer & wholesale supplier of satin lanyard rolls, PVC ID card holders, dog hooks, RFID smart cards, and card cutting machinery with pan-India dispatch.",
   keywords: [
+    "the print planet",
+    "print planet",
+    "print planet india",
+    "the print planet co in",
+    "theprintplanet.co.in",
+    "buy lanyard rolls wholesale",
     "wholesale id card lanyard roll",
     "color id card lanyard roll india",
     "semi transparent pvc id card holder",
     "crystal clear pvc id card holder",
     "id card lanyard hooks wholesale",
-    "id card cutting machine",
-    "fusing machine",
+    "id card cutting machine price",
+    "fusing machine wholesale",
     "rfid smart cards b2b",
     "custom satin lanyards manufacturer",
+    "wholesale id card accessories india",
   ],
   authors: [{ name: "The Print Planet" }],
   creator: "The Print Planet",
@@ -38,7 +45,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "./",
+    canonical: SITE_URL,
   },
   icons: {
     icon: [
@@ -54,9 +61,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "The Print Planet",
-    title: "The Print Planet | Wholesale ID Card Solutions & Lanyards",
+    title: "The Print Planet | Wholesale ID Card Solutions, Lanyard Rolls & Machinery India",
     description:
-      "Wholesale supplier of industrial satin lanyard rolls, rigid PVC ID card holders, clips, smart cards, and machinery. Fast dispatch across India.",
+      "Official website of The Print Planet. India's leading wholesale manufacturer of industrial satin lanyard rolls, rigid PVC ID card holders, clips, smart cards, and machinery. Fast dispatch across India.",
     images: [
       {
         url: `${SITE_URL}/logo.png`,
@@ -68,7 +75,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Print Planet | Wholesale ID Card Solutions & Lanyards",
+    title: "The Print Planet | Wholesale ID Card Solutions, Lanyard Rolls & Machinery India",
     description:
       "Wholesale manufacturer of satin lanyards, ID card holders, RFID cards, and machinery with nationwide dispatch.",
     images: [`${SITE_URL}/logo.png`],
@@ -90,16 +97,35 @@ const jsonLdOrg = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
+      "@type": ["Organization", "WholesaleStore"],
       "@id": `${SITE_URL}/#organization`,
       name: "The Print Planet",
+      alternateName: [
+        "Print Planet",
+        "The Print Planet India",
+        "print planet co in",
+        "theprintplanet.co.in",
+        "ThePrintPlanet"
+      ],
       url: SITE_URL,
       logo: `${SITE_URL}/logo.png`,
+      image: `${SITE_URL}/logo.png`,
       description:
-        "India's leading B2B wholesale manufacturer and supplier of satin lanyard rolls, ID holders, RFID cards, and card punching machines.",
+        "India's premier B2B wholesale manufacturer and supplier of satin lanyard rolls, ID holders, RFID cards, and card punching machinery.",
+      telephone: "+919741808034",
+      email: "theprintplanet01@gmail.com",
+      priceRange: "₹₹",
+      currenciesAccepted: "INR",
+      paymentAccepted: "Cash, NEFT, RTGS, UPI, Bank Transfer",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "IN",
+      },
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "sales",
+        telephone: "+919741808034",
+        email: "theprintplanet01@gmail.com",
         areaServed: "IN",
         availableLanguage: ["English", "Hindi"],
       },
@@ -109,6 +135,7 @@ const jsonLdOrg = {
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: "The Print Planet",
+      alternateName: ["Print Planet", "The Print Planet India", "theprintplanet.co.in"],
       publisher: {
         "@id": `${SITE_URL}/#organization`,
       },

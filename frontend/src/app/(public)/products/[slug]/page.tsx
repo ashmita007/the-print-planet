@@ -6,7 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import { getProductBySlug } from "@/lib/api";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://the-print-planet.onrender.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 const getAbsoluteImageUrl = (url?: string) => {
   if (!url) return `${SITE_URL}/media/products/LAN-ROY-20M.png`;
@@ -28,30 +28,33 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
+  const title = product.seo_title || `Buy ${product.name} Wholesale Online | The Print Planet India`;
+  const description = product.seo_description || `Buy ${product.name} at wholesale factory price from The Print Planet (theprintplanet.co.in). Industrial grade, bulk manufacturer supply, and fast dispatch across India.`;
 
   return {
-    title: product.seo_title || `${product.name} | The Print Planet`,
-    description: product.seo_description || product.short_description || product.description,
+    title,
+    description,
     alternates: {
       canonical: `${SITE_URL}/products/${product.slug}`,
     },
     openGraph: {
-      title: `${product.name} | The Print Planet`,
-      description: product.short_description || product.description,
+      title,
+      description,
       url: `${SITE_URL}/products/${product.slug}`,
+      siteName: "The Print Planet",
       images: [
         {
           url: imgUrl,
           width: 800,
           height: 800,
-          alt: product.name,
+          alt: `${product.name} - The Print Planet`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
-      description: product.short_description || product.description,
+      title,
+      description,
       images: [imgUrl],
     },
   };
@@ -67,28 +70,66 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   const productJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    image: getAbsoluteImageUrl(product.primary_image?.secure_url),
-    description: product.short_description || product.description,
-    sku: product.sku,
-    brand: {
-      "@type": "Brand",
-      name: "The Print Planet",
-    },
-    category: product.category?.name,
-    offers: {
-      "@type": "Offer",
-      url: `${SITE_URL}/products/${product.slug}`,
-      priceCurrency: product.currency || "INR",
-      price: product.price ? product.price.toString() : "0.00",
-      availability: "https://schema.org/InStock",
-      itemCondition: "https://schema.org/NewCondition",
-      seller: {
-        "@type": "Organization",
-        name: "The Print Planet",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${SITE_URL}/products/${product.slug}#product`,
+        name: product.name,
+        image: getAbsoluteImageUrl(product.primary_image?.secure_url),
+        description: product.short_description || product.description || `Industrial ${product.name} supplied by The Print Planet India.`,
+        sku: product.sku || product.id?.toString(),
+        mpn: product.sku || product.id?.toString(),
+        brand: {
+          "@type": "Brand",
+          name: "The Print Planet",
+        },
+        category: product.category?.name,
+        offers: {
+          "@type": "Offer",
+          url: `${SITE_URL}/products/${product.slug}`,
+          priceCurrency: product.currency || "INR",
+          price: product.price ? product.price.toString() : "100.00",
+          priceValidUntil: "2027-12-31",
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/NewCondition",
+          seller: {
+            "@type": "Organization",
+            name: "The Print Planet",
+            url: SITE_URL,
+          },
+        },
       },
-    },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/products/${product.slug}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Product Catalogue",
+            item: `${SITE_URL}/products`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: product.category?.name || "Category",
+            item: `${SITE_URL}/categories/${product.category?.slug || ""}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: product.name,
+            item: `${SITE_URL}/products/${product.slug}`,
+          },
+        ],
+      },
+    ],
   };
 
   return (
