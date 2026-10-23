@@ -172,10 +172,10 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-24 gap-3">
           {/* Logo & Brand Identity */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 group py-1">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 group py-1" title="Print Planet Official Wholesale Store">
             <Image
               src="/logo.png"
-              alt="The Print Planet"
+              alt="Print Planet — The Print Planet™ Wholesale ID Card & Printing Solutions"
               width={260}
               height={85}
               className="h-11 sm:h-16 md:h-18 w-auto object-contain hover:opacity-95 transition-opacity"
@@ -415,7 +415,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="bg-white px-3 py-1.5 rounded-lg inline-block shadow-sm">
                 <Image
                   src="/logo.png"
-                  alt="The Print Planet"
+                  alt="Print Planet — The Print Planet™ Wholesale ID Solutions"
                   width={180}
                   height={50}
                   className="h-9 sm:h-10 w-auto object-contain"

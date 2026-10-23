@@ -50,6 +50,45 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 <span>PAN: <strong className="text-white">{pan}</strong></span>
               </div>
             </div>
+
+            {/* Verified B2B Marketplace Outbound Citations */}
+            <div className="pt-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
+                Verified B2B Marketplace Profiles:
+              </span>
+              <div className="flex flex-wrap gap-1.5 text-[11px]">
+                <a
+                  href="https://www.indiamart.com/theprintplanet/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 bg-[#102742] hover:bg-[#0c1f35] px-2.5 py-1 rounded text-slate-200 hover:text-white border border-white/10 transition-colors"
+                  title="The Print Planet on IndiaMART"
+                >
+                  <ExternalLink className="w-3 h-3 text-[#E87832]" />
+                  <span>IndiaMART</span>
+                </a>
+                <a
+                  href="https://www.justdial.com/Bangalore/The-Print-Planet"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 bg-[#102742] hover:bg-[#0c1f35] px-2.5 py-1 rounded text-slate-200 hover:text-white border border-white/10 transition-colors"
+                  title="The Print Planet on Justdial"
+                >
+                  <ExternalLink className="w-3 h-3 text-[#E87832]" />
+                  <span>Justdial</span>
+                </a>
+                <a
+                  href="https://www.tradeindia.com/Seller-19717145-The-Print-Planet/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 bg-[#102742] hover:bg-[#0c1f35] px-2.5 py-1 rounded text-slate-200 hover:text-white border border-white/10 transition-colors"
+                  title="The Print Planet on TradeIndia"
+                >
+                  <ExternalLink className="w-3 h-3 text-[#E87832]" />
+                  <span>TradeIndia</span>
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Column 2: Key Product Categories */}
