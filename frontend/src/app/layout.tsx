@@ -113,13 +113,39 @@ const jsonLdOrg = {
       logo: `${SITE_URL}/logo.png`,
       image: `${SITE_URL}/logo.png`,
       description:
-        "India's premier B2B wholesale manufacturer and supplier of satin lanyard rolls, PVC ID card holders, dog hooks, RFID smart cards, and card punching machinery.",
+        "India's premier B2B factory manufacturer and wholesale supplier of satin lanyard rolls, PVC ID card holders, dog hooks, RFID smart cards, and card punching machinery.",
       telephone: "+919741808034",
       email: "theprintplanet01@gmail.com",
       taxID: "29AAQFT3909B1ZZ",
       priceRange: "₹₹",
       currenciesAccepted: "INR",
       paymentAccepted: "Cash, NEFT, RTGS, UPI, Bank Transfer",
+      sameAs: [
+        "https://www.indiamart.com/theprintplanet/",
+        "https://www.justdial.com/Bangalore/The-Print-Planet",
+        "https://www.tradeindia.com/Seller-16599025-THE-PRINT-PLANET/",
+        "https://theprintplanet.co.in"
+      ],
+      knowsAbout: [
+        "Satin Lanyard Rolls",
+        "PVC ID Card Holders",
+        "Sublimation Lanyard Printing",
+        "Dog Hooks and Alligator Clips",
+        "Motorized PVC Card Die Cutters",
+        "ID Card Fusing Machines",
+        "RFID and Mifare Smart Cards"
+      ],
+      areaServed: [
+        { "@type": "Country", name: "India" },
+        { "@type": "City", name: "Bengaluru" },
+        { "@type": "City", name: "Mumbai" },
+        { "@type": "City", name: "Delhi" },
+        { "@type": "City", name: "Hyderabad" },
+        { "@type": "City", name: "Chennai" },
+        { "@type": "City", name: "Pune" },
+        { "@type": "City", name: "Ahmedabad" },
+        { "@type": "City", name: "Kolkata" }
+      ],
       address: {
         "@type": "PostalAddress",
         streetAddress: "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town",

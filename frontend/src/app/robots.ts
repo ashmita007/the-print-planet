@@ -15,6 +15,23 @@ export default function robots(): MetadataRoute.Robots {
           '/admin/',
         ],
       },
+      {
+        userAgent: [
+          'Googlebot',
+          'Bingbot',
+          'Applebot',
+          'OAI-SearchBot',
+          'PerplexityBot',
+          'Claude-SearchBot',
+        ],
+        allow: '/',
+        disallow: [
+          '/owner/',
+          '/api/',
+          '/_next/',
+          '/admin/',
+        ],
+      },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
