@@ -63,13 +63,43 @@ export default async function HomePage() {
       p.category?.slug?.includes("machine") ||
       (p as any).category?.parent_slug === "machines"
   );
-  const safeFeatured = featuredProducts?.length > 0 ? featuredProducts : productsList.slice(0, 6);
+
+  // Curate a diverse selection of flagship products across all distinct categories
+  const diverseFlagships: typeof productsList = [];
+  const seenCatIds = new Set<number>();
+
+  // 1. First add any featured products
+  for (const p of featuredProducts || []) {
+    if (p.category && !seenCatIds.has(p.category.id)) {
+      seenCatIds.add(p.category.id);
+      diverseFlagships.push(p);
+    }
+  }
+
+  // 2. Pick top products across all remaining categories to guarantee full category diversity
+  for (const p of productsList) {
+    if (p.category && !seenCatIds.has(p.category.id)) {
+      seenCatIds.add(p.category.id);
+      diverseFlagships.push(p);
+    }
+  }
+
+  // 3. Fill up to 24 diverse products from productsList
+  for (const p of productsList) {
+    if (diverseFlagships.length >= 24) break;
+    if (!diverseFlagships.some((d) => d.id === p.id)) {
+      diverseFlagships.push(p);
+    }
+  }
+
+  const safeFeatured = diverseFlagships.length > 0 ? diverseFlagships : productsList.slice(0, 18);
 
   return (
     <div className="space-y-16 pb-20">
       {/* 1. Product-First Industrial Hero Showcase */}
       <ProductHeroShowcase
         flagshipProducts={safeFeatured}
+        allProducts={productsList}
         totalProductsCount={productsData?.count || productsList.length}
       />
 
