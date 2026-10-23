@@ -27,8 +27,51 @@ export default async function AboutPage() {
   const settings = await getSiteSettings();
   const businessName = settings?.business_name || "THE PRINT PLANET";
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "About Us",
+        item: `${SITE_URL}/about`,
+      },
+    ],
+  };
+
+  const aboutJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About The Print Planet",
+    url: `${SITE_URL}/about`,
+    description: "Learn about The Print Planet (theprintplanet.co.in), India's leading B2B factory manufacturer and wholesale distributor of satin lanyard rolls, PVC ID card holders, and card machinery.",
+    mainEntity: {
+      "@type": "Organization",
+      name: "The Print Planet",
+      alternateName: ["Print Planet", "The Print Planet India"],
+      url: SITE_URL,
+      telephone: "+919741808034",
+      email: "theprintplanet01@gmail.com",
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
       <Breadcrumbs items={[{ label: "About Our Company" }]} />
 
       {/* Hero */}

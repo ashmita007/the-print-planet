@@ -65,40 +65,23 @@ export default function ProductHeroShowcase({
       />
 
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 relative z-10">
-        {/* Mobile Header: Direct, realistic B2B proposition */}
-        <div className="lg:hidden mb-4 text-left space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#E87832] text-[10px] font-bold tracking-wide uppercase border border-white/10">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B] animate-pulse" />
-            <span>The Print Planet • Factory Direct Supply</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
-            The Print Planet — Wholesale ID Card Solutions &amp; Lanyards:
-            <span className="block text-[#E87832] text-lg sm:text-xl font-bold mt-1">
-              Satin Lanyard Rolls, PVC Holders &amp; Machinery
-            </span>
-          </h1>
-          <p className="text-xs text-slate-300 leading-relaxed pt-1">
-            Official portal of The Print Planet (theprintplanet.co.in). Premium satin lanyard rolls, rigid PVC ID card holders, dog hooks, RFID smart cards, and manufacturing machines.
-          </p>
-        </div>
-
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-5 lg:gap-12 items-center">
           {/* Left Column: Industrial Proposition & Quotation */}
-          <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full">
-            <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/15">
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#E87832] text-[11px] sm:text-xs font-bold tracking-wide uppercase border border-white/15">
               <span className="w-2 h-2 rounded-full bg-[#217A4B] animate-pulse" />
-              <span>The Print Planet • Factory Direct Supply</span>
+              <span>Print Planet • The Print Planet™ Factory Direct</span>
             </div>
 
-            <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-black tracking-tight leading-[1.14] text-white">
-              The Print Planet — <span className="text-[#E87832]">Wholesale ID Cards</span>, Lanyard Rolls &amp; Machinery.
-              <span className="block text-slate-100 font-extrabold text-xl sm:text-2xl lg:text-[1.6rem] mt-2 leading-snug">
-                India&apos;s Leading Factory Manufacturer for ID Bureaus &amp; Optical Labs.
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.4rem] font-black tracking-tight leading-[1.18] text-white">
+              Print Planet — <span className="text-[#E87832]">The Print Planet™</span> | Wholesale ID Cards, Lanyard Rolls &amp; Machinery
+              <span className="block text-slate-100 font-extrabold text-base sm:text-xl lg:text-[1.5rem] mt-2 leading-snug">
+                India&apos;s Leading Factory Manufacturer for ID Bureaus &amp; Printing Studios
               </span>
             </h1>
 
-            <p className="hidden lg:block text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-              Direct factory manufacturer and wholesale trade distributor. Premium satin lanyard rolls, rigid PVC ID card holders, dog hooks, RFID smart access cards, card cutting machines, and laminators at ex-factory wholesale prices with pan-India dispatch.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
+              Official portal of <strong>Print Planet</strong> (theprintplanet.co.in). Direct factory manufacturer and wholesale supplier of satin lanyard rolls, rigid PVC ID card holders, metal dog hooks, RFID smart cards, and motorized card die cutting machinery with pan-India dispatch.
             </p>
 
             {/* Quick Actions */}

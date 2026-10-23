@@ -34,8 +34,65 @@ export default async function ContactPage() {
   const pan = "AAQFT3909B";
   const whatsapp = settings?.whatsapp || "+91 97418 08034";
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Contact Us",
+        item: `${SITE_URL}/contact`,
+      },
+    ],
+  };
+
+  const contactJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact The Print Planet",
+    url: `${SITE_URL}/contact`,
+    mainEntity: {
+      "@type": "LocalBusiness",
+      name: "The Print Planet",
+      alternateName: ["Print Planet", "The Print Planet India"],
+      telephone: phone,
+      email: email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town",
+        addressLocality: "Bengaluru",
+        addressRegion: "Karnataka",
+        postalCode: "560079",
+        addressCountry: "IN",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: phone,
+        contactType: "sales",
+        email: email,
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi", "Kannada"],
+      },
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
       <Breadcrumbs items={[{ label: "Contact Us & Quotations" }]} />
 
       {/* Hero */}

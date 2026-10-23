@@ -97,9 +97,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
-  // 3. Dynamic Products
-  const productsData = await getProducts({ page_size: 100 });
-  const productRoutes: MetadataRoute.Sitemap = (productsData?.results || []).map((prod) => ({
+  // 3. Dynamic Products (Fetch all pages to guarantee 100% of catalogue products are indexed)
+  const allProducts: { slug: string; updated_at?: string }[] = [];
+  let page = 1;
+  let hasMore = true;
+  while (hasMore && page <= 10) {
+    const productsData = await getProducts({ page, page_size: 100 });
+    if (productsData?.results?.length) {
+      allProducts.push(...productsData.results);
+      if (!productsData.next || allProducts.length >= productsData.count) {
+        hasMore = false;
+      } else {
+        page++;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
+
+  const productRoutes: MetadataRoute.Sitemap = allProducts.map((prod) => ({
     url: `${SITE_URL}/products/${prod.slug}`,
     lastModified: prod.updated_at ? new Date(prod.updated_at) : currentDate,
     changeFrequency: 'weekly',
