@@ -7,12 +7,15 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: [
+          '/',
+          '/_next/static/',
+        ],
         disallow: [
           '/owner/',
           '/api/',
-          '/_next/',
           '/admin/',
+          '/checkout/',
         ],
       },
       {
@@ -24,12 +27,15 @@ export default function robots(): MetadataRoute.Robots {
           'PerplexityBot',
           'Claude-SearchBot',
         ],
-        allow: '/',
+        allow: [
+          '/',
+          '/_next/static/',
+        ],
         disallow: [
           '/owner/',
           '/api/',
-          '/_next/',
           '/admin/',
+          '/checkout/',
         ],
       },
     ],
