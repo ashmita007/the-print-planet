@@ -134,12 +134,13 @@ from django.dispatch import receiver
 @receiver(connection_created)
 def configure_sqlite_pragmas(sender, connection, **kwargs):
     """
-    Optimizes SQLite for zero-cost high concurrency:
+    Optimizes SQLite for high concurrency, zero locks, and maximum read speed:
     - WAL (Write-Ahead Logging): non-blocking concurrent reads and writes
     - synchronous=NORMAL: reduces disk fsync overhead safely
     - cache_size=-64000: 64MB RAM cache for instant catalog & query reads
     - mmap_size=268435456: 256MB memory mapping
-    - busy_timeout=5000: eliminates 'database is locked' errors under peak traffic
+    - busy_timeout=10000: eliminates 'database is locked' errors under peak traffic
+    - temp_store=MEMORY: keeps temporary tables and sorting in memory for high speed
     """
     if connection.vendor == 'sqlite':
         cursor = connection.cursor()
@@ -147,7 +148,8 @@ def configure_sqlite_pragmas(sender, connection, **kwargs):
         cursor.execute('PRAGMA synchronous=NORMAL;')
         cursor.execute('PRAGMA cache_size=-64000;')
         cursor.execute('PRAGMA mmap_size=268435456;')
-        cursor.execute('PRAGMA busy_timeout=5000;')
+        cursor.execute('PRAGMA busy_timeout=10000;')
+        cursor.execute('PRAGMA temp_store=MEMORY;')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

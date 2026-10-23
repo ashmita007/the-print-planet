@@ -63,22 +63,27 @@ class Command(BaseCommand):
                             except Exception:
                                 existing_prods = 0
 
-                        # Check downloaded database product count
+                        # Verify remote product count using safe tempfile verification
+                        import tempfile
+                        remote_prods = 0
                         try:
-                            mem_conn = sqlite3.connect(':memory:')
-                            if hasattr(mem_conn, 'deserialize'):
-                                mem_conn.deserialize(data)
-                                cur = mem_conn.cursor()
-                                cur.execute("SELECT count(*) FROM catalog_product")
-                                remote_prods = cur.fetchone()[0]
-                                mem_conn.close()
-                                if remote_prods < existing_prods:
-                                    self.stdout.write(self.style.WARNING(
-                                        f"Preserving local data: local database has {existing_prods} products while cloud backup has only {remote_prods} products."
-                                    ))
-                                    return False
-                        except Exception:
-                            pass
+                            with tempfile.NamedTemporaryFile(delete=False, suffix='.sqlite3') as tmp:
+                                tmp.write(data)
+                                tmp_path = tmp.name
+                            tmp_conn = sqlite3.connect(tmp_path)
+                            cur = tmp_conn.cursor()
+                            cur.execute("SELECT count(*) FROM catalog_product")
+                            remote_prods = cur.fetchone()[0]
+                            tmp_conn.close()
+                            os.remove(tmp_path)
+                        except Exception as check_err:
+                            self.stdout.write(self.style.WARNING(f"Could not verify remote database product count: {check_err}"))
+
+                        if existing_prods > 0 and remote_prods < existing_prods:
+                            self.stdout.write(self.style.WARNING(
+                                f"Preserving local data: local database has {existing_prods} products while cloud backup has only {remote_prods} products."
+                            ))
+                            return False
 
                         with open(db_path, 'wb') as f:
                             f.write(data)
