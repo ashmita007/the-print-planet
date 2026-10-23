@@ -16,6 +16,8 @@ class PublicEnquiryCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         enquiry = serializer.save()
         trigger_enquiry_notifications(enquiry)
+        from apps.catalog.backup_service import trigger_auto_backup_async
+        trigger_auto_backup_async(force=True)
 
 
 class OwnerEnquiryViewSet(viewsets.ModelViewSet):
@@ -24,6 +26,16 @@ class OwnerEnquiryViewSet(viewsets.ModelViewSet):
     serializer_class = EnquiryDetailSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     pagination_class = StandardResultsSetPagination
+
+    def perform_update(self, serializer):
+        serializer.save()
+        from apps.catalog.backup_service import trigger_auto_backup_async
+        trigger_auto_backup_async(force=True)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+        from apps.catalog.backup_service import trigger_auto_backup_async
+        trigger_auto_backup_async(force=True)
 
     def get_queryset(self):
         qs = super().get_queryset()
