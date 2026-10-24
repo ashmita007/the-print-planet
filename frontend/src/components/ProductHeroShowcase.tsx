@@ -152,22 +152,22 @@ export default function ProductHeroShowcase({
               </span>
               <span className="text-white/40">•</span>
               <span className="text-[10px] sm:text-[11px] font-semibold text-[#FFA868]">
-                {settings?.hero_badge?.includes("•") ? settings.hero_badge.split("•")[1]?.trim() : "India's Direct B2B Factory"}
+                {settings?.hero_badge?.includes("•") ? settings.hero_badge.split("•")[1]?.trim() : "Specialist in PVC Cards & ID Systems"}
               </span>
             </div>
 
             {/* Main Primary SEO & Brand Heading */}
             <h1 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight leading-[1.14] text-white">
-              {settings?.hero_title || "Print Planet — Factory Direct"}
+              {settings?.hero_title || "Print Planet — Specialist in PVC Cards"}
               <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
-                {settings?.hero_subtitle || "Wholesale ID Cards, Lanyard Rolls & Machinery"}
+                {settings?.hero_subtitle || "India's Direct B2B Wholesale ID Materials & Machinery Hub"}
               </span>
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl">
               {settings?.hero_caption || (
                 <>
-                  Official portal of <strong>The Print Planet</strong> (theprintplanet.co.in). India&apos;s leading B2B manufacturing hub for satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, dog hooks, and card die cutting machinery with 24–48h pan-India dispatch.
+                  Official portal of <strong>The Print Planet</strong> (theprintplanet.co.in) — recognized factory <strong>specialist in PVC cards</strong>, CR-80 fusing sheets, rigid ID card holders, satin lanyard rolls, RFID smart cards, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.
                 </>
               )}
             </p>

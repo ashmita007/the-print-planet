@@ -13,12 +13,16 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
-    template: "%s | Print Planet™ Bangalore",
+    default: "Print Planet™ Bangalore | Specialist in PVC Cards, ID Materials & Machinery — Official Website",
+    template: "%s | Print Planet™ — Specialist in PVC Cards",
   },
   description:
-    "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Leading B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, digital cutting plotters, badge reels, and sublimation supplies with pan-India dispatch from Sunkadakatte, Bangalore.",
+    "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's leading specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, and multicolour heat-transfer lanyards with pan-India dispatch from Sunkadakatte, Bangalore.",
   keywords: [
+    "specialist in pvc cards",
+    "specialist in pvc cards bangalore",
+    "pvc card specialist",
+    "pvc cards manufacturer bangalore",
     "print planet",
     "the print planet",
     "the print planet bangalore",
@@ -30,8 +34,8 @@ export const metadata: Metadata = {
     "lanyard and pvc id card supplies",
     "the print planet co in",
     "theprintplanet.co.in",
-    "buy lanyard rolls wholesale",
-    "wholesale id card lanyard roll",
+    "pvc id card fusing sheets wholesale",
+    "coated overlay sheets for pvc id card",
     "semi transparent pvc id card holder",
     "crystal clear pvc id card holder",
     "id card cutting machine price",
@@ -138,7 +142,7 @@ const jsonLdOrg = {
         `${SITE_URL}/icon.png`,
       ],
       description:
-        "India's premier B2B factory manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
+        "India's premier B2B factory manufacturer and specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
       telephone: "+919741808034",
       email: "theprintplanet01@gmail.com",
       taxID: "29AAQFT3909B1ZZ",
@@ -152,12 +156,13 @@ const jsonLdOrg = {
         "https://theprintplanet.co.in"
       ],
       knowsAbout: [
-        "PVC ID Cards and Raw Materials",
+        "Specialist in PVC Cards and ID Systems",
+        "PVC ID Card Manufacturing & Raw Materials",
+        "PVC Core Fusing Sheets & Coated Overlays",
         "Multicolour Heat-Transfer Lanyards",
         "Industrial Thermal Lamination Machines",
-        "Digital Cutting Plotters",
-        "Badge Reels",
-        "Die Cutters",
+        "Digital Cutting Plotters & Die Cutters",
+        "Badge Reels & Lanyard Fittings",
         "Sublimation Inks and Raw Materials",
         "Satin Lanyard Rolls",
         "PVC ID Card Holders",

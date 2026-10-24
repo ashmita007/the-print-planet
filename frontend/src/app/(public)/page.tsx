@@ -31,17 +31,17 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
+    absolute: "Print Planet™ Bangalore | Specialist in PVC Cards, ID Materials & Machinery — Official Website",
   },
   description:
-    "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's direct manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, cutting plotters, and badge reels from Sunkadakatte, Bangalore.",
+    "The Print Planet (theprintplanet.co.in) is India's premier specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, card die cutters, and satin lanyard rolls. Factory-direct wholesale dispatch from Sunkadakatte, Bangalore.",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
+    title: "Print Planet™ Bangalore | Specialist in PVC Cards, ID Materials & Machinery",
     description:
-      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's direct manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial machinery.",
+      "India's leading specialist in PVC cards, CR-80 fusing sheets, rigid ID card holders, and card manufacturing machinery. Direct B2B wholesale rates from Sunkadakatte, Bangalore.",
     url: SITE_URL,
     siteName: "Print Planet",
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/logo.png`,
         width: 1200,
         height: 600,
-        alt: "Print Planet Bangalore",
+        alt: "The Print Planet Bangalore — Specialist in PVC Cards",
       },
       {
         url: `${SITE_URL}/icon-512.png`,
@@ -353,6 +353,79 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* 5. India's Specialist in PVC Cards & Raw Materials */}
+      <section className="bg-gradient-to-b from-[#F8FAFC] to-white py-16 border-t border-[#DCE3EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-3xl mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E87832]/10 text-[#E87832] text-xs font-black uppercase tracking-wider mb-2">
+              <span>National Manufacturing Hub</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
+              India&apos;s Direct Specialist in PVC Cards &amp; ID Raw Materials
+            </h2>
+            <p className="text-xs sm:text-sm text-[#4E6178] mt-2 leading-relaxed">
+              From CR-80 ISO inkjet fusing sheets to coated magnetic overlays, semi-transparent card cases, and hydraulic motorized die cutters, <strong>The Print Planet</strong> is Bangalore&apos;s trusted factory specialist for commercial ID bureau production.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
+                01
+              </div>
+              <h3 className="font-black text-lg text-[#17365D]">
+                PVC Core Sheets &amp; Inkjet Fusing Media
+              </h3>
+              <p className="text-xs text-[#687586] leading-relaxed">
+                Optical-white 0.15mm + 0.46mm + 0.15mm standard 3-layer sandwich sheets engineered for vibrant high-DPI inkjet and digital press fusing with zero card delamination.
+              </p>
+              <Link
+                href="/products?search=fusing"
+                className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] inline-flex items-center gap-1 pt-1"
+              >
+                <span>Browse Fusing Media &rarr;</span>
+              </Link>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
+                02
+              </div>
+              <h3 className="font-black text-lg text-[#17365D]">
+                Coated Overlay &amp; Magnetic Stripe Films
+              </h3>
+              <p className="text-xs text-[#687586] leading-relaxed">
+                Scratch-resistant coated overlay films formulated for thermal roll lamination with durable peel resistance, UV protection, and clean burr-free edge punching.
+              </p>
+              <Link
+                href="/products?search=overlay"
+                className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] inline-flex items-center gap-1 pt-1"
+              >
+                <span>Explore Coated Overlays &rarr;</span>
+              </Link>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
+                03
+              </div>
+              <h3 className="font-black text-lg text-[#17365D]">
+                Rigid Holders, Reels &amp; RFID Smart Badges
+              </h3>
+              <p className="text-xs text-[#687586] leading-relaxed">
+                Vertical and horizontal crystal-clear PVC card cases, heavy-duty badge reels, and 125kHz / 13.56MHz RFID cards calibrated for enterprise access security.
+              </p>
+              <Link
+                href="/products?search=holder"
+                className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] inline-flex items-center gap-1 pt-1"
+              >
+                <span>View Card Accessories &rarr;</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. Custom Requirements & Bulk Order Callout */}
       <section className="max-w-7xl mx-auto px-3 sm:px-6">
         <div className="bg-[#17365D] rounded-xl sm:rounded-2xl text-white p-5 sm:p-10 shadow-xl border border-white/10 relative overflow-hidden">
@@ -422,6 +495,14 @@ export default async function HomePage() {
               "mainEntity": [
                 {
                   "@type": "Question",
+                  "name": "Why is The Print Planet recognized as Bangalore's specialist in PVC cards?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Print Planet is India's verified manufacturing specialist in PVC cards, supplying the complete production chain: printable PVC core fusing sheets, coated overlay films, ISO CR-80 card die cutting machinery, rigid PVC holders, and RFID access badges with direct wholesale rates and same-day dispatch from Sunkadakatte, Bangalore."
+                  }
+                },
+                {
+                  "@type": "Question",
                   "name": "What products does The Print Planet manufacture and supply wholesale?",
                   "acceptedAnswer": {
                     "@type": "Answer",
@@ -479,6 +560,15 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
+              <h3 className="font-bold text-sm text-[#17365D]">
+                Why is The Print Planet India&apos;s specialist in PVC cards?
+              </h3>
+              <p className="text-xs text-[#4E6178] leading-relaxed">
+                We are a direct factory manufacturer supplying the entire PVC card supply chain: CR-80 inkjet fusing sheets, coated magnetic overlay rolls, motorized card die cutters, crystal-clear badge holders, and RFID proximity cards.
+              </p>
+            </div>
+
             <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
               <h3 className="font-bold text-sm text-[#17365D]">
                 What products does The Print Planet manufacture?
