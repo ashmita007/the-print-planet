@@ -4,8 +4,8 @@ from django.db import models
 class SiteSettings(models.Model):
     business_name = models.CharField(max_length=255, default='THE PRINT PLANET')
     tagline = models.CharField(max_length=255, default='Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions')
-    logo_url = models.URLField(max_length=1000, blank=True, null=True)
-    favicon_url = models.URLField(max_length=1000, blank=True, null=True)
+    logo_url = models.CharField(max_length=1000, blank=True, null=True, default='/logo.png')
+    favicon_url = models.CharField(max_length=1000, blank=True, null=True, default='/favicon.ico')
     email = models.EmailField(default='theprintplanet01@gmail.com')
     phone = models.CharField(max_length=50, default='+91 97418 08034')
     whatsapp = models.CharField(max_length=50, default='+91 97418 08034')

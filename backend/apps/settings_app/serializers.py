@@ -4,6 +4,14 @@ from apps.catalog.serializers import CategorySerializer, ProductListSerializer
 
 
 class SiteSettingsSerializer(serializers.ModelSerializer):
+    logo_url = serializers.CharField(max_length=1000, allow_blank=True, allow_null=True, required=False)
+    favicon_url = serializers.CharField(max_length=1000, allow_blank=True, allow_null=True, required=False)
+    hero_badge = serializers.CharField(max_length=255, allow_blank=True, required=False)
+    hero_title = serializers.CharField(max_length=255, allow_blank=True, required=False)
+    hero_subtitle = serializers.CharField(max_length=255, allow_blank=True, required=False)
+    hero_caption = serializers.CharField(allow_blank=True, required=False)
+    about_data = serializers.JSONField(required=False)
+
     class Meta:
         model = SiteSettings
         fields = [

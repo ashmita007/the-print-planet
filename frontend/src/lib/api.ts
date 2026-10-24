@@ -521,7 +521,13 @@ export async function ownerUpdateSettings(data: Partial<SiteSettings>): Promise<
       body: JSON.stringify(data),
     });
     const resData = await res.json();
-    if (!res.ok) return { success: false, error: JSON.stringify(resData) };
+    if (!res.ok) {
+      const errorMsg =
+        resData.error ||
+        resData.detail ||
+        (typeof resData === 'object' ? Object.values(resData).flat().join(', ') : 'Failed to update settings');
+      return { success: false, error: errorMsg };
+    }
     return { success: true, data: resData };
   } catch (err: any) {
     return { success: false, error: err.message };

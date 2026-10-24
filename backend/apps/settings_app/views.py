@@ -30,7 +30,7 @@ class PublicHomePageSectionsView(generics.ListAPIView):
 
 
 class OwnerSiteSettingsView(APIView):
-    """Owner configuration endpoint for store identity, contact, social links."""
+    """Owner configuration endpoint for store identity, contact, social links, hero, and about CMS."""
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def get(self, request):
@@ -43,8 +43,22 @@ class OwnerSiteSettingsView(APIView):
         serializer = SiteSettingsSerializer(settings, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            try:
+                from apps.catalog.backup_service import trigger_auto_backup_async
+                trigger_auto_backup_async(force=True)
+            except Exception:
+                pass
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Flatten and humanize validation error messages
+        err_list = []
+        for field, messages in serializer.errors.items():
+            if isinstance(messages, list):
+                err_list.append(f"{field}: {' '.join(str(m) for m in messages)}")
+            else:
+                err_list.append(f"{field}: {messages}")
+        error_summary = " | ".join(err_list) if err_list else "Validation failed"
+        return Response({'error': error_summary, 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request):
         return self.put(request)

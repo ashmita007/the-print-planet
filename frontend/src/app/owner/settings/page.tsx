@@ -197,8 +197,105 @@ function OwnerSettingsInner() {
     });
   }, []);
 
-  const handleSaveAll = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSaveHero = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setSaving(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    const res = await ownerUpdateSettings({
+      hero_badge: heroBadge.trim(),
+      hero_title: heroTitle.trim(),
+      hero_subtitle: heroSubtitle.trim(),
+      hero_caption: heroCaption.trim(),
+    });
+
+    setSaving(false);
+    if (res.success) {
+      setSuccessMsg("Homepage Hero banner & captions saved successfully! Live now on the homepage.");
+      setTimeout(() => setSuccessMsg(""), 4000);
+    } else {
+      setErrorMsg(res.error || "Failed to update Homepage Hero.");
+    }
+  };
+
+  const handleSaveAbout = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setSaving(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    const updatedAboutData = {
+      hero_tag: aboutHeroTag,
+      hero_title: aboutHeroTitle,
+      hero_subtitle: aboutHeroSubtitle,
+      story_title: aboutStoryTitle,
+      story_p1: aboutStoryP1,
+      story_p2: aboutStoryP2,
+      stat_1_val: stat1Val,
+      stat_1_label: stat1Label,
+      stat_2_val: stat2Val,
+      stat_2_label: stat2Label,
+      stat_3_val: stat3Val,
+      stat_3_label: stat3Label,
+      stat_4_val: stat4Val,
+      stat_4_label: stat4Label,
+      standard_1_title: standard1Title,
+      standard_1_desc: standard1Desc,
+      standard_2_title: standard2Title,
+      standard_2_desc: standard2Desc,
+      standard_3_title: standard3Title,
+      standard_3_desc: standard3Desc,
+      facility_1_title: facility1Title,
+      facility_1_desc: facility1Desc,
+      facility_2_title: facility2Title,
+      facility_2_desc: facility2Desc,
+      facility_3_title: facility3Title,
+      facility_3_desc: facility3Desc,
+    };
+
+    const res = await ownerUpdateSettings({
+      about_data: updatedAboutData,
+    });
+
+    setSaving(false);
+    if (res.success) {
+      setSuccessMsg("About Us CMS saved successfully! Live now on /about.");
+      setTimeout(() => setSuccessMsg(""), 4000);
+    } else {
+      setErrorMsg(res.error || "Failed to update About Us content.");
+    }
+  };
+
+  const handleSaveIdentity = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setSaving(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    const res = await ownerUpdateSettings({
+      business_name: businessName,
+      tagline,
+      email,
+      phone,
+      whatsapp,
+      address,
+      gst_number: gstNumber,
+      footer_text: footerText,
+      logo_url: logoUrl.trim() || "/logo.png",
+    });
+
+    setSaving(false);
+    if (res.success) {
+      setSuccessMsg("Store Identity and Contact details saved successfully!");
+      setTimeout(() => setSuccessMsg(""), 4000);
+    } else {
+      setErrorMsg(res.error || "Failed to update store identity.");
+    }
+  };
+
+  const handleSaveAll = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setSaving(true);
     setErrorMsg("");
     setSuccessMsg("");
@@ -241,11 +338,11 @@ function OwnerSettingsInner() {
       address,
       gst_number: gstNumber,
       footer_text: footerText,
-      logo_url: logoUrl || null,
-      hero_badge: heroBadge,
-      hero_title: heroTitle,
-      hero_subtitle: heroSubtitle,
-      hero_caption: heroCaption,
+      logo_url: logoUrl.trim() || "/logo.png",
+      hero_badge: heroBadge.trim(),
+      hero_title: heroTitle.trim(),
+      hero_subtitle: heroSubtitle.trim(),
+      hero_caption: heroCaption.trim(),
       about_data: updatedAboutData,
     });
 
@@ -616,12 +713,12 @@ function OwnerSettingsInner() {
               <div className="pt-2">
                 <button
                   type="button"
-                  onClick={handleSaveAll}
+                  onClick={handleSaveHero}
                   disabled={saving}
                   className="bg-[#17365D] hover:bg-[#102742] text-white px-6 py-2.5 rounded-xl font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
                 >
-                  <Save className="w-3.5 h-3.5" />
-                  <span>Save Homepage Hero</span>
+                  {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+                  <span>{saving ? "Saving Hero..." : "Save Homepage Hero"}</span>
                 </button>
               </div>
             </div>
@@ -923,12 +1020,12 @@ function OwnerSettingsInner() {
             <div className="pt-2">
               <button
                 type="button"
-                onClick={handleSaveAll}
+                onClick={handleSaveAbout}
                 disabled={saving}
                 className="bg-[#17365D] hover:bg-[#102742] text-white px-6 py-2.5 rounded-xl font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
               >
-                <Save className="w-3.5 h-3.5" />
-                <span>Save About Us CMS</span>
+                {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+                <span>{saving ? "Saving About Us..." : "Save About Us CMS"}</span>
               </button>
             </div>
           </div>
@@ -937,7 +1034,7 @@ function OwnerSettingsInner() {
 
       {/* TAB 3: STORE IDENTITY & CONTACT */}
       {activeTab === "identity" && (
-        <form onSubmit={handleSaveAll} className="space-y-6 text-xs">
+        <form onSubmit={handleSaveIdentity} className="space-y-6 text-xs">
           <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-5">
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-2">
               <Building2 className="w-4 h-4 text-[#E87832]" />
@@ -1057,8 +1154,8 @@ function OwnerSettingsInner() {
               disabled={saving}
               className="bg-[#17365D] hover:bg-[#102742] text-white px-8 py-3 rounded-xl font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
-              <Save className="w-4 h-4" />
-              <span>{saving ? "Saving Changes..." : "Save Identity Settings"}</span>
+              {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+              <span>{saving ? "Saving Identity..." : "Save Identity Settings"}</span>
             </button>
           </div>
         </form>
