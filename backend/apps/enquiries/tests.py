@@ -136,11 +136,16 @@ class EnquiryApiTests(TestCase):
         import os
 
         # Temporarily enable BREVO_API_KEY and disable TESTING check for this unit test
-        with patch.dict(os.environ, {'BREVO_API_KEY': 'xkeysib-mock-api-key-test', 'BREVO_SENDER_EMAIL': 'theprintplanet01@gmail.com'}):
+        with patch.dict(os.environ, {
+            'BREVO_API_KEY': 'xkeysib-mock-api-key-test',
+            'BREVO_SENDER_EMAIL': 'sender@different-account.com',
+            'OWNER_NOTIFICATION_EMAIL': 'theprintplanet01@gmail.com'
+        }):
             with patch('apps.enquiries.services.settings') as mock_settings:
                 mock_settings.TESTING = False
                 mock_settings.BREVO_API_KEY = 'xkeysib-mock-api-key-test'
-                mock_settings.BREVO_SENDER_EMAIL = 'theprintplanet01@gmail.com'
+                mock_settings.BREVO_SENDER_EMAIL = 'sender@different-account.com'
+                mock_settings.OWNER_NOTIFICATION_EMAIL = 'theprintplanet01@gmail.com'
 
                 mock_response = MagicMock()
                 mock_response.status = 201

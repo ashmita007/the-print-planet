@@ -146,6 +146,11 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
                 'theprintplanet01@gmail.com'
             ).strip().strip('"\'')
             sender_name = os.environ.get('BREVO_SENDER_NAME', 'The Print Planet').strip()
+            reply_to_email = (
+                os.environ.get('BREVO_REPLY_TO_EMAIL', '') or
+                getattr(settings, 'OWNER_NOTIFICATION_EMAIL', '') or
+                'theprintplanet01@gmail.com'
+            ).strip().strip('"\'')
 
             brevo_headers = {
                 'api-key': brevo_key,
@@ -157,6 +162,7 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
             brevo_body = {
                 'sender': {'name': sender_name, 'email': sender_email},
                 'to': [{'email': to_email}],
+                'replyTo': {'name': 'The Print Planet', 'email': reply_to_email},
                 'subject': subject,
                 'htmlContent': html,
                 'textContent': text,
@@ -186,6 +192,7 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
                     brevo_body_no_att = {
                         'sender': {'name': sender_name, 'email': sender_email},
                         'to': [{'email': to_email}],
+                        'replyTo': {'name': 'The Print Planet', 'email': reply_to_email},
                         'subject': subject,
                         'htmlContent': html,
                         'textContent': text,
