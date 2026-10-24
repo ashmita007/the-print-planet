@@ -172,13 +172,28 @@ export default function ProductHeroShowcase({
             {/* Trust Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md text-white shadow-xs transition-all">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-              <span className="text-[11px] sm:text-xs font-black tracking-wide text-white uppercase">
-                {settings?.hero_badge ? settings.hero_badge.split("•")[0]?.trim() || "The Print Planet™" : "The Print Planet™"}
-              </span>
-              <span className="text-white/40">•</span>
-              <span className="text-[10px] sm:text-[11px] font-semibold text-[#FFA868]">
-                {settings?.hero_badge?.includes("•") ? settings.hero_badge.split("•")[1]?.trim() : "Specialist in PVC Cards & ID Systems"}
-              </span>
+              {(() => {
+                const badge = settings?.hero_badge?.trim() || "The Print Planet™ • Specialist in PVC Cards & ID Systems";
+                if (badge.includes("•")) {
+                  const parts = badge.split("•");
+                  return (
+                    <>
+                      <span className="text-[11px] sm:text-xs font-black tracking-wide text-white uppercase">
+                        {parts[0].trim()}
+                      </span>
+                      <span className="text-white/40">•</span>
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-[#FFA868]">
+                        {parts.slice(1).join("•").trim()}
+                      </span>
+                    </>
+                  );
+                }
+                return (
+                  <span className="text-[11px] sm:text-xs font-black tracking-wide text-white uppercase">
+                    {badge}
+                  </span>
+                );
+              })()}
             </div>
 
             {/* Main Primary SEO & Brand Heading with Typography Animation */}
@@ -194,7 +209,24 @@ export default function ProductHeroShowcase({
                       : "opacity-0 -translate-y-2 scale-95"
                   }`}
                 >
-                  {settings?.hero_title && !settings.hero_title.includes("—") ? settings.hero_title : ROTATING_PHRASES[phraseIdx]}
+                  {(() => {
+                    const rawTitle = settings?.hero_title?.trim() || "";
+                    const isDefault =
+                      !rawTitle ||
+                      rawTitle === "The Print Planet — Factory Direct" ||
+                      rawTitle === "Print Planet — Factory Direct" ||
+                      rawTitle === "Factory Direct";
+                    if (isDefault) {
+                      return ROTATING_PHRASES[phraseIdx];
+                    }
+                    if (rawTitle.includes("—")) {
+                      return rawTitle.split("—").slice(1).join("—").trim();
+                    }
+                    if (rawTitle.toLowerCase().startsWith("the print planet")) {
+                      return rawTitle.replace(/^the print planet\s*[-–—]?\s*/i, "").trim() || rawTitle;
+                    }
+                    return rawTitle;
+                  })()}
                 </span>
                 <span className="block h-[3px] bg-gradient-to-r from-[#E87832] via-[#FF7A1A] to-[#FFA868] rounded-full mt-0.5 opacity-90 shadow-[0_0_8px_rgba(232,120,50,0.6)]" />
               </span>

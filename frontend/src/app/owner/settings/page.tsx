@@ -260,6 +260,8 @@ function OwnerSettingsInner() {
 
     setSaving(false);
     if (res.success) {
+      if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("settingsUpdated"));
+      router.refresh();
       setSuccessMsg("About Us CMS saved successfully! Live now on /about.");
       setTimeout(() => setSuccessMsg(""), 4000);
     } else {
@@ -287,6 +289,8 @@ function OwnerSettingsInner() {
 
     setSaving(false);
     if (res.success) {
+      if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("settingsUpdated"));
+      router.refresh();
       setSuccessMsg("Store Identity and Contact details saved successfully!");
       setTimeout(() => setSuccessMsg(""), 4000);
     } else {
@@ -348,6 +352,8 @@ function OwnerSettingsInner() {
 
     setSaving(false);
     if (res.success) {
+      if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("settingsUpdated"));
+      router.refresh();
       setSuccessMsg("Configuration saved successfully! All updates are now active across the public website.");
       setTimeout(() => setSuccessMsg(""), 4000);
     } else {

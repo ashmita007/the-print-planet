@@ -118,7 +118,7 @@ export async function getProducts(params?: {
     if (params?.page_size) query.set('page_size', params.page_size.toString());
 
     const url = `${getApiUrl()}/api/v1/products/?${query.toString()}`;
-    const res = await fetchWithTimeout(url, { next: { revalidate: 30 } });
+    const res = await fetchWithTimeout(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
     return await res.json();
   } catch (err) {
@@ -129,7 +129,7 @@ export async function getProducts(params?: {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/${slug}/`, { next: { revalidate: 30 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/${slug}/`, { cache: 'no-store' });
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -140,7 +140,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/featured/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/featured/`, { cache: 'no-store' });
     if (!res.ok) return [];
     return await res.json();
   } catch (err) {
@@ -236,7 +236,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   };
 
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/site-settings/`, { next: { revalidate: 120 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/site-settings/`, { cache: 'no-store' });
     if (!res.ok) return fallback;
     return await res.json();
   } catch (err) {
@@ -246,7 +246,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
 export async function getHomePageSections(): Promise<HomePageSection[]> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/homepage-sections/`, { next: { revalidate: 60 } });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/homepage-sections/`, { cache: 'no-store' });
     if (!res.ok) return [];
     return await res.json();
   } catch (err) {

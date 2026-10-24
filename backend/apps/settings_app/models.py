@@ -31,8 +31,16 @@ class SiteSettings(models.Model):
 
     @classmethod
     def get_settings(cls):
-        obj, _ = cls.objects.get_or_create(id=1)
+        obj = cls.objects.first()
+        if not obj:
+            obj = cls.objects.create(id=1)
         return obj
+
+    def save(self, *args, **kwargs):
+        # Guarantee singleton row: if record already exists and this is new, update the existing one
+        if not self.pk and SiteSettings.objects.exists():
+            self.pk = SiteSettings.objects.first().pk
+        super().save(*args, **kwargs)
 
 
 class HomePageSection(models.Model):
