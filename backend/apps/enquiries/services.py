@@ -4,6 +4,7 @@ import logging
 import threading
 import urllib.request
 import urllib.parse
+import socket
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
@@ -39,7 +40,26 @@ def build_enquiry_payload(enquiry_or_id):
         b_name = "The Print Planet"
         s_phone = "+91 97418 08034"
         s_email = "theprintplanet01@gmail.com"
-        s_address = "Bengaluru, Karnataka, India"
+        s_address = "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091"
+
+    attachment_url = getattr(enquiry, 'attachment_url', '') or ''
+    attachment_path = ''
+    attachment_name = ''
+    if getattr(enquiry, 'attachment', None):
+        try:
+            attachment_file = enquiry.attachment
+            if attachment_file and hasattr(attachment_file, 'name') and attachment_file.name:
+                attachment_name = os.path.basename(attachment_file.name)
+                if hasattr(attachment_file, 'path') and os.path.exists(attachment_file.path):
+                    attachment_path = attachment_file.path
+                if not attachment_url and hasattr(attachment_file, 'url'):
+                    attachment_url = attachment_file.url
+        except Exception as att_err:
+            logger.warning(f"Could not resolve attachment metadata: {att_err}")
+
+    # Ensure absolute URL for attachment if relative
+    if attachment_url and attachment_url.startswith('/'):
+        attachment_url = f"https://theprintplanet.co.in{attachment_url}"
 
     return {
         'id': enquiry.id,
@@ -51,6 +71,9 @@ def build_enquiry_payload(enquiry_or_id):
         'requested_quantity': enquiry.requested_quantity,
         'source_page': enquiry.source_page or '/',
         'message': enquiry.message,
+        'attachment_url': attachment_url,
+        'attachment_path': attachment_path,
+        'attachment_name': attachment_name,
         'business_name': b_name,
         'site_phone': s_phone,
         'site_email': s_email,
@@ -71,7 +94,7 @@ def _send_whatsapp_callmebot(text):
         encoded_text = urllib.parse.quote(text)
         url = f"https://api.callmebot.com/whatsapp.php?phone={phone}&text={encoded_text}&apikey={apikey}"
         req = urllib.request.Request(url, headers={'User-Agent': 'ThePrintPlanet/1.0'})
-        with urllib.request.urlopen(req, timeout=8) as resp:
+        with urllib.request.urlopen(req, timeout=6) as resp:
             logger.info(f"Dispatched automated WhatsApp alert via CallMeBot: HTTP {resp.status}")
             return True
     except Exception as e:
@@ -82,7 +105,7 @@ def _send_whatsapp_callmebot(text):
 def _send_email_via_https(to_email, subject, text, html):
     """
     Dispatches email via HTTPS REST API (Port 443) to bypass Render Free Tier SMTP port blocking.
-    Supports Resend, Brevo, or Web3Forms.
+    Supports Resend, Brevo, FormSubmit, Web3Forms, or generic Webhooks.
     """
     ssl_context = None
     try:
@@ -92,7 +115,7 @@ def _send_email_via_https(to_email, subject, text, html):
     except Exception:
         ssl_context = None
 
-    # 1. Resend API
+    # 1. Resend API (HTTPS Port 443)
     resend_key = os.environ.get('RESEND_API_KEY', getattr(settings, 'RESEND_API_KEY', '')).strip()
     if resend_key:
         try:
@@ -111,7 +134,7 @@ def _send_email_via_https(to_email, subject, text, html):
                     'User-Agent': 'ThePrintPlanet/1.0'
                 }
             )
-            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
+            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
                 logger.info(f"Dispatched email via Resend HTTPS API to {to_email}")
                 return True
         except urllib.error.HTTPError as e:
@@ -120,7 +143,7 @@ def _send_email_via_https(to_email, subject, text, html):
         except Exception as e:
             logger.warning(f"Resend HTTPS dispatch failed: {e}")
 
-    # 2. Brevo (Sendinblue) API
+    # 2. Brevo (Sendinblue) API (HTTPS Port 443)
     brevo_key = os.environ.get('BREVO_API_KEY', getattr(settings, 'BREVO_API_KEY', '')).strip()
     if brevo_key:
         try:
@@ -140,7 +163,7 @@ def _send_email_via_https(to_email, subject, text, html):
                     'User-Agent': 'ThePrintPlanet/1.0'
                 }
             )
-            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
+            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
                 logger.info(f"Dispatched email via Brevo HTTPS API to {to_email}")
                 return True
         except urllib.error.HTTPError as e:
@@ -149,31 +172,57 @@ def _send_email_via_https(to_email, subject, text, html):
         except Exception as e:
             logger.warning(f"Brevo HTTPS dispatch failed: {e}")
 
-    # 3. Web3Forms API
-    web3_key = os.environ.get('WEB3FORMS_ACCESS_KEY', getattr(settings, 'WEB3FORMS_ACCESS_KEY', '')).strip()
-    if web3_key:
+    # 3. Custom Webhook Relay (e.g. Google Apps Script Webhook or Pipedream over HTTPS)
+    webhook_url = os.environ.get('EMAIL_WEBHOOK_URL', getattr(settings, 'EMAIL_WEBHOOK_URL', '')).strip()
+    if webhook_url:
         try:
             req = urllib.request.Request(
-                'https://api.web3forms.com/submit',
+                webhook_url,
                 data=json.dumps({
-                    'access_key': web3_key,
+                    'to': to_email,
                     'subject': subject,
-                    'email': to_email,
-                    'message': text,
+                    'text': text,
+                    'html': html,
                 }).encode('utf-8'),
                 headers={
                     'Content-Type': 'application/json',
                     'User-Agent': 'ThePrintPlanet/1.0'
                 }
             )
-            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
-                logger.info(f"Dispatched email via Web3Forms HTTPS API to {to_email}")
+            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
+                logger.info(f"Dispatched email via Webhook to {to_email}")
                 return True
-        except urllib.error.HTTPError as e:
-            err_msg = e.read().decode('utf-8', errors='ignore')
-            logger.error(f"Web3Forms HTTPS dispatch HTTP {e.code}: {err_msg}")
         except Exception as e:
-            logger.warning(f"Web3Forms HTTPS dispatch failed: {e}")
+            logger.warning(f"Email Webhook dispatch failed: {e}")
+
+    # 4. FormSubmit HTTPS Relay (Auto-fallback to theprintplanet01@gmail.com)
+    if 'theprintplanet' in to_email.lower():
+        try:
+            clean_subject = subject.replace('\n', ' ').strip()
+            req = urllib.request.Request(
+                'https://formsubmit.co/ajax/theprintplanet01@gmail.com',
+                data=json.dumps({
+                    'name': 'The Print Planet Wholesale RFQ',
+                    'email': 'theprintplanet01@gmail.com',
+                    '_subject': clean_subject,
+                    'message': text,
+                    '_template': 'table',
+                }).encode('utf-8'),
+                headers={
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Referer': 'https://theprintplanet.co.in',
+                    'Origin': 'https://theprintplanet.co.in',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ThePrintPlanet/1.0'
+                }
+            )
+            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
+                resp_data = resp.read().decode('utf-8', errors='ignore')
+                logger.info(f"FormSubmit HTTPS relay response: {resp_data}")
+                if '"success":"true"' in resp_data:
+                    return True
+        except Exception as e:
+            logger.warning(f"FormSubmit relay failed: {e}")
 
     return False
 
@@ -182,7 +231,8 @@ def _send_enquiry_emails_worker(payload):
     """
     Worker executed in a non-blocking background thread.
     Uses purely in-memory data with zero DB queries, preventing SQLite concurrency locks.
-    Dispatches via HTTPS REST APIs (Port 443) and falls back to SMTP.
+    Dispatches via HTTPS REST APIs (Port 443) and falls back to fast SMTP with strict 5s timeout.
+    Layout is styled with spacious 680px container, large typography, and 1-click action buttons.
     """
     if not payload:
         return
@@ -197,127 +247,291 @@ def _send_enquiry_emails_worker(payload):
         company_name = payload.get('company_name', 'Individual')
         email = payload.get('email', '')
         phone = payload.get('phone', '')
-        requested_quantity = payload.get('requested_quantity', 1)
+        requested_quantity = payload.get('requested_quantity') or 'Bulk Requirement'
         source_page = payload.get('source_page', '/')
-        message = payload.get('message', '')
+        message = payload.get('message', 'Please provide bulk quotation and dispatch timelines.')
+        attachment_url = payload.get('attachment_url', '')
+        attachment_path = payload.get('attachment_path', '')
+        attachment_name = payload.get('attachment_name', '')
         site_phone = payload.get('site_phone', '+91 97418 08034')
         site_email = payload.get('site_email', 'theprintplanet01@gmail.com')
-        site_address = payload.get('site_address', 'Bengaluru, Karnataka, India')
+        site_address = payload.get('site_address', 'No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091')
 
-        # 1. Email to Owner / Sales Desk
-        owner_subject = f"🔔 [New RFQ Enquiry] {prod_name} from {full_name}"
+        # Clean phone for WhatsApp international link
+        clean_phone = ''.join(c for c in phone if c.isdigit())
+        if clean_phone.startswith('0'):
+            clean_phone = clean_phone[1:]
+        if len(clean_phone) == 10:
+            clean_phone = '91' + clean_phone
+
+        wa_lead_text = urllib.parse.quote(
+            f"Hello {full_name}, thank you for contacting The Print Planet regarding your inquiry for {prod_name} ({requested_quantity} units). How can we assist you today?"
+        )
+
+        attachment_section_html = ""
+        if attachment_url:
+            attachment_section_html = f"""
+            <div style="margin: 22px 0; padding: 18px 20px; background-color: #fffbeb; border: 2px dashed #f59e0b; border-radius: 10px;">
+              <div style="font-weight: 800; color: #92400e; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+                📎 Customer File Attachment Included
+              </div>
+              <div style="font-size: 13px; color: #78350f; margin-bottom: 12px;">
+                File: <strong>{attachment_name or 'Uploaded Customer Document'}</strong>
+              </div>
+              <a href="{attachment_url}" target="_blank" style="background-color: #f59e0b; color: #ffffff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; font-size: 13px; display: inline-block;">
+                ⬇️ Download / Inspect Attached File
+              </a>
+            </div>
+            """
+
+        # =========================================================================
+        # 1. Executive HTML Email to Owner / Technical Sales Desk (Spacious 680px)
+        # =========================================================================
+        owner_subject = f"🔔 [NEW RFQ LEAD #{enquiry_id}] {prod_name} ({requested_quantity} qty) - {full_name}"
         owner_text = f"""
-A new customer RFQ enquiry has been submitted on The Print Planet:
+===============================================================================
+🔔 PRIORITY RFQ LEAD #{enquiry_id} - THE PRINT PLANET WHOLESALE PORTAL
+===============================================================================
 
-Customer Details:
-- Customer Name: {full_name}
-- Company: {company_name}
-- Email: {email}
-- Phone: {phone}
-- Product: {prod_name}
-- Requested Quantity: {requested_quantity}
-- Source Page: {source_page}
+CLIENT & INQUIRY OVERVIEW:
+-------------------------------------------------------------------------------
+• Customer Name : {full_name}
+• Company Name  : {company_name}
+• Phone Number  : {phone}
+• Email Address : {email}
+• Product       : {prod_name}
+• Quantity      : {requested_quantity} units
+• Source Page   : {source_page}
+{f'• Attachment   : {attachment_url}' if attachment_url else ''}
 
-Customer Message:
+CUSTOMER MESSAGE & SPECIFICATIONS:
+-------------------------------------------------------------------------------
 {message}
 
----
-View and manage this enquiry in the Owner Dashboard:
-https://theprintplanet.co.in/owner/enquiries
+INSTANT QUICK ACTIONS:
+-------------------------------------------------------------------------------
+• WhatsApp Customer : https://wa.me/{clean_phone}?text={wa_lead_text}
+• Call Customer     : tel:{phone}
+• Owner Portal      : https://theprintplanet.co.in/owner/enquiries
+===============================================================================
 """
+
         owner_html = f"""
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 20px; color: #263445; margin: 0;">
-  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; border: 1px solid #dce3eb; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-    <div style="background-color: #102742; padding: 24px; text-align: center; border-bottom: 4px solid #e87832;">
-      <h2 style="color: #ffffff; margin: 0; font-size: 20px; letter-spacing: -0.5px;">New RFQ Customer Enquiry</h2>
-      <p style="color: #cbd5e1; margin: 6px 0 0 0; font-size: 13px;">The Print Planet Wholesale Portal</p>
-    </div>
-    <div style="padding: 24px;">
-      <h3 style="color: #17365d; margin-top: 0; font-size: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px;">Order & Client Details</h3>
-      <table style="width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.6;">
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; width: 140px; color: #64748b;">Customer:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">{full_name}</td></tr>
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #64748b;">Company:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">{company_name}</td></tr>
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #64748b;">Email:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;"><a href="mailto:{email}" style="color: #17365d; text-decoration: none; font-weight: bold;">{email}</a></td></tr>
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #64748b;">Phone:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;"><a href="tel:{phone}" style="color: #17365d; text-decoration: none; font-weight: bold;">{phone}</a></td></tr>
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #64748b;">Product:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #e87832; font-weight: bold;">{prod_name}</td></tr>
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #64748b;">Quantity:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold;">{requested_quantity} units</td></tr>
-        <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #64748b;">Page Origin:</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">{source_page}</td></tr>
-      </table>
-      <div style="margin-top: 20px; padding: 14px 16px; background: #f8fafc; border-left: 4px solid #17365d; border-radius: 6px;">
-        <strong style="font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Customer Message:</strong>
-        <p style="margin: 6px 0 0 0; font-size: 13px; color: #334155; white-space: pre-wrap;">{message}</p>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; padding: 25px 10px; color: #1e293b; margin: 0;">
+  <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 14px; border: 1px solid #cbd5e1; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
+    
+    <!-- Header -->
+    <div style="background-color: #0d1f36; padding: 30px 28px; text-align: left; border-bottom: 5px solid #e87832;">
+      <div style="display: inline-block; background-color: #e87832; color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding: 5px 12px; border-radius: 4px; margin-bottom: 12px;">
+        🚨 Priority RFQ Lead #{enquiry_id}
       </div>
-      <div style="margin-top: 24px; text-align: center;">
-        <a href="https://theprintplanet.co.in/owner/enquiries" style="background-color: #e87832; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 13px; display: inline-block;">Manage in Owner Portal</a>
+      <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.25;">
+        {prod_name}
+      </h1>
+      <p style="color: #94a3b8; margin: 8px 0 0 0; font-size: 14px;">
+        Direct Wholesale Quotation Request from <strong>{full_name}</strong>
+      </p>
+    </div>
+
+    <div style="padding: 32px 28px;">
+      
+      <!-- Primary 1-Click Action Bar -->
+      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 26px; text-align: center;">
+        <div style="font-size: 12px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+          ⚡ Rapid Response Quick Actions
+        </div>
+        <div>
+          <a href="https://wa.me/{clean_phone}?text={wa_lead_text}" target="_blank" style="background-color: #25d366; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; display: inline-block; margin: 4px 6px;">
+            💬 Reply on WhatsApp
+          </a>
+          <a href="tel:{phone}" style="background-color: #0284c7; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; display: inline-block; margin: 4px 6px;">
+            📞 Call Customer Now
+          </a>
+          <a href="https://theprintplanet.co.in/owner/enquiries" style="background-color: #0d1f36; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; display: inline-block; margin: 4px 6px;">
+            ⚙️ Open in Owner Portal
+          </a>
+        </div>
+      </div>
+
+      <!-- Customer Details Table -->
+      <h2 style="color: #0d1f36; margin: 0 0 14px 0; font-size: 16px; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px;">
+        Order &amp; Client Overview
+      </h2>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b; width: 150px;">Customer Name:</td>
+          <td style="padding: 10px 0; font-weight: 800; color: #0f172a; font-size: 15px;">{full_name}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Company / Studio:</td>
+          <td style="padding: 10px 0; font-weight: 600; color: #334155;">{company_name}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Contact Phone:</td>
+          <td style="padding: 10px 0;"><a href="tel:{phone}" style="color: #0284c7; text-decoration: none; font-weight: 800; font-size: 15px;">{phone}</a></td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Email Address:</td>
+          <td style="padding: 10px 0;"><a href="mailto:{email}" style="color: #0d1f36; text-decoration: none; font-weight: 700;">{email}</a></td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Requested Item:</td>
+          <td style="padding: 10px 0; color: #e87832; font-weight: 800; font-size: 15px;">{prod_name}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Requested Quantity:</td>
+          <td style="padding: 10px 0; font-weight: 800; color: #0d1f36;">
+            <span style="background-color: #e2e8f0; padding: 3px 10px; border-radius: 6px;">{requested_quantity} units</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Page Origin:</td>
+          <td style="padding: 10px 0; color: #64748b; font-family: monospace; font-size: 12px;">{source_page}</td>
+        </tr>
+      </table>
+
+      <!-- Optional Attachment Section -->
+      {attachment_section_html}
+
+      <!-- Customer Message Block -->
+      <div style="background-color: #f8fafc; border-left: 5px solid #0d1f36; border-radius: 8px; padding: 18px 20px; margin-top: 20px;">
+        <div style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+          Customer Inquiry &amp; Specifications:
+        </div>
+        <p style="margin: 0; font-size: 14px; color: #1e293b; line-height: 1.6; white-space: pre-wrap;">{message}</p>
+      </div>
+
+      <!-- Footer Info -->
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
+        The Print Planet Automated Commercial Sales Dispatcher • Sunkadakatte, Bengaluru 560091
       </div>
     </div>
   </div>
 </body>
 </html>
 """
+
         # Try HTTPS REST dispatch first (bypasses Render SMTP port blocking)
         dispatched_https = _send_email_via_https(owner_recipient, owner_subject, owner_text, owner_html)
 
-        # Fallback to SMTP
+        # Fallback to SMTP with strict 5-second socket timeout (never hangs worker)
         if not dispatched_https:
             try:
+                socket.setdefaulttimeout(5)
                 msg_owner = EmailMultiAlternatives(owner_subject, owner_text, from_email, [owner_recipient])
                 msg_owner.attach_alternative(owner_html, "text/html")
+                if attachment_path and os.path.exists(attachment_path):
+                    try:
+                        msg_owner.attach_file(attachment_path)
+                    except Exception as att_attach_err:
+                        logger.warning(f"Could not attach file to SMTP email: {att_attach_err}")
                 msg_owner.send(fail_silently=False)
                 logger.info(f"Dispatched owner notification email via SMTP for enquiry #{enquiry_id} to {owner_recipient}")
             except Exception as e_smtp:
-                logger.warning(f"SMTP dispatch to owner failed: {e_smtp}")
+                logger.warning(f"SMTP dispatch to owner failed (expected on Render without HTTPS key): {e_smtp}")
 
-        # 2. Confirmation Email to Customer
+        # =========================================================================
+        # 2. Executive Confirmation Receipt to Customer (Spacious 680px)
+        # =========================================================================
         if email and '@' in email:
-            cust_subject = f"Enquiry Received: {prod_name} - The Print Planet"
+            cust_subject = f"Wholesale Quotation Request Registered: {prod_name} - The Print Planet"
             cust_text = f"""
 Dear {full_name},
 
-Thank you for contacting The Print Planet. We have received your wholesale RFQ enquiry regarding:
-Product: {prod_name}
-Quantity: {requested_quantity} units
+Thank you for contacting The Print Planet. We have successfully registered your Request for Quotation (RFQ Ref #{enquiry_id}):
 
-Our technical sales and wholesale pricing desk is reviewing your requirement. An official quotation with bulk slab discounts and dispatch timelines will be shared with you shortly.
+Requirement Summary:
+- Item             : {prod_name}
+- Requested Volume : {requested_quantity} units
+- Official Tax     : 100% GST Tax Invoices Provided for Input Tax Credit (ITC)
+
+Our technical commercial engineers at our Sunkadakatte, Bengaluru facility are currently reviewing your requirement and calculating trade discount slabs.
+
+An official commercial quotation with delivery timelines will be provided to you within 2 to 4 business hours via WhatsApp / Phone.
 
 Best Regards,
-The Print Planet Commercial Sales Team
-Phone: {site_phone}
-Email: {site_email}
-Bengaluru, Karnataka, India
+Commercial Sales Desk | The Print Planet
+Direct Phone : {site_phone}
+Official Email: {site_email}
+Facility     : {site_address}
+GSTIN        : 29AAQFT3909B1ZZ
 """
+
             cust_html = f"""
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 20px; color: #263445; margin: 0;">
-  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; border: 1px solid #dce3eb; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-    <div style="background-color: #102742; padding: 24px; text-align: center; border-bottom: 4px solid #e87832;">
-      <h2 style="color: #ffffff; margin: 0; font-size: 20px;">The Print Planet</h2>
-      <p style="color: #cbd5e1; margin: 6px 0 0 0; font-size: 13px;">Wholesale ID Supplies & Commercial Printing Solutions</p>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; padding: 25px 10px; color: #1e293b; margin: 0;">
+  <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 14px; border: 1px solid #cbd5e1; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
+    
+    <!-- Header -->
+    <div style="background-color: #0d1f36; padding: 28px; text-align: center; border-bottom: 5px solid #e87832;">
+      <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 900; letter-spacing: -0.5px;">The Print Planet™</h1>
+      <p style="color: #cbd5e1; margin: 6px 0 0 0; font-size: 13px; font-weight: 500;">
+        Wholesale ID Card Consumables, Lanyard Rolls &amp; Fabrication Machinery
+      </p>
     </div>
-    <div style="padding: 24px; font-size: 14px; line-height: 1.6;">
-      <p style="margin-top: 0;">Dear <strong>{full_name}</strong>,</p>
-      <p>Thank you for submitting your Request for Quotation (RFQ). We have successfully registered your inquiry regarding:</p>
-      <div style="background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; padding: 14px 18px; margin: 18px 0;">
-        <p style="margin: 0; color: #e87832; font-weight: bold; font-size: 15px;">{prod_name}</p>
-        <p style="margin: 4px 0 0 0; color: #64748b; font-size: 13px;">Requested Quantity: <strong style="color: #1e293b;">{requested_quantity} units</strong></p>
+
+    <div style="padding: 32px 28px; font-size: 14px; line-height: 1.65; color: #334155;">
+      
+      <p style="margin-top: 0; font-size: 16px;">
+        Dear <strong>{full_name}</strong>,
+      </p>
+      
+      <p>
+        Thank you for submitting your Request for Quotation (RFQ). We have registered your wholesale requirement in our system under Reference <strong>#{enquiry_id}</strong>.
+      </p>
+
+      <!-- Order Summary Card -->
+      <div style="background-color: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; padding: 20px; margin: 22px 0;">
+        <div style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+          Registered Product Inquiry
+        </div>
+        <div style="color: #e87832; font-weight: 800; font-size: 18px; margin-bottom: 4px;">
+          {prod_name}
+        </div>
+        <div style="font-size: 14px; color: #475569;">
+          Requested Volume: <strong style="color: #0f172a;">{requested_quantity} units</strong>
+        </div>
+        <div style="margin-top: 10px; font-size: 12px; color: #16a34a; font-weight: 700;">
+          ✓ 100% Tax Compliant GST Invoices with Input Tax Credit (ITC)
+        </div>
       </div>
-      <p>Our commercial sales engineers are calculating trade pricing, GST invoices, and dispatch logistics for your order. We will reach out via WhatsApp / Email with an official quote within 2 to 4 business hours.</p>
-      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">
-        <strong>The Print Planet</strong><br />
-        Support: {site_phone} | {site_email}<br />
-        {site_address}
+
+      <p>
+        Our commercial engineering team is calculating current factory bulk slabs and dispatch logistics. An official trade quotation will be shared with you via WhatsApp or Email within <strong>2 to 4 business hours</strong>.
+      </p>
+
+      <!-- Contact Banner -->
+      <div style="margin-top: 28px; padding: 20px; background-color: #f1f5f9; border-radius: 10px; font-size: 13px; color: #475569;">
+        <div style="font-weight: 800; color: #0d1f36; font-size: 14px; margin-bottom: 6px;">
+          The Print Planet Commercial Sales Desk
+        </div>
+        <div>📞 Phone / WhatsApp: <strong>{site_phone}</strong></div>
+        <div>✉️ Email: <strong>{site_email}</strong></div>
+        <div>🏭 Facility: {site_address}</div>
+        <div style="margin-top: 4px; font-size: 11px; color: #64748b;">GSTIN: 29AAQFT3909B1ZZ</div>
       </div>
+
     </div>
   </div>
 </body>
 </html>
 """
+
             dispatched_cust_https = _send_email_via_https(email, cust_subject, cust_text, cust_html)
             if not dispatched_cust_https:
                 try:
+                    socket.setdefaulttimeout(5)
                     msg_cust = EmailMultiAlternatives(cust_subject, cust_text, from_email, [email])
                     msg_cust.attach_alternative(cust_html, "text/html")
                     msg_cust.send(fail_silently=False)
@@ -326,7 +540,9 @@ Bengaluru, Karnataka, India
                     logger.warning(f"SMTP dispatch to customer failed: {e_cust_smtp}")
 
         # 3. Automated WhatsApp Dispatch via CallMeBot (if enabled)
-        wa_text = f"🔔 *New RFQ Enquiry - The Print Planet*\nCustomer: {full_name}\nPhone: {phone}\nEmail: {email}\nProduct: {prod_name}\nQty: {requested_quantity}\nMsg: {message}"
+        wa_text = f"🔔 *New RFQ Enquiry #{enquiry_id} - The Print Planet*\nCustomer: {full_name}\nPhone: {phone}\nEmail: {email}\nProduct: {prod_name}\nQty: {requested_quantity}\nMsg: {message}"
+        if attachment_url:
+            wa_text += f"\nAttachment: {attachment_url}"
         _send_whatsapp_callmebot(wa_text)
 
     except Exception as e:

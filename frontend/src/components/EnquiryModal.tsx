@@ -8,6 +8,9 @@ import {
   AlertCircle,
   Phone,
   Send,
+  Paperclip,
+  UploadCloud,
+  FileText,
 } from "lucide-react";
 import { Product } from "@/lib/types";
 import { submitEnquiry } from "@/lib/api";
@@ -25,6 +28,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [quantity, setQuantity] = useState<string>("");
+  const [attachment, setAttachment] = useState<File | null>(null);
   const [message, setMessage] = useState(
     product
       ? `Quotation request for ${product.name} (SKU: ${product.sku}).`
@@ -33,6 +37,18 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.size > 10 * 1024 * 1024) {
+        setErrorMessage("File attachment size must be under 10MB");
+        return;
+      }
+      setAttachment(file);
+      setErrorMessage("");
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -77,6 +93,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
       product_name_text: product ? product.name : "General Enquiry",
       requested_quantity: quantity ? parseInt(quantity, 10) : null,
       message: message || "Bulk pricing request",
+      attachment: attachment || null,
       source_page: typeof window !== "undefined" ? window.location.pathname : "",
     });
 
@@ -304,6 +321,44 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   placeholder="Colors, sizes, delivery location..."
                   className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none resize-none transition-colors"
                 />
+              </div>
+
+              {/* Optional Attachment Upload */}
+              <div>
+                <div className="flex items-center justify-between text-[#263445] text-[11px] sm:text-xs mb-1 font-semibold">
+                  <span className="flex items-center gap-1">
+                    <Paperclip className="w-3 h-3 text-[#E87832]" />
+                    <span>Attach Specs / Artwork (Optional)</span>
+                  </span>
+                  <span className="text-[10px] text-[#687586]">Max 10MB</span>
+                </div>
+                {!attachment ? (
+                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#CBD5E1] hover:border-[#17365D] bg-[#F8FAFC] hover:bg-[#F1F5F9] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#475569]">
+                    <UploadCloud className="w-3.5 h-3.5 text-[#E87832]" />
+                    <span>Click to attach PDF, artwork, or sample photo</span>
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.zip"
+                    />
+                  </label>
+                ) : (
+                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg py-1.5 px-3 text-xs text-emerald-800">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <FileText className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
+                      <span className="font-semibold truncate">{attachment.name}</span>
+                      <span className="text-[10px] text-emerald-600 shrink-0">({(attachment.size / 1024).toFixed(0)} KB)</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setAttachment(null)}
+                      className="text-emerald-700 hover:text-red-600 p-0.5 ml-2 cursor-pointer font-bold"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Action Buttons: Responsive stack on mobile, row on laptop */}

@@ -153,14 +153,38 @@ export async function submitEnquiry(payload: {
   product_name_text?: string;
   requested_quantity?: number | null;
   message: string;
+  attachment?: File | null;
+  attachment_url?: string;
   source_page?: string;
 }): Promise<{ success: boolean; data?: any; error?: string }> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/enquiries/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    let res: Response;
+    if (payload.attachment) {
+      const formData = new FormData();
+      formData.append('full_name', payload.full_name);
+      if (payload.company_name) formData.append('company_name', payload.company_name);
+      formData.append('email', payload.email);
+      formData.append('phone', payload.phone);
+      if (payload.product) formData.append('product', payload.product.toString());
+      if (payload.product_name_text) formData.append('product_name_text', payload.product_name_text);
+      if (payload.requested_quantity) formData.append('requested_quantity', payload.requested_quantity.toString());
+      formData.append('message', payload.message);
+      if (payload.source_page) formData.append('source_page', payload.source_page);
+      formData.append('attachment', payload.attachment);
+      if (payload.attachment_url) formData.append('attachment_url', payload.attachment_url);
+
+      res = await fetch(`${getApiUrl()}/api/v1/enquiries/`, {
+        method: 'POST',
+        body: formData,
+      });
+    } else {
+      res = await fetch(`${getApiUrl()}/api/v1/enquiries/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    }
+
     const data = await res.json();
     if (!res.ok) {
       const msg = typeof data === 'object' ? Object.values(data).flat().join(', ') : 'Submission failed';

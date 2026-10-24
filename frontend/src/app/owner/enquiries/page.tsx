@@ -19,6 +19,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Loader2,
+  ExternalLink,
 } from "lucide-react";
 import { ownerGetEnquiries, ownerUpdateEnquiry } from "@/lib/api";
 import { Enquiry } from "@/lib/types";
@@ -215,6 +216,13 @@ export default function OwnerEnquiriesPage() {
                     &ldquo;{enq.message}&rdquo;
                   </p>
 
+                  {(enq.attachment_url || enq.attachment) && (
+                    <div className="text-[11px] text-amber-700 bg-amber-50 px-2 py-1 rounded border border-amber-200 inline-flex items-center gap-1 font-semibold">
+                      <span>📎</span>
+                      <span>Customer Attachment Attached</span>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
                     <span>
                       Item: <strong>{enq.product_name_text || enq.product_details?.name || "General RFQ"}</strong>
@@ -338,6 +346,25 @@ export default function OwnerEnquiriesPage() {
                   {activeEnquiry.message}
                 </div>
               </div>
+
+              {/* Customer Attachment if present */}
+              {(activeEnquiry.attachment_url || activeEnquiry.attachment) && (
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg space-y-2">
+                  <div className="font-bold text-amber-900 flex items-center gap-1.5">
+                    <span>📎</span>
+                    <span>Customer Attached File / Artwork</span>
+                  </div>
+                  <a
+                    href={activeEnquiry.attachment_url || (activeEnquiry.attachment as string)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] text-white px-3 py-1.5 rounded-md font-bold text-[11px] transition-colors"
+                  >
+                    <span>View / Download Attachment</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
 
               {/* Status Selector */}
               <div>

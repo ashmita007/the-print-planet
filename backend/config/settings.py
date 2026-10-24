@@ -295,6 +295,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'nriurdkdovafflgk').
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
+EMAIL_TIMEOUT = 5
 
 if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
     EMAIL_BACKEND = 'apps.enquiries.email_backend.CertifiEmailBackend'
@@ -304,8 +305,11 @@ else:
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'The Print Planet <{EMAIL_HOST_USER}>')
 OWNER_NOTIFICATION_EMAIL = os.environ.get('OWNER_NOTIFICATION_EMAIL', 'theprintplanet01@gmail.com')
 
-# Brevo (Sendinblue) HTTPS API (Port 443 - Bypasses Render Free Port Restrictions)
+# HTTPS REST Email APIs (Port 443 - Bypasses Render Free Port Restrictions)
 BREVO_API_KEY = os.environ.get('BREVO_API_KEY', '').strip()
 BREVO_SENDER_EMAIL = os.environ.get('BREVO_SENDER_EMAIL', 'theprintplanet01@gmail.com').strip()
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '').strip()
+RESEND_FROM_EMAIL = os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>').strip()
+EMAIL_WEBHOOK_URL = os.environ.get('EMAIL_WEBHOOK_URL', '').strip()
 
 

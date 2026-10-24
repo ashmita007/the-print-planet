@@ -74,6 +74,8 @@ export interface Enquiry {
   product_details?: Product;
   requested_quantity?: number | null;
   message: string;
+  attachment?: string | null;
+  attachment_url?: string;
   source_page?: string;
   status: 'new' | 'in_progress' | 'quoted' | 'closed' | 'spam';
   admin_notes?: string;

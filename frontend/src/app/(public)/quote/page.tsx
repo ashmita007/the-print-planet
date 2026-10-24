@@ -14,6 +14,8 @@ import {
   Sparkles,
   Layers,
   ArrowRight,
+  Paperclip,
+  UploadCloud,
 } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { submitEnquiry } from "@/lib/api";
@@ -33,9 +35,22 @@ function QuoteFormContent() {
   const [quantity, setQuantity] = useState("1000");
   const [deliveryDate, setDeliveryDate] = useState("");
   const [customRequirements, setCustomRequirements] = useState("");
+  const [attachment, setAttachment] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.size > 10 * 1024 * 1024) {
+        setErrorMessage("File attachment size must be under 10MB");
+        return;
+      }
+      setAttachment(file);
+      setErrorMessage("");
+    }
+  };
 
   useEffect(() => {
     let initialNotes = [];
@@ -67,6 +82,7 @@ function QuoteFormContent() {
       phone,
       requested_quantity: quantity ? parseInt(quantity, 10) : null,
       message: fullMessage,
+      attachment: attachment || null,
       source_page: "/quote",
     });
 
@@ -281,7 +297,7 @@ function QuoteFormContent() {
               {/* Specifications / Notes */}
               <div>
                 <label className="block font-semibold text-[#263445] mb-1">
-                  Detailed Specifications & Customization Notes
+                  Detailed Specifications &amp; Customization Notes
                 </label>
                 <textarea
                   rows={4}
@@ -290,6 +306,44 @@ function QuoteFormContent() {
                   placeholder="Specify ribbon width (16mm/20mm), hook type (Dog hook/Fish hook), Pantone shades, single/double sided printing, chip types (Mifare 1K), or special packaging instructions."
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm leading-relaxed"
                 />
+              </div>
+
+              {/* Optional Attachment */}
+              <div>
+                <div className="flex items-center justify-between text-[#263445] text-xs mb-1 font-semibold">
+                  <span className="flex items-center gap-1.5">
+                    <Paperclip className="w-3.5 h-3.5 text-[#E87832]" />
+                    <span>Upload Artwork, CAD, Spec Sheet or Excel List (Optional)</span>
+                  </span>
+                  <span className="text-[11px] text-slate-500">Max 10MB</span>
+                </div>
+                {!attachment ? (
+                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-[#17365D] bg-slate-50 hover:bg-slate-100 rounded-xl py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
+                    <UploadCloud className="w-4 h-4 text-[#E87832]" />
+                    <span>Click to browse and attach your design file, artwork, or order spreadsheet</span>
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.zip"
+                    />
+                  </label>
+                ) : (
+                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl py-2 px-4 text-xs text-emerald-800">
+                    <div className="flex items-center gap-2 truncate">
+                      <FileText className="w-4 h-4 shrink-0 text-emerald-600" />
+                      <span className="font-semibold truncate">{attachment.name}</span>
+                      <span className="text-[11px] text-emerald-600 shrink-0">({(attachment.size / 1024).toFixed(0)} KB)</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setAttachment(null)}
+                      className="text-emerald-700 hover:text-red-600 p-1 ml-2 cursor-pointer font-bold"
+                    >
+                      ✕ Remove
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="pt-2">

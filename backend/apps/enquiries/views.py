@@ -1,5 +1,6 @@
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.db.models import Q
 from apps.catalog.views import StandardResultsSetPagination
 from .models import Enquiry
@@ -8,13 +9,20 @@ from .services import trigger_enquiry_notifications
 
 
 class PublicEnquiryCreateView(generics.CreateAPIView):
-    """Public customer enquiry submission endpoint with automated email alerts."""
+    """Public customer enquiry submission endpoint with automated email alerts and optional attachments."""
     queryset = Enquiry.objects.all()
     serializer_class = EnquiryCreateSerializer
     permission_classes = [permissions.AllowAny]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def perform_create(self, serializer):
         enquiry = serializer.save()
+        if enquiry.attachment and not enquiry.attachment_url:
+            try:
+                enquiry.attachment_url = enquiry.attachment.url
+                enquiry.save(update_fields=['attachment_url'])
+            except Exception:
+                pass
         trigger_enquiry_notifications(enquiry)
         from apps.catalog.backup_service import trigger_auto_backup_async
         trigger_auto_backup_async(force=True)

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle, AlertCircle } from "lucide-react";
+import { CheckCircle, AlertCircle, Paperclip, UploadCloud, FileText } from "lucide-react";
 import { submitEnquiry } from "@/lib/api";
 
 export default function ContactFormClient() {
@@ -13,8 +13,21 @@ export default function ContactFormClient() {
   const [phone, setPhone] = useState("");
   const [quantity, setQuantity] = useState("");
   const [message, setMessage] = useState("");
+  const [attachment, setAttachment] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.size > 10 * 1024 * 1024) {
+        setErrorMessage("File attachment size must be under 10MB");
+        return;
+      }
+      setAttachment(file);
+      setErrorMessage("");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +41,7 @@ export default function ContactFormClient() {
       phone,
       requested_quantity: quantity ? parseInt(quantity, 10) : null,
       message,
+      attachment: attachment || null,
       source_page: "/contact",
     });
 
@@ -136,7 +150,7 @@ export default function ContactFormClient() {
 
       <div>
         <label className="block font-semibold text-[#263445] mb-1">
-          Detailed Technical Requirements & Delivery Location *
+          Detailed Technical Requirements &amp; Delivery Location *
         </label>
         <textarea
           rows={4}
@@ -146,6 +160,44 @@ export default function ContactFormClient() {
           placeholder="Please describe required models (e.g. V2, V4 holders, 20mm Royal Blue satin rolls, DCT2000 cutter), custom printing, destination pincode..."
           className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none resize-none"
         />
+      </div>
+
+      {/* Optional Attachment Upload */}
+      <div>
+        <div className="flex items-center justify-between text-[#263445] text-xs mb-1 font-semibold">
+          <span className="flex items-center gap-1.5">
+            <Paperclip className="w-3.5 h-3.5 text-[#E87832]" />
+            <span>Attach Spec Sheet, Artwork, Sample Photo or Excel (Optional)</span>
+          </span>
+          <span className="text-[11px] text-slate-500">Max 10MB</span>
+        </div>
+        {!attachment ? (
+          <label className="flex items-center justify-center gap-2 border border-dashed border-[#CBD5E1] hover:border-[#17365D] bg-[#F8FAFC] hover:bg-[#F1F5F9] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#475569]">
+            <UploadCloud className="w-4 h-4 text-[#E87832]" />
+            <span>Click to attach file or sample photo</span>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="hidden"
+              accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.zip"
+            />
+          </label>
+        ) : (
+          <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg py-2 px-3 text-xs text-emerald-800">
+            <div className="flex items-center gap-2 truncate">
+              <FileText className="w-4 h-4 shrink-0 text-emerald-600" />
+              <span className="font-semibold truncate">{attachment.name}</span>
+              <span className="text-[11px] text-emerald-600 shrink-0">({(attachment.size / 1024).toFixed(0)} KB)</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setAttachment(null)}
+              className="text-emerald-700 hover:text-red-600 p-0.5 ml-2 cursor-pointer font-bold"
+            >
+              ✕ Remove
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="pt-2">

@@ -50,13 +50,19 @@ services:
       - key: R2_PUBLIC_URL
         sync: false
 
-      # Automated Email Notification System (Gmail / Brevo / Resend / SendGrid)
+      # Automated Email Notification System (Gmail / Brevo / Resend / Webhook)
       - key: EMAIL_HOST_USER
         sync: false
       - key: EMAIL_HOST_PASSWORD
         sync: false
       - key: OWNER_NOTIFICATION_EMAIL
         value: "theprintplanet01@gmail.com"
+      - key: BREVO_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_WEBHOOK_URL
+        sync: false
 
       # Cloudinary Media Storage (Optional Secondary CDN)
       - key: CLOUDINARY_URL

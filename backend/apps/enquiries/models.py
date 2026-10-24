@@ -24,6 +24,8 @@ class Enquiry(models.Model):
     product_name_text = models.CharField(max_length=255, blank=True, default='')
     requested_quantity = models.PositiveIntegerField(blank=True, null=True)
     message = models.TextField()
+    attachment = models.FileField(upload_to='enquiries/%Y/%m/', blank=True, null=True)
+    attachment_url = models.CharField(max_length=1000, blank=True, default='')
     source_page = models.CharField(max_length=255, blank=True, default='')
     status = models.CharField(max_length=50, default='new', choices=STATUS_CHOICES, db_index=True)
     admin_notes = models.TextField(blank=True, default='')
