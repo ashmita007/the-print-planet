@@ -11,13 +11,13 @@ interface FooterProps {
 
 export default function Footer({ categories = [], settings }: FooterProps) {
   const businessName = settings?.business_name || "THE PRINT PLANET";
-  const tagline = settings?.tagline || "Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions";
+  const tagline = settings?.tagline || "Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery";
   const phone = settings?.phone || "+91 97418 08034";
   const email = settings?.email || "theprintplanet01@gmail.com";
   const address = settings?.address || "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India";
   const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
   const pan = "AAQFT3909B";
-  const footerText = settings?.footer_text || "Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions. ✱ Your Vision is Our Focus ✱";
+  const footerText = settings?.footer_text || `THE PRINT PLANET — ${tagline}. ✱ Your Vision is Our Focus ✱. GSTIN: ${gst} | PAN: ${pan}.`;
 
   return (
     <footer className="bg-[#102742] text-white pt-10 sm:pt-16 pb-8 sm:pb-12 border-t-4 border-[#E87832]">
@@ -35,7 +35,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
               />
             </div>
             <p className="text-xs font-semibold text-[#E87832] tracking-wide">
-              ✱ Your Vision is Our Focus ✱
+              {tagline}
             </p>
             <p className="text-xs text-slate-300 leading-relaxed">
               {footerText}

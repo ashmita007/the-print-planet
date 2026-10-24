@@ -135,22 +135,22 @@ function OwnerSettingsInner() {
     getSiteSettings().then((s) => {
       setSettings(s);
       setBusinessName(s.business_name || "THE PRINT PLANET");
-      setTagline(s.tagline || "");
+      setTagline(s.tagline || "Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery");
       setEmail(s.email || "theprintplanet01@gmail.com");
       setPhone(s.phone || "+91 97418 08034");
       setWhatsapp(s.whatsapp || "+91 97418 08034");
       setAddress(s.address || "");
       setGstNumber(s.gst_number || "29AAQFT3909B1ZZ");
-      setFooterText(s.footer_text || "");
+      setFooterText(s.footer_text || "THE PRINT PLANET — Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B.");
       setLogoUrl(s.logo_url || "");
 
       // Hero
-      setHeroBadge(s.hero_badge || "The Print Planet™ • India's Direct B2B Factory");
-      setHeroTitle(s.hero_title || "Print Planet — Factory Direct");
-      setHeroSubtitle(s.hero_subtitle || "Wholesale ID Cards, Lanyard Rolls & Machinery");
+      setHeroBadge(s.hero_badge || "The Print Planet™ • Specialist in PVC Cards & ID Systems");
+      setHeroTitle(s.hero_title || "The Print Planet — Factory Direct");
+      setHeroSubtitle(s.hero_subtitle || s.tagline || "Specialist in PVC Cards, Lanyard Rolls & ID Machinery");
       setHeroCaption(
         s.hero_caption ||
-          "Official portal of The Print Planet (theprintplanet.co.in). India's leading B2B manufacturing hub for satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, dog hooks, and card die cutting machinery with 24–48h pan-India dispatch."
+          "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, rigid ID card holders, satin lanyard rolls, RFID smart cards, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
       );
 
       // About

@@ -200,11 +200,34 @@ export default function ProductHeroShowcase({
               </span>
 
               <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
-                India&apos;s Direct{" "}
-                <span className="text-[#FFA868] font-black underline decoration-[#E87832]/60 decoration-2 underline-offset-4">
-                  Specialist in PVC Cards
-                </span>
-                , Lanyard Rolls &amp; Machinery
+                {(() => {
+                  const subText = settings?.hero_subtitle || settings?.tagline || "Specialist in PVC Cards, Lanyard Rolls & ID Machinery";
+                  if (subText.includes("Specialist in PVC Cards")) {
+                    const parts = subText.split("Specialist in PVC Cards");
+                    return (
+                      <>
+                        {parts[0]}
+                        <span className="text-[#FFA868] font-black underline decoration-[#E87832]/60 decoration-2 underline-offset-4">
+                          Specialist in PVC Cards
+                        </span>
+                        {parts.slice(1).join("Specialist in PVC Cards")}
+                      </>
+                    );
+                  }
+                  if (subText.includes("PVC Cards")) {
+                    const parts = subText.split("PVC Cards");
+                    return (
+                      <>
+                        {parts[0]}
+                        <span className="text-[#FFA868] font-black underline decoration-[#E87832]/60 decoration-2 underline-offset-4">
+                          PVC Cards
+                        </span>
+                        {parts.slice(1).join("PVC Cards")}
+                      </>
+                    );
+                  }
+                  return subText;
+                })()}
               </span>
             </h1>
 
