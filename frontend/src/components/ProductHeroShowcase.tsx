@@ -55,6 +55,31 @@ export default function ProductHeroShowcase({
 
   const thumbScrollRef = useRef<HTMLDivElement>(null);
 
+  // Rotating typography phrases for brand hero headline
+  const ROTATING_PHRASES = useMemo(
+    () => [
+      "Factory Direct",
+      "Specialist in PVC Cards",
+      "Wholesale ID Systems",
+      "Pan-India Dispatch",
+    ],
+    []
+  );
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [isPhraseVisible, setIsPhraseVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsPhraseVisible(false);
+      setTimeout(() => {
+        setPhraseIdx((prev) => (prev + 1) % ROTATING_PHRASES.length);
+        setIsPhraseVisible(true);
+      }, 300);
+    }, 3200);
+
+    return () => clearInterval(timer);
+  }, [ROTATING_PHRASES]);
+
   // Filter pool by active hero category
   const activeProducts = useMemo(() => {
     if (selectedHeroCategory === "all") {
@@ -156,11 +181,30 @@ export default function ProductHeroShowcase({
               </span>
             </div>
 
-            {/* Main Primary SEO & Brand Heading */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight leading-[1.14] text-white">
-              {settings?.hero_title || "Print Planet — Specialist in PVC Cards"}
+            {/* Main Primary SEO & Brand Heading with Typography Animation */}
+            <h1 className="text-2xl sm:text-4xl lg:text-[2.65rem] font-black tracking-tight leading-[1.15] text-white">
+              The Print Planet{" "}
+              <span className="text-white/60 font-light">—</span>{" "}
+              <span className="inline-block relative">
+                <span
+                  key={phraseIdx}
+                  className={`inline-block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF7A1A] via-[#E87832] to-[#FFA868] animate-gradient-text animate-orange-glow transition-all duration-300 transform ${
+                    isPhraseVisible
+                      ? "opacity-100 translate-y-0 scale-100"
+                      : "opacity-0 -translate-y-2 scale-95"
+                  }`}
+                >
+                  {settings?.hero_title && !settings.hero_title.includes("—") ? settings.hero_title : ROTATING_PHRASES[phraseIdx]}
+                </span>
+                <span className="block h-[3px] bg-gradient-to-r from-[#E87832] via-[#FF7A1A] to-[#FFA868] rounded-full mt-0.5 opacity-90 shadow-[0_0_8px_rgba(232,120,50,0.6)]" />
+              </span>
+
               <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
-                {settings?.hero_subtitle || "India's Direct B2B Wholesale ID Materials & Machinery Hub"}
+                India&apos;s Direct{" "}
+                <span className="text-[#FFA868] font-black underline decoration-[#E87832]/60 decoration-2 underline-offset-4">
+                  Specialist in PVC Cards
+                </span>
+                , Lanyard Rolls &amp; Machinery
               </span>
             </h1>
 

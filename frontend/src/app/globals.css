@@ -71,3 +71,34 @@ body {
   outline: 2px solid #E87832;
   outline-offset: 2px;
 }
+
+/* Typography animations */
+@keyframes orangeGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(232, 120, 50, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 122, 26, 0.75));
+  }
+}
+
+@keyframes textGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-orange-glow {
+  animation: orangeGlow 3s ease-in-out infinite;
+}
+
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: textGradientShift 4s ease infinite;
+}
