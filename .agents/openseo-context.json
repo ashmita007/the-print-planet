@@ -1,0 +1,133 @@
+{
+  "project_name": "The Print Planet",
+  "domain": "theprintplanet.co.in",
+  "site_url": "https://theprintplanet.co.in",
+  "sitemap_url": "https://theprintplanet.co.in/sitemap.xml",
+  "robots_url": "https://theprintplanet.co.in/robots.txt",
+  "business_overview": {
+    "legal_name": "The Print Planet",
+    "brand_names": ["Print Planet", "The Print Planet", "Print Planet Bangalore", "The Print Planet Bangalore", "The Print Planet Sunkadakatte"],
+    "entity_type": "WholesaleStore / Manufacturer",
+    "gstin": "29AAQFT3909B1ZZ",
+    "address": "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India",
+    "phone": "+91 97418 08034",
+    "email": "theprintplanet01@gmail.com",
+    "geocoordinates": {
+      "latitude": 12.9863,
+      "longitude": 77.5020
+    },
+    "description": "India's premier B2B factory manufacturer and direct wholesale distributor of PVC ID card raw materials, multicolour heat-transfer satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, and industrial ID card cutting and fusing machinery with nationwide 24-48h dispatch from Sunkadakatte, Bengaluru."
+  },
+  "current_goal": {
+    "primary": "Achieve #1 Google ranking and brand dominance for searches: 'print planet', 'the print planet', 'the print planet bangalore', and 'the print planet sunkadakatte'.",
+    "logo_snippet": "Display verified high-resolution brand logo in Google Search snippets via 1:1 square icon.png (192x192), icon-512.png (512x512), and manifest.webmanifest.",
+    "b2b_intent_rankings": "Rank top 10 for high-converting wholesale keywords: 'ID card raw materials supplier Bangalore', 'thermal lamination machines supplier India', 'lanyard rolls wholesale', 'semi transparent pvc id card holder', 'fusing machine wholesale'.",
+    "lead_generation": "Drive qualified daily RFQs and wholesale trade inquiries through /quote and direct WhatsApp desk."
+  },
+  "positioning": {
+    "differentiators": [
+      "Direct factory wholesale pricing bypassing multi-tier broker markups",
+      "Live WhatsApp video machinery testing before shipment crating",
+      "100% GST Input Tax Credit (ITC) compliant corporate invoicing",
+      "Moisture-proof heavy-duty packaging with 24-48h dispatch via DTDC, Blue Dart, VRL, TCI",
+      "Fast 1-hour quotation turnaround from dedicated sales engineers"
+    ],
+    "target_icp": [
+      "Commercial ID card bureaus and digital print studios",
+      "Corporate gifting and event merchandise agencies",
+      "Schools, universities, and government education departments",
+      "Enterprise access control and RFID security system integrators"
+    ]
+  },
+  "competitors": [
+    {
+      "domain": "printplanet.com",
+      "name": "PrintPlanet Global Forum",
+      "notes": "25-year-old prepress community forum ranking globally for exact term 'print planet'. Disambiguated via localized entity schema (Bangalore, India)."
+    },
+    {
+      "domain": "indiamart.com",
+      "name": "IndiaMART Supplier Directory",
+      "notes": "B2B aggregator with verified profile for The Print Planet (https://www.indiamart.com/theprintplanet/)."
+    },
+    {
+      "domain": "justdial.com",
+      "name": "JustDial Bangalore",
+      "notes": "Local Bangalore directory listing (https://www.justdial.com/Bangalore/The-Print-Planet)."
+    },
+    {
+      "domain": "tradeindia.com",
+      "name": "TradeIndia B2B Portal",
+      "notes": "Verified export profile (https://www.tradeindia.com/Seller-16599025-THE-PRINT-PLANET/)."
+    }
+  ],
+  "key_pages": [
+    {
+      "url": "https://theprintplanet.co.in/",
+      "role": "hub",
+      "topic": "Print Planet Official B2B Factory Homepage",
+      "notes": "Primary brand anchor, flagship product showcase, Google site names, and organization schema."
+    },
+    {
+      "url": "https://theprintplanet.co.in/quote",
+      "role": "money",
+      "topic": "Wholesale Quotation & RFQ Portal",
+      "notes": "Primary conversion endpoint with file upload, Brevo automated dispatch, and multi-tier pricing."
+    },
+    {
+      "url": "https://theprintplanet.co.in/products",
+      "role": "hub",
+      "topic": "Complete Wholesale Product Catalog",
+      "notes": "186 verified wholesale consumables, machines, and hardware accessories with live search & filters."
+    },
+    {
+      "url": "https://theprintplanet.co.in/categories/machines",
+      "role": "money",
+      "topic": "Card Manufacturing & Lamination Machinery",
+      "notes": "High-ticket industrial hydraulic die cutters, fusing laminators, and slot hole punches."
+    },
+    {
+      "url": "https://theprintplanet.co.in/categories/lanyards",
+      "role": "money",
+      "topic": "Satin Lanyard Rolls & Sublimation Ribbons",
+      "notes": "High-volume wholesale rolls (12mm, 16mm, 20mm, 25mm) in royal blue, white, black, red."
+    },
+    {
+      "url": "https://theprintplanet.co.in/categories/holders",
+      "role": "money",
+      "topic": "PVC ID Card Holders & Badge Cases",
+      "notes": "Vertical, horizontal, crystal-clear, and semi-transparent holders."
+    },
+    {
+      "url": "https://theprintplanet.co.in/categories/rfid",
+      "role": "money",
+      "topic": "RFID Smart Access Cards",
+      "notes": "125kHz EM-Marin and 13.56MHz Mifare 1K Classic NFC ISO badges."
+    },
+    {
+      "url": "https://theprintplanet.co.in/contact",
+      "role": "other",
+      "topic": "Sales Desk & Factory Visit Sunkadakatte",
+      "notes": "Local business NAP data, Google Maps geocoordinates, GST verification, and phone/email desk."
+    },
+    {
+      "url": "https://theprintplanet.co.in/about",
+      "role": "other",
+      "topic": "Factory Quality Standards & Production Infrastructure",
+      "notes": "B2B credibility, polymer molding specs, and burr-free edge punch standards."
+    }
+  ],
+  "writing_preferences": {
+    "voice": "Direct industrial manufacturer, technical, transparent, authoritative.",
+    "banned_patterns": [
+      "Generic AI filler ('In today's fast-paced world', 'Look no further')",
+      "False guarantees of instant #1 rankings",
+      "Keyword stuffing in titles or headings"
+    ],
+    "mandatory_standards": [
+      "Exact technical specifications (e.g. CR-80 ISO 85.6 x 54 mm, 12/16/20/25mm)",
+      "Always mention official factory address in Sunkadakatte, Bangalore 560091",
+      "Clear GST ITC eligibility mentioned on trade transactions"
+    ]
+  }
+}
