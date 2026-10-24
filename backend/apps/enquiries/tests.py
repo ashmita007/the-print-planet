@@ -130,3 +130,34 @@ class EnquiryApiTests(TestCase):
         self.assertEqual(auth_resp.status_code, status.HTTP_200_OK)
         self.assertEqual(auth_resp['X-Content-Type-Options'], 'nosniff')
 
+    def test_brevo_https_dispatch_success(self):
+        from unittest.mock import patch, MagicMock
+        from apps.enquiries.services import _send_email_via_https
+        import os
+
+        # Temporarily enable BREVO_API_KEY and disable TESTING check for this unit test
+        with patch.dict(os.environ, {'BREVO_API_KEY': 'xkeysib-mock-api-key-test', 'BREVO_SENDER_EMAIL': 'theprintplanet01@gmail.com'}):
+            with patch('apps.enquiries.services.settings') as mock_settings:
+                mock_settings.TESTING = False
+                mock_settings.BREVO_API_KEY = 'xkeysib-mock-api-key-test'
+                mock_settings.BREVO_SENDER_EMAIL = 'theprintplanet01@gmail.com'
+
+                mock_response = MagicMock()
+                mock_response.status = 201
+                mock_response.__enter__.return_value = mock_response
+
+                with patch('urllib.request.urlopen', return_value=mock_response) as mock_urlopen:
+                    success = _send_email_via_https(
+                        to_email='client@test.com',
+                        subject='Wholesale Quote',
+                        text='Quote details',
+                        html='<p>Quote details</p>'
+                    )
+                    self.assertTrue(success)
+                    self.assertTrue(mock_urlopen.called)
+                    call_args = mock_urlopen.call_args[0]
+                    req = call_args[0]
+                    self.assertEqual(req.full_url, 'https://api.brevo.com/v3/smtp/email')
+                    self.assertEqual(req.headers['Api-key'], 'xkeysib-mock-api-key-test')
+
+

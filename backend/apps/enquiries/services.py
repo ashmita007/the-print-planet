@@ -133,8 +133,82 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
         except Exception as e_b64:
             logger.warning(f"Could not base64 encode attachment {attachment_path}: {e_b64}")
 
-    # 1. Resend API (HTTPS Port 443)
-    resend_key = os.environ.get('RESEND_API_KEY', getattr(settings, 'RESEND_API_KEY', '')).strip()
+    # 1. Brevo (Sendinblue) Primary API (HTTPS Port 443 — Priority Transactional Provider)
+    brevo_key = os.environ.get('BREVO_API_KEY', getattr(settings, 'BREVO_API_KEY', '')).strip().strip('"\'')
+    if brevo_key.startswith('BREVO_API_KEY='):
+        brevo_key = brevo_key.split('BREVO_API_KEY=', 1)[1].strip().strip('"\'')
+
+    if brevo_key:
+        try:
+            sender_email = (
+                os.environ.get('BREVO_SENDER_EMAIL', '') or
+                getattr(settings, 'BREVO_SENDER_EMAIL', '') or
+                'theprintplanet01@gmail.com'
+            ).strip().strip('"\'')
+            sender_name = os.environ.get('BREVO_SENDER_NAME', 'The Print Planet').strip()
+
+            brevo_headers = {
+                'api-key': brevo_key,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'ThePrintPlanet/1.0',
+            }
+
+            brevo_body = {
+                'sender': {'name': sender_name, 'email': sender_email},
+                'to': [{'email': to_email}],
+                'subject': subject,
+                'htmlContent': html,
+                'textContent': text,
+            }
+            if b64_content and attachment_name:
+                brevo_body['attachment'] = [{
+                    'name': attachment_name,
+                    'content': b64_content,
+                }]
+
+            req = urllib.request.Request(
+                'https://api.brevo.com/v3/smtp/email',
+                data=json.dumps(brevo_body).encode('utf-8'),
+                headers=brevo_headers,
+                method='POST'
+            )
+            with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
+                logger.info(f"Dispatched email via Brevo HTTPS API to {to_email} (HTTP {resp.status})")
+                return True
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode('utf-8', errors='ignore')
+            logger.error(f"Brevo HTTPS dispatch HTTP {e.code}: {err_msg}")
+            # If rejected due to attachment size or format, retry once without attachment
+            if b64_content:
+                try:
+                    logger.info("Retrying Brevo dispatch without attachment...")
+                    brevo_body_no_att = {
+                        'sender': {'name': sender_name, 'email': sender_email},
+                        'to': [{'email': to_email}],
+                        'subject': subject,
+                        'htmlContent': html,
+                        'textContent': text,
+                    }
+                    req_retry = urllib.request.Request(
+                        'https://api.brevo.com/v3/smtp/email',
+                        data=json.dumps(brevo_body_no_att).encode('utf-8'),
+                        headers=brevo_headers,
+                        method='POST'
+                    )
+                    with urllib.request.urlopen(req_retry, context=ssl_context, timeout=10) as retry_resp:
+                        logger.info(f"Dispatched email via Brevo HTTPS API (without attachment) to {to_email}")
+                        return True
+                except Exception as retry_err:
+                    logger.warning(f"Brevo retry without attachment also failed: {retry_err}")
+        except Exception as e:
+            logger.warning(f"Brevo HTTPS dispatch failed: {e}")
+
+    # 2. Resend API (HTTPS Port 443 — Secondary Fallback)
+    resend_key = os.environ.get('RESEND_API_KEY', getattr(settings, 'RESEND_API_KEY', '')).strip().strip('"\'')
+    if resend_key.startswith('RESEND_API_KEY='):
+        resend_key = resend_key.split('RESEND_API_KEY=', 1)[1].strip().strip('"\'')
+
     if resend_key:
         try:
             resend_body = {
@@ -156,8 +230,10 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
                 headers={
                     'Authorization': f'Bearer {resend_key}',
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'User-Agent': 'ThePrintPlanet/1.0'
-                }
+                },
+                method='POST'
             )
             with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
                 logger.info(f"Dispatched email via Resend HTTPS API to {to_email}")
@@ -167,65 +243,6 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
             logger.error(f"Resend HTTPS dispatch HTTP {e.code}: {err_msg}")
         except Exception as e:
             logger.warning(f"Resend HTTPS dispatch failed: {e}")
-
-    # 2. Brevo (Sendinblue) API (HTTPS Port 443)
-    brevo_key = os.environ.get('BREVO_API_KEY', getattr(settings, 'BREVO_API_KEY', '')).strip()
-    if brevo_key:
-        try:
-            sender_email = os.environ.get('BREVO_SENDER_EMAIL', getattr(settings, 'BREVO_SENDER_EMAIL', 'theprintplanet01@gmail.com')).strip()
-            brevo_body = {
-                'sender': {'name': 'The Print Planet', 'email': sender_email},
-                'to': [{'email': to_email}],
-                'subject': subject,
-                'htmlContent': html,
-                'textContent': text,
-            }
-            if b64_content and attachment_name:
-                brevo_body['attachment'] = [{
-                    'name': attachment_name,
-                    'content': b64_content,
-                }]
-
-            req = urllib.request.Request(
-                'https://api.brevo.com/v3/smtp/email',
-                data=json.dumps(brevo_body).encode('utf-8'),
-                headers={
-                    'api-key': brevo_key,
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'ThePrintPlanet/1.0'
-                }
-            )
-            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
-                logger.info(f"Dispatched email via Brevo HTTPS API to {to_email}")
-                return True
-        except urllib.error.HTTPError as e:
-            err_msg = e.read().decode('utf-8', errors='ignore')
-            logger.error(f"Brevo HTTPS dispatch HTTP {e.code}: {err_msg}")
-        except Exception as e:
-            logger.warning(f"Brevo HTTPS dispatch failed: {e}")
-            req = urllib.request.Request(
-                'https://api.brevo.com/v3/smtp/email',
-                data=json.dumps({
-                    'sender': {'name': 'The Print Planet', 'email': sender_email},
-                    'to': [{'email': to_email}],
-                    'subject': subject,
-                    'htmlContent': html,
-                    'textContent': text,
-                }).encode('utf-8'),
-                headers={
-                    'api-key': brevo_key,
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'ThePrintPlanet/1.0'
-                }
-            )
-            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
-                logger.info(f"Dispatched email via Brevo HTTPS API to {to_email}")
-                return True
-        except urllib.error.HTTPError as e:
-            err_msg = e.read().decode('utf-8', errors='ignore')
-            logger.error(f"Brevo HTTPS dispatch HTTP {e.code}: {err_msg}")
-        except Exception as e:
-            logger.warning(f"Brevo HTTPS dispatch failed: {e}")
 
     # 3. Custom Webhook Relay (e.g. Google Apps Script Webhook or Pipedream over HTTPS)
     webhook_url = os.environ.get('EMAIL_WEBHOOK_URL', getattr(settings, 'EMAIL_WEBHOOK_URL', '')).strip()
