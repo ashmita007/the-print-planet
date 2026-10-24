@@ -216,7 +216,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   const fallback: SiteSettings = {
     id: 1,
     business_name: 'THE PRINT PLANET',
-    tagline: 'Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery',
+    tagline: 'Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions',
     logo_url: null,
     favicon_url: null,
     email: 'theprintplanet01@gmail.com',
@@ -226,11 +226,11 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     gst_number: '29AAQFT3909B1ZZ',
     hero_badge: "The Print Planet™ • Specialist in PVC Cards & ID Systems",
     hero_title: 'The Print Planet — Factory Direct',
-    hero_subtitle: 'Specialist in PVC Cards, Lanyard Rolls & ID Machinery',
-    hero_caption: "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, rigid ID card holders, satin lanyard rolls, RFID smart cards, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.",
+    hero_subtitle: 'Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions',
+    hero_caption: "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, lens packaging & cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.",
     about_data: {},
     social_links: {},
-    footer_text: 'THE PRINT PLANET — Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B.',
+    footer_text: 'THE PRINT PLANET — Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B.',
     seo_defaults: {},
     updated_at: new Date().toISOString(),
   };

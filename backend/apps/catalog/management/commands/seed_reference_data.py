@@ -156,7 +156,7 @@ class Command(BaseCommand):
         # 3. Configure Site Settings
         settings_obj = SiteSettings.get_settings()
         settings_obj.business_name = "THE PRINT PLANET"
-        settings_obj.tagline = "Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery"
+        settings_obj.tagline = "Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions"
         settings_obj.phone = "+91 97418 08034"
         settings_obj.whatsapp = "+91 97418 08034"
         settings_obj.email = "theprintplanet01@gmail.com"
@@ -164,8 +164,9 @@ class Command(BaseCommand):
         settings_obj.gst_number = "29AAQFT3909B1ZZ"
         settings_obj.hero_badge = "The Print Planet™ • Specialist in PVC Cards & ID Systems"
         settings_obj.hero_title = "The Print Planet — Factory Direct"
-        settings_obj.hero_subtitle = "Specialist in PVC Cards, Lanyard Rolls & ID Machinery"
-        settings_obj.footer_text = "THE PRINT PLANET — Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B."
+        settings_obj.hero_subtitle = "Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions"
+        settings_obj.hero_caption = "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, lens packaging & cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
+        settings_obj.footer_text = "THE PRINT PLANET — Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B."
         settings_obj.save()
         self.stdout.write(self.style.SUCCESS("Configured default Site Settings."))
 

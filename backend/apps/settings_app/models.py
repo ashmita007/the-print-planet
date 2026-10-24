@@ -3,7 +3,7 @@ from django.db import models
 
 class SiteSettings(models.Model):
     business_name = models.CharField(max_length=255, default='THE PRINT PLANET')
-    tagline = models.CharField(max_length=255, default='Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery')
+    tagline = models.CharField(max_length=255, default='Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions')
     logo_url = models.CharField(max_length=1000, blank=True, null=True, default='/logo.png')
     favicon_url = models.CharField(max_length=1000, blank=True, null=True, default='/favicon.ico')
     email = models.EmailField(default='theprintplanet01@gmail.com')
@@ -13,11 +13,11 @@ class SiteSettings(models.Model):
     gst_number = models.CharField(max_length=50, blank=True, default='29AAQFT3909B1ZZ')
     hero_badge = models.CharField(max_length=255, blank=True, default="The Print Planet™ • Specialist in PVC Cards & ID Systems")
     hero_title = models.CharField(max_length=255, blank=True, default="The Print Planet — Factory Direct")
-    hero_subtitle = models.CharField(max_length=255, blank=True, default="Specialist in PVC Cards, Lanyard Rolls & ID Machinery")
-    hero_caption = models.TextField(blank=True, default="Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, rigid ID card holders, satin lanyard rolls, RFID smart cards, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.")
+    hero_subtitle = models.CharField(max_length=255, blank=True, default="Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions")
+    hero_caption = models.TextField(blank=True, default="Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, lens packaging & cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.")
     about_data = models.JSONField(default=dict, blank=True)
     social_links = models.JSONField(default=dict, blank=True)
-    footer_text = models.TextField(default='THE PRINT PLANET — Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B.')
+    footer_text = models.TextField(default='THE PRINT PLANET — Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B.')
     seo_defaults = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

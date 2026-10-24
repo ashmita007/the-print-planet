@@ -11,7 +11,7 @@ interface FooterProps {
 
 export default function Footer({ categories = [], settings }: FooterProps) {
   const businessName = settings?.business_name || "THE PRINT PLANET";
-  const tagline = settings?.tagline || "Specialist in PVC Cards | Lanyard Rolls & Commercial ID Machinery";
+  const tagline = settings?.tagline || "Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions";
   const phone = settings?.phone || "+91 97418 08034";
   const email = settings?.email || "theprintplanet01@gmail.com";
   const address = settings?.address || "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India";

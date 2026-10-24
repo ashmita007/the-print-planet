@@ -56,15 +56,40 @@ export default function ProductHeroShowcase({
   const thumbScrollRef = useRef<HTMLDivElement>(null);
 
   // Rotating typography phrases for brand hero headline
-  const ROTATING_PHRASES = useMemo(
-    () => [
-      "Factory Direct",
+  const ROTATING_PHRASES = useMemo(() => {
+    const defaultPhrases = [
       "Specialist in PVC Cards",
-      "Wholesale ID Systems",
-      "Pan-India Dispatch",
-    ],
-    []
-  );
+      "Factory Direct",
+      "Lens Packaging & Cleaning",
+      "Commercial Printing",
+      "Bulk ID & Card Solutions",
+    ];
+
+    if (!settings?.hero_title) return defaultPhrases;
+
+    let clean = settings.hero_title.trim();
+    if (clean.toLowerCase().startsWith("the print planet")) {
+      clean = clean.replace(/^the print planet\s*[-–—]?\s*/i, "").trim();
+    }
+
+    if (!clean || clean === "Factory Direct") {
+      return defaultPhrases;
+    }
+
+    // If owner set custom comma or pipe separated items in backend
+    if (clean.includes(",") || clean.includes("|")) {
+      const parts = clean
+        .split(/[,|]/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+      return parts.length > 0 ? parts : defaultPhrases;
+    }
+
+    // If owner set a custom title in backend, place it at the front of the animation rotation!
+    const customList = [clean, ...defaultPhrases.filter((p) => p.toLowerCase() !== clean.toLowerCase())];
+    return customList;
+  }, [settings?.hero_title]);
+
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [isPhraseVisible, setIsPhraseVisible] = useState(true);
 
@@ -209,31 +234,17 @@ export default function ProductHeroShowcase({
                       : "opacity-0 -translate-y-2 scale-95"
                   }`}
                 >
-                  {(() => {
-                    const rawTitle = settings?.hero_title?.trim() || "";
-                    const isDefault =
-                      !rawTitle ||
-                      rawTitle === "The Print Planet — Factory Direct" ||
-                      rawTitle === "Print Planet — Factory Direct" ||
-                      rawTitle === "Factory Direct";
-                    if (isDefault) {
-                      return ROTATING_PHRASES[phraseIdx];
-                    }
-                    if (rawTitle.includes("—")) {
-                      return rawTitle.split("—").slice(1).join("—").trim();
-                    }
-                    if (rawTitle.toLowerCase().startsWith("the print planet")) {
-                      return rawTitle.replace(/^the print planet\s*[-–—]?\s*/i, "").trim() || rawTitle;
-                    }
-                    return rawTitle;
-                  })()}
+                  {ROTATING_PHRASES[phraseIdx % ROTATING_PHRASES.length]}
                 </span>
                 <span className="block h-[3px] bg-gradient-to-r from-[#E87832] via-[#FF7A1A] to-[#FFA868] rounded-full mt-0.5 opacity-90 shadow-[0_0_8px_rgba(232,120,50,0.6)]" />
               </span>
 
               <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
                 {(() => {
-                  const subText = settings?.hero_subtitle || settings?.tagline || "Specialist in PVC Cards, Lanyard Rolls & ID Machinery";
+                  const subText =
+                    settings?.hero_subtitle ||
+                    settings?.tagline ||
+                    "Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions";
                   if (subText.includes("Specialist in PVC Cards")) {
                     const parts = subText.split("Specialist in PVC Cards");
                     return (
@@ -266,7 +277,7 @@ export default function ProductHeroShowcase({
             <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl">
               {settings?.hero_caption || (
                 <>
-                  Official portal of <strong>The Print Planet</strong> (theprintplanet.co.in) — recognized factory <strong>specialist in PVC cards</strong>, CR-80 fusing sheets, rigid ID card holders, satin lanyard rolls, RFID smart cards, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.
+                  Official portal of <strong>The Print Planet</strong> (theprintplanet.co.in) — recognized factory <strong>specialist in PVC cards</strong>, CR-80 fusing sheets, lens packaging &amp; cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore.
                 </>
               )}
             </p>
