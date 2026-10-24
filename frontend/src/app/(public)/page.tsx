@@ -31,10 +31,10 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const metadata: Metadata = {
   title: {
-    absolute: "The Print Planet™ | Official Website — Wholesale ID Cards, Lanyards & Machinery India",
+    absolute: "The Print Planet™ Bangalore | Official Website — ID Card Materials, Lanyards & Machinery",
   },
   description:
-    "Official website of The Print Planet (theprintplanet.co.in). India's leading B2B factory manufacturer and wholesale supplier of satin lanyard rolls, PVC ID card holders, dog hooks, RFID smart cards, and card cutting machinery with pan-India dispatch.",
+    "Official website of The Print Planet, Bangalore (theprintplanet.co.in). Direct B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, digital cutting plotters, badge reels, and sublimation supplies with pan-India dispatch from Sunkadakatte, Bangalore.",
   alternates: {
     canonical: SITE_URL,
   },

@@ -20,8 +20,9 @@ import {
   ChevronsRight,
   Loader2,
   ExternalLink,
+  Download,
 } from "lucide-react";
-import { ownerGetEnquiries, ownerUpdateEnquiry } from "@/lib/api";
+import { ownerGetEnquiries, ownerUpdateEnquiry, getApiUrl } from "@/lib/api";
 import { Enquiry } from "@/lib/types";
 
 
@@ -91,6 +92,42 @@ export default function OwnerEnquiriesPage() {
       setSaveSuccess(true);
       fetchEnquiries();
       setTimeout(() => setSaveSuccess(false), 2500);
+    }
+  };
+
+  const [downloadingAtt, setDownloadingAtt] = useState(false);
+
+  const handleDownloadAttachment = async (enquiryId: number) => {
+    try {
+      setDownloadingAtt(true);
+      const apiUrl = getApiUrl();
+      const token = typeof window !== "undefined" ? localStorage.getItem("owner_token") : null;
+      const res = await fetch(`${apiUrl}/api/v1/owner/enquiries/${enquiryId}/attachment/`, {
+        headers: token ? { Authorization: `Token ${token}` } : {},
+      });
+      if (!res.ok) {
+        alert("Could not download attachment. File may have been removed or access denied.");
+        return;
+      }
+      const blob = await res.blob();
+      const disposition = res.headers.get("content-disposition");
+      let filename = `enquiry-${enquiryId}-attachment`;
+      if (disposition && disposition.includes("filename=")) {
+        filename = disposition.split("filename=")[1].replace(/["']/g, "").trim();
+      }
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (err) {
+      console.error("Attachment download error:", err);
+      alert("Attachment download failed.");
+    } finally {
+      setDownloadingAtt(false);
     }
   };
 
@@ -354,15 +391,24 @@ export default function OwnerEnquiriesPage() {
                     <span>📎</span>
                     <span>Customer Attached File / Artwork</span>
                   </div>
-                  <a
-                    href={activeEnquiry.attachment_url || (activeEnquiry.attachment as string)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] text-white px-3 py-1.5 rounded-md font-bold text-[11px] transition-colors"
+                  <button
+                    type="button"
+                    disabled={downloadingAtt}
+                    onClick={() => handleDownloadAttachment(activeEnquiry.id)}
+                    className="inline-flex items-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] text-white px-3 py-1.5 rounded-md font-bold text-[11px] transition-colors cursor-pointer disabled:opacity-50"
                   >
-                    <span>View / Download Attachment</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                    {downloadingAtt ? (
+                      <>
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                        <span>Downloading Secure File...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-3 h-3" />
+                        <span>Download Secure Attachment</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               )}
 

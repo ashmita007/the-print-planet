@@ -22,6 +22,25 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/enquiry",
+        destination: "/quote",
+        permanent: true,
+      },
+      {
+        source: "/bulk-orders",
+        destination: "/corporate",
+        permanent: true,
+      },
+      {
+        source: "/portfolio",
+        destination: "/gallery",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

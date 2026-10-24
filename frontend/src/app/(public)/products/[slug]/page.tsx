@@ -88,7 +88,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           "@type": "Offer",
           url: `${SITE_URL}/products/${product.slug}`,
           priceCurrency: product.currency || "INR",
-          price: product.price ? product.price.toString() : "100.00",
+          ...(product.price && Number(product.price) > 0
+            ? { price: product.price.toString() }
+            : { price: "0", priceSpecification: { "@type": "UnitPriceSpecification", priceType: "https://schema.org/InvoicePrice", description: "Bulk B2B wholesale pricing upon quotation" } }),
           priceValidUntil: "2027-12-31",
           availability: "https://schema.org/InStock",
           itemCondition: "https://schema.org/NewCondition",

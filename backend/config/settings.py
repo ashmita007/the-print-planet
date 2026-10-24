@@ -1,10 +1,14 @@
 import os
+import sys
 import socket
 from pathlib import Path
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Test environment detection
+TESTING = 'test' in sys.argv or 'pytest' in sys.modules
 
 # Load environment variables from .env if present
 load_dotenv(BASE_DIR.parent / '.env')
@@ -289,20 +293,22 @@ R2_ENDPOINT_URL = os.environ.get('R2_ENDPOINT_URL', os.environ.get('CLOUDFLARE_R
 R2_PUBLIC_URL = os.environ.get('R2_PUBLIC_URL', os.environ.get('CLOUDFLARE_R2_PUBLIC_URL', '')).rstrip('/')
 
 # Email Notification System for Customer Inquiries & RFQs
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'theprintplanet01@gmail.com').strip()
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'nriurdkdovafflgk').strip()
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '').strip()
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '').strip()
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
 EMAIL_TIMEOUT = 5
 
-if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+if TESTING:
+    EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+elif EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
     EMAIL_BACKEND = 'apps.enquiries.email_backend.CertifiEmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'The Print Planet <{EMAIL_HOST_USER}>')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'The Print Planet <{EMAIL_HOST_USER or "theprintplanet01@gmail.com"}>')
 OWNER_NOTIFICATION_EMAIL = os.environ.get('OWNER_NOTIFICATION_EMAIL', 'theprintplanet01@gmail.com')
 
 # HTTPS REST Email APIs (Port 443 - Bypasses Render Free Port Restrictions)
@@ -311,5 +317,15 @@ BREVO_SENDER_EMAIL = os.environ.get('BREVO_SENDER_EMAIL', 'theprintplanet01@gmai
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '').strip()
 RESEND_FROM_EMAIL = os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>').strip()
 EMAIL_WEBHOOK_URL = os.environ.get('EMAIL_WEBHOOK_URL', '').strip()
+
+# Security Headers & Cookie Policies
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SESSION_COOKIE_HTTPONLY = True
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+
 
 

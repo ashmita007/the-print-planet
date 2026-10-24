@@ -73,3 +73,60 @@ class EnquiryApiTests(TestCase):
         enq.refresh_from_db()
         self.assertEqual(enq.status, 'quoted')
         self.assertEqual(enq.admin_notes, 'Sent formal proforma invoice via email.')
+
+    def test_file_upload_validation_safe_pdf(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        pdf_content = b"%PDF-1.4 sample pdf content for quote"
+        upload = SimpleUploadedFile("specs.pdf", pdf_content, content_type="application/pdf")
+        payload = {
+            'full_name': 'Corporate Buyer',
+            'email': 'buyer@corporate.com',
+            'phone': '+91 98765 00000',
+            'message': 'See attached specs for lanyards',
+            'attachment': upload
+        }
+        response = self.client.post('/api/v1/enquiries/', payload, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        enq = Enquiry.objects.get(email='buyer@corporate.com')
+        self.assertTrue(bool(enq.attachment))
+        self.assertTrue(enq.attachment_url.startswith('/api/v1/owner/enquiries/'))
+
+    def test_file_upload_validation_rejects_dangerous_files(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        exe_file = SimpleUploadedFile("malicious.exe", b"MZ\x90\x00executable", content_type="application/octet-stream")
+        payload = {
+            'full_name': 'Attacker',
+            'email': 'attacker@bad.com',
+            'phone': '+91 98765 00000',
+            'message': 'Dangerous payload',
+            'attachment': exe_file
+        }
+        response = self.client.post('/api/v1/enquiries/', payload, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('attachment', response.data)
+
+    def test_direct_media_enquiry_download_blocked(self):
+        response = self.client.get('/media/enquiries/2026/10/secret.pdf')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_owner_authenticated_attachment_download(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        pdf_file = SimpleUploadedFile("artwork.pdf", b"%PDF-1.4 sample vector", content_type="application/pdf")
+        enq = Enquiry.objects.create(
+            full_name='Artwork Buyer',
+            email='art@buyer.com',
+            phone='+91 91234 56789',
+            message='Vector artwork',
+            attachment=pdf_file
+        )
+
+        # Unauthenticated request fails
+        unauth_resp = self.client.get(f'/api/v1/owner/enquiries/{enq.id}/attachment/')
+        self.assertIn(unauth_resp.status_code, [status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN])
+
+        # Authenticated owner request succeeds
+        self.client.force_authenticate(user=self.owner)
+        auth_resp = self.client.get(f'/api/v1/owner/enquiries/{enq.id}/attachment/')
+        self.assertEqual(auth_resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(auth_resp['X-Content-Type-Options'], 'nosniff')
+

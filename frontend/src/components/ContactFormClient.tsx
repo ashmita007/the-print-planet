@@ -24,6 +24,15 @@ export default function ContactFormClient() {
         setErrorMessage("File attachment size must be under 10MB");
         return;
       }
+      const allowedExts = [
+        ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".csv", ".txt", ".rtf",
+        ".jpg", ".jpeg", ".png", ".webp", ".zip", ".rar", ".ai", ".eps", ".cdr", ".psd"
+      ];
+      const ext = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+      if (!allowedExts.includes(ext)) {
+        setErrorMessage("Unsupported file format. Allowed formats: PDF, Word, Excel, JPG, PNG, WEBP, ZIP, and Vector artwork.");
+        return;
+      }
       setAttachment(file);
       setErrorMessage("");
     }

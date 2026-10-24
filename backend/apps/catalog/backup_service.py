@@ -43,6 +43,10 @@ def trigger_auto_backup_async(force=False):
     Triggers an asynchronous SQLite cloud backup in a detached background thread.
     Debounced so rapid edits or concurrent customer enquiries do not thrash the CPU.
     """
+    from django.conf import settings
+    if getattr(settings, 'TESTING', False):
+        return
+
     global _last_backup_time
     now = time.time()
     if not force and (now - _last_backup_time < _MIN_BACKUP_INTERVAL):

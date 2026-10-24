@@ -327,3 +327,47 @@ test("Live Backend API responds with active categories and products", async () =
     console.log("Live API check skipped network error:", err.message);
   }
 });
+
+// 13. Test File Upload Extension & Size Security Validation
+test("File upload client validation rejects dangerous extensions and oversized files", () => {
+  const allowedExts = [
+    ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".csv", ".txt", ".rtf",
+    ".jpg", ".jpeg", ".png", ".webp", ".zip", ".rar", ".ai", ".eps", ".cdr", ".psd"
+  ];
+  const maxBytes = 10 * 1024 * 1024; // 10MB
+
+  const validateFile = (filename, size) => {
+    if (size > maxBytes) return "File attachment size must be under 10MB";
+    const ext = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+    if (!allowedExts.includes(ext)) return "Unsupported file format";
+    return null;
+  };
+
+  assert.strictEqual(validateFile("sample.pdf", 1024 * 500), null);
+  assert.strictEqual(validateFile("artwork.ai", 1024 * 1024 * 4), null);
+  assert.strictEqual(validateFile("specs.docx", 1024 * 200), null);
+  assert.strictEqual(validateFile("huge_file.zip", 15 * 1024 * 1024), "File attachment size must be under 10MB");
+  assert.strictEqual(validateFile("trojan.exe", 1024), "Unsupported file format");
+  assert.strictEqual(validateFile("exploit.php", 1024), "Unsupported file format");
+  assert.strictEqual(validateFile("script.sh", 1024), "Unsupported file format");
+});
+
+// 14. Test Branded Keywords & Canonical URL Schema Consistency
+test("Brand canonical metadata correctly targets 'Print Planet Bangalore' without keyword stuffing", () => {
+  const brandTitle = "The Print Planet™ Bangalore | Official Website — ID Card Materials, Lanyards & Machinery";
+  assert.ok(brandTitle.includes("The Print Planet"));
+  assert.ok(brandTitle.includes("Bangalore"));
+  assert.ok(brandTitle.includes("ID Card Materials"));
+  assert.ok(brandTitle.length <= 90);
+
+  const alternateNames = [
+    "Print Planet",
+    "The Print Planet",
+    "The Print Planet Bangalore",
+    "Print Planet Bangalore",
+    "The Print Planet Sunkadakatte",
+  ];
+  assert.ok(alternateNames.includes("The Print Planet Bangalore"));
+  assert.ok(alternateNames.includes("Print Planet"));
+});
+

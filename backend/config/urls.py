@@ -108,7 +108,14 @@ urlpatterns = [
 
 from django.views.static import serve
 from django.urls import re_path
+from django.http import HttpResponseForbidden
+
+def secure_media_serve(request, path, document_root=None, show_indexes=False):
+    """Prevents unauthorized public access to customer enquiry attachments."""
+    if path.startswith('enquiries/'):
+        return HttpResponseForbidden("Direct access to private customer enquiry attachments is prohibited.")
+    return serve(request, path, document_root=document_root, show_indexes=show_indexes)
 
 urlpatterns += [
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^media/(?P<path>.*)$', secure_media_serve, {'document_root': settings.MEDIA_ROOT}),
 ]

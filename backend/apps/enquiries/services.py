@@ -1,5 +1,6 @@
 import os
 import json
+import base64
 import logging
 import threading
 import urllib.request
@@ -86,6 +87,9 @@ def _send_whatsapp_callmebot(text):
     Dispatches automated WhatsApp message to owner phone via CallMeBot.
     Phone: +919741808034
     """
+    if getattr(settings, 'TESTING', False):
+        return True
+
     apikey = os.environ.get('CALLMEBOT_API_KEY', '').strip()
     phone = os.environ.get('OWNER_WHATSAPP_PHONE', '919741808034').strip().replace('+', '')
     if not apikey:
@@ -102,11 +106,15 @@ def _send_whatsapp_callmebot(text):
         return False
 
 
-def _send_email_via_https(to_email, subject, text, html):
+def _send_email_via_https(to_email, subject, text, html, attachment_path='', attachment_name=''):
     """
     Dispatches email via HTTPS REST API (Port 443) to bypass Render Free Tier SMTP port blocking.
     Supports Resend, Brevo, FormSubmit, Web3Forms, or generic Webhooks.
+    Includes base64 encoded attachments where supported.
     """
+    if getattr(settings, 'TESTING', False):
+        return True
+
     ssl_context = None
     try:
         import ssl
@@ -115,19 +123,36 @@ def _send_email_via_https(to_email, subject, text, html):
     except Exception:
         ssl_context = None
 
+    # Prepare base64 attachment if available and <= 5MB
+    b64_content = None
+    if attachment_path and os.path.exists(attachment_path):
+        try:
+            if os.path.getsize(attachment_path) <= 5 * 1024 * 1024:
+                with open(attachment_path, 'rb') as af:
+                    b64_content = base64.b64encode(af.read()).decode('utf-8')
+        except Exception as e_b64:
+            logger.warning(f"Could not base64 encode attachment {attachment_path}: {e_b64}")
+
     # 1. Resend API (HTTPS Port 443)
     resend_key = os.environ.get('RESEND_API_KEY', getattr(settings, 'RESEND_API_KEY', '')).strip()
     if resend_key:
         try:
+            resend_body = {
+                'from': os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>'),
+                'to': [to_email],
+                'subject': subject,
+                'text': text,
+                'html': html,
+            }
+            if b64_content and attachment_name:
+                resend_body['attachments'] = [{
+                    'filename': attachment_name,
+                    'content': b64_content,
+                }]
+
             req = urllib.request.Request(
                 'https://api.resend.com/emails',
-                data=json.dumps({
-                    'from': os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>'),
-                    'to': [to_email],
-                    'subject': subject,
-                    'text': text,
-                    'html': html,
-                }).encode('utf-8'),
+                data=json.dumps(resend_body).encode('utf-8'),
                 headers={
                     'Authorization': f'Bearer {resend_key}',
                     'Content-Type': 'application/json',
@@ -148,6 +173,36 @@ def _send_email_via_https(to_email, subject, text, html):
     if brevo_key:
         try:
             sender_email = os.environ.get('BREVO_SENDER_EMAIL', getattr(settings, 'BREVO_SENDER_EMAIL', 'theprintplanet01@gmail.com')).strip()
+            brevo_body = {
+                'sender': {'name': 'The Print Planet', 'email': sender_email},
+                'to': [{'email': to_email}],
+                'subject': subject,
+                'htmlContent': html,
+                'textContent': text,
+            }
+            if b64_content and attachment_name:
+                brevo_body['attachment'] = [{
+                    'name': attachment_name,
+                    'content': b64_content,
+                }]
+
+            req = urllib.request.Request(
+                'https://api.brevo.com/v3/smtp/email',
+                data=json.dumps(brevo_body).encode('utf-8'),
+                headers={
+                    'api-key': brevo_key,
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'ThePrintPlanet/1.0'
+                }
+            )
+            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
+                logger.info(f"Dispatched email via Brevo HTTPS API to {to_email}")
+                return True
+        except urllib.error.HTTPError as e:
+            err_msg = e.read().decode('utf-8', errors='ignore')
+            logger.error(f"Brevo HTTPS dispatch HTTP {e.code}: {err_msg}")
+        except Exception as e:
+            logger.warning(f"Brevo HTTPS dispatch failed: {e}")
             req = urllib.request.Request(
                 'https://api.brevo.com/v3/smtp/email',
                 data=json.dumps({
@@ -418,7 +473,14 @@ INSTANT QUICK ACTIONS:
 """
 
         # Try HTTPS REST dispatch first (bypasses Render SMTP port blocking)
-        dispatched_https = _send_email_via_https(owner_recipient, owner_subject, owner_text, owner_html)
+        dispatched_https = _send_email_via_https(
+            owner_recipient,
+            owner_subject,
+            owner_text,
+            owner_html,
+            attachment_path=attachment_path,
+            attachment_name=attachment_name
+        )
 
         # Fallback to SMTP with strict 5-second socket timeout (never hangs worker)
         if not dispatched_https:
