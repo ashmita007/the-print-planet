@@ -154,16 +154,16 @@ const jsonLdOrg = {
       ],
       address: {
         "@type": "PostalAddress",
-        streetAddress: "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town",
+        streetAddress: "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte",
         addressLocality: "Bengaluru",
         addressRegion: "Karnataka",
-        postalCode: "560079",
+        postalCode: "560091",
         addressCountry: "IN",
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 12.9880,
-        longitude: 77.5385,
+        latitude: 12.9863,
+        longitude: 77.5020,
       },
       openingHoursSpecification: [
         {

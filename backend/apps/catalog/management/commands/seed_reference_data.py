@@ -160,7 +160,7 @@ class Command(BaseCommand):
         settings_obj.phone = "+91 97418 08034"
         settings_obj.whatsapp = "+91 97418 08034"
         settings_obj.email = "theprintplanet01@gmail.com"
-        settings_obj.address = "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town, Bengaluru (Bangalore) Urban, Bengaluru - 560079, Karnataka, India"
+        settings_obj.address = "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India"
         settings_obj.gst_number = "29AAQFT3909B1ZZ"
         settings_obj.footer_text = "THE PRINT PLANET - Delivering Excellence in PVC Cards | Lens Packaging | Commercial Printing Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B."
         settings_obj.save()

@@ -3,7 +3,7 @@
 **Document version:** v1.0
 **Last updated:** October 2026
 **Target Website:** https://theprintplanet.co.in
-**Headquarters:** No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town, Bengaluru, Karnataka - 560079
+**Headquarters:** No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India
 **Primary Contact:** +91 97418 08034 | theprintplanet01@gmail.com
 **GSTIN:** 29AAQFT3909B1ZZ
 
@@ -61,4 +61,4 @@
 - **IndiaMART Verified Supplier:** https://www.indiamart.com/theprintplanet/
 - **JustDial Business Profile:** https://www.justdial.com/Bangalore/The-Print-Planet
 - **TradeIndia Exporter Listing:** https://www.tradeindia.com/Seller-16599025-THE-PRINT-PLANET/
-- **Google Maps Location:** Rajajinagar Industrial Town, Bengaluru, Karnataka 560079
+- **Google Maps Location:** Sunkadakatte, Bengaluru, Karnataka 560091

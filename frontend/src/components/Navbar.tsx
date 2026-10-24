@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   Phone,
   Mail,
@@ -35,8 +35,10 @@ interface NavbarProps {
 
 export default function Navbar({ categories = [], settings }: NavbarProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
+  const [mobileCategoriesOpen, setMobileCategoriesOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isOwnerLoggedIn, setIsOwnerLoggedIn] = useState(false);
   const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
@@ -362,8 +364,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             </div>
           </nav>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Fast CTA & Hamburger */}
           <div className="flex items-center gap-2 xl:hidden">
+            <Link
+              href="/quote"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow-xs"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Quote</span>
+            </Link>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -383,7 +392,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               placeholder="Search products, models, materials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-7 py-2 text-base sm:text-xs text-[#263445] placeholder-[#687586] outline-none transition-all"
+              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-7 py-2 text-base sm:text-xs text-[#263445] placeholder-[#687586] outline-none transition-all shadow-inner/5"
             />
             <Search className="w-3.5 h-3.5 text-[#687586] absolute left-2.5 top-1/2 -translate-y-1/2" />
             {searchQuery && (
@@ -409,7 +418,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           />
 
           {/* Drawer Content */}
-          <div className="fixed inset-y-0 right-0 w-[84vw] max-w-xs bg-white shadow-2xl flex flex-col z-50 animate-in slide-in-from-right duration-200">
+          <div className="fixed inset-y-0 right-0 w-[86vw] max-w-sm bg-white shadow-2xl flex flex-col z-50 animate-in slide-in-from-right duration-200">
             {/* Drawer Header */}
             <div className="p-4 border-b border-[#DCE3EB] flex items-center justify-between bg-[#102742] text-white">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="bg-white px-3 py-1.5 rounded-lg inline-block shadow-sm">
@@ -418,7 +427,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   alt="Print Planet — The Print Planet™ Wholesale ID Solutions"
                   width={180}
                   height={50}
-                  className="h-9 sm:h-10 w-auto object-contain"
+                  className="h-8 sm:h-9 w-auto object-contain"
                 />
               </Link>
               <button
@@ -437,118 +446,208 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
                 >
-                  <Home className="w-4 h-4 text-[#17365D]" />
-                  <span>1. Home</span>
+                  <div className="flex items-center gap-2.5">
+                    <Home className={`w-4 h-4 ${pathname === "/" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Home</span>
+                  </div>
                 </Link>
-                <Link
-                  href="/about"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
-                >
-                  <Info className="w-4 h-4 text-[#17365D]" />
-                  <span>2. About Us</span>
-                </Link>
+
                 <Link
                   href="/products"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/products"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
                 >
-                  <Package className="w-4 h-4 text-[#17365D]" />
-                  <span>3. Products & Catalogue</span>
+                  <div className="flex items-center gap-2.5">
+                    <Package className={`w-4 h-4 ${pathname === "/products" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Products &amp; Machinery</span>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    pathname === "/products"
+                      ? "bg-white/20 text-white"
+                      : "bg-[#E87832]/10 text-[#E87832]"
+                  }`}>
+                    180+ SKUs
+                  </span>
                 </Link>
+
                 <Link
-                  href="/services"
+                  href="/about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/about"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
                 >
-                  <Printer className="w-4 h-4 text-[#17365D]" />
-                  <span>4. Services</span>
+                  <div className="flex items-center gap-2.5">
+                    <Info className={`w-4 h-4 ${pathname === "/about" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>About Our Factory</span>
+                  </div>
                 </Link>
-                <Link
-                  href="/gallery"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
-                >
-                  <Sparkles className="w-4 h-4 text-[#17365D]" />
-                  <span>5. Portfolio / Gallery</span>
-                </Link>
-                <Link
-                  href="/industries"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
-                >
-                  <Building2 className="w-4 h-4 text-[#17365D]" />
-                  <span>6. Industries We Serve</span>
-                </Link>
+
                 <Link
                   href="/corporate"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/corporate" || pathname === "/bulk-orders"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
                 >
-                  <Briefcase className="w-4 h-4 text-[#17365D]" />
-                  <span>7. Bulk & Corporate Orders</span>
+                  <div className="flex items-center gap-2.5">
+                    <Briefcase className={`w-4 h-4 ${pathname === "/corporate" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Bulk &amp; Corporate Orders</span>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                    Volume Slabs
+                  </span>
                 </Link>
+
                 <Link
-                  href="/quote"
+                  href="/services"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-bold text-xs bg-orange-50 text-[#E87832] border border-orange-200"
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/services"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
                 >
-                  <FileText className="w-4 h-4 text-[#E87832]" />
-                  <span>8. Request a Quote</span>
+                  <div className="flex items-center gap-2.5">
+                    <Printer className={`w-4 h-4 ${pathname === "/services" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Printing Services</span>
+                  </div>
                 </Link>
+
+                <Link
+                  href="/gallery"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/gallery" || pathname === "/portfolio"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Sparkles className={`w-4 h-4 ${pathname === "/gallery" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Portfolio &amp; Showcase</span>
+                  </div>
+                </Link>
+
+                <Link
+                  href="/industries"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/industries"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Building2 className={`w-4 h-4 ${pathname === "/industries" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Industries We Supply</span>
+                  </div>
+                </Link>
+
+                {/* Instant RFQ Card */}
+                <div className="pt-1">
+                  <Link
+                    href="/quote"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-gradient-to-r from-[#E87832] to-[#FF7A1A] text-white shadow-md"
+                  >
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-white" />
+                      <span>Request Wholesale Quotation</span>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-md font-semibold text-xs text-[#263445] hover:bg-[#F5F7FA]"
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname === "/contact"
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
                 >
-                  <Phone className="w-4 h-4 text-[#17365D]" />
-                  <span>9. Contact Us</span>
+                  <div className="flex items-center gap-2.5">
+                    <Phone className={`w-4 h-4 ${pathname === "/contact" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Contact Us &amp; Factory Desk</span>
+                  </div>
                 </Link>
               </div>
 
-              {/* Categories Section */}
-              <div className="pt-2 border-t border-[#DCE3EB]">
-                <p className="px-3 text-xs font-bold text-[#17365D] uppercase tracking-wider mb-2">
-                  Categories
-                </p>
-                <div className="space-y-0.5">
-                  {liveCategories.map((c) => (
+              {/* Categories Section (Accordion) */}
+              <div className="pt-3 border-t border-[#DCE3EB]">
+                <button
+                  type="button"
+                  onClick={() => setMobileCategoriesOpen(!mobileCategoriesOpen)}
+                  className="w-full flex items-center justify-between px-2 py-2 text-xs font-black text-[#17365D] uppercase tracking-wider hover:text-[#E87832] transition-colors"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-[#E87832]" />
+                    <span>Browse Product Categories</span>
+                  </span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCategoriesOpen ? "rotate-180" : ""}`} />
+                </button>
+
+                {mobileCategoriesOpen && (
+                  <div className="mt-1 space-y-1 pl-1 max-h-60 overflow-y-auto animate-in fade-in duration-150">
+                    {liveCategories.map((c) => (
+                      <Link
+                        key={c.id}
+                        href={`/categories/${c.slug}`}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#263445] hover:bg-[#F5F7FA] hover:text-[#E87832] transition-colors"
+                      >
+                        <span className="truncate pr-2 font-medium">{c.name}</span>
+                        <span className="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full font-mono shrink-0">
+                          {c.products_count || 0}
+                        </span>
+                      </Link>
+                    ))}
                     <Link
-                      key={c.id}
-                      href={`/categories/${c.slug}`}
+                      href="/products"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-between px-3 py-2 rounded text-xs text-[#263445] hover:bg-[#F5F7FA] hover:text-[#E87832]"
+                      className="block text-center text-xs font-bold text-[#E87832] pt-1.5 hover:underline"
                     >
-                      <span className="truncate pr-2">{c.name}</span>
-                      <span className="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
-                        {c.products_count || 0}
-                      </span>
+                      View All Products &rarr;
                     </Link>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* Owner Portal Link */}
-              <div suppressHydrationWarning className="pt-4 border-t border-[#DCE3EB]">
+              <div suppressHydrationWarning className="pt-3 border-t border-[#DCE3EB]">
                 {isOwnerLoggedIn ? (
                   <Link
                     href="/owner/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-[#17365D] text-white text-xs font-bold shadow-sm"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#17365D] text-white text-xs font-bold shadow-xs hover:bg-[#102742] transition-colors"
                   >
-                    <User className="w-4 h-4" />
-                    Owner Admin Dashboard
+                    <User className="w-4 h-4 text-[#FFA868]" />
+                    <span>Owner Admin Dashboard</span>
                   </Link>
                 ) : (
                   <Link
                     href="/owner/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-[#DCE3EB] text-[#17365D] text-xs font-semibold hover:bg-[#F5F7FA]"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-[#DCE3EB] text-[#17365D] text-xs font-semibold hover:bg-[#F5F7FA] transition-colors"
                   >
-                    <User className="w-4 h-4" />
-                    Owner Portal Login
+                    <User className="w-4 h-4 text-slate-400" />
+                    <span>Owner Portal Login</span>
                   </Link>
                 )}
               </div>
@@ -557,27 +656,29 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             {/* Drawer Footer Actions */}
             <div className="p-4 border-t border-[#DCE3EB] bg-[#F5F7FA] space-y-2">
               <a
-                href={`mailto:${email}`}
-                className="flex items-center justify-center gap-2 w-full py-2 rounded-lg border border-[#DCE3EB] bg-white text-[#17365D] text-xs font-bold"
-              >
-                <Mail className="w-3.5 h-3.5 text-[#E87832]" />
-                {email}
-              </a>
-              <a
-                href={`tel:${phone.replace(/\s+/g, "")}`}
-                className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-[#102742] text-white text-xs font-bold"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#E87832]" />
-                Call {phone}
-              </a>
-              <a
-                href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}?text=Hello%2C%20I%20am%20enquiring%20about%20ID%20card%20products.`}
+                href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}?text=Hello%2C%20I%20am%20enquiring%20about%20ID%20card%20products%20from%20The%20Print%20Planet.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-[#217A4B] text-white text-xs font-bold"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#217A4B] hover:bg-[#1a663e] text-white text-xs font-bold shadow-sm transition-all"
               >
-                WhatsApp Instant Enquiry
+                <span>WhatsApp Direct Inquiry</span>
               </a>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={`tel:${phone.replace(/\s+/g, "")}`}
+                  className="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-[#102742] hover:bg-[#0c1f36] text-white text-xs font-bold transition-all truncate px-2"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#E87832] shrink-0" />
+                  <span className="truncate">Call Factory</span>
+                </a>
+                <a
+                  href={`mailto:${email}`}
+                  className="flex items-center justify-center gap-1.5 py-2 rounded-lg border border-[#DCE3EB] bg-white text-[#17365D] text-xs font-bold hover:bg-slate-50 transition-all truncate px-2"
+                >
+                  <Mail className="w-3.5 h-3.5 text-[#E87832] shrink-0" />
+                  <span className="truncate">Email RFQ</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

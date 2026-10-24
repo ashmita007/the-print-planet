@@ -9,6 +9,8 @@ class SiteSettingsSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'business_name', 'tagline', 'logo_url', 'favicon_url',
             'email', 'phone', 'whatsapp', 'address', 'gst_number',
+            'hero_badge', 'hero_title', 'hero_subtitle', 'hero_caption',
+            'about_data',
             'social_links', 'footer_text', 'seo_defaults', 'updated_at'
         ]
 

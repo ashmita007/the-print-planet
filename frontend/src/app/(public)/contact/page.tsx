@@ -10,13 +10,13 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "Contact The Print Planet Bengaluru | Sales Desk & Factory Quotation",
   description:
-    "Contact The Print Planet sales and technical support in Rajajinagar Bengaluru. Call +91 97418 08034 or email theprintplanet01@gmail.com for wholesale pricing, factory visits, and bulk quotations.",
+    "Contact The Print Planet sales and technical support in Sunkadakatte, Bengaluru. Call +91 97418 08034 or email theprintplanet01@gmail.com for wholesale pricing, factory visits, and bulk quotations.",
   alternates: {
     canonical: `${SITE_URL}/contact`,
   },
   openGraph: {
     title: "Contact The Print Planet Bengaluru | Sales Desk & Factory Quotation",
-    description: "Official contact portal of The Print Planet. Factory sales desk, Rajajinagar Bengaluru.",
+    description: "Official contact portal of The Print Planet. Factory sales desk, Sunkadakatte, Bengaluru.",
     url: `${SITE_URL}/contact`,
     siteName: "The Print Planet",
     type: "website",
@@ -29,7 +29,7 @@ export default async function ContactPage() {
   const businessName = settings?.business_name || "THE PRINT PLANET";
   const phone = settings?.phone || "+91 97418 08034";
   const email = settings?.email || "theprintplanet01@gmail.com";
-  const address = settings?.address || "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town, Bengaluru (Bangalore) Urban, Bengaluru - 560079, Karnataka, India";
+  const address = settings?.address || "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India";
   const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
   const pan = "AAQFT3909B";
   const whatsapp = settings?.whatsapp || "+91 97418 08034";
@@ -66,10 +66,10 @@ export default async function ContactPage() {
       email: email,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "No.17, Ground Floor, 7th Main, 13th Cross Rd, Agrahara Dasarahalli, Rajajinagar Industrial Town",
+        streetAddress: "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte",
         addressLocality: "Bengaluru",
         addressRegion: "Karnataka",
-        postalCode: "560079",
+        postalCode: "560091",
         addressCountry: "IN",
       },
       contactPoint: {

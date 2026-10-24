@@ -18,6 +18,8 @@ import {
   Database,
   Loader2,
   AlertCircle,
+  Sparkles,
+  Info,
 } from "lucide-react";
 import {
   ownerGetDashboardStats,
@@ -175,6 +177,40 @@ export default function OwnerDashboardPage() {
           >
             <FileSpreadsheet className="w-3.5 h-3.5" />
             <span>Bulk CSV/JSON Import</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Dynamic Content Controls Quickstrip */}
+      <div className="bg-gradient-to-r from-[#17365D] to-[#102742] text-white p-4 sm:p-5 rounded-2xl shadow-sm border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="bg-[#E87832] text-white text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded">
+              CMS Controls
+            </span>
+            <span className="text-xs font-bold text-slate-200">
+              Instant Dynamic Content Management
+            </span>
+          </div>
+          <p className="text-xs text-slate-300">
+            Edit the homepage hero banner caption, public About Us story &amp; stats counters without touching code.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <Link
+            href="/owner/settings?tab=hero"
+            className="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-white/20 transition-all flex items-center gap-1.5"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#FFA868]" />
+            <span>Edit Hero Caption</span>
+          </Link>
+          <Link
+            href="/owner/settings?tab=about"
+            className="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-white/20 transition-all flex items-center gap-1.5"
+          >
+            <Info className="w-3.5 h-3.5 text-[#FFA868]" />
+            <span>Edit About Us CMS</span>
           </Link>
         </div>
       </div>

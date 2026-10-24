@@ -92,6 +92,11 @@ export interface SiteSettings {
   whatsapp: string;
   address: string;
   gst_number?: string;
+  hero_badge?: string;
+  hero_title?: string;
+  hero_subtitle?: string;
+  hero_caption?: string;
+  about_data?: Record<string, any>;
   social_links: Record<string, string>;
   footer_text: string;
   seo_defaults: Record<string, string>;

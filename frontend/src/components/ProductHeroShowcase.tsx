@@ -18,13 +18,14 @@ import {
   CreditCard,
   Tag,
 } from "lucide-react";
-import { Product } from "@/lib/types";
+import { Product, SiteSettings } from "@/lib/types";
 import EnquiryModal from "./EnquiryModal";
 
 interface ProductHeroShowcaseProps {
   flagshipProducts: Product[];
   totalProductsCount: number;
   allProducts?: Product[];
+  settings?: SiteSettings;
 }
 
 // Hero category filter tabs
@@ -41,6 +42,7 @@ export default function ProductHeroShowcase({
   flagshipProducts,
   totalProductsCount,
   allProducts = [],
+  settings,
 }: ProductHeroShowcaseProps) {
   // Use allProducts if available to give maximum diversity across 186 items, otherwise flagshipProducts
   const pool = allProducts.length > 0 ? allProducts : flagshipProducts;
@@ -146,27 +148,28 @@ export default function ProductHeroShowcase({
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md text-white shadow-xs transition-all">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               <span className="text-[11px] sm:text-xs font-black tracking-wide text-white uppercase">
-                The Print Planet™
+                {settings?.hero_badge ? settings.hero_badge.split("•")[0]?.trim() || "The Print Planet™" : "The Print Planet™"}
               </span>
               <span className="text-white/40">•</span>
               <span className="text-[10px] sm:text-[11px] font-semibold text-[#FFA868]">
-                India&apos;s Direct B2B Factory
+                {settings?.hero_badge?.includes("•") ? settings.hero_badge.split("•")[1]?.trim() : "India's Direct B2B Factory"}
               </span>
             </div>
 
             {/* Main Primary SEO & Brand Heading */}
             <h1 className="text-2xl sm:text-4xl lg:text-[2.6rem] font-black tracking-tight leading-[1.14] text-white">
-              Print Planet —{" "}
-              <span className="bg-gradient-to-r from-[#FF7A1A] via-[#FFA868] to-[#FFC799] bg-clip-text text-transparent">
-                Factory Direct
-              </span>
+              {settings?.hero_title || "Print Planet — Factory Direct"}
               <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
-                Wholesale ID Cards, Lanyard Rolls &amp; Machinery
+                {settings?.hero_subtitle || "Wholesale ID Cards, Lanyard Rolls & Machinery"}
               </span>
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl">
-              Official portal of <strong>The Print Planet</strong> (theprintplanet.co.in). India&apos;s leading B2B manufacturing hub for satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, dog hooks, and card die cutting machinery with 24–48h pan-India dispatch.
+              {settings?.hero_caption || (
+                <>
+                  Official portal of <strong>The Print Planet</strong> (theprintplanet.co.in). India&apos;s leading B2B manufacturing hub for satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, dog hooks, and card die cutting machinery with 24–48h pan-India dispatch.
+                </>
+              )}
             </p>
 
             {/* Quick Actions */}

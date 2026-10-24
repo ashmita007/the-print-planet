@@ -101,6 +101,7 @@ export default async function HomePage() {
         flagshipProducts={safeFeatured}
         allProducts={productsList}
         totalProductsCount={productsData?.count || productsList.length}
+        settings={settings}
       />
 
       {/* 2. Direct Industrial Products Showcase with Live Category Tabs & Search */}
@@ -109,99 +110,190 @@ export default async function HomePage() {
         categories={categories || []}
       />
 
-      {/* 3. How It Works: 5-Step B2B Procurement & Fulfillment Workflow */}
-      <section className="bg-gradient-to-b from-white to-[#F8FAFC] py-16 border-y border-[#DCE3EB]">
+      {/* 3. Industrial Operations & Trade Hub (Human-Crafted Bento Architecture) */}
+      <section className="bg-gradient-to-b from-white via-[#F8FAFC] to-white py-16 border-y border-[#DCE3EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E87832] bg-[#E87832]/10 px-3 py-1 rounded-full">
-              Fulfillment Workflow
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#17365D] tracking-tight mt-2.5">
-              How B2B Ordering Works
-            </h2>
-            <p className="text-xs sm:text-sm text-[#687586] mt-2">
-              From requirement enquiry to pan-India delivery in 5 simple steps. Most standard orders dispatched within 24–48 hours.
-            </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#17365D]/10 text-[#17365D] text-xs font-black uppercase tracking-wider mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#E87832]" />
+                <span>Shop Floor &amp; Trade Operations</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
+                Engineered for High-Output Print Studios
+              </h2>
+              <p className="text-xs sm:text-sm text-[#687586] mt-1.5 max-w-2xl leading-relaxed">
+                Direct trade terms, physical machinery verification, and rapid consumable replenishment from our Sunkadakatte, Bengaluru facility.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs font-bold text-[#17365D]">
+              <span className="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
+                ✓ Shop Open: Mon–Sat 9:30 AM – 7:30 PM
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {/* Step 1 */}
-            <div className="bg-white p-5 rounded-2xl border border-[#DCE3EB] shadow-2xs relative flex flex-col justify-between group hover:border-[#17365D] transition-all">
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            {/* Bento Block 1 (8 Cols): Live Video Demonstration & Factory Machinery Floor */}
+            <div className="lg:col-span-8 bg-[#102742] text-white rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl relative overflow-hidden flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#E87832]/10 rounded-full blur-3xl pointer-events-none" />
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#F5F7FA] text-[#17365D] font-black text-sm flex items-center justify-center mb-3 group-hover:bg-[#17365D] group-hover:text-white transition-colors">
-                  01
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                  <span className="bg-[#E87832] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded">
+                    Machinery Shop Floor Verification
+                  </span>
+                  <span className="text-xs font-mono text-slate-300">
+                    Sunkadakatte, Bengaluru 560091
+                  </span>
                 </div>
-                <h3 className="font-bold text-[#17365D] text-sm">Pick Equipment or Material</h3>
-                <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
-                  Select fusing machines, cutters, lanyard printers, PVC core sheets, coated overlay, clips, or RFID cards.
+                <h3 className="text-xl sm:text-2xl font-black text-white leading-tight">
+                  Never Buy Industrial Equipment Blindly. <br />
+                  <span className="text-[#FFA868]">Inspect Your Machine on Live WhatsApp Video.</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed max-w-2xl">
+                  Before we crate your hydraulic fusing laminator, motorized card die cutter, or lanyard heat press, our factory engineers run test cards with your exact materials on live video call. We verify cutting burr, heat uniformity, and cycle speed before you pay.
                 </p>
+
+                {/* Machine Spec Pillars */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <div className="text-[10px] text-slate-400 uppercase font-bold">Cutting Speed</div>
+                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">3,500+ /hr</div>
+                    <div className="text-[9px] text-slate-400">CR-80 ISO Precision</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <div className="text-[10px] text-slate-400 uppercase font-bold">Die Warranty</div>
+                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">1-Year Live</div>
+                    <div className="text-[9px] text-slate-400">Tungsten Steel Core</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <div className="text-[10px] text-slate-400 uppercase font-bold">Power Input</div>
+                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">230V / 415V</div>
+                    <div className="text-[9px] text-slate-400">Single or 3-Phase</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <div className="text-[10px] text-slate-400 uppercase font-bold">Spares Ready</div>
+                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">Same-Day</div>
+                    <div className="text-[9px] text-slate-400">Dies, Relays &amp; Elements</div>
+                  </div>
+                </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] font-semibold text-[#17365D]">
-                <span>180+ Active SKUs</span>
+
+              <div className="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-xs text-slate-300">
+                  Ready stock available for physical inspection in Bengaluru.
+                </div>
+                <a
+                  href="https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%20I%20would%20like%20to%20schedule%20a%20live%20video%20demonstration%20of%20your%20ID%20card%20machinery."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md w-full sm:w-auto justify-center"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>Book WhatsApp Live Machine Demo</span>
+                </a>
               </div>
             </div>
 
-            {/* Step 2 */}
-            <div className="bg-white p-5 rounded-2xl border border-[#DCE3EB] shadow-2xs relative flex flex-col justify-between group hover:border-[#17365D] transition-all">
+            {/* Bento Block 2 (4 Cols): Physical Material Swatch & Sample Proofing Desk */}
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 sm:p-7 border border-[#DCE3EB] shadow-sm flex flex-col justify-between hover:border-[#17365D] transition-colors">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#F5F7FA] text-[#17365D] font-black text-sm flex items-center justify-center mb-3 group-hover:bg-[#17365D] group-hover:text-white transition-colors">
-                  02
-                </div>
-                <h3 className="font-bold text-[#17365D] text-sm">Request Factory Quote</h3>
-                <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
-                  Send SKU & quantity. Our sales desk replies within 1 working hour with GST-inclusive wholesale rates.
+                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded">
+                  Trade Proofing Desk
+                </span>
+                <h3 className="text-lg font-bold text-[#17365D] mt-3">
+                  Physical Sample Kit for Registered Print Studios
+                </h3>
+                <p className="text-xs text-[#687586] mt-2 leading-relaxed">
+                  Verify the satin weave density, clip spring resistance, and RFID chip read range on your own readers before placing bulk carton orders.
                 </p>
+
+                <ul className="mt-4 space-y-2 text-xs text-[#263445]">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>12mm, 16mm, 20mm &amp; 25mm Satin Ribbon Cuts</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>Executive, Crystal &amp; Rigid PVC Card Holders</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>Zinc Alloy Dog Hooks &amp; Twist Wire Fittings</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>125kHz &amp; 13.56MHz RFID Smart Card Samples</span>
+                  </li>
+                </ul>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] font-semibold text-[#E87832]">
-                <span>1-Hour Response Desk</span>
+
+              <div className="mt-6 pt-4 border-t border-slate-100">
+                <Link
+                  href="/contact"
+                  className="w-full bg-[#17365D] hover:bg-[#102742] text-white py-2.5 px-3 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <Package className="w-3.5 h-3.5 text-[#E87832]" />
+                  <span>Request Factory Sample Swatches</span>
+                </Link>
               </div>
             </div>
 
-            {/* Step 3 */}
-            <div className="bg-white p-5 rounded-2xl border border-[#DCE3EB] shadow-2xs relative flex flex-col justify-between group hover:border-[#17365D] transition-all">
+            {/* Bento Block 3 (4 Cols): Local Bengaluru Pickup & Pan-India Freight */}
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-sm flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#F5F7FA] text-[#17365D] font-black text-sm flex items-center justify-center mb-3 group-hover:bg-[#17365D] group-hover:text-white transition-colors">
-                  03
+                <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-800 flex items-center justify-center mb-3">
+                  <Truck className="w-5 h-5 text-cyan-700" />
                 </div>
-                <h3 className="font-bold text-[#17365D] text-sm">Video Demo & Swatches</h3>
+                <h3 className="font-bold text-base text-[#17365D]">
+                  Same-Day Bengaluru Counter Pickup
+                </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
-                  For machinery: live video demonstration & speed verification. For materials: physical sample proofing.
+                  Have an urgent ID bureau deadline today? Place your consumable order by 2:00 PM for same-day local Porter, Dunzo, or direct auto pickup at our Sunkadakatte warehouse counter.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] font-semibold text-[#217A4B]">
-                <span>Zero Risk Verification</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-[#17365D] flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-[#E87832]" />
+                <span>Pan-India Air &amp; Surface via VRL &amp; DTDC</span>
               </div>
             </div>
 
-            {/* Step 4 */}
-            <div className="bg-white p-5 rounded-2xl border border-[#DCE3EB] shadow-2xs relative flex flex-col justify-between group hover:border-[#17365D] transition-all">
+            {/* Bento Block 4 (4 Cols): Official Bill-of-Materials (BOM) Quotations */}
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-sm flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#F5F7FA] text-[#17365D] font-black text-sm flex items-center justify-center mb-3 group-hover:bg-[#17365D] group-hover:text-white transition-colors">
-                  04
+                <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-800 flex items-center justify-center mb-3">
+                  <FileText className="w-5 h-5 text-[#E87832]" />
                 </div>
-                <h3 className="font-bold text-[#17365D] text-sm">Confirm & Pay via GST</h3>
+                <h3 className="font-bold text-base text-[#17365D]">
+                  1-Hour Institution Quotation Desk
+                </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
-                  Pay securely via NEFT / RTGS / UPI with formal proforma invoice on official company letterhead.
+                  Bidding on a university, school, or corporate campus identity tender? WhatsApp or email your complete bill of materials for verified GST-inclusive slab quotations.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] font-semibold text-[#17365D]">
-                <span>100% Tax Compliant</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-[#E87832] flex items-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>Direct Sales Desk: +91 97418 08034</span>
               </div>
             </div>
 
-            {/* Step 5 */}
-            <div className="bg-[#17365D] text-white p-5 rounded-2xl border border-[#17365D] shadow-md relative flex flex-col justify-between group">
+            {/* Bento Block 5 (4 Cols): GST & Input Tax Credit Guarantee */}
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-sm flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-white/10 text-white font-black text-sm flex items-center justify-center mb-3">
-                  05
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3">
+                  <ShieldCheck className="w-5 h-5 text-[#217A4B]" />
                 </div>
-                <h3 className="font-bold text-white text-sm">24–48h Dispatch</h3>
-                <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
-                  Moisture-proof sealed or wooden crated. Shipped via DTDC, Blue Dart, VRL, TCI with live tracking.
+                <h3 className="font-bold text-base text-[#17365D]">
+                  100% Tax Compliant (GST: 29AAQFT3909B1ZZ)
+                </h3>
+                <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
+                  Every consignment ships with a formal GST tax invoice and valid e-Way bill on official company letterhead, ensuring complete Input Tax Credit (ITC) pass-through.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-white/10 flex items-center text-[11px] font-semibold text-[#E87832]">
-                <span>Pan-India Door Delivery</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-emerald-700 flex items-center gap-1">
+                <span>Verified Business • Bengaluru Urban 560091</span>
               </div>
             </div>
           </div>
@@ -217,7 +309,7 @@ export default async function HomePage() {
                 Industrial Card Machinery
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17365D] tracking-tight">
-                ID Card Cutting, Fusing, Punching & Heat Press
+                ID Card Cutting, Fusing, Punching &amp; Heat Press
               </h2>
               <p className="text-xs sm:text-sm text-[#687586] mt-1.5 leading-relaxed">
                 Heavy-duty machines engineered for commercial print shops and industrial ID manufacturers.
@@ -236,91 +328,6 @@ export default async function HomePage() {
             {machineryList.slice(0, 8).map((machine) => (
               <ProductCard key={machine.id} product={machine} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Why Choose The Print Planet: 6 Manufacturer Credentials */}
-      <section className="bg-[#F5F7FA] py-16 border-y border-[#DCE3EB]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E87832] bg-[#E87832]/10 px-3 py-1 rounded-full">
-              Trust & Credentials
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#17365D] tracking-tight mt-2.5">
-              Why Partner with The Print Planet
-            </h2>
-            <p className="text-xs sm:text-sm text-[#687586] mt-2">
-              Manufacturer credentials, comprehensive machinery range, in-house consumables, and pan-India express dispatch.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {/* 1 */}
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold">
-                <Factory className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-base text-[#17365D]">Direct Factory Pricing</h3>
-              <p className="text-xs text-[#687586] leading-relaxed">
-                Direct wholesale rates with zero middleman markups. Every order backed by transparent bulk tier discounting.
-              </p>
-            </div>
-
-            {/* 2 */}
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-[#217A4B] flex items-center justify-center font-bold">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-base text-[#17365D]">GST & Tax Compliant</h3>
-              <p className="text-xs text-[#687586] leading-relaxed">
-                GSTIN verified business. Instant official GST proforma and tax invoices provided on company letterhead for all orders.
-              </p>
-            </div>
-
-            {/* 3 */}
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
-                <Cpu className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-base text-[#17365D]">Full Machinery Lineup</h3>
-              <p className="text-xs text-[#687586] leading-relaxed">
-                From manual desktop card punchers to ₹28 Lakh fully-automatic multi-daylight hydraulic card laminators for any production volume.
-              </p>
-            </div>
-
-            {/* 4 */}
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
-                <Layers className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-base text-[#17365D]">Complete In-House Consumables</h3>
-              <p className="text-xs text-[#687586] leading-relaxed">
-                PVC sheets, coated overlay, frosted steel lamination plates, RFID/NFC cards, satin ribbon rolls, and hardware clips in one place.
-              </p>
-            </div>
-
-            {/* 5 */}
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold">
-                <Award className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-base text-[#17365D]">500+ Customers Pan-India</h3>
-              <p className="text-xs text-[#687586] leading-relaxed">
-                Trusted by ID card bureaus, universities, government departments, RFID resellers, and export buyers across all Indian states.
-              </p>
-            </div>
-
-            {/* 6 */}
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#E87832] flex items-center justify-center font-bold">
-                <Clock className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-base text-[#17365D]">Fast 1-Hour Response Desk</h3>
-              <p className="text-xs text-[#687586] leading-relaxed">
-                Sales engineers reply to WhatsApp & portal quotation enquiries within 1 working hour with technical specifications and pricing.
-              </p>
-            </div>
           </div>
         </div>
       </section>
