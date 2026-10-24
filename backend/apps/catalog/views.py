@@ -39,6 +39,24 @@ class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     pagination_class = None
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        from django.db.models import Count
+        from collections import defaultdict
+
+        counts = defaultdict(int)
+        direct = Product.objects.filter(is_active=True).values('category_id', 'category__parent_id').annotate(c=Count('id'))
+        for item in direct:
+            cat_id = item['category_id']
+            parent_id = item['category__parent_id']
+            c = item['c']
+            if cat_id:
+                counts[cat_id] += c
+            if parent_id:
+                counts[parent_id] += c
+        context['category_product_counts'] = counts
+        return context
+
     def get_queryset(self):
         return Category.objects.filter(is_active=True).order_by('display_order', 'name')
 

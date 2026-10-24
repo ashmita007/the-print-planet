@@ -4,6 +4,15 @@ from .models import Category, Product, ProductImage
 
 from django.utils.text import slugify
 
+class CategorySimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            'id', 'name', 'slug', 'image', 'parent', 'is_active',
+            'display_order'
+        ]
+
+
 class CategorySerializer(serializers.ModelSerializer):
     products_count = serializers.SerializerMethodField()
     slug = serializers.SlugField(required=False, allow_blank=True)
@@ -17,6 +26,9 @@ class CategorySerializer(serializers.ModelSerializer):
         ]
 
     def get_products_count(self, obj):
+        counts_cache = self.context.get('category_product_counts')
+        if counts_cache is not None:
+            return counts_cache.get(obj.id, 0)
         from django.db.models import Q
         return Product.objects.filter(
             Q(category=obj) | Q(category__parent=obj),
@@ -50,7 +62,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 
 class ProductListSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
+    category = CategorySimpleSerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), source='category', write_only=True
     )
@@ -67,9 +79,10 @@ class ProductListSerializer(serializers.ModelSerializer):
         ]
 
     def get_primary_image(self, obj):
-        primary = obj.images.filter(is_primary=True).first()
-        if not primary:
-            primary = obj.images.first()
+        images = list(obj.images.all())
+        primary = next((img for img in images if getattr(img, 'is_primary', False)), None)
+        if not primary and images:
+            primary = images[0]
         if primary:
             return {
                 'id': primary.id,
@@ -80,7 +93,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
+    category = CategorySimpleSerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), source='category', write_only=True, required=False
     )
@@ -112,9 +125,10 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         ]
 
     def get_primary_image(self, obj):
-        primary = obj.images.filter(is_primary=True).first()
-        if not primary:
-            primary = obj.images.first()
+        images = list(obj.images.all())
+        primary = next((img for img in images if getattr(img, 'is_primary', False)), None)
+        if not primary and images:
+            primary = images[0]
         if primary:
             return {
                 'id': primary.id,

@@ -30,7 +30,7 @@ export const getApiUrl = (): string => {
 };
 
 // Helper for fetch with abort timeout to guarantee page never hangs
-const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutMs = 6000): Promise<Response> => {
+const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutMs = 15000): Promise<Response> => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -39,6 +39,22 @@ const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutM
       signal: options.signal || controller.signal,
     });
     return res;
+  } catch (err: any) {
+    // If aborted on server-side during container spinup, retry once with fresh signal
+    if (err?.name === 'AbortError' && typeof window === 'undefined') {
+      console.warn(`[fetchWithTimeout] Aborted on ${url}, retrying once with 15s timeout...`);
+      const retryController = new AbortController();
+      const retryTimer = setTimeout(() => retryController.abort(), 15000);
+      try {
+        return await fetch(url, {
+          ...options,
+          signal: retryController.signal,
+        });
+      } finally {
+        clearTimeout(retryTimer);
+      }
+    }
+    throw err;
   } finally {
     clearTimeout(timeoutId);
   }
