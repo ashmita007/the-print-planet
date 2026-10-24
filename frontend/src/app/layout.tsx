@@ -13,11 +13,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "The Print Planet™ Bangalore | Official Website — ID Card Materials, Lanyards & Machinery",
-    template: "%s | The Print Planet",
+    default: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
+    template: "%s | Print Planet™ Bangalore",
   },
   description:
-    "Official website of The Print Planet, Bangalore (theprintplanet.co.in). Leading B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, digital cutting plotters, badge reels, and sublimation supplies with pan-India dispatch from Sunkadakatte, Bangalore.",
+    "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Leading B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, digital cutting plotters, badge reels, and sublimation supplies with pan-India dispatch from Sunkadakatte, Bangalore.",
   keywords: [
     "print planet",
     "the print planet",
@@ -58,8 +58,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico" },
+      { url: "/favicon.ico", sizes: "48x48" },
       { url: "/icon.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
@@ -69,22 +70,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: SITE_URL,
-    siteName: "The Print Planet",
-    title: "The Print Planet™ Bangalore | Official Website — ID Card Materials, Lanyards & Machinery",
+    siteName: "Print Planet",
+    title: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
     description:
-      "Official website of The Print Planet, Bangalore (theprintplanet.co.in). Leading wholesale manufacturer and supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial card machinery.",
+      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Leading wholesale manufacturer and supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial card machinery.",
     images: [
       {
         url: `${SITE_URL}/logo.png`,
         width: 1200,
         height: 600,
-        alt: "The Print Planet Bangalore B2B Printing & ID Systems",
+        alt: "Print Planet Bangalore B2B Printing & ID Systems",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Print Planet™ Bangalore | Official Website — ID Card Materials, Lanyards & Machinery",
+    title: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
     description:
       "Direct manufacturer of satin lanyards, ID card materials, and card machines in Bangalore with nationwide dispatch.",
     images: [`${SITE_URL}/logo.png`],
@@ -108,13 +109,14 @@ const jsonLdOrg = {
     {
       "@type": ["Organization", "LocalBusiness", "WholesaleStore"],
       "@id": `${SITE_URL}/#organization`,
-      name: "The Print Planet",
+      name: "Print Planet",
+      legalName: "The Print Planet",
       alternateName: [
-        "Print Planet",
         "The Print Planet",
-        "The Print Planet Bangalore",
         "Print Planet Bangalore",
+        "The Print Planet Bangalore",
         "The Print Planet Sunkadakatte",
+        "Print Planet Sunkadakatte",
         "The Print Planet Bengaluru",
         "Print Planet Bengaluru",
         "Print Planet ID Card Materials",
@@ -123,8 +125,18 @@ const jsonLdOrg = {
         "ThePrintPlanet"
       ],
       url: SITE_URL,
-      logo: `${SITE_URL}/logo.png`,
-      image: `${SITE_URL}/logo.png`,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/icon-512.png`,
+        width: 512,
+        height: 512,
+        caption: "Print Planet Official Brand Logo",
+      },
+      image: [
+        `${SITE_URL}/icon-512.png`,
+        `${SITE_URL}/logo.png`,
+        `${SITE_URL}/icon.png`,
+      ],
       description:
         "India's premier B2B factory manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
       telephone: "+919741808034",
@@ -198,8 +210,15 @@ const jsonLdOrg = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "The Print Planet",
-      alternateName: ["Print Planet", "The Print Planet India", "theprintplanet.co.in"],
+      name: "Print Planet",
+      alternateName: [
+        "The Print Planet",
+        "Print Planet Bangalore",
+        "The Print Planet Bangalore",
+        "Print Planet Sunkadakatte",
+        "theprintplanet.co.in",
+        "print planet co in"
+      ],
       publisher: {
         "@id": `${SITE_URL}/#organization`,
       },
@@ -221,7 +240,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/icon.png" sizes="192x192" type="image/png" />
+        <link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}

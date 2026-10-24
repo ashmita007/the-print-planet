@@ -31,12 +31,33 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const metadata: Metadata = {
   title: {
-    absolute: "The Print Planet™ Bangalore | Official Website — ID Card Materials, Lanyards & Machinery",
+    absolute: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
   },
   description:
-    "Official website of The Print Planet, Bangalore (theprintplanet.co.in). Direct B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, digital cutting plotters, badge reels, and sublimation supplies with pan-India dispatch from Sunkadakatte, Bangalore.",
+    "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's direct manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, industrial thermal lamination machines, cutting plotters, and badge reels from Sunkadakatte, Bangalore.",
   alternates: {
     canonical: SITE_URL,
+  },
+  openGraph: {
+    title: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
+    description:
+      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's direct manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial machinery.",
+    url: SITE_URL,
+    siteName: "Print Planet",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 600,
+        alt: "Print Planet Bangalore",
+      },
+      {
+        url: `${SITE_URL}/icon-512.png`,
+        width: 512,
+        height: 512,
+        alt: "Print Planet Official Logo",
+      },
+    ],
   },
 };
 
