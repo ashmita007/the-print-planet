@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileBottomBar from "@/components/MobileBottomBar";
 import { getCategories, getSiteSettings } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
@@ -19,8 +20,9 @@ export default async function PublicLayout({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar categories={categories} settings={settings} />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-16 sm:pb-0">{children}</main>
       <Footer categories={categories} settings={settings} />
+      <MobileBottomBar settings={settings} />
     </div>
   );
 }

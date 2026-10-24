@@ -20,6 +20,7 @@ import {
 import ProductCard from "@/components/ProductCard";
 import ProductHeroShowcase from "@/components/ProductHeroShowcase";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
+import GoogleReviews from "@/components/GoogleReviews";
 import {
   getCategories,
   getFeaturedProducts,
@@ -483,6 +484,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 6.5. Verified Google Customer Reviews with Indian B2B Bureaus */}
+      <GoogleReviews />
 
       {/* 7. Frequently Asked Questions (FAQ) Section - High Search Intent & Buyer Assurance */}
       <section className="max-w-7xl mx-auto px-3 sm:px-6 pt-4 pb-12">
