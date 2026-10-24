@@ -17,6 +17,7 @@ import {
   ownerDeleteCategory,
 } from "@/lib/api";
 import { Category } from "@/lib/types";
+import { formatCategoryName } from "@/lib/formatters";
 import ConfirmModal from "@/components/owner/ConfirmModal";
 
 
@@ -109,7 +110,7 @@ export default function OwnerCategoriesPage() {
       .replace(/(^-|-$)+/g, "");
 
     const payload: any = {
-      name: name.trim(),
+      name: formatCategoryName(name),
       slug: generatedSlug,
       description: description.trim(),
       parent: parentId || null,
@@ -206,8 +207,9 @@ export default function OwnerCategoriesPage() {
                 required
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
-                placeholder="e.g. Color ID Card Lanyard Roll"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none text-xs"
+                onBlur={() => setName(formatCategoryName(name))}
+                placeholder="e.g. COLOR ID CARD LANYARD ROLL"
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none text-xs font-bold uppercase tracking-wide"
               />
             </div>
 
@@ -323,15 +325,15 @@ export default function OwnerCategoriesPage() {
                     {c.parent ? (
                       <span className="flex items-center gap-1.5 pl-4 text-slate-700 font-medium">
                         <span className="text-slate-400">↳</span>
-                        <span>{c.name}</span>
-                        <span className="text-[10px] text-slate-400 font-normal">
-                          (in {categories.find((p) => p.id === c.parent)?.name})
+                        <span className="uppercase tracking-wide font-bold">{formatCategoryName(c.name)}</span>
+                        <span className="text-[10px] text-slate-400 font-normal uppercase">
+                          (in {formatCategoryName(categories.find((p) => p.id === c.parent)?.name)})
                         </span>
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1.5 text-[#17365D] font-extrabold">
+                      <span className="flex items-center gap-1.5 text-[#17365D] font-extrabold uppercase tracking-wide">
                         <Layers className="w-3.5 h-3.5 text-[#E87832]" />
-                        <span>{c.name}</span>
+                        <span>{formatCategoryName(c.name)}</span>
                         <span className="text-[9px] bg-blue-100 text-[#17365D] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
                           Main Sector
                         </span>

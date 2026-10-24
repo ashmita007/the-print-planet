@@ -26,6 +26,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
+import { formatCategoryName } from "@/lib/formatters";
 import { getApiUrl } from "@/lib/api";
 
 interface NavbarProps {
@@ -261,10 +262,10 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                           <Link
                             href={`/products?category=${mainCat.slug}`}
                             onClick={() => setCategoriesDropdownOpen(false)}
-                            className="flex items-center justify-between text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors mb-1.5"
+                            className="flex items-center justify-between text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors mb-1.5 uppercase tracking-wider"
                           >
-                            <span className="truncate pr-1">{mainCat.name}</span>
-                            <span className="text-[10px] text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0">
+                            <span className="truncate pr-1">{formatCategoryName(mainCat.name)}</span>
+                            <span className="text-[10px] text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-normal">
                               {mainCat.products_count || 0}
                             </span>
                           </Link>
@@ -275,9 +276,9 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                   key={sub.id}
                                   href={`/products?category=${sub.slug}`}
                                   onClick={() => setCategoriesDropdownOpen(false)}
-                                  className="block text-[11px] text-slate-600 hover:text-[#E87832] truncate transition-colors"
+                                  className="block text-[10px] text-slate-600 hover:text-[#E87832] truncate transition-colors uppercase tracking-wide font-medium"
                                 >
-                                  {sub.name}
+                                  {formatCategoryName(sub.name)}
                                 </Link>
                               ))}
                               {subs.length > 4 && (
@@ -610,9 +611,9 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                         key={c.id}
                         href={`/categories/${c.slug}`}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#263445] hover:bg-[#F5F7FA] hover:text-[#E87832] transition-colors"
+                        className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-[#263445] hover:bg-[#F5F7FA] hover:text-[#E87832] transition-colors uppercase tracking-wider"
                       >
-                        <span className="truncate pr-2 font-medium">{c.name}</span>
+                        <span className="truncate pr-2 font-bold">{formatCategoryName(c.name)}</span>
                         <span className="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full font-mono shrink-0">
                           {c.products_count || 0}
                         </span>

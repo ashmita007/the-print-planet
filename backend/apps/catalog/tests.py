@@ -51,7 +51,7 @@ class CatalogApiTests(TestCase):
     def test_public_category_detail(self):
         response = self.client.get(f'/api/v1/categories/{self.category.slug}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['name'], 'Test Lanyard Rolls')
+        self.assertEqual(response.data['name'], 'TEST LANYARD ROLLS')
 
     def test_public_product_list(self):
         response = self.client.get('/api/v1/products/')

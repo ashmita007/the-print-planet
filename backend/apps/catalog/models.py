@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from .formatters import format_category_name, format_product_name
 
 
 class Category(models.Model):
@@ -29,6 +30,8 @@ class Category(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        if self.name:
+            self.name = format_category_name(self.name)
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
@@ -76,6 +79,8 @@ class Product(models.Model):
         return f"{self.name} ({self.sku})"
 
     def save(self, *args, **kwargs):
+        if self.name:
+            self.name = format_product_name(self.name)
         if not self.slug:
             base_slug = slugify(self.name) or 'product'
         else:

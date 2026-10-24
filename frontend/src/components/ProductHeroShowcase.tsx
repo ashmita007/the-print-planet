@@ -19,6 +19,7 @@ import {
   Tag,
 } from "lucide-react";
 import { Product, SiteSettings } from "@/lib/types";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import EnquiryModal from "./EnquiryModal";
 
 interface ProductHeroShowcaseProps {
@@ -373,8 +374,8 @@ export default function ProductHeroShowcase({
                     <span>Auto-Rotating Spotlight</span>
                   </span>
                   <span className="text-slate-400 text-xs hidden sm:inline">•</span>
-                  <span className="text-[11px] sm:text-xs text-slate-200 font-medium truncate max-w-[120px] sm:max-w-[180px]">
-                    {activeProduct.category?.name}
+                  <span className="text-[11px] sm:text-xs text-slate-200 font-bold uppercase tracking-wider truncate max-w-[120px] sm:max-w-[180px]">
+                    {formatCategoryName(activeProduct.category?.name)}
                   </span>
                 </div>
 
@@ -420,7 +421,7 @@ export default function ProductHeroShowcase({
                   >
                     <img
                       src={heroImg}
-                      alt={activeProduct.name}
+                      alt={formatProductName(activeProduct.name)}
                       onError={() => setHeroImg("/placeholder-product.svg")}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     />
@@ -438,7 +439,7 @@ export default function ProductHeroShowcase({
                   <div>
                     <h3 className="text-sm sm:text-lg font-bold text-white leading-snug hover:text-[#FFA868] transition-colors line-clamp-2">
                       <Link href={`/products/${activeProduct.slug}`}>
-                        {activeProduct.name}
+                        {formatProductName(activeProduct.name)}
                       </Link>
                     </h3>
                   </div>
@@ -539,7 +540,7 @@ export default function ProductHeroShowcase({
                         <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg p-1 overflow-hidden shrink-0 mb-1 border border-slate-100">
                           <img
                             src={thumbImg}
-                            alt={prod.name}
+                            alt={formatProductName(prod.name)}
                             className="w-full h-full object-contain"
                           />
                         </div>

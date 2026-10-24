@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, ShieldCheck, Lock, ExternalLink } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
+import { formatCategoryName } from "@/lib/formatters";
 
 interface FooterProps {
   categories?: Category[];
@@ -102,9 +103,9 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 <li key={c.id}>
                   <Link
                     href={`/categories/${c.slug}`}
-                    className="hover:text-[#E87832] hover:underline transition-colors block truncate"
+                    className="hover:text-[#E87832] hover:underline transition-colors block truncate uppercase tracking-wider text-[11px] font-semibold"
                   >
-                    {c.name}
+                    {formatCategoryName(c.name)}
                   </Link>
                 </li>
               ))}

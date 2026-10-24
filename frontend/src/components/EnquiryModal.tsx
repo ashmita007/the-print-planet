@@ -13,6 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Product } from "@/lib/types";
+import { formatProductName } from "@/lib/formatters";
 import { submitEnquiry } from "@/lib/api";
 
 interface EnquiryModalProps {
@@ -31,7 +32,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
   const [attachment, setAttachment] = useState<File | null>(null);
   const [message, setMessage] = useState(
     product
-      ? `Quotation request for ${product.name} (SKU: ${product.sku}).`
+      ? `Quotation request for ${formatProductName(product.name)} (SKU: ${product.sku}).`
       : ""
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -99,7 +100,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
       email,
       phone,
       product: product ? product.id : null,
-      product_name_text: product ? product.name : "General Enquiry",
+      product_name_text: product ? formatProductName(product.name) : "General Enquiry",
       requested_quantity: quantity ? parseInt(quantity, 10) : null,
       message: message || "Bulk pricing request",
       attachment: attachment || null,
@@ -117,7 +118,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
           `🏢 *Company:* ${companyName || 'Individual'}\n` +
           `📱 *Phone:* ${phone}\n` +
           `✉️ *Email:* ${email}\n` +
-          `📦 *Product:* ${product ? product.name : 'Wholesale Printing Supplies'}\n` +
+          `📦 *Product:* ${product ? formatProductName(product.name) : 'Wholesale Printing Supplies'}\n` +
           `🔢 *Quantity:* ${quantity || 'Bulk Order'}\n` +
           `📝 *Message:* ${message || 'Please provide quotation with dispatch timeline.'}`
         );
@@ -134,7 +135,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
     `🏢 *Company:* ${companyName || 'Individual'}\n` +
     `📱 *Phone:* ${phone || ''}\n` +
     `✉️ *Email:* ${email || ''}\n` +
-    `📦 *Product:* ${product ? product.name : 'Wholesale Printing Supplies'}\n` +
+    `📦 *Product:* ${product ? formatProductName(product.name) : 'Wholesale Printing Supplies'}\n` +
     `🔢 *Quantity:* ${quantity || 'Bulk Order'}\n` +
     `📝 *Message:* ${message || 'Please provide quotation with dispatch timeline.'}`
   );
@@ -158,7 +159,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               Request Quotation
             </h2>
             <p className="text-[10px] sm:text-xs text-slate-300 truncate">
-              {product ? product.name : "Direct factory price & MOQ quote"}
+              {product ? formatProductName(product.name) : "Direct factory price & MOQ quote"}
             </p>
           </div>
           <button
@@ -221,7 +222,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     {product.primary_image ? (
                       <img
                         src={product.primary_image.secure_url}
-                        alt={product.name}
+                        alt={formatProductName(product.name)}
                         className="w-8 h-8 sm:w-11 sm:h-11 object-contain rounded-md bg-white border border-slate-200 p-0.5 shrink-0"
                       />
                     ) : (
@@ -230,7 +231,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                       </div>
                     )}
                     <div className="min-w-0">
-                      <p className="font-bold text-[#263445] text-[11px] sm:text-sm truncate">{product.name}</p>
+                      <p className="font-bold text-[#263445] text-[11px] sm:text-sm truncate">{formatProductName(product.name)}</p>
                       <p className="font-mono text-[9px] sm:text-xs text-[#687586] truncate">SKU: {product.sku}</p>
                     </div>
                   </div>

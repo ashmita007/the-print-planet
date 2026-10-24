@@ -34,6 +34,7 @@ import {
   ownerToggleProductStatus,
 } from "@/lib/api";
 import { Product, Category } from "@/lib/types";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import ConfirmModal from "@/components/owner/ConfirmModal";
 
 
@@ -395,7 +396,7 @@ export default function OwnerProductsListPage() {
                 <option value="">All Categories ({categories.length})</option>
                 {categories.map((c) => (
                   <option key={c.id} value={c.slug}>
-                    {c.name}
+                    {formatCategoryName(c.name)}
                   </option>
                 ))}
               </select>
@@ -496,7 +497,7 @@ export default function OwnerProductsListPage() {
                             {img ? (
                               <img
                                 src={img}
-                                alt={p.name}
+                                alt={formatProductName(p.name)}
                                 className="w-full h-full object-contain"
                               />
                             ) : (
@@ -505,7 +506,7 @@ export default function OwnerProductsListPage() {
                           </div>
                           <div className="max-w-xs">
                             <p className="font-bold text-[#17365D] line-clamp-1 group-hover:text-[#E87832] transition-colors">
-                              {p.name}
+                              {formatProductName(p.name)}
                             </p>
                             <p className="text-[11px] text-slate-400 truncate mt-0.5">
                               {p.material || "Standard Grade"}
@@ -535,8 +536,8 @@ export default function OwnerProductsListPage() {
 
                       {/* Category */}
                       <td className="py-3.5 px-4">
-                        <span className="bg-[#17365D]/10 text-[#17365D] px-2.5 py-1 rounded-md font-semibold text-[11px]">
-                          {p.category?.name || "Uncategorized"}
+                        <span className="bg-[#17365D]/10 text-[#17365D] px-2.5 py-1 rounded-md font-bold text-[10px] uppercase tracking-wider">
+                          {formatCategoryName(p.category?.name || "Uncategorized")}
                         </span>
                       </td>
 

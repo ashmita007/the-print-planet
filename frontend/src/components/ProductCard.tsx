@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Shield, Box } from "lucide-react";
 import { Product } from "@/lib/types";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import EnquiryModal from "./EnquiryModal";
 
 interface ProductCardProps {
@@ -37,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {!hasError && imgSrc && !imgSrc.startsWith("/placeholder") ? (
             <img
               src={imgSrc}
-              alt={product.name}
+              alt={formatProductName(product.name)}
               onError={() => {
                 setHasError(true);
                 setImgSrc("/placeholder-product.svg");
@@ -81,15 +82,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="mb-1">
               <Link
                 href={`/categories/${product.category?.slug}`}
-                className="text-[9px] sm:text-[11px] font-semibold text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1 block"
+                className="text-[9px] sm:text-[11px] font-bold text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1 block uppercase tracking-wider"
               >
-                {product.category?.name}
+                {formatCategoryName(product.category?.name)}
               </Link>
             </div>
 
             {/* Product Title */}
             <h3 className="text-[11px] sm:text-xs md:text-sm font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 leading-snug min-h-[1.9rem] sm:min-h-[2.4rem]">
-              <Link href={`/products/${product.slug}`}>{product.name}</Link>
+              <Link href={`/products/${product.slug}`}>{formatProductName(product.name)}</Link>
             </h3>
 
             {/* Technical Highlights Badges */}

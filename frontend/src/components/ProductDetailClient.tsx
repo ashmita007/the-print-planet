@@ -22,6 +22,7 @@ import {
   Info,
 } from "lucide-react";
 import { Product } from "@/lib/types";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
 
@@ -57,7 +58,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   );
 
   const whatsappMessage = encodeURIComponent(
-    `Hello The Print Planet, I want to order ${product.name} (SKU: ${product.sku}). Please share price quote, minimum order quantity, and dispatch time.`
+    `Hello The Print Planet, I want to order ${formatProductName(product.name)} (SKU: ${product.sku}). Please share price quote, minimum order quantity, and dispatch time.`
   );
 
   const handleCopySku = () => {
@@ -91,7 +92,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
   }
   if (dynamicHighlights.length < 4 && product.category?.name) {
-    dynamicHighlights.push({ label: "Category", value: product.category.name });
+    dynamicHighlights.push({ label: "Category", value: formatCategoryName(product.category.name) });
   }
   if (dynamicHighlights.length < 4) {
     dynamicHighlights.push({ label: "Supply Grade", value: "Industrial Heavy-Duty" });
@@ -121,7 +122,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {!imgError && selectedImage && !selectedImage.startsWith("/placeholder") ? (
               <img
                 src={selectedImage}
-                alt={product.name}
+                alt={formatProductName(product.name)}
                 onError={() => {
                   setImgError(true);
                   setSelectedImage("/placeholder-product.svg");
@@ -179,7 +180,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 >
                   <img
                     src={imgUrl}
-                    alt={`${product.name} view ${idx + 1}`}
+                    alt={`${formatProductName(product.name)} view ${idx + 1}`}
                     className="w-full h-full object-contain"
                   />
                 </button>
@@ -245,9 +246,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <Link
                 href={`/categories/${product.category.slug}`}
-                className="bg-[#102742] text-white hover:bg-[#17365D] font-bold px-2.5 py-1 rounded-md transition-colors text-[11px]"
+                className="bg-[#102742] text-white hover:bg-[#17365D] font-bold px-2.5 py-1 rounded-md transition-colors text-[11px] uppercase tracking-wider"
               >
-                {product.category.name}
+                {formatCategoryName(product.category.name)}
               </Link>
 
               {/* SKU Pill with Copy */}
@@ -268,7 +269,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
             {/* Product Title */}
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#17365D] tracking-tight leading-snug">
-              {product.name}
+              {formatProductName(product.name)}
             </h1>
 
             {/* Short Tagline / Summary */}
@@ -424,8 +425,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
                           Category Sector
                         </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                          {product.category?.name || "General Catalog"}
+                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB] uppercase">
+                          {formatCategoryName(product.category?.name || "General Catalog")}
                         </td>
                       </tr>
                       {product.material && (
@@ -648,7 +649,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {product.price_display || (product.price ? `₹ ${product.price}` : "Price on Request")}
           </div>
           <span className="text-[9px] font-mono text-slate-500 truncate block mt-0.5">
-            {product.sku} • {product.category?.name || "Direct Factory Supply"}
+            {product.sku} • {formatCategoryName(product.category?.name || "Direct Factory Supply")}
           </span>
         </div>
 
@@ -694,7 +695,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         onClose={() => setLightboxOpen(false)}
         images={imagesList.length > 0 ? imagesList : [selectedImage]}
         initialIndex={Math.max(0, imagesList.indexOf(selectedImage))}
-        productName={product.name}
+        productName={formatProductName(product.name)}
       />
     </>
   );

@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { Layers, ArrowRight, Package, Box } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getCategories } from "@/lib/api";
+import { formatCategoryName } from "@/lib/formatters";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -105,8 +106,8 @@ export default async function CategoriesIndexPage() {
                   <Layers className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-[#17365D] group-hover:text-[#E87832] transition-colors">
-                    {cat.name}
+                  <h2 className="text-lg font-bold text-[#17365D] group-hover:text-[#E87832] transition-colors uppercase tracking-wider">
+                    {formatCategoryName(cat.name)}
                   </h2>
                   <p className="text-xs text-[#4E6178] mt-1 leading-relaxed line-clamp-2">
                     {cat.description || "Direct factory wholesale supply and trade distribution across India."}
@@ -123,9 +124,9 @@ export default async function CategoriesIndexPage() {
                         <Link
                           key={sub.id}
                           href={`/categories/${sub.slug}`}
-                          className="text-[11px] font-semibold bg-slate-50 hover:bg-orange-50 text-[#17365D] hover:text-[#E87832] px-2 py-0.5 rounded border border-slate-200 transition-colors"
+                          className="text-[10px] font-bold uppercase tracking-wider bg-slate-50 hover:bg-orange-50 text-[#17365D] hover:text-[#E87832] px-2 py-0.5 rounded border border-slate-200 transition-colors"
                         >
-                          {sub.name}
+                          {formatCategoryName(sub.name)}
                         </Link>
                       ))}
                     </div>

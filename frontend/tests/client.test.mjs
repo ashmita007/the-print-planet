@@ -371,3 +371,66 @@ test("Brand canonical metadata correctly targets 'Print Planet Bangalore' withou
   assert.ok(alternateNames.includes("Print Planet"));
 });
 
+// 15. Test Category Name UPPERCASE Standardization
+test("Category names are strictly normalized to UPPERCASE", () => {
+  const formatCategoryName = (name) => {
+    if (!name) return "";
+    return name.replace(/\s+/g, " ").trim().toUpperCase();
+  };
+
+  assert.strictEqual(formatCategoryName("Aluminium Metal Holder"), "ALUMINIUM METAL HOLDER");
+  assert.strictEqual(formatCategoryName("id card holder"), "ID CARD HOLDER");
+  assert.strictEqual(formatCategoryName("  Coated   overlay sheets  "), "COATED OVERLAY SHEETS");
+  assert.strictEqual(formatCategoryName("satin lanyard rolls"), "SATIN LANYARD ROLLS");
+});
+
+// 16. Test Product Title Case Formatting with Technical Acronyms Preservation
+test("Product names are cleanly formatted to Title Case while preserving PVC, ID, RFID, A4, and units", () => {
+  const ACRONYMS = new Set(["PVC", "ID", "RFID", "GSM", "A4", "CR80", "CR-80", "USB", "EH-T"]);
+  const LOWERCASE_WORDS = new Set(["a", "an", "and", "for", "in", "of", "on", "to", "with", "x"]);
+  const UNIT_MAP = { mm: "mm", cm: "cm", m: "m", gsm: "GSM", mic: "Mic", inch: "Inch" };
+
+  const formatProductName = (name) => {
+    if (!name) return "";
+    let cleaned = name.replace(/[_\s]+/g, " ").trim();
+    cleaned = cleaned.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
+    const words = cleaned.split(" ");
+    const formatted = words.map((word, index) => {
+      const match = word.match(/^([(\[\{"'<]*)(.*?)([)\]\}\"'>,.:;!?]*)$/);
+      if (!match) return word;
+      const [, prefix, core, suffix] = match;
+      if (!core) return word;
+      const upperCore = core.toUpperCase();
+      const lowerCore = core.toLowerCase();
+      if (ACRONYMS.has(upperCore)) return `${prefix}${upperCore}${suffix}`;
+      if (lowerCore === "x") return `${prefix}x${suffix}`;
+      const numUnitMatch = core.match(/^(\d+(?:\.\d+)?)([a-zA-Z]+)$/);
+      if (numUnitMatch) {
+        const numPart = numUnitMatch[1];
+        const unitPart = numUnitMatch[2].toLowerCase();
+        const formattedUnit = UNIT_MAP[unitPart] || unitPart.toUpperCase();
+        return `${prefix}${numPart}${formattedUnit}${suffix}`;
+      }
+      if (UNIT_MAP[lowerCore]) return `${prefix}${UNIT_MAP[lowerCore]}${suffix}`;
+      if (index > 0 && LOWERCASE_WORDS.has(lowerCore)) return `${prefix}${lowerCore}${suffix}`;
+      if (core.includes("-")) {
+        const subParts = core.split("-").map((sub) => {
+          const subUpper = sub.toUpperCase();
+          if (ACRONYMS.has(subUpper)) return subUpper;
+          return sub.charAt(0).toUpperCase() + sub.slice(1).toLowerCase();
+        });
+        return `${prefix}${subParts.join("-")}${suffix}`;
+      }
+      return `${prefix}${core.charAt(0).toUpperCase() + core.slice(1).toLowerCase()}${suffix}`;
+    });
+    return formatted.join(" ");
+  };
+
+  assert.strictEqual(formatProductName("YELLOW SUBLIMATION INK"), "Yellow Sublimation Ink");
+  assert.strictEqual(formatProductName("WIRE HOOK 20MM"), "Wire Hook 20mm");
+  assert.strictEqual(formatProductName("40 Inch x 100 M X 80 Gsm SUBLIMATION PAPER ROLL"), "40 Inch x 100 m x 80 GSM Sublimation Paper Roll");
+  assert.strictEqual(formatProductName("EH-T Executive Crystal Clear ID Card Holder"), "EH-T Executive Crystal Clear ID Card Holder");
+  assert.strictEqual(formatProductName("A4 PVC CORE _320 MIC"), "A4 PVC Core 320 Mic");
+});
+
+

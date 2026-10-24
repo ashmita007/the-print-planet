@@ -27,6 +27,7 @@ import {
   ownerDownloadDatabaseBackup,
 } from "@/lib/api";
 import { DashboardMetrics, Enquiry, Product } from "@/lib/types";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 
 
 export default function OwnerDashboardPage() {
@@ -352,9 +353,9 @@ export default function OwnerDashboardPage() {
             {recentProducts.map((p) => (
               <div key={p.id} className="p-3.5 flex items-center justify-between hover:bg-[#F5F7FA]">
                 <div className="truncate pr-3">
-                  <p className="font-bold text-[#263445] truncate">{p.name}</p>
+                  <p className="font-bold text-[#263445] truncate">{formatProductName(p.name)}</p>
                   <p className="text-[11px] text-[#687586] font-mono">
-                    {p.sku} • {p.category.name}
+                    {p.sku} • <span className="uppercase">{formatCategoryName(p.category.name)}</span>
                   </p>
                 </div>
                 <Link

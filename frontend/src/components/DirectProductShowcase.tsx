@@ -14,6 +14,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Product, Category } from "@/lib/types";
+import { formatCategoryName } from "@/lib/formatters";
 import ProductCard from "./ProductCard";
 import SortModal, { SortOptionValue } from "./SortModal";
 
@@ -283,13 +284,13 @@ export default function DirectProductShowcase({
                       block: "nearest",
                     });
                   }}
-                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     selectedCategory === cat.slug
                       ? "bg-[#17365D] text-white shadow-xs"
                       : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"
                   }`}
                 >
-                  <span>{cat.name}</span>
+                  <span>{formatCategoryName(cat.name)}</span>
                   <span
                     className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                       selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"

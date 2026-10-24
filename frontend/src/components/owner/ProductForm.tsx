@@ -33,6 +33,7 @@ import {
   ownerUploadImage,
 } from "@/lib/api";
 import { Product, Category } from "@/lib/types";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 
 interface ProductFormProps {
   initialProduct?: Product | null;
@@ -386,7 +387,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
     });
 
     const payload: any = {
-      name: name.trim(),
+      name: formatProductName(name.trim()),
       sku: sku.trim().toUpperCase(),
       category: Number(categoryId),
       category_id: Number(categoryId),
@@ -513,17 +514,33 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             <div className="space-y-4 text-xs">
               {/* Product Name */}
               <div>
-                <label className="block font-semibold text-[#263445] mb-1">
-                  Product Commercial Name *
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="font-semibold text-[#263445]">
+                    Product Commercial Name *
+                  </label>
+                  {name && (
+                    <button
+                      type="button"
+                      onClick={() => setName(formatProductName(name))}
+                      className="text-[10px] text-[#E87832] hover:underline font-bold flex items-center gap-0.5"
+                    >
+                      <Sparkles className="w-2.5 h-2.5" />
+                      <span>Format Proper Case</span>
+                    </button>
+                  )}
+                </div>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  onBlur={() => setName(formatProductName(name))}
                   placeholder="e.g. 20MM Indian Royal Blue Colour Satin Lanyard Roll"
                   className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 outline-none font-medium text-[#263445] text-sm"
                 />
+                <p className="text-[10px] text-slate-400 mt-1">
+                  Auto-formats on blur to professional Title Case while preserving technical codes (PVC, RFID, ID, GSM, A4).
+                </p>
               </div>
 
               {/* Category Assignment with Quick Add Button */}
@@ -543,14 +560,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 <select
                   value={String(categoryId)}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none font-medium text-[#263445]"
+                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3 py-2 outline-none font-medium text-[#263445] uppercase"
                 >
                   <option value="" disabled>
                     -- Select Verified Category --
                   </option>
                   {categories.map((c) => (
                     <option key={c.id} value={String(c.id)}>
-                      {c.name} ({c.products_count || 0} models)
+                      {formatCategoryName(c.name)} ({c.products_count || 0} models)
                     </option>
                   ))}
                 </select>

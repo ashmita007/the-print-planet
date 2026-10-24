@@ -7,6 +7,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
+import { formatCategoryName } from "@/lib/formatters";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -155,14 +156,14 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             {parentCategory && (
               <Link
                 href={`/categories/${parentCategory.slug}`}
-                className="text-[11px] font-semibold text-slate-300 hover:text-white bg-white/10 px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1"
+                className="text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white bg-white/10 px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1"
               >
-                <span>Part of {parentCategory.name} &rarr;</span>
+                <span>Part of {formatCategoryName(parentCategory.name)} &rarr;</span>
               </Link>
             )}
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            {category.name}
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight uppercase">
+            {formatCategoryName(category.name)}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
             {category.description ||
@@ -175,8 +176,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {childSubcategories.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm sm:text-base font-bold text-[#17365D]">
-              Subcategories in {category.name} ({childSubcategories.length})
+            <h2 className="text-sm sm:text-base font-bold text-[#17365D] uppercase tracking-wider">
+              Subcategories in {formatCategoryName(category.name)} ({childSubcategories.length})
             </h2>
             <span className="text-xs text-slate-500">Filter by specific product line</span>
           </div>
@@ -187,8 +188,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
                 href={`/categories/${sub.slug}`}
                 className="p-3 rounded-xl bg-white border border-[#DCE3EB] hover:border-[#17365D] hover:shadow-xs transition-all flex flex-col justify-between group"
               >
-                <span className="text-xs font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2">
-                  {sub.name}
+                <span className="text-xs font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 uppercase tracking-wide">
+                  {formatCategoryName(sub.name)}
                 </span>
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
                   <span>{sub.products_count || 0} products</span>
@@ -239,7 +240,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
                 : "bg-[#F5F7FA] text-[#263445] hover:bg-slate-200 border border-[#DCE3EB]"
             }`}
           >
-            {c.name}
+            {formatCategoryName(c.name)}
           </Link>
         ))}
       </div>
@@ -248,7 +249,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3 gap-2">
           <span className="text-xs font-bold text-[#687586]">
-            Showing <strong className="text-[#17365D]">{productsData.results.length}</strong> products in {category.name}
+            Showing <strong className="text-[#17365D]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
           </span>
           <MobileFilterSortBar
             categories={allCategories}

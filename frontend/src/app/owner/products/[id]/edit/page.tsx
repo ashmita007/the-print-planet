@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import ProductForm from "@/components/owner/ProductForm";
+import { formatProductName } from "@/lib/formatters";
 import { ownerGetProduct } from "@/lib/api";
 import { Product } from "@/lib/types";
 
@@ -44,7 +45,7 @@ export default function EditProductPage() {
         <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-wider">
           Catalogue Operations
         </span>
-        <h1 className="text-2xl font-extrabold text-[#17365D]">Edit Product: {product.name}</h1>
+        <h1 className="text-2xl font-extrabold text-[#17365D]">Edit Product: {formatProductName(product.name)}</h1>
       </div>
       <ProductForm initialProduct={product} isEdit={true} />
     </div>
