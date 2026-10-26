@@ -10,6 +10,8 @@ import { getCategories, getProducts } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Wholesale Products Catalogue | The Print Planet India",
   description:

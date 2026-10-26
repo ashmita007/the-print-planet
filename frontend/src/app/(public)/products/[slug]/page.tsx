@@ -9,6 +9,8 @@ import { getProductBySlug } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
+export const revalidate = 120;
+
 const getAbsoluteImageUrl = (url?: string) => {
   if (!url) return `${SITE_URL}/media/products/LAN-ROY-20M.png`;
   if (url.startsWith("http://") || url.startsWith("https://")) return url;
