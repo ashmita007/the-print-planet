@@ -29,35 +29,40 @@ export const getApiUrl = (): string => {
   return url.replace(/\/$/, '');
 };
 
-// Helper for fetch with abort timeout to guarantee page never hangs
+// Helper for fetch with abort timeout and automatic retry on cold boot / socket reset
 const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutMs = 15000): Promise<Response> => {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, {
-      ...options,
-      signal: options.signal || controller.signal,
-    });
-    return res;
-  } catch (err: any) {
-    // If aborted on server-side during container spinup, retry once with fresh signal
-    if (err?.name === 'AbortError' && typeof window === 'undefined') {
-      console.warn(`[fetchWithTimeout] Aborted on ${url}, retrying once with 15s timeout...`);
-      const retryController = new AbortController();
-      const retryTimer = setTimeout(() => retryController.abort(), 15000);
-      try {
-        return await fetch(url, {
-          ...options,
-          signal: retryController.signal,
-        });
-      } finally {
-        clearTimeout(retryTimer);
+  const maxRetries = typeof window === 'undefined' ? 3 : 1;
+  let lastError: any;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, {
+        ...options,
+        signal: options.signal || controller.signal,
+      });
+      return res;
+    } catch (err: any) {
+      lastError = err;
+      const isRecoverableError =
+        err?.code === 'UND_ERR_SOCKET' ||
+        err?.cause?.code === 'UND_ERR_SOCKET' ||
+        err?.name === 'AbortError' ||
+        (err?.message && (err.message.includes('fetch failed') || err.message.includes('other side closed') || err.message.includes('ECONNREFUSED')));
+
+      if (attempt < maxRetries && isRecoverableError && typeof window === 'undefined') {
+        const delayMs = attempt * 1200;
+        console.warn(`[fetchWithTimeout] Attempt ${attempt} failed on ${url} (${err?.cause?.code || err?.message}). Retrying in ${delayMs}ms...`);
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+        continue;
       }
+      throw err;
+    } finally {
+      clearTimeout(timeoutId);
     }
-    throw err;
-  } finally {
-    clearTimeout(timeoutId);
   }
+  throw lastError;
 };
 
 const getAuthHeaders = (): Record<string, string> => {
