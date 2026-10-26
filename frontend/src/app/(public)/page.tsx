@@ -62,14 +62,14 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 120;
 
 export default async function HomePage() {
-  const [categories, productsData, featuredProducts, settings] = await Promise.all([
+  const [categories, productsData, featuredProducts, machineryData, settings] = await Promise.all([
     getCategories(),
-    getProducts({ page_size: 200 }),
+    getProducts({ page_size: 48 }),
     getFeaturedProducts(),
+    getProducts({ category: "id-card-manufacturing-machines", page_size: 8 }),
     getSiteSettings(),
   ]);
 
@@ -78,13 +78,15 @@ export default async function HomePage() {
   const businessName = settings?.business_name || "THE PRINT PLANET";
 
   const productsList = productsData?.results || [];
-  const machineryList = productsList.filter(
-    (p) =>
-      p.category?.slug === "machines" ||
-      p.category?.slug === "id-card-manufacturing-machines" ||
-      p.category?.slug?.includes("machine") ||
-      (p as any).category?.parent_slug === "machines"
-  );
+  const machineryList = (machineryData?.results && machineryData.results.length > 0)
+    ? machineryData.results
+    : productsList.filter(
+        (p) =>
+          p.category?.slug === "machines" ||
+          p.category?.slug === "id-card-manufacturing-machines" ||
+          p.category?.slug?.includes("machine") ||
+          (p as any).category?.parent_slug === "machines"
+      );
 
   // Curate a diverse selection of flagship products across all distinct categories
   const diverseFlagships: typeof productsList = [];
