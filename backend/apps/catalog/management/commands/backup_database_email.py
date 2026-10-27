@@ -2,7 +2,6 @@ import io
 import json
 from datetime import datetime
 from django.core.management.base import BaseCommand
-from django.core.mail import EmailMessage
 from django.conf import settings
 from apps.catalog.models import Category, Product, ProductImage
 from apps.enquiries.models import Enquiry
@@ -196,15 +195,25 @@ Best Regards,
 The Print Planet Automated Backup Shield
 """
 
-        try:
-            email = EmailMessage(
-                subject=subject,
-                body=body,
-                from_email=from_email,
-                to=[recipient],
-            )
-            email.attach(filename, excel_bytes, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            email.send(fail_silently=False)
+        html_body = f"""
+<div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;color:#263445;line-height:1.6">
+  <h2 style="color:#17365D;margin:0 0 8px">Database backup</h2>
+  <p style="margin:0 0 16px;color:#687586">The Print Planet automated backup for {now_str}</p>
+  <p style="font-size:14px">Products: {Product.objects.count()} &middot; Categories: {Category.objects.count()} &middot; Enquiries: {Enquiry.objects.count()}</p>
+  <p style="color:#687586;font-size:12px">Open the attached workbook in Excel, Numbers, or Google Sheets.</p>
+</div>
+"""
+
+        from apps.enquiries.services import _send_email_via_https
+        sent = _send_email_via_https(
+            recipient,
+            subject,
+            body,
+            html_body,
+            attachment_bytes=excel_bytes,
+            attachment_name=filename,
+        )
+        if sent:
             self.stdout.write(self.style.SUCCESS(f"Successfully dispatched database backup to {recipient}!"))
-        except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Failed to email backup: {e}"))
+        else:
+            self.stdout.write(self.style.ERROR("No HTTPS email provider could deliver the backup. Configure BREVO_API_KEY or RESEND_API_KEY."))

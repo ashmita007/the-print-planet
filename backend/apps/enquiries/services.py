@@ -106,7 +106,7 @@ def _send_whatsapp_callmebot(text):
         return False
 
 
-def _send_email_via_https(to_email, subject, text, html, attachment_path='', attachment_name=''):
+def _send_email_via_https(to_email, subject, text, html, attachment_path='', attachment_name='', attachment_bytes=None):
     """
     Dispatches email via HTTPS REST API (Port 443) to bypass Render Free Tier SMTP port blocking.
     Supports Resend, Brevo, FormSubmit, Web3Forms, or generic Webhooks.
@@ -125,7 +125,15 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
 
     # Prepare base64 attachment if available and <= 5MB
     b64_content = None
-    if attachment_path and os.path.exists(attachment_path):
+    if attachment_bytes:
+        try:
+            if len(attachment_bytes) <= 5 * 1024 * 1024:
+                b64_content = base64.b64encode(attachment_bytes).decode('utf-8')
+            else:
+                logger.warning("Attachment exceeds 5MB HTTPS provider limit; sending without it.")
+        except Exception as e_b64:
+            logger.warning(f"Could not base64 encode in-memory attachment: {e_b64}")
+    elif attachment_path and os.path.exists(attachment_path):
         try:
             if os.path.getsize(attachment_path) <= 5 * 1024 * 1024:
                 with open(attachment_path, 'rb') as af:
