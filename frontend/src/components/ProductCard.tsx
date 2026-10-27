@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <div className="group bg-white border border-[#DCE3EB] hover:border-[#17365D] rounded-xl overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col h-full">
+      <div className="group bg-white border border-[#DCE3EB] hover:border-[#B9C6D6] rounded-xl overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_1px_2px_rgba(16,39,66,0.04)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_14px_30px_-12px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 focus-within:border-[#B9C6D6] transition-all duration-300 ease-out flex flex-col h-full">
         {/* Image Container with 1:1 Aspect Ratio */}
         <Link
           href={`/products/${product.slug}`}
@@ -43,7 +43,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 setHasError(true);
                 setImgSrc("/placeholder-product.svg");
               }}
-              className="absolute inset-0 w-full h-full object-contain p-2 sm:p-4 group-hover:scale-105 transition-transform duration-300"
+              className="absolute inset-0 w-full h-full object-contain p-2 sm:p-4 group-hover:scale-[1.06] transition-transform duration-500 ease-out will-change-transform"
               loading="lazy"
             />
           ) : (
@@ -63,14 +63,14 @@ export default function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
             {product.verification_status === "verified" && (
-              <span className="hidden sm:inline-flex bg-[#217A4B] text-white text-[9px] font-semibold px-1.5 py-0.5 rounded shadow-2xs items-center gap-1">
+              <span className="hidden sm:inline-flex bg-white/90 backdrop-blur-sm text-[#217A4B] border border-[#217A4B]/25 text-[9px] font-semibold px-1.5 py-0.5 rounded shadow-[0_1px_2px_rgba(16,39,66,0.06)] items-center gap-1">
                 <Shield className="w-2.5 h-2.5" /> Verified
               </span>
             )}
           </div>
 
           {/* SKU Pill */}
-          <div className="absolute bottom-1.5 right-1.5 sm:bottom-2.5 sm:right-2.5 bg-white/90 backdrop-blur-xs border border-slate-200 text-[#263445] text-[9px] sm:text-[10px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded shadow-2xs max-w-[85%] truncate">
+          <div className="absolute bottom-1.5 right-1.5 sm:bottom-2.5 sm:right-2.5 bg-white/85 backdrop-blur-sm border border-slate-200/80 text-[#4E6178] text-[9px] sm:text-[10px] font-mono font-semibold tabular-nums px-1.5 sm:px-2 py-0.5 rounded shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] max-w-[85%] truncate">
             {product.sku}
           </div>
         </Link>
@@ -89,7 +89,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
 
             {/* Product Title */}
-            <h3 className="text-[11px] sm:text-xs md:text-sm font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 leading-snug min-h-[1.9rem] sm:min-h-[2.4rem]">
+            <h3 className="text-[11px] sm:text-xs md:text-sm font-bold tracking-[-0.01em] text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 leading-snug min-h-[1.9rem] sm:min-h-[2.4rem]">
               <Link href={`/products/${product.slug}`}>{formatProductName(product.name)}</Link>
             </h3>
 
@@ -116,11 +116,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                   B2B Trade Price
                 </span>
                 {product.price_display ? (
-                  <span className="text-[11px] sm:text-sm font-black text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-black tabular-nums tracking-tight text-[#17365D] block truncate">
                     {product.price_display}
                   </span>
                 ) : product.price ? (
-                  <span className="text-[11px] sm:text-sm font-black text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-black tabular-nums tracking-tight text-[#17365D] block truncate">
                     ₹ {Number(product.price).toLocaleString("en-IN")}
                   </span>
                 ) : (
@@ -141,14 +141,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="grid grid-cols-2 gap-1 sm:gap-2">
               <Link
                 href={`/products/${product.slug}`}
-                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-semibold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA] hover:border-[#17365D] transition-colors text-center"
+                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-semibold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA] hover:border-[#17365D] hover:shadow-xs active:scale-[0.98] transition-all text-center"
               >
                 Details
               </Link>
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg bg-[#E87832] hover:bg-[#d66b28] text-white transition-colors shadow-2xs text-center"
+                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg bg-[#E87832] hover:bg-[#d66b28] hover:shadow-sm active:scale-[0.98] text-white transition-all shadow-2xs text-center"
               >
                 Quote
               </button>

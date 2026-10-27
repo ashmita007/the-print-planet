@@ -44,16 +44,16 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
   ];
 
   return (
-    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#102742]/95 backdrop-blur-md border-t border-white/10 px-2 py-2 shadow-[0_-8px_25px_rgba(0,0,0,0.35)]">
+    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#102742]/95 backdrop-blur-md border-t border-white/10 px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-[0_-8px_25px_rgba(0,0,0,0.35)]">
       <div className="flex items-center justify-around gap-1 max-w-md mx-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isItemActive = item.isActive;
           const content = (
             <div
-              className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all ${
+              className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all duration-200 active:scale-95 ${
                 isItemActive
-                  ? "text-[#E87832] font-bold"
+                  ? "text-[#E87832] font-bold bg-white/[0.06]"
                   : "text-slate-300 hover:text-white"
               }`}
             >

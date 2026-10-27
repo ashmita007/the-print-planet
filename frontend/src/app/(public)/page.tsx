@@ -222,7 +222,7 @@ export default async function HomePage() {
             </div>
 
             {/* Bento Block 2 (4 Cols): Physical Material Swatch & Sample Proofing Desk */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 sm:p-7 border border-[#DCE3EB] shadow-sm flex flex-col justify-between hover:border-[#17365D] transition-colors">
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 sm:p-7 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <div>
                 <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded">
                   Trade Proofing Desk
@@ -266,7 +266,7 @@ export default async function HomePage() {
             </div>
 
             {/* Bento Block 3 (4 Cols): Local Bengaluru Pickup & Pan-India Freight */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-sm flex flex-col justify-between">
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-800 flex items-center justify-center mb-3">
                   <Truck className="w-5 h-5 text-cyan-700" />
@@ -285,7 +285,7 @@ export default async function HomePage() {
             </div>
 
             {/* Bento Block 4 (4 Cols): Official Bill-of-Materials (BOM) Quotations */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-sm flex flex-col justify-between">
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-800 flex items-center justify-center mb-3">
                   <FileText className="w-5 h-5 text-[#E87832]" />
@@ -304,7 +304,7 @@ export default async function HomePage() {
             </div>
 
             {/* Bento Block 5 (4 Cols): GST & Input Tax Credit Guarantee */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-sm flex flex-col justify-between">
+            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3">
                   <ShieldCheck className="w-5 h-5 text-[#217A4B]" />
@@ -372,7 +372,7 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out space-y-3">
               <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
                 01
               </div>
@@ -390,7 +390,7 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out space-y-3">
               <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
                 02
               </div>
@@ -408,7 +408,7 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out space-y-3">
               <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
                 03
               </div>

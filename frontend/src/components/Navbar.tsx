@@ -121,7 +121,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const whatsapp = settings?.whatsapp || "+91 97418 08034";
 
   return (
-    <header className="w-full border-b border-[#DCE3EB] bg-white sticky top-0 z-50">
+    <header className="w-full border-b border-[#DCE3EB] bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/85 sticky top-0 z-50 shadow-[0_1px_14px_rgba(16,39,66,0.06)]">
       {/* Top Utility Contact Strip */}
       <div className="bg-[#102742] text-white text-[11px] sm:text-xs py-1 sm:py-2 px-3 sm:px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
@@ -163,7 +163,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             <span className="text-slate-500">|</span>
             <Link
               href="/contact"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-2 sm:px-2.5 py-0.5 rounded font-semibold text-[10px] sm:text-[11px] tracking-wide transition-colors"
+              className="bg-[#E87832] hover:bg-[#d66b28] active:scale-[0.98] text-white px-2 sm:px-2.5 py-0.5 rounded font-semibold text-[10px] sm:text-[11px] tracking-wide transition-colors"
             >
               Quote
             </Link>
@@ -197,13 +197,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 placeholder="Search lanyard rolls, PVC holders, hooks, machines..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-10 pr-10 py-2 text-sm text-[#263445] placeholder-[#687586] transition-all outline-none"
+                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] hover:border-slate-300 focus:border-[#17365D] focus:bg-white focus:ring-4 focus:ring-[#17365D]/10 rounded-lg pl-10 pr-10 py-2 text-sm text-[#263445] placeholder-[#687586] transition-all outline-none"
               />
               <Search className="w-4 h-4 text-[#687586] absolute left-3 top-1/2 -translate-y-1/2" />
               {searchQuery && (
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-semibold bg-[#17365D] text-white px-2 py-0.5 rounded hover:bg-[#102742]"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-semibold bg-[#17365D] text-white px-2 py-0.5 rounded hover:bg-[#102742] active:scale-95 transition-all"
                 >
                   Go
                 </button>
@@ -213,11 +213,11 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden xl:flex items-center gap-4 2xl:gap-5 text-[13px] font-semibold text-[#263445]">
-            <Link href="/" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Home
             </Link>
 
-            <Link href="/about" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/about" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               About Us
             </Link>
 
@@ -230,7 +230,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   setCategoriesDropdownOpen(nextState);
                   if (nextState) fetchFreshCategories();
                 }}
-                className="flex items-center gap-1 hover:text-[#E87832] transition-colors focus:outline-none whitespace-nowrap"
+                className="nav-link flex items-center gap-1 hover:text-[#E87832] transition-colors focus:outline-none whitespace-nowrap"
               >
                 <span>Products</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${categoriesDropdownOpen ? "rotate-180" : ""}`} />
@@ -238,7 +238,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
               {/* Mega Dropdown Menu */}
               {categoriesDropdownOpen && (
-                <div className="absolute top-full left-0 w-[640px] bg-white border border-[#DCE3EB] rounded-2xl shadow-2xl py-3 mt-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="absolute top-full left-0 w-[640px] bg-white border border-[#DCE3EB] rounded-2xl shadow-[0_24px_60px_-20px_rgba(16,39,66,0.35),inset_0_1px_0_rgba(255,255,255,0.9)] py-3 mt-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   <div className="px-5 py-2.5 border-b border-[#F5F7FA] bg-[#F5F7FA] flex items-center justify-between rounded-t-2xl">
                     <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5 text-[#E87832]" /> Wholesale Product Lines
@@ -257,7 +257,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       return (
                         <div
                           key={mainCat.id}
-                          className="p-3 rounded-xl bg-slate-50/70 hover:bg-[#F5F7FA] border border-slate-100 transition-colors"
+                          className="p-3 rounded-xl bg-slate-50/70 hover:bg-white border border-slate-100 hover:border-[#DCE3EB] hover:shadow-[0_6px_16px_-8px_rgba(16,39,66,0.18)] transition-all duration-200"
                         >
                           <Link
                             href={`/products?category=${mainCat.slug}`}
@@ -313,30 +313,30 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               )}
             </div>
 
-            <Link href="/services" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/services" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Services
             </Link>
 
-            <Link href="/gallery" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/gallery" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Portfolio
             </Link>
 
-            <Link href="/industries" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/industries" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Industries
             </Link>
 
-            <Link href="/corporate" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/corporate" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Bulk Orders
             </Link>
 
-            <Link href="/contact" className="hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/contact" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Contact
             </Link>
 
             {/* Request a Quote CTA Button */}
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs whitespace-nowrap flex items-center gap-1"
+              className="bg-[#E87832] hover:bg-[#d66b28] active:scale-[0.98] text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs hover:shadow-md whitespace-nowrap flex items-center gap-1"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>Request Quote</span>
@@ -369,7 +369,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           <div className="flex items-center gap-2 xl:hidden">
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow-xs"
+              className="bg-[#E87832] hover:bg-[#d66b28] active:scale-[0.98] text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow-xs"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>Quote</span>
@@ -393,7 +393,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               placeholder="Search products, models, materials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-8 pr-7 py-2 text-base sm:text-xs text-[#263445] placeholder-[#687586] outline-none transition-all shadow-inner/5"
+              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] hover:border-slate-300 focus:border-[#17365D] focus:bg-white focus:ring-4 focus:ring-[#17365D]/10 rounded-lg pl-8 pr-7 py-2 text-base sm:text-xs text-[#263445] placeholder-[#687586] outline-none transition-all"
             />
             <Search className="w-3.5 h-3.5 text-[#687586] absolute left-2.5 top-1/2 -translate-y-1/2" />
             {searchQuery && (
