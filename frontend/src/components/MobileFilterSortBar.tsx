@@ -42,7 +42,7 @@ export default function MobileFilterSortBar({
       <Filter className="w-3.5 h-3.5 text-[#E87832]" />
       <span>Filter & Sort</span>
       {activeFiltersCount > 0 && (
-        <span className="w-4 h-4 rounded-full bg-[#E87832] text-white text-[10px] font-black flex items-center justify-center ml-0.5">
+        <span className="w-4 h-4 rounded-full bg-[#E87832] text-white text-[10px] font-bold flex items-center justify-center ml-0.5">
           {activeFiltersCount}
         </span>
       )}

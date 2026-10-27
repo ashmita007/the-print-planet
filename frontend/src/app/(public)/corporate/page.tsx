@@ -73,22 +73,22 @@ export default function CorporatePage() {
       <Breadcrumbs items={[{ label: "Bulk & Corporate Orders" }]} />
 
       {/* Hero */}
-      <div className="bg-[#102742] text-white p-6 sm:p-12 rounded-2xl border-l-4 border-[#E87832] shadow-sm">
+      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 bg-[#E87832]/20 border border-[#E87832]/40 text-[#E87832] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
             <Building className="w-3.5 h-3.5" />
             <span>Enterprise B2B Division</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
             Bulk & Corporate Printing Solutions
           </h1>
-          <p className="text-xs sm:text-base text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
             Eliminate intermediary markups by partnering directly with our Bengaluru manufacturing facility. We support enterprise buyers, HR departments, and institutional procurement teams with volume tiered pricing, SLA guarantees, and recurring dispatch schedules.
           </p>
           <div className="pt-2 flex flex-wrap gap-3">
             <Link
               href="/quote?type=corporate_bulk"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
             >
               <span>Request Corporate Quotation</span>
               <ArrowRight className="w-4 h-4" />
@@ -97,7 +97,7 @@ export default function CorporatePage() {
               href="https://wa.me/919741808034?text=Hi%2C%20I%20am%20looking%20for%20bulk%20corporate%20pricing%20for%20our%20company."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
+              className="bg-white hover:bg-[#F8FAFC] text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-2"
             >
               <PhoneCall className="w-4 h-4 text-[#E87832]" />
               <span>Talk to Procurement Desk</span>
@@ -147,7 +147,7 @@ export default function CorporatePage() {
           <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
             Transparent Volume Scaling
           </span>
-          <h2 className="text-xl sm:text-3xl font-black text-[#17365D]">
+          <h2 className="text-xl sm:text-3xl font-bold text-[#17365D]">
             Corporate Order Tiers & Service Levels
           </h2>
           <p className="text-xs sm:text-sm text-[#687586]">
@@ -166,7 +166,7 @@ export default function CorporatePage() {
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E87832] text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow-sm">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E87832] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-wider shadow-sm">
                   Most Popular for Enterprises
                 </div>
               )}
@@ -174,7 +174,7 @@ export default function CorporatePage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-base font-bold text-[#17365D]">{tier.tier}</h3>
-                  <div className="text-2xl font-black text-[#17365D] mt-1">{tier.volume}</div>
+                  <div className="text-2xl font-bold text-[#17365D] mt-1">{tier.volume}</div>
                   <div className="text-xs font-semibold text-[#E87832] mt-0.5">{tier.discount}</div>
                   <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
                     <Clock4 className="w-3.5 h-3.5 text-slate-400" />
@@ -221,7 +221,7 @@ export default function CorporatePage() {
           <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
             Ongoing Corporate Partnerships
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-[#17365D] mt-1">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#17365D] mt-1">
             Need Scheduled Monthly Batches for Onboarding?
           </h2>
           <p className="text-xs sm:text-sm text-[#687586] mt-1">
@@ -257,24 +257,24 @@ export default function CorporatePage() {
       </div>
 
       {/* Direct Contact Banner */}
-      <div className="bg-[#17365D] text-white p-6 sm:p-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-[#E87832]">
+      <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-bold">Speak Directly with Our Corporate Accounts Head</h3>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+          <h3 className="text-xl sm:text-2xl font-semibold text-[#17365D]">Speak Directly with Our Corporate Accounts Head</h3>
+          <p className="text-sm text-slate-500 max-w-xl">
             Have questions about custom PMS colors, large-scale annual agreements, or multi-branch logistics? Contact our industrial desk today.
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
           <a
             href="tel:+919741808034"
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2"
+            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
           >
             <PhoneCall className="w-4 h-4" />
             <span>Call +91 97418 08034</span>
           </a>
           <Link
             href="/quote"
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all"
+            className="bg-white hover:bg-[#F8FAFC] text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all"
           >
             Submit Corporate RFQ
           </Link>

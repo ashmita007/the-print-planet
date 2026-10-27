@@ -13,7 +13,7 @@ export default function EnquirySuccessPage() {
         <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
           Enquiry Received
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#17365D]">
           Thank You! Your Request Has Been Logged.
         </h1>
         <p className="text-xs sm:text-sm text-[#687586] leading-relaxed max-w-lg mx-auto">

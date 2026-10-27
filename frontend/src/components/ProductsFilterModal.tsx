@@ -109,17 +109,17 @@ export default function ProductsFilterModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Responsive Modal Header */}
-        <div className="bg-[#102742] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
+        <div className="bg-white border-b border-[#E6EBF1] px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2 sm:gap-2.5">
-            <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#E87832]" />
-            <h3 id="filter-modal-title" className="text-xs sm:text-base font-bold tracking-tight">
-              Filter & Sort
+            <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
+            <h3 id="filter-modal-title" className="text-xs sm:text-base font-semibold tracking-tight text-[#17365D]">
+              Filter & sort
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-white/70 hover:text-white hover:bg-white/10 active:bg-white/20 flex items-center justify-center transition-colors"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-slate-400 hover:text-[#17365D] hover:bg-slate-100 active:bg-slate-200 flex items-center justify-center transition-colors"
             aria-label="Close filter dialog"
           >
             <X className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -130,7 +130,7 @@ export default function ProductsFilterModal({
         <form onSubmit={handleApply} className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 text-xs sm:text-sm">
           {/* Keyword Search */}
           <div className="space-y-1.5">
-            <label className="block font-bold text-[#263445]">Keyword</label>
+            <label className="block font-medium text-[#263445]">Keyword</label>
             <div className="relative">
               <input
                 type="text"
@@ -145,7 +145,7 @@ export default function ProductsFilterModal({
 
           {/* Category Dropdown */}
           <div className="space-y-1.5">
-            <label className="block font-bold text-[#263445]">Category</label>
+            <label className="block font-medium text-[#263445]">Category</label>
             <select
               value={categoryVal}
               onChange={(e) => setCategoryVal(e.target.value)}
@@ -182,7 +182,7 @@ export default function ProductsFilterModal({
 
           {/* Sort By Radio Pills */}
           <div className="space-y-1.5">
-            <label className="block font-bold text-[#263445]">Sort Order</label>
+            <label className="block font-medium text-[#263445]">Sort Order</label>
             <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
               {sortOptions.map((opt) => {
                 const isSelected = orderingVal === opt.val;
@@ -208,7 +208,7 @@ export default function ProductsFilterModal({
           <div className="pt-2 sm:pt-4 border-t border-[#DCE3EB] space-y-2">
             <button
               type="submit"
-              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-colors shadow-2xs flex items-center justify-center gap-1.5"
+              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5"
             >
               <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Apply Filters</span>

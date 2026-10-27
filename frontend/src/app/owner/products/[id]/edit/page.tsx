@@ -60,10 +60,13 @@ export default function EditProductPage() {
   return (
     <div className="space-y-6">
       <div>
-        <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-wider">
-          Catalogue Operations
+        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+          Catalogue
         </span>
-        <h1 className="text-2xl font-extrabold text-[#17365D]">Edit Product: {formatProductName(product.name)}</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-[#17365D] mt-1">
+          Edit product
+        </h1>
+        <p className="text-xs text-slate-500 mt-1 truncate">{formatProductName(product.name)}</p>
       </div>
       <ProductForm initialProduct={product} isEdit={true} />
     </div>

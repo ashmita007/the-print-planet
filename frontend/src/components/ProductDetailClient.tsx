@@ -287,12 +287,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     {product.price_display}
                   </div>
                 ) : product.price ? (
-                  <div className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
                     ₹ {Number(product.price).toLocaleString("en-IN")}
                     <span className="text-xs font-semibold text-slate-500 ml-1">/ Unit</span>
                   </div>
                 ) : (
-                  <div className="text-xl font-extrabold text-[#E87832]">
+                  <div className="text-xl font-bold text-[#E87832]">
                     Price on Request
                   </div>
                 )}
@@ -305,7 +305,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#687586] block">
                   Order Quantity
                 </span>
-                <span className="text-sm sm:text-base font-extrabold text-[#263445] block">
+                <span className="text-sm sm:text-base font-bold text-[#263445] block">
                   {product.minimum_order_quantity
                     ? `${product.minimum_order_quantity} Units MOQ`
                     : "Commercial Batch Order"}
@@ -324,7 +324,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <span className="text-[10px] text-slate-400 font-bold uppercase block truncate">
                   {item.label}
                 </span>
-                <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
+                <span className="font-bold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
                   {item.value}
                 </span>
               </div>
@@ -641,7 +641,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       {/* ========================================================= */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#DCE3EB] p-2.5 px-3 flex items-center justify-between gap-2 shadow-xl anim-toast">
         <div className="min-w-0 pr-1">
-          <div className="text-base font-black text-[#17365D] truncate leading-none">
+          <div className="text-base font-bold text-[#17365D] truncate leading-none">
             {product.price_display || (product.price ? `₹ ${product.price}` : "Price on Request")}
           </div>
           <span className="text-[9px] font-mono text-slate-500 truncate block mt-0.5">

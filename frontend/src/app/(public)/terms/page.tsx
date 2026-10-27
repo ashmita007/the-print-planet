@@ -7,7 +7,7 @@ export default function TermsPage() {
       <Breadcrumbs items={[{ label: "Terms & Conditions" }]} />
 
       <div className="space-y-4">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#17365D]">
           Commercial Terms & Conditions
         </h1>
         <p className="text-xs text-slate-500">Effective: October 2026</p>

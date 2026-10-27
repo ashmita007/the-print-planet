@@ -505,7 +505,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           {/* Section 1: Basic Identity & Dynamic Category */}
           <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                 <Tag className="w-4 h-4 text-[#E87832]" />
                 <span>1. Core Product Identity & Category</span>
               </h2>
@@ -719,7 +719,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           {/* Section 2: Pricing, MOQ & B2B Visibility */}
           <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-[#E87832]" />
                 <span>2. Commercial Pricing & Minimum Order Quantity</span>
               </h2>
@@ -810,7 +810,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           {/* Section 3: Physical & Material Highlights */}
           <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                 <Box className="w-4 h-4 text-[#E87832]" />
                 <span>3. Physical Specifications & Dimensions</span>
               </h2>
@@ -856,7 +856,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DCE3EB] pb-3">
               <div>
-                <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+                <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                   <Sliders className="w-4 h-4 text-[#E87832]" />
                   <span>4. Dynamic Technical Specification Key-Values</span>
                 </h2>
@@ -876,7 +876,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
             {/* Quick Presets Injector */}
             <div className="p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl space-y-1.5">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
+              <span className="text-[10px] font-medium text-slate-500 uppercase tracking-[0.14em] block">
                 Quick Industrial Spec Presets (Click to add):
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -928,7 +928,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           {/* Section 5: Cloudinary Image Upload & Media Management */}
           <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#DCE3EB] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                 <ImageIcon className="w-4 h-4 text-[#E87832]" />
                 <span>5. High-Resolution Product Images</span>
               </h2>
@@ -1145,7 +1145,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                       <span className="text-[8px] uppercase font-bold text-[#687586] block">
                         B2B Trade Price
                       </span>
-                      <span className="text-xs font-black text-[#17365D] block truncate">
+                      <span className="text-xs font-semibold text-[#17365D] block truncate">
                         {!priceVisibility
                           ? "Price on Request"
                           : priceDisplay ||

@@ -135,46 +135,43 @@ export default async function HomePage() {
       />
 
       {/* 3. Industrial Operations & Trade Hub (Human-Crafted Bento Architecture) */}
-      <section className="bg-gradient-to-b from-white via-[#F8FAFC] to-white py-16 border-y border-[#DCE3EB]">
+      <section className="bg-[#FAFBFC] py-14 sm:py-16 border-y border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#17365D]/10 text-[#17365D] text-xs font-black uppercase tracking-wider mb-2">
-                <span className="w-2 h-2 rounded-full bg-[#E87832]" />
-                <span>Shop Floor &amp; Trade Operations</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
-                Engineered for High-Output Print Studios
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] mb-2">
+                Shop floor &amp; trade operations
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+                Built for high-output print studios
               </h2>
               <p className="text-xs sm:text-sm text-[#687586] mt-1.5 max-w-2xl leading-relaxed">
                 Direct trade terms, physical machinery verification, and rapid consumable replenishment from our Sunkadakatte, Bengaluru facility.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-[#17365D]">
-              <span className="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
-                ✓ Shop Open: Mon–Sat 9:30 AM – 7:30 PM
-              </span>
+            <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+              <span>Open Mon–Sat, 9:30 am – 7:30 pm</span>
             </div>
           </div>
 
           {/* Bento Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             {/* Bento Block 1 (8 Cols): Live Video Demonstration & Factory Machinery Floor */}
-            <div className="lg:col-span-8 bg-[#102742] text-white rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl relative overflow-hidden flex flex-col justify-between">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-[#E87832]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="lg:col-span-8 bg-[#102742] text-white rounded-2xl p-6 sm:p-8 border border-white/10 flex flex-col justify-between">
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                  <span className="bg-[#E87832] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded">
-                    Machinery Shop Floor Verification
+                  <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#F0A46B]">
+                    Machine verification
                   </span>
-                  <span className="text-xs font-mono text-slate-300">
-                    Sunkadakatte, Bengaluru 560091
+                  <span className="text-[11px] text-slate-400">
+                    Sunkadakatte, Bengaluru
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white leading-tight">
+                <h3 className="text-xl sm:text-2xl font-semibold text-white leading-snug">
                   Never Buy Industrial Equipment Blindly. <br />
-                  <span className="text-[#FFA868]">Inspect Your Machine on Live WhatsApp Video.</span>
+                  <span className="text-[#F0A46B]">Inspect your machine on live WhatsApp video.</span>
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed max-w-2xl">
                   Before we crate your hydraulic fusing laminator, motorized card die cutter, or lanyard heat press, our factory engineers run test cards with your exact materials on live video call. We verify cutting burr, heat uniformity, and cycle speed before you pay.
@@ -182,24 +179,24 @@ export default async function HomePage() {
 
                 {/* Machine Spec Pillars */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <div className="text-[10px] text-slate-400 uppercase font-bold">Cutting Speed</div>
-                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">3,500+ /hr</div>
+                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
+                    <div className="text-[10px] text-slate-400">Cutting speed</div>
+                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">3,500+ /hr</div>
                     <div className="text-[9px] text-slate-400">CR-80 ISO Precision</div>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <div className="text-[10px] text-slate-400 uppercase font-bold">Die Warranty</div>
-                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">1-Year Live</div>
+                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
+                    <div className="text-[10px] text-slate-400">Die warranty</div>
+                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">1-Year Live</div>
                     <div className="text-[9px] text-slate-400">Tungsten Steel Core</div>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <div className="text-[10px] text-slate-400 uppercase font-bold">Power Input</div>
-                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">230V / 415V</div>
+                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
+                    <div className="text-[10px] text-slate-400">Power input</div>
+                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">230V / 415V</div>
                     <div className="text-[9px] text-slate-400">Single or 3-Phase</div>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <div className="text-[10px] text-slate-400 uppercase font-bold">Spares Ready</div>
-                    <div className="text-base sm:text-lg font-black text-white font-mono mt-0.5">Same-Day</div>
+                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
+                    <div className="text-[10px] text-slate-400">Spares ready</div>
+                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">Same-Day</div>
                     <div className="text-[9px] text-slate-400">Dies, Relays &amp; Elements</div>
                   </div>
                 </div>
@@ -213,7 +210,7 @@ export default async function HomePage() {
                   href="https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%20I%20would%20like%20to%20schedule%20a%20live%20video%20demonstration%20of%20your%20ID%20card%20machinery."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md w-full sm:w-auto justify-center"
+                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 w-full sm:w-auto justify-center"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span>Book WhatsApp Live Machine Demo</span>
@@ -222,12 +219,12 @@ export default async function HomePage() {
             </div>
 
             {/* Bento Block 2 (4 Cols): Physical Material Swatch & Sample Proofing Desk */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 sm:p-7 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
+            <div className="lg:col-span-4 surface-card surface-hover p-6">
               <div>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded">
-                  Trade Proofing Desk
+                <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-emerald-700">
+                  Trade proofing desk
                 </span>
-                <h3 className="text-lg font-bold text-[#17365D] mt-3">
+                <h3 className="text-lg font-semibold text-[#17365D] mt-3">
                   Physical Sample Kit for Registered Print Studios
                 </h3>
                 <p className="text-xs text-[#687586] mt-2 leading-relaxed">
@@ -257,66 +254,66 @@ export default async function HomePage() {
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <Link
                   href="/contact"
-                  className="w-full bg-[#17365D] hover:bg-[#102742] text-white py-2.5 px-3 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 px-3 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
                 >
-                  <Package className="w-3.5 h-3.5 text-[#E87832]" />
+                  <Package className="w-3.5 h-3.5" />
                   <span>Request Factory Sample Swatches</span>
                 </Link>
               </div>
             </div>
 
             {/* Bento Block 3 (4 Cols): Local Bengaluru Pickup & Pan-India Freight */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
+            <div className="lg:col-span-4 surface-card surface-hover p-6 sm:p-7">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-800 flex items-center justify-center mb-3">
-                  <Truck className="w-5 h-5 text-cyan-700" />
+                <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-center justify-center mb-3">
+                  <Truck className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-base text-[#17365D]">
+                <h3 className="font-semibold text-base text-[#17365D]">
                   Same-Day Bengaluru Counter Pickup
                 </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
                   Have an urgent ID bureau deadline today? Place your consumable order by 2:00 PM for same-day local Porter, Dunzo, or direct auto pickup at our Sunkadakatte warehouse counter.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-[#17365D] flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-[#E87832]" />
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500 flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-slate-400" />
                 <span>Pan-India Air &amp; Surface via VRL &amp; DTDC</span>
               </div>
             </div>
 
             {/* Bento Block 4 (4 Cols): Official Bill-of-Materials (BOM) Quotations */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
+            <div className="lg:col-span-4 surface-card surface-hover p-6 sm:p-7">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-800 flex items-center justify-center mb-3">
-                  <FileText className="w-5 h-5 text-[#E87832]" />
+                <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-center justify-center mb-3">
+                  <FileText className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-base text-[#17365D]">
+                <h3 className="font-semibold text-base text-[#17365D]">
                   1-Hour Institution Quotation Desk
                 </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
                   Bidding on a university, school, or corporate campus identity tender? WhatsApp or email your complete bill of materials for verified GST-inclusive slab quotations.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-[#E87832] flex items-center gap-1">
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500 flex items-center gap-1">
                 <Phone className="w-3.5 h-3.5" />
                 <span>Direct Sales Desk: +91 97418 08034</span>
               </div>
             </div>
 
             {/* Bento Block 5 (4 Cols): GST & Input Tax Credit Guarantee */}
-            <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
+            <div className="lg:col-span-4 surface-card surface-hover p-6 sm:p-7">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3">
-                  <ShieldCheck className="w-5 h-5 text-[#217A4B]" />
+                <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-center justify-center mb-3">
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-base text-[#17365D]">
+                <h3 className="font-semibold text-base text-[#17365D]">
                   100% Tax Compliant (GST: 29AAQFT3909B1ZZ)
                 </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
                   Every consignment ships with a formal GST tax invoice and valid e-Way bill on official company letterhead, ensuring complete Input Tax Credit (ITC) pass-through.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-emerald-700 flex items-center gap-1">
+              <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500 flex items-center gap-1">
                 <span>Verified Business • Bengaluru Urban 560091</span>
               </div>
             </div>
@@ -329,11 +326,11 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
             <div className="max-w-2xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#E87832] block mb-1">
-                Industrial Card Machinery
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] block mb-2">
+                Machinery
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17365D] tracking-tight">
-                ID Card Cutting, Fusing, Punching &amp; Heat Press
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+                Card cutting, fusing, punching &amp; heat press
               </h2>
               <p className="text-xs sm:text-sm text-[#687586] mt-1.5 leading-relaxed">
                 Heavy-duty machines engineered for commercial print shops and industrial ID manufacturers.
@@ -342,7 +339,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/categories/machines"
-              className="text-xs font-bold text-[#17365D] hover:text-[#E87832] flex items-center gap-1 shrink-0"
+              className="text-xs font-medium text-slate-500 hover:text-[#17365D] flex items-center gap-1 shrink-0"
             >
               <span>Explore All Machinery ({machineryList.length}) &rarr;</span>
             </Link>
@@ -357,14 +354,14 @@ export default async function HomePage() {
       </section>
 
       {/* 5. India's Specialist in PVC Cards & Raw Materials */}
-      <section className="bg-gradient-to-b from-[#F8FAFC] to-white py-16 border-t border-[#DCE3EB]">
+      <section className="bg-white py-14 sm:py-16 border-t border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mb-10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E87832]/10 text-[#E87832] text-xs font-black uppercase tracking-wider mb-2">
-              <span>National Manufacturing Hub</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
-              India&apos;s Direct Specialist in PVC Cards &amp; ID Raw Materials
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] mb-2">
+              Manufacturing
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+              Direct specialist in PVC cards &amp; ID materials
             </h2>
             <p className="text-xs sm:text-sm text-[#4E6178] mt-2 leading-relaxed">
               From CR-80 ISO inkjet fusing sheets to coated magnetic overlays, semi-transparent card cases, and hydraulic motorized die cutters, <strong>The Print Planet</strong> is Bangalore&apos;s trusted factory specialist for commercial ID bureau production.
@@ -372,11 +369,11 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
+            <div className="surface-card surface-hover p-6 space-y-3">
+              <div className="text-[11px] font-semibold tracking-[0.14em] text-slate-400">
                 01
               </div>
-              <h3 className="font-black text-lg text-[#17365D]">
+              <h3 className="font-semibold text-base text-[#17365D]">
                 PVC Core Sheets &amp; Inkjet Fusing Media
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -384,17 +381,17 @@ export default async function HomePage() {
               </p>
               <Link
                 href="/products?search=fusing"
-                className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] inline-flex items-center gap-1 pt-1"
+                className="text-xs font-medium text-[#C25E1F] hover:text-[#a94d15] inline-flex items-center gap-1 pt-1"
               >
                 <span>Browse Fusing Media &rarr;</span>
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
+            <div className="surface-card surface-hover p-6 space-y-3">
+              <div className="text-[11px] font-semibold tracking-[0.14em] text-slate-400">
                 02
               </div>
-              <h3 className="font-black text-lg text-[#17365D]">
+              <h3 className="font-semibold text-base text-[#17365D]">
                 Coated Overlay &amp; Magnetic Stripe Films
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -402,17 +399,17 @@ export default async function HomePage() {
               </p>
               <Link
                 href="/products?search=overlay"
-                className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] inline-flex items-center gap-1 pt-1"
+                className="text-xs font-medium text-[#C25E1F] hover:text-[#a94d15] inline-flex items-center gap-1 pt-1"
               >
                 <span>Explore Coated Overlays &rarr;</span>
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(16,39,66,0.04)] hover:border-[#B9C6D6] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_30px_-14px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 transition-all duration-300 ease-out space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center font-bold text-lg">
+            <div className="surface-card surface-hover p-6 space-y-3">
+              <div className="text-[11px] font-semibold tracking-[0.14em] text-slate-400">
                 03
               </div>
-              <h3 className="font-black text-lg text-[#17365D]">
+              <h3 className="font-semibold text-base text-[#17365D]">
                 Rigid Holders, Reels &amp; RFID Smart Badges
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -420,7 +417,7 @@ export default async function HomePage() {
               </p>
               <Link
                 href="/products?search=holder"
-                className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] inline-flex items-center gap-1 pt-1"
+                className="text-xs font-medium text-[#C25E1F] hover:text-[#a94d15] inline-flex items-center gap-1 pt-1"
               >
                 <span>View Card Accessories &rarr;</span>
               </Link>
@@ -431,13 +428,13 @@ export default async function HomePage() {
 
       {/* 6. Custom Requirements & Bulk Order Callout */}
       <section className="max-w-7xl mx-auto px-3 sm:px-6">
-        <div className="bg-[#17365D] rounded-xl sm:rounded-2xl text-white p-5 sm:p-10 shadow-xl border border-white/10 relative overflow-hidden">
+        <div className="bg-[#102742] rounded-2xl text-white p-6 sm:p-10 border border-white/10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             <div className="lg:col-span-8 space-y-3 sm:space-y-4">
-              <span className="bg-[#E87832] text-white text-[10px] sm:text-[11px] font-bold uppercase px-2.5 py-1 rounded">
-                Custom Production & Contract Manufacturing
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#F0A46B]">
+                Custom production &amp; contract manufacturing
               </span>
-              <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              <h2 className="text-xl sm:text-3xl font-semibold tracking-tight leading-snug">
                 Require Custom Dimensions, Pantone Matching, or Machine Sourcing?
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
@@ -447,14 +444,14 @@ export default async function HomePage() {
               <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 pt-2">
                 <Link
                   href="/quote"
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 sm:py-3 rounded-xl font-bold text-xs tracking-wide transition-colors shadow-sm text-center flex items-center justify-center gap-1.5"
+                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 sm:py-3 rounded-lg font-semibold text-xs transition-colors text-center flex items-center justify-center gap-1.5"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Request Custom Quotation</span>
                 </Link>
                 <a
                   href={`tel:${phone.replace(/\s+/g, "")}`}
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2.5 sm:py-3 rounded-xl font-bold text-xs tracking-wide transition-colors text-center flex items-center justify-center gap-1.5"
+                  className="bg-white/5 hover:bg-white/10 text-white border border-white/15 px-5 py-2.5 sm:py-3 rounded-lg font-medium text-xs transition-colors text-center flex items-center justify-center gap-1.5"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Sales Support: {phone}</span>
@@ -462,24 +459,24 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-[#102742] p-4 sm:p-6 rounded-xl border border-white/10 text-xs space-y-2.5 sm:space-y-3">
-              <h3 className="font-bold text-white text-sm border-b border-white/10 pb-2">
+            <div className="lg:col-span-4 bg-white/[0.04] p-5 sm:p-6 rounded-xl border border-white/10 text-xs space-y-2.5 sm:space-y-3">
+              <h3 className="font-semibold text-white text-sm border-b border-white/10 pb-2">
                 Wholesale Assurance
               </h3>
               <div className="flex items-center gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#217A4B] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>Verified raw materials & high tensile strength</span>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#217A4B] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>Uniform roll winding & precision cutting</span>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#217A4B] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>Heavy-duty export corrugated & crated packing</span>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-[#217A4B] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>Pan-India and international logistics network</span>
               </div>
             </div>
@@ -552,13 +549,13 @@ export default async function HomePage() {
           }}
         />
 
-        <div className="bg-[#F8FAFC] border border-[#DCE3EB] rounded-2xl p-6 sm:p-10 space-y-8">
+        <div className="surface-card rounded-2xl p-6 sm:p-10 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#E87832] bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
-              Buyer Questions &amp; Support
+            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F]">
+              Buyer questions
             </span>
-            <h2 className="text-xl sm:text-3xl font-black text-[#17365D]">
-              Frequently Asked Questions (FAQ)
+            <h2 className="text-xl sm:text-3xl font-bold text-[#17365D]">
+              Frequently asked questions
             </h2>
             <p className="text-xs sm:text-sm text-[#4E6178]">
               Everything you need to know about purchasing wholesale ID card supplies from The Print Planet.
@@ -566,8 +563,8 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
-            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
-              <h3 className="font-bold text-sm text-[#17365D]">
+            <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
+              <h3 className="font-semibold text-sm text-[#17365D]">
                 Why is The Print Planet India&apos;s specialist in PVC cards?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -575,8 +572,8 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
-              <h3 className="font-bold text-sm text-[#17365D]">
+            <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
+              <h3 className="font-semibold text-sm text-[#17365D]">
                 What products does The Print Planet manufacture?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -584,8 +581,8 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
-              <h3 className="font-bold text-sm text-[#17365D]">
+            <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
+              <h3 className="font-semibold text-sm text-[#17365D]">
                 How do I order or get bulk wholesale rates?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -593,8 +590,8 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
-              <h3 className="font-bold text-sm text-[#17365D]">
+            <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
+              <h3 className="font-semibold text-sm text-[#17365D]">
                 Does The Print Planet deliver across India?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -602,8 +599,8 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-2xs space-y-2">
-              <h3 className="font-bold text-sm text-[#17365D]">
+            <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
+              <h3 className="font-semibold text-sm text-[#17365D]">
                 Are GST tax invoices provided?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">

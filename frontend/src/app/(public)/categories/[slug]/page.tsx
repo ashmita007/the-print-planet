@@ -149,25 +149,25 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       />
 
       {/* Category Hero / Header */}
-      <div className="bg-[#102742] text-white p-6 sm:p-10 rounded-2xl border-l-4 border-[#E87832] shadow-sm">
+      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E87832]">
+            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F]">
               {parentCategory ? "Subcategory Sector" : "Main Category Sector"}
             </span>
             {parentCategory && (
               <Link
                 href={`/categories/${parentCategory.slug}`}
-                className="text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white bg-white/10 px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1"
+                className="text-[11px] font-medium text-slate-500 hover:text-[#17365D] transition-colors inline-flex items-center gap-1"
               >
                 <span>Part of {formatCategoryName(parentCategory.name)} &rarr;</span>
               </Link>
             )}
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight uppercase">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#17365D]">
             {formatCategoryName(category.name)}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
             {category.description ||
               "Explore full verified models, dimensions, materials, and trade prices."}
           </p>

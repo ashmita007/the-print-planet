@@ -29,15 +29,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       />
 
       {/* Search Header */}
-      <div className="bg-[#102742] text-white p-6 sm:p-8 rounded-2xl border-l-4 border-[#E87832]">
+      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
         <div className="max-w-2xl space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#E87832]">
+          <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F]">
             Catalogue Search
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-[#17365D]">
             Search Results for &ldquo;{q}&rdquo;
           </h1>
-          <p className="text-xs text-slate-300">
+          <p className="text-sm text-slate-500">
             Found {results.products.length} product(s) and {results.categories.length} category match(es).
           </p>
         </div>
@@ -46,7 +46,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* Matching Categories */}
       {results.categories.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D]">
+          <h2 className="text-sm font-semibold text-[#17365D]">
             Matching Categories
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -67,7 +67,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* Matching Products */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-2 gap-2">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D]">
+          <h2 className="text-sm font-semibold text-[#17365D]">
             Matching Products ({results.products.length})
           </h2>
           <MobileFilterSortBar
@@ -86,7 +86,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             ))}
           </div>
         ) : (
-          <div className="bg-white border border-[#DCE3EB] rounded-2xl p-12 text-center space-y-4">
+          <div className="surface-card rounded-2xl p-12 text-center space-y-4">
             <Box className="w-16 h-16 text-slate-300 mx-auto" />
             <h3 className="text-base font-bold text-[#17365D]">No items matched your query</h3>
             <p className="text-xs text-[#687586] max-w-sm mx-auto">

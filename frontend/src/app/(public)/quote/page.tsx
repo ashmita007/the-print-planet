@@ -123,16 +123,16 @@ function QuoteFormContent() {
       <Breadcrumbs items={[{ label: "Request a Quote" }]} />
 
       {/* Hero */}
-      <div className="bg-[#102742] text-white p-6 sm:p-12 rounded-2xl border-l-4 border-[#E87832] shadow-sm">
+      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 bg-[#E87832]/20 border border-[#E87832]/40 text-[#E87832] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
             <FileText className="w-3.5 h-3.5" />
             <span>Fast-Track Commercial RFQ</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
             Request a Custom B2B Quotation
           </h1>
-          <p className="text-xs sm:text-base text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
             Receive official wholesale unit pricing, digital proof mockups, and estimated production timelines within 2 business hours. Direct factory pricing with verified GST tax invoicing.
           </p>
         </div>
@@ -140,14 +140,14 @@ function QuoteFormContent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Form (7 Cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-[#DCE3EB] p-6 sm:p-8 shadow-xs">
+        <div className="lg:col-span-7 surface-card rounded-2xl p-6 sm:p-8">
           {isSubmitted ? (
             <div className="py-12 text-center space-y-4">
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h2 className="text-2xl font-black text-[#17365D]">
-                Quotation Request Received!
+              <h2 className="text-2xl font-bold text-[#17365D]">
+                Quotation request received
               </h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
                 Thank you, <strong>{fullName}</strong>. Our commercial sales engineering team is reviewing your specifications and will deliver your formal quotation via email and WhatsApp.
@@ -155,7 +155,7 @@ function QuoteFormContent() {
               <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/products"
-                  className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm"
+                  className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-colors"
                 >
                   Continue Browsing Products
                 </Link>
@@ -359,7 +359,7 @@ function QuoteFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 px-6 rounded-xl text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 px-6 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Submitting Quotation Request...</span>
@@ -381,13 +381,13 @@ function QuoteFormContent() {
         {/* Right Column: Assurances & Immediate Desk (5 Cols) */}
         <div className="lg:col-span-5 space-y-5">
           {/* Direct WhatsApp Callout */}
-          <div className="bg-[#F5F7FA] border border-[#DCE3EB] rounded-2xl p-6 space-y-4">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#E87832] uppercase tracking-wider">
+          <div className="surface-card rounded-2xl p-6 space-y-4">
+            <div className="flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
               <Clock className="w-4 h-4" />
-              <span>Need an Instant Price Estimate?</span>
+              <span>Instant estimate</span>
             </div>
-            <h3 className="text-lg font-bold text-[#17365D]">
-              Chat Live with Our Sales Desk
+            <h3 className="text-lg font-semibold text-[#17365D]">
+              Chat with our sales desk
             </h3>
             <p className="text-xs text-[#687586] leading-relaxed">
               If your order is urgent or requires immediate same-day dispatch from Bengaluru, message us directly with your artwork on WhatsApp.
@@ -396,7 +396,7 @@ function QuoteFormContent() {
               href="https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%20I%20need%20an%20urgent%20quote%20for%20bulk%20supplies."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white w-full py-2.5 px-4 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-2"
             >
               <PhoneCall className="w-4 h-4" />
               <span>Chat on WhatsApp (+91 97418 08034)</span>
@@ -404,9 +404,9 @@ function QuoteFormContent() {
           </div>
 
           {/* Guarantees List */}
-          <div className="bg-white rounded-2xl border border-[#DCE3EB] p-6 space-y-4">
-            <h4 className="text-sm font-bold text-[#17365D] uppercase tracking-wider">
-              The Print Planet B2B Guarantee
+          <div className="surface-card rounded-2xl p-6 space-y-4">
+            <h4 className="text-sm font-semibold text-[#17365D]">
+              What we guarantee
             </h4>
             <div className="space-y-3 text-xs text-slate-700">
               <div className="flex items-start gap-2.5">

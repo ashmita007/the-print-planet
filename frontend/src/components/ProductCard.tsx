@@ -60,7 +60,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-slate-400">
               <Box className="w-8 h-8 sm:w-12 sm:h-12 stroke-[1.5] mb-1 sm:mb-2 text-slate-300" />
               <span className="text-[10px] sm:text-xs font-semibold text-slate-400 text-center">
-                Industrial Asset
+                Image coming soon
               </span>
             </div>
           )}
@@ -92,7 +92,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="mb-1">
               <Link
                 href={`/categories/${product.category?.slug}`}
-                className="text-[9px] sm:text-[11px] font-bold text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1 block uppercase tracking-wider"
+                className="text-[9px] sm:text-[11px] font-medium text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1 block"
               >
                 {formatCategoryName(product.category?.name)}
               </Link>
@@ -122,15 +122,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2.5 border-t border-[#F5F7FA]">
             <div className="flex items-baseline justify-between mb-1.5 sm:mb-2.5 gap-1">
               <div className="min-w-0 flex-1">
-                <span className="hidden sm:block text-[8px] sm:text-[10px] uppercase font-bold text-[#687586]">
-                  B2B Trade Price
-                </span>
                 {product.price_display ? (
-                  <span className="text-[11px] sm:text-sm font-black tabular-nums tracking-tight text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-bold tabular-nums tracking-tight text-[#17365D] block truncate">
                     {product.price_display}
                   </span>
                 ) : product.price ? (
-                  <span className="text-[11px] sm:text-sm font-black tabular-nums tracking-tight text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-bold tabular-nums tracking-tight text-[#17365D] block truncate">
                     ₹ {Number(product.price).toLocaleString("en-IN")}
                   </span>
                 ) : (

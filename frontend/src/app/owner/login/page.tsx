@@ -62,25 +62,25 @@ export default function OwnerLoginPage() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-[#DCE3EB] overflow-hidden">
-      {/* Top Header */}
-      <div className="bg-[#102742] text-white p-7 text-center space-y-2 border-b-4 border-[#E87832]">
-        <div className="bg-white px-5 py-3 rounded-xl inline-block shadow-md mx-auto mb-2">
-          <Image
-            src="/logo.png"
-            alt="The Print Planet"
-            width={240}
-            height={70}
-            className="h-12 sm:h-14 w-auto object-contain"
-            priority
-          />
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-[0_24px_60px_-32px_rgba(16,39,66,0.35)] border border-[#E2E8F0] overflow-hidden anim-scale-in">
+      {/* Header */}
+      <div className="px-7 pt-8 pb-6 text-center space-y-3 border-b border-[#E6EBF1]">
+        <Image
+          src="/logo.png"
+          alt="The Print Planet"
+          width={240}
+          height={70}
+          className="h-11 sm:h-12 w-auto object-contain mx-auto"
+          priority
+        />
+        <div className="space-y-1">
+          <h2 className="text-base font-semibold text-[#17365D] tracking-tight">
+            Owner console
+          </h2>
+          <p className="text-xs text-slate-500">
+            Sign in to manage the store
+          </p>
         </div>
-        <h2 className="text-base font-bold text-white tracking-tight">
-          Owner & Catalogue Management Portal
-        </h2>
-        <p className="text-xs text-slate-300">
-          Secure industrial dashboard access for The Print Planet
-        </p>
       </div>
 
       {/* Form Content */}

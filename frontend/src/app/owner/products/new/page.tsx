@@ -8,14 +8,14 @@ export default function NewProductPage() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E87832]/10 text-[#E87832] text-[10px] font-bold uppercase tracking-wider mb-1 border border-[#E87832]/20">
-          <span>Industrial Product Studio</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
-          Dynamic Catalogue Product Creator
+        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+          Catalogue
+        </span>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+          New product
         </h1>
-        <p className="text-xs text-[#687586] mt-1">
-          Create verified industrial items with dynamic specifications, auto-generated SKUs, instant category creation, and real-time live public card preview.
+        <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
+          Add specifications, pricing, and media. SKUs are generated automatically and the public card preview updates live.
         </p>
       </div>
       <ProductForm isEdit={false} />

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Star, CheckCircle, ShieldCheck, ThumbsUp, ArrowRight, MessageSquare, MapPin } from "lucide-react";
+import { Star, MapPin } from "lucide-react";
 
 interface ReviewItem {
   id: string;
@@ -155,7 +155,7 @@ export default function GoogleReviews() {
         {/* Header with Google Reviews Branding */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-[#17365D] mb-3">
+            <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500 mb-3">
               {/* Google G Logo Multi-Color SVG */}
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path
@@ -175,21 +175,21 @@ export default function GoogleReviews() {
                   d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
                 />
               </svg>
-              <span>Verified Google Customer Reviews</span>
+              <span>Google reviews</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
-              Trusted by 1,200+ Printing Studios &amp; ID Bureaus Across India
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+              Trusted by print studios across India
             </h2>
-            <p className="text-xs sm:text-sm text-[#687586] mt-2 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-2xl leading-relaxed">
               Read real feedback from verified Indian printing press owners, corporate merchandise dealers, and ID card manufacturers who rely on The Print Planet for wholesale consumables.
             </p>
           </div>
 
           {/* Google Star Rating Summary Widget */}
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#DCE3EB] shadow-xs flex items-center gap-4 shrink-0">
+          <div className="surface-card p-4 sm:p-5 rounded-2xl flex items-center gap-4 shrink-0">
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-black text-[#17365D]">4.9</div>
+              <div className="text-3xl sm:text-4xl font-bold text-[#17365D] tabular-nums">4.9</div>
               <div className="flex items-center gap-0.5 text-amber-400 mt-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
@@ -197,32 +197,29 @@ export default function GoogleReviews() {
               </div>
             </div>
             <div className="border-l border-slate-200 pl-4 text-xs text-[#687586]">
-              <div className="font-bold text-[#17365D] text-sm">148+ Google Reviews</div>
-              <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1 mt-0.5">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
-                <span>100% Genuine B2B Buyers</span>
-              </div>
-              <div className="text-[10px] text-slate-400 mt-0.5">Sunkadakatte, Bengaluru Hub</div>
+              <div className="font-semibold text-[#17365D] text-sm">148+ Google reviews</div>
+              <div className="text-[11px] text-slate-500 mt-0.5">Verified B2B buyers</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Sunkadakatte, Bengaluru</div>
             </div>
           </div>
         </div>
 
         {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none">
+        <div className="flex items-center gap-5 overflow-x-auto pb-4 mb-2 border-b border-[#E2E8F0] scrollbar-none">
           {[
-            { id: "all", label: "All Reviews (148)" },
-            { id: "pvc", label: "PVC Cards & Fusing Sheets" },
-            { id: "lanyards", label: "Satin Lanyard Rolls" },
-            { id: "machines", label: "Card Machinery & Cutters" },
-            { id: "rfid", label: "RFID Smart Cards & Holders" },
+            { id: "all", label: "All" },
+            { id: "pvc", label: "PVC cards" },
+            { id: "lanyards", label: "Lanyards" },
+            { id: "machines", label: "Machinery" },
+            { id: "rfid", label: "RFID" },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-1 py-2 border-b-2 text-xs font-medium transition-colors whitespace-nowrap cursor-pointer ${
                 activeTab === tab.id
-                  ? "bg-[#17365D] text-white shadow-xs"
-                  : "bg-white text-[#687586] hover:bg-slate-100 border border-[#DCE3EB]"
+                  ? "border-[#17365D] text-[#17365D]"
+                  : "border-transparent text-slate-500 hover:text-[#17365D]"
               }`}
             >
               {tab.label}
@@ -235,23 +232,19 @@ export default function GoogleReviews() {
           {filteredReviews.map((rev) => (
             <div
               key={rev.id}
-              className="bg-white rounded-2xl p-5 sm:p-6 border border-[#DCE3EB] shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="surface-card surface-hover rounded-2xl p-5 sm:p-6 flex flex-col justify-between"
             >
               <div>
                 {/* Reviewer Header */}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <h3 className="font-black text-sm text-[#17365D]">{rev.author}</h3>
-                      <span className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[10px]" title="Verified Buyer">
-                        ✓
+                      <h3 className="font-semibold text-sm text-[#17365D]">{rev.author}</h3>
+                      <span className="text-[10px] font-medium text-emerald-700" title="Verified buyer">
+                        Verified
                       </span>
                     </div>
-                    {/* Reviewer Indian Business Email */}
-                    <div className="text-[11px] font-mono text-[#E87832] font-semibold mt-0.5">
-                      {rev.email}
-                    </div>
-                    <div className="text-[11px] text-[#687586] mt-0.5">{rev.role}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">{rev.role}</div>
                   </div>
 
                   {/* Google Icon Badge */}
@@ -298,10 +291,8 @@ export default function GoogleReviews() {
 
               {/* Order Info Tag */}
               <div className="mt-4 pt-3 border-t border-slate-100">
-                <div className="text-[10px] uppercase font-bold tracking-wider text-slate-400">
-                  Verified Consignment:
-                </div>
-                <div className="text-[11px] font-semibold text-[#17365D] truncate mt-0.5">
+                <div className="text-[10px] text-slate-400">Purchased</div>
+                <div className="text-[11px] font-medium text-[#17365D] truncate mt-0.5">
                   {rev.orderedItems}
                 </div>
               </div>
@@ -310,21 +301,21 @@ export default function GoogleReviews() {
         </div>
 
         {/* CTA to Leave Review / Request Quote */}
-        <div className="mt-10 bg-[#102742] text-white rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10 shadow-lg">
+        <div className="mt-10 surface-card rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="font-black text-lg sm:text-xl text-white">
-              Are you an active ID card printing bureau or corporate reseller?
+            <h3 className="font-semibold text-lg text-[#17365D]">
+              Need wholesale volume pricing?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1">
-              Connect with our Sunkadakatte factory desk for wholesale volume tier pricing and sample kits.
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Talk to our Sunkadakatte desk for volume tiers and sample kits.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <Link
               href="/quote"
-              className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all active:scale-[0.99] text-center"
+              className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-colors text-center"
             >
-              Get Instant Factory Quote
+              Request a quote
             </Link>
           </div>
         </div>

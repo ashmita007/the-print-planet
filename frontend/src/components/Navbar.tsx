@@ -12,7 +12,6 @@ import {
   X,
   ChevronDown,
   Layers,
-  ShieldCheck,
   User,
   ArrowRight,
   ExternalLink,
@@ -122,51 +121,35 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
   return (
     <header className="w-full border-b border-[#DCE3EB] bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/85 sticky top-0 z-50 shadow-[0_1px_14px_rgba(16,39,66,0.06)]">
-      {/* Top Utility Contact Strip */}
-      <div className="bg-[#102742] text-white text-[11px] sm:text-xs py-1 sm:py-2 px-3 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 sm:gap-4 text-slate-300 min-w-0">
-            <span className="flex items-center gap-1 font-medium text-white truncate">
-              <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E87832] shrink-0" />
-              <span className="hidden sm:inline">Verified Industrial Manufacturer & Wholesaler</span>
-              <span className="sm:hidden truncate">Verified Manufacturer</span>
-            </span>
-            <span className="hidden sm:inline-block text-slate-400">|</span>
-            <span className="hidden md:inline-block text-slate-300">Bengaluru, Karnataka</span>
+      {/* Utility contact strip */}
+      <div className="hidden sm:block bg-[#FAFBFC] border-b border-[#EEF2F7] text-[11px] text-slate-500">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-1.5 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="truncate">Bengaluru, Karnataka</span>
             {settings?.gst_number && (
               <>
-                <span className="hidden lg:inline-block text-slate-400">|</span>
-                <span className="hidden lg:inline-block text-slate-300">
-                  GST: <span className="font-semibold text-white">{settings.gst_number}</span>
-                </span>
+                <span className="text-slate-300">·</span>
+                <span className="truncate">GSTIN {settings.gst_number}</span>
               </>
             )}
           </div>
 
-          <div className="flex items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-medium shrink-0">
+          <div className="flex items-center gap-3 shrink-0">
             <a
               href={`mailto:${email}`}
-              className="hidden lg:flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
+              className="hidden lg:flex items-center gap-1.5 hover:text-[#17365D] transition-colors"
             >
-              <Mail className="w-3.5 h-3.5 text-[#E87832]" />
+              <Mail className="w-3.5 h-3.5 text-slate-400" />
               <span>{email}</span>
             </a>
-            <span className="hidden lg:inline text-slate-500">|</span>
+            <span className="hidden lg:inline text-slate-300">·</span>
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
-              className="flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
+              className="flex items-center gap-1.5 hover:text-[#17365D] transition-colors tabular-nums"
             >
-              <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E87832]" />
-              <span className="hidden xs:inline">{phone}</span>
-              <span className="xs:hidden">Call</span>
+              <Phone className="w-3.5 h-3.5 text-slate-400" />
+              <span>{phone}</span>
             </a>
-            <span className="text-slate-500">|</span>
-            <Link
-              href="/contact"
-              className="bg-[#E87832] hover:bg-[#d66b28] active:scale-[0.98] text-white px-2 sm:px-2.5 py-0.5 rounded font-semibold text-[10px] sm:text-[11px] tracking-wide transition-colors"
-            >
-              Quote
-            </Link>
           </div>
         </div>
       </div>
@@ -595,7 +578,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <button
                   type="button"
                   onClick={() => setMobileCategoriesOpen(!mobileCategoriesOpen)}
-                  className="w-full flex items-center justify-between px-2 py-2 text-xs font-black text-[#17365D] uppercase tracking-wider hover:text-[#E87832] transition-colors"
+                  className="w-full flex items-center justify-between px-2 py-2 text-xs font-semibold text-[#17365D] hover:text-[#E87832] transition-colors"
                 >
                   <span className="flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-[#E87832]" />

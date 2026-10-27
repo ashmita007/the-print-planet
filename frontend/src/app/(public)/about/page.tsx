@@ -106,15 +106,15 @@ export default async function AboutPage() {
       <Breadcrumbs items={[{ label: "About Our Company" }]} />
 
       {/* Hero */}
-      <div className="bg-[#102742] text-white p-5 sm:p-12 rounded-xl sm:rounded-2xl border-l-4 border-[#E87832] shadow-sm">
+      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-2 sm:space-y-3">
-          <span className="text-[11px] sm:text-xs font-bold text-[#E87832] uppercase tracking-wider">
+          <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
             {heroTag}
           </span>
-          <h1 className="text-2xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
             {heroTitle}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
             {heroSubtitle}
           </p>
         </div>
@@ -130,45 +130,45 @@ export default async function AboutPage() {
           <p>{storyP2}</p>
           <div className="pt-2 grid grid-cols-2 gap-3">
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] font-mono">{stat1Val}</div>
+              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat1Val}</div>
               <div className="text-[11px] text-[#687586]">{stat1Label}</div>
             </div>
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] font-mono">{stat2Val}</div>
+              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat2Val}</div>
               <div className="text-[11px] text-[#687586]">{stat2Label}</div>
             </div>
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] font-mono">{stat3Val}</div>
+              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat3Val}</div>
               <div className="text-[11px] text-[#687586]">{stat3Label}</div>
             </div>
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] font-mono">{stat4Val}</div>
+              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat4Val}</div>
               <div className="text-[11px] text-[#687586]">{stat4Label}</div>
             </div>
           </div>
         </div>
 
         <div className="bg-[#F5F7FA] p-5 sm:p-8 rounded-xl sm:rounded-2xl border border-[#DCE3EB] space-y-4">
-          <h3 className="font-bold text-sm text-[#17365D] uppercase tracking-wider">
-            Core Production Standards
+          <h3 className="font-semibold text-sm text-[#17365D]">
+            Production standards
           </h3>
           <div className="space-y-3 text-xs">
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-[#217A4B] shrink-0 mt-0.5" />
+              <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-[#263445]">{standard1Title}:</strong>
                 <p className="text-[#687586] mt-0.5">{standard1Desc}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-[#217A4B] shrink-0 mt-0.5" />
+              <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-[#263445]">{standard2Title}:</strong>
                 <p className="text-[#687586] mt-0.5">{standard2Desc}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-[#217A4B] shrink-0 mt-0.5" />
+              <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-[#263445]">{standard3Title}:</strong>
                 <p className="text-[#687586] mt-0.5">{standard3Desc}</p>
@@ -180,21 +180,21 @@ export default async function AboutPage() {
 
       {/* Facilities Strip */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-6 bg-white border border-[#DCE3EB] rounded-xl space-y-2 shadow-2xs">
+        <div className="surface-card p-6 rounded-2xl space-y-2">
           <Factory className="w-6 h-6 text-[#17365D]" />
           <h4 className="font-bold text-sm text-[#17365D]">{facility1Title}</h4>
           <p className="text-xs text-[#687586] leading-relaxed">
             {facility1Desc}
           </p>
         </div>
-        <div className="p-6 bg-white border border-[#DCE3EB] rounded-xl space-y-2 shadow-2xs">
+        <div className="surface-card p-6 rounded-2xl space-y-2">
           <ShieldCheck className="w-6 h-6 text-[#17365D]" />
           <h4 className="font-bold text-sm text-[#17365D]">{facility2Title}</h4>
           <p className="text-xs text-[#687586] leading-relaxed">
             {facility2Desc}
           </p>
         </div>
-        <div className="p-6 bg-white border border-[#DCE3EB] rounded-xl space-y-2 shadow-2xs">
+        <div className="surface-card p-6 rounded-2xl space-y-2">
           <Truck className="w-6 h-6 text-[#17365D]" />
           <h4 className="font-bold text-sm text-[#17365D]">{facility3Title}</h4>
           <p className="text-xs text-[#687586] leading-relaxed">
