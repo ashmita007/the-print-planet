@@ -312,6 +312,7 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', f'The Print Planet <{E
 OWNER_NOTIFICATION_EMAIL = os.environ.get('OWNER_NOTIFICATION_EMAIL', 'theprintplanet01@gmail.com')
 
 # HTTPS REST Email APIs (Port 443 - Bypasses Render Free Port Restrictions)
+EMAIL_PROVIDER = os.environ.get('EMAIL_PROVIDER', '').strip().lower()
 BREVO_API_KEY = os.environ.get('BREVO_API_KEY', '').strip()
 BREVO_SENDER_EMAIL = os.environ.get('BREVO_SENDER_EMAIL', 'theprintplanet01@gmail.com').strip()
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '').strip()

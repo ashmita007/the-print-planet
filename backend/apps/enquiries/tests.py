@@ -166,3 +166,42 @@ class EnquiryApiTests(TestCase):
                     self.assertEqual(req.headers['Api-key'], 'xkeysib-mock-api-key-test')
 
 
+
+    def test_resend_https_dispatch_success(self):
+        from unittest.mock import patch, MagicMock
+        from apps.enquiries.services import _send_email_via_https
+        import json
+        import os
+
+        with patch.dict(os.environ, {
+            'EMAIL_PROVIDER': 'resend',
+            'RESEND_API_KEY': 're_mock_api_key',
+            'RESEND_FROM_EMAIL': 'The Print Planet <onboarding@resend.dev>',
+            'OWNER_NOTIFICATION_EMAIL': 'theprintplanet01@gmail.com',
+        }, clear=False):
+            with patch('apps.enquiries.services.settings') as mock_settings:
+                mock_settings.TESTING = False
+                mock_settings.RESEND_API_KEY = 're_mock_api_key'
+                mock_settings.RESEND_FROM_EMAIL = 'The Print Planet <onboarding@resend.dev>'
+                mock_settings.BREVO_API_KEY = ''
+                mock_settings.BREVO_SENDER_EMAIL = 'theprintplanet01@gmail.com'
+                mock_settings.OWNER_NOTIFICATION_EMAIL = 'theprintplanet01@gmail.com'
+
+                mock_response = MagicMock()
+                mock_response.status = 200
+                mock_response.__enter__.return_value = mock_response
+
+                with patch('urllib.request.urlopen', return_value=mock_response) as mock_urlopen:
+                    success = _send_email_via_https(
+                        to_email='theprintplanet01@gmail.com',
+                        subject='Wholesale Quote',
+                        text='Quote details',
+                        html='<p>Quote details</p>'
+                    )
+                    self.assertTrue(success)
+                    req = mock_urlopen.call_args[0][0]
+                    self.assertEqual(req.full_url, 'https://api.resend.com/emails')
+                    self.assertEqual(req.headers['Authorization'], 'Bearer re_mock_api_key')
+                    payload = json.loads(req.data.decode('utf-8'))
+                    self.assertEqual(payload['to'], ['theprintplanet01@gmail.com'])
+                    self.assertIn('onboarding@resend.dev', payload['from'])

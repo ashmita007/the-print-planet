@@ -141,12 +141,21 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
         except Exception as e_b64:
             logger.warning(f"Could not base64 encode attachment {attachment_path}: {e_b64}")
 
-    # 1. Brevo (Sendinblue) Primary API (HTTPS Port 443 — Priority Transactional Provider)
+    provider_pref = (
+        os.environ.get('EMAIL_PROVIDER', '') or
+        getattr(settings, 'EMAIL_PROVIDER', '')
+    ).strip().lower()
+    owner_email = (
+        os.environ.get('OWNER_NOTIFICATION_EMAIL', '') or
+        getattr(settings, 'OWNER_NOTIFICATION_EMAIL', '')
+    ).strip().strip('"\'')
+
+    # 1. Brevo (Sendinblue) API (HTTPS Port 443)
     brevo_key = os.environ.get('BREVO_API_KEY', getattr(settings, 'BREVO_API_KEY', '')).strip().strip('"\'')
     if brevo_key.startswith('BREVO_API_KEY='):
         brevo_key = brevo_key.split('BREVO_API_KEY=', 1)[1].strip().strip('"\'')
 
-    if brevo_key:
+    if brevo_key and provider_pref != 'resend':
         try:
             sender_email = (
                 os.environ.get('BREVO_SENDER_EMAIL', '') or
@@ -219,43 +228,63 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
         except Exception as e:
             logger.warning(f"Brevo HTTPS dispatch failed: {e}")
 
-    # 2. Resend API (HTTPS Port 443 — Secondary Fallback)
+    # 2. Resend API (HTTPS Port 443)
     resend_key = os.environ.get('RESEND_API_KEY', getattr(settings, 'RESEND_API_KEY', '')).strip().strip('"\'')
     if resend_key.startswith('RESEND_API_KEY='):
         resend_key = resend_key.split('RESEND_API_KEY=', 1)[1].strip().strip('"\'')
+    resend_from = (
+        os.environ.get('RESEND_FROM_EMAIL', '') or
+        getattr(settings, 'RESEND_FROM_EMAIL', '') or
+        'The Print Planet <onboarding@resend.dev>'
+    ).strip().strip('"\'')
 
-    if resend_key:
+    def _resend_post(sender):
+        body = {
+            'from': sender,
+            'to': [to_email],
+            'subject': subject,
+            'text': text,
+            'html': html,
+        }
+        if owner_email:
+            body['reply_to'] = owner_email
+        if b64_content and attachment_name:
+            body['attachments'] = [{
+                'filename': attachment_name,
+                'content': b64_content,
+            }]
+        req = urllib.request.Request(
+            'https://api.resend.com/emails',
+            data=json.dumps(body).encode('utf-8'),
+            headers={
+                'Authorization': f'Bearer {resend_key}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'ThePrintPlanet/1.0'
+            },
+            method='POST'
+        )
+        with urllib.request.urlopen(req, context=ssl_context, timeout=10) as resp:
+            logger.info(f"Dispatched email via Resend HTTPS API to {to_email} (HTTP {resp.status})")
+            return True
+
+    if resend_key and provider_pref != 'brevo':
         try:
-            resend_body = {
-                'from': os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>'),
-                'to': [to_email],
-                'subject': subject,
-                'text': text,
-                'html': html,
-            }
-            if b64_content and attachment_name:
-                resend_body['attachments'] = [{
-                    'filename': attachment_name,
-                    'content': b64_content,
-                }]
-
-            req = urllib.request.Request(
-                'https://api.resend.com/emails',
-                data=json.dumps(resend_body).encode('utf-8'),
-                headers={
-                    'Authorization': f'Bearer {resend_key}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'User-Agent': 'ThePrintPlanet/1.0'
-                },
-                method='POST'
-            )
-            with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
-                logger.info(f"Dispatched email via Resend HTTPS API to {to_email}")
-                return True
+            return _resend_post(resend_from)
         except urllib.error.HTTPError as e:
             err_msg = e.read().decode('utf-8', errors='ignore')
             logger.error(f"Resend HTTPS dispatch HTTP {e.code}: {err_msg}")
+            # Sandbox fallback: onboarding@resend.dev can deliver to the account owner
+            # even before a custom sending domain is verified.
+            if 'onboarding@resend.dev' not in resend_from and owner_email and to_email.lower() == owner_email.lower():
+                try:
+                    logger.info("Retrying owner email via Resend sandbox sender onboarding@resend.dev...")
+                    return _resend_post('The Print Planet <onboarding@resend.dev>')
+                except urllib.error.HTTPError as retry_err:
+                    retry_msg = retry_err.read().decode('utf-8', errors='ignore')
+                    logger.error(f"Resend sandbox retry HTTP {retry_err.code}: {retry_msg}")
+                except Exception as retry_err:
+                    logger.warning(f"Resend sandbox retry failed: {retry_err}")
         except Exception as e:
             logger.warning(f"Resend HTTPS dispatch failed: {e}")
 

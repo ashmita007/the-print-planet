@@ -50,8 +50,12 @@ services:
       - key: R2_PUBLIC_URL
         sync: false
 
-      # Automated Email Notification System (Brevo HTTPS Primary / Resend / Webhook)
-      # BREVO_SENDER_EMAIL: Must match the verified sender/login email in your Brevo account
+      # Automated Email Notification System (HTTPS APIs on port 443)
+      # EMAIL_PROVIDER: "resend" or "brevo". Leave empty for automatic fallback.
+      # Resend sandbox (onboarding@resend.dev) only delivers to the Resend account owner.
+      # Set RESEND_FROM_EMAIL after verifying theprintplanet.co.in under Resend > Domains.
+      - key: EMAIL_PROVIDER
+        sync: false
       - key: EMAIL_HOST_USER
         sync: false
       - key: EMAIL_HOST_PASSWORD
@@ -63,6 +67,8 @@ services:
       - key: BREVO_SENDER_EMAIL
         sync: false
       - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM_EMAIL
         sync: false
       - key: EMAIL_WEBHOOK_URL
         sync: false

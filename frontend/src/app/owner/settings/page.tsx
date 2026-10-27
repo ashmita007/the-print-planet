@@ -47,15 +47,30 @@ type TabKey = "hero" | "about" | "identity" | "database" | "security";
 type EmailDiagnostics = {
   config?: {
     provider?: string;
+    preferred_provider?: string;
     brevo_key_configured?: boolean;
     brevo_key_preview?: string;
     brevo_sender_email?: string;
+    resend_key_configured?: boolean;
+    resend_key_preview?: string;
+    resend_from_email?: string;
+    active_sender_email?: string;
     owner_recipient?: string;
     smtp_backend?: string;
   };
   account?: { email?: string; company_name?: string; plan?: string };
   senders?: { email?: string; name?: string; active?: boolean }[];
   sender_verified?: boolean;
+  brevo_sender_verified?: boolean;
+  resend_sender_verified?: boolean;
+  resend?: {
+    key_valid?: boolean;
+    sender_domain?: string;
+    sandbox?: boolean;
+    sender_verified?: boolean;
+    note?: string;
+    domains?: { name?: string; status?: string }[];
+  } | null;
   problems?: string[];
 };
 
@@ -1252,7 +1267,7 @@ function OwnerSettingsInner() {
                     Transactional email
                   </h3>
                   <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                    RFQ alerts are delivered through Brevo over HTTPS. Run a live diagnostic to see the provider response.
+                    RFQ alerts are delivered over HTTPS through Brevo or Resend. Run a live diagnostic to see the provider response.
                   </p>
                 </div>
               </div>
@@ -1267,7 +1282,7 @@ function OwnerSettingsInner() {
                 ) : (
                   <Mail className="w-3.5 h-3.5" />
                 )}
-                <span>{emailTestLoading ? "Checking..." : "Test Email Delivery"}</span>
+                <span>{emailTestLoading ? "Checking..." : "Test email delivery"}</span>
               </button>
             </div>
 
@@ -1302,7 +1317,7 @@ function OwnerSettingsInner() {
                   <div className="bg-white border border-[#DCE3EB] rounded-lg p-2.5">
                     <div className="text-[9px] font-bold uppercase tracking-wider text-[#687586]">Sender</div>
                     <div className="font-bold text-[#17365D] mt-0.5 truncate">
-                      {emailDiagnostics.config?.brevo_sender_email || "Not set"}
+                      {emailDiagnostics.config?.active_sender_email || emailDiagnostics.config?.brevo_sender_email || emailDiagnostics.config?.resend_from_email || "Not set"}
                     </div>
                   </div>
                   <div className="bg-white border border-[#DCE3EB] rounded-lg p-2.5">
@@ -1312,6 +1327,19 @@ function OwnerSettingsInner() {
                     </div>
                   </div>
                 </div>
+                {emailDiagnostics.resend && (
+                  <div className="bg-white border border-[#DCE3EB] rounded-lg p-2.5 text-[11px] text-slate-600 space-y-1">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="font-medium text-[#17365D]">Resend</span>
+                      <span>Key: {emailDiagnostics.resend.key_valid ? "valid" : "not validated"}</span>
+                      <span>Domains: {emailDiagnostics.resend.domains?.length || 0}</span>
+                      {emailDiagnostics.resend.sandbox && <span className="text-[#C25E1F]">Sandbox sender</span>}
+                    </div>
+                    {emailDiagnostics.resend.note && (
+                      <p className="text-slate-500 leading-relaxed">{emailDiagnostics.resend.note}</p>
+                    )}
+                  </div>
+                )}
                 {emailDiagnostics.problems && emailDiagnostics.problems.length > 0 && (
                   <ul className="space-y-1 text-[11px] text-red-700 bg-red-50 border border-red-200 rounded-lg p-2.5">
                     {emailDiagnostics.problems.map((problem, index) => (
