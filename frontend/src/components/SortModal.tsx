@@ -89,14 +89,14 @@ export default function SortModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs anim-fade-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="sort-modal-title"
     >
       <div
-        className="bg-white rounded-2xl shadow-xl sm:shadow-2xl w-full max-w-[320px] sm:max-w-md border border-[#DCE3EB] overflow-hidden animate-in zoom-in-95 duration-150"
+        className="bg-white rounded-2xl shadow-xl sm:shadow-2xl w-full max-w-[320px] sm:max-w-md border border-[#DCE3EB] overflow-hidden anim-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Responsive Header */}

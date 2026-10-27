@@ -67,16 +67,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         ]}
       />
 
-      {/* Header Banner */}
-      <div className="bg-[#102742] rounded-2xl p-6 sm:p-8 text-white border-l-4 border-[#E87832] shadow-sm">
-        <div className="max-w-3xl space-y-2">
-          <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-wider">
-            Industrial Wholesale Catalogue
+      {/* Page header */}
+      <div className="border-b border-[#E2E8F0] pb-6 anim-fade-up">
+        <div className="max-w-3xl space-y-2.5">
+          <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+            Wholesale catalogue
           </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            {activeCategory ? activeCategory.name : "All Products & Equipment"}
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#17365D]">
+            {activeCategory ? activeCategory.name : "All products & equipment"}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed">
             {activeCategory
               ? activeCategory.description
               : "Complete inventory of ID card holders, color satin rolls, metal clips, dog hooks, punching machinery, and RFID cards."}

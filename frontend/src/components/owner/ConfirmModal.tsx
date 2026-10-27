@@ -49,13 +49,13 @@ export default function ConfirmModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/55 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/55 backdrop-blur-xs anim-fade-in"
       onClick={onClose}
       role="alertdialog"
       aria-modal="true"
     >
       <div
-        className="bg-white rounded-2xl max-w-[320px] sm:max-w-md w-full p-4 sm:p-6 shadow-xl sm:shadow-2xl border border-[#DCE3EB] animate-in zoom-in-95 duration-150 space-y-3 sm:space-y-4"
+        className="bg-white rounded-2xl max-w-[320px] sm:max-w-md w-full p-4 sm:p-6 shadow-xl sm:shadow-2xl border border-[#DCE3EB] anim-scale-in space-y-3 sm:space-y-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start gap-3 sm:gap-4">

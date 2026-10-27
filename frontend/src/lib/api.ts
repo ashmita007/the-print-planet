@@ -601,6 +601,44 @@ export async function ownerTriggerDatabaseBackupEmail(recipient?: string): Promi
   }
 }
 
+export async function ownerGetEmailDiagnostics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/email/diagnostics/`, {
+      headers: { ...getAuthHeaders() },
+      cache: 'no-store',
+    });
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.error || 'Failed to read email diagnostics' };
+    return { success: true, data };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+
+export async function ownerSendTestEmail(to?: string): Promise<{
+  ok: boolean;
+  provider?: string;
+  message?: string;
+  error?: string;
+  sender?: string;
+  recipient?: string;
+  status?: number;
+  code?: string;
+  message_id?: string;
+}> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/email/diagnostics/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify(to ? { to } : {}),
+    });
+    const data = await res.json();
+    return { ...data, ok: res.ok && data.ok !== false };
+  } catch (err: any) {
+    return { ok: false, error: err.message };
+  }
+}
+
 export async function ownerDownloadDatabaseBackup(): Promise<{ success: boolean; error?: string }> {
   try {
     const res = await fetch(`${getApiUrl()}/api/v1/owner/backup/download/`, {

@@ -137,23 +137,21 @@ export default function OwnerEnquiriesPage() {
 
   return (
     <div className="space-y-6">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-wider">
-            Lead & RFQ Operations
+      {/* Header */}
+      <div>
+        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+          Sales inbox
+        </span>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+          Enquiries
+          <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
+            {totalCount}
           </span>
-          <h1 className="text-2xl font-extrabold text-[#17365D] flex items-center gap-2">
-            <span>Customer Enquiries</span>
-            <span className="text-xs bg-[#E87832]/10 text-[#E87832] font-bold px-2.5 py-0.5 rounded-full border border-[#E87832]/20">
-              {totalCount} Total
-            </span>
-          </h1>
-        </div>
+        </h1>
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-[#DCE3EB] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <div className="surface-card p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full sm:max-w-md">
           <input
             type="text"
@@ -205,18 +203,29 @@ export default function OwnerEnquiriesPage() {
       {/* Grid: Master List & Detail View */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Enquiry List (7 Cols) */}
-        <div className="lg:col-span-7 bg-white rounded-xl border border-[#DCE3EB] shadow-xs overflow-hidden flex flex-col">
-          <div className="p-3 bg-[#F8FAFC] border-b border-[#DCE3EB] text-[11px] font-bold text-[#687586] flex items-center justify-between">
-            <span>Enquiries List ({totalCount})</span>
-            <span>Click to review details</span>
+        <div className="lg:col-span-7 surface-card rounded-2xl overflow-hidden flex flex-col">
+          <div className="px-4 py-3 border-b border-[#E6EBF1] text-[11px] font-medium text-slate-500 flex items-center justify-between">
+            <span>Inbox</span>
+            <span>Select to review</span>
           </div>
 
           <div className="divide-y divide-[#DCE3EB] max-h-[600px] overflow-y-auto">
             {loading ? (
-              <div className="p-12 text-center text-slate-400 text-xs flex flex-col items-center gap-2">
-                <Loader2 className="w-5 h-5 animate-spin text-[#E87832]" />
-                <span>Loading customer enquiries...</span>
-              </div>
+              <>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} className="p-4 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <div className="h-4 w-32 skeleton" />
+                      <div className="h-4 w-16 skeleton rounded-full" />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="h-3 w-24 skeleton" />
+                      <div className="h-3 w-28 skeleton" />
+                    </div>
+                    <div className="h-3 w-3/4 skeleton" />
+                  </div>
+                ))}
+              </>
             ) : enquiries.length > 0 ? (
               enquiries.map((enq) => (
                 <div
@@ -338,7 +347,7 @@ export default function OwnerEnquiriesPage() {
               </div>
 
               {saveSuccess && (
-                <div className="p-2.5 bg-green-50 border border-green-200 rounded-lg text-[#217A4B] font-semibold flex items-center gap-1.5 animate-in fade-in">
+                <div className="p-2.5 bg-green-50 border border-green-200 rounded-lg text-[#217A4B] font-semibold flex items-center gap-1.5 anim-fade-in">
                   <CheckCircle className="w-3.5 h-3.5" />
                   <span>Enquiry status & internal notes updated.</span>
                 </div>

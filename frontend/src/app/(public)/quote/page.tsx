@@ -62,7 +62,7 @@ function QuoteFormContent() {
   };
 
   useEffect(() => {
-    let initialNotes = [];
+    const initialNotes: string[] = [];
     if (prefilledProduct) initialNotes.push(`Product of interest: ${prefilledProduct}`);
     if (prefilledService) initialNotes.push(`Service needed: ${prefilledService}`);
     if (prefilledTier) initialNotes.push(`Selected Volume Tier: ${prefilledTier}`);

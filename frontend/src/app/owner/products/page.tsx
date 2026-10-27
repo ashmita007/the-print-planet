@@ -208,137 +208,108 @@ export default function OwnerProductsListPage() {
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-[#102742] text-white px-4 py-3 rounded-xl shadow-2xl border border-white/20 text-xs flex items-center gap-2 animate-in slide-in-from-bottom duration-200">
+        <div className="fixed bottom-5 right-5 z-50 bg-white text-[#263445] px-4 py-3 rounded-xl shadow-lg border border-[#E2E8F0] text-xs flex items-center gap-2 anim-toast">
           <Sparkles className="w-4 h-4 text-[#E87832]" />
           <span>{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
-            className="ml-2 text-slate-400 hover:text-white"
+            className="ml-2 text-slate-400 hover:text-slate-700"
           >
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
 
-      {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#17365D]/10 text-[#17365D] text-[10px] font-bold uppercase tracking-wider mb-1">
-            <Package className="w-3 h-3 text-[#E87832]" />
-            <span>Industrial Inventory & Products</span>
-          </div>
-          <h1 className="text-2xl font-extrabold text-[#17365D] flex items-center gap-2.5">
-            <span>Catalogue Management</span>
-            <span className="text-xs bg-[#E87832]/10 text-[#E87832] font-bold px-2.5 py-0.5 rounded-full border border-[#E87832]/20">
-              {totalCount} Items
+          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+            Catalogue
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+            Products
+            <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
+              {totalCount}
             </span>
           </h1>
         </div>
 
-        {/* Action CTAs */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={handleExportExcel}
             disabled={isExporting}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50"
+            className="bg-white border border-[#DCE3EB] hover:border-[#B9C6D6] hover:bg-[#F8FAFC] text-[#263445] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
             title="Download full catalogue Excel spreadsheet"
           >
             {isExporting ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
             ) : (
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5 text-slate-500" />
             )}
-            <span>Export Excel</span>
+            <span>Export</span>
           </button>
 
           <Link
             href="/owner/import"
-            className="bg-[#17365D] hover:bg-[#102742] text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+            className="bg-white border border-[#DCE3EB] hover:border-[#B9C6D6] hover:bg-[#F8FAFC] text-[#263445] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5" />
-            <span>Bulk CSV/Excel</span>
+            <FileSpreadsheet className="w-3.5 h-3.5 text-slate-500" />
+            <span>Import</span>
           </Link>
 
           <Link
             href="/owner/products/new"
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
-            <PlusCircle className="w-4 h-4" />
-            <span>Add New Product</span>
+            <PlusCircle className="w-3.5 h-3.5" />
+            <span>Add product</span>
           </Link>
         </div>
       </div>
 
-      {/* Visibility Status Tabs (All / Active / Disabled Section) */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[#DCE3EB] pb-3">
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedStatus("");
-            setCurrentPage(1);
-          }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all ${
-            selectedStatus === ""
-              ? "bg-[#17365D] text-white shadow-xs"
-              : "bg-white text-slate-600 hover:bg-slate-100 border border-[#DCE3EB]"
-          }`}
-        >
-          <Package className="w-3.5 h-3.5" />
-          <span>All Catalogue</span>
-          <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-            selectedStatus === "" ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
-          }`}>
-            {totalCount}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedStatus("active");
-            setCurrentPage(1);
-          }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all ${
-            selectedStatus === "active"
-              ? "bg-emerald-700 text-white shadow-xs"
-              : "bg-white text-slate-600 hover:bg-slate-100 border border-[#DCE3EB]"
-          }`}
-        >
-          <Eye className={`w-3.5 h-3.5 ${selectedStatus === "active" ? "text-emerald-200" : "text-emerald-600"}`} />
-          <span>Active (Public Store)</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedStatus("hidden");
-            setCurrentPage(1);
-          }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all ${
-            selectedStatus === "hidden"
-              ? "bg-amber-600 text-white shadow-xs ring-2 ring-amber-400/50"
-              : "bg-white text-slate-600 hover:bg-amber-50 hover:text-amber-800 border border-[#DCE3EB]"
-          }`}
-        >
-          <EyeOff className={`w-3.5 h-3.5 ${selectedStatus === "hidden" ? "text-white" : "text-amber-600"}`} />
-          <span>Disabled Products Section</span>
-          <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-            selectedStatus === "hidden" ? "bg-white/20 text-white" : "bg-amber-100 text-amber-700"
-          }`}>
-            Disabled
-          </span>
-        </button>
+      {/* Visibility tabs */}
+      <div className="flex items-center gap-6 border-b border-[#E2E8F0] overflow-x-auto">
+        {[
+          { value: "", label: "All catalogue", count: totalCount },
+          { value: "active", label: "Active", count: undefined },
+          { value: "hidden", label: "Disabled", count: undefined },
+        ].map((tab) => {
+          const isActiveTab = selectedStatus === tab.value;
+          return (
+            <button
+              key={tab.label}
+              type="button"
+              onClick={() => {
+                setSelectedStatus(tab.value);
+                setCurrentPage(1);
+              }}
+              className={`relative flex items-center gap-2 pb-3 pt-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                isActiveTab ? "text-[#17365D]" : "text-slate-500 hover:text-[#17365D]"
+              }`}
+            >
+              <span>{tab.label}</span>
+              {tab.count !== undefined && (
+                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#C25E1F]" : "text-slate-400"}`}>
+                  {tab.count}
+                </span>
+              )}
+              {isActiveTab && (
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#E87832]" />
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {selectedStatus === "hidden" && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 animate-in fade-in">
-          <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+        <div className="bg-[#FBF7F0] border border-[#EBDFC8] rounded-xl p-4 flex items-start gap-3 anim-fade-in">
+          <AlertCircle className="w-4 h-4 text-[#A97A34] shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <h3 className="text-xs font-bold text-amber-900">
-              Disabled Products Management Section
+            <h3 className="text-xs font-semibold text-[#7A5B2E]">
+              Disabled products
             </h3>
-            <p className="text-xs text-amber-700 leading-relaxed">
+            <p className="text-xs text-[#8A6A3A] leading-relaxed">
               These products are currently <strong>disabled and hidden</strong> from your public website, categories, and customer search results. You can inspect or edit their details, or click the status toggle switch on any item to instantly re-enable it for your live public store.
             </p>
           </div>
@@ -346,7 +317,7 @@ export default function OwnerProductsListPage() {
       )}
 
       {/* Filter / Search Toolbar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+      <div className="surface-card p-4 rounded-2xl space-y-3">
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 text-xs">
           {/* Keyword Search */}
           <form onSubmit={handleSearchSubmit} className="relative flex-1">
@@ -468,16 +439,31 @@ export default function OwnerProductsListPage() {
             </thead>
             <tbody className="divide-y divide-[#DCE3EB]">
               {loading ? (
-                <tr>
-                  <td colSpan={6} className="py-16 text-center text-slate-400">
-                    <div className="flex flex-col items-center justify-center gap-2">
-                      <Loader2 className="w-6 h-6 animate-spin text-[#E87832]" />
-                      <span className="text-xs font-semibold text-[#17365D]">
-                        Loading catalogue inventory...
-                      </span>
-                    </div>
-                  </td>
-                </tr>
+                <>
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <tr key={index}>
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 skeleton rounded-xl shrink-0" />
+                          <div className="space-y-2">
+                            <div className="h-3 w-40 skeleton" />
+                            <div className="h-2.5 w-24 skeleton" />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-4"><div className="h-5 w-20 skeleton rounded-md" /></td>
+                      <td className="py-3.5 px-4"><div className="h-3 w-24 skeleton" /></td>
+                      <td className="py-3.5 px-4"><div className="h-4 w-16 skeleton" /></td>
+                      <td className="py-3.5 px-4"><div className="h-5 w-16 skeleton rounded-full" /></td>
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <div className="h-7 w-7 skeleton rounded-lg" />
+                          <div className="h-7 w-7 skeleton rounded-lg" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </>
               ) : products.length > 0 ? (
                 products.map((p) => {
                   const img =

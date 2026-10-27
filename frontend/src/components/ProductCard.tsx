@@ -21,10 +21,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const [imgSrc, setImgSrc] = useState(imageUrl);
   const [hasError, setHasError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     setImgSrc(imageUrl);
     setHasError(false);
+    setImgLoaded(false);
   }, [imageUrl]);
 
   return (
@@ -35,16 +37,24 @@ export default function ProductCard({ product }: ProductCardProps) {
           href={`/products/${product.slug}`}
           className="relative w-full pt-[100%] bg-[#F8FAFC] overflow-hidden border-b border-[#DCE3EB] block"
         >
+          {!imgLoaded && !hasError && imgSrc && !imgSrc.startsWith("/placeholder") && (
+            <div className="absolute inset-0 skeleton" />
+          )}
+
           {!hasError && imgSrc && !imgSrc.startsWith("/placeholder") ? (
             <img
               src={imgSrc}
               alt={formatProductName(product.name)}
+              onLoad={() => setImgLoaded(true)}
               onError={() => {
                 setHasError(true);
                 setImgSrc("/placeholder-product.svg");
               }}
-              className="absolute inset-0 w-full h-full object-contain p-2 sm:p-4 group-hover:scale-[1.06] transition-transform duration-500 ease-out will-change-transform"
+              className={`absolute inset-0 w-full h-full object-contain p-2 sm:p-4 group-hover:scale-[1.06] transition-[opacity,transform] duration-500 ease-out will-change-transform ${
+                imgLoaded ? "opacity-100" : "opacity-0"
+              }`}
               loading="lazy"
+              decoding="async"
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-slate-400">

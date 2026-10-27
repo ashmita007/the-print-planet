@@ -79,16 +79,16 @@ export default async function CategoriesIndexPage() {
 
       <Breadcrumbs items={[{ label: "Product Categories" }]} />
 
-      {/* Header Banner */}
-      <div className="bg-[#102742] text-white p-6 sm:p-12 rounded-xl sm:rounded-2xl border-l-4 border-[#E87832] space-y-3">
-        <span className="text-[11px] sm:text-xs font-bold text-[#E87832] uppercase tracking-wider">
-          The Print Planet • Complete Product Taxonomy
+      {/* Page header */}
+      <div className="border-b border-[#E2E8F0] pb-6 space-y-2.5 anim-fade-up">
+        <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          Product taxonomy
         </span>
-        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-          Industrial Product Categories
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#17365D]">
+          Industrial product categories
         </h1>
-        <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-          Browse our comprehensive manufacturing and wholesale trade supply categories. High-density satin lanyard rolls, optically clear PVC card holders, RFID chips, and turnkey card machinery with pan-India dispatch.
+        <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
+          Browse our manufacturing and wholesale trade supply categories. High-density satin lanyard rolls, optically clear PVC card holders, RFID chips, and turnkey card machinery with pan-India dispatch.
         </p>
       </div>
 

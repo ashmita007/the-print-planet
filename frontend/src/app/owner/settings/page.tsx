@@ -15,7 +15,6 @@ import {
   Download,
   Loader2,
   FileSpreadsheet,
-  ShieldCheck,
   CloudUpload,
   CloudDownload,
   Sparkles,
@@ -38,10 +37,27 @@ import {
   ownerDownloadDatabaseBackup,
   ownerDownloadCatalogExcel,
   ownerSyncCloudDatabase,
+  ownerGetEmailDiagnostics,
+  ownerSendTestEmail,
 } from "@/lib/api";
 import { SiteSettings } from "@/lib/types";
 
 type TabKey = "hero" | "about" | "identity" | "database" | "security";
+
+type EmailDiagnostics = {
+  config?: {
+    provider?: string;
+    brevo_key_configured?: boolean;
+    brevo_key_preview?: string;
+    brevo_sender_email?: string;
+    owner_recipient?: string;
+    smtp_backend?: string;
+  };
+  account?: { email?: string; company_name?: string; plan?: string };
+  senders?: { email?: string; name?: string; active?: boolean }[];
+  sender_verified?: boolean;
+  problems?: string[];
+};
 
 function OwnerSettingsInner() {
   const searchParams = useSearchParams();
@@ -130,6 +146,11 @@ function OwnerSettingsInner() {
   const [cloudSyncLoading, setCloudSyncLoading] = useState(false);
   const [cloudRestoreLoading, setCloudRestoreLoading] = useState(false);
   const [backupNotice, setBackupNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  // Email delivery diagnostics
+  const [emailTestLoading, setEmailTestLoading] = useState(false);
+  const [emailDiagnostics, setEmailDiagnostics] = useState<EmailDiagnostics | null>(null);
+  const [emailTestNotice, setEmailTestNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
     getSiteSettings().then((s) => {
@@ -413,6 +434,31 @@ function OwnerSettingsInner() {
     }
   };
 
+  const handleTestEmail = async () => {
+    setEmailTestLoading(true);
+    setEmailTestNotice(null);
+    const diagnostics = await ownerGetEmailDiagnostics();
+    if (diagnostics.success) {
+      setEmailDiagnostics(diagnostics.data as EmailDiagnostics);
+    }
+    const test = await ownerSendTestEmail();
+    setEmailTestLoading(false);
+
+    if (test.ok) {
+      setEmailTestNotice({
+        type: "success",
+        text: `Test email accepted by ${test.provider || "provider"} for ${test.recipient || email}. Check the inbox and spam folder.`,
+      });
+      return;
+    }
+
+    const firstProblem = (diagnostics.data as EmailDiagnostics | undefined)?.problems?.[0];
+    setEmailTestNotice({
+      type: "error",
+      text: test.error || firstProblem || "Test email failed. Check the Brevo sender verification and API key.",
+    });
+  };
+
   const handleDownloadBackup = async () => {
     setBackupDownloadLoading(true);
     setBackupNotice(null);
@@ -491,127 +537,116 @@ function OwnerSettingsInner() {
 
   if (loading) {
     return (
-      <div className="py-20 text-center text-xs text-[#687586]">
-        Loading owner control center...
+      <div className="space-y-6 max-w-5xl anim-fade-in">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <div className="h-3 w-28 skeleton" />
+            <div className="h-8 w-48 skeleton" />
+            <div className="h-3 w-72 skeleton" />
+          </div>
+          <div className="h-10 w-32 skeleton rounded-lg" />
+        </div>
+        <div className="flex gap-6 border-b border-[#E2E8F0] pb-3">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className="h-3 w-16 skeleton" />
+          ))}
+        </div>
+        <div className="surface-card p-6 rounded-2xl space-y-5">
+          <div className="space-y-2">
+            <div className="h-4 w-40 skeleton" />
+            <div className="h-3 w-64 skeleton" />
+          </div>
+          <div className="h-44 w-full skeleton rounded-xl" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="space-y-2">
+                <div className="h-3 w-24 skeleton" />
+                <div className="h-10 w-full skeleton rounded-lg" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6 max-w-5xl">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-wider">
-            Owner Management Portal
+          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+            Configuration
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
-            Website &amp; Store Configuration
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+            Store settings
           </h1>
-          <p className="text-xs text-[#687586] mt-0.5">
-            Real-time controls for homepage captions, dynamic About Us CMS, contact identity, and database backups.
+          <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
+            Homepage copy, contact identity, database backups, and owner credentials.
           </p>
         </div>
 
         <button
           onClick={handleSaveAll}
           disabled={saving}
-          className="inline-flex items-center justify-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-md transition-all disabled:opacity-50 shrink-0 cursor-pointer"
+          className="inline-flex items-center justify-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] disabled:opacity-50 shrink-0 cursor-pointer"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          <span>{saving ? "Saving Changes..." : "Publish All Changes"}</span>
+          <span>{saving ? "Publishing..." : "Publish changes"}</span>
         </button>
       </div>
 
-      {/* Notifications */}
+      {/* Feedback */}
       {successMsg && (
-        <div className="p-3.5 bg-green-50 border border-green-200 rounded-xl text-[#217A4B] text-xs font-semibold flex items-center gap-2 shadow-xs animate-in fade-in">
-          <CheckCircle className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2 text-[11px] font-medium text-[#217A4B] anim-fade-in">
+          <CheckCircle className="w-3.5 h-3.5 shrink-0" />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs font-semibold flex items-center gap-2 shadow-xs animate-in fade-in">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2 text-[11px] font-medium text-red-600 anim-fade-in">
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      {/* Tabs Navigation */}
-      <div className="flex items-center gap-1.5 border-b border-[#DCE3EB] overflow-x-auto pb-1 scrollbar-none">
-        <button
-          type="button"
-          onClick={() => handleTabChange("hero")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === "hero"
-              ? "bg-[#17365D] text-white shadow-xs border-b-2 border-[#E87832]"
-              : "text-[#4E6178] hover:text-[#17365D] hover:bg-[#F5F7FA]"
-          }`}
-        >
-          <Sparkles className="w-3.5 h-3.5 text-[#FFA868]" />
-          <span>Homepage Hero &amp; Caption</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabChange("about")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === "about"
-              ? "bg-[#17365D] text-white shadow-xs border-b-2 border-[#E87832]"
-              : "text-[#4E6178] hover:text-[#17365D] hover:bg-[#F5F7FA]"
-          }`}
-        >
-          <Info className="w-3.5 h-3.5 text-[#FFA868]" />
-          <span>Dynamic About Us CMS</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabChange("identity")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === "identity"
-              ? "bg-[#17365D] text-white shadow-xs border-b-2 border-[#E87832]"
-              : "text-[#4E6178] hover:text-[#17365D] hover:bg-[#F5F7FA]"
-          }`}
-        >
-          <Building2 className="w-3.5 h-3.5 text-[#FFA868]" />
-          <span>Store Identity &amp; Contact</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabChange("database")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === "database"
-              ? "bg-[#17365D] text-white shadow-xs border-b-2 border-[#E87832]"
-              : "text-[#4E6178] hover:text-[#17365D] hover:bg-[#F5F7FA]"
-          }`}
-        >
-          <Database className="w-3.5 h-3.5 text-[#FFA868]" />
-          <span>Cloud Sync &amp; Backups</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabChange("security")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-            activeTab === "security"
-              ? "bg-[#17365D] text-white shadow-xs border-b-2 border-[#E87832]"
-              : "text-[#4E6178] hover:text-[#17365D] hover:bg-[#F5F7FA]"
-          }`}
-        >
-          <Lock className="w-3.5 h-3.5 text-[#FFA868]" />
-          <span>Owner Credentials</span>
-        </button>
+      {/* Tabs */}
+      <div className="flex items-center gap-6 border-b border-[#E2E8F0] overflow-x-auto scrollbar-none">
+        {[
+          { id: "hero", label: "Hero", icon: Sparkles },
+          { id: "about", label: "About", icon: Info },
+          { id: "identity", label: "Identity", icon: Building2 },
+          { id: "database", label: "Database", icon: Database },
+          { id: "security", label: "Security", icon: Lock },
+        ].map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => handleTabChange(tab.id as typeof activeTab)}
+              className={`relative flex items-center gap-1.5 pb-3 pt-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                isActive ? "text-[#17365D]" : "text-slate-500 hover:text-[#17365D]"
+              }`}
+            >
+              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#C25E1F]" : "text-slate-400"}`} />
+              <span>{tab.label}</span>
+              {isActive && (
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#E87832]" />
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* TAB 1: HOMEPAGE HERO & CAPTION */}
       {activeTab === "hero" && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-5 text-xs">
+          <div className="surface-card p-6 rounded-2xl space-y-5 text-xs">
             <div className="border-b border-[#DCE3EB] pb-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#E87832]" />
                 Homepage Hero Banner &amp; Headline Editor
               </h2>
@@ -735,9 +770,9 @@ function OwnerSettingsInner() {
       {/* TAB 2: DYNAMIC ABOUT US CMS */}
       {activeTab === "about" && (
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-6 text-xs">
+          <div className="surface-card p-6 rounded-2xl space-y-6 text-xs">
             <div className="border-b border-[#DCE3EB] pb-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
+              <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
                 <Info className="w-4 h-4 text-[#E87832]" />
                 Dynamic About Us Content Management System (CMS)
               </h2>
@@ -1041,8 +1076,8 @@ function OwnerSettingsInner() {
       {/* TAB 3: STORE IDENTITY & CONTACT */}
       {activeTab === "identity" && (
         <form onSubmit={handleSaveIdentity} className="space-y-6 text-xs">
-          <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-5">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-2">
+          <div className="surface-card p-6 rounded-2xl space-y-5">
+            <h2 className="text-sm font-semibold text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-2">
               <Building2 className="w-4 h-4 text-[#E87832]" />
               Store Legal Identity &amp; Branding
             </h2>
@@ -1095,8 +1130,8 @@ function OwnerSettingsInner() {
           </div>
 
           {/* Contact Strip Details */}
-          <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-5">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-2">
+          <div className="surface-card p-6 rounded-2xl space-y-5">
+            <h2 className="text-sm font-semibold text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-2">
               <Phone className="w-4 h-4 text-[#217A4B]" />
               Trade Contact &amp; Dispatch Desk
             </h2>
@@ -1169,21 +1204,15 @@ function OwnerSettingsInner() {
 
       {/* TAB 4: DATABASE & CLOUD SYNC */}
       {activeTab === "database" && (
-        <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-6 text-xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DCE3EB] pb-3">
-            <div className="space-y-0.5">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] flex items-center gap-2">
-                <Database className="w-4 h-4 text-[#217A4B]" />
-                Database Backup &amp; Automated Recovery Shield
-              </h2>
-              <p className="text-[11px] text-[#687586]">
-                Instant multi-sheet Excel (.xlsx) backups containing all Products, Categories, RFQ Leads, and Store Configuration.
-              </p>
-            </div>
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-50 text-[#217A4B] border border-green-200 shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              100% Free Lifetime WAL Backup
-            </span>
+        <div className="surface-card p-6 rounded-2xl space-y-6 text-xs anim-fade-up">
+          <div className="border-b border-[#E6EBF1] pb-4">
+            <h2 className="text-sm font-semibold text-[#17365D] flex items-center gap-2">
+              <Database className="w-4 h-4 text-slate-400" />
+              Backup &amp; recovery
+            </h2>
+            <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+              Multi-sheet Excel backups containing products, categories, RFQ leads, and store configuration.
+            </p>
           </div>
 
           {backupNotice && (
@@ -1211,22 +1240,109 @@ function OwnerSettingsInner() {
             </div>
           )}
 
-          {/* Cloud Auto-Persistence Block */}
-          <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border border-blue-200/90 rounded-xl p-4 space-y-3">
+          {/* Email delivery diagnostics */}
+          <div className="border border-[#E6EBF1] rounded-xl p-4 bg-[#FAFBFC] space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-start sm:items-center gap-2.5">
-                <span className="p-2 bg-[#17365D] text-white rounded-lg shrink-0 mt-0.5 sm:mt-0">
+              <div className="flex items-start gap-2.5">
+                <span className="p-2 bg-white border border-[#E6EBF1] text-slate-500 rounded-lg shrink-0">
+                  <Mail className="w-4 h-4" />
+                </span>
+                <div>
+                  <h3 className="font-semibold text-[#17365D] text-xs sm:text-sm">
+                    Transactional email
+                  </h3>
+                  <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                    RFQ alerts are delivered through Brevo over HTTPS. Run a live diagnostic to see the provider response.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleTestEmail}
+                disabled={emailTestLoading}
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#17365D] hover:bg-[#102742] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer shrink-0"
+              >
+                {emailTestLoading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Mail className="w-3.5 h-3.5" />
+                )}
+                <span>{emailTestLoading ? "Checking..." : "Test Email Delivery"}</span>
+              </button>
+            </div>
+
+            {emailTestNotice && (
+              <div
+                className={`p-3 rounded-lg border text-xs font-semibold ${
+                  emailTestNotice.type === "success"
+                    ? "bg-green-50 border-green-200 text-[#217A4B]"
+                    : "bg-red-50 border-red-200 text-red-700"
+                }`}
+              >
+                <div className="flex items-start gap-2">
+                  {emailTestNotice.type === "success" ? (
+                    <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  )}
+                  <span>{emailTestNotice.text}</span>
+                </div>
+              </div>
+            )}
+
+            {emailDiagnostics && (
+              <div className="space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                  <div className="bg-white border border-[#DCE3EB] rounded-lg p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#687586]">Provider</div>
+                    <div className="font-bold text-[#17365D] mt-0.5 uppercase">
+                      {emailDiagnostics.config?.provider || "none"}
+                    </div>
+                  </div>
+                  <div className="bg-white border border-[#DCE3EB] rounded-lg p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#687586]">Sender</div>
+                    <div className="font-bold text-[#17365D] mt-0.5 truncate">
+                      {emailDiagnostics.config?.brevo_sender_email || "Not set"}
+                    </div>
+                  </div>
+                  <div className="bg-white border border-[#DCE3EB] rounded-lg p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#687586]">Sender Status</div>
+                    <div className={`font-bold mt-0.5 ${emailDiagnostics.sender_verified ? "text-[#217A4B]" : "text-red-600"}`}>
+                      {emailDiagnostics.sender_verified ? "Verified" : "Not verified"}
+                    </div>
+                  </div>
+                </div>
+                {emailDiagnostics.problems && emailDiagnostics.problems.length > 0 && (
+                  <ul className="space-y-1 text-[11px] text-red-700 bg-red-50 border border-red-200 rounded-lg p-2.5">
+                    {emailDiagnostics.problems.map((problem, index) => (
+                      <li key={index} className="flex items-start gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                        <span>{problem}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Cloud auto-persistence */}
+          <div className="border border-[#E6EBF1] rounded-xl p-4 bg-[#FAFBFC] space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start gap-2.5">
+                <span className="p-2 bg-white border border-[#E6EBF1] text-slate-500 rounded-lg shrink-0 mt-0.5">
                   <CloudUpload className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="font-bold text-[#17365D] text-xs sm:text-sm flex items-center gap-2">
-                    Cloud Auto-Persistence (Free Render Container Fix)
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-[#17365D]">
-                      Active Cloudinary WAL
+                  <h3 className="font-semibold text-[#17365D] text-xs sm:text-sm flex items-center gap-2">
+                    Cloud auto-persistence
+                    <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#217A4B]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B]" />
+                      Active
                     </span>
                   </h3>
-                  <p className="text-[11px] text-[#687586] mt-0.5">
-                    Your products, categories, and enquiries are automatically mirrored to secure cloud storage on every change, and auto-restored on boot.
+                  <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                    Products, categories, and enquiries are mirrored to secure cloud storage on every change, then restored automatically on boot.
                   </p>
                 </div>
               </div>
@@ -1235,27 +1351,27 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={() => handleCloudSync("backup")}
                   disabled={cloudSyncLoading || cloudRestoreLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#17365D] hover:bg-[#102742] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#17365D] hover:bg-[#102742] text-white rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {cloudSyncLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   ) : (
                     <CloudUpload className="w-3.5 h-3.5" />
                   )}
-                  <span>{cloudSyncLoading ? "Syncing..." : "Sync to Cloud Now"}</span>
+                  <span>{cloudSyncLoading ? "Syncing..." : "Sync now"}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleCloudSync("restore")}
                   disabled={cloudSyncLoading || cloudRestoreLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 text-[#17365D] border border-blue-300 rounded-lg font-bold text-xs transition-colors shadow-2xs disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 text-[#17365D] border border-[#DCE3EB] rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {cloudRestoreLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   ) : (
                     <CloudDownload className="w-3.5 h-3.5" />
                   )}
-                  <span>{cloudRestoreLoading ? "Restoring..." : "Restore from Cloud"}</span>
+                  <span>{cloudRestoreLoading ? "Restoring..." : "Restore"}</span>
                 </button>
               </div>
             </div>
@@ -1342,8 +1458,8 @@ function OwnerSettingsInner() {
 
       {/* TAB 5: SECURITY CREDENTIALS */}
       {activeTab === "security" && (
-        <div className="bg-white p-6 rounded-2xl border border-[#DCE3EB] shadow-xs space-y-5 text-xs">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-1.5">
+        <div className="surface-card p-6 rounded-2xl space-y-5 text-xs">
+          <h2 className="text-sm font-semibold text-[#17365D] border-b border-[#DCE3EB] pb-2 flex items-center gap-1.5">
             <Lock className="w-4 h-4 text-[#E87832]" />
             Change Owner Master Password
           </h2>

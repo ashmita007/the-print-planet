@@ -90,7 +90,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
         {/* Highlighted Quote Action matching Navbar Orange Button */}
         <Link
           href="/quote"
-          className="flex-1 bg-gradient-to-r from-[#E87832] to-[#FF7A1A] hover:from-[#d66b28] hover:to-[#e66c15] text-white py-2 px-2.5 rounded-xl flex flex-col items-center justify-center font-bold shadow-[0_4px_12px_rgba(232,120,50,0.4)] transition-all active:scale-95"
+          className="flex-1 bg-[#E87832] hover:bg-[#d66b28] text-white py-2 px-2.5 rounded-lg flex flex-col items-center justify-center font-semibold transition-all active:scale-95"
         >
           <FileText className="w-4 h-4 mb-0.5 text-white" />
           <span className="text-[10px] tracking-tight whitespace-nowrap uppercase">

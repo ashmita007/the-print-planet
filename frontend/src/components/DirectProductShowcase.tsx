@@ -4,7 +4,6 @@ import React, { useState, useMemo, useEffect, useRef, useCallback } from "react"
 import Link from "next/link";
 import {
   Search,
-  Sparkles,
   ArrowRight,
   Layers,
   SlidersHorizontal,
@@ -169,35 +168,35 @@ export default function DirectProductShowcase({
       {/* Header with Title and B2B Badge */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E87832]/10 border border-[#E87832]/25 text-[#E87832] text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-1.5 sm:mb-2">
-            <Sparkles className="w-3 h-3" />
-            <span>Direct Wholesale Catalogue</span>
-          </div>
-          <h2 className="text-xl sm:text-3xl font-extrabold text-[#17365D] tracking-tight">
-            Explore Factory Products Directly
+          <span className="text-[10px] sm:text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+            Catalogue
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight mt-1">
+            Explore factory products
           </h2>
-          <p className="text-xs sm:text-sm text-[#687586] mt-1 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 max-w-2xl leading-relaxed">
             Instant B2B pricing, technical specifications, and factory quotations for ID card rolls, holders, clips, and machinery.
           </p>
         </div>
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors self-start md:self-auto py-1.5 sm:py-2 px-3 sm:px-3.5 rounded-lg border border-[#DCE3EB] hover:border-[#E87832] bg-white shadow-2xs"
+          className="group inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-[#17365D] transition-colors self-start md:self-auto py-1"
         >
-          <span>View Full Catalogue ({products.length} Items)</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          <span>View full catalogue</span>
+          <span className="tabular-nums text-slate-400">({products.length})</span>
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
 
       {/* Control Bar: Category Tabs + Quick Search + Sorting */}
-      <div className="bg-[#F5F7FA] border border-[#DCE3EB] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-5 sm:mb-8 space-y-3 sm:space-y-4">
+      <div className="bg-[#FAFBFC] border border-[#E2E8F0] rounded-2xl p-3 sm:p-5 mb-5 sm:mb-8 space-y-3 sm:space-y-4">
         {/* Category Pills Header with Scroll Controls */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <div className="text-[10px] sm:text-[11px] font-bold text-[#687586] uppercase tracking-wider flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-[#E87832]" />
-              <span>Select Category Line:</span>
+            <div className="text-[10px] sm:text-[11px] font-medium text-slate-500 uppercase tracking-[0.12em] flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-slate-400" />
+              <span>Category</span>
             </div>
 
             {/* Left / Right Arrow Buttons for Desktop & Tablet */}
@@ -284,7 +283,7 @@ export default function DirectProductShowcase({
                       block: "nearest",
                     });
                   }}
-                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     selectedCategory === cat.slug
                       ? "bg-[#17365D] text-white shadow-xs"
                       : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"
@@ -341,7 +340,7 @@ export default function DirectProductShowcase({
                 className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F8FAFC] border border-[#DCE3EB] hover:border-[#17365D] text-[11px] sm:text-xs font-semibold text-[#263445] hover:text-[#17365D] rounded-lg sm:rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
                 aria-label="Open sort products modal"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#E87832]" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
                 <span className="font-bold">{SORT_LABELS[sortBy]}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#687586]" />
               </button>

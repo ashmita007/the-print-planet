@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -101,6 +102,23 @@ class OwnerDashboardStatsView(APIView):
             'recent_enquiries': EnquiryDetailSerializer(recent_enquiries, many=True).data,
             'recent_products': ProductListSerializer(recent_products, many=True).data,
         })
+
+
+class OwnerEmailDiagnosticsView(APIView):
+    """Owner-only email configuration check and real test delivery endpoint."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def get(self, request):
+        from apps.enquiries.email_diagnostics import diagnose_email_delivery
+        return Response(diagnose_email_delivery())
+
+    def post(self, request):
+        from apps.enquiries.email_diagnostics import send_diagnostic_email, get_owner_recipient
+        to_email = (request.data.get('to') or get_owner_recipient()).strip()
+        if '@' not in to_email:
+            return Response({'error': 'A valid recipient email address is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        result = send_diagnostic_email(to_email)
+        return Response(result, status=status.HTTP_200_OK if result.get('ok') else status.HTTP_502_BAD_GATEWAY)
 
 
 class OwnerCloudDatabaseSyncView(APIView):

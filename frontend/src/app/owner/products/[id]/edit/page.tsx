@@ -25,8 +25,26 @@ export default function EditProductPage() {
 
   if (loading) {
     return (
-      <div className="py-20 text-center text-xs text-[#687586]">
-        Loading product details...
+      <div className="space-y-6 anim-fade-in">
+        <div className="space-y-2">
+          <div className="h-3 w-32 skeleton" />
+          <div className="h-8 w-64 skeleton" />
+        </div>
+        <div className="surface-card p-6 rounded-2xl space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="space-y-2">
+                <div className="h-3 w-24 skeleton" />
+                <div className="h-10 w-full skeleton rounded-lg" />
+              </div>
+            ))}
+          </div>
+          <div className="h-32 w-full skeleton rounded-xl" />
+          <div className="flex justify-end gap-2">
+            <div className="h-9 w-24 skeleton rounded-lg" />
+            <div className="h-9 w-32 skeleton rounded-lg" />
+          </div>
+        </div>
       </div>
     );
   }

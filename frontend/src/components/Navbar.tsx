@@ -238,7 +238,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
               {/* Mega Dropdown Menu */}
               {categoriesDropdownOpen && (
-                <div className="absolute top-full left-0 w-[640px] bg-white border border-[#DCE3EB] rounded-2xl shadow-[0_24px_60px_-20px_rgba(16,39,66,0.35),inset_0_1px_0_rgba(255,255,255,0.9)] py-3 mt-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="absolute top-full left-0 w-[640px] bg-white border border-[#DCE3EB] rounded-2xl shadow-[0_24px_60px_-20px_rgba(16,39,66,0.35),inset_0_1px_0_rgba(255,255,255,0.9)] py-3 mt-1.5 z-50 anim-fade-in">
                   <div className="px-5 py-2.5 border-b border-[#F5F7FA] bg-[#F5F7FA] flex items-center justify-between rounded-t-2xl">
                     <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5 text-[#E87832]" /> Wholesale Product Lines
@@ -414,15 +414,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
         <div className="fixed inset-0 z-50 xl:hidden">
           {/* Overlay */}
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-black/55 backdrop-blur-xs anim-fade-in"
             onClick={() => setMobileMenuOpen(false)}
           />
 
           {/* Drawer Content */}
-          <div className="fixed inset-y-0 right-0 w-[86vw] max-w-sm bg-white shadow-2xl flex flex-col z-50 animate-in slide-in-from-right duration-200">
+          <div className="fixed inset-y-0 right-0 w-[88vw] max-w-[22rem] h-dvh bg-white shadow-2xl flex flex-col z-50 anim-slide-in-right">
             {/* Drawer Header */}
-            <div className="p-4 border-b border-[#DCE3EB] flex items-center justify-between bg-[#102742] text-white">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="bg-white px-3 py-1.5 rounded-lg inline-block shadow-sm">
+            <div className="px-4 py-3 border-b border-[#E2E8F0] flex items-center justify-between bg-white">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="inline-block">
                 <Image
                   src="/logo.png"
                   alt="Print Planet — The Print Planet™ Wholesale ID Solutions"
@@ -434,15 +434,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-10 h-10 flex items-center justify-center rounded-xl text-white/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors"
+                className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-800 hover:bg-[#F5F7FA] active:bg-[#EEF2F7] transition-colors"
                 aria-label="Close navigation menu"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Drawer Nav Items */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
               <div className="space-y-1">
                 <Link
                   href="/"
@@ -564,7 +564,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   <Link
                     href="/quote"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-gradient-to-r from-[#E87832] to-[#FF7A1A] text-white shadow-md"
+                    className="flex items-center justify-between p-3.5 rounded-lg font-semibold text-xs bg-[#E87832] hover:bg-[#d66b28] text-white transition-colors active:scale-[0.99]"
                   >
                     <div className="flex items-center gap-2">
                       <FileText className="w-4 h-4 text-white" />
@@ -605,7 +605,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 </button>
 
                 {mobileCategoriesOpen && (
-                  <div className="mt-1 space-y-1 pl-1 max-h-60 overflow-y-auto animate-in fade-in duration-150">
+                  <div className="mt-1 space-y-1 pl-1 max-h-60 overflow-y-auto overscroll-contain anim-fade-in">
                     {liveCategories.map((c) => (
                       <Link
                         key={c.id}

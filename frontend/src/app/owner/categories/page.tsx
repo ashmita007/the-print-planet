@@ -150,14 +150,17 @@ export default function OwnerCategoriesPage() {
 
   return (
     <div className="space-y-6">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-wider">
-            Catalogue Structure
+          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+            Catalogue structure
           </span>
-          <h1 className="text-2xl font-extrabold text-[#17365D]">
-            Category Management ({categories.length})
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+            Categories
+            <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
+              {categories.length}
+            </span>
           </h1>
         </div>
 
@@ -165,24 +168,24 @@ export default function OwnerCategoriesPage() {
           <button
             type="button"
             onClick={startCreate}
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs"
+            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
             <PlusCircle className="w-3.5 h-3.5" />
-            <span>Create Category</span>
+            <span>New category</span>
           </button>
         )}
       </div>
 
       {statusMsg && (
-        <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-[#217A4B] text-xs flex items-center gap-2">
-          <CheckCircle className="w-4 h-4 shrink-0" />
+        <div className="text-[11px] text-[#217A4B] flex items-center gap-1.5 anim-fade-in">
+          <CheckCircle className="w-3.5 h-3.5 shrink-0" />
           <span>{statusMsg}</span>
         </div>
       )}
 
       {/* Inline Create/Edit Form */}
       {(isCreating || editingCategory) && (
-        <form onSubmit={handleSave} className="bg-white p-6 rounded-xl border border-[#17365D] shadow-md space-y-4 text-xs">
+        <form onSubmit={handleSave} className="surface-card p-6 rounded-2xl space-y-4 text-xs anim-fade-up">
           <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
             <h2 className="font-bold text-sm text-[#17365D]">
               {isCreating ? "Create New Category" : `Edit Category: ${editingCategory?.name}`}
@@ -296,9 +299,9 @@ export default function OwnerCategoriesPage() {
       )}
 
       {/* Categories Table */}
-      <div className="bg-white rounded-xl border border-[#DCE3EB] shadow-xs overflow-hidden">
+      <div className="surface-card rounded-2xl overflow-hidden">
         <table className="w-full text-left text-xs text-[#263445]">
-          <thead className="bg-[#F8FAFC] border-b border-[#DCE3EB] text-[11px] font-bold text-[#687586] uppercase tracking-wider">
+          <thead className="bg-[#FAFBFC] border-b border-[#E6EBF1] text-[10px] font-semibold text-slate-500 uppercase tracking-[0.1em]">
             <tr>
               <th className="py-3 px-4 w-12 text-center">#</th>
               <th className="py-3 px-4">Category Name</th>
@@ -310,14 +313,21 @@ export default function OwnerCategoriesPage() {
           </thead>
           <tbody className="divide-y divide-[#DCE3EB]">
             {loading ? (
-              <tr>
-                <td colSpan={6} className="py-12 text-center text-slate-400">
-                  Loading categories...
-                </td>
-              </tr>
+              <>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <tr key={index}>
+                    <td className="py-3 px-4"><div className="h-3 w-4 mx-auto skeleton" /></td>
+                    <td className="py-3 px-4"><div className="h-3.5 w-44 skeleton" /></td>
+                    <td className="py-3 px-4"><div className="h-3 w-32 skeleton" /></td>
+                    <td className="py-3 px-4"><div className="h-3 w-12 skeleton" /></td>
+                    <td className="py-3 px-4"><div className="h-5 w-16 skeleton rounded-full" /></td>
+                    <td className="py-3 px-4"><div className="h-6 w-20 ml-auto skeleton rounded-lg" /></td>
+                  </tr>
+                ))}
+              </>
             ) : (
               categories.map((c) => (
-                <tr key={c.id} className="hover:bg-[#F5F7FA]">
+                <tr key={c.id} className="hover:bg-[#F8FAFC] transition-colors">
                   <td className="py-3 px-4 text-center font-bold text-slate-400">
                     {c.display_order}
                   </td>
@@ -334,7 +344,7 @@ export default function OwnerCategoriesPage() {
                       <span className="flex items-center gap-1.5 text-[#17365D] font-extrabold uppercase tracking-wide">
                         <Layers className="w-3.5 h-3.5 text-[#E87832]" />
                         <span>{formatCategoryName(c.name)}</span>
-                        <span className="text-[9px] bg-blue-100 text-[#17365D] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                        <span className="text-[9px] bg-[#EEF2F7] text-[#52627A] px-1.5 py-0.5 rounded font-medium uppercase tracking-wider">
                           Main Sector
                         </span>
                       </span>

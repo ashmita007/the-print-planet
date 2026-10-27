@@ -98,14 +98,14 @@ export default function ProductsFilterModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs anim-fade-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="filter-modal-title"
     >
       <div
-        className="bg-white rounded-2xl shadow-xl sm:shadow-2xl w-full max-w-[340px] sm:max-w-md md:max-w-lg max-h-[88vh] sm:max-h-[85vh] flex flex-col border border-[#DCE3EB] overflow-hidden animate-in zoom-in-95 duration-150"
+        className="bg-white rounded-2xl shadow-xl sm:shadow-2xl w-full max-w-[340px] sm:max-w-md md:max-w-lg max-h-[88vh] sm:max-h-[85vh] flex flex-col border border-[#DCE3EB] overflow-hidden anim-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Responsive Modal Header */}

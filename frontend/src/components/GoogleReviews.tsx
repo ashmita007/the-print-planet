@@ -107,7 +107,7 @@ export default function GoogleReviews() {
     : REVIEWS_DATA.filter((r) => r.category === activeTab);
 
   return (
-    <section className="bg-gradient-to-b from-white via-[#F8FAFC] to-white py-16 border-t border-[#DCE3EB]">
+    <section className="bg-white py-16 border-t border-[#DCE3EB]">
       {/* Schema.org Aggregate Rating & Reviews Structured Data */}
       <script
         type="application/ld+json"
@@ -322,7 +322,7 @@ export default function GoogleReviews() {
           <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <Link
               href="/quote"
-              className="w-full sm:w-auto bg-gradient-to-r from-[#E87832] to-[#FF7A1A] hover:from-[#d66b28] hover:to-[#e66c15] text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md text-center"
+              className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all active:scale-[0.99] text-center"
             >
               Get Instant Factory Quote
             </Link>

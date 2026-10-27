@@ -485,14 +485,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
       {/* Feedback Banners */}
       {errorMsg && (
-        <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-2 animate-in fade-in">
+        <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-2 anim-fade-in">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
 
       {successMsg && (
-        <div className="p-3.5 bg-green-50 border border-green-200 rounded-xl text-[#217A4B] text-xs flex items-center gap-2 animate-in fade-in">
+        <div className="p-3.5 bg-green-50 border border-green-200 rounded-xl text-[#217A4B] text-xs flex items-center gap-2 anim-fade-in">
           <CheckCircle className="w-4 h-4 shrink-0" />
           <span>{successMsg}</span>
         </div>
@@ -593,7 +593,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
                 {/* Inline Quick Category Creator */}
                 {showCatCreator && (
-                  <div className="mt-3 p-4 bg-[#F8FAFC] border border-[#E87832]/30 rounded-xl space-y-3 animate-in fade-in duration-200">
+                  <div className="mt-3 p-4 bg-[#F8FAFC] border border-[#E87832]/30 rounded-xl space-y-3 anim-fade-up">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-[#17365D] text-xs">
                         Create New Category On-The-Fly
@@ -974,7 +974,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   </p>
                 </div>
                 {uploadingImage && (
-                  <div className="pt-1 text-[#E87832] font-semibold flex items-center justify-center gap-1.5 text-xs animate-in fade-in">
+                  <div className="pt-1 text-[#E87832] font-semibold flex items-center justify-center gap-1.5 text-xs anim-fade-in">
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                     <span>Uploading asset to Cloudinary CDN...</span>
                   </div>

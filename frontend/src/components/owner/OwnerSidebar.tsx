@@ -101,53 +101,64 @@ function OwnerSidebarInner() {
   ];
 
   useEffect(() => {
-    if (mobileOpen) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = original;
-      };
-    }
+    if (!mobileOpen) return;
+
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = original;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [mobileOpen]);
 
   return (
     <>
       {/* Mobile Bar */}
-      <div className="lg:hidden bg-[#102742] text-white p-3.5 flex items-center justify-between border-b border-white/10 sticky top-0 z-40">
+      <div className="lg:hidden bg-[#0E2238]/95 backdrop-blur-md text-white px-4 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-30">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-[#E87832] flex items-center justify-center font-bold text-white text-xs shadow-xs">
             P
           </div>
           <div>
             <span className="font-bold text-xs block leading-tight">THE PRINT PLANET</span>
-            <span className="text-[10px] text-slate-400 block leading-tight">Owner Control Center</span>
+            <span className="text-[10px] text-slate-400 block leading-tight">Owner Console</span>
           </div>
         </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
           aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
+          aria-controls="owner-sidebar"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* Mobile Backdrop Overlay */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-xs transition-opacity animate-in fade-in"
-          onClick={() => setMobileOpen(false)}
-        />
-      )}
+      <div
+        className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMobileOpen(false)}
+        aria-hidden="true"
+      />
 
       {/* Sidebar Container */}
       <aside
-        className={`${
-          mobileOpen ? "block" : "hidden"
-        } lg:block w-64 bg-[#102742] text-white flex flex-col shrink-0 min-h-screen border-r border-[#17365D] z-40 fixed lg:static inset-y-0 left-0 animate-in slide-in-from-left duration-200`}
+        id="owner-sidebar"
+        className={`fixed lg:static inset-y-0 left-0 z-50 lg:z-auto w-72 sm:w-64 bg-[#0E2238] text-white flex flex-col shrink-0 h-dvh lg:h-auto lg:min-h-screen border-r border-white/[0.06] shadow-2xl lg:shadow-none transition-transform duration-300 ease-out ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
       >
         {/* Brand Header */}
-        <div className="p-4 border-b border-white/10 flex items-center justify-between bg-[#0c1f36]">
+        <div className="px-4 py-4 border-b border-white/10 flex items-center justify-between bg-[#0B1B2D]">
           <Link href="/owner/dashboard" className="flex items-center gap-2.5">
             <div className="bg-white px-2.5 py-1.5 rounded-lg inline-block shadow-xs">
               <Image
@@ -159,11 +170,11 @@ function OwnerSidebarInner() {
               />
             </div>
             <div>
-              <span className="text-[11px] font-bold text-white block leading-tight">
-                Owner Portal
+              <span className="text-[11px] font-semibold text-white/90 block leading-tight">
+                Owner Console
               </span>
-              <span className="text-[9px] text-[#FFA868] font-mono block leading-tight">
-                v2.4 Management
+              <span className="text-[9px] text-slate-500 block leading-tight">
+                Wholesale operations
               </span>
             </div>
           </Link>
@@ -176,10 +187,10 @@ function OwnerSidebarInner() {
         </div>
 
         {/* Navigation List */}
-        <nav className="flex-1 p-3.5 space-y-4 overflow-y-auto">
+        <nav className="flex-1 p-3 space-y-5 overflow-y-auto">
           {navSections.map((sec, sIdx) => (
             <div key={sIdx} className="space-y-1">
-              <span className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
+              <span className="px-3 text-[9px] font-semibold text-slate-500 uppercase tracking-[0.14em] block mb-1.5">
                 {sec.title}
               </span>
               <div className="space-y-0.5">
@@ -196,13 +207,16 @@ function OwnerSidebarInner() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      className={`group relative flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                         isActive
-                          ? "bg-[#17365D] text-white border-l-4 border-[#E87832] shadow-xs font-bold"
-                          : "text-slate-300 hover:bg-white/5 hover:text-white"
+                          ? "bg-white/[0.08] text-white font-semibold"
+                          : "text-slate-400 hover:bg-white/[0.04] hover:text-slate-100"
                       }`}
                     >
-                      <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? "text-[#FFA868]" : "text-slate-400"}`} />
+                      {isActive && (
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[2px] rounded-full bg-[#E87832]" />
+                      )}
+                      <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? "text-[#FFA868]" : "text-slate-500 group-hover:text-slate-300"}`} />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -215,31 +229,36 @@ function OwnerSidebarInner() {
             <Link
               href="/"
               target="_blank"
-              className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/5 hover:text-white transition-colors"
+              className="group flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-white/[0.04] hover:text-slate-100 transition-all duration-200"
             >
               <span className="flex items-center gap-2">
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" />
                 <span>Live Public Site</span>
               </span>
-              <span className="text-[9px] bg-white/10 px-1.5 py-0.5 rounded text-slate-300">New tab</span>
+              <span className="text-[10px] text-slate-500 group-hover:text-slate-300 transition-colors">↗</span>
             </Link>
           </div>
         </nav>
 
         {/* User Info & Logout Footer */}
-        <div className="p-3.5 border-t border-white/10 bg-[#0c1f36]">
-          <div className="flex items-center justify-between">
-            <div className="truncate pr-2">
-              <p className="text-xs font-bold text-white truncate">
-                {user?.username || "Owner Admin"}
-              </p>
-              <p className="text-[10px] text-slate-400 truncate">
-                {user?.email || "theprintplanet01@gmail.com"}
-              </p>
+        <div className="p-4 border-t border-white/10 bg-[#0B1B2D]">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-white/[0.08] border border-white/10 flex items-center justify-center text-[11px] font-semibold text-slate-200 shrink-0">
+                {(user?.username || "O").charAt(0).toUpperCase()}
+              </div>
+              <div className="truncate">
+                <p className="text-[11px] font-semibold text-white truncate">
+                  {user?.username || "Owner Admin"}
+                </p>
+                <p className="text-[10px] text-slate-500 truncate">
+                  {user?.email || "theprintplanet01@gmail.com"}
+                </p>
+              </div>
             </div>
             <button
               onClick={handleLogout}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-[#FFA868] hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-slate-500 hover:text-[#FFA868] hover:bg-white/[0.06] transition-colors cursor-pointer shrink-0"
               title="Logout from portal"
             >
               <LogOut className="w-4 h-4" />

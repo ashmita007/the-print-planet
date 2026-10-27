@@ -142,14 +142,14 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/55 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/55 backdrop-blur-xs anim-fade-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-headline"
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-[340px] sm:max-w-lg md:max-w-xl max-h-[92vh] sm:max-h-[88vh] flex flex-col border border-[#DCE3EB] overflow-hidden animate-in zoom-in-95 duration-150"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-[340px] sm:max-w-lg md:max-w-xl max-h-[92vh] sm:max-h-[88vh] flex flex-col border border-[#DCE3EB] overflow-hidden anim-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header: compact on mobile, spacious on laptop */}

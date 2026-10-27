@@ -69,7 +69,7 @@ export default function OwnerLayout({
   // If on login page, render form immediately
   if (isLoginPage) {
     return (
-      <div className="min-h-screen bg-[#F5F7FA] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#F6F8FB] flex items-center justify-center p-4">
         {children}
       </div>
     );
@@ -78,9 +78,9 @@ export default function OwnerLayout({
   // If on a protected route and still verifying or unauthenticated
   if (hasAuthToken !== true) {
     return (
-      <div className="min-h-screen bg-[#F5F7FA] flex flex-col items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-[#DCE3EB] flex flex-col items-center gap-4 max-w-sm w-full text-center">
-          <div className="bg-[#102742] p-4 rounded-xl">
+      <div className="min-h-screen bg-[#F6F8FB] flex flex-col items-center justify-center p-4">
+        <div className="bg-white p-8 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_20px_50px_-30px_rgba(16,39,66,0.3)] flex flex-col items-center gap-4 max-w-sm w-full text-center anim-scale-in">
+          <div className="bg-[#0E2238] p-3.5 rounded-xl">
             <Image
               src="/logo.png"
               alt="The Print Planet"
@@ -105,10 +105,10 @@ export default function OwnerLayout({
 
   // Authenticated owner layout
   return (
-    <div className="min-h-screen bg-[#F5F7FA] flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-[#F6F8FB] flex flex-col lg:flex-row">
       <OwnerSidebar />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+        <main key={pathname} className="flex-1 p-4 sm:p-6 lg:p-8 pb-16 max-w-7xl w-full mx-auto space-y-6 anim-fade-up">
           {children}
         </main>
       </div>

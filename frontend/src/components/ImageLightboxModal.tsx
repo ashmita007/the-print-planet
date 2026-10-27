@@ -59,7 +59,7 @@ export default function ImageLightboxModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex flex-col justify-between bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none p-3 sm:p-6"
+      className="fixed inset-0 z-[9999] flex flex-col justify-between bg-black/95 backdrop-blur-md anim-fade-in select-none p-3 sm:p-6"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
