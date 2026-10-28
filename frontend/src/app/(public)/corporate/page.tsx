@@ -79,7 +79,7 @@ export default function CorporatePage() {
             <Building className="w-3.5 h-3.5" />
             <span>Enterprise B2B Division</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
             Bulk & Corporate Printing Solutions
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -259,7 +259,7 @@ export default function CorporatePage() {
       {/* Direct Contact Banner */}
       <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-bold text-[#17365D]">Speak Directly with Our Corporate Accounts Head</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Speak Directly with Our Corporate Accounts Head</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             Have questions about custom PMS colors, large-scale annual agreements, or multi-branch logistics? Contact our industrial desk today.
           </p>

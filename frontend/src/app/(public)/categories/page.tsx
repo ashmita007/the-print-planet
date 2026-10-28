@@ -106,7 +106,7 @@ export default async function CategoriesIndexPage() {
                   <Layers className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-[#17365D] group-hover:text-[#E87832] transition-colors">
+                  <h2 className="text-lg font-bold text-[#17365D] group-hover:text-[#E87832] transition-colors uppercase tracking-wider">
                     {formatCategoryName(cat.name)}
                   </h2>
                   <p className="text-xs text-[#4E6178] mt-1 leading-relaxed line-clamp-2">

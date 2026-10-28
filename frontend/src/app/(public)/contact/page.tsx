@@ -101,7 +101,7 @@ export default async function ContactPage() {
           <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
             Industrial Sales & Trade Desk
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17365D]">
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
             Contact & Bulk Quotation Enquiry
           </h1>
           <p className="text-sm text-slate-500 max-w-2xl">
@@ -167,7 +167,7 @@ export default async function ContactPage() {
 
           {/* Quick WhatsApp Action Card */}
           <div className="surface-card p-5 rounded-2xl space-y-3">
-            <h3 className="font-bold text-sm text-[#17365D]">Need a quote on WhatsApp?</h3>
+            <h3 className="font-bold text-sm">Need a quote on WhatsApp?</h3>
             <p className="text-xs text-slate-500 leading-relaxed">
               Send your roll quantities and holder requirements directly to our on-duty trade manager.
             </p>

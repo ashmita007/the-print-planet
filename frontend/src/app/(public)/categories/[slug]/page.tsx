@@ -164,7 +164,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
               </Link>
             )}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17365D]">
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight uppercase">
             {formatCategoryName(category.name)}
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">

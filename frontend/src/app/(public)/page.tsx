@@ -142,7 +142,7 @@ export default async function HomePage() {
               <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] mb-2">
                 Shop floor &amp; trade operations
               </p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
                 Built for high-output print studios
               </h2>
               <p className="text-xs sm:text-sm text-[#687586] mt-1.5 max-w-2xl leading-relaxed">
@@ -169,7 +169,7 @@ export default async function HomePage() {
                     Sunkadakatte, Bengaluru
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white leading-snug">
+                <h3 className="text-xl sm:text-2xl font-black text-white leading-tight">
                   Never Buy Industrial Equipment Blindly. <br />
                   <span className="text-[#F0A46B]">Inspect your machine on live WhatsApp video.</span>
                 </h3>
@@ -360,7 +360,7 @@ export default async function HomePage() {
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] mb-2">
               Manufacturing
             </p>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-[#17365D] tracking-tight">
               Direct specialist in PVC cards &amp; ID materials
             </h2>
             <p className="text-xs sm:text-sm text-[#4E6178] mt-2 leading-relaxed">
@@ -373,7 +373,7 @@ export default async function HomePage() {
               <div className="text-[11px] font-bold tracking-[0.14em] text-slate-400">
                 01
               </div>
-              <h3 className="font-black text-base text-[#17365D]">
+              <h3 className="font-black text-lg text-[#17365D]">
                 PVC Core Sheets &amp; Inkjet Fusing Media
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -391,7 +391,7 @@ export default async function HomePage() {
               <div className="text-[11px] font-bold tracking-[0.14em] text-slate-400">
                 02
               </div>
-              <h3 className="font-black text-base text-[#17365D]">
+              <h3 className="font-black text-lg text-[#17365D]">
                 Coated Overlay &amp; Magnetic Stripe Films
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -409,7 +409,7 @@ export default async function HomePage() {
               <div className="text-[11px] font-bold tracking-[0.14em] text-slate-400">
                 03
               </div>
-              <h3 className="font-black text-base text-[#17365D]">
+              <h3 className="font-black text-lg text-[#17365D]">
                 Rigid Holders, Reels &amp; RFID Smart Badges
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -434,7 +434,7 @@ export default async function HomePage() {
               <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#F0A46B]">
                 Custom production &amp; contract manufacturing
               </span>
-              <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight leading-snug">
+              <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
                 Require Custom Dimensions, Pantone Matching, or Machine Sourcing?
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">

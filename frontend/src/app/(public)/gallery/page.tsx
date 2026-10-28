@@ -135,7 +135,7 @@ export default function GalleryPage() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Proof of Craftsmanship & Quality</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
             Our Portfolio & Product Sample Gallery
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -256,7 +256,7 @@ export default function GalleryPage() {
             <ShieldCheck className="w-4 h-4" />
             <span>Guaranteed Production Match</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-black text-[#17365D]">Want to inspect physical samples before ordering?</h3>
+          <h3 className="text-xl sm:text-2xl font-black">Want to inspect physical samples before ordering?</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             We dispatch verified physical sample kits with satin lanyard swatches, acrylic and PVC badge holders, and metal hook fittings directly to your corporate address.
           </p>

@@ -151,7 +151,7 @@ export default function IndustriesPage() {
             <Briefcase className="w-3.5 h-3.5" />
             <span>Sector-Specific Printing Solutions</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
             Industries & Business Sectors We Serve
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -298,7 +298,7 @@ export default function IndustriesPage() {
       {/* CTA */}
       <div className="surface-card p-6 sm:p-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-bold text-[#17365D]">Have an institutional RFP or bulk tender?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Have an institutional RFP or bulk tender?</h3>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
             Our enterprise division provides formal B2B tender quotations, technical specification sheets, and compliance certificates.
           </p>

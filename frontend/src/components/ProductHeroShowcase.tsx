@@ -189,17 +189,17 @@ export default function ProductHeroShowcase({
           {/* Left Column: Industrial Proposition & Quotation */}
           <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full text-left">
             {/* Quiet brand line */}
-            <div className="text-[10px] sm:text-[11px] font-medium tracking-[0.16em] uppercase text-slate-400">
+            <div className="text-[11px] sm:text-xs font-black tracking-wide uppercase text-white">
               {settings?.hero_badge?.trim() ||
                 "The Print Planet • Specialist in PVC Cards & ID Systems"}
             </div>
 
-            <h1 className="text-[1.7rem] sm:text-4xl lg:text-[2.6rem] font-semibold tracking-tight leading-[1.12] text-white">
-              The Print Planet <span className="text-slate-500 font-light">—</span>{" "}
+            <h1 className="text-2xl sm:text-4xl lg:text-[2.65rem] font-black tracking-tight leading-[1.15] text-white">
+              The Print Planet <span className="text-white/60 font-light">—</span>{" "}
               <span className="inline-block">
                 <span
                   key={phraseIdx}
-                  className={`inline-block text-[#F0A46B] transition-all duration-300 ${
+                  className={`inline-block font-black text-[#F0A46B] transition-all duration-300 ${
                     isPhraseVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 -translate-y-1"
@@ -208,14 +208,14 @@ export default function ProductHeroShowcase({
                   {ROTATING_PHRASES[phraseIdx % ROTATING_PHRASES.length]}
                 </span>
               </span>
-              <span className="block text-base sm:text-xl lg:text-[1.3rem] font-normal text-slate-300 mt-2.5 leading-snug tracking-normal">
+              <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
                 {settings?.hero_subtitle ||
                   settings?.tagline ||
                   "Specialist in PVC cards, lens packaging & commercial printing solutions"}
               </span>
             </h1>
 
-            <p className="text-xs sm:text-[13px] text-slate-400 leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl">
               {settings?.hero_caption || (
                 <>
                   Official portal of <strong className="text-slate-300">The Print Planet</strong> — a factory specialist in PVC cards, CR-80 fusing sheets, lens packaging, rigid ID card holders, satin lanyard rolls, commercial printing, and card die-cutting machinery. 24–48h pan-India dispatch from Bangalore.
@@ -227,7 +227,7 @@ export default function ProductHeroShowcase({
             <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
               <a
                 href="#catalogue-section"
-                className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-[13px] transition-all active:scale-[0.99] flex items-center justify-center gap-2 group text-center"
+                className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm tracking-wide transition-all active:scale-[0.99] flex items-center justify-center gap-2 group text-center"
               >
                 <span>Browse {totalProductsCount} products</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -235,7 +235,7 @@ export default function ProductHeroShowcase({
 
               <Link
                 href="/quote"
-                className="text-slate-200 hover:text-white border border-white/15 hover:border-white/30 hover:bg-white/5 px-5 py-2.5 rounded-lg font-medium text-xs sm:text-[13px] transition-all flex items-center justify-center gap-2 text-center"
+                className="text-slate-200 hover:text-white border border-white/15 hover:border-white/30 hover:bg-white/5 px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm tracking-wide transition-all flex items-center justify-center gap-2 text-center"
               >
                 <FileText className="w-4 h-4 text-slate-400" />
                 <span>Request a quote</span>

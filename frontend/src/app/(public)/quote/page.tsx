@@ -129,7 +129,7 @@ function QuoteFormContent() {
             <FileText className="w-3.5 h-3.5" />
             <span>Fast-Track Commercial RFQ</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
             Request a Custom B2B Quotation
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">

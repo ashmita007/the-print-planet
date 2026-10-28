@@ -103,7 +103,7 @@ export default function ServicesPage() {
             <Zap className="w-3.5 h-3.5" />
             <span>Industrial Printing & Fabrication Solutions</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
             Commercial Printing Capabilities & Value-Added Services
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -291,7 +291,7 @@ export default function ServicesPage() {
       {/* Bottom CTA Banner */}
       <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-bold text-[#17365D]">Need a Custom Printing Specification?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold">Need a Custom Printing Specification?</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             Our technical engineers assist with custom mold dies, pantone yarn dyeing, and customized optical packaging dimensions.
           </p>

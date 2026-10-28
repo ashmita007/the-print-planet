@@ -111,7 +111,7 @@ export default async function AboutPage() {
           <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
             {heroTag}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-2xl sm:text-5xl font-black tracking-tight">
             {heroTitle}
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -149,7 +149,7 @@ export default async function AboutPage() {
         </div>
 
         <div className="bg-[#F5F7FA] p-5 sm:p-8 rounded-xl sm:rounded-2xl border border-[#DCE3EB] space-y-4">
-          <h3 className="font-bold text-sm text-[#17365D]">
+          <h3 className="font-bold text-sm text-[#17365D] uppercase tracking-wider">
             Production standards
           </h3>
           <div className="space-y-3 text-xs">
