@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Shield, Box } from "lucide-react";
 import { Product } from "@/lib/types";
@@ -22,12 +22,20 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [imgSrc, setImgSrc] = useState(imageUrl);
   const [hasError, setHasError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
     setImgSrc(imageUrl);
     setHasError(false);
     setImgLoaded(false);
   }, [imageUrl]);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth > 0) {
+      setImgLoaded(true);
+    }
+  }, [imgSrc]);
 
   return (
     <>
@@ -43,6 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {!hasError && imgSrc && !imgSrc.startsWith("/placeholder") ? (
             <img
+              ref={imgRef}
               src={imgSrc}
               alt={formatProductName(product.name)}
               onLoad={() => setImgLoaded(true)}
@@ -123,11 +132,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="flex items-baseline justify-between mb-1.5 sm:mb-2.5 gap-1">
               <div className="min-w-0 flex-1">
                 {product.price_display ? (
-                  <span className="text-[11px] sm:text-sm font-bold tabular-nums tracking-tight text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-black tabular-nums tracking-tight text-[#17365D] block truncate">
                     {product.price_display}
                   </span>
                 ) : product.price ? (
-                  <span className="text-[11px] sm:text-sm font-bold tabular-nums tracking-tight text-[#17365D] block truncate">
+                  <span className="text-[11px] sm:text-sm font-black tabular-nums tracking-tight text-[#17365D] block truncate">
                     ₹ {Number(product.price).toLocaleString("en-IN")}
                   </span>
                 ) : (

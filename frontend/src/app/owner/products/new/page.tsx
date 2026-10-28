@@ -11,7 +11,7 @@ export default function NewProductPage() {
         <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
           Catalogue
         </span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#17365D] mt-1">
           New product
         </h1>
         <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">

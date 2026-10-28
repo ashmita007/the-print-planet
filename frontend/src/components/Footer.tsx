@@ -35,60 +35,66 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 className="h-11 sm:h-13 w-auto object-contain"
               />
             </div>
-            <p className="text-xs font-medium text-slate-400 leading-relaxed tracking-wide">
-              {tagline}
-            </p>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              {footerText}
-            </p>
-            <div className="pt-1 space-y-1 text-[11px] text-slate-400">
-              <p>GSTIN <span className="text-slate-200">{gst}</span></p>
-              <p>PAN <span className="text-slate-200">{pan}</span></p>
-            </div>
+            <div className="grid grid-cols-1 gap-3">
+              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-4">
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.14em] mb-2">
+                  About
+                </p>
+                <p className="text-xs font-semibold text-slate-200 leading-relaxed">
+                  {tagline}
+                </p>
+                <p className="text-xs text-slate-300 leading-relaxed mt-2">
+                  {footerText}
+                </p>
+              </div>
 
-            {/* Verified B2B Marketplace Outbound Citations */}
-            <div className="pt-1">
-              <span className="text-[10px] font-medium text-slate-500 uppercase tracking-[0.14em] block mb-2">
-                Marketplace profiles
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-[11px]">
-                <a
-                  href="https://www.indiamart.com/theprintplanet/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
-                  title="The Print Planet on IndiaMART"
-                >
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
-                  <span>IndiaMART</span>
-                </a>
-                <a
-                  href="https://www.justdial.com/Bangalore/The-Print-Planet"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
-                  title="The Print Planet on Justdial"
-                >
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
-                  <span>Justdial</span>
-                </a>
-                <a
-                  href="https://www.tradeindia.com/Seller-19717145-The-Print-Planet/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
-                  title="The Print Planet on TradeIndia"
-                >
-                  <ExternalLink className="w-3 h-3 text-slate-500" />
-                  <span>TradeIndia</span>
-                </a>
+              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-4">
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.14em] mb-2">
+                  Business details
+                </p>
+                <div className="space-y-1 text-[11px] text-slate-400">
+                  <p>GSTIN <span className="text-slate-200">{gst}</span></p>
+                  <p>PAN <span className="text-slate-200">{pan}</span></p>
+                </div>
+                <div className="flex flex-wrap gap-x-3 gap-y-1 pt-3 mt-3 border-t border-white/10 text-[11px]">
+                  <a
+                    href="https://www.indiamart.com/theprintplanet/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
+                    title="The Print Planet on IndiaMART"
+                  >
+                    <ExternalLink className="w-3 h-3 text-slate-500" />
+                    <span>IndiaMART</span>
+                  </a>
+                  <a
+                    href="https://www.justdial.com/Bangalore/The-Print-Planet"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
+                    title="The Print Planet on Justdial"
+                  >
+                    <ExternalLink className="w-3 h-3 text-slate-500" />
+                    <span>Justdial</span>
+                  </a>
+                  <a
+                    href="https://www.tradeindia.com/Seller-19717145-The-Print-Planet/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
+                    title="The Print Planet on TradeIndia"
+                  >
+                    <ExternalLink className="w-3 h-3 text-slate-500" />
+                    <span>TradeIndia</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Column 2: Key Product Categories */}
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400 mb-4">
               Catalogue
             </h3>
             <ul className="space-y-2 text-xs text-slate-300">
@@ -115,7 +121,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
 
           {/* Column 3: Quick Navigation (9 Core Sections) */}
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400 mb-4">
               Explore
             </h3>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5 text-xs text-slate-300">
@@ -169,7 +175,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
 
           {/* Column 4: Contact & Factory Headquarters */}
           <div className="space-y-3">
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400 mb-4">
               Contact
             </h3>
             <div className="flex items-start gap-2.5 text-xs text-slate-300">
@@ -192,7 +198,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
             <div className="pt-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 px-3 rounded-lg text-xs font-semibold transition-colors"
+                className="inline-flex items-center justify-center w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 px-3 rounded-lg text-xs font-bold transition-colors"
               >
                 Request Custom Quotation
               </Link>

@@ -74,7 +74,7 @@ export default function OwnerLoginPage() {
           priority
         />
         <div className="space-y-1">
-          <h2 className="text-base font-semibold text-[#17365D] tracking-tight">
+          <h2 className="text-base font-bold text-[#17365D] tracking-tight">
             Owner console
           </h2>
           <p className="text-xs text-slate-500">

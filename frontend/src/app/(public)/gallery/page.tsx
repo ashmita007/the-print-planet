@@ -135,7 +135,7 @@ export default function GalleryPage() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Proof of Craftsmanship & Quality</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
             Our Portfolio & Product Sample Gallery
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -144,7 +144,7 @@ export default function GalleryPage() {
           <div className="pt-2 flex flex-wrap gap-3">
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors flex items-center gap-2"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors flex items-center gap-2"
             >
               <span>Request Custom Sample Kit</span>
               <ArrowRight className="w-4 h-4" />
@@ -164,7 +164,7 @@ export default function GalleryPage() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[#17365D]">
+            <h2 className="text-xl sm:text-2xl font-black text-[#17365D]">
               Featured Production Deliverables
             </h2>
             <p className="text-xs text-[#687586] mt-0.5">
@@ -256,14 +256,14 @@ export default function GalleryPage() {
             <ShieldCheck className="w-4 h-4" />
             <span>Guaranteed Production Match</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-semibold text-[#17365D]">Want to inspect physical samples before ordering?</h3>
+          <h3 className="text-xl sm:text-2xl font-black text-[#17365D]">Want to inspect physical samples before ordering?</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             We dispatch verified physical sample kits with satin lanyard swatches, acrylic and PVC badge holders, and metal hook fittings directly to your corporate address.
           </p>
         </div>
         <Link
           href="/quote?type=sample_kit"
-          className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all shrink-0 flex items-center gap-2"
+          className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all shrink-0 flex items-center gap-2"
         >
           <span>Order Physical Sample Kit</span>
           <ArrowRight className="w-4 h-4" />

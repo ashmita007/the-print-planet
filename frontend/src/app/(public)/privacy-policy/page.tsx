@@ -7,7 +7,7 @@ export default function PrivacyPolicyPage() {
       <Breadcrumbs items={[{ label: "Privacy Policy" }]} />
 
       <div className="space-y-4">
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#17365D]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
           Privacy Policy
         </h1>
         <p className="text-xs text-slate-500">Last updated: October 2026</p>

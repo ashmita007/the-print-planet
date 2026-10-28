@@ -87,7 +87,7 @@ export default function BulkImportPage() {
         <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
           Catalogue
         </span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#17365D] mt-1">
           Bulk import
         </h1>
         <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
@@ -104,7 +104,7 @@ export default function BulkImportPage() {
 
       {/* Step 1: Upload & Validate File */}
       <div className="surface-card p-6 rounded-2xl space-y-4 text-xs">
-        <h2 className="text-sm font-semibold text-[#17365D] border-b border-[#DCE3EB] pb-2">
+        <h2 className="text-sm font-bold text-[#17365D] border-b border-[#DCE3EB] pb-2">
           Step 1: Select Excel (.xlsx), CSV, or JSON Data File
         </h2>
 
@@ -117,7 +117,7 @@ export default function BulkImportPage() {
           />
           <FileSpreadsheet className="w-10 h-10 text-[#17365D] mx-auto group-hover:scale-110 transition-transform" />
           <div>
-            <span className="bg-[#17365D] group-hover:bg-[#102742] text-white px-5 py-2.5 rounded-xl font-semibold text-xs inline-block transition-colors shadow-xs">
+            <span className="bg-[#17365D] group-hover:bg-[#102742] text-white px-5 py-2.5 rounded-xl font-bold text-xs inline-block transition-colors shadow-xs">
               Choose Excel (.xlsx) / CSV / JSON File
             </span>
             <p className="text-[11px] text-slate-500 mt-2">
@@ -139,7 +139,7 @@ export default function BulkImportPage() {
             type="button"
             onClick={handleValidate}
             disabled={isValidating}
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-6 py-2.5 rounded-lg font-semibold text-xs transition-colors disabled:opacity-50"
+            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-6 py-2.5 rounded-lg font-bold text-xs transition-colors disabled:opacity-50"
           >
             {isValidating ? "Validating Columns & Detecting Duplicates..." : "Validate & Preview Rows"}
           </button>
@@ -150,7 +150,7 @@ export default function BulkImportPage() {
       {validationResult && !executionResult && (
         <div className="surface-card p-6 rounded-2xl space-y-5 text-xs">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#DCE3EB] pb-3">
-            <h2 className="text-sm font-semibold text-[#17365D]">
+            <h2 className="text-sm font-bold text-[#17365D]">
               Step 2: Pre-Import Inspection & Strategy
             </h2>
 
@@ -170,19 +170,19 @@ export default function BulkImportPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
               <span className="text-[11px] text-slate-500 font-semibold block">Total Rows</span>
-              <strong className="text-xl font-bold tabular-nums text-[#17365D]">{validationResult.total_rows}</strong>
+              <strong className="text-xl font-black tabular-nums text-[#17365D]">{validationResult.total_rows}</strong>
             </div>
             <div className="p-3 bg-green-50 rounded-lg border border-green-200">
               <span className="text-[11px] text-[#217A4B] font-semibold block">New Products</span>
-              <strong className="text-xl font-bold tabular-nums text-[#217A4B]">{validationResult.new_count}</strong>
+              <strong className="text-xl font-black tabular-nums text-[#217A4B]">{validationResult.new_count}</strong>
             </div>
             <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
               <span className="text-[11px] text-[#E87832] font-semibold block">Existing SKUs</span>
-              <strong className="text-xl font-bold tabular-nums text-[#E87832]">{validationResult.existing_count}</strong>
+              <strong className="text-xl font-black tabular-nums text-[#E87832]">{validationResult.existing_count}</strong>
             </div>
             <div className="p-3 bg-red-50 rounded-lg border border-red-200">
               <span className="text-[11px] text-[#C0392B] font-semibold block">Invalid Rows</span>
-              <strong className="text-xl font-bold tabular-nums text-[#C0392B]">{validationResult.error_count}</strong>
+              <strong className="text-xl font-black tabular-nums text-[#C0392B]">{validationResult.error_count}</strong>
             </div>
           </div>
 
@@ -289,7 +289,7 @@ export default function BulkImportPage() {
           <div className="pt-4 flex justify-center gap-4">
             <Link
               href="/owner/products"
-              className="bg-[#17365D] hover:bg-[#102742] text-white px-6 py-2.5 rounded-lg font-semibold text-xs"
+              className="bg-[#17365D] hover:bg-[#102742] text-white px-6 py-2.5 rounded-lg font-bold text-xs"
             >
               View Products Table
             </Link>

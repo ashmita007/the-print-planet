@@ -178,7 +178,7 @@ export default function GoogleReviews() {
               <span>Google reviews</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
               Trusted by print studios across India
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-2xl leading-relaxed">
@@ -189,7 +189,7 @@ export default function GoogleReviews() {
           {/* Google Star Rating Summary Widget */}
           <div className="surface-card p-4 sm:p-5 rounded-2xl flex items-center gap-4 shrink-0">
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-[#17365D] tabular-nums">4.9</div>
+              <div className="text-3xl sm:text-4xl font-black text-[#17365D] tabular-nums">4.9</div>
               <div className="flex items-center gap-0.5 text-amber-400 mt-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
@@ -239,7 +239,7 @@ export default function GoogleReviews() {
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <h3 className="font-semibold text-sm text-[#17365D]">{rev.author}</h3>
+                      <h3 className="font-black text-sm text-[#17365D]">{rev.author}</h3>
                       <span className="text-[10px] font-medium text-emerald-700" title="Verified buyer">
                         Verified
                       </span>
@@ -303,7 +303,7 @@ export default function GoogleReviews() {
         {/* CTA to Leave Review / Request Quote */}
         <div className="mt-10 surface-card rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="font-semibold text-lg text-[#17365D]">
+            <h3 className="font-black text-lg text-[#17365D]">
               Need wholesale volume pricing?
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">

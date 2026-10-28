@@ -112,7 +112,7 @@ export default function ProductsFilterModal({
         <div className="bg-white border-b border-[#E6EBF1] px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2 sm:gap-2.5">
             <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
-            <h3 id="filter-modal-title" className="text-xs sm:text-base font-semibold tracking-tight text-[#17365D]">
+            <h3 id="filter-modal-title" className="text-xs sm:text-base font-bold tracking-tight text-[#17365D]">
               Filter & sort
             </h3>
           </div>
@@ -208,7 +208,7 @@ export default function ProductsFilterModal({
           <div className="pt-2 sm:pt-4 border-t border-[#DCE3EB] space-y-2">
             <button
               type="submit"
-              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5"
+              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5"
             >
               <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Apply Filters</span>

@@ -103,7 +103,7 @@ export default function ServicesPage() {
             <Zap className="w-3.5 h-3.5" />
             <span>Industrial Printing & Fabrication Solutions</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
             Commercial Printing Capabilities & Value-Added Services
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -112,7 +112,7 @@ export default function ServicesPage() {
           <div className="pt-2 flex flex-wrap gap-3 sm:gap-4">
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
             >
               <span>Request Service Quote</span>
               <ArrowRight className="w-4 h-4" />
@@ -133,22 +133,22 @@ export default function ServicesPage() {
       {/* Production Metrics Highlights */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
         <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-bold text-[#17365D]">50,000+</div>
+          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">50,000+</div>
           <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Cards / Day</div>
           <div className="text-[11px] text-[#687586] mt-0.5">High-speed hydraulic production</div>
         </div>
         <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-bold text-[#17365D]">10,000 m</div>
+          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">10,000 m</div>
           <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Lanyard Ribbon</div>
           <div className="text-[11px] text-[#687586] mt-0.5">Sublimation & screen print rolls</div>
         </div>
         <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-bold text-[#17365D]">±0.1 mm</div>
+          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">±0.1 mm</div>
           <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Cutting Precision</div>
           <div className="text-[11px] text-[#687586] mt-0.5">Optical servo mark alignment</div>
         </div>
         <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-bold text-[#17365D]">24-48h</div>
+          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">24-48h</div>
           <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Rush Dispatch</div>
           <div className="text-[11px] text-[#687586] mt-0.5">Rapid turnaround for urgent bulk runs</div>
         </div>
@@ -157,7 +157,7 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl sm:text-3xl font-bold text-[#17365D]">
+          <h2 className="text-xl sm:text-3xl font-extrabold text-[#17365D]">
             Comprehensive Printing & Customization Services
           </h2>
           <p className="text-xs sm:text-sm text-[#687586] mt-1">
@@ -237,7 +237,7 @@ export default function ServicesPage() {
           <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
             Quality Assurance Workflow
           </span>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#17365D] mt-1">
+          <h2 className="text-xl sm:text-2xl font-black text-[#17365D] mt-1">
             How We Execute Your Bulk Printing Orders
           </h2>
           <p className="text-xs sm:text-sm text-[#687586] mt-1">
@@ -291,7 +291,7 @@ export default function ServicesPage() {
       {/* Bottom CTA Banner */}
       <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-semibold text-[#17365D]">Need a Custom Printing Specification?</h3>
+          <h3 className="text-xl sm:text-2xl font-bold text-[#17365D]">Need a Custom Printing Specification?</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             Our technical engineers assist with custom mold dies, pantone yarn dyeing, and customized optical packaging dimensions.
           </p>
@@ -299,7 +299,7 @@ export default function ServicesPage() {
         <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
           <Link
             href="/quote"
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors"
+            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors"
           >
             Submit Specifications
           </Link>

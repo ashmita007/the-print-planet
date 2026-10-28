@@ -169,7 +169,7 @@ export default async function HomePage() {
                     Sunkadakatte, Bengaluru
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-semibold text-white leading-snug">
+                <h3 className="text-xl sm:text-2xl font-black text-white leading-snug">
                   Never Buy Industrial Equipment Blindly. <br />
                   <span className="text-[#F0A46B]">Inspect your machine on live WhatsApp video.</span>
                 </h3>
@@ -181,22 +181,22 @@ export default async function HomePage() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
                   <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
                     <div className="text-[10px] text-slate-400">Cutting speed</div>
-                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">3,500+ /hr</div>
+                    <div className="text-base font-black text-white tabular-nums mt-0.5">3,500+ /hr</div>
                     <div className="text-[9px] text-slate-400">CR-80 ISO Precision</div>
                   </div>
                   <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
                     <div className="text-[10px] text-slate-400">Die warranty</div>
-                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">1-Year Live</div>
+                    <div className="text-base font-black text-white tabular-nums mt-0.5">1-Year Live</div>
                     <div className="text-[9px] text-slate-400">Tungsten Steel Core</div>
                   </div>
                   <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
                     <div className="text-[10px] text-slate-400">Power input</div>
-                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">230V / 415V</div>
+                    <div className="text-base font-black text-white tabular-nums mt-0.5">230V / 415V</div>
                     <div className="text-[9px] text-slate-400">Single or 3-Phase</div>
                   </div>
                   <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
                     <div className="text-[10px] text-slate-400">Spares ready</div>
-                    <div className="text-base font-semibold text-white tabular-nums mt-0.5">Same-Day</div>
+                    <div className="text-base font-black text-white tabular-nums mt-0.5">Same-Day</div>
                     <div className="text-[9px] text-slate-400">Dies, Relays &amp; Elements</div>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default async function HomePage() {
                   href="https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%20I%20would%20like%20to%20schedule%20a%20live%20video%20demonstration%20of%20your%20ID%20card%20machinery."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 w-full sm:w-auto justify-center"
+                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 w-full sm:w-auto justify-center"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span>Book WhatsApp Live Machine Demo</span>
@@ -224,7 +224,7 @@ export default async function HomePage() {
                 <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-emerald-700">
                   Trade proofing desk
                 </span>
-                <h3 className="text-lg font-semibold text-[#17365D] mt-3">
+                <h3 className="text-lg font-bold text-[#17365D] mt-3">
                   Physical Sample Kit for Registered Print Studios
                 </h3>
                 <p className="text-xs text-[#687586] mt-2 leading-relaxed">
@@ -254,7 +254,7 @@ export default async function HomePage() {
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <Link
                   href="/contact"
-                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 px-3 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 px-3 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Package className="w-3.5 h-3.5" />
                   <span>Request Factory Sample Swatches</span>
@@ -268,7 +268,7 @@ export default async function HomePage() {
                 <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-center justify-center mb-3">
                   <Truck className="w-4 h-4" />
                 </div>
-                <h3 className="font-semibold text-base text-[#17365D]">
+                <h3 className="font-bold text-base text-[#17365D]">
                   Same-Day Bengaluru Counter Pickup
                 </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
@@ -287,7 +287,7 @@ export default async function HomePage() {
                 <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-center justify-center mb-3">
                   <FileText className="w-4 h-4" />
                 </div>
-                <h3 className="font-semibold text-base text-[#17365D]">
+                <h3 className="font-bold text-base text-[#17365D]">
                   1-Hour Institution Quotation Desk
                 </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
@@ -306,7 +306,7 @@ export default async function HomePage() {
                 <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-center justify-center mb-3">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
-                <h3 className="font-semibold text-base text-[#17365D]">
+                <h3 className="font-bold text-base text-[#17365D]">
                   100% Tax Compliant (GST: 29AAQFT3909B1ZZ)
                 </h3>
                 <p className="text-xs text-[#687586] mt-1.5 leading-relaxed">
@@ -329,7 +329,7 @@ export default async function HomePage() {
               <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] block mb-2">
                 Machinery
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17365D] tracking-tight">
                 Card cutting, fusing, punching &amp; heat press
               </h2>
               <p className="text-xs sm:text-sm text-[#687586] mt-1.5 leading-relaxed">
@@ -360,7 +360,7 @@ export default async function HomePage() {
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F] mb-2">
               Manufacturing
             </p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
               Direct specialist in PVC cards &amp; ID materials
             </h2>
             <p className="text-xs sm:text-sm text-[#4E6178] mt-2 leading-relaxed">
@@ -370,10 +370,10 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="surface-card surface-hover p-6 space-y-3">
-              <div className="text-[11px] font-semibold tracking-[0.14em] text-slate-400">
+              <div className="text-[11px] font-bold tracking-[0.14em] text-slate-400">
                 01
               </div>
-              <h3 className="font-semibold text-base text-[#17365D]">
+              <h3 className="font-black text-base text-[#17365D]">
                 PVC Core Sheets &amp; Inkjet Fusing Media
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -388,10 +388,10 @@ export default async function HomePage() {
             </div>
 
             <div className="surface-card surface-hover p-6 space-y-3">
-              <div className="text-[11px] font-semibold tracking-[0.14em] text-slate-400">
+              <div className="text-[11px] font-bold tracking-[0.14em] text-slate-400">
                 02
               </div>
-              <h3 className="font-semibold text-base text-[#17365D]">
+              <h3 className="font-black text-base text-[#17365D]">
                 Coated Overlay &amp; Magnetic Stripe Films
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -406,10 +406,10 @@ export default async function HomePage() {
             </div>
 
             <div className="surface-card surface-hover p-6 space-y-3">
-              <div className="text-[11px] font-semibold tracking-[0.14em] text-slate-400">
+              <div className="text-[11px] font-bold tracking-[0.14em] text-slate-400">
                 03
               </div>
-              <h3 className="font-semibold text-base text-[#17365D]">
+              <h3 className="font-black text-base text-[#17365D]">
                 Rigid Holders, Reels &amp; RFID Smart Badges
               </h3>
               <p className="text-xs text-[#687586] leading-relaxed">
@@ -434,7 +434,7 @@ export default async function HomePage() {
               <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#F0A46B]">
                 Custom production &amp; contract manufacturing
               </span>
-              <h2 className="text-xl sm:text-3xl font-semibold tracking-tight leading-snug">
+              <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight leading-snug">
                 Require Custom Dimensions, Pantone Matching, or Machine Sourcing?
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
@@ -444,7 +444,7 @@ export default async function HomePage() {
               <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 pt-2">
                 <Link
                   href="/quote"
-                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 sm:py-3 rounded-lg font-semibold text-xs transition-colors text-center flex items-center justify-center gap-1.5"
+                  className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 sm:py-3 rounded-lg font-bold text-xs transition-colors text-center flex items-center justify-center gap-1.5"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Request Custom Quotation</span>
@@ -460,7 +460,7 @@ export default async function HomePage() {
             </div>
 
             <div className="lg:col-span-4 bg-white/[0.04] p-5 sm:p-6 rounded-xl border border-white/10 text-xs space-y-2.5 sm:space-y-3">
-              <h3 className="font-semibold text-white text-sm border-b border-white/10 pb-2">
+              <h3 className="font-bold text-white text-sm border-b border-white/10 pb-2">
                 Wholesale Assurance
               </h3>
               <div className="flex items-center gap-2 text-slate-300">
@@ -554,7 +554,7 @@ export default async function HomePage() {
             <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F]">
               Buyer questions
             </span>
-            <h2 className="text-xl sm:text-3xl font-bold text-[#17365D]">
+            <h2 className="text-xl sm:text-3xl font-black text-[#17365D]">
               Frequently asked questions
             </h2>
             <p className="text-xs sm:text-sm text-[#4E6178]">
@@ -564,7 +564,7 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
             <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
-              <h3 className="font-semibold text-sm text-[#17365D]">
+              <h3 className="font-bold text-sm text-[#17365D]">
                 Why is The Print Planet India&apos;s specialist in PVC cards?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -573,7 +573,7 @@ export default async function HomePage() {
             </div>
 
             <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
-              <h3 className="font-semibold text-sm text-[#17365D]">
+              <h3 className="font-bold text-sm text-[#17365D]">
                 What products does The Print Planet manufacture?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -582,7 +582,7 @@ export default async function HomePage() {
             </div>
 
             <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
-              <h3 className="font-semibold text-sm text-[#17365D]">
+              <h3 className="font-bold text-sm text-[#17365D]">
                 How do I order or get bulk wholesale rates?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -591,7 +591,7 @@ export default async function HomePage() {
             </div>
 
             <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
-              <h3 className="font-semibold text-sm text-[#17365D]">
+              <h3 className="font-bold text-sm text-[#17365D]">
                 Does The Print Planet deliver across India?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">
@@ -600,7 +600,7 @@ export default async function HomePage() {
             </div>
 
             <div className="bg-white p-5 rounded-xl border border-[#EEF2F7] space-y-2">
-              <h3 className="font-semibold text-sm text-[#17365D]">
+              <h3 className="font-bold text-sm text-[#17365D]">
                 Are GST tax invoices provided?
               </h3>
               <p className="text-xs text-[#4E6178] leading-relaxed">

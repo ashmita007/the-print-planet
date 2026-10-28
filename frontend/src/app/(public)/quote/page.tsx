@@ -129,7 +129,7 @@ function QuoteFormContent() {
             <FileText className="w-3.5 h-3.5" />
             <span>Fast-Track Commercial RFQ</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
             Request a Custom B2B Quotation
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -146,7 +146,7 @@ function QuoteFormContent() {
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h2 className="text-2xl font-bold text-[#17365D]">
+              <h2 className="text-2xl font-black text-[#17365D]">
                 Quotation request received
               </h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
@@ -155,7 +155,7 @@ function QuoteFormContent() {
               <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/products"
-                  className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-colors"
+                  className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors"
                 >
                   Continue Browsing Products
                 </Link>
@@ -359,7 +359,7 @@ function QuoteFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 px-6 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 px-6 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Submitting Quotation Request...</span>
@@ -386,7 +386,7 @@ function QuoteFormContent() {
               <Clock className="w-4 h-4" />
               <span>Instant estimate</span>
             </div>
-            <h3 className="text-lg font-semibold text-[#17365D]">
+            <h3 className="text-lg font-bold text-[#17365D]">
               Chat with our sales desk
             </h3>
             <p className="text-xs text-[#687586] leading-relaxed">
@@ -396,7 +396,7 @@ function QuoteFormContent() {
               href="https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%20I%20need%20an%20urgent%20quote%20for%20bulk%20supplies."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white w-full py-2.5 px-4 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-2"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
             >
               <PhoneCall className="w-4 h-4" />
               <span>Chat on WhatsApp (+91 97418 08034)</span>
@@ -405,7 +405,7 @@ function QuoteFormContent() {
 
           {/* Guarantees List */}
           <div className="surface-card rounded-2xl p-6 space-y-4">
-            <h4 className="text-sm font-semibold text-[#17365D]">
+            <h4 className="text-sm font-bold text-[#17365D]">
               What we guarantee
             </h4>
             <div className="space-y-3 text-xs text-slate-700">

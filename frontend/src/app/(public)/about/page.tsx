@@ -111,7 +111,7 @@ export default async function AboutPage() {
           <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
             {heroTag}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
             {heroTitle}
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -130,26 +130,26 @@ export default async function AboutPage() {
           <p>{storyP2}</p>
           <div className="pt-2 grid grid-cols-2 gap-3">
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat1Val}</div>
+              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat1Val}</div>
               <div className="text-[11px] text-[#687586]">{stat1Label}</div>
             </div>
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat2Val}</div>
+              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat2Val}</div>
               <div className="text-[11px] text-[#687586]">{stat2Label}</div>
             </div>
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat3Val}</div>
+              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat3Val}</div>
               <div className="text-[11px] text-[#687586]">{stat3Label}</div>
             </div>
             <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-bold text-[#17365D] tabular-nums">{stat4Val}</div>
+              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat4Val}</div>
               <div className="text-[11px] text-[#687586]">{stat4Label}</div>
             </div>
           </div>
         </div>
 
         <div className="bg-[#F5F7FA] p-5 sm:p-8 rounded-xl sm:rounded-2xl border border-[#DCE3EB] space-y-4">
-          <h3 className="font-semibold text-sm text-[#17365D]">
+          <h3 className="font-bold text-sm text-[#17365D]">
             Production standards
           </h3>
           <div className="space-y-3 text-xs">

@@ -79,7 +79,7 @@ export default function CorporatePage() {
             <Building className="w-3.5 h-3.5" />
             <span>Enterprise B2B Division</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#17365D] leading-[1.08]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#17365D] leading-[1.08]">
             Bulk & Corporate Printing Solutions
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -88,7 +88,7 @@ export default function CorporatePage() {
           <div className="pt-2 flex flex-wrap gap-3">
             <Link
               href="/quote?type=corporate_bulk"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
+              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
             >
               <span>Request Corporate Quotation</span>
               <ArrowRight className="w-4 h-4" />
@@ -147,7 +147,7 @@ export default function CorporatePage() {
           <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
             Transparent Volume Scaling
           </span>
-          <h2 className="text-xl sm:text-3xl font-bold text-[#17365D]">
+          <h2 className="text-xl sm:text-3xl font-black text-[#17365D]">
             Corporate Order Tiers & Service Levels
           </h2>
           <p className="text-xs sm:text-sm text-[#687586]">
@@ -166,7 +166,7 @@ export default function CorporatePage() {
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E87832] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-wider shadow-sm">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E87832] text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow-sm">
                   Most Popular for Enterprises
                 </div>
               )}
@@ -174,7 +174,7 @@ export default function CorporatePage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-base font-bold text-[#17365D]">{tier.tier}</h3>
-                  <div className="text-2xl font-bold text-[#17365D] mt-1">{tier.volume}</div>
+                  <div className="text-2xl font-black text-[#17365D] mt-1">{tier.volume}</div>
                   <div className="text-xs font-semibold text-[#E87832] mt-0.5">{tier.discount}</div>
                   <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
                     <Clock4 className="w-3.5 h-3.5 text-slate-400" />
@@ -221,7 +221,7 @@ export default function CorporatePage() {
           <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
             Ongoing Corporate Partnerships
           </span>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#17365D] mt-1">
+          <h2 className="text-xl sm:text-2xl font-black text-[#17365D] mt-1">
             Need Scheduled Monthly Batches for Onboarding?
           </h2>
           <p className="text-xs sm:text-sm text-[#687586] mt-1">
@@ -259,7 +259,7 @@ export default function CorporatePage() {
       {/* Direct Contact Banner */}
       <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-semibold text-[#17365D]">Speak Directly with Our Corporate Accounts Head</h3>
+          <h3 className="text-xl sm:text-2xl font-bold text-[#17365D]">Speak Directly with Our Corporate Accounts Head</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             Have questions about custom PMS colors, large-scale annual agreements, or multi-branch logistics? Contact our industrial desk today.
           </p>
@@ -267,7 +267,7 @@ export default function CorporatePage() {
         <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
           <a
             href="tel:+919741808034"
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
+            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
           >
             <PhoneCall className="w-4 h-4" />
             <span>Call +91 97418 08034</span>

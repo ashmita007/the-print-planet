@@ -34,7 +34,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F]">
             Catalogue Search
           </span>
-          <h1 className="text-3xl font-bold tracking-tight text-[#17365D]">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#17365D]">
             Search Results for &ldquo;{q}&rdquo;
           </h1>
           <p className="text-sm text-slate-500">
@@ -46,7 +46,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* Matching Categories */}
       {results.categories.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold text-[#17365D]">
+          <h2 className="text-sm font-bold text-[#17365D]">
             Matching Categories
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -67,7 +67,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* Matching Products */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-2 gap-2">
-          <h2 className="text-sm font-semibold text-[#17365D]">
+          <h2 className="text-sm font-bold text-[#17365D]">
             Matching Products ({results.products.length})
           </h2>
           <MobileFilterSortBar

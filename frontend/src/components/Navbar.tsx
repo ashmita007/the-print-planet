@@ -578,7 +578,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <button
                   type="button"
                   onClick={() => setMobileCategoriesOpen(!mobileCategoriesOpen)}
-                  className="w-full flex items-center justify-between px-2 py-2 text-xs font-semibold text-[#17365D] hover:text-[#E87832] transition-colors"
+                  className="w-full flex items-center justify-between px-2 py-2 text-xs font-black text-[#17365D] hover:text-[#E87832] transition-colors"
                 >
                   <span className="flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-[#E87832]" />
