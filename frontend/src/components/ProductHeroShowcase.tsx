@@ -196,17 +196,11 @@ export default function ProductHeroShowcase({
 
             <div className="space-y-3">
               <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight leading-[1.14] text-white">
-                The Print Planet
-                <span
-                  className="block text-[#E87832] min-h-[1.25em] mt-1"
-                  style={{
-                    WebkitTextStroke: "1px #FFFFFF",
-                    paintOrder: "stroke fill",
-                  }}
-                >
+                <span className="block text-white">The Print Planet</span>
+                <span className="block min-h-[1.25em] mt-1">
                   <span
                     key={phraseIdx}
-                    className={`inline-block font-black transition-all duration-300 ${
+                    className={`inline-block font-black transition-all duration-300 bg-gradient-to-r from-[#FFA868] via-[#E87832] to-[#FF8C38] bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(232,120,50,0.35)] ${
                       isPhraseVisible
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 -translate-y-1"
