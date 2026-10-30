@@ -216,13 +216,6 @@ export default function Footer({ categories = [], settings }: FooterProps) {
             <Link href="/terms" className="hover:text-white transition-colors">
               Terms & Conditions
             </Link>
-            <Link
-              href="/owner/login"
-              className="flex items-center gap-1 text-slate-500 hover:text-white transition-colors"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Owner Portal</span>
-            </Link>
           </div>
         </div>
       </div>

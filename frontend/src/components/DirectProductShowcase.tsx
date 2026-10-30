@@ -37,7 +37,8 @@ export default function DirectProductShowcase({
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<SortOptionValue>("featured");
   const [sortModalOpen, setSortModalOpen] = useState<boolean>(false);
-  const [visibleLimit, setVisibleLimit] = useState<number>(16);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageSize = 16;
 
   // Category horizontal scroll controls
   const categoryScrollRef = useRef<HTMLDivElement>(null);
@@ -112,7 +113,7 @@ export default function DirectProductShowcase({
 
   // Reset pagination when category or search changes
   useEffect(() => {
-    setVisibleLimit(16);
+    setCurrentPage(1);
   }, [selectedCategory, searchQuery]);
 
   // Filter products based on active tab and search query
@@ -168,7 +169,53 @@ export default function DirectProductShowcase({
     return list;
   }, [products, selectedCategory, searchQuery, sortBy]);
 
-  const visibleProducts = filteredProducts.slice(0, visibleLimit);
+  // Reset to page 1 whenever user searches or selects a new category/sort
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery, sortBy]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, filteredProducts.length);
+  const visibleProducts = filteredProducts.slice(startIndex, endIndex);
+
+  // Generate smart page numbers with ellipsis
+  const getPageNumbers = () => {
+    const delta = 1;
+    const range: (number | string)[] = [];
+    const rangeWithDots: (number | string)[] = [];
+    let l: number | undefined;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+        range.push(i);
+      }
+    }
+
+    for (const i of range) {
+      if (typeof i === "number") {
+        if (l !== undefined) {
+          if (i - l === 2) {
+            rangeWithDots.push(l + 1);
+          } else if (i - l !== 1) {
+            rangeWithDots.push("...");
+          }
+        }
+        rangeWithDots.push(i);
+        l = i;
+      }
+    }
+    return rangeWithDots;
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setCurrentPage(newPage);
+    const catalogueEl = document.getElementById("catalogue-section");
+    if (catalogueEl) {
+      catalogueEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <section id="catalogue-section" className="max-w-7xl mx-auto px-3 sm:px-6 scroll-mt-24">
@@ -337,7 +384,7 @@ export default function DirectProductShowcase({
           {/* Result Count & Sorting */}
           <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#687586]">
             <span className="font-medium whitespace-nowrap">
-              Showing <strong className="text-[#17365D] font-bold">{Math.min(visibleLimit, filteredProducts.length)}</strong> of <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong>
+              Showing <strong className="text-[#17365D] font-bold">{filteredProducts.length > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong>
             </span>
 
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -365,19 +412,70 @@ export default function DirectProductShowcase({
             ))}
           </div>
 
-          {visibleLimit < filteredProducts.length && (
-            <div className="mt-10 text-center">
-              <button
-                type="button"
-                onClick={() => setVisibleLimit((prev) => prev + 16)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#17365D] hover:bg-[#102742] text-white font-bold text-xs tracking-wide transition-all shadow-md group cursor-pointer"
-              >
-                <span>Load More Products (+16)</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <p className="text-[11px] text-[#687586] mt-2">
-                Showing {visibleProducts.length} of {filteredProducts.length} models
-              </p>
+          {/* Properly Aligned Pagination Bar */}
+          {totalPages > 1 && (
+            <div className="mt-8 pt-6 border-t border-[#DCE3EB] flex flex-col sm:flex-row items-center justify-between gap-4">
+              {/* Left Item Counter */}
+              <div className="text-xs text-[#687586] font-medium order-2 sm:order-1 text-center sm:text-left">
+                Showing <strong className="text-[#17365D] font-bold">{startIndex + 1}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong> products
+                <span className="text-slate-400 ml-1.5">(Page {currentPage} of {totalPages})</span>
+              </div>
+
+              {/* Right Pagination Navigation */}
+              <div className="flex items-center gap-1 sm:gap-1.5 order-1 sm:order-2 flex-wrap justify-center">
+                {/* Previous Page */}
+                <button
+                  type="button"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage <= 1}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DCE3EB] bg-white text-xs font-semibold text-[#17365D] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Prev</span>
+                </button>
+
+                {/* Page Number Pills */}
+                {getPageNumbers().map((num, idx) => {
+                  if (num === "...") {
+                    return (
+                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-slate-400 select-none">
+                        ...
+                      </span>
+                    );
+                  }
+                  const pageNum = num as number;
+                  const isActive = pageNum === currentPage;
+                  return (
+                    <button
+                      key={pageNum}
+                      type="button"
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`min-w-[34px] h-[34px] px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
+                        isActive
+                          ? "bg-[#17365D] text-white shadow-xs"
+                          : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D] hover:bg-slate-50"
+                      }`}
+                      aria-label={`Page ${pageNum}`}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                {/* Next Page */}
+                <button
+                  type="button"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage >= totalPages}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DCE3EB] bg-white text-xs font-semibold text-[#17365D] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
+                  aria-label="Next page"
+                >
+                  <span className="hidden sm:inline">Next</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           )}
         </>

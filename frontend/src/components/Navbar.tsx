@@ -341,7 +341,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             </Link>
 
             {/* Track Orders displayed ONLY when user is logged in */}
-            {(isClientLoggedIn || isOwnerLoggedIn) && (
+            {isClientLoggedIn && (
               <Link
                 href="/orders"
                 className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap text-[#17365D] font-bold flex items-center gap-1.5"
@@ -365,7 +365,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             </Link>
 
             {/* Client Account Link (if logged in as client) */}
-            {isClientLoggedIn && !isOwnerLoggedIn && (
+            {isClientLoggedIn && (
               <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
                 <Link
                   href="/orders"
@@ -378,8 +378,8 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               </div>
             )}
 
-            {/* Client Login Link (if not logged in at all) */}
-            {!isClientLoggedIn && !isOwnerLoggedIn && (
+            {/* Client Login Link (if not logged in) */}
+            {!isClientLoggedIn && (
               <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
                 <Link
                   href="/account/login"
@@ -391,28 +391,6 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 </Link>
               </div>
             )}
-
-            {/* Owner Portal Link */}
-            <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
-              {isOwnerLoggedIn ? (
-                <Link
-                  href="/owner/dashboard"
-                  className="flex items-center gap-1.5 bg-[#17365D] text-white px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-[#102742] transition-colors shadow-xs"
-                >
-                  <User className="w-3 h-3" />
-                  <span>Dashboard</span>
-                </Link>
-              ) : (
-                <Link
-                  href="/owner/login"
-                  className="flex items-center gap-1 text-xs text-[#687586] hover:text-[#17365D] transition-colors"
-                  title="Owner Portal Login"
-                >
-                  <User className="w-3.5 h-3.5" />
-                  <span>Owner</span>
-                </Link>
-              )}
-            </div>
           </nav>
 
           {/* Mobile Fast CTA & Hamburger */}
@@ -565,7 +543,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 </Link>
 
                 {/* Track Orders displayed ONLY when user is logged in */}
-                {(isClientLoggedIn || isOwnerLoggedIn) && (
+                {isClientLoggedIn && (
                   <Link
                     href="/orders"
                     onClick={() => setMobileMenuOpen(false)}
@@ -709,7 +687,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     <User className="w-4 h-4 text-[#E87832]" />
                     <span>My Account ({clientUser?.first_name || "Client"})</span>
                   </Link>
-                ) : !isOwnerLoggedIn ? (
+                ) : (
                   <Link
                     href="/account/login"
                     onClick={() => setMobileMenuOpen(false)}
@@ -717,29 +695,6 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   >
                     <LogIn className="w-4 h-4 text-slate-400" />
                     <span>Client Login / Register</span>
-                  </Link>
-                ) : null}
-              </div>
-
-              {/* Owner Portal Link */}
-              <div suppressHydrationWarning className="pt-2">
-                {isOwnerLoggedIn ? (
-                  <Link
-                    href="/owner/dashboard"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#17365D] text-white text-xs font-bold shadow-xs hover:bg-[#102742] transition-colors"
-                  >
-                    <User className="w-4 h-4 text-[#FFA868]" />
-                    <span>Owner Admin Dashboard</span>
-                  </Link>
-                ) : (
-                  <Link
-                    href="/owner/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-[#DCE3EB] text-[#17365D] text-xs font-semibold hover:bg-[#F5F7FA] transition-colors"
-                  >
-                    <User className="w-4 h-4 text-slate-400" />
-                    <span>Owner Portal Login</span>
                   </Link>
                 )}
               </div>

@@ -106,17 +106,11 @@ export default function ClientLoginPage() {
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#687586] space-y-2">
+        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#687586]">
           <div>
             New bulk order client?{" "}
             <Link href="/bulk-orders" className="text-[#E87832] font-bold hover:underline">
               Submit your bulk inquiry to auto-register
-            </Link>
-          </div>
-          <div>
-            Are you the store owner?{" "}
-            <Link href="/owner/login" className="text-slate-500 hover:text-[#17365D] underline font-medium">
-              Owner Console &rarr;
             </Link>
           </div>
         </div>

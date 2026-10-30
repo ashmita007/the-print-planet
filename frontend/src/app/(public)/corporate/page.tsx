@@ -367,9 +367,68 @@ export default function CorporatePage() {
             Corporate Order Tiers &amp; Service Levels
           </h2>
           <p className="text-xs sm:text-sm text-[#687586]">
-            Select your anticipated order quantity below to prefill your inquiry specifications.
+            Select your anticipated order quantity below to prefill your inquiry specifications and register your client account.
           </p>
         </div>
+
+        {/* User Login/Registration Banner for Slabs */}
+        {isLoggedIn ? (
+          <div className="bg-[#EBF5FB] border border-[#AED6F1] p-3.5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="p-1 bg-emerald-100 text-emerald-800 rounded-lg font-bold">
+                <Check className="w-4 h-4" />
+              </span>
+              <span className="text-[#17365D]">
+                Logged in as <strong>{currentUser?.first_name ? `${currentUser.first_name} ${currentUser.last_name || ""}` : currentUser?.username}</strong> ({currentUser?.email}). Orders will be linked to your portal.
+              </span>
+            </div>
+            <Link
+              href="/orders"
+              className="text-xs font-bold text-[#E87832] hover:underline flex items-center gap-1 shrink-0"
+            >
+              <span>Track Past Orders &amp; Chat &rarr;</span>
+            </Link>
+          </div>
+        ) : (
+          <div className="bg-[#F8FAFC] border border-[#DCE3EB] p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2.5">
+              <span className="p-2 bg-[#17365D]/10 text-[#17365D] rounded-xl">
+                <Lock className="w-4 h-4 text-[#17365D]" />
+              </span>
+              <div>
+                <p className="font-bold text-[#17365D]">
+                  User Account Required to Track Quotes &amp; Chat with Factory
+                </p>
+                <p className="text-[11px] text-[#687586]">
+                  Select your tier below to register, or sign in if your organization already has an account.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode("login");
+                  formRef.current?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="bg-[#17365D] hover:bg-[#102742] text-white px-3.5 py-1.5 rounded-xl font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              >
+                <LogIn className="w-3.5 h-3.5 text-[#FFA868]" />
+                <span>Existing Client? Log In</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode("register");
+                  formRef.current?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="bg-white border border-[#DCE3EB] hover:bg-slate-50 text-[#17365D] px-3.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+              >
+                <span>New Client? Register</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {VOLUME_TIERS.map((tier, idx) => {
@@ -427,7 +486,13 @@ export default function CorporatePage() {
                         : "bg-[#17365D] hover:bg-[#102742] text-white"
                     }`}
                   >
-                    <span>{isSelected ? "Selected Slab" : `Choose ${tier.tier.split(":")[0]}`}</span>
+                    <span>
+                      {isSelected
+                        ? "Selected Slab · Proceed Below"
+                        : isLoggedIn
+                        ? `Choose ${tier.tier.split(":")[0]}`
+                        : `Choose ${tier.tier.split(":")[0]} & Register`}
+                    </span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -446,11 +511,45 @@ export default function CorporatePage() {
                 Direct Submission Desk
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-[#17365D]">
-                Place Your Bulk Order &amp; Register Account
+                {authMode === "login" && !isLoggedIn
+                  ? "Sign In to Your Account"
+                  : isLoggedIn
+                  ? "Place Your Bulk Order Inquiry"
+                  : "Register & Submit Bulk Order"}
               </h2>
               <p className="text-xs sm:text-sm text-[#687586] mt-0.5">
-                Every bulk order automatically creates a verified client account so you can track quotes, download proofs, and chat with the factory team.
+                {isLoggedIn
+                  ? `Logged in as ${currentUser?.first_name || currentUser?.username} (${currentUser?.email}). This inquiry will be tracked in your client dashboard.`
+                  : "Every bulk order automatically sets up your verified client account to track quotes, proofs, and chat with factory engineers."}
               </p>
+
+              {!isLoggedIn && (
+                <div className="flex items-center gap-2 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setAuthMode("register")}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      authMode === "register"
+                        ? "bg-[#17365D] text-white shadow-2xs"
+                        : "bg-[#F5F7FA] text-[#687586] hover:text-[#17365D] border border-[#DCE3EB]"
+                    }`}
+                  >
+                    New Client: Register &amp; Order
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAuthMode("login")}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                      authMode === "login"
+                        ? "bg-[#17365D] text-white shadow-2xs"
+                        : "bg-[#F5F7FA] text-[#687586] hover:text-[#17365D] border border-[#DCE3EB]"
+                    }`}
+                  >
+                    <LogIn className="w-3.5 h-3.5 text-[#FFA868]" />
+                    <span>Existing Client: Log In</span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Sector Tabs: Corporate vs School */}
