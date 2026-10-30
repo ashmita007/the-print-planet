@@ -16,6 +16,7 @@ class PublicEnquiryCreateView(generics.CreateAPIView):
     queryset = Enquiry.objects.all()
     serializer_class = EnquiryCreateSerializer
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'enquiry'
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def perform_create(self, serializer):

@@ -177,6 +177,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# In-memory stable cache backend for DRF throttling and session caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'theprintplanet_cache',
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            'MAX_ENTRIES': 5000,
+            'CULL_FREQUENCY': 3,
+        }
+    }
+}
+
 # REST Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -191,6 +204,18 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '120/minute',          # Generous 2 requests/sec for anonymous visitors browsing products
+        'user': '300/minute',          # 5 requests/sec for authenticated users
+        'auth': '30/minute',           # Brute-force protection on login / register / password reset
+        'enquiry': '30/minute',        # Spam prevention on public contact and quote inquiries
+        'bulk_order': '30/minute',     # Rate limit for bulk order submissions
+    },
 }
 
 # OpenAPI Docs (drf-spectacular)

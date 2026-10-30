@@ -13,6 +13,7 @@ from rest_framework.authtoken.models import Token
 class LoginView(APIView):
     """Unified login endpoint for owners and bulk buyer clients."""
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'auth'
 
     def post(self, request):
         username = request.data.get('username', '').strip()
@@ -57,6 +58,7 @@ class LoginView(APIView):
 class RegisterView(APIView):
     """Customer registration endpoint for schools, corporates, and bulk buyers."""
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'auth'
 
     def post(self, request):
         full_name = request.data.get('full_name', '').strip()
@@ -202,6 +204,7 @@ class ChangePasswordView(APIView):
 class RequestPasswordResetView(APIView):
     """Initiates a secure password reset link / reset token for any client or owner."""
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'auth'
 
     def post(self, request):
         email = request.data.get('email', '').strip().lower()
@@ -248,6 +251,7 @@ class RequestPasswordResetView(APIView):
 class ConfirmPasswordResetView(APIView):
     """Sets a new password using uid and token."""
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'auth'
 
     def post(self, request):
         uidb64 = request.data.get('uid', '').strip()

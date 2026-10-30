@@ -27,6 +27,7 @@ from .serializers import (
 class BulkOrderSubmitView(APIView):
     """Submits a School or Corporate bulk order. Enforces or provides seamless user registration."""
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'bulk_order'
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def post(self, request):

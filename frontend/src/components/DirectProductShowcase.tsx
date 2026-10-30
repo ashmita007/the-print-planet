@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -11,14 +11,18 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 import { Product, Category } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
+import { getProducts } from "@/lib/api";
 import ProductCard from "./ProductCard";
 import SortModal, { SortOptionValue } from "./SortModal";
 
 interface DirectProductShowcaseProps {
-  products: Product[];
+  products?: Product[];
+  initialProducts?: Product[];
+  initialTotalCount?: number;
   categories: Category[];
 }
 
@@ -30,15 +34,28 @@ const SORT_LABELS: Record<SortOptionValue, string> = {
 };
 
 export default function DirectProductShowcase({
-  products,
+  products: legacyProducts = [],
+  initialProducts = [],
+  initialTotalCount = 0,
   categories,
 }: DirectProductShowcaseProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
   const [sortBy, setSortBy] = useState<SortOptionValue>("featured");
   const [sortModalOpen, setSortModalOpen] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 16;
+
+  // Active items and total count loaded from backend
+  const [items, setItems] = useState<Product[]>(
+    initialProducts.length > 0 ? initialProducts : legacyProducts.slice(0, pageSize)
+  );
+  const [totalCount, setTotalCount] = useState<number>(
+    initialTotalCount || legacyProducts.length || initialProducts.length
+  );
+  const [loading, setLoading] = useState<boolean>(false);
+  const isFirstRender = useRef<boolean>(true);
 
   // Category horizontal scroll controls
   const categoryScrollRef = useRef<HTMLDivElement>(null);
@@ -79,7 +96,6 @@ export default function DirectProductShowcase({
     el.scrollBy({ left: offset, behavior: "smooth" });
   };
 
-  // Convert vertical mouse wheel to horizontal scroll inside category row
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const el = categoryScrollRef.current;
     if (!el) return;
@@ -88,7 +104,6 @@ export default function DirectProductShowcase({
     }
   };
 
-  // Desktop mouse drag-to-scroll
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = categoryScrollRef.current;
     if (!el) return;
@@ -111,73 +126,60 @@ export default function DirectProductShowcase({
     isDraggingRef.current = false;
   };
 
-  // Reset pagination when category or search changes
+  // Debounce search query so backend isn't spammed while typing
   useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory, searchQuery]);
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery.trim());
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-  // Filter products based on active tab and search query
-  const filteredProducts = useMemo(() => {
-    let list = [...products];
+  // Fetch paginated products from backend
+  const fetchProductsFromBackend = useCallback(
+    async (page: number, cat: string, search: string, sort: SortOptionValue) => {
+      setLoading(true);
+      try {
+        const res = await getProducts({
+          page,
+          page_size: pageSize,
+          category: cat !== "all" ? cat : undefined,
+          search: search || undefined,
+          ordering: sort,
+        });
+        setItems(res.results || []);
+        setTotalCount(res.count || 0);
+      } catch {
+        // preserve items on error
+      } finally {
+        setLoading(false);
+      }
+    },
+    [pageSize]
+  );
 
-    // Category filter (matches direct slug or child subcategories)
-    if (selectedCategory !== "all") {
-      const selectedCatObj = categories.find((c) => c.slug === selectedCategory);
-      const childCatIds = selectedCatObj
-        ? categories.filter((c) => c.parent === selectedCatObj.id).map((c) => c.id)
-        : [];
-
-      list = list.filter((p) => {
-        if (!p.category) return false;
-        if (p.category.slug === selectedCategory) return true;
-        if (childCatIds.includes(p.category.id)) return true;
-        return false;
-      });
-    }
-
-    // Search query filter (tokenized across multiple words)
-    if (searchQuery.trim()) {
-      const tokens = searchQuery.toLowerCase().trim().split(/\s+/).filter(Boolean);
-      list = list.filter((p) => {
-        const textToSearch = [
-          p.name,
-          p.sku,
-          p.material || "",
-          p.color || "",
-          p.dimensions || "",
-          p.short_description || "",
-          p.category?.name || "",
-          p.category?.slug || "",
-        ]
-          .join(" ")
-          .toLowerCase();
-        return tokens.every((token) => textToSearch.includes(token));
-      });
-    }
-
-    // Sort order
-    if (sortBy === "featured") {
-      list.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0));
-    } else if (sortBy === "price-asc") {
-      list.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
-    } else if (sortBy === "price-desc") {
-      list.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
-    } else if (sortBy === "name") {
-      list.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    return list;
-  }, [products, selectedCategory, searchQuery, sortBy]);
-
-  // Reset to page 1 whenever user searches or selects a new category/sort
+  // Trigger backend fetch on page, category, debounced search, or sort change
   useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory, searchQuery, sortBy]);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    fetchProductsFromBackend(currentPage, selectedCategory, debouncedSearch, sortBy);
+  }, [currentPage, selectedCategory, debouncedSearch, sortBy, fetchProductsFromBackend]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
+  // Reset to page 1 whenever search, category, or sort changes
+  const handleSelectCategory = (slug: string) => {
+    setSelectedCategory(slug);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (newSort: SortOptionValue) => {
+    setSortBy(newSort);
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
   const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = Math.min(startIndex + pageSize, filteredProducts.length);
-  const visibleProducts = filteredProducts.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + pageSize, totalCount);
 
   // Generate smart page numbers with ellipsis
   const getPageNumbers = () => {
@@ -238,7 +240,7 @@ export default function DirectProductShowcase({
           className="group inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-[#17365D] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
-          <span className="tabular-nums text-slate-400">({products.length})</span>
+          <span className="tabular-nums text-slate-400">({totalCount})</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
@@ -299,27 +301,20 @@ export default function DirectProductShowcase({
               <button
                 type="button"
                 onClick={(e) => {
-                  setSelectedCategory("all");
+                  handleSelectCategory("all");
                   (e.currentTarget as HTMLElement).scrollIntoView({
                     behavior: "smooth",
                     inline: "center",
                     block: "nearest",
                   });
                 }}
-                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                   selectedCategory === "all"
                     ? "bg-[#17365D] text-white shadow-xs"
                     : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D]"
                 }`}
               >
                 <span>All Products</span>
-                <span
-                  className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                    selectedCategory === "all" ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
-                  }`}
-                >
-                  {products.length}
-                </span>
               </button>
 
               {(categories.filter((c) => !c.parent).length > 0
@@ -330,7 +325,7 @@ export default function DirectProductShowcase({
                   key={cat.id}
                   type="button"
                   onClick={(e) => {
-                    setSelectedCategory(cat.slug);
+                    handleSelectCategory(cat.slug);
                     (e.currentTarget as HTMLElement).scrollIntoView({
                       behavior: "smooth",
                       inline: "center",
@@ -344,13 +339,15 @@ export default function DirectProductShowcase({
                   }`}
                 >
                   <span>{formatCategoryName(cat.name)}</span>
-                  <span
-                    className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                      selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
-                    }`}
-                  >
-                    {cat.products_count}
-                  </span>
+                  {cat.products_count !== undefined && (
+                    <span
+                      className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
+                      }`}
+                    >
+                      {cat.products_count}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -383,8 +380,11 @@ export default function DirectProductShowcase({
 
           {/* Result Count & Sorting */}
           <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#687586]">
-            <span className="font-medium whitespace-nowrap">
-              Showing <strong className="text-[#17365D] font-bold">{filteredProducts.length > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong>
+            <span className="font-medium whitespace-nowrap flex items-center gap-1.5">
+              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E87832]" />}
+              <span>
+                Showing <strong className="text-[#17365D] font-bold">{totalCount > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{totalCount}</strong>
+              </span>
             </span>
 
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -403,21 +403,32 @@ export default function DirectProductShowcase({
         </div>
       </div>
 
-      {/* Product Cards Grid */}
-      {filteredProducts.length > 0 ? (
+      {/* Product Cards Grid with Backend Loading State */}
+      {loading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
+          {Array.from({ length: 8 }).map((_, idx) => (
+            <div key={idx} className="surface-card rounded-2xl p-4 space-y-3 animate-pulse border border-[#DCE3EB]">
+              <div className="w-full aspect-square bg-slate-100 rounded-xl" />
+              <div className="h-4 bg-slate-100 rounded w-3/4" />
+              <div className="h-3 bg-slate-100 rounded w-1/2" />
+              <div className="h-6 bg-slate-100 rounded w-1/3" />
+            </div>
+          ))}
+        </div>
+      ) : items.length > 0 ? (
         <>
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
-            {visibleProducts.map((p) => (
+            {items.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
 
-          {/* Properly Aligned Pagination Bar */}
+          {/* Properly Aligned Backend Pagination Bar */}
           {totalPages > 1 && (
             <div className="mt-8 pt-6 border-t border-[#DCE3EB] flex flex-col sm:flex-row items-center justify-between gap-4">
               {/* Left Item Counter */}
               <div className="text-xs text-[#687586] font-medium order-2 sm:order-1 text-center sm:text-left">
-                Showing <strong className="text-[#17365D] font-bold">{startIndex + 1}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{filteredProducts.length}</strong> products
+                Showing <strong className="text-[#17365D] font-bold">{startIndex + 1}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{totalCount}</strong> products
                 <span className="text-slate-400 ml-1.5">(Page {currentPage} of {totalPages})</span>
               </div>
 
@@ -427,7 +438,7 @@ export default function DirectProductShowcase({
                 <button
                   type="button"
                   onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage <= 1}
+                  disabled={currentPage <= 1 || loading}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DCE3EB] bg-white text-xs font-semibold text-[#17365D] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
                   aria-label="Previous page"
                 >
@@ -451,6 +462,7 @@ export default function DirectProductShowcase({
                       key={pageNum}
                       type="button"
                       onClick={() => handlePageChange(pageNum)}
+                      disabled={loading}
                       className={`min-w-[34px] h-[34px] px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
                         isActive
                           ? "bg-[#17365D] text-white shadow-xs"
@@ -468,7 +480,7 @@ export default function DirectProductShowcase({
                 <button
                   type="button"
                   onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage >= totalPages}
+                  disabled={currentPage >= totalPages || loading}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DCE3EB] bg-white text-xs font-semibold text-[#17365D] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
                   aria-label="Next page"
                 >
@@ -489,7 +501,7 @@ export default function DirectProductShowcase({
           <button
             type="button"
             onClick={() => {
-              setSelectedCategory("all");
+              handleSelectCategory("all");
               setSearchQuery("");
             }}
             className="px-4 py-2 rounded-lg bg-[#17365D] text-white text-xs font-bold hover:bg-[#102742] transition-colors cursor-pointer"
@@ -504,8 +516,8 @@ export default function DirectProductShowcase({
         isOpen={sortModalOpen}
         onClose={() => setSortModalOpen(false)}
         currentSort={sortBy}
-        onSelectSort={setSortBy}
-        totalProductsCount={filteredProducts.length}
+        onSelectSort={handleSortChange}
+        totalProductsCount={totalCount}
       />
     </section>
   );

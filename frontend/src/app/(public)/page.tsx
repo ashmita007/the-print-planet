@@ -67,7 +67,7 @@ export const revalidate = 120;
 export default async function HomePage() {
   const [categories, productsData, featuredProducts, machineryData, settings] = await Promise.all([
     getCategories(),
-    getProducts({ page_size: 250 }),
+    getProducts({ page: 1, page_size: 24, ordering: "featured" }),
     getFeaturedProducts(),
     getProducts({ category: "id-card-manufacturing-machines", page_size: 8 }),
     getSiteSettings(),
@@ -130,7 +130,8 @@ export default async function HomePage() {
 
       {/* 2. Direct Industrial Products Showcase with Live Category Tabs & Search */}
       <DirectProductShowcase
-        products={productsList}
+        initialProducts={productsList.slice(0, 16)}
+        initialTotalCount={productsData?.count || productsList.length}
         categories={categories || []}
       />
 

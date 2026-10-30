@@ -117,8 +117,18 @@ class ProductListView(generics.ListAPIView):
             qs = qs.filter(is_featured=True)
 
         # Ordering
-        ordering = self.request.query_params.get('ordering', 'display_order')
-        if ordering in ['price', '-price', 'name', '-name', 'created_at', '-created_at', 'display_order']:
+        ordering = self.request.query_params.get('ordering', 'featured')
+        if ordering in ['featured', '-is_featured']:
+            qs = qs.order_by('-is_featured', 'display_order', '-id')
+        elif ordering in ['price', 'price-asc']:
+            qs = qs.order_by('price', 'id')
+        elif ordering in ['-price', 'price-desc']:
+            qs = qs.order_by('-price', 'id')
+        elif ordering in ['name', 'name-asc']:
+            qs = qs.order_by('name')
+        elif ordering in ['-name', 'name-desc']:
+            qs = qs.order_by('-name')
+        elif ordering in ['created_at', '-created_at', 'display_order']:
             qs = qs.order_by(ordering)
         else:
             qs = qs.order_by('display_order', '-id')
