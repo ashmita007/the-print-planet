@@ -277,6 +277,7 @@ export async function ownerLogin(username: string, password: string): Promise<{ 
     if (typeof window !== 'undefined' && data.token) {
       localStorage.setItem('owner_token', data.token);
       localStorage.setItem('owner_user', JSON.stringify(data.user));
+      window.dispatchEvent(new Event('authChange'));
     }
     return { success: true, token: data.token, user: data.user };
   } catch (err: any) {
@@ -296,6 +297,7 @@ export async function ownerLogout(): Promise<void> {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('owner_token');
       localStorage.removeItem('owner_user');
+      window.dispatchEvent(new Event('authChange'));
     }
   }
 }
@@ -737,6 +739,7 @@ export async function clientRegister(data: {
     if (typeof window !== 'undefined' && resData.token) {
       localStorage.setItem('client_token', resData.token);
       localStorage.setItem('client_user', JSON.stringify(resData.user));
+      window.dispatchEvent(new Event('authChange'));
     }
     return { success: true, token: resData.token, user: resData.user };
   } catch (err: any) {
@@ -766,6 +769,7 @@ export async function clientLogin(data: {
         localStorage.setItem('client_token', resData.token);
         localStorage.setItem('client_user', JSON.stringify(resData.user));
       }
+      window.dispatchEvent(new Event('authChange'));
     }
     return { success: true, token: resData.token, role: resData.role, user: resData.user };
   } catch (err: any) {
@@ -798,6 +802,10 @@ export async function clientSubmitBulkOrder(formData: FormData): Promise<{
     }
     if (typeof window !== 'undefined' && data.token) {
       localStorage.setItem('client_token', data.token);
+      if (data.order?.user) {
+        localStorage.setItem('client_user', JSON.stringify(data.order.user));
+      }
+      window.dispatchEvent(new Event('authChange'));
     }
     return { success: true, ...data };
   } catch (err: any) {
@@ -876,6 +884,7 @@ export async function clientLogout(): Promise<void> {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('client_token');
     localStorage.removeItem('client_user');
+    window.dispatchEvent(new Event('authChange'));
   }
 }
 
@@ -957,6 +966,98 @@ export async function ownerDownloadConversationsBackup(): Promise<{ success: boo
     return { success: true };
   } catch (err: any) {
     return { success: false, error: err.message };
+  }
+}
+
+export async function ownerGetBulkOrders(params?: {
+  page?: number;
+  search?: string;
+  status?: string;
+  org_type?: string;
+}): Promise<{
+  count: number;
+  results: any[];
+  next?: string;
+  previous?: string;
+}> {
+  try {
+    const sp = new URLSearchParams();
+    if (params?.page) sp.set('page', params.page.toString());
+    if (params?.search) sp.set('search', params.search);
+    if (params?.status && params.status !== 'all') sp.set('status', params.status);
+    if (params?.org_type && params.org_type !== 'all') sp.set('org_type', params.org_type);
+
+    const query = sp.toString() ? `?${sp.toString()}` : '';
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/bulk-orders/${query}`, {
+      headers: getAuthHeaders(),
+      cache: 'no-store',
+    });
+    if (!res.ok) return { count: 0, results: [] };
+    return await res.json();
+  } catch {
+    return { count: 0, results: [] };
+  }
+}
+
+export async function ownerGetBulkOrderDetail(idOrNumber: string | number): Promise<any | null> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/bulk-orders/${idOrNumber}/`, {
+      headers: getAuthHeaders(),
+      cache: 'no-store',
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function ownerReplyBulkOrder(
+  idOrNumber: string | number,
+  data: {
+    message: string;
+    status?: string;
+    quoted_amount?: number | string;
+    tracking_courier_partner?: string;
+    tracking_consignment_number?: string;
+    attachment_url?: string;
+  }
+): Promise<{ success: boolean; data?: any; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/bulk-orders/${idOrNumber}/messages/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+      },
+      body: JSON.stringify(data),
+    });
+    const resData = await res.json();
+    if (!res.ok) return { success: false, error: resData.error || 'Failed to submit reply' };
+    return { success: true, data: resData };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network failure' };
+  }
+}
+
+export async function ownerUpdateBulkOrder(
+  idOrNumber: string | number,
+  data: any
+): Promise<{ success: boolean; data?: any; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/bulk-orders/${idOrNumber}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+      },
+      body: JSON.stringify(data),
+    });
+    const resData = await res.json();
+    if (!res.ok) return { success: false, error: resData.error || 'Failed to update order' };
+    return { success: true, data: resData };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network failure' };
   }
 }
 

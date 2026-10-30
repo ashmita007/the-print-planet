@@ -9,6 +9,8 @@ from apps.catalog.models import Product, Category
 from apps.catalog.serializers import ProductListSerializer
 from apps.enquiries.models import Enquiry
 from apps.enquiries.serializers import EnquiryDetailSerializer
+from apps.bulk_orders.models import BulkOrder
+from apps.bulk_orders.serializers import BulkOrderListSerializer
 
 
 class PublicSiteSettingsView(generics.RetrieveAPIView):
@@ -86,7 +88,12 @@ class OwnerDashboardStatsView(APIView):
         new_enquiries = Enquiry.objects.filter(status='new').count()
         in_progress_enquiries = Enquiry.objects.filter(status='in_progress').count()
 
+        total_bulk_orders = BulkOrder.objects.count()
+        pending_bulk_orders = BulkOrder.objects.filter(status__in=['submitted', 'reviewing']).count()
+        active_bulk_orders = BulkOrder.objects.filter(status__in=['quoted', 'proofing', 'in_production']).count()
+
         recent_enquiries = Enquiry.objects.select_related('product').all()[:5]
+        recent_bulk_orders = BulkOrder.objects.select_related('user', 'product').prefetch_related('messages').all()[:5]
         recent_products = Product.objects.select_related('category').prefetch_related('images').all().order_by('-updated_at')[:6]
 
         return Response({
@@ -98,8 +105,12 @@ class OwnerDashboardStatsView(APIView):
                 'total_enquiries': total_enquiries,
                 'new_enquiries': new_enquiries,
                 'in_progress_enquiries': in_progress_enquiries,
+                'total_bulk_orders': total_bulk_orders,
+                'pending_bulk_orders': pending_bulk_orders,
+                'active_bulk_orders': active_bulk_orders,
             },
             'recent_enquiries': EnquiryDetailSerializer(recent_enquiries, many=True).data,
+            'recent_bulk_orders': BulkOrderListSerializer(recent_bulk_orders, many=True).data,
             'recent_products': ProductListSerializer(recent_products, many=True).data,
         })
 

@@ -19,6 +19,7 @@ import {
   Sparkles,
   Info,
   Database,
+  Briefcase,
 } from "lucide-react";
 import { ownerLogout, ownerGetMe } from "@/lib/api";
 import { AuthUser } from "@/lib/types";
@@ -77,6 +78,7 @@ function OwnerSidebarInner() {
       title: "Overview",
       links: [
         { label: "Dashboard Overview", href: "/owner/dashboard", icon: LayoutDashboard },
+        { label: "Bulk Orders & Chats", href: "/owner/orders", icon: Briefcase },
         { label: "Customer Enquiries", href: "/owner/enquiries", icon: Inbox },
       ],
     },

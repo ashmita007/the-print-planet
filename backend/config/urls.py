@@ -28,6 +28,7 @@ from apps.enquiries.views import (
 )
 from apps.bulk_orders.views import (
     OwnerConversationBackupDownloadView,
+    OwnerBulkOrderViewSet,
 )
 from apps.settings_app.views import (
     PublicSiteSettingsView,
@@ -55,6 +56,8 @@ owner_router.register(r'categories', OwnerCategoryViewSet, basename='owner-categ
 owner_router.register(r'images', OwnerProductImageViewSet, basename='owner-images')
 owner_router.register(r'enquiries', OwnerEnquiryViewSet, basename='owner-enquiries')
 owner_router.register(r'homepage-sections', OwnerHomePageSectionViewSet, basename='owner-homepage-sections')
+owner_router.register(r'bulk-orders', OwnerBulkOrderViewSet, basename='owner-bulk-orders')
+owner_router.register(r'orders', OwnerBulkOrderViewSet, basename='owner-orders')
 
 from django.http import JsonResponse
 from django.db import connection

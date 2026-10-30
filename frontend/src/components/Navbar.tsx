@@ -23,6 +23,7 @@ import {
   Building2,
   Briefcase,
   FileText,
+  LogIn,
 } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
@@ -41,6 +42,8 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const [mobileCategoriesOpen, setMobileCategoriesOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isOwnerLoggedIn, setIsOwnerLoggedIn] = useState(false);
+  const [isClientLoggedIn, setIsClientLoggedIn] = useState(false);
+  const [clientUser, setClientUser] = useState<any>(null);
   const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -81,9 +84,34 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsOwnerLoggedIn(!!localStorage.getItem("owner_token"));
-    }
+    const updateAuth = () => {
+      if (typeof window !== "undefined") {
+        const ownerTok = localStorage.getItem("owner_token");
+        const clientTok = localStorage.getItem("client_token");
+        const clientUserStr = localStorage.getItem("client_user");
+        setIsOwnerLoggedIn(!!ownerTok);
+        setIsClientLoggedIn(!!clientTok);
+        if (clientUserStr) {
+          try {
+            setClientUser(JSON.parse(clientUserStr));
+          } catch {
+            setClientUser(null);
+          }
+        } else {
+          setClientUser(null);
+        }
+      }
+    };
+
+    updateAuth();
+    window.addEventListener("authChange", updateAuth);
+    window.addEventListener("storage", updateAuth);
+    window.addEventListener("focus", updateAuth);
+    return () => {
+      window.removeEventListener("authChange", updateAuth);
+      window.removeEventListener("storage", updateAuth);
+      window.removeEventListener("focus", updateAuth);
+    };
   }, []);
 
   useEffect(() => {
@@ -312,9 +340,16 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               Bulk Orders
             </Link>
 
-            <Link href="/orders" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
-              Track Orders
-            </Link>
+            {/* Track Orders displayed ONLY when user is logged in */}
+            {(isClientLoggedIn || isOwnerLoggedIn) && (
+              <Link
+                href="/orders"
+                className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap text-[#17365D] font-bold flex items-center gap-1.5"
+              >
+                <Package className="w-3.5 h-3.5 text-[#E87832]" />
+                <span>Track Orders</span>
+              </Link>
+            )}
 
             <Link href="/contact" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
               Contact
@@ -328,6 +363,34 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               <FileText className="w-3.5 h-3.5" />
               <span>Request Quote</span>
             </Link>
+
+            {/* Client Account Link (if logged in as client) */}
+            {isClientLoggedIn && !isOwnerLoggedIn && (
+              <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
+                <Link
+                  href="/orders"
+                  className="flex items-center gap-1.5 bg-[#F0F4F8] hover:bg-[#E2E8F0] text-[#17365D] px-2.5 py-1 rounded-lg text-xs font-bold transition-colors"
+                  title="My Account & Track Orders"
+                >
+                  <User className="w-3 h-3 text-[#E87832]" />
+                  <span className="max-w-[90px] truncate">{clientUser?.first_name || "Account"}</span>
+                </Link>
+              </div>
+            )}
+
+            {/* Client Login Link (if not logged in at all) */}
+            {!isClientLoggedIn && !isOwnerLoggedIn && (
+              <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
+                <Link
+                  href="/account/login"
+                  className="flex items-center gap-1 text-xs text-[#687586] hover:text-[#17365D] transition-colors"
+                  title="Client Login"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Login</span>
+                </Link>
+              </div>
+            )}
 
             {/* Owner Portal Link */}
             <div suppressHydrationWarning className="flex items-center border-l border-slate-200 pl-3">
@@ -501,20 +564,23 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   </span>
                 </Link>
 
-                <Link
-                  href="/orders"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
-                    pathname?.startsWith("/orders")
-                      ? "bg-[#17365D] text-white shadow-xs font-bold"
-                      : "text-[#263445] hover:bg-[#F5F7FA]"
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Package className={`w-4 h-4 ${pathname?.startsWith("/orders") ? "text-[#FFA868]" : "text-[#17365D]"}`} />
-                    <span>Track My Orders &amp; Chat</span>
-                  </div>
-                </Link>
+                {/* Track Orders displayed ONLY when user is logged in */}
+                {(isClientLoggedIn || isOwnerLoggedIn) && (
+                  <Link
+                    href="/orders"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                      pathname?.startsWith("/orders")
+                        ? "bg-[#17365D] text-white shadow-xs font-bold"
+                        : "text-[#263445] hover:bg-[#F5F7FA]"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Package className={`w-4 h-4 ${pathname?.startsWith("/orders") ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                      <span>Track My Orders &amp; Chat</span>
+                    </div>
+                  </Link>
+                )}
 
                 <Link
                   href="/services"
@@ -632,8 +698,31 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 )}
               </div>
 
-              {/* Owner Portal Link */}
+              {/* Client Account or Login in Mobile Drawer */}
               <div suppressHydrationWarning className="pt-3 border-t border-[#DCE3EB]">
+                {isClientLoggedIn ? (
+                  <Link
+                    href="/orders"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#F0F4F8] text-[#17365D] text-xs font-bold hover:bg-[#E2E8F0] transition-colors"
+                  >
+                    <User className="w-4 h-4 text-[#E87832]" />
+                    <span>My Account ({clientUser?.first_name || "Client"})</span>
+                  </Link>
+                ) : !isOwnerLoggedIn ? (
+                  <Link
+                    href="/account/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-[#DCE3EB] text-[#17365D] text-xs font-semibold hover:bg-[#F5F7FA] transition-colors"
+                  >
+                    <LogIn className="w-4 h-4 text-slate-400" />
+                    <span>Client Login / Register</span>
+                  </Link>
+                ) : null}
+              </div>
+
+              {/* Owner Portal Link */}
+              <div suppressHydrationWarning className="pt-2">
                 {isOwnerLoggedIn ? (
                   <Link
                     href="/owner/dashboard"

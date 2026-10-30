@@ -302,6 +302,16 @@ class OwnerBulkOrderViewSet(viewsets.ModelViewSet):
             )
         return qs
 
+    def get_object(self):
+        lookup = str(self.kwargs.get('pk', '')).strip()
+        if lookup.isdigit():
+            return super().get_object()
+        obj = self.get_queryset().filter(order_number=lookup).first()
+        if not obj:
+            raise Http404("Bulk order not found.")
+        self.check_object_permissions(self.request, obj)
+        return obj
+
     @action(detail=True, methods=['post'], url_path='messages')
     def post_owner_reply(self, request, pk=None):
         order = self.get_object()

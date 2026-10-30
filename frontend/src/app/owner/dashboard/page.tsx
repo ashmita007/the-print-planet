@@ -14,6 +14,7 @@ import {
   Download,
   Loader2,
   AlertCircle,
+  Briefcase,
 } from "lucide-react";
 import {
   ownerGetDashboardStats,
@@ -270,12 +271,22 @@ export default function OwnerDashboardPage() {
       </div>
 
       {/* Metrics row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {[
+          {
+            label: "Bulk Orders",
+            value: (metrics as any)?.total_bulk_orders || 0,
+            icon: Briefcase,
+            href: "/owner/orders",
+            note: `${(metrics as any)?.pending_bulk_orders || 0} need quotes`,
+            noteTone: "text-[#E87832] font-bold",
+            accent: true,
+          },
           {
             label: "Total products",
             value: metrics?.total_products || 0,
             icon: Package,
+            href: "/owner/products",
             note: `${metrics?.active_products || 0} active on public catalogue`,
             noteTone: "text-[#217A4B]",
             accent: false,
@@ -284,6 +295,7 @@ export default function OwnerDashboardPage() {
             label: "Categories",
             value: metrics?.total_categories || 0,
             icon: Layers,
+            href: "/owner/categories",
             note: "Active product groupings",
             noteTone: "text-slate-500",
             accent: false,
@@ -292,6 +304,7 @@ export default function OwnerDashboardPage() {
             label: "New RFQs",
             value: metrics?.new_enquiries || 0,
             icon: Inbox,
+            href: "/owner/enquiries",
             note: "Awaiting response",
             noteTone: "text-[#C25E1F]",
             accent: true,
@@ -300,6 +313,7 @@ export default function OwnerDashboardPage() {
             label: "Total inquiries",
             value: metrics?.total_enquiries || 0,
             icon: TrendingUp,
+            href: "/owner/enquiries",
             note: `${metrics?.in_progress_enquiries || 0} in progress`,
             noteTone: "text-slate-500",
             accent: false,
@@ -307,9 +321,10 @@ export default function OwnerDashboardPage() {
         ].map((card, index) => {
           const Icon = card.icon;
           return (
-            <div
+            <Link
               key={card.label}
-              className={`surface-card surface-hover p-5 rounded-2xl space-y-4 anim-fade-up stagger-${index + 1}`}
+              href={card.href}
+              className={`surface-card surface-hover p-5 rounded-2xl space-y-4 anim-fade-up stagger-${index + 1} block transition-transform hover:-translate-y-0.5`}
             >
               <div className="flex items-start justify-between gap-3">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 pt-1">
@@ -333,7 +348,7 @@ export default function OwnerDashboardPage() {
                 {card.value}
               </div>
               <div className={`text-[11px] font-medium ${card.noteTone}`}>{card.note}</div>
-            </div>
+            </Link>
           );
         })}
       </div>
