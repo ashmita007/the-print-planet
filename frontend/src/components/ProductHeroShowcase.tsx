@@ -188,17 +188,16 @@ export default function ProductHeroShowcase({
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Left Column: Industrial Proposition & Quotation */}
           <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full text-left">
-            {/* Brand eyebrow pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] sm:text-xs font-bold tracking-wide uppercase text-[#FFA868] shadow-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E87832] animate-pulse" />
+            {/* Brand eyebrow line with theme color */}
+            <div className="text-[11px] sm:text-xs font-bold tracking-[0.14em] uppercase text-[#E87832] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#E87832]" />
               <span>{settings?.hero_badge?.trim() || "The Print Planet • Specialist in PVC Cards & ID Systems"}</span>
             </div>
 
-            <div className="space-y-2 sm:space-y-2.5">
-              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight leading-[1.12] text-white">
-                The Print Planet{" "}
-                <span className="text-white/40 font-light">—</span>{" "}
-                <span className="inline-block text-[#FFA868]">
+            <div className="space-y-3">
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight leading-[1.14] text-white">
+                The Print Planet
+                <span className="block text-[#E87832] min-h-[1.25em] mt-1">
                   <span
                     key={phraseIdx}
                     className={`inline-block font-black transition-all duration-300 ${
@@ -219,7 +218,7 @@ export default function ProductHeroShowcase({
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
               {settings?.hero_caption || (
                 <>
                   Official portal of <strong className="text-white font-semibold">The Print Planet</strong> — a factory specialist in PVC cards, CR-80 fusing sheets, lens packaging, rigid ID card holders, satin lanyard rolls, commercial printing, and card die-cutting machinery. 24–48h pan-India dispatch from Bangalore.
@@ -228,10 +227,10 @@ export default function ProductHeroShowcase({
             </p>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+            <div className="flex flex-col sm:flex-row gap-3 pt-1">
               <a
                 href="#catalogue-section"
-                className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm tracking-wide transition-all active:scale-[0.99] flex items-center justify-center gap-2 group text-center"
+                className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm tracking-wide transition-all active:scale-[0.99] flex items-center justify-center gap-2 group text-center shadow-xs"
               >
                 <span>Browse {totalProductsCount} products</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -247,20 +246,20 @@ export default function ProductHeroShowcase({
             </div>
 
             {/* Standards */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 border-t border-white/10 text-[10px] sm:text-[11px] text-slate-400">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 border-t border-white/10 text-[10px] sm:text-[11px] text-slate-300">
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-slate-500" />
-                CR-80 ISO 85.6 × 54 mm
+                <ShieldCheck className="w-3.5 h-3.5 text-[#E87832]" />
+                <span>CR-80 ISO 85.6 × 54 mm</span>
               </span>
               <span className="hidden sm:block w-px h-3 bg-white/10" />
               <span className="flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-slate-500" />
-                Optical grade, UV &amp; scratch proof
+                <Award className="w-3.5 h-3.5 text-[#E87832]" />
+                <span>Optical grade, UV &amp; scratch proof</span>
               </span>
               <span className="hidden sm:block w-px h-3 bg-white/10" />
               <span className="flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5 text-slate-500" />
-                24–48h pan-India
+                <Truck className="w-3.5 h-3.5 text-[#E87832]" />
+                <span>24–48h pan-India</span>
               </span>
             </div>
           </div>
@@ -303,7 +302,7 @@ export default function ProductHeroShowcase({
               {/* Spotlight Header */}
               <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-white/10 gap-2">
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#E87832]">
                     Spotlight
                   </span>
                   <span className="text-slate-600 text-xs">/</span>
@@ -367,7 +366,7 @@ export default function ProductHeroShowcase({
                 {/* Product Information & Live Pricing */}
                 <div className="sm:col-span-7 space-y-2.5 sm:space-y-3">
                   <div>
-                    <h3 className="text-sm sm:text-lg font-bold text-white leading-snug hover:text-[#FFA868] transition-colors line-clamp-2">
+                    <h3 className="text-sm sm:text-lg font-bold text-white leading-snug hover:text-[#E87832] transition-colors line-clamp-2">
                       <Link href={`/products/${activeProduct.slug}`}>
                         {formatProductName(activeProduct.name)}
                       </Link>
@@ -389,10 +388,10 @@ export default function ProductHeroShowcase({
                   {/* Pricing */}
                   <div className="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex items-baseline justify-between">
                     <div>
-                      <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.12em] font-medium text-slate-500 block">
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.12em] font-medium text-slate-400 block">
                         Wholesale rate
                       </span>
-                      <span className="text-base sm:text-xl font-semibold text-[#F0A46B] tabular-nums">
+                      <span className="text-base sm:text-xl font-bold font-mono text-[#E87832] tabular-nums tracking-tight">
                         {activeProduct.price_display ||
                           (activeProduct.price
                             ? `₹ ${Number(activeProduct.price).toLocaleString("en-IN")}`
