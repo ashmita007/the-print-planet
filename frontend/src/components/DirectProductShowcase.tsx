@@ -224,23 +224,23 @@ export default function DirectProductShowcase({
       {/* Header with Title and B2B Badge */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <span className="text-[10px] sm:text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <span className="text-[10px] sm:text-[11px] font-bold text-[#E87832] uppercase tracking-[0.14em]">
             Catalogue
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#17365D] tracking-tight mt-1">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#17365D] tracking-tight mt-1">
             Explore factory products
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
             Instant B2B pricing, technical specifications, and factory quotations for ID card rolls, holders, clips, and machinery.
           </p>
         </div>
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-[#17365D] transition-colors self-start md:self-auto py-1"
+          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#17365D] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
-          <span className="tabular-nums text-slate-400">({totalCount})</span>
+          <span className="tabular-nums font-mono text-slate-400 font-bold">({totalCount})</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>

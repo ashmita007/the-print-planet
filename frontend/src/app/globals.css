@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
   --color-brand-navy: #17365D;
   --color-brand-deepNavy: #102742;
   --color-brand-orange: #E87832;
@@ -34,12 +38,14 @@ html {
 body {
   background-color: #FFFFFF;
   color: #263445;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  line-height: 1.55;
 }
 
 ::selection {
@@ -48,12 +54,47 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), var(--font-sans), sans-serif;
+  letter-spacing: -0.025em;
   text-wrap: balance;
+  color: #17365D;
+}
+
+h1 {
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+h2 {
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+h3 {
+  letter-spacing: -0.015em;
+  line-height: 1.3;
 }
 
 p {
   text-wrap: pretty;
+  line-height: 1.6;
+}
+
+.font-heading {
+  font-family: var(--font-heading), var(--font-sans), sans-serif;
+}
+
+.font-sans {
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 button,

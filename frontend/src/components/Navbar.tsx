@@ -29,6 +29,10 @@ import { Category, SiteSettings } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
 import { getApiUrl } from "@/lib/api";
 
+const CDN_LOGO_URL =
+  process.env.NEXT_PUBLIC_LOGO_URL ||
+  "https://res.cloudinary.com/pmq4rert/image/upload/v1793343181/the_print_planet/brand/logo_webp.webp";
+
 interface NavbarProps {
   categories?: Category[];
   settings?: SiteSettings;
@@ -188,12 +192,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           {/* Logo & Brand Identity */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group py-1" title="Print Planet Official Wholesale Store">
             <Image
-              src="/logo.png"
+              src={CDN_LOGO_URL}
               alt="Print Planet — The Print Planet™ Wholesale ID Card & Printing Solutions"
               width={260}
               height={85}
               className="h-11 sm:h-16 md:h-18 w-auto object-contain hover:opacity-95 transition-opacity"
               priority
+              unoptimized
             />
           </Link>
 

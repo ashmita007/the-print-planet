@@ -452,11 +452,11 @@ export default function CorporatePage() {
 
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-sm font-bold text-[#17365D]">{tier.tier}</h3>
-                    <div className="text-2xl font-black text-[#17365D] mt-1">{tier.volume}</div>
-                    <div className="text-xs font-semibold text-[#E87832] mt-0.5">{tier.discount}</div>
-                    <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
-                      <Clock4 className="w-3.5 h-3.5 text-slate-400" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">{tier.tier}</h3>
+                    <div className="text-2xl sm:text-3xl font-black font-heading text-[#17365D] mt-1 tracking-tight">{tier.volume}</div>
+                    <div className="text-xs font-bold text-[#E87832] mt-1">{tier.discount}</div>
+                    <div className="text-[11px] font-medium text-slate-500 mt-1.5 flex items-center gap-1.5">
+                      <Clock4 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       <span>Lead time: {tier.turnaround}</span>
                     </div>
                   </div>

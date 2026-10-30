@@ -5,6 +5,10 @@ import { Phone, Mail, MapPin, Lock, ExternalLink } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
 
+const CDN_LOGO_URL =
+  process.env.NEXT_PUBLIC_LOGO_URL ||
+  "https://res.cloudinary.com/pmq4rert/image/upload/v1793343181/the_print_planet/brand/logo_webp.webp";
+
 interface FooterProps {
   categories?: Category[];
   settings?: SiteSettings;
@@ -28,11 +32,13 @@ export default function Footer({ categories = [], settings }: FooterProps) {
           <div className="space-y-4">
             <div className="bg-white px-4 py-2.5 rounded-xl inline-block shadow-sm">
               <Image
-                src="/logo.png"
+                src={CDN_LOGO_URL}
                 alt={businessName}
                 width={220}
                 height={60}
                 className="h-11 sm:h-13 w-auto object-contain"
+                loading="lazy"
+                unoptimized
               />
             </div>
             <div className="grid grid-cols-1 gap-3">

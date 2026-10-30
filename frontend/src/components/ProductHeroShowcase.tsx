@@ -188,37 +188,41 @@ export default function ProductHeroShowcase({
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Left Column: Industrial Proposition & Quotation */}
           <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full text-left">
-            {/* Quiet brand line */}
-            <div className="text-[11px] sm:text-xs font-black tracking-wide uppercase text-white">
-              {settings?.hero_badge?.trim() ||
-                "The Print Planet • Specialist in PVC Cards & ID Systems"}
+            {/* Brand eyebrow pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] sm:text-xs font-bold tracking-wide uppercase text-[#FFA868] shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E87832] animate-pulse" />
+              <span>{settings?.hero_badge?.trim() || "The Print Planet • Specialist in PVC Cards & ID Systems"}</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-[2.65rem] font-black tracking-tight leading-[1.15] text-white">
-              The Print Planet <span className="text-white/60 font-light">—</span>{" "}
-              <span className="inline-block">
-                <span
-                  key={phraseIdx}
-                  className={`inline-block font-black text-[#F0A46B] transition-all duration-300 ${
-                    isPhraseVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 -translate-y-1"
-                  }`}
-                >
-                  {ROTATING_PHRASES[phraseIdx % ROTATING_PHRASES.length]}
+            <div className="space-y-2 sm:space-y-2.5">
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight leading-[1.12] text-white">
+                The Print Planet{" "}
+                <span className="text-white/40 font-light">—</span>{" "}
+                <span className="inline-block text-[#FFA868]">
+                  <span
+                    key={phraseIdx}
+                    className={`inline-block font-black transition-all duration-300 ${
+                      isPhraseVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-1"
+                    }`}
+                  >
+                    {ROTATING_PHRASES[phraseIdx % ROTATING_PHRASES.length]}
+                  </span>
                 </span>
-              </span>
-              <span className="block text-lg sm:text-2xl lg:text-[1.55rem] font-extrabold text-slate-100 mt-2 sm:mt-2.5 leading-snug">
+              </h1>
+
+              <p className="text-base sm:text-lg lg:text-xl font-bold text-slate-100 leading-snug tracking-tight">
                 {settings?.hero_subtitle ||
                   settings?.tagline ||
                   "Specialist in PVC cards, lens packaging & commercial printing solutions"}
-              </span>
-            </h1>
+              </p>
+            </div>
 
             <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-xl">
               {settings?.hero_caption || (
                 <>
-                  Official portal of <strong className="text-slate-300">The Print Planet</strong> — a factory specialist in PVC cards, CR-80 fusing sheets, lens packaging, rigid ID card holders, satin lanyard rolls, commercial printing, and card die-cutting machinery. 24–48h pan-India dispatch from Bangalore.
+                  Official portal of <strong className="text-white font-semibold">The Print Planet</strong> — a factory specialist in PVC cards, CR-80 fusing sheets, lens packaging, rigid ID card holders, satin lanyard rolls, commercial printing, and card die-cutting machinery. 24–48h pan-India dispatch from Bangalore.
                 </>
               )}
             </p>
