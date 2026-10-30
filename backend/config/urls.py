@@ -44,6 +44,8 @@ from apps.authentication.views import (
     LogoutView,
     CurrentUserView,
     ChangePasswordView,
+    RequestPasswordResetView,
+    ConfirmPasswordResetView,
 )
 
 # Router for owner ViewSets
@@ -98,6 +100,8 @@ urlpatterns = [
     path('api/v1/auth/logout/', LogoutView.as_view(), name='auth-logout'),
     path('api/v1/auth/me/', CurrentUserView.as_view(), name='auth-me'),
     path('api/v1/auth/change-password/', ChangePasswordView.as_view(), name='auth-change-password'),
+    path('api/v1/auth/forgot-password/', RequestPasswordResetView.as_view(), name='auth-forgot-password'),
+    path('api/v1/auth/reset-password/', ConfirmPasswordResetView.as_view(), name='auth-reset-password'),
 
     # Bulk Orders & Dedicated Conversation System App
     path('api/v1/bulk-orders/', include('apps.bulk_orders.urls')),

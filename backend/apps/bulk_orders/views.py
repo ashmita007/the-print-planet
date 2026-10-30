@@ -13,13 +13,14 @@ from django.db.models import Q, Count
 from django.http import HttpResponse, Http404
 
 from apps.catalog.views import StandardResultsSetPagination
-from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive
+from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive, UserCheckedProduct
 from .serializers import (
     BulkOrderCreateSerializer,
     BulkOrderDetailSerializer,
     BulkOrderListSerializer,
     BulkOrderMessageSerializer,
     ConversationBackupArchiveSerializer,
+    UserCheckedProductSerializer,
 )
 
 
@@ -97,6 +98,17 @@ class BulkOrderSubmitView(APIView):
 
         order = serializer.save(user=user)
 
+        # Attach any products the user explicitly checked/explored
+        checked_product_ids = request.data.get('checked_product_ids')
+        if checked_product_ids:
+            if isinstance(checked_product_ids, str):
+                try:
+                    checked_product_ids = json.loads(checked_product_ids)
+                except Exception:
+                    checked_product_ids = [int(x.strip()) for x in checked_product_ids.split(',') if x.strip().isdigit()]
+            if isinstance(checked_product_ids, list):
+                order.checked_products.set(checked_product_ids)
+
         # Set attachment url if uploaded
         if order.attachment:
             order.attachment_url = f"/api/v1/bulk-orders/my-orders/{order.order_number}/attachment/"
@@ -136,6 +148,41 @@ class BulkOrderSubmitView(APIView):
             'token': token_key or getattr(getattr(user, 'auth_token', None), 'key', None),
             'order': BulkOrderDetailSerializer(order).data
         }, status=status.HTTP_201_CREATED)
+
+
+class TrackCheckedProductView(APIView):
+    """Records a product checked or browsed by an authenticated user for buyer insights."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, product_id):
+        from apps.catalog.models import Product
+        try:
+            prod = Product.objects.get(id=product_id, is_active=True)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        item, created = UserCheckedProduct.objects.get_or_create(
+            user=request.user,
+            product=prod,
+            defaults={'inquiry_count': 1}
+        )
+        if not created:
+            item.inquiry_count += 1
+            item.save(update_fields=['inquiry_count', 'viewed_at'])
+
+        return Response({'success': True, 'checked_product_id': prod.id}, status=status.HTTP_200_OK)
+
+
+class ClientCheckedProductsListView(generics.ListAPIView):
+    """Lists all products previously checked by the current client."""
+    serializer_class = UserCheckedProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        return UserCheckedProduct.objects.filter(
+            user=self.request.user
+        ).select_related('product', 'product__category').prefetch_related('product__images')
 
 
 class ClientBulkOrdersListView(generics.ListAPIView):

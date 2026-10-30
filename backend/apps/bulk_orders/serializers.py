@@ -1,7 +1,7 @@
 import os
 import re
 from rest_framework import serializers
-from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive
+from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive, UserCheckedProduct
 from apps.catalog.serializers import ProductListSerializer
 
 ALLOWED_ATTACHMENT_EXTENSIONS = {
@@ -55,6 +55,7 @@ class BulkOrderCreateSerializer(serializers.ModelSerializer):
 class BulkOrderDetailSerializer(serializers.ModelSerializer):
     messages = BulkOrderMessageSerializer(many=True, read_only=True)
     product_details = ProductListSerializer(source='product', read_only=True)
+    checked_products_details = ProductListSerializer(source='checked_products', many=True, read_only=True)
     status_label = serializers.CharField(source='get_status_display', read_only=True)
     organization_type_label = serializers.CharField(source='get_organization_type_display', read_only=True)
 
@@ -64,11 +65,20 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
             'id', 'order_number', 'user', 'organization_type', 'organization_type_label',
             'organization_name', 'contact_person', 'email', 'phone', 'city', 'state',
             'gst_number', 'category_type', 'product', 'product_details', 'product_name_text',
+            'checked_products', 'checked_products_details',
             'estimated_quantity', 'specifications', 'requirements', 'attachment',
             'attachment_url', 'status', 'status_label', 'quoted_amount', 'quote_notes',
             'tracking_consignment_number', 'tracking_courier_partner',
             'messages', 'created_at', 'updated_at'
         ]
+
+
+class UserCheckedProductSerializer(serializers.ModelSerializer):
+    product_details = ProductListSerializer(source='product', read_only=True)
+
+    class Meta:
+        model = UserCheckedProduct
+        fields = ['id', 'product', 'product_details', 'viewed_at', 'inquiry_count']
 
 
 class BulkOrderListSerializer(serializers.ModelSerializer):

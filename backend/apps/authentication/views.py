@@ -1,5 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.conf import settings
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -193,3 +197,86 @@ class ChangePasswordView(APIView):
             'message': 'Password changed successfully',
             'token': new_token.key
         })
+
+
+class RequestPasswordResetView(APIView):
+    """Initiates a secure password reset link / reset token for any client or owner."""
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email', '').strip().lower()
+        if not email:
+            return Response({'error': 'Please provide your registered email address.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.filter(email__iexact=email).first()
+        if not user:
+            # Prevent email enumeration by returning a generic success message
+            return Response({
+                'message': 'If this email is registered in our portal, a password reset link has been dispatched.',
+            }, status=status.HTTP_200_OK)
+
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        # Dispatch via email provider if available
+        try:
+            from apps.enquiries.services import send_resend_email, send_brevo_email
+            reset_url = f"{request.build_absolute_uri('/')}account/reset-password?uid={uid}&token={token}"
+            subject = "Password Reset Request — The Print Planet"
+            html_body = f"""
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #E2E8F0; border-radius: 12px;">
+              <h2 style="color: #17365D;">Password Reset Instructions</h2>
+              <p style="color: #4A5568;">Hello {user.first_name or user.username},</p>
+              <p style="color: #4A5568;">We received a request to reset your password on The Print Planet Official Portal.</p>
+              <p style="text-align: center; margin: 30px 0;">
+                <a href="{reset_url}" style="background-color: #E87832; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Reset My Password</a>
+              </p>
+              <p style="color: #718096; font-size: 12px;">If you did not request this, please disregard this email. This link is valid for 24 hours.</p>
+            </div>
+            """
+            send_resend_email(to_email=user.email, subject=subject, html_content=html_body)
+        except Exception:
+            pass
+
+        return Response({
+            'message': 'If this email is registered in our portal, password reset instructions have been generated.',
+            'debug_reset_token': token if (user.is_staff or settings.DEBUG) else None,
+            'uid': uid if (user.is_staff or settings.DEBUG) else None,
+        }, status=status.HTTP_200_OK)
+
+
+class ConfirmPasswordResetView(APIView):
+    """Sets a new password using uid and token."""
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        uidb64 = request.data.get('uid', '').strip()
+        token = request.data.get('token', '').strip()
+        new_password = request.data.get('new_password', '').strip()
+
+        if not uidb64 or not token or not new_password:
+            return Response({'error': 'UID, reset token, and new password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if len(new_password) < 6:
+            return Response({'error': 'Password must be at least 6 characters long.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return Response({'error': 'Invalid or expired password reset link.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not default_token_generator.check_token(user, token):
+            return Response({'error': 'Invalid or expired password reset token. Please request a new one.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+
+        # Re-issue auth token
+        Token.objects.filter(user=user).delete()
+        new_token = Token.objects.create(user=user)
+
+        return Response({
+            'message': 'Your password has been successfully reset. You can now log in.',
+            'token': new_token.key
+        }, status=status.HTTP_200_OK)

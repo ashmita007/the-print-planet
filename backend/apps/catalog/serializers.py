@@ -138,9 +138,11 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         return None
 
     def get_related_products(self, obj):
+        if not obj.category_id:
+            return []
         related = Product.objects.filter(
-            category=obj.category, is_active=True
-        ).exclude(id=obj.id)[:4]
+            category_id=obj.category_id, is_active=True
+        ).exclude(id=obj.id).select_related('category').prefetch_related('images')[:4]
         return ProductListSerializer(related, many=True).data
 
 

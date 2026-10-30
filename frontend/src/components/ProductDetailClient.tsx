@@ -24,6 +24,7 @@ import { Product } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
+import { trackUserCheckedProduct } from "@/lib/api";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -57,6 +58,13 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       setImgLoaded(true);
     }
   }, [selectedImage]);
+
+  // Track product view for logged-in buyer insights and quick quote recall
+  useEffect(() => {
+    if (product?.id) {
+      trackUserCheckedProduct(product.id);
+    }
+  }, [product?.id]);
 
   const imagesList = (
     product.images && product.images.length > 0

@@ -86,8 +86,8 @@ class OwnerDashboardStatsView(APIView):
         new_enquiries = Enquiry.objects.filter(status='new').count()
         in_progress_enquiries = Enquiry.objects.filter(status='in_progress').count()
 
-        recent_enquiries = Enquiry.objects.all()[:5]
-        recent_products = Product.objects.all().order_by('-updated_at')[:6]
+        recent_enquiries = Enquiry.objects.select_related('product').all()[:5]
+        recent_products = Product.objects.select_related('category').prefetch_related('images').all().order_by('-updated_at')[:6]
 
         return Response({
             'metrics': {

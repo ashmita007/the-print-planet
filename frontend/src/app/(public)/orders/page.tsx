@@ -20,12 +20,13 @@ import {
   User,
 } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { clientGetBulkOrders } from "@/lib/api";
+import { clientGetBulkOrders, clientGetCheckedProducts, clientLogout } from "@/lib/api";
 import { BulkOrder } from "@/lib/types";
 
 export default function ClientOrdersDashboardPage() {
   const router = useRouter();
   const [orders, setOrders] = useState<BulkOrder[]>([]);
+  const [checkedProducts, setCheckedProducts] = useState<any[]>([]);
   const [metrics, setMetrics] = useState<any>({
     total: 0,
     submitted: 0,
@@ -52,19 +53,22 @@ export default function ClientOrdersDashboardPage() {
         } catch {}
       }
 
-      clientGetBulkOrders().then((data) => {
-        setOrders(data.results || []);
-        if (data.summary_metrics) {
-          setMetrics(data.summary_metrics);
+      Promise.all([
+        clientGetBulkOrders(),
+        clientGetCheckedProducts(),
+      ]).then(([ordersData, checkedData]) => {
+        setOrders(ordersData.results || []);
+        if (ordersData.summary_metrics) {
+          setMetrics(ordersData.summary_metrics);
         }
+        setCheckedProducts(checkedData.results || []);
         setLoading(false);
       });
     }
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("client_token");
-    localStorage.removeItem("client_user");
+  const handleLogout = async () => {
+    await clientLogout();
     router.push("/account/login");
   };
 
@@ -271,6 +275,43 @@ export default function ClientOrdersDashboardPage() {
           </div>
         )}
       </div>
+      {/* Products Checked by User Section */}
+      {checkedProducts.length > 0 && (
+        <div className="bg-white border border-[#DCE3EB] rounded-2xl p-5 sm:p-6 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-[#17365D] uppercase tracking-wider flex items-center gap-2">
+              <Package className="w-4 h-4 text-[#E87832]" />
+              <span>Products You Explored &amp; Checked ({checkedProducts.length})</span>
+            </h3>
+            <span className="text-[11px] text-slate-400">Available to add directly into your bulk quotation</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {checkedProducts.map((item) => {
+              const p = item.product_details;
+              if (!p) return null;
+              const imgUrl = p.primary_image?.secure_url || "/placeholder-product.svg";
+              return (
+                <Link
+                  key={item.id}
+                  href={`/products/${p.slug}`}
+                  className="p-2.5 rounded-xl border border-[#DCE3EB] hover:border-[#17365D] hover:shadow-sm bg-[#FAFBFC] transition-all group flex flex-col justify-between"
+                >
+                  <div className="w-full aspect-square bg-white rounded-lg p-1.5 mb-2 overflow-hidden flex items-center justify-center border border-slate-100">
+                    <img src={imgUrl} alt={p.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-mono text-slate-400 uppercase block">{p.sku}</span>
+                    <h4 className="text-xs font-bold text-[#17365D] group-hover:text-[#E87832] transition-colors truncate">
+                      {p.name}
+                    </h4>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

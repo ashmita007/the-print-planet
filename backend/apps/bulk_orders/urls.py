@@ -5,6 +5,8 @@ from .views import (
     ClientBulkOrdersListView,
     ClientBulkOrderDetailView,
     ClientBulkOrderMessagePostView,
+    TrackCheckedProductView,
+    ClientCheckedProductsListView,
     OwnerBulkOrderViewSet,
     OwnerConversationBackupDownloadView,
     OwnerConversationBackupCreateSnapshotView,
@@ -19,6 +21,8 @@ urlpatterns = [
     path('my-orders/', ClientBulkOrdersListView.as_view(), name='client-bulk-orders-list'),
     path('my-orders/<str:order_number>/', ClientBulkOrderDetailView.as_view(), name='client-bulk-order-detail'),
     path('my-orders/<str:order_number>/messages/', ClientBulkOrderMessagePostView.as_view(), name='client-bulk-order-message-post'),
+    path('track-checked-product/<int:product_id>/', TrackCheckedProductView.as_view(), name='track-checked-product'),
+    path('checked-products/', ClientCheckedProductsListView.as_view(), name='client-checked-products'),
 
     # Owner management and backup endpoints
     path('owner/backup/download/', OwnerConversationBackupDownloadView.as_view(), name='owner-conversation-backup-download'),

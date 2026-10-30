@@ -53,6 +53,12 @@ class BulkOrder(models.Model):
         related_name='bulk_orders'
     )
     product_name_text = models.CharField(max_length=255, blank=True, default='')
+    checked_products = models.ManyToManyField(
+        'catalog.Product',
+        blank=True,
+        related_name='checked_in_bulk_orders',
+        help_text='Products explored, sampled, or checked by user for this bulk requirement'
+    )
     estimated_quantity = models.PositiveIntegerField(default=500)
     specifications = models.JSONField(default=dict, blank=True)
     requirements = models.TextField()
@@ -149,3 +155,28 @@ class ConversationBackupArchive(models.Model):
 
     def __str__(self):
         return f"{self.archive_code} ({self.total_orders} orders, {self.total_messages} messages)"
+
+
+class UserCheckedProduct(models.Model):
+    """Tracks which catalog products a registered buyer or visitor browsed, checked, or quoted."""
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='checked_products'
+    )
+    product = models.ForeignKey(
+        'catalog.Product',
+        on_delete=models.CASCADE,
+        related_name='user_views'
+    )
+    viewed_at = models.DateTimeField(auto_now=True)
+    inquiry_count = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        ordering = ['-viewed_at']
+        unique_together = ('user', 'product')
+        verbose_name = 'User Checked Product'
+        verbose_name_plural = 'User Checked Products'
+
+    def __str__(self):
+        return f"{self.user.username} checked {self.product.name}"

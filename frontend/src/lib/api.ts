@@ -863,6 +863,82 @@ export async function clientPostBulkOrderMessage(orderNumber: string, message: s
   }
 }
 
+export async function clientLogout(): Promise<void> {
+  try {
+    const token = localStorage.getItem('client_token') || localStorage.getItem('owner_token');
+    if (token) {
+      await fetch(`${getApiUrl()}/api/v1/auth/logout/`, {
+        method: 'POST',
+        headers: { Authorization: `Token ${token}` },
+      });
+    }
+  } catch {}
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('client_token');
+    localStorage.removeItem('client_user');
+  }
+}
+
+export async function requestForgotPassword(email: string): Promise<{ success: boolean; message?: string; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/forgot-password/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.error || 'Failed to submit password reset request.' };
+    return { success: true, message: data.message };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network failed.' };
+  }
+}
+
+export async function confirmPasswordReset(data: {
+  uid: string;
+  token: string;
+  new_password: string;
+}): Promise<{ success: boolean; message?: string; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/reset-password/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const resData = await res.json();
+    if (!res.ok) return { success: false, error: resData.error || 'Failed to reset password.' };
+    return { success: true, message: resData.message };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network failed.' };
+  }
+}
+
+export async function trackUserCheckedProduct(productId: number): Promise<void> {
+  try {
+    const headers = getClientAuthHeaders();
+    if (!headers.Authorization) return;
+    await fetch(`${getApiUrl()}/api/v1/bulk-orders/track-checked-product/${productId}/`, {
+      method: 'POST',
+      headers,
+    });
+  } catch {}
+}
+
+export async function clientGetCheckedProducts(): Promise<{ results: any[]; count: number }> {
+  try {
+    const headers = getClientAuthHeaders();
+    if (!headers.Authorization) return { results: [], count: 0 };
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/checked-products/`, {
+      headers,
+      cache: 'no-store',
+    });
+    if (!res.ok) return { results: [], count: 0 };
+    return await res.json();
+  } catch {
+    return { results: [], count: 0 };
+  }
+}
+
 export async function ownerDownloadConversationsBackup(): Promise<{ success: boolean; error?: string }> {
   try {
     const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/owner/backup/download/`, {

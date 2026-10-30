@@ -74,7 +74,15 @@ export default function ClientLoginPage() {
           </div>
 
           <div>
-            <label className="block font-bold text-[#263445] mb-1">Password</label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block font-bold text-[#263445]">Password</label>
+              <Link
+                href="/account/forgot-password"
+                className="text-[11px] font-semibold text-[#E87832] hover:underline"
+              >
+                Forgotten Password?
+              </Link>
+            </div>
             <div className="relative">
               <input
                 type="password"
