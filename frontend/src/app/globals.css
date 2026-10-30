@@ -62,7 +62,11 @@ h6 {
   font-family: var(--font-heading), var(--font-sans), sans-serif;
   letter-spacing: -0.025em;
   text-wrap: balance;
-  color: #17365D;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
 }
 
 h1 {

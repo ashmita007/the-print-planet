@@ -197,7 +197,13 @@ export default function ProductHeroShowcase({
             <div className="space-y-3">
               <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight leading-[1.14] text-white">
                 The Print Planet
-                <span className="block text-[#E87832] min-h-[1.25em] mt-1">
+                <span
+                  className="block text-[#E87832] min-h-[1.25em] mt-1"
+                  style={{
+                    WebkitTextStroke: "1px #FFFFFF",
+                    paintOrder: "stroke fill",
+                  }}
+                >
                   <span
                     key={phraseIdx}
                     className={`inline-block font-black transition-all duration-300 ${
@@ -366,8 +372,11 @@ export default function ProductHeroShowcase({
                 {/* Product Information & Live Pricing */}
                 <div className="sm:col-span-7 space-y-2.5 sm:space-y-3">
                   <div>
-                    <h3 className="text-sm sm:text-lg font-bold text-white leading-snug hover:text-[#E87832] transition-colors line-clamp-2">
-                      <Link href={`/products/${activeProduct.slug}`}>
+                    <h3 className="text-sm sm:text-lg font-bold text-white leading-snug line-clamp-2">
+                      <Link
+                        href={`/products/${activeProduct.slug}`}
+                        className="text-white hover:text-[#E87832] transition-colors"
+                      >
                         {formatProductName(activeProduct.name)}
                       </Link>
                     </h3>
