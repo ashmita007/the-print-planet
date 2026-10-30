@@ -86,16 +86,22 @@ class ProductListView(generics.ListAPIView):
             else:
                 qs = qs.filter(Q(category__slug=cat) | Q(category__parent__slug=cat))
 
-        # Keyword search
-        q = self.request.query_params.get('search') or self.request.query_params.get('q')
+        # Keyword search (supports multi-word query tokens and matches category name as well)
+        q = (self.request.query_params.get('search') or self.request.query_params.get('q') or '').strip()
         if q:
-            qs = qs.filter(
-                Q(name__icontains=q) |
-                Q(sku__icontains=q) |
-                Q(description__icontains=q) |
-                Q(material__icontains=q) |
-                Q(dimensions__icontains=q)
-            )
+            tokens = [t.strip() for t in q.split() if t.strip()]
+            for token in tokens:
+                qs = qs.filter(
+                    Q(name__icontains=token) |
+                    Q(sku__icontains=token) |
+                    Q(description__icontains=token) |
+                    Q(short_description__icontains=token) |
+                    Q(material__icontains=token) |
+                    Q(dimensions__icontains=token) |
+                    Q(color__icontains=token) |
+                    Q(category__name__icontains=token) |
+                    Q(category__slug__icontains=token)
+                )
 
         # Attribute filters
         material = self.request.query_params.get('material')
@@ -145,14 +151,28 @@ class GlobalSearchView(APIView):
         if not query:
             return Response({'products': [], 'categories': []})
 
-        products = Product.objects.filter(
-            Q(name__icontains=query) | Q(sku__icontains=query) | Q(description__icontains=query),
-            is_active=True
-        )[:15]
-        categories = Category.objects.filter(
-            Q(name__icontains=query) | Q(description__icontains=query),
-            is_active=True
-        )[:5]
+        # Tokenized product search
+        tokens = [t.strip() for t in query.split() if t.strip()]
+        prod_qs = Product.objects.filter(is_active=True).select_related('category').prefetch_related('images')
+        for token in tokens:
+            prod_qs = prod_qs.filter(
+                Q(name__icontains=token) |
+                Q(sku__icontains=token) |
+                Q(description__icontains=token) |
+                Q(short_description__icontains=token) |
+                Q(material__icontains=token) |
+                Q(dimensions__icontains=token) |
+                Q(color__icontains=token) |
+                Q(category__name__icontains=token)
+            )
+        products = prod_qs[:24]
+
+        cat_qs = Category.objects.filter(is_active=True)
+        for token in tokens:
+            cat_qs = cat_qs.filter(
+                Q(name__icontains=token) | Q(description__icontains=token) | Q(slug__icontains=token)
+            )
+        categories = cat_qs[:8]
 
         return Response({
             'query': query,

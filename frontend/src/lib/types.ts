@@ -141,3 +141,57 @@ export interface DashboardMetrics {
   new_enquiries: number;
   in_progress_enquiries: number;
 }
+
+export interface BulkOrderMessage {
+  id: number;
+  order: number;
+  sender_type: 'client' | 'owner' | 'system';
+  sender_name: string;
+  message: string;
+  attachment?: string | null;
+  attachment_url?: string;
+  created_at: string;
+}
+
+export interface BulkOrder {
+  id: number;
+  order_number: string;
+  user?: number;
+  organization_type: 'school' | 'corporate' | 'college' | 'reseller' | 'other';
+  organization_type_label?: string;
+  organization_name: string;
+  contact_person: string;
+  email: string;
+  phone: string;
+  city?: string;
+  state?: string;
+  gst_number?: string;
+  category_type?: string;
+  product?: number | null;
+  product_details?: Product | null;
+  product_name_text?: string;
+  estimated_quantity: number;
+  specifications?: Record<string, any>;
+  requirements: string;
+  attachment?: string | null;
+  attachment_url?: string;
+  status: 'submitted' | 'reviewing' | 'quoted' | 'proofing' | 'in_production' | 'dispatched' | 'completed' | 'cancelled';
+  status_label?: string;
+  quoted_amount?: number | null;
+  quote_notes?: string;
+  tracking_consignment_number?: string;
+  tracking_courier_partner?: string;
+  messages?: BulkOrderMessage[];
+  messages_count?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BulkOrderSummaryMetrics {
+  total: number;
+  submitted: number;
+  reviewing: number;
+  quoted: number;
+  in_production: number;
+  completed: number;
+}

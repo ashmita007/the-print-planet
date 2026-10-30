@@ -26,6 +26,9 @@ from apps.enquiries.views import (
     PublicEnquiryCreateView,
     OwnerEnquiryViewSet,
 )
+from apps.bulk_orders.views import (
+    OwnerConversationBackupDownloadView,
+)
 from apps.settings_app.views import (
     PublicSiteSettingsView,
     PublicHomePageSectionsView,
@@ -37,6 +40,7 @@ from apps.settings_app.views import (
 )
 from apps.authentication.views import (
     LoginView,
+    RegisterView,
     LogoutView,
     CurrentUserView,
     ChangePasswordView,
@@ -88,11 +92,15 @@ urlpatterns = [
     path('api/v1/site-settings/', PublicSiteSettingsView.as_view(), name='public-site-settings'),
     path('api/v1/homepage-sections/', PublicHomePageSectionsView.as_view(), name='public-homepage-sections'),
 
-    # Authentication
+    # Authentication & Registration
+    path('api/v1/auth/register/', RegisterView.as_view(), name='auth-register'),
     path('api/v1/auth/login/', LoginView.as_view(), name='auth-login'),
     path('api/v1/auth/logout/', LogoutView.as_view(), name='auth-logout'),
     path('api/v1/auth/me/', CurrentUserView.as_view(), name='auth-me'),
     path('api/v1/auth/change-password/', ChangePasswordView.as_view(), name='auth-change-password'),
+
+    # Bulk Orders & Dedicated Conversation System App
+    path('api/v1/bulk-orders/', include('apps.bulk_orders.urls')),
 
     # Owner Management APIs
     path('api/v1/owner/site-settings/', OwnerSiteSettingsView.as_view(), name='owner-site-settings'),
@@ -104,6 +112,7 @@ urlpatterns = [
     path('api/v1/owner/backup/email/', OwnerDatabaseBackupEmailView.as_view(), name='owner-backup-email'),
     path('api/v1/owner/email/diagnostics/', OwnerEmailDiagnosticsView.as_view(), name='owner-email-diagnostics'),
     path('api/v1/owner/backup/download/', OwnerDatabaseBackupDownloadView.as_view(), name='owner-backup-download'),
+    path('api/v1/owner/backup/conversations/', OwnerConversationBackupDownloadView.as_view(), name='owner-backup-conversations'),
     path('api/v1/owner/backup/cloud/', OwnerCloudDatabaseSyncView.as_view(), name='owner-backup-cloud'),
     path('api/v1/owner/', include(owner_router.urls)),
 ]

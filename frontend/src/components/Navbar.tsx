@@ -308,8 +308,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               Industries
             </Link>
 
-            <Link href="/corporate" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
+            <Link href="/bulk-orders" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap text-[#E87832] font-bold">
               Bulk Orders
+            </Link>
+
+            <Link href="/orders" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
+              Track Orders
             </Link>
 
             <Link href="/contact" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
@@ -480,21 +484,36 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 </Link>
 
                 <Link
-                  href="/corporate"
+                  href="/bulk-orders"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
-                    pathname === "/corporate" || pathname === "/bulk-orders"
+                    pathname === "/bulk-orders"
                       ? "bg-[#17365D] text-white shadow-xs font-bold"
                       : "text-[#263445] hover:bg-[#F5F7FA]"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Briefcase className={`w-4 h-4 ${pathname === "/corporate" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
-                    <span>Bulk &amp; Corporate Orders</span>
+                    <Briefcase className={`w-4 h-4 ${pathname === "/bulk-orders" ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Bulk Orders (Schools &amp; Corporate)</span>
                   </div>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    Volume Slabs
+                    Tier Pricing
                   </span>
+                </Link>
+
+                <Link
+                  href="/orders"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors min-h-[44px] ${
+                    pathname?.startsWith("/orders")
+                      ? "bg-[#17365D] text-white shadow-xs font-bold"
+                      : "text-[#263445] hover:bg-[#F5F7FA]"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Package className={`w-4 h-4 ${pathname?.startsWith("/orders") ? "text-[#FFA868]" : "text-[#17365D]"}`} />
+                    <span>Track My Orders &amp; Chat</span>
+                  </div>
                 </Link>
 
                 <Link

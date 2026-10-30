@@ -57,6 +57,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
   const activeCategory = categories.find((c) => c.slug === params.category);
   const totalPages = Math.ceil(productsData.count / 24);
+  const totalCatalogCount =
+    categories.filter((c) => !c.parent).reduce((sum, c) => sum + (c.products_count || 0), 0) ||
+    productsData.count;
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
@@ -149,7 +152,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               >
                 <span>All Wholesale Products</span>
                 <span className={`text-[10px] px-1.5 py-0.5 rounded ${!params.category ? "bg-white/20 text-white" : "bg-slate-200"}`}>
-                  {productsData.count}
+                  {totalCatalogCount}
                 </span>
               </Link>
 

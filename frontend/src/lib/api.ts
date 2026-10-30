@@ -703,3 +703,184 @@ export async function ownerSyncCloudDatabase(action: 'backup' | 'restore' = 'bac
   }
 }
 
+// ==========================================
+// CLIENT PORTAL & BULK ORDERS API CALLS
+// ==========================================
+
+export const getClientAuthHeaders = (): Record<string, string> => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('client_token') || localStorage.getItem('owner_token');
+    if (token) {
+      return { Authorization: `Token ${token}` };
+    }
+  }
+  return {};
+};
+
+export async function clientRegister(data: {
+  full_name: string;
+  company_name?: string;
+  email: string;
+  phone: string;
+  password: string;
+}): Promise<{ success: boolean; token?: string; user?: any; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/register/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const resData = await res.json();
+    if (!res.ok) {
+      return { success: false, error: resData.error || Object.values(resData)[0] as string || 'Registration failed' };
+    }
+    if (typeof window !== 'undefined' && resData.token) {
+      localStorage.setItem('client_token', resData.token);
+      localStorage.setItem('client_user', JSON.stringify(resData.user));
+    }
+    return { success: true, token: resData.token, user: resData.user };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Registration network failed' };
+  }
+}
+
+export async function clientLogin(data: {
+  username: string;
+  password: string;
+}): Promise<{ success: boolean; token?: string; role?: string; user?: any; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/login/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const resData = await res.json();
+    if (!res.ok) {
+      return { success: false, error: resData.error || 'Invalid credentials' };
+    }
+    if (typeof window !== 'undefined' && resData.token) {
+      if (resData.role === 'owner') {
+        localStorage.setItem('owner_token', resData.token);
+        localStorage.setItem('owner_user', JSON.stringify(resData.user));
+      } else {
+        localStorage.setItem('client_token', resData.token);
+        localStorage.setItem('client_user', JSON.stringify(resData.user));
+      }
+    }
+    return { success: true, token: resData.token, role: resData.role, user: resData.user };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Login network failed' };
+  }
+}
+
+export async function clientSubmitBulkOrder(formData: FormData): Promise<{
+  success: boolean;
+  order_number?: string;
+  token?: string;
+  order?: any;
+  error?: string;
+  requires_login?: boolean;
+}> {
+  try {
+    const headers = getClientAuthHeaders();
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/submit/`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      return {
+        success: false,
+        error: data.error || (typeof data === 'object' ? Object.values(data)[0] : 'Submission failed') as string,
+        requires_login: data.requires_login,
+      };
+    }
+    if (typeof window !== 'undefined' && data.token) {
+      localStorage.setItem('client_token', data.token);
+    }
+    return { success: true, ...data };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Failed to submit bulk order.' };
+  }
+}
+
+export async function clientGetBulkOrders(): Promise<{
+  results: any[];
+  count: number;
+  summary_metrics?: any;
+  error?: string;
+}> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/`, {
+      headers: getClientAuthHeaders(),
+      cache: 'no-store',
+    });
+    if (!res.ok) {
+      return { results: [], count: 0, error: 'Unauthorized or failed to fetch orders.' };
+    }
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    return { results: [], count: 0, error: err.message };
+  }
+}
+
+export async function clientGetBulkOrderDetail(orderNumber: string): Promise<any | null> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${orderNumber}/`, {
+      headers: getClientAuthHeaders(),
+      cache: 'no-store',
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function clientPostBulkOrderMessage(orderNumber: string, message: string, file?: File): Promise<{
+  success: boolean;
+  message?: any;
+  error?: string;
+}> {
+  try {
+    const formData = new FormData();
+    formData.append('message', message);
+    if (file) {
+      formData.append('attachment', file);
+    }
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${orderNumber}/messages/`, {
+      method: 'POST',
+      headers: getClientAuthHeaders(),
+      body: formData,
+    });
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.error || 'Failed to send message.' };
+    return { success: true, message: data };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+
+export async function ownerDownloadConversationsBackup(): Promise<{ success: boolean; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/owner/backup/download/`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) return { success: false, error: 'Failed to download conversations backup' };
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `The_Print_Planet_Conversations_Backup_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
+

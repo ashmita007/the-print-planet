@@ -134,17 +134,24 @@ export default function DirectProductShowcase({
       });
     }
 
-    // Search query filter
+    // Search query filter (tokenized across multiple words)
     if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      list = list.filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.sku.toLowerCase().includes(q) ||
-          (p.material && p.material.toLowerCase().includes(q)) ||
-          (p.color && p.color.toLowerCase().includes(q)) ||
-          (p.category?.name && p.category.name.toLowerCase().includes(q))
-      );
+      const tokens = searchQuery.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      list = list.filter((p) => {
+        const textToSearch = [
+          p.name,
+          p.sku,
+          p.material || "",
+          p.color || "",
+          p.dimensions || "",
+          p.short_description || "",
+          p.category?.name || "",
+          p.category?.slug || "",
+        ]
+          .join(" ")
+          .toLowerCase();
+        return tokens.every((token) => textToSearch.includes(token));
+      });
     }
 
     // Sort order

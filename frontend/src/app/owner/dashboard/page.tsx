@@ -19,6 +19,7 @@ import {
   ownerGetDashboardStats,
   ownerTriggerDatabaseBackupEmail,
   ownerDownloadDatabaseBackup,
+  ownerDownloadConversationsBackup,
 } from "@/lib/api";
 import { DashboardMetrics, Enquiry, Product } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
@@ -33,7 +34,27 @@ export default function OwnerDashboardPage() {
   // Backup states
   const [backupEmailLoading, setBackupEmailLoading] = useState(false);
   const [backupDownloadLoading, setBackupDownloadLoading] = useState(false);
+  const [backupConvLoading, setBackupConvLoading] = useState(false);
   const [backupNotice, setBackupNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleDownloadConversationsBackup = async () => {
+    setBackupConvLoading(true);
+    setBackupNotice(null);
+    const res = await ownerDownloadConversationsBackup();
+    setBackupConvLoading(false);
+    if (res.success) {
+      setBackupNotice({
+        type: "success",
+        text: "Dedicated customer conversations & bulk orders backup downloaded successfully.",
+      });
+      setTimeout(() => setBackupNotice(null), 5000);
+    } else {
+      setBackupNotice({
+        type: "error",
+        text: res.error || "Failed to download conversations backup.",
+      });
+    }
+  };
 
   useEffect(() => {
     ownerGetDashboardStats().then((data) => {
@@ -214,6 +235,20 @@ export default function OwnerDashboardPage() {
               <Download className="w-3.5 h-3.5 text-slate-500" />
             )}
             <span>Download</span>
+          </button>
+
+          <button
+            onClick={handleDownloadConversationsBackup}
+            disabled={backupConvLoading}
+            title="Download dedicated backup of all customer conversations, messages & bulk order threads"
+            className="bg-white border border-[#DCE3EB] hover:border-[#17365D] hover:bg-[#F8FAFC] text-[#17365D] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+          >
+            {backupConvLoading ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E87832]" />
+            ) : (
+              <Download className="w-3.5 h-3.5 text-[#E87832]" />
+            )}
+            <span>Backup Conversations</span>
           </button>
 
           <Link

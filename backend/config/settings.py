@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.enquiries',
     'apps.settings_app',
     'apps.authentication',
+    'apps.bulk_orders',
 ]
 
 MIDDLEWARE = [

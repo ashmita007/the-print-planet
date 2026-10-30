@@ -67,7 +67,7 @@ export const revalidate = 120;
 export default async function HomePage() {
   const [categories, productsData, featuredProducts, machineryData, settings] = await Promise.all([
     getCategories(),
-    getProducts({ page_size: 48 }),
+    getProducts({ page_size: 250 }),
     getFeaturedProducts(),
     getProducts({ category: "id-card-manufacturing-machines", page_size: 8 }),
     getSiteSettings(),

@@ -153,22 +153,35 @@ class Command(BaseCommand):
                 f"Successfully seeded {len(categories_data)} categories and {products_created + products_updated} products ({products_created} created, {products_updated} updated)."
             ))
 
-        # 3. Configure Site Settings
+        # 3. Configure Site Settings (Preserve user dynamic hero content & configuration!)
+        settings_exists = SiteSettings.objects.exists()
         settings_obj = SiteSettings.get_settings()
-        settings_obj.business_name = "THE PRINT PLANET"
-        settings_obj.tagline = "Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions"
-        settings_obj.phone = "+91 97418 08034"
-        settings_obj.whatsapp = "+91 97418 08034"
-        settings_obj.email = "theprintplanet01@gmail.com"
-        settings_obj.address = "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India"
-        settings_obj.gst_number = "29AAQFT3909B1ZZ"
-        settings_obj.hero_badge = "The Print Planet™ • Specialist in PVC Cards & ID Systems"
-        settings_obj.hero_title = "The Print Planet — Factory Direct"
-        settings_obj.hero_subtitle = "Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions"
-        settings_obj.hero_caption = "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, lens packaging & cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
-        settings_obj.footer_text = "THE PRINT PLANET — Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B."
-        settings_obj.save()
-        self.stdout.write(self.style.SUCCESS("Configured default Site Settings."))
+        if not settings_exists:
+            settings_obj.business_name = "THE PRINT PLANET"
+            settings_obj.tagline = "Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions"
+            settings_obj.phone = "+91 97418 08034"
+            settings_obj.whatsapp = "+91 97418 08034"
+            settings_obj.email = "theprintplanet01@gmail.com"
+            settings_obj.address = "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India"
+            settings_obj.gst_number = "29AAQFT3909B1ZZ"
+            settings_obj.hero_badge = "The Print Planet™ • Specialist in PVC Cards & ID Systems"
+            settings_obj.hero_title = "The Print Planet — Factory Direct"
+            settings_obj.hero_subtitle = "Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions"
+            settings_obj.hero_caption = "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, lens packaging & cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
+            settings_obj.footer_text = "THE PRINT PLANET — Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B."
+            settings_obj.save()
+            self.stdout.write(self.style.SUCCESS("Initialized default Site Settings."))
+        else:
+            save_needed = False
+            if not settings_obj.business_name:
+                settings_obj.business_name = "THE PRINT PLANET"
+                save_needed = True
+            if not settings_obj.hero_title:
+                settings_obj.hero_title = "The Print Planet — Factory Direct"
+                save_needed = True
+            if save_needed:
+                settings_obj.save()
+            self.stdout.write(self.style.SUCCESS("Preserved user dynamic Site Settings & Hero content. ZERO fields overwritten."))
 
         # 4. Configure HomePage Sections
         if not HomePageSection.objects.exists():

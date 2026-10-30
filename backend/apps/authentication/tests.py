@@ -36,12 +36,14 @@ class AuthenticationApiTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('token', response.data)
 
-    def test_non_staff_user_login_rejected(self):
+    def test_client_user_login_succeeds(self):
         response = self.client.post('/api/v1/auth/login/', {
             'username': 'regular',
             'password': self.password
         })
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['role'], 'client')
+        self.assertIn('token', response.data)
 
     def test_auth_me_endpoint(self):
         self.client.force_authenticate(user=self.owner)
