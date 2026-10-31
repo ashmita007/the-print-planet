@@ -187,26 +187,10 @@ button:disabled,
   animation: textGradientShift 4s ease infinite;
 }
 
-/* Animated underline for desktop navigation links */
+/* Desktop navigation links */
 .nav-link {
   position: relative;
-}
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  border-radius: 9999px;
-  background-color: #E87832;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 200ms ease;
-}
-.nav-link:hover::after,
-.nav-link:focus-visible::after {
-  transform: scaleX(1);
+  transition: color 150ms ease;
 }
 
 /* Human-crafted motion system */

@@ -53,6 +53,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const [clientUser, setClientUser] = useState<any>(null);
   const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
   const [mounted, setMounted] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -240,30 +241,41 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             onSubmit={handleSearchSubmit}
             className="hidden xl:flex flex-1 max-w-xs xl:max-w-sm mx-3 xl:mx-6 relative items-center"
           >
-            <div className="relative w-full">
+            <div className="relative w-full group">
               <input
                 type="text"
-                placeholder="Search products, ID cards, lanyards, apparel..."
+                placeholder="Search products, ID cards, lanyards..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-[#E87832] focus:bg-white focus:ring-4 focus:ring-[#E87832]/10 rounded-xl pl-9 pr-9 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
+                className="w-full bg-[#F5F7FA] hover:bg-white focus:bg-white border border-[#DCE3EB] hover:border-[#17365D]/30 focus:border-[#E87832] focus:ring-4 focus:ring-[#E87832]/10 rounded-xl pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              {searchQuery && (
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#E87832] transition-colors" />
+              {searchQuery ? (
                 <button
                   type="submit"
                   className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#E87832] text-white px-2 py-0.5 rounded-md hover:bg-[#d66b28] transition-colors"
                 >
                   Go
                 </button>
+              ) : (
+                <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-2xs pointer-events-none">
+                  ⌘K
+                </span>
               )}
             </div>
           </form>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs sm:text-[13px] font-semibold text-slate-800">
+          {/* Desktop Navigation Links with Motion.dev Interactive Hover Pill */}
+          <nav
+            onMouseLeave={() => setHoveredNav(null)}
+            className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs sm:text-[13px] font-semibold text-slate-800"
+          >
             {/* Shop by Category Mega Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div
+              className="relative"
+              ref={dropdownRef}
+              onMouseEnter={() => setHoveredNav("category")}
+            >
               <button
                 type="button"
                 onClick={() => {
@@ -271,8 +283,17 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   setCategoriesDropdownOpen(nextState);
                   if (nextState) fetchFreshCategories();
                 }}
-                className="nav-link flex items-center gap-1 hover:text-[#E87832] transition-colors focus:outline-none py-2"
+                className={`relative px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors focus:outline-none cursor-pointer ${
+                  categoriesDropdownOpen ? "text-[#E87832] font-bold" : "text-[#17365D] hover:text-[#E87832]"
+                }`}
               >
+                {hoveredNav === "category" && (
+                  <motion.div
+                    layoutId="navbar-hover-pill"
+                    className="absolute inset-0 bg-[#FFF7F2] border border-[#E87832]/25 rounded-xl -z-10 shadow-2xs"
+                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                  />
+                )}
                 <span>Shop by Category</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
@@ -285,11 +306,11 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               <AnimatePresence>
                 {categoriesDropdownOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                    transition={{ duration: 0.18 }}
-                    className="absolute top-full left-0 w-[640px] bg-white border border-slate-200 rounded-2xl shadow-2xl py-3 mt-1.5 z-50"
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute top-full left-0 w-[640px] bg-white/98 backdrop-blur-lg border border-[#DCE3EB] rounded-2xl shadow-[0_20px_50px_-10px_rgba(16,39,66,0.18)] py-3 mt-2 z-50 overflow-hidden"
                   >
                     <div className="px-5 py-2.5 border-b border-slate-100 bg-[#F8FAFC] flex items-center justify-between rounded-t-2xl">
                       <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider flex items-center gap-1.5">
@@ -366,43 +387,69 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               </AnimatePresence>
             </div>
 
-            <Link href="/corporate" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
-              Corporate Gifting
-            </Link>
-
-            <Link href="/services" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
-              Custom Printing
-            </Link>
-
-            <Link href="/bulk-orders" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap font-bold text-[#E87832]">
-              Bulk Orders
-            </Link>
-
-            <Link href="/about" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
-              About Us
-            </Link>
-
-            <Link href="/contact" className="nav-link hover:text-[#E87832] transition-colors whitespace-nowrap">
-              Contact
-            </Link>
+            {/* Standard Nav Items with Motion Hover Pill */}
+            {[
+              { href: "/corporate", label: "Corporate Gifting" },
+              { href: "/services", label: "Custom Printing" },
+              { href: "/bulk-orders", label: "Bulk Orders", badge: "Factory Direct" },
+              { href: "/about", label: "About Us" },
+              { href: "/contact", label: "Contact" },
+            ].map((item) => (
+              <div
+                key={item.href}
+                className="relative"
+                onMouseEnter={() => setHoveredNav(item.href)}
+              >
+                <Link
+                  href={item.href}
+                  className={`relative px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap ${
+                    pathname === item.href
+                      ? "text-[#E87832] font-bold"
+                      : item.badge
+                      ? "text-[#E87832] font-bold"
+                      : "text-slate-700 hover:text-[#E87832]"
+                  }`}
+                >
+                  {hoveredNav === item.href && (
+                    <motion.div
+                      layoutId="navbar-hover-pill"
+                      className="absolute inset-0 bg-[#FFF7F2] border border-[#E87832]/25 rounded-xl -z-10 shadow-2xs"
+                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                    />
+                  )}
+                  <span>{item.label}</span>
+                  {item.badge && (
+                    <span className="text-[9px] font-bold bg-[#E87832]/10 text-[#E87832] border border-[#E87832]/25 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              </div>
+            ))}
           </nav>
 
           {/* Action Icons (Cart, Account, Request Quote) */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Cart Button */}
-            <button
+            {/* Cart Button with Motion Tap & Hover */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={toggleCart}
-              className="relative p-2 sm:p-2.5 rounded-xl border border-slate-200 hover:border-[#E87832]/50 hover:bg-[#FFF7F2] text-slate-700 hover:text-[#E87832] transition-all flex items-center justify-center group"
+              className="relative p-2.5 rounded-xl border border-slate-200 hover:border-[#E87832]/60 hover:bg-[#FFF7F2] text-slate-700 hover:text-[#E87832] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
               title="View Cart & Quote List"
               aria-label="View Cart"
             >
-              <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-105" />
+              <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110" />
               {mounted && totalItems > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#E87832] text-white text-[10px] font-bold flex items-center justify-center shadow-sm animate-pulse">
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#E87832] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
+                >
                   {totalItems > 99 ? "99+" : totalItems}
-                </span>
+                </motion.span>
               )}
-            </button>
+            </motion.button>
 
             {/* Track Orders / Account */}
             {isClientLoggedIn ? (
@@ -416,14 +463,20 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               </Link>
             ) : null}
 
-            {/* Request a Quote Button */}
-            <Link
-              href="/quote"
-              className="hidden sm:inline-flex items-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] active:scale-95 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-xs hover:shadow-md transition-all whitespace-nowrap"
+            {/* Request a Quote Button with Motion Elevation */}
+            <motion.div
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              className="hidden sm:block"
             >
-              <FileText className="w-4 h-4" />
-              <span>Request Quote</span>
-            </Link>
+              <Link
+                href="/quote"
+                className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#E87832] to-[#D66B28] hover:from-[#d66b28] hover:to-[#c25e1f] text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-[#E87832]/20 hover:shadow-lg hover:shadow-[#E87832]/30 transition-all whitespace-nowrap cursor-pointer"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Request Quote</span>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -158,21 +158,21 @@ export default function ProductHeroShowcase({
             {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-[#E87832]/15 border border-[#E87832]/35 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold text-[#FFA868]">
               <span className="w-2 h-2 rounded-full bg-[#E87832] animate-pulse" />
-              <span>THE PRINT PLANET • Factory Direct Solutions</span>
+              <span>{settings?.hero_badge?.trim() || "THE PRINT PLANET • Factory Direct Solutions"}</span>
             </div>
 
             {/* Main Headline with Split Word Animation & Highlight */}
             <div className="space-y-3">
               <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-display font-black tracking-tight leading-[1.08] text-white">
                 <TextReveal
-                  text="Precision Custom Printing &"
+                  text={settings?.hero_title?.trim() || "Precision Custom Printing &"}
                   delay={0.1}
                   staggerDelay={0.05}
                 />
                 <span className="block mt-1">
                   <KineticHighlight>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA868] via-[#E87832] to-[#FF8C38] animate-gradient-text drop-shadow-[0_2px_14px_rgba(232,120,50,0.35)]">
-                      Enterprise Merchandise
+                      {settings?.hero_subtitle?.trim() || "Enterprise Merchandise"}
                     </span>
                   </KineticHighlight>
                 </span>
@@ -196,7 +196,8 @@ export default function ProductHeroShowcase({
             </div>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-              India&apos;s premier specialist in PVC identification cards, satin lanyard rolls, card manufacturing machinery, custom corporate gifting, and promotional branding. Direct factory wholesale dispatch from Bangalore with 24–48h express turnaround.
+              {settings?.hero_caption?.trim() ||
+                "India's premier specialist in PVC identification cards, satin lanyard rolls, card manufacturing machinery, custom corporate gifting, and promotional branding. Direct factory wholesale dispatch from Bangalore with 24–48h express turnaround."}
             </p>
 
             {/* CTAs */}
