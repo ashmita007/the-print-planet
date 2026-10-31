@@ -197,7 +197,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               }`}
                             >
                               <span className="truncate pr-1">{sub.name}</span>
-                              <span className={`text-[9px] px-1 py-0.2 rounded shrink-0 ${isSubSelected ? "bg-white/20 text-white" : "text-slate-400"}`}>
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded shrink-0 ${isSubSelected ? "bg-white/20 text-white" : "text-slate-400"}`}>
                                 {sub.products_count}
                               </span>
                             </Link>

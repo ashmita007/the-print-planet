@@ -341,7 +341,7 @@ export default function DirectProductShowcase({
                   <span>{formatCategoryName(cat.name)}</span>
                   {cat.products_count !== undefined && (
                     <span
-                      className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                      className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
                         selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
                       }`}
                     >

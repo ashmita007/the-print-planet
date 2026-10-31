@@ -238,7 +238,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           {/* Search Box (Desktop) */}
           <form
             onSubmit={handleSearchSubmit}
-            className="hidden md:flex flex-1 max-w-sm lg:max-w-md mx-3 lg:mx-6 relative items-center"
+            className="hidden xl:flex flex-1 max-w-xs xl:max-w-sm mx-3 xl:mx-6 relative items-center"
           >
             <div className="relative w-full">
               <input

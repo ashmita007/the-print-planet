@@ -59,11 +59,12 @@ export default function TextReveal({
 
   return (
     <motion.span
-      className={`inline-block overflow-hidden ${className}`}
+      className={`inline-block ${className}`}
       variants={container}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
+      animate="visible"
+      viewport={{ once: true }}
     >
       {words.map((word, index) => {
         const isHighlighted = highlightWords.some(
