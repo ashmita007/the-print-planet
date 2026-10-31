@@ -2,185 +2,221 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Shield, Box } from "lucide-react";
+import Image from "next/image";
+import { motion } from "motion/react";
+import {
+  ShieldCheck,
+  Box,
+  Eye,
+  ShoppingBag,
+  ArrowRight,
+  MessageCircle,
+} from "lucide-react";
 import { Product } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
-import EnquiryModal from "./EnquiryModal";
+import { useCart } from "@/lib/cart";
+import QuickViewModal from "./QuickViewModal";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const { addItem } = useCart();
+  const [quickViewOpen, setQuickViewOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const imageUrl =
+  const primaryUrl =
     product.primary_image?.secure_url ||
     (product.images && product.images.length > 0 ? product.images[0].secure_url : null) ||
     "/placeholder-product.svg";
 
-  const [imgSrc, setImgSrc] = useState(imageUrl);
+  const secondaryUrl =
+    product.images && product.images.length > 1
+      ? product.images[1].secure_url
+      : null;
+
+  const [imgSrc, setImgSrc] = useState(primaryUrl);
   const [hasError, setHasError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const imgRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    setImgSrc(imageUrl);
+    setImgSrc(primaryUrl);
     setHasError(false);
     setImgLoaded(false);
-  }, [imageUrl]);
+  }, [primaryUrl]);
 
-  useEffect(() => {
-    const img = imgRef.current;
-    if (img?.complete && img.naturalWidth > 0) {
-      setImgLoaded(true);
-    }
-  }, [imgSrc]);
+  const handleQuickAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product, product.minimum_order_quantity || 1);
+  };
+
+  const handleOpenQuickView = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setQuickViewOpen(true);
+  };
 
   return (
     <>
-      <div className="group bg-white border border-[#DCE3EB] hover:border-[#B9C6D6] rounded-xl overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_1px_2px_rgba(16,39,66,0.04)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_14px_30px_-12px_rgba(16,39,66,0.22)] hover:-translate-y-0.5 focus-within:border-[#B9C6D6] transition-all duration-300 ease-out flex flex-col h-full">
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group bg-white border border-slate-200 hover:border-blue-400 rounded-2xl overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative"
+      >
         {/* Image Container with 1:1 Aspect Ratio */}
         <Link
           href={`/products/${product.slug}`}
-          className="relative w-full pt-[100%] bg-[#F8FAFC] overflow-hidden border-b border-[#DCE3EB] block"
+          className="relative w-full pt-[100%] bg-slate-50 overflow-hidden border-b border-slate-100 block"
         >
           {!imgLoaded && !hasError && imgSrc && !imgSrc.startsWith("/placeholder") && (
             <div className="absolute inset-0 skeleton" />
           )}
 
           {!hasError && imgSrc && !imgSrc.startsWith("/placeholder") ? (
-            <img
-              ref={imgRef}
-              src={imgSrc}
-              alt={formatProductName(product.name)}
-              onLoad={() => setImgLoaded(true)}
-              onError={() => {
-                setHasError(true);
-                setImgSrc("/placeholder-product.svg");
-              }}
-              className={`absolute inset-0 w-full h-full object-contain p-2 sm:p-4 group-hover:scale-[1.06] transition-[opacity,transform] duration-500 ease-out will-change-transform ${
-                imgLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              loading="lazy"
-              decoding="async"
-            />
+            <>
+              {/* Primary Image */}
+              <img
+                src={primaryUrl}
+                alt={formatProductName(product.name)}
+                onLoad={() => setImgLoaded(true)}
+                onError={() => {
+                  setHasError(true);
+                  setImgSrc("/placeholder-product.svg");
+                }}
+                className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-all duration-500 ease-out will-change-transform ${
+                  isHovered && secondaryUrl ? "opacity-0 scale-95" : "opacity-100 group-hover:scale-105"
+                } ${imgLoaded ? "visible" : "invisible"}`}
+                loading="lazy"
+                decoding="async"
+              />
+
+              {/* Secondary Image on Hover (if available) */}
+              {secondaryUrl && (
+                <img
+                  src={secondaryUrl}
+                  alt={`${formatProductName(product.name)} alternate view`}
+                  className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-all duration-500 ease-out will-change-transform ${
+                    isHovered ? "opacity-100 scale-105" : "opacity-0 scale-95 pointer-events-none"
+                  }`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </>
           ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-slate-400">
-              <Box className="w-8 h-8 sm:w-12 sm:h-12 stroke-[1.5] mb-1 sm:mb-2 text-slate-300" />
-              <span className="text-[10px] sm:text-xs font-semibold text-slate-400 text-center">
-                Image coming soon
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-slate-400">
+              <Box className="w-8 h-8 sm:w-10 sm:h-10 stroke-[1.5] mb-1.5 text-slate-300" />
+              <span className="text-[10px] font-semibold text-slate-400 text-center">
+                Production Spec
               </span>
             </div>
           )}
 
-          {/* Featured or Verified Badge */}
-          <div className="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 flex flex-col gap-1">
+          {/* Badges (Top Left) */}
+          <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
             {product.is_featured && (
-              <span className="bg-[#17365D] text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-2xs">
+              <span className="bg-[#0A1128] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shadow-xs">
                 Featured
               </span>
             )}
             {product.verification_status === "verified" && (
-              <span className="hidden sm:inline-flex bg-white/90 backdrop-blur-sm text-[#217A4B] border border-[#217A4B]/25 text-[9px] font-semibold px-1.5 py-0.5 rounded shadow-[0_1px_2px_rgba(16,39,66,0.06)] items-center gap-1">
-                <Shield className="w-2.5 h-2.5" /> Verified
+              <span className="bg-white/95 backdrop-blur-xs text-blue-700 border border-blue-200 text-[9px] font-bold px-2 py-0.5 rounded-md shadow-xs inline-flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-blue-600" /> Factory Direct
               </span>
             )}
           </div>
 
-          {/* SKU Pill */}
-          <div className="absolute bottom-1.5 right-1.5 sm:bottom-2.5 sm:right-2.5 bg-white/85 backdrop-blur-sm border border-slate-200/80 text-[#4E6178] text-[9px] sm:text-[10px] font-mono font-semibold tabular-nums px-1.5 sm:px-2 py-0.5 rounded shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] max-w-[85%] truncate">
+          {/* SKU Pill (Bottom Left) */}
+          <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-xs border border-slate-200 text-slate-600 text-[9px] sm:text-[10px] font-mono font-medium px-2 py-0.5 rounded-md shadow-xs">
             {product.sku}
+          </div>
+
+          {/* Quick View Button (Desktop overlay on hover) */}
+          <div className="absolute inset-x-0 bottom-3 hidden sm:flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 px-3">
+            <button
+              onClick={handleOpenQuickView}
+              className="bg-white/95 hover:bg-blue-600 hover:text-white text-slate-800 text-xs font-semibold px-3.5 py-1.5 rounded-xl shadow-lg border border-slate-200 hover:border-blue-600 transition-all flex items-center gap-1.5 backdrop-blur-xs"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Quick View</span>
+            </button>
           </div>
         </Link>
 
         {/* Content Details */}
-        <div className="p-2 sm:p-3.5 flex flex-col flex-1 justify-between">
+        <div className="p-3 sm:p-4 flex flex-col flex-1 justify-between gap-3">
           <div>
-            {/* Category Breadcrumb Pill */}
-            <div className="mb-1">
+            {/* Category Breadcrumb */}
+            {product.category && (
               <Link
-                href={`/categories/${product.category?.slug}`}
-                className="text-[9px] sm:text-[11px] font-medium text-[#687586] hover:text-[#E87832] transition-colors line-clamp-1 block"
+                href={`/products?category=${product.category.slug}`}
+                className="text-[10px] sm:text-[11px] font-bold text-blue-600 uppercase tracking-wider hover:underline block truncate mb-1"
               >
-                {formatCategoryName(product.category?.name)}
+                {formatCategoryName(product.category.name)}
               </Link>
-            </div>
+            )}
 
             {/* Product Title */}
-            <h3 className="text-[11px] sm:text-xs md:text-sm font-bold tracking-[-0.01em] text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 leading-snug min-h-[1.9rem] sm:min-h-[2.4rem]">
-              <Link href={`/products/${product.slug}`}>{formatProductName(product.name)}</Link>
-            </h3>
+            <Link
+              href={`/products/${product.slug}`}
+              className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug"
+              title={product.name}
+            >
+              {formatProductName(product.name)}
+            </Link>
 
-            {/* Technical Highlights Badges */}
-            <div className="mt-1.5 sm:mt-2.5 flex flex-wrap gap-1">
-              {product.material && (
-                <span className="text-[8.5px] sm:text-[10px] bg-[#F5F7FA] text-[#263445] border border-[#DCE3EB] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
-                  {product.material}
-                </span>
-              )}
-              {product.dimensions && (
-                <span className="hidden sm:inline-block text-[8.5px] sm:text-[10px] bg-[#F5F7FA] text-[#263445] border border-[#DCE3EB] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
-                  {product.dimensions}
-                </span>
-              )}
-            </div>
+            {/* Micro specs / material */}
+            {(product.material || product.dimensions) && (
+              <p className="text-[11px] text-slate-500 truncate mt-1">
+                {product.material || product.dimensions}
+              </p>
+            )}
           </div>
 
-          {/* Price & Action Strip */}
-          <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2.5 border-t border-[#F5F7FA]">
-            <div className="flex items-baseline justify-between mb-1.5 sm:mb-2.5 gap-1">
-              <div className="min-w-0 flex-1">
-                {product.price_display ? (
-                  <span className="text-[11px] sm:text-sm font-bold font-mono tabular-nums tracking-tight text-[#17365D] block truncate">
-                    {product.price_display}
-                  </span>
-                ) : product.price ? (
-                  <span className="text-[11px] sm:text-sm font-bold font-mono tabular-nums tracking-tight text-[#17365D] block truncate">
-                    ₹ {Number(product.price).toLocaleString("en-IN")}
-                  </span>
-                ) : (
-                  <span className="text-[10px] sm:text-xs font-bold text-[#E87832] block">
-                    Price on Request
-                  </span>
-                )}
-              </div>
-
+          {/* Pricing & Actions */}
+          <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+            <div>
+              {product.price_display ? (
+                <div className="text-xs sm:text-sm font-bold text-slate-900 leading-none">
+                  {product.price_display}
+                </div>
+              ) : product.price ? (
+                <div className="text-xs sm:text-sm font-bold text-slate-900 leading-none">
+                  ₹{Number(product.price).toLocaleString("en-IN")}
+                </div>
+              ) : (
+                <div className="text-[11px] font-semibold text-blue-600 leading-none">
+                  Wholesale Rate
+                </div>
+              )}
               {product.minimum_order_quantity && (
-                <span className="text-[8.5px] sm:text-[10px] text-slate-500 font-mono font-medium whitespace-nowrap shrink-0">
-                  MOQ {product.minimum_order_quantity}
+                <span className="text-[10px] text-slate-500 block mt-0.5">
+                  MOQ: {product.minimum_order_quantity} Units
                 </span>
               )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-1 sm:gap-2">
-              <Link
-                href={`/products/${product.slug}`}
-                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-semibold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA] hover:border-[#17365D] hover:shadow-xs active:scale-[0.98] transition-all text-center"
-              >
-                Details
-              </Link>
-              <button
-                type="button"
-                onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-1.5 sm:px-2 rounded-md sm:rounded-lg bg-[#E87832] hover:bg-[#d66b28] hover:shadow-sm active:scale-[0.98] text-white transition-all shadow-2xs text-center"
-              >
-                Quote
-              </button>
-            </div>
+            {/* Add to Cart / RFQ button */}
+            <button
+              onClick={handleQuickAdd}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 flex items-center justify-center transition-colors shrink-0 shadow-2xs group/btn"
+              title="Add to Quote Cart"
+              aria-label="Add to cart"
+            >
+              <ShoppingBag className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Quick Enquiry Modal */}
-      {modalOpen && (
-        <EnquiryModal
-          product={product}
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
+      {/* Quick View Modal */}
+      <QuickViewModal
+        product={product}
+        isOpen={quickViewOpen}
+        onClose={() => setQuickViewOpen(false)}
+      />
     </>
   );
 }

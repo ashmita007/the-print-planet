@@ -386,7 +386,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] active:bg-[#c55d1d] text-white py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm shadow-2xs transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 active:scale-98 text-white py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
                 >
                   <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>{isSubmitting ? "Sending..." : "Submit Quote Request"}</span>

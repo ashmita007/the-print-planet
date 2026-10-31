@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   MessageSquare,
   Shield,
@@ -19,9 +20,20 @@ import {
   Printer,
   ChevronRight,
   Info,
+  ShoppingBag,
+  UploadCloud,
+  FileText,
+  Sliders,
+  MapPin,
+  Sparkles,
+  ShieldCheck,
+  Plus,
+  Minus,
+  Paperclip,
 } from "lucide-react";
 import { Product } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { useCart } from "@/lib/cart";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
 import { trackUserCheckedProduct } from "@/lib/api";
@@ -31,10 +43,22 @@ interface ProductDetailClientProps {
 }
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
+  const { addItem } = useCart();
   const [modalOpen, setModalOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copiedSku, setCopiedSku] = useState(false);
   const [activeTab, setActiveTab] = useState<"specs" | "overview" | "hardware" | "shipping">("specs");
+
+  // Customization & Ordering options
+  const moq = product.minimum_order_quantity || 1;
+  const [quantity, setQuantity] = useState<number>(moq);
+  const [selectedMaterial, setSelectedMaterial] = useState<string>(product.material || "Standard Grade");
+  const [selectedDimensions, setSelectedDimensions] = useState<string>(product.dimensions || "Standard");
+  const [customText, setCustomText] = useState<string>("");
+  const [artworkFile, setArtworkFile] = useState<File | null>(null);
+  const [pincode, setPincode] = useState<string>("");
+  const [pincodeVerified, setPincodeVerified] = useState<boolean>(false);
+  const [addedSuccess, setAddedSuccess] = useState<boolean>(false);
 
   const formatImageUrl = (url?: string | null) => {
     if (!url) return "/placeholder-product.svg";
@@ -59,23 +83,23 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
   }, [selectedImage]);
 
-  // Track product view for logged-in buyer insights and quick quote recall
   useEffect(() => {
     if (product?.id) {
       trackUserCheckedProduct(product.id);
     }
   }, [product?.id]);
 
-  const imagesList = (
+  const imagesList =
     product.images && product.images.length > 0
       ? product.images.map((img) => formatImageUrl(img.secure_url))
       : product.primary_image
       ? [formatImageUrl(product.primary_image.secure_url)]
-      : []
-  );
+      : [];
 
   const whatsappMessage = encodeURIComponent(
-    `Hello The Print Planet, I want to order ${formatProductName(product.name)} (SKU: ${product.sku}). Please share price quote, minimum order quantity, and dispatch time.`
+    `Hello The Print Planet, I want to order ${formatProductName(product.name)} (SKU: ${product.sku}, Qty: ${quantity}${
+      selectedMaterial ? `, Material: ${selectedMaterial}` : ""
+    }${customText ? `, Custom Text: "${customText}"` : ""}). Please share price quote and dispatch time.`
   );
 
   const handleCopySku = () => {
@@ -86,7 +110,31 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
   };
 
-  // Dynamically extract top 4 highlight attributes for any category
+  const handleAddToCart = () => {
+    addItem(product, quantity, {
+      material: selectedMaterial,
+      size: selectedDimensions,
+      customText: customText || undefined,
+      artworkName: artworkFile?.name || undefined,
+    });
+    setAddedSuccess(true);
+    setTimeout(() => setAddedSuccess(false), 2000);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setArtworkFile(e.target.files[0]);
+    }
+  };
+
+  const checkPincode = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pincode.trim().length === 6 && /^\d+$/.test(pincode.trim())) {
+      setPincodeVerified(true);
+    }
+  };
+
+  // Highlights
   const dynamicHighlights: { label: string; value: string }[] = [];
   if (product.dimensions) {
     dynamicHighlights.push({ label: "Dimensions / Format", value: product.dimensions });
@@ -108,33 +156,30 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       }
     }
   }
-  if (dynamicHighlights.length < 4 && product.category?.name) {
-    dynamicHighlights.push({ label: "Category", value: formatCategoryName(product.category.name) });
-  }
-  if (dynamicHighlights.length < 4) {
-    dynamicHighlights.push({ label: "Supply Grade", value: "Industrial Heavy-Duty" });
-  }
 
   const isMachine =
     product.category?.slug?.includes("machine") ||
-    product.category?.name?.toLowerCase().includes("machine") ||
-    Boolean(product.specifications?.["Heating"]) ||
-    Boolean(product.specifications?.["Pressure"]) ||
-    Boolean(product.specifications?.["Output"]);
+    product.category?.name?.toLowerCase().includes("machine");
+
+  // Material alternatives
+  const availableMaterials = [
+    product.material || "Industrial Grade PVC",
+    "Satin Heat-Transfer Fabric",
+    "Rigid Polycarbonate",
+  ].filter((v, i, a) => a.indexOf(v) === i);
 
   return (
     <>
-      {/* Main Two-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* ========================================================= */}
-        {/* LEFT COLUMN: Gallery + Trust Cards (5 Cols on LG)         */}
+        {/* LEFT COLUMN: Gallery & Trust Highlights (5 Cols)          */}
         {/* ========================================================= */}
         <div className="lg:col-span-5 space-y-4">
-          {/* Main Hero Image Container */}
+          {/* Main Hero Image */}
           <div
             onClick={() => setLightboxOpen(true)}
-            className="relative w-full pt-[90%] sm:pt-[100%] bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] overflow-hidden cursor-zoom-in group select-none"
-            title="Click to view full-screen high-resolution image"
+            className="relative w-full pt-[90%] sm:pt-[100%] bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden cursor-zoom-in group select-none shadow-xs"
+            title="Click to zoom high-resolution preview"
           >
             {!imgLoaded && !imgError && selectedImage && !selectedImage.startsWith("/placeholder") && (
               <div className="absolute inset-0 skeleton" />
@@ -150,7 +195,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   setImgError(true);
                   setSelectedImage("/placeholder-product.svg");
                 }}
-                className={`absolute inset-0 w-full h-full object-contain p-4 sm:p-8 group-hover:scale-[1.03] transition-[opacity,transform] duration-500 ease-out ${
+                className={`absolute inset-0 w-full h-full object-contain p-4 sm:p-8 group-hover:scale-105 transition-all duration-500 ease-out ${
                   imgLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 decoding="async"
@@ -158,22 +203,22 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-slate-400">
                 <Box className="w-16 h-16 stroke-[1.5] mb-2 text-slate-300" />
-                <span className="text-xs font-semibold text-slate-400">Industrial ID Asset</span>
+                <span className="text-xs font-semibold text-slate-400">Manufactured Product Spec</span>
               </div>
             )}
 
-            {/* Quiet stock status */}
-            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-[10px] font-medium text-slate-600 bg-white/85 backdrop-blur-sm px-2 py-1 rounded-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B]" />
-              <span>In stock · dispatches in 24–48h</span>
+            {/* In stock badge */}
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-[10px] font-semibold text-slate-700 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md border border-slate-200 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>In Stock • Ready to Dispatch in 24–48h</span>
             </div>
 
-            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-slate-600 transition-colors">
+            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-blue-600 transition-colors">
               <ZoomIn className="w-4 h-4" />
             </div>
           </div>
 
-          {/* Thumbnail Gallery Strip */}
+          {/* Thumbnail Gallery */}
           {imagesList.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
               {imagesList.map((imgUrl, idx) => (
@@ -181,10 +226,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   key={idx}
                   type="button"
                   onClick={() => setSelectedImage(imgUrl)}
-                  className={`w-16 h-16 rounded-xl bg-[#F8FAFC] border p-1 shrink-0 overflow-hidden transition-all ${
+                  className={`w-16 h-16 rounded-xl bg-slate-50 border p-1 shrink-0 overflow-hidden transition-all ${
                     selectedImage === imgUrl
-                      ? "border-[#17365D] ring-2 ring-[#17365D]/20 shadow-xs"
-                      : "border-[#DCE3EB] hover:border-slate-400 opacity-80 hover:opacity-100"
+                      ? "border-blue-600 ring-2 ring-blue-600/20 shadow-xs"
+                      : "border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100"
                   }`}
                   aria-label={`Select product image ${idx + 1}`}
                 >
@@ -198,65 +243,65 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           )}
 
-          {/* Logistics & Trust Features Card */}
-          <div className="bg-[#F8FAFC] p-4 rounded-2xl border border-[#DCE3EB] space-y-3 text-xs">
-            <h4 className="font-bold text-[#17365D] text-[11px] uppercase tracking-wider flex items-center gap-1.5">
-              <Truck className="w-3.5 h-3.5 text-[#E87832]" /> B2B Supply & Dispatch Guarantees
+          {/* Pincode Check & Delivery Guarantees */}
+          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
+              <Truck className="w-4 h-4 text-blue-600" /> Delivery &amp; Pincode Check
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-[11px]">
-              <div className="flex items-start gap-1.5 p-2 bg-white rounded-lg border border-[#DCE3EB]/80">
-                <Clock className="w-3.5 h-3.5 text-[#17365D] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold text-[#263445]">24–48h Dispatch</p>
-                  <p className="text-slate-500 text-[10px]">Bengaluru Hub</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-1.5 p-2 bg-white rounded-lg border border-[#DCE3EB]/80">
-                <Box className="w-3.5 h-3.5 text-[#17365D] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold text-[#263445]">{isMachine ? "Crate Packaging" : "Moisture Sealed"}</p>
-                  <p className="text-slate-500 text-[10px]">{isMachine ? "Heavy-Duty Wood Pallet" : "Export Shrink Wrap"}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-1.5 p-2 bg-white rounded-lg border border-[#DCE3EB]/80">
-                <FileCheck2 className="w-3.5 h-3.5 text-[#17365D] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold text-[#263445]">GST Tax Invoice</p>
-                  <p className="text-slate-500 text-[10px]">100% Tax Compliant</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-1.5 p-2 bg-white rounded-lg border border-[#DCE3EB]/80">
-                <Shield className="w-3.5 h-3.5 text-[#17365D] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold text-[#263445]">QC Inspected</p>
-                  <p className="text-slate-500 text-[10px]">Verified Specifications</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Quick Contact Desk */}
-            <div className="pt-2 border-t border-[#DCE3EB] flex items-center justify-between text-[11px] text-[#687586]">
-              <span>Direct Sales Desk:</span>
-              <a
-                href="tel:+919741808034"
-                className="font-bold text-[#17365D] hover:text-[#E87832] flex items-center gap-1"
+            <form onSubmit={checkPincode} className="flex gap-2">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  maxLength={6}
+                  placeholder="Enter 6-digit delivery pincode..."
+                  value={pincode}
+                  onChange={(e) => {
+                    setPincode(e.target.value);
+                    setPincodeVerified(false);
+                  }}
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-600 font-mono"
+                />
+                <MapPin className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" />
+              </div>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition-colors shrink-0"
               >
-                <Phone className="w-3 h-3" /> +91 97418 08034
-              </a>
+                Check
+              </button>
+            </form>
+
+            {pincodeVerified && (
+              <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Express Courier &amp; Cargo available for pincode {pincode}. Dispatches in 24h.</span>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-slate-200">
+              <div className="p-2 bg-white rounded-lg border border-slate-200 flex items-center gap-1.5">
+                <FileCheck2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span className="font-semibold text-slate-800">GST Invoice Ready</span>
+              </div>
+              <div className="p-2 bg-white rounded-lg border border-slate-200 flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span className="font-semibold text-slate-800">Factory QC Passed</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* RIGHT COLUMN: Specifications, Pricing & CTAs (7 Cols)     */}
+        {/* RIGHT COLUMN: Customization, Pricing & Ordering (7 Cols)   */}
         {/* ========================================================= */}
-        <div className="lg:col-span-7 space-y-5">
-          {/* Header Badges & Category */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Header & Title */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <Link
                 href={`/categories/${product.category.slug}`}
-                className="text-[11px] font-medium uppercase tracking-[0.12em] text-slate-500 hover:text-[#17365D] transition-colors"
+                className="text-[11px] font-bold uppercase tracking-wider text-blue-600 hover:underline"
               >
                 {formatCategoryName(product.category.name)}
               </Link>
@@ -265,119 +310,253 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={handleCopySku}
-                className="flex items-center gap-1 bg-[#F5F7FA] hover:bg-slate-200 text-[#263445] px-2.5 py-1 rounded-md border border-[#DCE3EB] font-mono text-[11px] font-semibold transition-colors"
+                className="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-0.5 rounded-md border border-slate-200 font-mono text-[11px] font-semibold transition-colors"
                 title="Click to copy SKU"
               >
                 <span>SKU: {product.sku}</span>
                 {copiedSku ? (
-                  <Check className="w-3 h-3 text-[#217A4B]" />
+                  <Check className="w-3 h-3 text-emerald-600" />
                 ) : (
                   <Copy className="w-3 h-3 text-slate-400" />
                 )}
               </button>
             </div>
 
-            {/* Product Title */}
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#17365D] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
               {formatProductName(product.name)}
             </h1>
 
-            {/* Short Tagline / Summary */}
-            <p className="text-xs sm:text-sm text-[#687586] leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
               {product.short_description || product.description ||
                 "Industrial-grade commercial supply engineered for professional ID card printing, lanyard manufacturing, and identification solutions."}
             </p>
           </div>
 
-          {/* Pricing & MOQ Banner */}
-          <div className="p-4 sm:p-5 bg-[#FAFBFC] rounded-2xl border border-[#DCE3EB] shadow-xs space-y-3">
+          {/* Pricing Banner */}
+          <div className="p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
               <div>
-                <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 block">
-                  Wholesale price
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Wholesale Factory Price
                 </span>
                 {product.price_display ? (
-                  <div className="text-2xl sm:text-3xl font-semibold text-[#17365D] tracking-tight tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight tabular-nums">
                     {product.price_display}
                   </div>
                 ) : product.price ? (
-                  <div className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
-                    ₹ {Number(product.price).toLocaleString("en-IN")}
-                    <span className="text-xs font-semibold text-slate-500 ml-1">/ Unit</span>
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    ₹{Number(product.price).toLocaleString("en-IN")}{" "}
+                    <span className="text-xs font-semibold text-slate-500">/ unit</span>
                   </div>
                 ) : (
-                  <div className="text-xl font-extrabold text-[#E87832]">
-                    Price on Request
+                  <div className="text-xl font-bold text-blue-600">
+                    Direct Wholesale Quote
                   </div>
                 )}
                 <span className="text-[10px] text-slate-500 block mt-0.5">
-                  Ex-factory Bengaluru • GST applicable extra
+                  Ex-factory Bengaluru • Tiered wholesale volume pricing available
                 </span>
               </div>
 
               <div className="text-left sm:text-right">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#687586] block">
-                  Order Quantity
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Minimum Order
                 </span>
-                <span className="text-sm sm:text-base font-extrabold text-[#263445] block">
-                  {product.minimum_order_quantity
-                    ? `${product.minimum_order_quantity} Units MOQ`
-                    : "Commercial Batch Order"}
+                <span className="text-sm sm:text-base font-bold text-slate-800 block">
+                  {moq} Units MOQ
                 </span>
-                <span className="text-[10px] text-[#217A4B] font-bold block mt-0.5">
-                  Bulk trade tier discounts on high-volume lots
+                <span className="text-[10px] text-emerald-600 font-semibold block">
+                  Volume discounts apply
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Dynamic Highlights 4-Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 text-xs">
-            {dynamicHighlights.map((item, idx) => (
-              <div key={idx} className="p-2.5 sm:p-3 bg-[#F8FAFC] border border-[#DCE3EB] rounded-xl">
-                <span className="text-[10px] text-slate-400 font-bold uppercase block truncate">
-                  {item.label}
-                </span>
-                <span className="font-extrabold text-[#17365D] mt-0.5 block text-xs sm:text-sm truncate">
-                  {item.value}
-                </span>
+          {/* Customization Options Box */}
+          <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+              <Sliders className="w-4 h-4 text-blue-600" />
+              <h3 className="text-sm font-bold text-slate-900">Configure &amp; Customize</h3>
+            </div>
+
+            {/* Material & Size Selector */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Material / Finish
+                </label>
+                <select
+                  value={selectedMaterial}
+                  onChange={(e) => setSelectedMaterial(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-blue-600"
+                >
+                  {availableMaterials.map((mat) => (
+                    <option key={mat} value={mat}>
+                      {mat}
+                    </option>
+                  ))}
+                </select>
               </div>
-            ))}
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Dimensions / Format
+                </label>
+                <input
+                  type="text"
+                  value={selectedDimensions}
+                  onChange={(e) => setSelectedDimensions(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-blue-600"
+                />
+              </div>
+            </div>
+
+            {/* Custom Branding Text Field */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Custom Branding Text / Organization Name (Optional)
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Acme Corp 2026, Bangalore Tech Summit..."
+                value={customText}
+                onChange={(e) => setCustomText(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 placeholder-slate-400 outline-none focus:border-blue-600"
+              />
+            </div>
+
+            {/* Artwork / Logo Upload Dropzone */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Upload Artwork or Logo (PDF, AI, CDR, PNG, JPG under 10MB)
+              </label>
+              <label className="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-xl p-3 flex items-center justify-between gap-3 cursor-pointer bg-slate-50/50 hover:bg-blue-50/30 transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                    <UploadCloud className="w-4 h-4" />
+                  </div>
+                  <div className="text-left">
+                    <span className="text-xs font-semibold text-slate-800 block truncate">
+                      {artworkFile ? artworkFile.name : "Choose or drag logo/artwork file"}
+                    </span>
+                    <span className="text-[10px] text-slate-400 block">
+                      Free digital proofing included with your order
+                    </span>
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  accept=".pdf,.ai,.cdr,.png,.jpg,.jpeg,.zip"
+                  className="hidden"
+                />
+                <span className="text-[11px] font-bold text-blue-600 px-3 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
+                  Browse
+                </span>
+              </label>
+            </div>
+
+            {/* Quantity Selector & Tier Pricing */}
+            <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="text-xs font-semibold text-slate-700 block">Order Quantity</span>
+                <span className="text-[10px] text-slate-400 block">MOQ: {moq} units</span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex items-center border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(moq, q - 50))}
+                    className="w-9 h-9 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
+                    title="Decrease quantity"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <input
+                    type="number"
+                    min={moq}
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(moq, parseInt(e.target.value, 10) || moq))}
+                    className="w-16 text-center text-xs font-bold text-slate-900 bg-transparent outline-none tabular-nums"
+                  />
+                  <button
+                    onClick={() => setQuantity((q) => q + 50)}
+                    className="w-9 h-9 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
+                    title="Increase quantity"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="bg-blue-600 hover:bg-blue-700 active:scale-98 text-white py-3 px-4 rounded-xl font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+              >
+                {addedSuccess ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-300" />
+                    <span>Added to Cart!</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Add to Order / RFQ</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setModalOpen(true)}
+                className="bg-[#0A1128] hover:bg-slate-800 active:scale-98 text-white py-3 px-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Formal Quotation</span>
+              </button>
+
+              <a
+                href={`https://wa.me/919741808034?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white py-3 px-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+              >
+                <Phone className="w-4 h-4" />
+                <span>WhatsApp Quote</span>
+              </a>
+            </div>
           </div>
 
-          {/* Call-to-Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-1">
-            <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              className="flex-1 bg-[#E87832] hover:bg-[#d66b28] active:bg-[#c55d1d] text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <MessageSquare className="w-4 h-4 shrink-0" />
-              <span>Request Factory Quotation</span>
-            </button>
+          {/* Highlights 4-Grid */}
+          {dynamicHighlights.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+              {dynamicHighlights.map((item, idx) => (
+                <div key={idx} className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block truncate">
+                    {item.label}
+                  </span>
+                  <span className="font-extrabold text-slate-900 mt-0.5 block text-xs truncate">
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
 
-            <a
-              href={`https://wa.me/919741808034?text=${whatsappMessage}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 bg-[#217A4B] hover:bg-[#1b633d] active:bg-[#154e30] text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-center"
-            >
-              <Phone className="w-4 h-4 shrink-0" />
-              <span>WhatsApp Trade Chat</span>
-            </a>
-          </div>
-
-          {/* Comprehensive Content Tabs */}
-          <div className="pt-4 border-t border-[#DCE3EB] space-y-4">
-            {/* Tabs Navigation */}
-            <div className="flex border-b border-[#DCE3EB] gap-1 overflow-x-auto scrollbar-thin">
+          {/* Content Tabs */}
+          <div className="pt-4 border-t border-slate-200 space-y-4">
+            <div className="flex border-b border-slate-200 gap-2 overflow-x-auto scrollbar-thin">
               <button
                 type="button"
                 onClick={() => setActiveTab("specs")}
                 className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "specs"
-                    ? "border-[#17365D] text-[#17365D]"
-                    : "border-transparent text-[#687586] hover:text-[#263445]"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
               >
                 Technical Specifications
@@ -387,125 +566,111 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 onClick={() => setActiveTab("overview")}
                 className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "overview"
-                    ? "border-[#17365D] text-[#17365D]"
-                    : "border-transparent text-[#687586] hover:text-[#263445]"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
               >
-                Overview & Applications
+                Overview &amp; Applications
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("hardware")}
                 className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "hardware"
-                    ? "border-[#17365D] text-[#17365D]"
-                    : "border-transparent text-[#687586] hover:text-[#263445]"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
               >
-                How It Works & Ordering
+                Workflow &amp; Ordering
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("shipping")}
                 className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "shipping"
-                    ? "border-[#17365D] text-[#17365D]"
-                    : "border-transparent text-[#687586] hover:text-[#263445]"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
               >
-                Packaging & Dispatch
+                Packaging &amp; Dispatch
               </button>
             </div>
 
-            {/* Tab 1: Technical Specifications Table */}
+            {/* Specs Table */}
             {activeTab === "specs" && (
-              <div className="space-y-3">
-                <div className="border border-[#DCE3EB] rounded-xl overflow-hidden shadow-2xs">
-                  <table className="w-full text-xs text-left">
-                    <tbody>
-                      <tr className="bg-[#F8FAFC]">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB] w-2/5">
-                          Product Code (SKU)
+              <div className="border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+                <table className="w-full text-xs text-left">
+                  <tbody>
+                    <tr className="bg-slate-50">
+                      <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200 w-2/5">
+                        Product Code (SKU)
+                      </td>
+                      <td className="py-2.5 px-4 font-bold text-slate-900 font-mono border-b border-slate-200 w-3/5">
+                        {product.sku}
+                      </td>
+                    </tr>
+                    <tr className="bg-white">
+                      <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
+                        Category Sector
+                      </td>
+                      <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200 uppercase">
+                        {formatCategoryName(product.category?.name || "General Catalog")}
+                      </td>
+                    </tr>
+                    {product.material && (
+                      <tr className="bg-slate-50">
+                        <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
+                          Material / Construction
                         </td>
-                        <td className="py-2.5 px-4 font-bold text-[#17365D] font-mono border-b border-[#DCE3EB] w-3/5">
-                          {product.sku}
+                        <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
+                          {product.material}
                         </td>
                       </tr>
+                    )}
+                    {product.dimensions && (
                       <tr className="bg-white">
-                        <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                          Category Sector
+                        <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
+                          Dimensions / Sheet Format
                         </td>
-                        <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB] uppercase">
-                          {formatCategoryName(product.category?.name || "General Catalog")}
+                        <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
+                          {product.dimensions}
                         </td>
                       </tr>
-                      {product.material && (
-                        <tr className="bg-[#F8FAFC]">
-                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                            Material / Construction
+                    )}
+                    {product.color && (
+                      <tr className="bg-slate-50">
+                        <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
+                          Color / Surface Finish
+                        </td>
+                        <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
+                          {product.color}
+                        </td>
+                      </tr>
+                    )}
+                    {product.specifications &&
+                      Object.entries(product.specifications).map(([key, val], idx) => (
+                        <tr
+                          key={key}
+                          className={idx % 2 === 0 ? "bg-slate-50" : "bg-white"}
+                        >
+                          <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
+                            {key}
                           </td>
-                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                            {product.material}
-                          </td>
-                        </tr>
-                      )}
-                      {product.dimensions && (
-                        <tr className="bg-white">
-                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                            Dimensions / Sheet Format
-                          </td>
-                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                            {product.dimensions}
-                          </td>
-                        </tr>
-                      )}
-                      {product.color && (
-                        <tr className="bg-[#F8FAFC]">
-                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                            Color / Surface Finish
-                          </td>
-                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                            {product.color}
+                          <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
+                            {String(val)}
                           </td>
                         </tr>
-                      )}
-                      {product.minimum_order_quantity && (
-                        <tr className="bg-white">
-                          <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                            Minimum Order Quantity
-                          </td>
-                          <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                            {product.minimum_order_quantity} Units
-                          </td>
-                        </tr>
-                      )}
-
-                      {/* Dynamic Backend Specs */}
-                      {product.specifications &&
-                        Object.entries(product.specifications).map(([key, val], idx) => (
-                          <tr
-                            key={key}
-                            className={idx % 2 === 0 ? "bg-[#F8FAFC]" : "bg-white"}
-                          >
-                            <td className="py-2.5 px-4 font-semibold text-[#687586] border-b border-[#DCE3EB]">
-                              {key}
-                            </td>
-                            <td className="py-2.5 px-4 font-bold text-[#263445] border-b border-[#DCE3EB]">
-                              {String(val)}
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                </div>
+                      ))}
+                  </tbody>
+                </table>
               </div>
             )}
 
-            {/* Tab 2: Overview & Applications */}
+            {/* Overview Tab */}
             {activeTab === "overview" && (
-              <div className="space-y-3 text-xs text-[#263445] leading-relaxed">
-                <div className="bg-[#F8FAFC] p-4 rounded-xl border border-[#DCE3EB] space-y-2">
-                  <h4 className="font-bold text-[#17365D] text-xs">
+              <div className="space-y-3 text-xs text-slate-700 leading-relaxed">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                  <h4 className="font-bold text-slate-900 text-xs">
                     Industrial Application Overview
                   </h4>
                   <p className="whitespace-pre-line leading-relaxed">
@@ -514,93 +679,54 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       "Manufactured specifically for ID card printers, lanyard manufacturing, corporate security, and institutional badge manufacturing."}
                   </p>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl space-y-1">
-                    <div className="flex items-center gap-1.5 font-bold text-[#17365D]">
-                      <Printer className="w-3.5 h-3.5 text-[#E87832]" />
-                      <span>Commercial Grade Engineering</span>
-                    </div>
-                    <p className="text-[11px] text-[#687586]">
-                      Built to withstand high-volume continuous operation with high precision tolerances and repeatable outputs.
-                    </p>
-                  </div>
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl space-y-1">
-                    <div className="flex items-center gap-1.5 font-bold text-[#17365D]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#217A4B]" />
-                      <span>Certified Quality Compliance</span>
-                    </div>
-                    <p className="text-[11px] text-[#687586]">
-                      Calibrated for ISO CR-80 standards and tested against physical, thermal, and electrical durability standards.
-                    </p>
-                  </div>
-                </div>
               </div>
             )}
 
-            {/* Tab 3: How It Works & Ordering Workflow (DeltaCardz-style) */}
+            {/* Workflow Tab */}
             {activeTab === "hardware" && (
               <div className="space-y-3 text-xs">
-                <p className="text-[#687586] text-[11px]">
-                  Direct factory supply workflow — from requirement enquiry to insured delivery in 5 simple steps:
-                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#F5F7FA] flex items-center justify-center font-bold text-[#17365D] shrink-0 text-xs">
+                  <div className="p-3 bg-white border border-slate-200 rounded-xl flex items-start gap-2.5">
+                    <div className="w-7 h-7 rounded bg-blue-50 flex items-center justify-center font-bold text-blue-600 shrink-0 text-xs">
                       01
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Pick Your Model or Material</h5>
+                      <h5 className="font-bold text-slate-900">Pick Model &amp; Quantity</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        Choose from fusing machines, cutters, lanyard printers, PVC sheets, holders, or RFID cards.
+                        Select batch size, dimensions, and custom accessories.
                       </p>
                     </div>
                   </div>
-
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#F5F7FA] flex items-center justify-center font-bold text-[#17365D] shrink-0 text-xs">
+                  <div className="p-3 bg-white border border-slate-200 rounded-xl flex items-start gap-2.5">
+                    <div className="w-7 h-7 rounded bg-blue-50 flex items-center justify-center font-bold text-blue-600 shrink-0 text-xs">
                       02
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Request a Factory Quotation</h5>
+                      <h5 className="font-bold text-slate-900">Upload Logo &amp; Approve Proof</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        Submit required quantity. Our sales desk replies within 1 working hour with GST-inclusive pricing.
+                        Submit artwork for free 3D digital proofing and alignment verification.
                       </p>
                     </div>
                   </div>
-
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#F5F7FA] flex items-center justify-center font-bold text-[#17365D] shrink-0 text-xs">
+                  <div className="p-3 bg-white border border-slate-200 rounded-xl flex items-start gap-2.5">
+                    <div className="w-7 h-7 rounded bg-blue-50 flex items-center justify-center font-bold text-blue-600 shrink-0 text-xs">
                       03
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Video Demo & Free Swatches</h5>
+                      <h5 className="font-bold text-slate-900">Factory Production</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        For machines: get video demo, power, and speed specs. For consumables: physical sample proofing.
+                        High-speed precision manufacturing with strict ISO quality standards.
                       </p>
                     </div>
                   </div>
-
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#F5F7FA] flex items-center justify-center font-bold text-[#17365D] shrink-0 text-xs">
+                  <div className="p-3 bg-white border border-slate-200 rounded-xl flex items-start gap-2.5">
+                    <div className="w-7 h-7 rounded bg-emerald-50 flex items-center justify-center font-bold text-emerald-600 shrink-0 text-xs">
                       04
                     </div>
                     <div>
-                      <h5 className="font-bold text-[#17365D]">Confirm & Pay via GST Invoice</h5>
+                      <h5 className="font-bold text-slate-900">24–48h Dispatch</h5>
                       <p className="text-[11px] text-slate-500 mt-0.5">
-                        Instant proforma on company letterhead. Pay securely via NEFT / RTGS / UPI with GST credit.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl flex items-start gap-2.5 sm:col-span-2">
-                    <div className="w-7 h-7 rounded bg-[#F5F7FA] flex items-center justify-center font-bold text-[#217A4B] shrink-0 text-xs">
-                      05
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-[#17365D]">Pan-India Dispatch in 24–48 Hours</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        Dispatched via top cargo & couriers (DTDC, Blue Dart, VRL, TCI) with real-time tracking from our Bengaluru hub.
+                        Insured courier transit with full tracking directly from Bangalore.
                       </p>
                     </div>
                   </div>
@@ -608,89 +734,56 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
             )}
 
-            {/* Tab 4: Packaging & Dispatch */}
+            {/* Shipping Tab */}
             {activeTab === "shipping" && (
-              <div className="space-y-3 text-xs text-[#263445]">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl space-y-1.5">
-                    <h5 className="font-bold text-[#17365D] flex items-center gap-1.5">
-                      <Box className="w-3.5 h-3.5 text-[#E87832]" /> Packaging Standards
-                    </h5>
-                    <ul className="space-y-1 text-[11px] text-[#687586] list-disc list-inside">
-                      {isMachine ? (
-                        <>
-                          <li>Heavy-duty fumigated wooden box / plywood crate packaging</li>
-                          <li>Shock-absorbent foam lining with corrosion-inhibiting rust shield</li>
-                          <li>Pre-delivery testing certificate & operation manual included</li>
-                        </>
-                      ) : (
-                        <>
-                          <li>Individually shrink-wrapped lots with moisture-absorbent desiccant</li>
-                          <li>Heavy-duty 5-ply export corrugated master cartons</li>
-                          <li>Corner-reinforced strapping for zero transit damage</li>
-                        </>
-                      )}
-                    </ul>
-                  </div>
-
-                  <div className="p-3 bg-white border border-[#DCE3EB] rounded-xl space-y-1.5">
-                    <h5 className="font-bold text-[#17365D] flex items-center gap-1.5">
-                      <Truck className="w-3.5 h-3.5 text-[#217A4B]" /> Pan-India Logistics
-                    </h5>
-                    <ul className="space-y-1 text-[11px] text-[#687586] list-disc list-inside">
-                      <li>Express Couriers: DTDC, Professional, Blue Dart, Delhivery</li>
-                      <li>Surface Transport / Cargo: VRL, TCI Freight, ARC, Navata</li>
-                      <li>Local Bengaluru: Same-day porter / pickup available</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="p-4 bg-white border border-slate-200 rounded-xl space-y-2 text-xs text-slate-600">
+                <h5 className="font-bold text-slate-900 flex items-center gap-1.5">
+                  <Box className="w-4 h-4 text-blue-600" /> Secure Packaging Standards
+                </h5>
+                <p>
+                  Every lot is individually shrink-wrapped with moisture-absorbent desiccant and packed in heavy-duty 5-ply export master cartons for damage-free transit.
+                </p>
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* ========================================================= */}
-      {/* MOBILE STICKY BOTTOM DOCK (Visible on Mobile Only)        */}
-      {/* ========================================================= */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#DCE3EB] p-2.5 px-3 flex items-center justify-between gap-2 shadow-xl anim-toast">
+      {/* Mobile Sticky Bottom Action Bar */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-2.5 px-3 flex items-center justify-between gap-2 shadow-xl">
         <div className="min-w-0 pr-1">
-          <div className="text-base font-black text-[#17365D] truncate leading-none">
-            {product.price_display || (product.price ? `₹ ${product.price}` : "Price on Request")}
+          <div className="text-base font-extrabold text-slate-900 truncate leading-none">
+            {product.price_display || (product.price ? `₹${product.price}` : "Wholesale Quote")}
           </div>
           <span className="text-[9px] font-mono text-slate-500 truncate block mt-0.5">
-            {product.sku} • {formatCategoryName(product.category?.name || "Direct Factory Supply")}
+            SKU: {product.sku}
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 shrink-0">
-          <a
-            href={`https://wa.me/919741808034?text=${whatsappMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#217A4B] text-white py-2 px-3 rounded-lg font-bold text-xs flex items-center gap-1 shadow-2xs"
-            aria-label="WhatsApp quick chat"
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="bg-blue-600 text-white py-2 px-3.5 rounded-xl font-bold text-xs flex items-center gap-1 shadow-xs"
           >
-            <Phone className="w-3.5 h-3.5" />
-            <span>WhatsApp</span>
-          </a>
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>Add to Cart</span>
+          </button>
 
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="bg-[#E87832] text-white py-2 px-3.5 rounded-lg font-bold text-xs flex items-center gap-1 shadow-2xs"
-            aria-label="Request quote"
+            className="bg-[#0A1128] text-white py-2 px-3 rounded-xl font-bold text-xs flex items-center gap-1 shadow-xs"
           >
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>Get Quote</span>
+            <span>Quote</span>
           </button>
         </div>
       </div>
 
-      {/* Spacing safeguard for mobile dock */}
+      {/* Spacing safeguard */}
       <div className="sm:hidden h-12" />
 
-      {/* Responsive Enquiry Modal */}
+      {/* Modal windows */}
       {modalOpen && (
         <EnquiryModal
           product={product}
@@ -699,7 +792,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         />
       )}
 
-      {/* Responsive Image Lightbox Modal */}
       <ImageLightboxModal
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}

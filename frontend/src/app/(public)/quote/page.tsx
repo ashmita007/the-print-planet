@@ -19,9 +19,12 @@ import {
 } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { submitEnquiry } from "@/lib/api";
+import { useCart } from "@/lib/cart";
 
 function QuoteFormContent() {
   const searchParams = useSearchParams();
+  const { items: cartItems, formattedSubtotal } = useCart();
+  const fromCart = searchParams.get("cart") === "true";
   const prefilledProduct = searchParams.get("product") || "";
   const prefilledService = searchParams.get("service") || "";
   const prefilledTier = searchParams.get("tier") || "";
@@ -63,15 +66,28 @@ function QuoteFormContent() {
 
   useEffect(() => {
     const initialNotes: string[] = [];
+    if (fromCart && cartItems.length > 0) {
+      initialNotes.push(
+        `Order Cart Items (${cartItems.length} products - Est: ${formattedSubtotal}):\n` +
+          cartItems
+            .map(
+              (i, idx) =>
+                `• ${idx + 1}. ${i.name} (SKU: ${i.sku}) - Qty: ${i.quantity}${
+                  i.options?.material ? ` [Material: ${i.options.material}]` : ""
+                }${i.options?.customText ? ` [Text: "${i.options.customText}"]` : ""}`
+            )
+            .join("\n")
+      );
+    }
     if (prefilledProduct) initialNotes.push(`Product of interest: ${prefilledProduct}`);
     if (prefilledService) initialNotes.push(`Service needed: ${prefilledService}`);
     if (prefilledTier) initialNotes.push(`Selected Volume Tier: ${prefilledTier}`);
     if (prefilledIndustry) initialNotes.push(`Industry Vertical: ${prefilledIndustry}`);
 
     if (initialNotes.length > 0) {
-      setCustomRequirements(initialNotes.join(" | ") + "\n\n");
+      setCustomRequirements(initialNotes.join("\n\n") + "\n\n");
     }
-  }, [prefilledProduct, prefilledService, prefilledTier, prefilledIndustry]);
+  }, [fromCart, cartItems, formattedSubtotal, prefilledProduct, prefilledService, prefilledTier, prefilledIndustry]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -327,8 +343,8 @@ function QuoteFormContent() {
                   <span className="text-[11px] text-slate-500">Max 10MB</span>
                 </div>
                 {!attachment ? (
-                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-[#17365D] bg-slate-50 hover:bg-slate-100 rounded-xl py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
-                    <UploadCloud className="w-4 h-4 text-[#E87832]" />
+                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50 hover:bg-blue-50/30 rounded-xl py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
+                    <UploadCloud className="w-4 h-4 text-blue-600" />
                     <span>Click to browse and attach your design file, artwork, or order spreadsheet</span>
                     <input
                       type="file"
@@ -359,14 +375,14 @@ function QuoteFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 px-6 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full bg-blue-600 hover:bg-blue-700 active:scale-98 text-white py-3.5 px-6 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Submitting Quotation Request...</span>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Submit Quotation Request & Connect on WhatsApp</span>
+                      <span>Submit Quotation Request &amp; Connect on WhatsApp</span>
                     </>
                   )}
                 </button>

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
   ChevronRight,
@@ -10,11 +12,17 @@ import {
   Truck,
   Award,
   FileText,
-  RotateCw,
+  ShoppingBag,
+  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 import { Product, SiteSettings } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { useCart } from "@/lib/cart";
 import EnquiryModal from "./EnquiryModal";
+import AnimeLogoHeroEffect from "./AnimeLogoHeroEffect";
+import TextReveal from "./animations/TextReveal";
+import KineticHighlight from "./animations/KineticHighlight";
 
 interface ProductHeroShowcaseProps {
   flagshipProducts: Product[];
@@ -26,11 +34,11 @@ interface ProductHeroShowcaseProps {
 // Hero category filter tabs
 const HERO_CATEGORIES = [
   { id: "all", label: "★ All Flagships" },
-  { id: "machines", label: "Industrial Machines", keywords: ["machine", "cutter", "fusing", "press"] },
-  { id: "lanyards", label: "Satin Lanyard Rolls", keywords: ["lanyard", "satin", "roll", "ribbon"] },
-  { id: "holders", label: "PVC Card Holders", keywords: ["holder", "pvc", "acrylic", "clear"] },
-  { id: "rfid", label: "RFID & Smart Cards", keywords: ["rfid", "smart", "inlay", "prelam", "mifare"] },
-  { id: "hooks", label: "Clips & Hooks", keywords: ["hook", "clip", "fitting", "clamp"] },
+  { id: "lanyards", label: "Satin Lanyards", keywords: ["lanyard", "satin", "roll", "ribbon"] },
+  { id: "cards", label: "PVC & Smart Cards", keywords: ["card", "rfid", "smart", "inlay", "pvc"] },
+  { id: "holders", label: "ID Card Holders", keywords: ["holder", "acrylic", "clear"] },
+  { id: "machines", label: "Card Machinery", keywords: ["machine", "cutter", "fusing", "puncher"] },
+  { id: "corporate", label: "Clips & Fittings", keywords: ["hook", "clip", "fitting", "clamp"] },
 ];
 
 export default function ProductHeroShowcase({
@@ -39,7 +47,7 @@ export default function ProductHeroShowcase({
   allProducts = [],
   settings,
 }: ProductHeroShowcaseProps) {
-  // Use allProducts if available to give maximum diversity across 186 items, otherwise flagshipProducts
+  const { addItem } = useCart();
   const pool = allProducts.length > 0 ? allProducts : flagshipProducts;
 
   const [selectedHeroCategory, setSelectedHeroCategory] = useState<string>("all");
@@ -50,75 +58,41 @@ export default function ProductHeroShowcase({
 
   const thumbScrollRef = useRef<HTMLDivElement>(null);
 
-  // Rotating typography phrases for brand hero headline
-  const ROTATING_PHRASES = useMemo(() => {
-    const defaultPhrases = [
-      "Specialist in PVC Cards",
-      "Factory Direct",
-      "Lens Packaging & Cleaning",
-      "Commercial Printing",
-      "Bulk ID & Card Solutions",
-    ];
-
-    if (!settings?.hero_title) return defaultPhrases;
-
-    let clean = settings.hero_title.trim();
-    if (clean.toLowerCase().startsWith("the print planet")) {
-      clean = clean.replace(/^the print planet\s*[-–—]?\s*/i, "").trim();
-    }
-
-    if (!clean || clean === "Factory Direct") {
-      return defaultPhrases;
-    }
-
-    // If owner set custom comma or pipe separated items in backend
-    if (clean.includes(",") || clean.includes("|")) {
-      const parts = clean
-        .split(/[,|]/)
-        .map((p) => p.trim())
-        .filter(Boolean);
-      return parts.length > 0 ? parts : defaultPhrases;
-    }
-
-    // If owner set a custom title in backend, place it at the front of the animation rotation!
-    const customList = [clean, ...defaultPhrases.filter((p) => p.toLowerCase() !== clean.toLowerCase())];
-    return customList;
-  }, [settings]);
+  // Rotating headline phrases
+  const ROTATING_PHRASES = [
+    "Specialist in PVC Cards & ID Systems",
+    "Custom Lanyards & Sublimation Rolls",
+    "High-Speed Card Production Machinery",
+    "Corporate Gifting & Brand Merchandise",
+    "Lens Packaging & Commercial Printing",
+  ];
 
   const [phraseIdx, setPhraseIdx] = useState(0);
-  const [isPhraseVisible, setIsPhraseVisible] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsPhraseVisible(false);
-      setTimeout(() => {
-        setPhraseIdx((prev) => (prev + 1) % ROTATING_PHRASES.length);
-        setIsPhraseVisible(true);
-      }, 300);
-    }, 3200);
-
+      setPhraseIdx((prev) => (prev + 1) % ROTATING_PHRASES.length);
+    }, 3800);
     return () => clearInterval(timer);
-  }, [ROTATING_PHRASES]);
+  }, [ROTATING_PHRASES.length]);
 
   // Filter pool by active hero category
   const activeProducts = useMemo(() => {
     if (selectedHeroCategory === "all") {
-      // Pick a diverse set of up to 18 products
-      return flagshipProducts.slice(0, 18);
+      return flagshipProducts.slice(0, 14);
     }
 
     const catDef = HERO_CATEGORIES.find((c) => c.id === selectedHeroCategory);
-    if (!catDef || !catDef.keywords) return flagshipProducts.slice(0, 18);
+    if (!catDef || !catDef.keywords) return flagshipProducts.slice(0, 14);
 
     const matches = pool.filter((p) => {
       const text = `${p.name} ${p.category?.name || ""} ${p.category?.slug || ""}`.toLowerCase();
       return catDef.keywords.some((k) => text.includes(k));
     });
 
-    return matches.length > 0 ? matches.slice(0, 18) : flagshipProducts.slice(0, 18);
+    return matches.length > 0 ? matches.slice(0, 14) : flagshipProducts.slice(0, 14);
   }, [selectedHeroCategory, flagshipProducts, pool]);
 
-  // Reset active index when category tab changes
   useEffect(() => {
     setActiveIndex(0);
     setProgress(0);
@@ -133,25 +107,8 @@ export default function ProductHeroShowcase({
       : null) ||
     "/placeholder-product.svg";
 
-  const [heroImg, setHeroImg] = useState(imageUrl);
-
-  useEffect(() => {
-    setHeroImg(imageUrl);
-  }, [imageUrl]);
-
-  // Keep active thumbnail visible in scroll view
-  useEffect(() => {
-    if (!thumbScrollRef.current) return;
-    const container = thumbScrollRef.current;
-    const activeBtn = container.children[activeIndex] as HTMLElement;
-    if (activeBtn) {
-      const left = activeBtn.offsetLeft - container.offsetWidth / 2 + activeBtn.offsetWidth / 2;
-      container.scrollTo({ left, behavior: "smooth" });
-    }
-  }, [activeIndex]);
-
-  // Auto-rotation timer and animated progress bar (4.5 seconds per product)
-  const ROTATE_INTERVAL_MS = 4500;
+  // Auto-rotation progress
+  const ROTATE_INTERVAL_MS = 5000;
   const STEP_MS = 100;
 
   useEffect(() => {
@@ -173,321 +130,269 @@ export default function ProductHeroShowcase({
   if (!activeProduct) return null;
 
   return (
-    <section className="relative bg-[#0D1E35] text-white overflow-hidden py-10 sm:py-14 lg:py-16 border-b border-white/10">
-      {/* Quiet atmospheric depth */}
-      <div className="absolute -top-40 right-0 w-[36rem] h-[36rem] bg-[#E87832]/[0.07] rounded-full blur-3xl pointer-events-none" />
+    <section className="relative bg-[#0A1128] text-white overflow-hidden py-10 sm:py-16 lg:py-20 border-b border-slate-800">
+      {/* Precision atmospheric grid & lighting */}
+      <div className="absolute top-0 right-1/4 w-[42rem] h-[42rem] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+      
+      {/* Anime.js SVG Registration Animation */}
+      <AnimeLogoHeroEffect />
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
+          backgroundSize: "40px 40px",
         }}
       />
 
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 relative z-10">
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-          {/* Left Column: Industrial Proposition & Quotation */}
-          <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full text-left">
-            {/* Brand eyebrow line with theme color */}
-            <div className="text-[11px] sm:text-xs font-bold tracking-[0.14em] uppercase text-[#E87832] flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#E87832]" />
-              <span>{settings?.hero_badge?.trim() || "The Print Planet • Specialist in PVC Cards & ID Systems"}</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Headline, Value Proposition & Actions */}
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-2 bg-blue-950/80 border border-blue-500/30 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold text-blue-300">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+              <span>THE PRINT PLANET • Factory Direct Solutions</span>
             </div>
 
+            {/* Main Headline with Split Word Animation & Highlight */}
             <div className="space-y-3">
-              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black tracking-tight leading-[1.14] text-white">
-                <span className="block text-white">The Print Planet</span>
-                <span className="block min-h-[1.25em] mt-1">
-                  <span
-                    key={phraseIdx}
-                    className={`inline-block font-black transition-all duration-300 bg-gradient-to-r from-[#FFA868] via-[#E87832] to-[#FF8C38] bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(232,120,50,0.35)] ${
-                      isPhraseVisible
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 -translate-y-1"
-                    }`}
-                  >
-                    {ROTATING_PHRASES[phraseIdx % ROTATING_PHRASES.length]}
-                  </span>
+              <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-display font-black tracking-tight leading-[1.08] text-white">
+                <TextReveal
+                  text="Precision Custom Printing &"
+                  delay={0.1}
+                  staggerDelay={0.05}
+                />
+                <span className="block mt-1">
+                  <KineticHighlight>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-blue-500 animate-gradient-text">
+                      Enterprise Merchandise
+                    </span>
+                  </KineticHighlight>
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg lg:text-xl font-bold text-slate-100 leading-snug tracking-tight">
-                {settings?.hero_subtitle ||
-                  settings?.tagline ||
-                  "Specialist in PVC cards, lens packaging & commercial printing solutions"}
-              </p>
+              <div className="h-7 sm:h-8 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={phraseIdx}
+                    initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-xs sm:text-sm font-semibold font-mono text-blue-300 tracking-wide flex items-center gap-1.5"
+                  >
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping" />
+                    <span>✦ {ROTATING_PHRASES[phraseIdx]}</span>
+                  </motion.p>
+                </AnimatePresence>
+              </div>
             </div>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-              {settings?.hero_caption || (
-                <>
-                  Official portal of <strong className="text-white font-semibold">The Print Planet</strong> — a factory specialist in PVC cards, CR-80 fusing sheets, lens packaging, rigid ID card holders, satin lanyard rolls, commercial printing, and card die-cutting machinery. 24–48h pan-India dispatch from Bangalore.
-                </>
-              )}
+              India&apos;s premier specialist in PVC identification cards, satin lanyard rolls, card manufacturing machinery, custom corporate gifting, and promotional branding. Direct factory wholesale dispatch from Bangalore with 24–48h express turnaround.
             </p>
 
-            {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <a
-                href="#catalogue-section"
-                className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm tracking-wide transition-all active:scale-[0.99] flex items-center justify-center gap-2 group text-center shadow-xs"
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Link
+                href="/products"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-98 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition-all text-center group"
               >
-                <span>Browse {totalProductsCount} products</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+                <span>Explore Full Catalogue ({totalProductsCount}+)</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
 
               <Link
                 href="/quote"
-                className="text-slate-200 hover:text-white border border-white/15 hover:border-white/30 hover:bg-white/5 px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm tracking-wide transition-all flex items-center justify-center gap-2 text-center"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 text-slate-200 hover:text-white font-semibold text-xs sm:text-sm transition-all text-center"
               >
-                <FileText className="w-4 h-4 text-slate-400" />
-                <span>Request a quote</span>
+                <FileText className="w-4 h-4 text-blue-400" />
+                <span>Request Custom Quote</span>
               </Link>
             </div>
 
-            {/* Standards */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 border-t border-white/10 text-[10px] sm:text-[11px] text-slate-300">
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#E87832]" />
-                <span>CR-80 ISO 85.6 × 54 mm</span>
-              </span>
-              <span className="hidden sm:block w-px h-3 bg-white/10" />
-              <span className="flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-[#E87832]" />
-                <span>Optical grade, UV &amp; scratch proof</span>
-              </span>
-              <span className="hidden sm:block w-px h-3 bg-white/10" />
-              <span className="flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5 text-[#E87832]" />
-                <span>24–48h pan-India</span>
-              </span>
+            {/* Key Trust Signals */}
+            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-slate-800/80 text-[11px] sm:text-xs">
+              <div className="space-y-0.5">
+                <div className="font-bold text-white text-base sm:text-lg">180+</div>
+                <div className="text-slate-400">Products &amp; Machines</div>
+              </div>
+              <div className="space-y-0.5 border-x border-slate-800 px-3">
+                <div className="font-bold text-white text-base sm:text-lg">50,000+</div>
+                <div className="text-slate-400">Daily Production Capacity</div>
+              </div>
+              <div className="space-y-0.5">
+                <div className="font-bold text-white text-base sm:text-lg">100%</div>
+                <div className="text-slate-400">PAN-India Dispatch</div>
+              </div>
             </div>
           </div>
 
-          {/* Right Column: PRODUCT-FIRST HERO SHOWCASE STAGE */}
+          {/* Right Column: Interactive Featured Product Showcase Card */}
           <div
-            className="lg:col-span-7 w-full"
+            className="lg:col-span-6 w-full"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="bg-[#0F223A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3.5 sm:p-5 lg:p-6 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-px bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-[#E87832]/80 transition-all duration-100 ease-linear"
-                  style={{ width: `${progress}%` }}
-                />
+            {/* Category tabs */}
+            <div className="flex gap-1.5 overflow-x-auto pb-2 mb-3 scrollbar-none">
+              {HERO_CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedHeroCategory(cat.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                    selectedHeroCategory === cat.id
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "bg-slate-900/60 text-slate-400 hover:text-white hover:bg-slate-800/60 border border-slate-800"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Showcase Stage */}
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+              {/* Product Badge & SKU */}
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-950/80 border border-blue-800/50 px-2 py-0.5 rounded">
+                  {formatCategoryName(activeProduct.category?.name || "Featured Product")}
+                </span>
+                <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
+                  SKU: {activeProduct.sku}
+                </span>
               </div>
 
-              {/* Category Filter Pills (Switch Between Machines, Lanyards, Holders, RFID, Clips) */}
-              <div className="pt-1 pb-3 flex items-center gap-1.5 overflow-x-auto scrollbar-none snap-x">
-                {HERO_CATEGORIES.map((cat) => {
-                  const isCatSelected = selectedHeroCategory === cat.id;
+              {/* Product Image Stage */}
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-xl bg-white/95 overflow-hidden p-4 mb-4 flex items-center justify-center border border-slate-200">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProduct.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full flex items-center justify-center"
+                  >
+                    <Image
+                      src={imageUrl}
+                      alt={activeProduct.name}
+                      fill
+                      className="object-contain p-2"
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 550px"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Progress bar for auto-rotation */}
+                <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-200">
+                  <div
+                    className="h-full bg-blue-600 transition-all duration-100 ease-linear"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Product Info & Quick Actions */}
+              <div className="space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
+                      {formatProductName(activeProduct.name)}
+                    </h3>
+                    <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">
+                      {activeProduct.material ? `${activeProduct.material} • ` : ""}
+                      {activeProduct.minimum_order_quantity
+                        ? `MOQ: ${activeProduct.minimum_order_quantity} Units`
+                        : "Wholesale batch available"}
+                    </p>
+                  </div>
+
+                  <div className="text-right shrink-0">
+                    {activeProduct.price_display ? (
+                      <div className="text-base sm:text-lg font-bold text-white">
+                        {activeProduct.price_display}
+                      </div>
+                    ) : activeProduct.price ? (
+                      <div className="text-base sm:text-lg font-bold text-white">
+                        ₹{Number(activeProduct.price).toLocaleString("en-IN")}
+                      </div>
+                    ) : (
+                      <div className="text-xs font-semibold text-blue-400">
+                        Wholesale Rate
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Buttons */}
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => addItem(activeProduct, activeProduct.minimum_order_quantity || 1)}
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors shadow-xs"
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    <span>Add to Order / RFQ</span>
+                  </button>
+
+                  <Link
+                    href={`/products/${activeProduct.slug}`}
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 transition-colors"
+                  >
+                    <span>View Specifications</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Thumbnail Strip for Carousel navigation */}
+              <div
+                ref={thumbScrollRef}
+                className="flex gap-2 overflow-x-auto mt-4 pt-3 border-t border-slate-800/80 pb-1 scrollbar-none"
+              >
+                {activeProducts.map((p, idx) => {
+                  const thumb =
+                    p.primary_image?.secure_url ||
+                    (p.images && p.images.length > 0 ? p.images[0].secure_url : "/placeholder-product.svg");
+                  const isSelected = idx === activeIndex;
+
                   return (
                     <button
-                      key={cat.id}
-                      type="button"
-                      onClick={() => setSelectedHeroCategory(cat.id)}
-                      className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold whitespace-nowrap transition-all cursor-pointer snap-start ${
-                        isCatSelected
-                          ? "bg-white text-[#0F223A]"
-                          : "bg-white/[0.04] text-slate-400 hover:bg-white/[0.08] hover:text-slate-100"
+                      key={p.id}
+                      onClick={() => {
+                        setActiveIndex(idx);
+                        setProgress(0);
+                      }}
+                      className={`relative w-12 h-12 rounded-lg bg-white overflow-hidden shrink-0 border transition-all ${
+                        isSelected
+                          ? "border-blue-500 ring-2 ring-blue-500/30 scale-105"
+                          : "border-slate-700 opacity-60 hover:opacity-100"
                       }`}
+                      title={p.name}
                     >
-                      {cat.label}
+                      <Image
+                        src={thumb}
+                        alt={p.name}
+                        fill
+                        className="object-contain p-1"
+                        sizes="48px"
+                      />
                     </button>
                   );
                 })}
-              </div>
-
-              {/* Spotlight Header */}
-              <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-white/10 gap-2">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#E87832]">
-                    Spotlight
-                  </span>
-                  <span className="text-slate-600 text-xs">/</span>
-                  <span className="text-[11px] sm:text-xs text-slate-300 font-medium truncate max-w-[140px] sm:max-w-[200px]">
-                    {formatCategoryName(activeProduct.category?.name)}
-                  </span>
-                </div>
-
-                {/* Carousel Controls */}
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setProgress(0);
-                      setActiveIndex(
-                        (prev) => (prev - 1 + activeProducts.length) % activeProducts.length
-                      );
-                    }}
-                    className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10 cursor-pointer"
-                    aria-label="Previous product"
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-200 px-1">
-                    {activeIndex + 1}/{activeProducts.length}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setProgress(0);
-                      setActiveIndex((prev) => (prev + 1) % activeProducts.length);
-                    }}
-                    className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10 cursor-pointer"
-                    aria-label="Next product"
-                  >
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Main Product Showcase Block: Split Image + Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5 sm:gap-5 py-3 sm:py-4 items-center">
-                {/* Product Image Stage */}
-                <div className="sm:col-span-5 relative">
-                  <Link
-                    href={`/products/${activeProduct.slug}`}
-                    className="block aspect-square max-h-48 sm:max-h-none w-44 sm:w-full mx-auto bg-white rounded-xl p-4 sm:p-5 overflow-hidden group relative"
-                  >
-                    <img
-                      src={heroImg}
-                      alt={formatProductName(activeProduct.name)}
-                      onError={() => setHeroImg("/placeholder-product.svg")}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute bottom-1.5 right-2 text-[9px] font-medium tabular-nums text-slate-400">
-                      {activeProduct.sku}
-                    </div>
-                  </Link>
-                </div>
-
-                {/* Product Information & Live Pricing */}
-                <div className="sm:col-span-7 space-y-2.5 sm:space-y-3">
-                  <div>
-                    <h3 className="text-sm sm:text-lg font-bold text-white leading-snug line-clamp-2">
-                      <Link
-                        href={`/products/${activeProduct.slug}`}
-                        className="text-white hover:text-[#E87832] transition-colors"
-                      >
-                        {formatProductName(activeProduct.name)}
-                      </Link>
-                    </h3>
-                  </div>
-
-                  {/* Specifications */}
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] sm:text-[11px] text-slate-400">
-                    {[activeProduct.material, activeProduct.dimensions, activeProduct.color]
-                      .filter(Boolean)
-                      .map((spec, index) => (
-                        <span key={index} className="flex items-center gap-2">
-                          {index > 0 && <span className="text-slate-600">•</span>}
-                          <span className="truncate max-w-[14rem]">{spec}</span>
-                        </span>
-                      ))}
-                  </div>
-
-                  {/* Pricing */}
-                  <div className="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex items-baseline justify-between">
-                    <div>
-                      <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.12em] font-medium text-slate-400 block">
-                        Wholesale rate
-                      </span>
-                      <span className="text-base sm:text-xl font-bold font-mono text-[#E87832] tabular-nums tracking-tight">
-                        {activeProduct.price_display ||
-                          (activeProduct.price
-                            ? `₹ ${Number(activeProduct.price).toLocaleString("en-IN")}`
-                            : "Trade Quote on Request")}
-                      </span>
-                    </div>
-
-                    {activeProduct.minimum_order_quantity && (
-                      <span className="text-[10px] sm:text-[11px] text-slate-400 tabular-nums">
-                        MOQ {activeProduct.minimum_order_quantity}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-2 pt-0.5">
-                    <button
-                      type="button"
-                      onClick={() => setModalOpen(true)}
-                      className="flex-1 bg-[#E87832] hover:bg-[#d66b28] text-white py-2.5 px-3 sm:px-4 rounded-lg font-semibold text-xs transition-all active:scale-[0.99] text-center cursor-pointer"
-                    >
-                      Request batch quote
-                    </button>
-                    <Link
-                      href={`/products/${activeProduct.slug}`}
-                      className="bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 py-2.5 px-3.5 rounded-lg font-medium text-xs transition-colors border border-white/10 text-center"
-                    >
-                      Specs
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              {/* Thumbnails Row: Dynamic Horizontal Carousel with Active Ring */}
-              <div className="pt-2.5 sm:pt-3 border-t border-white/10">
-                <div className="text-[10px] font-medium text-slate-500 uppercase tracking-[0.14em] mb-2 flex items-center justify-between">
-                  <span>Product lineup</span>
-                  <span className="tabular-nums normal-case tracking-normal">{activeProducts.length}</span>
-                </div>
-                <div
-                  ref={thumbScrollRef}
-                  className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x touch-pan-x"
-                >
-                  {activeProducts.map((prod, idx) => {
-                    const thumbImg =
-                      prod.primary_image?.secure_url ||
-                      (prod.images && prod.images.length > 0
-                        ? prod.images[0].secure_url
-                        : "/placeholder-product.svg");
-                    const isSelected = idx === activeIndex;
-
-                    return (
-                      <button
-                        key={prod.id}
-                        type="button"
-                        onClick={() => {
-                          setProgress(0);
-                          setActiveIndex(idx);
-                        }}
-                        className={`p-1.5 rounded-xl border transition-all text-left flex flex-col items-center shrink-0 w-20 sm:w-24 snap-start cursor-pointer ${
-                          isSelected
-                            ? "bg-white text-[#17365D] border-[#E87832] shadow-md ring-2 ring-[#E87832]"
-                            : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/15"
-                        }`}
-                      >
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg p-1 overflow-hidden shrink-0 mb-1 border border-slate-100">
-                          <img
-                            src={thumbImg}
-                            alt={formatProductName(prod.name)}
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <span className="text-[8.5px] sm:text-[9.5px] font-bold truncate max-w-full leading-tight text-center">
-                          {prod.sku.replace("LAN-", "").replace("MCH-", "").replace("HLD-", "").replace("CRD-", "")}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* RFQ Enquiry Modal */}
-      {modalOpen && (
-        <EnquiryModal
-          product={activeProduct}
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
+      <EnquiryModal
+        product={activeProduct}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </section>
   );
 }

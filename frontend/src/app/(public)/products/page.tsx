@@ -71,15 +71,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       />
 
       {/* Page header */}
-      <div className="border-b border-[#E2E8F0] pb-6 anim-fade-up">
-        <div className="max-w-3xl space-y-2.5">
-          <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
-            Wholesale catalogue
+      <div className="border-b border-slate-200 pb-6 anim-fade-up">
+        <div className="max-w-3xl space-y-2">
+          <span className="text-[11px] font-bold text-blue-600 uppercase tracking-[0.14em]">
+            Official Wholesale Catalogue
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#17365D]">
-            {activeCategory ? activeCategory.name : "All products & equipment"}
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            {activeCategory ? activeCategory.name : "All Products & Equipment"}
           </h1>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
             {activeCategory
               ? activeCategory.description
               : "Complete inventory of ID card holders, color satin rolls, metal clips, dog hooks, punching machinery, and RFID cards."}
@@ -100,15 +100,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       {/* Main Layout: Filter Sidebar + Products Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Filter Sidebar (Desktop only) */}
-        <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-[#F5F7FA] p-5 rounded-xl border border-[#DCE3EB]">
-          <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3">
-            <span className="font-bold text-sm text-[#17365D] flex items-center gap-1.5">
-              <Filter className="w-4 h-4 text-[#E87832]" /> Filter Catalogue
+        <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+            <span className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+              <Filter className="w-4 h-4 text-blue-600" /> Filter Catalogue
             </span>
             {(params.category || params.search || params.material || params.color || params.ordering) && (
               <Link
                 href="/products"
-                className="text-[11px] text-[#C0392B] font-semibold flex items-center gap-1 hover:underline"
+                className="text-[11px] text-red-600 font-semibold flex items-center gap-1 hover:underline"
               >
                 <RotateCcw className="w-3 h-3" /> Clear
               </Link>
@@ -118,20 +118,20 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           {/* Search Filter Form */}
           <form method="get" action="/products" className="space-y-3">
             {params.category && <input type="hidden" name="category" value={params.category} />}
-            <label className="block text-xs font-bold text-[#263445]">Keyword Search</label>
+            <label className="block text-xs font-bold text-slate-800">Keyword Search</label>
             <div className="relative">
               <input
                 type="text"
                 name="search"
                 defaultValue={params.search || ""}
                 placeholder="Model code, size..."
-                className="w-full bg-white border border-[#DCE3EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#263445] outline-none"
+                className="w-full bg-white border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-600"
               />
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             </div>
             <button
               type="submit"
-              className="w-full bg-[#17365D] hover:bg-[#102742] text-white py-1.5 rounded-lg text-xs font-semibold transition-colors"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl text-xs font-semibold transition-colors shadow-xs"
             >
               Filter
             </button>
@@ -139,19 +139,19 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
           {/* Hierarchical Categories Filter List */}
           <div>
-            <label className="block text-xs font-bold text-[#263445] mb-2 flex items-center justify-between">
+            <label className="block text-xs font-bold text-slate-800 mb-2 flex items-center justify-between">
               <span>Category Sector</span>
               <span className="text-[10px] text-slate-400 font-semibold">{categories.length} lines</span>
             </label>
             <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1 text-xs">
               <Link
                 href={`/products${params.search ? `?search=${encodeURIComponent(params.search)}` : ""}`}
-                className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-colors ${
-                  !params.category ? "bg-[#17365D] text-white font-bold" : "text-[#263445] hover:bg-white"
+                className={`flex items-center justify-between px-3 py-2 rounded-xl transition-colors ${
+                  !params.category ? "bg-blue-600 text-white font-bold shadow-xs" : "text-slate-700 hover:bg-white"
                 }`}
               >
                 <span>All Wholesale Products</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded ${!params.category ? "bg-white/20 text-white" : "bg-slate-200"}`}>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded ${!params.category ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"}`}>
                   {totalCatalogCount}
                 </span>
               </Link>
@@ -168,16 +168,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   <div key={mainCat.id} className="space-y-1 pt-1">
                     <Link
                       href={`/products?category=${mainCat.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
-                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-colors ${
+                      className={`flex items-center justify-between px-3 py-2 rounded-xl transition-colors ${
                         isMainSelected
-                          ? "bg-[#17365D] text-white font-bold"
+                          ? "bg-blue-600 text-white font-bold shadow-xs"
                           : hasSelectedChild
-                          ? "bg-slate-200/70 text-[#17365D] font-bold"
-                          : "text-[#17365D] font-bold hover:bg-white"
+                          ? "bg-blue-50 text-blue-800 font-bold"
+                          : "text-slate-800 font-semibold hover:bg-white"
                       }`}
                     >
                       <span className="truncate pr-1">{mainCat.name}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded shrink-0 ${isMainSelected ? "bg-white/20 text-white" : "bg-slate-200"}`}>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded shrink-0 ${isMainSelected ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"}`}>
                         {mainCat.products_count}
                       </span>
                     </Link>
@@ -190,10 +190,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                             <Link
                               key={sub.id}
                               href={`/products?category=${sub.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
-                              className={`flex items-center justify-between px-2 py-1 rounded text-[11px] transition-colors ${
+                              className={`flex items-center justify-between px-2 py-1 rounded-lg text-[11px] transition-colors ${
                                 isSubSelected
-                                  ? "bg-[#E87832] text-white font-bold"
-                                  : "text-slate-600 hover:text-[#17365D] hover:bg-white"
+                                  ? "bg-blue-600 text-white font-bold"
+                                  : "text-slate-600 hover:text-blue-600 hover:bg-white"
                               }`}
                             >
                               <span className="truncate pr-1">{sub.name}</span>

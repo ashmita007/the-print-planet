@@ -20,6 +20,10 @@ import {
 import ProductCard from "@/components/ProductCard";
 import ProductHeroShowcase from "@/components/ProductHeroShowcase";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
+import ShopByCategories from "@/components/ShopByCategories";
+import MarqueeTicker from "@/components/animations/MarqueeTicker";
+import HowItWorks from "@/components/HowItWorks";
+import CorporateAndWhyChooseUs from "@/components/CorporateAndWhyChooseUs";
 import GoogleReviews from "@/components/GoogleReviews";
 import {
   getCategories,
@@ -119,8 +123,8 @@ export default async function HomePage() {
   const safeFeatured = diverseFlagships.length > 0 ? diverseFlagships : productsList.slice(0, 18);
 
   return (
-    <div className="space-y-16 pb-20">
-      {/* 1. Product-First Industrial Hero Showcase */}
+    <div className="space-y-12 sm:space-y-16 pb-20">
+      {/* 1. Hero Section */}
       <ProductHeroShowcase
         flagshipProducts={safeFeatured}
         allProducts={productsList}
@@ -128,12 +132,24 @@ export default async function HomePage() {
         settings={settings}
       />
 
-      {/* 2. Direct Industrial Products Showcase with Live Category Tabs & Search */}
+      {/* Kinetic Infinite Capabilities Marquee */}
+      <MarqueeTicker />
+
+      {/* 2. Shop by Categories (8 Core Flagship Cards) */}
+      <ShopByCategories />
+
+      {/* 3. Best Sellers & Direct Catalogue with Category Tabs */}
       <DirectProductShowcase
         initialProducts={productsList.slice(0, 16)}
         initialTotalCount={productsData?.count || productsList.length}
         categories={categories || []}
       />
+
+      {/* 4. Why Choose Us & Corporate Solutions */}
+      <CorporateAndWhyChooseUs />
+
+      {/* 5. How It Works (5-Step Production Pipeline) */}
+      <HowItWorks />
 
       {/* 3. Industrial Operations & Trade Hub (Human-Crafted Bento Architecture) */}
       <section className="bg-[#FAFBFC] py-14 sm:py-16 border-y border-[#E2E8F0]">

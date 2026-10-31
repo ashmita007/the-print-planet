@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  weight: ["500", "600", "700"],
+});
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -23,10 +30,13 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
+import { CartProvider } from "@/lib/cart";
+import CartDrawer from "@/components/CartDrawer";
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const viewport: Viewport = {
-  themeColor: "#17365D",
+  themeColor: "#0A1128",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -287,9 +297,12 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-white text-[#263445] antialiased selection:bg-[#E87832] selection:text-white`}
+        className={`${inter.variable} ${plusJakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white`}
       >
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

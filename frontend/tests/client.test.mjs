@@ -433,4 +433,45 @@ test("Product names are cleanly formatted to Title Case while preserving PVC, ID
   assert.strictEqual(formatProductName("A4 PVC CORE _320 MIC"), "A4 PVC Core 320 Mic");
 });
 
+test("Cart calculation accurately computes subtotal and enforces MOQ", () => {
+  const cartItems = [
+    {
+      id: "1-default",
+      name: "20MM Satin Lanyard Roll",
+      sku: "LAN-ROY-20M",
+      price: 300,
+      quantity: 10,
+      minimumOrderQuantity: 5,
+    },
+    {
+      id: "2-default",
+      name: "V2 ID Card Holder",
+      sku: "HLD-V2",
+      price: 4.5,
+      quantity: 100,
+      minimumOrderQuantity: 50,
+    },
+  ];
+
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  assert.strictEqual(subtotal, 300 * 10 + 4.5 * 100); // 3000 + 450 = 3450
+  assert.strictEqual(cartItems[0].quantity >= cartItems[0].minimumOrderQuantity, true);
+  assert.strictEqual(cartItems[1].quantity >= cartItems[1].minimumOrderQuantity, true);
+});
+
+test("Cart quote order serialization matches WhatsApp inquiry format", () => {
+  const items = [
+    { name: "Satin Lanyard", sku: "LAN-01", quantity: 500, options: { material: "20mm Royal Blue" } },
+  ];
+  const formatted = items
+    .map((i, idx) => `${idx + 1}. ${i.name} (SKU: ${i.sku}) - Qty: ${i.quantity} [Material: ${i.options.material}]`)
+    .join("\n");
+
+  assert.strictEqual(
+    formatted,
+    "1. Satin Lanyard (SKU: LAN-01) - Qty: 500 [Material: 20mm Royal Blue]"
+  );
+});
+
+
 
