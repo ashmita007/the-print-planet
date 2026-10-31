@@ -12,7 +12,7 @@ interface KineticHighlightProps {
 export default function KineticHighlight({
   children,
   className = "",
-  glowColor = "rgba(37, 99, 235, 0.4)",
+  glowColor = "rgba(232, 120, 50, 0.35)",
 }: KineticHighlightProps) {
   return (
     <span className={`relative inline-block font-black ${className}`}>
@@ -22,7 +22,7 @@ export default function KineticHighlight({
         whileInView={{ width: "100%" }}
         viewport={{ once: true }}
         transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-1 left-0 h-[35%] -z-10 rounded-sm bg-gradient-to-r from-blue-600/35 via-blue-500/45 to-sky-400/35"
+        className="absolute bottom-1 left-0 h-[35%] -z-10 rounded-sm bg-gradient-to-r from-[#E87832]/35 via-[#FFA868]/45 to-[#FF8C38]/35"
         style={{
           boxShadow: `0 0 16px ${glowColor}`,
         }}

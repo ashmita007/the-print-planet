@@ -78,11 +78,11 @@ export default function CorporateAndWhyChooseUs() {
       {/* 1. WHY CHOOSE US */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">
-            <ShieldCheck className="w-4 h-4 text-blue-600" />
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E87832] mb-2">
+            <ShieldCheck className="w-4 h-4 text-[#E87832]" />
             <span>The Print Planet Advantage</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#17365D] tracking-tight">
             Why Leading Brands &amp; Print Studios Choose Us
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
@@ -100,13 +100,13 @@ export default function CorporateAndWhyChooseUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.06, duration: 0.3 }}
-                className="bg-white rounded-2xl p-5 border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white rounded-2xl p-5 border border-slate-200 hover:border-[#E87832]/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Icon className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF7F2] text-[#E87832] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Icon className="w-5 h-5 text-[#E87832]" />
                   </div>
-                  <h3 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-[#17365D] transition-colors">
                     {pillar.title}
                   </h3>
                   <p className="text-xs text-slate-500 mt-2 leading-relaxed">
@@ -121,13 +121,13 @@ export default function CorporateAndWhyChooseUs() {
 
       {/* 2. CORPORATE SOLUTIONS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-[#0A1128] rounded-3xl p-6 sm:p-12 text-white border border-slate-800 shadow-2xl relative overflow-hidden">
+        <div className="bg-[#102742] rounded-3xl p-6 sm:p-12 text-white border border-white/10 shadow-2xl relative overflow-hidden">
           {/* Background aura */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#E87832]/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 relative z-10">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400 block mb-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#FFA868] block mb-2">
                 Enterprise &amp; Institutional Solutions
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -140,7 +140,7 @@ export default function CorporateAndWhyChooseUs() {
 
             <Link
               href="/corporate"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-md transition-colors shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] text-white font-bold text-xs sm:text-sm shadow-md transition-colors shrink-0"
             >
               <span>Explore Corporate Portal</span>
               <ArrowRight className="w-4 h-4" />
@@ -153,14 +153,14 @@ export default function CorporateAndWhyChooseUs() {
               return (
                 <div
                   key={sector.title}
-                  className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 hover:border-blue-500/50 transition-colors flex flex-col justify-between"
+                  className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 hover:border-[#E87832]/50 transition-colors flex flex-col justify-between"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-[#E87832]/20 text-[#FFA868] flex items-center justify-center">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-950 border border-blue-800/40 px-2 py-0.5 rounded">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFA868] bg-[#E87832]/15 border border-[#E87832]/30 px-2 py-0.5 rounded">
                         {sector.badge}
                       </span>
                     </div>
@@ -174,10 +174,10 @@ export default function CorporateAndWhyChooseUs() {
                       </p>
                     </div>
 
-                    <ul className="space-y-1.5 pt-2 border-t border-slate-800 text-xs text-slate-300">
+                    <ul className="space-y-1.5 pt-2 border-t border-white/10 text-xs text-slate-300">
                       {sector.highlights.map((h, i) => (
                         <li key={i} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#FFA868] shrink-0" />
                           <span>{h}</span>
                         </li>
                       ))}
@@ -186,7 +186,7 @@ export default function CorporateAndWhyChooseUs() {
 
                   <Link
                     href="/quote"
-                    className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+                    className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-[#FFA868] hover:text-white transition-colors"
                   >
                     <span>Request Institutional Tender Quote</span>
                     <ArrowRight className="w-3.5 h-3.5" />

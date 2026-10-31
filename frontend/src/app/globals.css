@@ -6,35 +6,31 @@
   --font-display: var(--font-display), var(--font-heading), system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --color-brand-navy: #0F172A;
-  --color-brand-deepNavy: #0A1128;
-  --color-brand-blue: #2563EB;
-  --color-brand-blueHover: #1D4ED8;
-  --color-brand-blueLight: #EFF6FF;
-  --color-brand-orange: #2563EB;
+  --color-brand-navy: #17365D;
+  --color-brand-deepNavy: #102742;
+  --color-brand-orange: #E87832;
+  --color-brand-orangeHover: #D66B28;
   --color-brand-bgMain: #FFFFFF;
-  --color-brand-bgAlt: #F8FAFC;
-  --color-brand-textMain: #0F172A;
-  --color-brand-textSecondary: #64748B;
-  --color-brand-border: #E2E8F0;
-  --color-brand-success: #10B981;
-  --color-brand-error: #EF4444;
+  --color-brand-bgAlt: #F5F7FA;
+  --color-brand-textMain: #263445;
+  --color-brand-textSecondary: #687586;
+  --color-brand-border: #DCE3EB;
+  --color-brand-success: #217A4B;
+  --color-brand-error: #C0392B;
 }
 
 :root {
-  --color-brand-navy: #0F172A;
-  --color-brand-deepNavy: #0A1128;
-  --color-brand-blue: #2563EB;
-  --color-brand-blueHover: #1D4ED8;
-  --color-brand-blueLight: #EFF6FF;
-  --color-brand-orange: #2563EB;
+  --color-brand-navy: #17365D;
+  --color-brand-deepNavy: #102742;
+  --color-brand-orange: #E87832;
+  --color-brand-orangeHover: #D66B28;
   --color-brand-bgMain: #FFFFFF;
-  --color-brand-bgAlt: #F8FAFC;
-  --color-brand-textMain: #0F172A;
-  --color-brand-textSecondary: #64748B;
-  --color-brand-border: #E2E8F0;
-  --color-brand-success: #10B981;
-  --color-brand-error: #EF4444;
+  --color-brand-bgAlt: #F5F7FA;
+  --color-brand-textMain: #263445;
+  --color-brand-textSecondary: #687586;
+  --color-brand-border: #DCE3EB;
+  --color-brand-success: #217A4B;
+  --color-brand-error: #C0392B;
 }
 
 html {
@@ -154,19 +150,19 @@ button:disabled,
   width: 4px;
 }
 
-/* Industrial focus rings */
+/* Brand focus rings */
 *:focus-visible {
-  outline: 2px solid #2563EB;
+  outline: 2px solid #E87832;
   outline-offset: 2px;
 }
 
-/* Electric Blue Glow & Shimmer */
-@keyframes blueGlow {
+/* Warm Brand Amber/Orange Glow & Shimmer */
+@keyframes brandGlow {
   0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.35));
+    filter: drop-shadow(0 0 10px rgba(232, 120, 50, 0.35));
   }
   50% {
-    filter: drop-shadow(0 0 22px rgba(59, 130, 246, 0.65));
+    filter: drop-shadow(0 0 22px rgba(255, 168, 104, 0.65));
   }
 }
 
@@ -182,8 +178,8 @@ button:disabled,
   }
 }
 
-.animate-blue-glow {
-  animation: blueGlow 3s ease-in-out infinite;
+.animate-brand-glow {
+  animation: brandGlow 3s ease-in-out infinite;
 }
 
 .animate-gradient-text {
@@ -203,14 +199,10 @@ button:disabled,
   bottom: -4px;
   height: 2px;
   border-radius: 9999px;
-  background-color: #2563EB;
+  background-color: #E87832;
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 200ms ease;
-}
-.nav-link:hover::after,
-.nav-link:focus-visible::after {
-  transform: scaleX(1);
 }
 .nav-link:hover::after,
 .nav-link:focus-visible::after {

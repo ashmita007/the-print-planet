@@ -343,8 +343,8 @@ function QuoteFormContent() {
                   <span className="text-[11px] text-slate-500">Max 10MB</span>
                 </div>
                 {!attachment ? (
-                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50 hover:bg-blue-50/30 rounded-xl py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
-                    <UploadCloud className="w-4 h-4 text-blue-600" />
+                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-[#E87832]/60 bg-slate-50 hover:bg-[#FFF7F2]/40 rounded-xl py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
+                    <UploadCloud className="w-4 h-4 text-[#E87832]" />
                     <span>Click to browse and attach your design file, artwork, or order spreadsheet</span>
                     <input
                       type="file"
@@ -375,7 +375,7 @@ function QuoteFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-blue-600 hover:bg-blue-700 active:scale-98 text-white py-3.5 px-6 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white py-3.5 px-6 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Submitting Quotation Request...</span>

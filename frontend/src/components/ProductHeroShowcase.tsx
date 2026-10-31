@@ -2,27 +2,24 @@
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
-  ChevronRight,
-  ChevronLeft,
   ShieldCheck,
-  Truck,
   Award,
-  FileText,
-  ShoppingBag,
+  Truck,
   Sparkles,
-  CheckCircle2,
+  ShoppingBag,
+  FileText,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Product, SiteSettings } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
-import EnquiryModal from "./EnquiryModal";
-import AnimeLogoHeroEffect from "./AnimeLogoHeroEffect";
 import TextReveal from "./animations/TextReveal";
 import KineticHighlight from "./animations/KineticHighlight";
+import AnimeLogoHeroEffect from "./AnimeLogoHeroEffect";
 
 interface ProductHeroShowcaseProps {
   flagshipProducts: Product[];
@@ -31,14 +28,13 @@ interface ProductHeroShowcaseProps {
   settings?: SiteSettings;
 }
 
-// Hero category filter tabs
 const HERO_CATEGORIES = [
   { id: "all", label: "★ All Flagships" },
-  { id: "lanyards", label: "Satin Lanyards", keywords: ["lanyard", "satin", "roll", "ribbon"] },
-  { id: "cards", label: "PVC & Smart Cards", keywords: ["card", "rfid", "smart", "inlay", "pvc"] },
-  { id: "holders", label: "ID Card Holders", keywords: ["holder", "acrylic", "clear"] },
-  { id: "machines", label: "Card Machinery", keywords: ["machine", "cutter", "fusing", "puncher"] },
-  { id: "corporate", label: "Clips & Fittings", keywords: ["hook", "clip", "fitting", "clamp"] },
+  { id: "machines", label: "Industrial Machines", keywords: ["machine", "cutter", "fusing", "press"] },
+  { id: "lanyards", label: "Satin Lanyard Rolls", keywords: ["lanyard", "satin", "roll", "ribbon"] },
+  { id: "holders", label: "PVC Card Holders", keywords: ["holder", "pvc", "acrylic", "clear"] },
+  { id: "rfid", label: "RFID & Smart Cards", keywords: ["rfid", "smart", "inlay", "prelam", "mifare"] },
+  { id: "hooks", label: "Clips & Hooks", keywords: ["hook", "clip", "fitting", "clamp"] },
 ];
 
 export default function ProductHeroShowcase({
@@ -53,7 +49,6 @@ export default function ProductHeroShowcase({
   const [selectedHeroCategory, setSelectedHeroCategory] = useState<string>("all");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const thumbScrollRef = useRef<HTMLDivElement>(null);
@@ -100,12 +95,18 @@ export default function ProductHeroShowcase({
 
   const activeProduct = activeProducts[activeIndex] || activeProducts[0];
 
-  const imageUrl =
+  const primaryUrl =
     activeProduct?.primary_image?.secure_url ||
     (activeProduct?.images && activeProduct.images.length > 0
       ? activeProduct.images[0].secure_url
       : null) ||
     "/placeholder-product.svg";
+
+  const [currentHeroImg, setCurrentHeroImg] = useState<string>(primaryUrl);
+
+  useEffect(() => {
+    setCurrentHeroImg(primaryUrl);
+  }, [primaryUrl]);
 
   // Auto-rotation progress
   const ROTATE_INTERVAL_MS = 5000;
@@ -130,13 +131,14 @@ export default function ProductHeroShowcase({
   if (!activeProduct) return null;
 
   return (
-    <section className="relative bg-[#0A1128] text-white overflow-hidden py-10 sm:py-16 lg:py-20 border-b border-slate-800">
-      {/* Precision atmospheric grid & lighting */}
-      <div className="absolute top-0 right-1/4 w-[42rem] h-[42rem] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+    <section className="relative bg-[#102742] text-white overflow-hidden py-10 sm:py-16 lg:py-20 border-b border-slate-800">
+      {/* Precision atmospheric ambient lighting */}
+      <div className="absolute top-0 right-1/4 w-[42rem] h-[42rem] bg-[#E87832]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#17365D]/60 rounded-full blur-2xl pointer-events-none" />
       
       {/* Anime.js SVG Registration Animation */}
       <AnimeLogoHeroEffect />
+
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
@@ -150,8 +152,8 @@ export default function ProductHeroShowcase({
           {/* Left Column: Headline, Value Proposition & Actions */}
           <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-950/80 border border-blue-500/30 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold text-blue-300">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-[#E87832]/15 border border-[#E87832]/35 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold text-[#FFA868]">
+              <span className="w-2 h-2 rounded-full bg-[#E87832] animate-pulse" />
               <span>THE PRINT PLANET • Factory Direct Solutions</span>
             </div>
 
@@ -165,7 +167,7 @@ export default function ProductHeroShowcase({
                 />
                 <span className="block mt-1">
                   <KineticHighlight>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-blue-500 animate-gradient-text">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA868] via-[#E87832] to-[#FF8C38] animate-gradient-text drop-shadow-[0_2px_14px_rgba(232,120,50,0.35)]">
                       Enterprise Merchandise
                     </span>
                   </KineticHighlight>
@@ -180,9 +182,9 @@ export default function ProductHeroShowcase({
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-xs sm:text-sm font-semibold font-mono text-blue-300 tracking-wide flex items-center gap-1.5"
+                    className="text-xs sm:text-sm font-semibold font-mono text-[#FFA868] tracking-wide flex items-center gap-1.5"
                   >
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping" />
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#E87832] animate-ping" />
                     <span>✦ {ROTATING_PHRASES[phraseIdx]}</span>
                   </motion.p>
                 </AnimatePresence>
@@ -197,7 +199,7 @@ export default function ProductHeroShowcase({
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-98 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition-all text-center group"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white font-bold text-xs sm:text-sm shadow-lg shadow-[#E87832]/30 transition-all text-center group"
               >
                 <span>Explore Full Catalogue ({totalProductsCount}+)</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -205,20 +207,20 @@ export default function ProductHeroShowcase({
 
               <Link
                 href="/quote"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 text-slate-200 hover:text-white font-semibold text-xs sm:text-sm transition-all text-center"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-slate-100 hover:text-white font-semibold text-xs sm:text-sm transition-all text-center"
               >
-                <FileText className="w-4 h-4 text-blue-400" />
+                <FileText className="w-4 h-4 text-[#FFA868]" />
                 <span>Request Custom Quote</span>
               </Link>
             </div>
 
             {/* Key Trust Signals */}
-            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-slate-800/80 text-[11px] sm:text-xs">
+            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-white/10 text-[11px] sm:text-xs">
               <div className="space-y-0.5">
                 <div className="font-bold text-white text-base sm:text-lg">180+</div>
                 <div className="text-slate-400">Products &amp; Machines</div>
               </div>
-              <div className="space-y-0.5 border-x border-slate-800 px-3">
+              <div className="space-y-0.5 border-x border-white/10 px-3">
                 <div className="font-bold text-white text-base sm:text-lg">50,000+</div>
                 <div className="text-slate-400">Daily Production Capacity</div>
               </div>
@@ -243,8 +245,8 @@ export default function ProductHeroShowcase({
                   onClick={() => setSelectedHeroCategory(cat.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                     selectedHeroCategory === cat.id
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "bg-slate-900/60 text-slate-400 hover:text-white hover:bg-slate-800/60 border border-slate-800"
+                      ? "bg-[#E87832] text-white shadow-sm"
+                      : "bg-white/[0.06] text-slate-300 hover:text-white hover:bg-white/[0.12] border border-white/10"
                   }`}
                 >
                   {cat.label}
@@ -253,19 +255,19 @@ export default function ProductHeroShowcase({
             </div>
 
             {/* Showcase Stage */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+            <div className="bg-[#0c1e33] border border-white/15 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden backdrop-blur-sm">
               {/* Product Badge & SKU */}
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-950/80 border border-blue-800/50 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFA868] bg-[#E87832]/15 border border-[#E87832]/30 px-2 py-0.5 rounded">
                   {formatCategoryName(activeProduct.category?.name || "Featured Product")}
                 </span>
-                <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded">
                   SKU: {activeProduct.sku}
                 </span>
               </div>
 
               {/* Product Image Stage */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-xl bg-white/95 overflow-hidden p-4 mb-4 flex items-center justify-center border border-slate-200">
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-xl bg-white overflow-hidden p-4 mb-4 flex items-center justify-center border border-slate-200">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeProduct.id}
@@ -275,13 +277,13 @@ export default function ProductHeroShowcase({
                     transition={{ duration: 0.3 }}
                     className="relative w-full h-full flex items-center justify-center"
                   >
-                    <Image
-                      src={imageUrl}
+                    <img
+                      src={currentHeroImg}
                       alt={activeProduct.name}
-                      fill
-                      className="object-contain p-2"
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 550px"
+                      onError={() => setCurrentHeroImg("/placeholder-product.svg")}
+                      className="w-full h-full object-contain p-2"
+                      loading="eager"
+                      decoding="async"
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -289,7 +291,7 @@ export default function ProductHeroShowcase({
                 {/* Progress bar for auto-rotation */}
                 <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-200">
                   <div
-                    className="h-full bg-blue-600 transition-all duration-100 ease-linear"
+                    className="h-full bg-[#E87832] transition-all duration-100 ease-linear"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -302,7 +304,7 @@ export default function ProductHeroShowcase({
                     <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
                       {formatProductName(activeProduct.name)}
                     </h3>
-                    <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">
+                    <p className="text-xs text-slate-300 line-clamp-1 mt-0.5">
                       {activeProduct.material ? `${activeProduct.material} • ` : ""}
                       {activeProduct.minimum_order_quantity
                         ? `MOQ: ${activeProduct.minimum_order_quantity} Units`
@@ -320,7 +322,7 @@ export default function ProductHeroShowcase({
                         ₹{Number(activeProduct.price).toLocaleString("en-IN")}
                       </div>
                     ) : (
-                      <div className="text-xs font-semibold text-blue-400">
+                      <div className="text-xs font-semibold text-[#FFA868]">
                         Wholesale Rate
                       </div>
                     )}
@@ -331,7 +333,7 @@ export default function ProductHeroShowcase({
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <button
                     onClick={() => addItem(activeProduct, activeProduct.minimum_order_quantity || 1)}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors shadow-xs"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] text-white font-bold text-xs transition-colors shadow-xs"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
                     <span>Add to Order / RFQ</span>
@@ -339,7 +341,7 @@ export default function ProductHeroShowcase({
 
                   <Link
                     href={`/products/${activeProduct.slug}`}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 transition-colors"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white font-semibold text-xs border border-white/15 transition-colors"
                   >
                     <span>View Specifications</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -350,7 +352,7 @@ export default function ProductHeroShowcase({
               {/* Thumbnail Strip for Carousel navigation */}
               <div
                 ref={thumbScrollRef}
-                className="flex gap-2 overflow-x-auto mt-4 pt-3 border-t border-slate-800/80 pb-1 scrollbar-none"
+                className="flex gap-2 overflow-x-auto mt-4 pt-3 border-t border-white/10 pb-1 scrollbar-none"
               >
                 {activeProducts.map((p, idx) => {
                   const thumb =
@@ -365,19 +367,19 @@ export default function ProductHeroShowcase({
                         setActiveIndex(idx);
                         setProgress(0);
                       }}
-                      className={`relative w-12 h-12 rounded-lg bg-white overflow-hidden shrink-0 border transition-all ${
-                        isSelected
-                          ? "border-blue-500 ring-2 ring-blue-500/30 scale-105"
-                          : "border-slate-700 opacity-60 hover:opacity-100"
+                      className={`relative w-11 h-11 rounded-lg overflow-hidden shrink-0 border transition-all ${
+                        isSelected ? "border-[#E87832] ring-2 ring-[#E87832]/50 scale-105" : "border-white/15 opacity-60 hover:opacity-100"
                       }`}
-                      title={p.name}
                     >
-                      <Image
+                      <img
                         src={thumb}
                         alt={p.name}
-                        fill
-                        className="object-contain p-1"
-                        sizes="48px"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/placeholder-product.svg";
+                        }}
+                        className="w-full h-full object-contain p-1 bg-white"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </button>
                   );
@@ -387,12 +389,6 @@ export default function ProductHeroShowcase({
           </div>
         </div>
       </div>
-
-      <EnquiryModal
-        product={activeProduct}
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
     </section>
   );
 }

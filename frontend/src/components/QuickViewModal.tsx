@@ -1,17 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import {
   X,
+  ShoppingBag,
+  MessageCircle,
+  ExternalLink,
   ShieldCheck,
   Truck,
-  ShoppingBag,
-  ExternalLink,
-  MessageCircle,
-  FileText,
   Check,
 } from "lucide-react";
 import { Product } from "@/lib/types";
@@ -19,18 +17,24 @@ import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 
 interface QuickViewModalProps {
-  product: Product | null;
+  product: Product;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps) {
+export default function QuickViewModal({
+  product,
+  isOpen,
+  onClose,
+}: QuickViewModalProps) {
   const { addItem } = useCart();
-  const [selectedImage, setSelectedImage] = useState<string>("");
-  const [quantity, setQuantity] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState<number>(
+    product.minimum_order_quantity || 1
+  );
   const [added, setAdded] = useState(false);
 
-  if (!isOpen || !product) return null;
+  if (!isOpen) return null;
 
   const imagesList =
     product.images && product.images.length > 0
@@ -66,7 +70,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-[#0A1128]/70 backdrop-blur-xs"
+          className="fixed inset-0 bg-[#102742]/75 backdrop-blur-xs"
         />
 
         {/* Modal Window */}
@@ -75,12 +79,12 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-slate-200"
+          className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#DCE3EB]"
         >
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors"
+            className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -88,34 +92,40 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
 
           <div className="grid grid-cols-1 md:grid-cols-2 max-h-[85vh] overflow-y-auto">
             {/* Image Gallery Column */}
-            <div className="p-5 bg-slate-50 flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-200">
-              <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-white border border-slate-200/80 p-4">
-                <Image
+            <div className="p-5 bg-[#F8FAFC] flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#DCE3EB]">
+              <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-white border border-[#DCE3EB] p-4 flex items-center justify-center">
+                <img
                   src={activeImage}
                   alt={product.name}
-                  fill
-                  className="object-contain p-2"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder-product.svg";
+                  }}
+                  className="w-full h-full object-contain p-2"
+                  loading="eager"
+                  decoding="async"
                 />
               </div>
 
               {/* Thumbnails */}
               {imagesList.length > 1 && (
-                <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
+                <div className="flex gap-2 mt-3 overflow-x-auto pb-1 scrollbar-none">
                   {imagesList.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setSelectedImage(img)}
                       className={`relative w-14 h-14 rounded-lg bg-white border overflow-hidden shrink-0 transition-all ${
-                        activeImage === img ? "border-blue-600 ring-2 ring-blue-600/20" : "border-slate-200 opacity-70 hover:opacity-100"
+                        activeImage === img ? "border-[#E87832] ring-2 ring-[#E87832]/30" : "border-[#DCE3EB] opacity-70 hover:opacity-100"
                       }`}
                     >
-                      <Image
+                      <img
                         src={img}
                         alt={`Thumb ${idx + 1}`}
-                        fill
-                        className="object-contain p-1"
-                        sizes="56px"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/placeholder-product.svg";
+                        }}
+                        className="w-full h-full object-contain p-1"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </button>
                   ))}
@@ -123,12 +133,12 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               )}
 
               {/* Quality & Delivery trust signals */}
-              <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-600">
-                <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Factory Verified
+              <div className="mt-4 pt-3 border-t border-[#DCE3EB] flex items-center justify-between text-[11px] text-[#687586]">
+                <span className="flex items-center gap-1 font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" /> Factory Verified
                 </span>
-                <span className="flex items-center gap-1">
-                  <Truck className="w-3.5 h-3.5 text-blue-600" /> PAN-India Dispatch
+                <span className="flex items-center gap-1 font-medium">
+                  <Truck className="w-3.5 h-3.5 text-[#E87832]" /> PAN-India Dispatch
                 </span>
               </div>
             </div>
@@ -137,76 +147,76 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
             <div className="p-5 sm:p-6 flex flex-col justify-between">
               <div className="space-y-3">
                 {product.category && (
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#E87832] bg-[#E87832]/10 px-2 py-0.5 rounded">
                     {formatCategoryName(product.category.name)}
                   </span>
                 )}
 
-                <h2 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                <h2 className="text-lg sm:text-xl font-bold text-[#17365D] leading-snug">
                   {formatProductName(product.name)}
                 </h2>
 
-                <div className="flex items-center gap-3 text-xs text-slate-500">
-                  <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-700">
+                <div className="flex items-center gap-3 text-xs text-[#687586]">
+                  <span className="font-mono bg-[#F5F7FA] border border-[#DCE3EB] px-2 py-0.5 rounded text-[#263445]">
                     SKU: {product.sku}
                   </span>
                   {product.minimum_order_quantity && (
-                    <span className="text-slate-600 font-medium">
+                    <span className="text-[#687586] font-medium font-mono">
                       MOQ: {product.minimum_order_quantity} Units
                     </span>
                   )}
                 </div>
 
                 {/* Price */}
-                <div className="pt-2 pb-1 border-y border-slate-100">
+                <div className="pt-2 pb-1 border-y border-[#F5F7FA]">
                   {product.price_display ? (
-                    <div className="text-xl sm:text-2xl font-bold text-slate-900">
+                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#17365D]">
                       {product.price_display}
                     </div>
                   ) : product.price ? (
-                    <div className="text-xl sm:text-2xl font-bold text-slate-900">
+                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#17365D]">
                       ₹{Number(product.price).toLocaleString("en-IN")}{" "}
-                      <span className="text-xs text-slate-500 font-normal">per unit</span>
+                      <span className="text-xs text-[#687586] font-normal">per unit</span>
                     </div>
                   ) : (
-                    <div className="text-base font-semibold text-blue-600">
+                    <div className="text-base font-bold text-[#E87832]">
                       Direct Wholesale Pricing on Request
                     </div>
                   )}
                 </div>
 
                 {/* Description excerpt */}
-                <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                <p className="text-xs text-[#687586] leading-relaxed line-clamp-3">
                   {product.short_description || product.description || "Premium industrial-grade materials engineered for custom printing, corporate identification, and high-volume merchandise."}
                 </p>
 
                 {/* Key specs pills */}
                 <div className="grid grid-cols-2 gap-2 text-[11px] pt-1">
                   {product.material && (
-                    <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
-                      <span className="text-slate-400 block text-[9px] uppercase font-bold">Material</span>
-                      <span className="font-semibold text-slate-800 truncate block">{product.material}</span>
+                    <div className="p-2 rounded-lg bg-[#F5F7FA] border border-[#DCE3EB]">
+                      <span className="text-[#687586] block text-[9px] uppercase font-bold">Material</span>
+                      <span className="font-semibold text-[#263445] truncate block">{product.material}</span>
                     </div>
                   )}
                   {product.dimensions && (
-                    <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
-                      <span className="text-slate-400 block text-[9px] uppercase font-bold">Dimensions</span>
-                      <span className="font-semibold text-slate-800 truncate block">{product.dimensions}</span>
+                    <div className="p-2 rounded-lg bg-[#F5F7FA] border border-[#DCE3EB]">
+                      <span className="text-[#687586] block text-[9px] uppercase font-bold">Dimensions</span>
+                      <span className="font-semibold text-[#263445] truncate block">{product.dimensions}</span>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="space-y-2.5 pt-5 mt-4 border-t border-slate-100">
+              <div className="space-y-2.5 pt-5 mt-4 border-t border-[#F5F7FA]">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={handleAddToCart}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
                   >
                     {added ? (
                       <>
-                        <Check className="w-4 h-4 text-emerald-300" />
+                        <Check className="w-4 h-4 text-white" />
                         <span>Added to Cart</span>
                       </>
                     ) : (
@@ -221,7 +231,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                     href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white text-xs font-semibold transition-all"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#217A4B] hover:bg-[#1b633d] active:scale-98 text-white text-xs font-semibold transition-all"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>WhatsApp Quote</span>
@@ -231,7 +241,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                 <Link
                   href={`/products/${product.slug}`}
                   onClick={onClose}
-                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
+                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#687586] hover:text-[#17365D] transition-colors"
                 >
                   <span>View Full Product Specifications</span>
                   <ExternalLink className="w-3.5 h-3.5" />

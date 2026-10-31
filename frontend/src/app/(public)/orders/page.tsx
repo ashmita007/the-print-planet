@@ -87,7 +87,7 @@ export default function ClientOrdersDashboardPage() {
       case "submitted":
         return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Submitted</span>;
       case "reviewing":
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Technical Review</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#17365D]/10 text-[#17365D] border border-[#17365D]/20">Technical Review</span>;
       case "quoted":
         return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Quotation Ready</span>;
       case "proofing":
@@ -150,8 +150,8 @@ export default function ClientOrdersDashboardPage() {
           <div className="text-xl sm:text-2xl font-black text-amber-600">{metrics.submitted}</div>
         </div>
         <div className="bg-white border border-[#DCE3EB] p-4 rounded-xl space-y-1">
-          <span className="text-[11px] font-semibold text-blue-600 uppercase">Reviewing</span>
-          <div className="text-xl sm:text-2xl font-black text-blue-600">{metrics.reviewing}</div>
+          <span className="text-[11px] font-semibold text-[#17365D] uppercase">Reviewing</span>
+          <div className="text-xl sm:text-2xl font-black text-[#17365D]">{metrics.reviewing}</div>
         </div>
         <div className="bg-white border border-[#DCE3EB] p-4 rounded-xl space-y-1">
           <span className="text-[11px] font-semibold text-purple-600 uppercase">Quoted</span>

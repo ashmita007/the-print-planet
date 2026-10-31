@@ -48,18 +48,18 @@ export default function Footer({ categories = [], settings }: FooterProps) {
   const pan = "AAQFT3909B";
 
   return (
-    <footer className="bg-[#0A1128] text-white pt-14 sm:pt-20 pb-10 border-t border-slate-800">
+    <footer className="bg-[#102742] text-white pt-14 sm:pt-20 pb-10 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Top Newsletter & B2B Updates Row */}
-        <div className="pb-12 mb-12 border-b border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="pb-12 mb-12 border-b border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6 space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#FFA868]">
               Stay Informed • Factory Updates &amp; Bulk Offers
             </span>
             <h3 className="text-xl sm:text-2xl font-extrabold text-white">
               Subscribe for Wholesale Catalogues &amp; Pricing Drops
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-lg">
+            <p className="text-xs sm:text-sm text-slate-300 max-w-lg">
               Get notified when new raw materials, lanyard satin rolls, smart cards, and machinery arrive in Bangalore stock.
             </p>
           </div>
@@ -72,11 +72,11 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
                 required
-                className="flex-1 bg-slate-900 border border-slate-700 focus:border-blue-500 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-400 outline-none"
+                className="flex-1 bg-white/[0.06] border border-white/15 focus:border-[#E87832] rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-400 outline-none"
               />
               <button
                 type="submit"
-                className="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-98 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shrink-0 shadow-md"
+                className="px-5 py-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shrink-0 shadow-md"
               >
                 {subscribed ? (
                   <>
@@ -146,7 +146,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 href="https://www.linkedin.com/company/the-print-planet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-400 hover:text-white border border-slate-800 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#E87832] text-slate-300 hover:text-white border border-white/10 flex items-center justify-center transition-colors"
                 title="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -157,7 +157,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 href="https://www.instagram.com/theprintplanet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-900 hover:bg-pink-600 text-slate-400 hover:text-white border border-slate-800 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-pink-600 text-slate-300 hover:text-white border border-white/10 flex items-center justify-center transition-colors"
                 title="Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -168,7 +168,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
                 href="https://www.indiamart.com/theprintplanet/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-400 hover:text-white border border-slate-800 flex items-center justify-center text-[11px] font-semibold transition-colors"
+                className="px-2.5 h-8 rounded-lg bg-white/10 hover:bg-[#E87832] text-slate-300 hover:text-white border border-white/10 flex items-center justify-center text-[11px] font-semibold transition-colors"
                 title="IndiaMART Verified Seller"
               >
                 IndiaMART
@@ -183,37 +183,37 @@ export default function Footer({ categories = [], settings }: FooterProps) {
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li>
-                <Link href="/products?search=lanyard" className="hover:text-blue-400 transition-colors block">
+                <Link href="/products?search=lanyard" className="hover:text-[#FFA868] transition-colors block">
                   Custom Lanyards &amp; Satin Rolls
                 </Link>
               </li>
               <li>
-                <Link href="/products?search=card" className="hover:text-blue-400 transition-colors block">
+                <Link href="/products?search=card" className="hover:text-[#FFA868] transition-colors block">
                   PVC &amp; Smart RFID Cards
                 </Link>
               </li>
               <li>
-                <Link href="/products?search=holder" className="hover:text-blue-400 transition-colors block">
+                <Link href="/products?search=holder" className="hover:text-[#FFA868] transition-colors block">
                   Rigid ID Card Holders &amp; Cases
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=id-card-manufacturing-machines" className="hover:text-blue-400 transition-colors block">
+                <Link href="/products?category=id-card-manufacturing-machines" className="hover:text-[#FFA868] transition-colors block">
                   Card Machinery &amp; Die Cutters
                 </Link>
               </li>
               <li>
-                <Link href="/corporate" className="hover:text-blue-400 transition-colors block">
+                <Link href="/corporate" className="hover:text-[#FFA868] transition-colors block">
                   Corporate Gifting &amp; Hampers
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-blue-400 transition-colors block">
+                <Link href="/services" className="hover:text-[#FFA868] transition-colors block">
                   Custom Apparel &amp; Uniforms
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors block pt-1">
+                <Link href="/products" className="text-[#FFA868] hover:text-white font-semibold transition-colors block pt-1">
                   View All 180+ Products &rarr;
                 </Link>
               </li>
@@ -227,37 +227,37 @@ export default function Footer({ categories = [], settings }: FooterProps) {
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li>
-                <Link href="/about" className="hover:text-blue-400 transition-colors">
+                <Link href="/about" className="hover:text-[#FFA868] transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/corporate" className="hover:text-blue-400 transition-colors">
+                <Link href="/corporate" className="hover:text-[#FFA868] transition-colors">
                   Corporate Gifting
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-blue-400 transition-colors">
+                <Link href="/services" className="hover:text-[#FFA868] transition-colors">
                   Custom Printing
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="hover:text-blue-400 transition-colors">
+                <Link href="/gallery" className="hover:text-[#FFA868] transition-colors">
                   Portfolio Gallery
                 </Link>
               </li>
               <li>
-                <Link href="/industries" className="hover:text-blue-400 transition-colors">
+                <Link href="/industries" className="hover:text-[#FFA868] transition-colors">
                   Industries We Serve
                 </Link>
               </li>
               <li>
-                <Link href="/quote" className="hover:text-blue-400 transition-colors">
+                <Link href="/quote" className="hover:text-[#FFA868] transition-colors">
                   Request a Quote
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-blue-400 transition-colors">
+                <Link href="/contact" className="hover:text-[#FFA868] transition-colors">
                   Contact &amp; Factory Desk
                 </Link>
               </li>
@@ -270,17 +270,17 @@ export default function Footer({ categories = [], settings }: FooterProps) {
               Factory Headquarters
             </h4>
             <div className="flex items-start gap-2.5 text-xs text-slate-300">
-              <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-[#FFA868] shrink-0 mt-0.5" />
               <span>{address}</span>
             </div>
             <div className="flex items-center gap-2.5 text-xs text-slate-300">
-              <Phone className="w-4 h-4 text-blue-400 shrink-0" />
+              <Phone className="w-4 h-4 text-[#FFA868] shrink-0" />
               <a href={`tel:${phone.replace(/\s+/g, "")}`} className="hover:text-white font-mono font-semibold">
                 {phone}
               </a>
             </div>
             <div className="flex items-center gap-2.5 text-xs text-slate-300">
-              <Mail className="w-4 h-4 text-blue-400 shrink-0" />
+              <Mail className="w-4 h-4 text-[#FFA868] shrink-0" />
               <a href={`mailto:${email}`} className="hover:text-white">
                 {email}
               </a>
@@ -289,7 +289,7 @@ export default function Footer({ categories = [], settings }: FooterProps) {
             <div className="pt-2">
               <Link
                 href="/quote"
-                className="w-full inline-flex items-center justify-center py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors shadow-md"
+                className="w-full inline-flex items-center justify-center py-2.5 px-4 rounded-xl bg-[#E87832] hover:bg-[#d66b28] text-white font-bold text-xs transition-colors shadow-md"
               >
                 Request Custom Quotation
               </Link>

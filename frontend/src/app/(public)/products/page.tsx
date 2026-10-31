@@ -73,10 +73,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       {/* Page header */}
       <div className="border-b border-slate-200 pb-6 anim-fade-up">
         <div className="max-w-3xl space-y-2">
-          <span className="text-[11px] font-bold text-blue-600 uppercase tracking-[0.14em]">
+          <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-[0.14em]">
             Official Wholesale Catalogue
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17365D]">
             {activeCategory ? activeCategory.name : "All Products & Equipment"}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
@@ -102,8 +102,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         {/* Left Filter Sidebar (Desktop only) */}
         <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-2xl border border-slate-200">
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-            <span className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
-              <Filter className="w-4 h-4 text-blue-600" /> Filter Catalogue
+            <span className="font-bold text-sm text-[#17365D] flex items-center gap-1.5">
+              <Filter className="w-4 h-4 text-[#E87832]" /> Filter Catalogue
             </span>
             {(params.category || params.search || params.material || params.color || params.ordering) && (
               <Link
@@ -125,13 +125,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 name="search"
                 defaultValue={params.search || ""}
                 placeholder="Model code, size..."
-                className="w-full bg-white border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-600"
+                className="w-full bg-white border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-900 outline-none focus:border-[#E87832]"
               />
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl text-xs font-semibold transition-colors shadow-xs"
+              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2 rounded-xl text-xs font-semibold transition-colors shadow-xs"
             >
               Filter
             </button>
@@ -147,7 +147,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               <Link
                 href={`/products${params.search ? `?search=${encodeURIComponent(params.search)}` : ""}`}
                 className={`flex items-center justify-between px-3 py-2 rounded-xl transition-colors ${
-                  !params.category ? "bg-blue-600 text-white font-bold shadow-xs" : "text-slate-700 hover:bg-white"
+                  !params.category ? "bg-[#17365D] text-white font-bold shadow-xs" : "text-slate-700 hover:bg-white"
                 }`}
               >
                 <span>All Wholesale Products</span>
@@ -170,9 +170,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                       href={`/products?category=${mainCat.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
                       className={`flex items-center justify-between px-3 py-2 rounded-xl transition-colors ${
                         isMainSelected
-                          ? "bg-blue-600 text-white font-bold shadow-xs"
+                          ? "bg-[#17365D] text-white font-bold shadow-xs"
                           : hasSelectedChild
-                          ? "bg-blue-50 text-blue-800 font-bold"
+                          ? "bg-[#FFF7F2] text-[#E87832] font-bold"
                           : "text-slate-800 font-semibold hover:bg-white"
                       }`}
                     >
@@ -192,8 +192,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               href={`/products?category=${sub.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
                               className={`flex items-center justify-between px-2 py-1 rounded-lg text-[11px] transition-colors ${
                                 isSubSelected
-                                  ? "bg-blue-600 text-white font-bold"
-                                  : "text-slate-600 hover:text-blue-600 hover:bg-white"
+                                  ? "bg-[#E87832] text-white font-bold"
+                                  : "text-slate-600 hover:text-[#E87832] hover:bg-white"
                               }`}
                             >
                               <span className="truncate pr-1">{sub.name}</span>

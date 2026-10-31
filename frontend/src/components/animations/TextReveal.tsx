@@ -20,7 +20,7 @@ export default function TextReveal({
   staggerDelay = 0.04,
   as: Tag = "span",
   highlightWords = [],
-  highlightClassName = "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-blue-500",
+  highlightClassName = "text-transparent bg-clip-text bg-gradient-to-r from-[#FFA868] via-[#E87832] to-[#FF8C38]",
 }: TextRevealProps) {
   const shouldReduceMotion = useReducedMotion();
   const words = text.split(" ");

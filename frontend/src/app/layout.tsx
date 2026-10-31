@@ -297,7 +297,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${plusJakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white`}
+        className={`${inter.variable} ${plusJakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-[#E87832] selection:text-white`}
       >
         <CartProvider>
           {children}

@@ -20,7 +20,6 @@ import {
 import ProductCard from "@/components/ProductCard";
 import ProductHeroShowcase from "@/components/ProductHeroShowcase";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
-import ShopByCategories from "@/components/ShopByCategories";
 import MarqueeTicker from "@/components/animations/MarqueeTicker";
 import HowItWorks from "@/components/HowItWorks";
 import CorporateAndWhyChooseUs from "@/components/CorporateAndWhyChooseUs";
@@ -135,10 +134,7 @@ export default async function HomePage() {
       {/* Kinetic Infinite Capabilities Marquee */}
       <MarqueeTicker />
 
-      {/* 2. Shop by Categories (8 Core Flagship Cards) */}
-      <ShopByCategories />
-
-      {/* 3. Best Sellers & Direct Catalogue with Category Tabs */}
+      {/* 2. Direct Catalogue & Best Sellers with Category Tabs */}
       <DirectProductShowcase
         initialProducts={productsList.slice(0, 16)}
         initialTotalCount={productsData?.count || productsList.length}

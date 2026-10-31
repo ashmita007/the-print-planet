@@ -224,10 +224,10 @@ export default function DirectProductShowcase({
       {/* Header with Title and B2B Badge */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <span className="text-[10px] sm:text-[11px] font-bold text-blue-600 uppercase tracking-[0.14em]">
+          <span className="text-[10px] sm:text-[11px] font-bold text-[#E87832] uppercase tracking-[0.14em]">
             Wholesale Best Sellers
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#17365D] tracking-tight mt-1">
             Featured Factory Products &amp; Supplies
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
@@ -237,7 +237,7 @@ export default function DirectProductShowcase({
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-600 transition-colors self-start md:self-auto py-1"
+          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#E87832] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
           <span className="tabular-nums font-mono text-slate-400 font-bold">({totalCount})</span>
@@ -310,8 +310,8 @@ export default function DirectProductShowcase({
                 }}
                 className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                   selectedCategory === "all"
-                    ? "bg-blue-600 text-white shadow-xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-blue-500"
+                    ? "bg-[#17365D] text-white shadow-xs"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-[#17365D]"
                 }`}
               >
                 <span>All Products</span>
@@ -334,8 +334,8 @@ export default function DirectProductShowcase({
                   }}
                   className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     selectedCategory === cat.slug
-                      ? "bg-blue-600 text-white shadow-xs"
-                      : "bg-white text-slate-700 border border-slate-200 hover:border-blue-500"
+                      ? "bg-[#17365D] text-white shadow-xs"
+                      : "bg-white text-slate-700 border border-slate-200 hover:border-[#17365D]"
                   }`}
                 >
                   <span>{formatCategoryName(cat.name)}</span>

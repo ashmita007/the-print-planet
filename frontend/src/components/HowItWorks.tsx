@@ -53,11 +53,11 @@ export default function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">
-            <FileCheck className="w-4 h-4 text-blue-600" />
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#E87832] mb-2">
+            <FileCheck className="w-4 h-4 text-[#E87832]" />
             <span>Seamless Production Process</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#17365D] tracking-tight">
             How Custom Ordering Works
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
@@ -76,19 +76,19 @@ export default function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.08, duration: 0.35 }}
-                className="bg-slate-50/70 hover:bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-blue-400 hover:shadow-lg transition-all duration-300 relative group flex flex-col justify-between"
+                className="bg-slate-50/70 hover:bg-white rounded-2xl p-5 border border-slate-200/80 hover:border-[#E87832]/60 hover:shadow-lg transition-all duration-300 relative group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-black text-blue-600 font-mono tracking-widest bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md">
+                    <span className="text-xs font-black text-[#E87832] font-mono tracking-widest bg-[#FFF7F2] border border-[#E87832]/20 px-2 py-0.5 rounded-md">
                       STEP {item.step}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 group-hover:border-blue-500 group-hover:bg-blue-600 group-hover:text-white text-slate-700 flex items-center justify-center transition-colors shadow-2xs">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 group-hover:border-[#E87832] group-hover:bg-[#E87832] group-hover:text-white text-slate-700 flex items-center justify-center transition-colors shadow-2xs">
                       <Icon className="w-5 h-5 transition-transform group-hover:scale-110" />
                     </div>
                   </div>
 
-                  <h3 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-[#17365D] transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-xs text-slate-500 mt-2 leading-relaxed">
@@ -96,7 +96,7 @@ export default function HowItWorks() {
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-slate-200/60 flex items-center text-[11px] font-semibold text-blue-600">
+                <div className="pt-4 mt-4 border-t border-slate-200/60 flex items-center text-[11px] font-semibold text-[#E87832]">
                   <span>Guaranteed Accuracy</span>
                 </div>
               </motion.div>
@@ -105,7 +105,7 @@ export default function HowItWorks() {
         </div>
 
         {/* Bottom CTA Banner */}
-        <div className="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#0A1128] to-[#0F172A] text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl border border-slate-800">
+        <div className="mt-12 p-6 sm:p-8 rounded-2xl bg-[#102742] text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl border border-white/10">
           <div className="space-y-1 text-center sm:text-left">
             <h4 className="text-lg sm:text-xl font-bold text-white">
               Ready to start your custom printing order?
@@ -118,7 +118,7 @@ export default function HowItWorks() {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/quote"
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-98 text-white text-xs sm:text-sm font-bold shadow-md transition-all flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white text-xs sm:text-sm font-bold shadow-md transition-all flex items-center gap-1.5"
             >
               <span>Get Instant Quote</span>
               <ArrowRight className="w-4 h-4" />
