@@ -13,7 +13,7 @@ import {
   Check,
 } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 
 interface QuickViewModalProps {
@@ -38,21 +38,19 @@ export default function QuickViewModal({
 
   const imagesList =
     product.images && product.images.length > 0
-      ? product.images.map((img) => img.secure_url)
-      : product.primary_image
-      ? [product.primary_image.secure_url]
-      : ["/placeholder-product.svg"];
+      ? product.images.map((img) => getProductImageUrl(img))
+      : [getProductImageUrl(product)];
 
   const activeImage = selectedImage || imagesList[0] || "/placeholder-product.svg";
   const moq = product.minimum_order_quantity || 1;
 
   const handleAddToCart = () => {
-    addItem(product, Math.max(quantity, moq));
     setAdded(true);
+    addItem(product, Math.max(quantity, moq));
     setTimeout(() => {
       setAdded(false);
       onClose();
-    }, 900);
+    }, 400);
   };
 
   const whatsappMessage = encodeURIComponent(

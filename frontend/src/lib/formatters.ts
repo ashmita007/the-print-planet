@@ -164,3 +164,53 @@ export function formatProductName(name?: string | null): string {
 
   return formattedWords.join(" ");
 }
+
+/**
+ * Robust image URL resolver for products.
+ * Guarantees a valid, displayable image URL across all catalog formats,
+ * falling back safely to the official branded placeholder asset.
+ */
+export function getProductImageUrl(product?: any): string {
+  if (!product) return "/placeholder-product.svg";
+
+  // 1. Direct primary_image object with secure_url or url
+  if (product.primary_image?.secure_url && typeof product.primary_image.secure_url === "string") {
+    const url = product.primary_image.secure_url.trim();
+    if (url) return url;
+  }
+  if (product.primary_image?.url && typeof product.primary_image.url === "string") {
+    const url = product.primary_image.url.trim();
+    if (url) return url;
+  }
+
+  // 2. Direct primary_image string
+  if (typeof product.primary_image === "string" && product.primary_image.trim()) {
+    return product.primary_image.trim();
+  }
+
+  // 3. images array
+  if (Array.isArray(product.images) && product.images.length > 0) {
+    for (const img of product.images) {
+      if (typeof img === "string" && img.trim()) {
+        return img.trim();
+      }
+      if (img?.secure_url && typeof img.secure_url === "string" && img.secure_url.trim()) {
+        return img.secure_url.trim();
+      }
+      if (img?.url && typeof img.url === "string" && img.url.trim()) {
+        return img.url.trim();
+      }
+      if (img?.image && typeof img.image === "string" && img.image.trim()) {
+        return img.image.trim();
+      }
+    }
+  }
+
+  // 4. product.image property
+  if (typeof product.image === "string" && product.image.trim()) {
+    return product.image.trim();
+  }
+
+  return "/placeholder-product.svg";
+}
+

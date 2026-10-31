@@ -1081,10 +1081,13 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-slate-200 text-[#263445]">
                 {/* Image Stage */}
                 <div className="relative w-full pt-[100%] bg-[#F8FAFC] border-b border-[#DCE3EB]">
-                  {primaryPreviewImg && !primaryPreviewImg.startsWith("/placeholder") ? (
+                  {primaryPreviewImg ? (
                     <img
                       src={primaryPreviewImg}
                       alt={name || "Product Preview"}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/placeholder-product.svg";
+                      }}
                       className="absolute inset-0 w-full h-full object-contain p-3"
                     />
                   ) : (

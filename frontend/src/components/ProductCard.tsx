@@ -9,9 +9,10 @@ import {
   ShoppingBag,
   ArrowRight,
   Sparkles,
+  Check,
 } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import QuickViewModal from "./QuickViewModal";
 
@@ -23,11 +24,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [added, setAdded] = useState(false);
 
-  const primaryUrl =
-    product.primary_image?.secure_url ||
-    (product.images && product.images.length > 0 ? product.images[0].secure_url : null) ||
-    "/placeholder-product.svg";
+  const primaryUrl = getProductImageUrl(product);
 
   const secondaryUrl =
     product.images && product.images.length > 1
@@ -56,6 +55,8 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, product.minimum_order_quantity || 1);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
   };
 
   const handleOpenQuickView = (e: React.MouseEvent) => {
@@ -76,11 +77,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           href={`/products/${product.slug}`}
           className="relative w-full pt-[100%] bg-[#F8FAFC] overflow-hidden border-b border-[#DCE3EB] block"
         >
-          {!imgLoaded && !hasError && imgSrc && !imgSrc.startsWith("/placeholder") && (
+          {!imgLoaded && !hasError && (
             <div className="absolute inset-0 skeleton" />
           )}
 
-          {!hasError && imgSrc && !imgSrc.startsWith("/placeholder") ? (
+          {!hasError && imgSrc ? (
             <>
               {/* Primary Image */}
               <img
@@ -89,8 +90,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                 alt={formatProductName(product.name)}
                 onLoad={() => setImgLoaded(true)}
                 onError={() => {
-                  setHasError(true);
-                  setImgSrc("/placeholder-product.svg");
+                  if (imgSrc !== "/placeholder-product.svg") {
+                    setImgSrc("/placeholder-product.svg");
+                  } else {
+                    setHasError(true);
+                  }
                 }}
                 className={`absolute inset-0 w-full h-full object-contain p-2.5 sm:p-4 transition-transform duration-300 ease-out will-change-transform ${
                   isHovered && secondaryUrl ? "opacity-0 scale-95" : "opacity-100 group-hover:scale-105"
@@ -213,11 +217,19 @@ export default function ProductCard({ product }: ProductCardProps) {
               </Link>
               <button
                 onClick={handleQuickAdd}
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#E87832] hover:bg-[#d66b28] text-white flex items-center justify-center transition-all shadow-2xs group/btn active:scale-95"
-                title="Add to Quote Cart"
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-md ${
+                  added
+                    ? "bg-[#217A4B] text-white"
+                    : "bg-[#E87832] hover:bg-[#d66b28] text-white"
+                } flex items-center justify-center transition-all shadow-2xs group/btn active:scale-95`}
+                title={added ? "Added to Quote Cart!" : "Add to Quote Cart"}
                 aria-label="Add to cart"
               >
-                <ShoppingBag className="w-3.5 h-3.5 transition-transform group-hover/btn:scale-110" />
+                {added ? (
+                  <Check className="w-3.5 h-3.5 stroke-[2.5] animate-in zoom-in-75 duration-150" />
+                ) : (
+                  <ShoppingBag className="w-3.5 h-3.5 transition-transform group-hover/btn:scale-110" />
+                )}
               </button>
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product } from "./types";
+import { getProductImageUrl } from "./formatters";
 
 export interface CartItem {
   id: string; // unique cart item id (product id + variant string)
@@ -80,9 +81,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const moq = product.minimum_order_quantity || 1;
     const finalQty = Math.max(quantity, moq);
 
-    const imageUrl =
-      product.primary_image?.secure_url ||
-      (product.images && product.images.length > 0 ? product.images[0].secure_url : "/placeholder-product.svg");
+    const imageUrl = getProductImageUrl(product);
 
     const optionKey = options ? Object.entries(options).map(([k, v]) => `${k}:${v}`).sort().join("|") : "default";
     const itemId = `${product.id}-${optionKey}`;

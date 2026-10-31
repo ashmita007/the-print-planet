@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Layers, Phone, FileText, ShoppingBag, MessageCircle } from "lucide-react";
@@ -14,6 +14,12 @@ interface MobileBottomBarProps {
 export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
   const pathname = usePathname();
   const { totalItems, toggleCart } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const phone = settings?.phone || "+91 97418 08034";
   const cleanPhone = phone.replace(/[^0-9]/g, "");
 
@@ -92,7 +98,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
           <div className="flex flex-col items-center justify-center py-1 px-1.5 rounded-xl text-slate-300 hover:text-white active:scale-95 transition-all">
             <div className="relative">
               <ShoppingBag className="w-5 h-5 mb-0.5 text-slate-300" />
-              {totalItems > 0 && (
+              {mounted && totalItems > 0 && (
                 <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-[#E87832] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>

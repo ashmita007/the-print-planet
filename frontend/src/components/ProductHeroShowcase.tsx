@@ -13,9 +13,10 @@ import {
   FileText,
   ChevronLeft,
   ChevronRight,
+  Check,
 } from "lucide-react";
 import { Product, SiteSettings } from "@/lib/types";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import TextReveal from "./animations/TextReveal";
 import KineticHighlight from "./animations/KineticHighlight";
@@ -50,6 +51,7 @@ export default function ProductHeroShowcase({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [heroAdded, setHeroAdded] = useState(false);
 
   const thumbScrollRef = useRef<HTMLDivElement>(null);
 
@@ -95,18 +97,20 @@ export default function ProductHeroShowcase({
 
   const activeProduct = activeProducts[activeIndex] || activeProducts[0];
 
-  const primaryUrl =
-    activeProduct?.primary_image?.secure_url ||
-    (activeProduct?.images && activeProduct.images.length > 0
-      ? activeProduct.images[0].secure_url
-      : null) ||
-    "/placeholder-product.svg";
+  const primaryUrl = getProductImageUrl(activeProduct);
 
   const [currentHeroImg, setCurrentHeroImg] = useState<string>(primaryUrl);
 
   useEffect(() => {
     setCurrentHeroImg(primaryUrl);
   }, [primaryUrl]);
+
+  const handleHeroAdd = () => {
+    if (!activeProduct) return;
+    addItem(activeProduct, activeProduct.minimum_order_quantity || 1);
+    setHeroAdded(true);
+    setTimeout(() => setHeroAdded(false), 1500);
+  };
 
   // Auto-rotation progress
   const ROTATE_INTERVAL_MS = 5000;
@@ -332,11 +336,22 @@ export default function ProductHeroShowcase({
                 {/* Buttons */}
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <button
-                    onClick={() => addItem(activeProduct, activeProduct.minimum_order_quantity || 1)}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] text-white font-bold text-xs transition-colors shadow-xs"
+                    onClick={handleHeroAdd}
+                    className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl ${
+                      heroAdded ? "bg-[#217A4B] text-white" : "bg-[#E87832] hover:bg-[#d66b28] text-white"
+                    } font-bold text-xs transition-all shadow-xs active:scale-95`}
                   >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>Add to Order / RFQ</span>
+                    {heroAdded ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>Added to Cart!</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        <span>Add to Order / RFQ</span>
+                      </>
+                    )}
                   </button>
 
                   <Link
@@ -355,9 +370,7 @@ export default function ProductHeroShowcase({
                 className="flex gap-2 overflow-x-auto mt-4 pt-3 border-t border-white/10 pb-1 scrollbar-none"
               >
                 {activeProducts.map((p, idx) => {
-                  const thumb =
-                    p.primary_image?.secure_url ||
-                    (p.images && p.images.length > 0 ? p.images[0].secure_url : "/placeholder-product.svg");
+                  const thumb = getProductImageUrl(p);
                   const isSelected = idx === activeIndex;
 
                   return (

@@ -32,7 +32,7 @@ import {
   Paperclip,
 } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
@@ -60,20 +60,18 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [pincodeVerified, setPincodeVerified] = useState<boolean>(false);
   const [addedSuccess, setAddedSuccess] = useState<boolean>(false);
 
-  const formatImageUrl = (url?: string | null) => {
-    if (!url) return "/placeholder-product.svg";
-    return url;
-  };
-
-  const initialImage = formatImageUrl(
-    product.primary_image?.secure_url ||
-    (product.images && product.images.length > 0 ? product.images[0].secure_url : "/placeholder-product.svg")
-  );
+  const initialImage = getProductImageUrl(product);
 
   const [selectedImage, setSelectedImage] = useState<string>(initialImage);
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const mainImageRef = useRef<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    setSelectedImage(initialImage);
+    setImgError(false);
+    setImgLoaded(false);
+  }, [initialImage]);
 
   useEffect(() => {
     setImgLoaded(false);
@@ -91,10 +89,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   const imagesList =
     product.images && product.images.length > 0
-      ? product.images.map((img) => formatImageUrl(img.secure_url))
-      : product.primary_image
-      ? [formatImageUrl(product.primary_image.secure_url)]
-      : [];
+      ? product.images.map((img) => getProductImageUrl(img))
+      : [getProductImageUrl(product)];
 
   const whatsappMessage = encodeURIComponent(
     `Hello The Print Planet, I want to order ${formatProductName(product.name)} (SKU: ${product.sku}, Qty: ${quantity}${
@@ -181,19 +177,22 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             className="relative w-full pt-[90%] sm:pt-[100%] bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden cursor-zoom-in group select-none shadow-xs"
             title="Click to zoom high-resolution preview"
           >
-            {!imgLoaded && !imgError && selectedImage && !selectedImage.startsWith("/placeholder") && (
+            {!imgLoaded && !imgError && (
               <div className="absolute inset-0 skeleton" />
             )}
 
-            {!imgError && selectedImage && !selectedImage.startsWith("/placeholder") ? (
+            {!imgError && selectedImage ? (
               <img
                 ref={mainImageRef}
                 src={selectedImage}
                 alt={formatProductName(product.name)}
                 onLoad={() => setImgLoaded(true)}
                 onError={() => {
-                  setImgError(true);
-                  setSelectedImage("/placeholder-product.svg");
+                  if (selectedImage !== "/placeholder-product.svg") {
+                    setSelectedImage("/placeholder-product.svg");
+                  } else {
+                    setImgError(true);
+                  }
                 }}
                 className={`absolute inset-0 w-full h-full object-contain p-4 sm:p-8 group-hover:scale-105 transition-all duration-500 ease-out ${
                   imgLoaded ? "opacity-100" : "opacity-0"

@@ -52,7 +52,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const [isClientLoggedIn, setIsClientLoggedIn] = useState(false);
   const [clientUser, setClientUser] = useState<any>(null);
   const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Rotating announcement bar messages
   const announcements = [
@@ -392,7 +397,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               aria-label="View Cart"
             >
               <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-105" />
-              {totalItems > 0 && (
+              {mounted && totalItems > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#E87832] text-white text-[10px] font-bold flex items-center justify-center shadow-sm animate-pulse">
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>
