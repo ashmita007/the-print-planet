@@ -29,6 +29,11 @@ export const getApiUrl = (): string => {
   return url.replace(/\/$/, '');
 };
 
+// Catalogue reads are shared between visitors for a minute on the server, which keeps
+// pages fast for buyers and crawlers. The browser and owner screens always read fresh.
+const CATALOGUE_READ: RequestInit =
+  typeof window === 'undefined' ? ({ next: { revalidate: 60 } } as RequestInit) : { cache: 'no-store' };
+
 // Helper for fetch with abort timeout and automatic retry on cold boot / socket reset
 const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutMs = 15000): Promise<Response> => {
   const maxRetries = typeof window === 'undefined' ? 3 : 1;
@@ -81,7 +86,7 @@ const getAuthHeaders = (): Record<string, string> => {
 
 export async function getCategories(): Promise<Category[]> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/`, { cache: 'no-store' });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/`, CATALOGUE_READ);
     if (!res.ok) throw new Error(`Failed to fetch categories: ${res.status}`);
     return await res.json();
   } catch (err) {
@@ -92,7 +97,7 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${slug}/`, { cache: 'no-store' });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${slug}/`, CATALOGUE_READ);
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -123,7 +128,7 @@ export async function getProducts(params?: {
     if (params?.page_size) query.set('page_size', params.page_size.toString());
 
     const url = `${getApiUrl()}/api/v1/products/?${query.toString()}`;
-    const res = await fetchWithTimeout(url, { cache: 'no-store' });
+    const res = await fetchWithTimeout(url, CATALOGUE_READ);
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
     return await res.json();
   } catch (err) {
@@ -134,7 +139,7 @@ export async function getProducts(params?: {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/${slug}/`, { cache: 'no-store' });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/${slug}/`, CATALOGUE_READ);
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -145,7 +150,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/featured/`, { cache: 'no-store' });
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/featured/`, CATALOGUE_READ);
     if (!res.ok) return [];
     return await res.json();
   } catch (err) {

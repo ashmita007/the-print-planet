@@ -44,7 +44,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [modalOpen, setModalOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copiedSku, setCopiedSku] = useState(false);
-  const [activeTab, setActiveTab] = useState<"specs" | "overview">("specs");
 
   // Customization & Ordering options
   const moq = product.minimum_order_quantity || 1;
@@ -458,35 +457,22 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           </div>
 
-          {/* Content Tabs */}
-          <div className="pt-4 border-t border-slate-200 space-y-4">
-            <div className="flex border-b border-slate-200 gap-2 overflow-x-auto scrollbar-thin">
-              <button
-                type="button"
-                onClick={() => setActiveTab("specs")}
-                className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === "specs"
-                    ? "border-[#D9601A] text-[#D9601A]"
-                    : "border-transparent text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                Specifications
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("overview")}
-                className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === "overview"
-                    ? "border-[#D9601A] text-[#D9601A]"
-                    : "border-transparent text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                Details
-              </button>
-            </div>
+          {/* Description and specifications stay in the page, so buyers and search engines both get them. */}
+          <div className="pt-4 border-t border-slate-200 space-y-6">
+            <section aria-labelledby="product-details">
+              <h2 id="product-details" className="text-lg font-bold text-[#16324F]">
+                Product details
+              </h2>
+              <p className="mt-2 whitespace-pre-line leading-relaxed text-sm text-slate-700">
+                {product.description || product.short_description || "Ask us for the full details of this product."}
+              </p>
+            </section>
 
+            <section aria-labelledby="product-specs" className="space-y-2">
+              <h2 id="product-specs" className="text-lg font-bold text-[#16324F]">
+                Specifications
+              </h2>
             {/* Specs Table */}
-            {activeTab === "specs" && (
               <div className="border border-slate-200 rounded-md overflow-hidden shadow-2xs">
                 <table className="w-full text-xs text-left">
                   <tbody>
@@ -553,17 +539,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   </tbody>
                 </table>
               </div>
-            )}
-
-            {/* Overview Tab */}
-            {activeTab === "overview" && (
-              <div className="space-y-3 text-xs text-slate-700 leading-relaxed">
-                <p className="whitespace-pre-line leading-relaxed text-sm">
-                  {product.description || product.short_description || "Ask us for the full details of this product."}
-                </p>
-              </div>
-            )}
-
+            </section>
           </div>
         </div>
       </div>

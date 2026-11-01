@@ -445,7 +445,7 @@ export default function BulkOrderDesk() {
             <ColorBar />
           </div>
           <h1 data-hero className="text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold tracking-[-0.02em] leading-[1.04] max-w-3xl">
-            <TextReveal text="Bulk orders, direct" />
+            <TextReveal text="Bulk orders, direct" />{" "}
             <span className="block text-[#F4A36B]">
               <TextReveal text="from our factory." />
             </span>

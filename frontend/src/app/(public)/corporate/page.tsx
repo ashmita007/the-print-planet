@@ -6,9 +6,9 @@ import BulkOrderDesk from "@/components/corporate/BulkOrderDesk";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 
 export const metadata: Metadata = {
-  title: "Corporate & Bulk Orders",
+  title: "Bulk ID Card & Lanyard Orders",
   description:
-    "Order lanyards, ID cards, holders and RFID cards in bulk, direct from our Bengaluru factory. Volume slabs, GST invoicing and pan-India dispatch for companies, schools and print shops.",
+    "Order lanyards, ID cards, holders and RFID cards in bulk from our Bengaluru factory, with a GST invoice on every order.",
   alternates: { canonical: "/corporate" },
 };
 

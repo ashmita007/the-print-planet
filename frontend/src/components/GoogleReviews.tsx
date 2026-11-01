@@ -64,49 +64,6 @@ const REVIEWS_DATA: ReviewItem[] = [
 export default function GoogleReviews() {
   return (
     <section aria-labelledby="reviews-heading" className="bg-[#F3F5F7] py-12 sm:py-16">
-      {/* Schema.org Aggregate Rating & Reviews Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "The Print Planet",
-            "url": "https://theprintplanet.co.in",
-            "telephone": "+919741808034",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte",
-              "addressLocality": "Bangalore",
-              "addressRegion": "Karnataka",
-              "postalCode": "560091",
-              "addressCountry": "IN"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "bestRating": "5",
-              "worstRating": "1",
-              "ratingCount": "148"
-            },
-            "review": REVIEWS_DATA.map((rev) => ({
-              "@type": "Review",
-              "author": {
-                "@type": "Person",
-                "name": rev.author
-              },
-              "datePublished": "2026-10-01",
-              "reviewBody": rev.text,
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": rev.rating.toString(),
-                "bestRating": "5"
-              }
-            }))
-          })
-        }}
-      />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-end justify-between gap-4">
         <h2 id="reviews-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#16324F]">
           What buyers say

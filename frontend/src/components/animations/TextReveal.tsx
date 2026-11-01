@@ -5,21 +5,20 @@ interface TextRevealProps {
   className?: string;
 }
 
-/** Word masks for the hero timeline in ProductHeroShowcase, which targets [data-word]. */
+/** Word masks for hero timelines, which target [data-word]. Spaces stay real text so
+ *  headings read correctly to screen readers and search engines. */
 export default function TextReveal({ text, className = "" }: TextRevealProps) {
   return (
     <span className={className}>
-      <span className="sr-only">{text}</span>
       {text.split(" ").map((word, index) => (
-        <span
-          key={index}
-          aria-hidden="true"
-          className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em] mr-[0.26em]"
-        >
-          <span data-word className="inline-block will-change-transform">
-            {word}
+        <React.Fragment key={index}>
+          {index > 0 && " "}
+          <span className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]">
+            <span data-word className="inline-block will-change-transform">
+              {word}
+            </span>
           </span>
-        </span>
+        </React.Fragment>
       ))}
     </span>
   );

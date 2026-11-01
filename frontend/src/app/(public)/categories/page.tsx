@@ -9,14 +9,14 @@ import { formatCategoryName } from "@/lib/formatters";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "Product Categories & Wholesale Industrial Supplies | The Print Planet India",
+  title: "ID Card Product Categories",
   description:
-    "Explore all product categories from The Print Planet (theprintplanet.co.in). Wholesale satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, clips, and industrial card manufacturing machinery with nationwide dispatch.",
+    "Browse ID card holders, lanyard rolls, PVC sheets, RFID cards and card machines by category. Wholesale supply from The Print Planet, Bengaluru.",
   alternates: {
     canonical: `${SITE_URL}/categories`,
   },
   openGraph: {
-    title: "Product Categories & Wholesale Industrial Supplies | The Print Planet India",
+    title: "ID Card Product Categories | The Print Planet",
     description:
       "Explore all product categories from The Print Planet. Wholesale satin lanyard rolls, PVC ID card holders, RFID cards, and machinery.",
     url: `${SITE_URL}/categories`,
@@ -76,7 +76,7 @@ export default async function CategoriesIndexPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categoriesJsonLd) }}
       />
-      <PageHero title="Categories" crumbs={[{ label: "Categories" }]} />
+      <PageHero title="ID card product categories" crumbs={[{ label: "Categories" }]} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D8DEE5] border border-[#D8DEE5] rounded-lg overflow-hidden">

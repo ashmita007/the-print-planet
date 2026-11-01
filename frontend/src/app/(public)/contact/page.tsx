@@ -8,14 +8,14 @@ import { getSiteSettings } from "@/lib/api";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "Contact The Print Planet Bengaluru | Sales Desk & Factory Quotation",
+  title: "Contact Us in Bengaluru",
   description:
-    "Contact The Print Planet sales and technical support in Sunkadakatte, Bengaluru. Call +91 97418 08034 or email theprintplanet01@gmail.com for wholesale pricing, factory visits, and bulk quotations.",
+    "Contact The Print Planet in Sunkadakatte, Bengaluru. Call or WhatsApp +91 97418 08034 for wholesale prices on ID cards, lanyards and machines.",
   alternates: {
     canonical: `${SITE_URL}/contact`,
   },
   openGraph: {
-    title: "Contact The Print Planet Bengaluru | Sales Desk & Factory Quotation",
+    title: "Contact Us in Bengaluru | The Print Planet",
     description: "Official contact portal of The Print Planet. Factory sales desk, Sunkadakatte, Bengaluru.",
     url: `${SITE_URL}/contact`,
     siteName: "The Print Planet",
@@ -103,7 +103,7 @@ export default async function ContactPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
       />
       <PageHero
-        title="Talk to us"
+        title="Contact The Print Planet"
         lead="Monday to Saturday, 10 am to 7 pm."
         crumbs={[{ label: "Contact" }]}
       />

@@ -14,10 +14,11 @@ interface FooterProps {
 }
 
 const SHOP_LINKS = [
-  { href: "/categories/machines", label: "Machines" },
-  { href: "/products?search=lanyard", label: "Lanyards" },
-  { href: "/products?search=card", label: "PVC and RFID cards" },
-  { href: "/products?search=holder", label: "Card holders" },
+  { href: "/categories/machines", label: "ID card machines" },
+  { href: "/categories/indian-satin-digital-lanyard-roll", label: "Satin lanyard rolls" },
+  { href: "/categories/id-card-holder", label: "ID card holders" },
+  { href: "/categories/pvc-id-card-consumable", label: "PVC fusing sheets" },
+  { href: "/categories/rfid-cansumables", label: "RFID cards" },
   { href: "/products", label: "All products" },
 ];
 

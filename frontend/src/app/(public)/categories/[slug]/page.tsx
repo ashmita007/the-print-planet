@@ -4,10 +4,13 @@ import Link from "next/link";
 import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
 import PageHero from "@/components/PageHero";
+import FaqAccordion from "@/components/FaqAccordion";
+import { CATEGORY_SEO } from "@/lib/categorySeo";
+import { brandedTitle, snippet } from "@/lib/seo";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
-import { formatCategoryName } from "@/lib/formatters";
+import { formatCategoryName, formatProductName } from "@/lib/formatters";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -23,23 +26,38 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const { page } = searchParams ? await searchParams : { page: undefined };
+  const currentPage = Number(page) || 1;
   const category = await getCategoryBySlug(slug);
   if (!category) {
     return { title: "Category Not Found | The Print Planet" };
   }
-  const title = category.seo_title || `${category.name} Wholesale Manufacturer & Supplier | The Print Planet India`;
-  const desc = category.seo_description || category.description || `Wholesale trade supply of ${category.name} from The Print Planet (theprintplanet.co.in). High industrial grade materials, bulk trade pricing, and pan-India dispatch.`;
+  const seo = CATEGORY_SEO[category.slug];
+  const name = formatProductName(category.name);
+  // Stored copy of this shape was bulk generated and says nothing specific.
+  const generic = /wholesale id supplies|high quality industrial/i;
+  const storedTitle = category.seo_title && !generic.test(category.seo_title) ? category.seo_title : "";
+  const storedDesc = category.seo_description && !generic.test(category.seo_description) ? category.seo_description : "";
+  const title = brandedTitle(seo?.title || storedTitle || `${name} Wholesale Supplier in India`);
+  const desc = snippet(
+    seo?.description ||
+      storedDesc ||
+      `${name} from The Print Planet, Bengaluru. See wholesale prices online, with GST invoice and delivery across India.`
+  );
+  const shareTitle = title.absolute;
 
   return {
     title,
     description: desc,
     alternates: {
-      canonical: `${SITE_URL}/categories/${category.slug}`,
+      canonical: `${SITE_URL}/categories/${category.slug}${currentPage > 1 ? `?page=${currentPage}` : ""}`,
     },
+    // An empty category has nothing to rank, so it stays out of the index until stocked.
+    ...(category.products_count > 0 ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
-      title,
+      title: shareTitle,
       description: desc,
       url: `${SITE_URL}/categories/${category.slug}`,
       type: "website",
@@ -55,7 +73,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: shareTitle,
       description: desc,
       images: [`${SITE_URL}/media/products/LAN-ROY-20M.png`],
     },
@@ -134,6 +152,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   const mainCategories = allCategories.filter((c) => !c.parent);
   const siblingSubcategories = parentCategory ? allCategories.filter((c) => c.parent === parentCategory.id) : [];
 
+  const seo = CATEGORY_SEO[category.slug];
+
   return (
     <div>
       <script
@@ -141,8 +161,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
       />
       <PageHero
-        title={formatCategoryName(category.name)}
-        lead={category.description || undefined}
+        title={seo?.h1 || formatCategoryName(category.name)}
+        lead={seo?.lead || category.description || undefined}
         crumbs={[
           { label: "Products", href: "/products" },
           ...(parentCategory ? [{ label: parentCategory.name, href: `/categories/${parentCategory.slug}` }] : []),
@@ -261,6 +281,22 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           }}
         />
       </section>
+
+      {seo && (
+        <section aria-labelledby="category-guide" className="border-t border-[#D8DEE5] pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <h2 id="category-guide" className="text-2xl font-extrabold tracking-tight text-[#16324F]">
+              Choosing {seo.h1.toLowerCase().replace(/\bid\b/, "ID").replace(/\bpvc\b/, "PVC").replace(/\brfid\b/, "RFID")}
+            </h2>
+            <div className="mt-3 space-y-3 text-sm text-[#1C2733] leading-relaxed max-w-xl">
+              {seo.about.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          <FaqAccordion items={seo.questions} />
+        </section>
+      )}
       </div>
     </div>
   );

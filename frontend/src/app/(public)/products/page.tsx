@@ -13,14 +13,14 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Wholesale Products Catalogue | The Print Planet India",
+  title: "ID Card Supplies & Machines Wholesale",
   description:
-    "Complete wholesale catalogue of The Print Planet (theprintplanet.co.in). Buy satin lanyard rolls, rigid PVC ID card holders, RFID cards, dog hooks, and card punching machinery at direct factory prices with pan-India delivery.",
+    "Wholesale catalogue from The Print Planet, Bengaluru: satin lanyard rolls, PVC ID card holders, fusing sheets, RFID cards and card machines with prices.",
   alternates: {
     canonical: `${SITE_URL}/products`,
   },
   openGraph: {
-    title: "Wholesale Products Catalogue | The Print Planet India",
+    title: "ID Card Supplies & Machines Wholesale | The Print Planet",
     description: "Factory direct catalog of satin lanyards, ID holders, RFID cards, and machinery.",
     url: `${SITE_URL}/products`,
     siteName: "The Print Planet",
@@ -64,7 +64,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   return (
     <div>
       <PageHero
-        title={activeCategory ? activeCategory.name : "All products"}
+        title={activeCategory ? activeCategory.name : "ID card supplies and machines"}
         lead={activeCategory?.description || undefined}
         crumbs={[
           { label: "Products", href: "/products" },

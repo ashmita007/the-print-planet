@@ -8,14 +8,14 @@ import { getSiteSettings } from "@/lib/api";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "About The Print Planet | India's Leading ID Cards & Lanyards Manufacturer",
+  title: "About Us: ID Card & Lanyard Manufacturer in Bengaluru",
   description:
-    "Learn about The Print Planet (theprintplanet.co.in), based in Sunkadakatte, Bengaluru. Dedicated high-capacity manufacturing facility for satin lanyard rolls, rigid PVC ID card holders, RFID access cards, and card machinery.",
+    "The Print Planet makes and supplies ID card products, lanyards and card machines from Sunkadakatte, Bengaluru, for buyers across India.",
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
   openGraph: {
-    title: "About The Print Planet | India's Leading ID Cards & Lanyards Manufacturer",
+    title: "About Us: ID Card & Lanyard Manufacturer in Bengaluru | The Print Planet",
     description: "Dedicated B2B production and wholesale distribution facility in Bengaluru, Karnataka.",
     url: `${SITE_URL}/about`,
     siteName: "The Print Planet",
@@ -28,7 +28,7 @@ export default async function AboutPage() {
   const businessName = settings?.business_name || "THE PRINT PLANET";
   const about = settings?.about_data || {};
 
-  const heroTitle = about.hero_title || "About us";
+  const heroTitle = about.hero_title || "About The Print Planet";
   const heroSubtitle = about.hero_subtitle || "Makers of ID card products, lanyards and card machines in Bengaluru.";
   const storyTitle = about.story_title || "Engineering Precision in Identification Systems";
   const storyP1 = about.story_p1 || `At ${businessName}, our operations combine high-capacity polymer molding, ribbon slitting, and ultrasonic tooling to produce uniform badge accessories designed to meet strict institutional requirements.`;

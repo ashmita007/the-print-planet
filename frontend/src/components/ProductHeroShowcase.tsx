@@ -176,14 +176,18 @@ export default function ProductHeroShowcase({
               <span className="font-mono text-xs text-slate-300">{copy.badge}</span>
             </div>
 
-            <h1 data-hero className={`${heroHeadlineClass(copy)} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}>
+            <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}>
               <TextReveal text={copy.title} />
               <span className="block text-[#F4A36B]">
                 <TextReveal text={copy.subtitle} />
               </span>
+            </p>
+
+            <h1 data-hero data-hero-item className="mt-4 text-sm sm:text-base font-semibold text-white">
+              The Print Planet: PVC cards, lanyards and ID card machines, Bengaluru
             </h1>
 
-            <p data-hero data-hero-item className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
+            <p data-hero data-hero-item className="mt-2 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
               {copy.caption}
             </p>
 
@@ -319,7 +323,7 @@ export default function ProductHeroShowcase({
                     >
                       <img
                         src={getProductImageUrl(p)}
-                        alt=""
+                        alt={formatProductName(p.name)}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "/placeholder-product.svg";
                         }}

@@ -5,7 +5,8 @@ import PageCta from "@/components/PageCta";
 import GalleryWall, { GalleryPiece } from "@/components/GalleryWall";
 
 export const metadata: Metadata = {
-  title: "Product Gallery: Lanyards, Cards, Machines | The Print Planet",
+  alternates: { canonical: "https://theprintplanet.co.in/gallery" },
+  title: "Product Gallery: Lanyards, ID Cards & Machines",
   description:
     "Photos of our sublimation lanyards, PVC holders, RFID cards, lamination plates and card manufacturing machines.",
 };
@@ -24,7 +25,7 @@ const PIECES: GalleryPiece[] = [
 export default function GalleryPage() {
   return (
     <div>
-      <PageHero title="Gallery" lead="Tap any piece to ask for a price." crumbs={[{ label: "Gallery" }]} />
+      <PageHero title="Product gallery" lead="Tap any piece to ask for a price." crumbs={[{ label: "Gallery" }]} />
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-6 sm:py-10">
         <GalleryWall pieces={PIECES} />
       </div>

@@ -6,7 +6,8 @@ import PageHero from "@/components/PageHero";
 import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
-  title: "Printing Services: Lanyards, RFID Cards, Packaging | The Print Planet",
+  alternates: { canonical: "https://theprintplanet.co.in/services" },
+  title: "Lanyard & ID Card Printing Services in Bengaluru",
   description:
     "Lanyard sublimation and screen printing, RFID card encoding, lens packaging, holographic foil, card die-cutting, lamination and kitting from Bengaluru.",
 };
@@ -33,7 +34,7 @@ export default function ServicesPage() {
   return (
     <div>
       <PageHero
-        title="What we print"
+        title="Lanyard and ID card printing services"
         lead="Eight production lines under one roof in Bengaluru."
         crumbs={[{ label: "Services" }]}
       />

@@ -1,4 +1,5 @@
 import React from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Search, Layers, Box } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
@@ -11,6 +12,11 @@ interface SearchPageProps {
     q?: string;
   }>;
 }
+
+export const metadata: Metadata = {
+  title: "Search",
+  robots: { index: false, follow: true },
+};
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { q = "" } = await searchParams;

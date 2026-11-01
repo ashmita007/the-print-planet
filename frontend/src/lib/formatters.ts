@@ -149,6 +149,12 @@ export function formatProductName(name?: string | null): string {
 
     // 6. Hyphenated words (e.g. EH-T or Semi-Transparent)
     if (core.includes("-")) {
+      // Model codes such as WL-8000T or WL-HSA-3C stay fully uppercase.
+      const isModelCode = core
+        .split("-")
+        .some((sub) => /\d/.test(sub) && /[a-z]/i.test(sub) && !/^\d+(mm|cm|m|gsm|mic|kg)$/i.test(sub));
+      if (isModelCode) return `${prefix}${upperCore}${suffix}`;
+
       const subParts = core.split("-").map((sub) => {
         const subUpper = sub.toUpperCase();
         if (ACRONYMS.has(subUpper)) return subUpper;

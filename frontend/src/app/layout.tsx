@@ -40,36 +40,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Print Planet™ Bangalore | Specialist in PVC Cards, ID Materials & Machinery — Official Website",
-    template: "%s | Print Planet™ — Specialist in PVC Cards",
+    default: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
+    template: "%s | The Print Planet",
   },
   description:
-    "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's leading specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, and multicolour heat-transfer lanyards with pan-India dispatch from Sunkadakatte, Bangalore.",
-  keywords: [
-    "specialist in pvc cards",
-    "specialist in pvc cards bangalore",
-    "pvc card specialist",
-    "pvc cards manufacturer bangalore",
-    "print planet",
-    "the print planet",
-    "the print planet bangalore",
-    "print planet bangalore",
-    "the print planet sunkadakatte",
-    "print planet id card materials",
-    "id card raw materials supplier bangalore",
-    "thermal lamination machines supplier india",
-    "lanyard and pvc id card supplies",
-    "the print planet co in",
-    "theprintplanet.co.in",
-    "pvc id card fusing sheets wholesale",
-    "coated overlay sheets for pvc id card",
-    "semi transparent pvc id card holder",
-    "crystal clear pvc id card holder",
-    "id card cutting machine price",
-    "fusing machine wholesale",
-    "rfid smart cards b2b",
-    "custom satin lanyards manufacturer",
-  ],
+    "The Print Planet, Bengaluru: PVC cards, ID card holders, satin lanyard rolls, RFID cards and ID card machines. Factory-direct wholesale across India.",
   authors: [{ name: "The Print Planet" }],
   creator: "The Print Planet",
   publisher: "The Print Planet",
@@ -77,9 +52,6 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false,
-  },
-  alternates: {
-    canonical: SITE_URL,
   },
   verification: {
     google: "OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg",
@@ -101,8 +73,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: SITE_URL,
-    siteName: "Print Planet",
-    title: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
+    siteName: "The Print Planet",
+    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
     description:
       "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Leading wholesale manufacturer and supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial card machinery.",
     images: [
@@ -116,7 +88,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Print Planet™ (The Print Planet) Bangalore | Official Website — ID Card Materials & Machinery",
+    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
     description:
       "Direct manufacturer of satin lanyards, ID card materials, and card machines in Bangalore with nationwide dispatch.",
     images: [`${SITE_URL}/logo.png`],
@@ -140,21 +112,9 @@ const jsonLdOrg = {
     {
       "@type": ["Organization", "LocalBusiness", "WholesaleStore"],
       "@id": `${SITE_URL}/#organization`,
-      name: "Print Planet",
+      name: "The Print Planet",
       legalName: "The Print Planet",
-      alternateName: [
-        "The Print Planet",
-        "Print Planet Bangalore",
-        "The Print Planet Bangalore",
-        "The Print Planet Sunkadakatte",
-        "Print Planet Sunkadakatte",
-        "The Print Planet Bengaluru",
-        "Print Planet Bengaluru",
-        "Print Planet ID Card Materials",
-        "theprintplanet.co.in",
-        "print planet co in",
-        "ThePrintPlanet"
-      ],
+      alternateName: ["Print Planet", "ThePrintPlanet", "Print Planet Bangalore", "The Print Planet Bengaluru"],
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
@@ -169,7 +129,7 @@ const jsonLdOrg = {
         `${SITE_URL}/icon.png`,
       ],
       description:
-        "India's premier B2B factory manufacturer and specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
+        "B2B factory manufacturer and specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
       telephone: "+919741808034",
       email: "theprintplanet01@gmail.com",
       taxID: "29AAQFT3909B1ZZ",
@@ -180,7 +140,8 @@ const jsonLdOrg = {
         "https://www.indiamart.com/theprintplanet/",
         "https://www.justdial.com/Bangalore/The-Print-Planet",
         "https://www.tradeindia.com/Seller-16599025-THE-PRINT-PLANET/",
-        "https://theprintplanet.co.in"
+        "https://www.instagram.com/theprintplanet",
+        "https://www.linkedin.com/company/the-print-planet"
       ],
       knowsAbout: [
         "Specialist in PVC Cards and ID Systems",
@@ -225,7 +186,7 @@ const jsonLdOrg = {
         {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          opens: "09:30",
+          opens: "10:00",
           closes: "19:00",
         },
       ],
@@ -242,15 +203,8 @@ const jsonLdOrg = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Print Planet",
-      alternateName: [
-        "The Print Planet",
-        "Print Planet Bangalore",
-        "The Print Planet Bangalore",
-        "Print Planet Sunkadakatte",
-        "theprintplanet.co.in",
-        "print planet co in"
-      ],
+      name: "The Print Planet",
+      alternateName: ["Print Planet", "ThePrintPlanet"],
       publisher: {
         "@id": `${SITE_URL}/#organization`,
       },

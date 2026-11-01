@@ -132,7 +132,7 @@ function QuoteFormContent() {
   return (
     <div>
       <PageHero
-        title="Get a quote"
+        title="Get a wholesale quote"
         lead="Tell us what you need. We reply with a price and delivery time."
         crumbs={[{ label: "Quote" }]}
       />

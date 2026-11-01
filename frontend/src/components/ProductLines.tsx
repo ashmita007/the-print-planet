@@ -51,7 +51,7 @@ export default async function ProductLines() {
               <span className="relative block flex-1 min-h-40 sm:min-h-52 m-3 sm:m-4 mb-0 sm:mb-0">
                 <img
                   src={line.image}
-                  alt=""
+                  alt={line.label}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-105"

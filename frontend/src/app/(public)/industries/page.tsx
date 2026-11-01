@@ -16,7 +16,8 @@ import PageHero from "@/components/PageHero";
 import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
-  title: "Industries We Supply: ID Cards, Lanyards, Packaging | The Print Planet",
+  alternates: { canonical: "https://theprintplanet.co.in/industries" },
+  title: "ID Cards & Lanyards for Schools, Offices and Hospitals",
   description:
     "ID badges, lanyards, RFID cards and packaging for offices, schools, hospitals, optical makers, government, events, factories and banks.",
 };
@@ -36,7 +37,7 @@ export default function IndustriesPage() {
   return (
     <div>
       <PageHero
-        title="Who we supply"
+        title="ID cards and lanyards for every industry"
         lead="Find your sector and we'll price what it usually needs."
         crumbs={[{ label: "Industries" }]}
       />
