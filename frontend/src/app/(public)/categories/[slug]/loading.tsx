@@ -1,9 +1,12 @@
 import React from "react";
+import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 
 export default function CategoryDetailLoading() {
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6 anim-fade-in">
-      <div className="h-3 w-56 skeleton" />
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8 anim-fade-in">
+      <div className="h-11 flex items-center">
+        <div className="h-3 w-56 skeleton" />
+      </div>
 
       <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
         <div className="h-3 w-36 skeleton" />
@@ -17,24 +20,7 @@ export default function CategoryDetailLoading() {
         <div className="h-9 w-36 skeleton rounded-lg" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="bg-white border border-[#D8DEE5] rounded-lg p-3 space-y-3">
-            <div className="aspect-square w-full skeleton rounded-md" />
-            <div className="h-2.5 w-16 skeleton" />
-            <div className="h-3.5 w-5/6 skeleton" />
-            <div className="h-3 w-2/3 skeleton" />
-            <div className="flex items-center justify-between pt-1">
-              <div className="h-5 w-20 skeleton" />
-              <div className="h-3 w-12 skeleton" />
-            </div>
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <div className="h-8 skeleton rounded-lg" />
-              <div className="h-8 skeleton rounded-lg" />
-            </div>
-          </div>
-        ))}
-      </div>
+      <ProductGridSkeleton count={8} className="grid-cols-2 md:grid-cols-3 lg:grid-cols-4" />
     </div>
   );
 }

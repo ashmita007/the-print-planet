@@ -1,47 +1,51 @@
 import React from "react";
+import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 
 export default function ProductsLoading() {
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6 anim-fade-in">
-      <div className="h-3 w-44 skeleton" />
-
-      <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
-        <div className="h-3 w-40 skeleton" />
-        <div className="h-8 sm:h-10 w-3/4 max-w-lg skeleton" />
-        <div className="h-3 w-full max-w-2xl skeleton" />
-        <div className="h-3 w-2/3 max-w-xl skeleton" />
+      <div className="h-11 flex items-center">
+        <div className="h-3 w-44 skeleton" />
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2 overflow-hidden">
-          <div className="h-9 w-24 skeleton rounded-lg" />
-          <div className="h-9 w-32 skeleton rounded-lg" />
-          <div className="h-9 w-28 skeleton rounded-lg" />
+      <div className="border-b border-[#D8DEE5] pb-6">
+        <div className="max-w-3xl space-y-3 min-h-[148px] sm:min-h-[97px]">
+          <div className="h-3 w-48 skeleton" />
+          <div className="h-9 sm:h-10 w-3/4 max-w-lg skeleton" />
+          <div className="h-3 w-full skeleton" />
         </div>
-        <div className="h-9 w-40 skeleton rounded-lg" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div
-            key={i}
-            className="bg-white border border-[#D8DEE5] rounded-lg p-3 space-y-3"
-            style={{ animationDelay: `${Math.min(i, 8) * 45}ms` }}
-          >
-            <div className="aspect-square w-full skeleton rounded-md" />
-            <div className="h-2.5 w-16 skeleton" />
-            <div className="h-3.5 w-5/6 skeleton" />
-            <div className="h-3 w-2/3 skeleton" />
-            <div className="flex items-center justify-between pt-1">
-              <div className="h-5 w-20 skeleton" />
-              <div className="h-3 w-12 skeleton" />
+      <div className="lg:hidden h-[58px] bg-white p-3 rounded-md border border-[#D8DEE5] flex items-center justify-between gap-2">
+        <div className="h-3 w-32 skeleton" />
+        <div className="h-8 w-24 skeleton rounded-lg" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div aria-hidden="true" className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-lg border border-slate-200">
+          <div className="h-4 w-32 skeleton" />
+          {[6, 4].map((rows, group) => (
+            <div key={group} className="space-y-3 pt-3 border-t border-slate-200">
+              <div className="h-3 w-24 skeleton" />
+              {Array.from({ length: rows }).map((_, i) => (
+                <div key={i} className="h-3 skeleton" style={{ width: `${88 - ((i * 13) % 34)}%` }} />
+              ))}
             </div>
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <div className="h-8 skeleton rounded-lg" />
-              <div className="h-8 skeleton rounded-lg" />
+          ))}
+        </div>
+
+        <div className="lg:col-span-9 space-y-6">
+          <div className="min-h-[132px] md:min-h-[58px] bg-white p-3.5 rounded-md border border-[#D8DEE5] flex flex-wrap items-center justify-between gap-4">
+            <div className="h-3 w-36 skeleton" />
+            <div className="flex gap-1.5">
+              <div className="h-6 w-16 skeleton rounded" />
+              <div className="h-6 w-28 skeleton rounded" />
+              <div className="h-6 w-28 skeleton rounded" />
+              <div className="h-6 w-12 skeleton rounded" />
             </div>
           </div>
-        ))}
+          <ProductGridSkeleton count={12} className="grid-cols-2 md:grid-cols-3" />
+        </div>
       </div>
     </div>
   );

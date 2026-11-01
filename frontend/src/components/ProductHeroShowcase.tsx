@@ -9,6 +9,7 @@ import { useCart } from "@/lib/cart";
 import TextReveal from "./animations/TextReveal";
 import { ColorBar, CropMarks } from "./animations/PrintMarks";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { heroCopy, heroHeadlineClass } from "@/lib/hero";
 
 interface ProductHeroShowcaseProps {
   flagshipProducts: Product[];
@@ -48,13 +49,8 @@ export default function ProductHeroShowcase({
   const progressBarRef = useRef<HTMLDivElement>(null);
   const rotationRef = useRef<gsap.core.Tween | null>(null);
 
-  // Headline text is editable in owner settings, so size it to what was entered.
-  const headline = settings?.hero_title?.trim() || "Precision Custom Printing &";
-  const subheadline = settings?.hero_subtitle?.trim() || "Enterprise Merchandise";
-  const headlineSize =
-    headline.length + subheadline.length > 60
-      ? "text-[1.75rem] sm:text-4xl lg:text-[2.625rem]"
-      : "text-[2.5rem] sm:text-5xl lg:text-[3.75rem]";
+  // All hero text comes from Owner Settings, with short defaults if a field is empty.
+  const copy = heroCopy(settings);
 
   // Entrance: the markup starts hidden via [data-hero] in globals.css, so there is no flash.
   useGSAP(
@@ -177,24 +173,18 @@ export default function ProductHeroShowcase({
           <div className="lg:col-span-6">
             <div data-hero data-hero-item className="flex items-center gap-3 mb-5">
               <ColorBar />
-              <span className="font-mono text-xs text-slate-300">
-                {settings?.hero_badge?.trim() || "Factory direct from Bengaluru"}
-              </span>
+              <span className="font-mono text-xs text-slate-300">{copy.badge}</span>
             </div>
 
-            <h1
-              data-hero
-              className={`${headlineSize} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}
-            >
-              <TextReveal text={headline} />
+            <h1 data-hero className={`${heroHeadlineClass(copy)} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}>
+              <TextReveal text={copy.title} />
               <span className="block text-[#F4A36B]">
-                <TextReveal text={subheadline} />
+                <TextReveal text={copy.subtitle} />
               </span>
             </h1>
 
-            <p data-hero data-hero-item className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-              {settings?.hero_caption?.trim() ||
-                "PVC identification cards, satin lanyard rolls, card manufacturing machinery and corporate gifting. Wholesale dispatch from Bangalore in 24 to 48 hours."}
+            <p data-hero data-hero-item className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
+              {copy.caption}
             </p>
 
             <div data-hero data-hero-item className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mt-7">
@@ -213,24 +203,6 @@ export default function ProductHeroShowcase({
                 Request a custom quote
               </Link>
             </div>
-
-            <dl data-hero data-hero-item className="grid grid-cols-3 mt-9 border-t border-white/15">
-              {[
-                { value: "180+", label: "Products & machines" },
-                { value: "50,000+", label: "Units a day capacity" },
-                { value: "24-48h", label: "Pan-India dispatch" },
-              ].map((stat, index) => (
-                <div key={stat.label} className={`pt-4 ${index > 0 ? "pl-4 border-l border-white/15" : ""}`}>
-                  <dd
-                    {...(index < 2 ? { "data-count": true } : {})}
-                    className="font-heading text-xl sm:text-2xl font-bold text-white tabular-nums"
-                  >
-                    {stat.value}
-                  </dd>
-                  <dt className="text-xs text-slate-400 mt-0.5">{stat.label}</dt>
-                </div>
-              ))}
-            </dl>
           </div>
 
           {activeProduct && (

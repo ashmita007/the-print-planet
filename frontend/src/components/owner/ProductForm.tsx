@@ -535,7 +535,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   onBlur={() => setName(formatProductName(name))}
-                  placeholder="e.g. 20MM Indian Royal Blue Colour Satin Lanyard Roll"
+                  aria-label="Product name"
+              placeholder="e.g. 20MM Indian Royal Blue Colour Satin Lanyard Roll"
                   className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 outline-none font-medium text-[#1C2733] text-sm"
                 />
                 <p className="text-[10px] text-slate-400 mt-1">
@@ -558,6 +559,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 </div>
 
                 <select
+                  aria-label="Category line"
                   value={String(categoryId)}
                   onChange={(e) => setCategoryId(e.target.value)}
                   className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-medium text-[#1C2733] uppercase"
@@ -657,7 +659,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     required
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
-                    placeholder="e.g. LAN-RB-20M"
+                    aria-label="SKU"
+              placeholder="e.g. LAN-RB-20M"
                     className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-mono font-bold text-[#16324F]"
                   />
                 </div>
@@ -688,10 +691,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               {/* Short Description */}
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-single-line-subtitle-summary" className="block font-semibold text-[#1C2733] mb-1">
                   Single-Line Subtitle / Summary
                 </label>
-                <input
+                <input id="field-single-line-subtitle-summary"
                   type="text"
                   value={shortDesc}
                   onChange={(e) => setShortDesc(e.target.value)}
@@ -702,10 +705,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               {/* Full Description */}
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-full-application-technical-description" className="block font-semibold text-[#1C2733] mb-1">
                   Full Application & Technical Description
                 </label>
-                <textarea
+                <textarea id="field-full-application-technical-description"
                   rows={3}
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
@@ -727,10 +730,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-numeric-price-inr" className="block font-semibold text-[#1C2733] mb-1">
                   Numeric Price (INR)
                 </label>
-                <input
+                <input id="field-numeric-price-inr"
                   type="number"
                   step="0.01"
                   value={price}
@@ -757,15 +760,16 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   value={priceDisplay}
                   onChange={(e) => setPriceDisplay(e.target.value)}
                   placeholder="e.g. ₹ 225 / Roll"
+                      aria-label="Price label"
                   className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-minimum-order-moq" className="block font-semibold text-[#1C2733] mb-1">
                   Minimum Order (MOQ)
                 </label>
-                <input
+                <input id="field-minimum-order-moq"
                   type="number"
                   value={moq}
                   onChange={(e) => setMoq(e.target.value)}
@@ -818,8 +822,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Primary Material</label>
-                <input
+                <label htmlFor="field-primary-material" className="block font-semibold text-[#1C2733] mb-1">Primary Material</label>
+                <input id="field-primary-material"
                   type="text"
                   value={material}
                   onChange={(e) => setMaterial(e.target.value)}
@@ -829,8 +833,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Dimensions / Gauge</label>
-                <input
+                <label htmlFor="field-dimensions-gauge" className="block font-semibold text-[#1C2733] mb-1">Dimensions / Gauge</label>
+                <input id="field-dimensions-gauge"
                   type="text"
                   value={dimensions}
                   onChange={(e) => setDimensions(e.target.value)}
@@ -840,8 +844,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Color / Finish</label>
-                <input
+                <label htmlFor="field-color-finish" className="block font-semibold text-[#1C2733] mb-1">Color / Finish</label>
+                <input id="field-color-finish"
                   type="text"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
@@ -901,6 +905,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   <input
                     type="text"
                     placeholder="Attribute name (e.g. GSM / Voltage)"
+                      aria-label="Attribute name"
                     value={spec.key}
                     onChange={(e) => handleSpecChange(idx, "key", e.target.value)}
                     className="w-2/5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-2 outline-none font-semibold text-[#1C2733]"
@@ -908,6 +913,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   <input
                     type="text"
                     placeholder="Specification value (e.g. 180 GSM)"
+                      aria-label="Attribute value"
                     value={spec.value}
                     onChange={(e) => handleSpecChange(idx, "value", e.target.value)}
                     className="w-3/5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-2 outline-none text-[#1C2733]"
@@ -991,6 +997,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   <input
                     type="url"
                     placeholder="https://example.com/item.jpg"
+                      aria-label="Image URL"
                     value={imageUrlInput}
                     onChange={(e) => setImageUrlInput(e.target.value)}
                     className="flex-1 bg-white border border-[#D8DEE5] rounded-lg px-3 py-1.5 text-xs outline-none"

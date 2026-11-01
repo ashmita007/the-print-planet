@@ -323,6 +323,7 @@ export default function OwnerProductsListPage() {
           <form onSubmit={handleSearchSubmit} className="relative flex-1">
             <input
               type="text"
+              aria-label="Search products"
               placeholder="Search by SKU, product name, or material specs..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -352,17 +353,18 @@ export default function OwnerProductsListPage() {
           </form>
 
           {/* Dropdown Filters */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 min-w-0">
             {/* Category Filter */}
-            <div className="flex items-center gap-1.5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1">
+            <div className="flex items-center gap-1.5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1 min-w-0 w-full sm:w-auto sm:max-w-64">
               <Layers className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <select
-                value={selectedCategory}
+                aria-label="Filter by category"
+              value={selectedCategory}
                 onChange={(e) => {
                   setSelectedCategory(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#1C2733] font-medium outline-none py-1 cursor-pointer"
+                className="bg-transparent text-xs text-[#1C2733] font-medium outline-none py-1 cursor-pointer min-w-0 w-full"
               >
                 <option value="">All Categories ({categories.length})</option>
                 {categories.map((c) => (
@@ -377,7 +379,8 @@ export default function OwnerProductsListPage() {
             <div className="flex items-center gap-1.5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1">
               <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <select
-                value={selectedStatus}
+                aria-label="Filter by visibility"
+              value={selectedStatus}
                 onChange={(e) => {
                   setSelectedStatus(e.target.value);
                   setCurrentPage(1);
@@ -394,7 +397,8 @@ export default function OwnerProductsListPage() {
             <div className="flex items-center gap-1 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1">
               <span className="text-[11px] text-slate-500 font-semibold">Per Page:</span>
               <select
-                value={pageSize}
+                aria-label="Products per page"
+              value={pageSize}
                 onChange={(e) => {
                   setPageSize(Number(e.target.value));
                   setCurrentPage(1);
@@ -430,10 +434,10 @@ export default function OwnerProductsListPage() {
             <thead className="bg-[#F3F5F7] border-b border-[#D8DEE5] text-[11px] font-bold text-[#566373] uppercase tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Product Details</th>
-                <th className="py-3.5 px-4">SKU Code</th>
-                <th className="py-3.5 px-4">Category</th>
-                <th className="py-3.5 px-4">B2B Trade Price</th>
-                <th className="py-3.5 px-4">Store Visibility</th>
+                <th className="py-3.5 px-4 hidden lg:table-cell">SKU Code</th>
+                <th className="py-3.5 px-4 hidden xl:table-cell">Category</th>
+                <th className="py-3.5 px-4 hidden md:table-cell">B2B Trade Price</th>
+                <th className="py-3.5 px-4 hidden sm:table-cell">Store Visibility</th>
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -451,10 +455,10 @@ export default function OwnerProductsListPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="py-3.5 px-4"><div className="h-5 w-20 skeleton rounded-md" /></td>
-                      <td className="py-3.5 px-4"><div className="h-3 w-24 skeleton" /></td>
-                      <td className="py-3.5 px-4"><div className="h-4 w-16 skeleton" /></td>
-                      <td className="py-3.5 px-4"><div className="h-5 w-16 skeleton rounded-full" /></td>
+                      <td className="py-3.5 px-4 hidden lg:table-cell"><div className="h-5 w-20 skeleton rounded-md" /></td>
+                      <td className="py-3.5 px-4 hidden xl:table-cell"><div className="h-3 w-24 skeleton" /></td>
+                      <td className="py-3.5 px-4 hidden md:table-cell"><div className="h-4 w-16 skeleton" /></td>
+                      <td className="py-3.5 px-4 hidden sm:table-cell"><div className="h-5 w-16 skeleton rounded-full" /></td>
                       <td className="py-3.5 px-4">
                         <div className="flex items-center justify-end gap-2">
                           <div className="h-7 w-7 skeleton rounded-lg" />
@@ -490,8 +494,8 @@ export default function OwnerProductsListPage() {
                               <Package className="w-5 h-5 text-slate-300" />
                             )}
                           </div>
-                          <div className="max-w-xs">
-                            <p className="font-bold text-[#16324F] line-clamp-1 group-hover:text-[#D9601A] transition-colors">
+                          <div className="max-w-xs min-w-0">
+                            <p className="font-bold text-[#16324F] line-clamp-2 lg:line-clamp-1 group-hover:text-[#D9601A] transition-colors">
                               {formatProductName(p.name)}
                             </p>
                             <p className="text-[11px] text-slate-400 truncate mt-0.5">
@@ -499,36 +503,48 @@ export default function OwnerProductsListPage() {
                               {p.dimensions ? ` • ${p.dimensions}` : ""}
                               {p.color ? ` • ${p.color}` : ""}
                             </p>
+                            {/* Columns hidden on small screens move under the name. */}
+                            <p className="md:hidden text-[11px] font-bold text-[#16324F] mt-0.5">
+                              {p.price_display || (p.price ? `₹ ${p.price}` : "On Request")}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => handleToggleStatus(p)}
+                              disabled={isToggling}
+                              className={`sm:hidden mt-1 min-h-7 text-[11px] font-bold underline underline-offset-2 ${p.is_active ? "text-emerald-700" : "text-slate-600"}`}
+                            >
+                              {p.is_active ? "Active" : "Hidden"}
+                            </button>
                           </div>
                         </div>
                       </td>
 
                       {/* SKU with Copy Pill */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-3.5 px-4 hidden lg:table-cell">
                         <button
                           type="button"
                           onClick={() => handleCopySku(p.sku)}
-                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 font-mono text-[11px] font-bold text-slate-700 transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1.5 max-w-36 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 font-mono text-[11px] font-bold text-slate-700 transition-colors cursor-pointer"
                           title="Click to copy SKU"
                         >
-                          <span>{p.sku}</span>
+                          <span className="truncate" title={p.sku}>{p.sku}</span>
                           {copiedSku === p.sku ? (
                             <Check className="w-3 h-3 text-[#217A4B]" />
                           ) : (
-                            <Copy className="w-3 h-3 text-slate-400" />
+                            <Copy className="w-3 h-3 shrink-0 text-slate-400" />
                           )}
                         </button>
                       </td>
 
                       {/* Category */}
-                      <td className="py-3.5 px-4">
-                        <span className="bg-[#16324F]/10 text-[#16324F] px-2.5 py-1 rounded-md font-bold text-[10px] uppercase tracking-wider">
+                      <td className="py-3.5 px-4 hidden xl:table-cell max-w-44">
+                        <span className="line-clamp-2 text-[11px] font-semibold text-[#475565]">
                           {formatCategoryName(p.category?.name || "Uncategorized")}
                         </span>
                       </td>
 
                       {/* Trade Price */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-3.5 px-4 hidden md:table-cell whitespace-nowrap">
                         <span className="font-extrabold text-[#16324F]">
                           {p.price_display || (p.price ? `₹ ${p.price}` : "On Request")}
                         </span>
@@ -540,7 +556,7 @@ export default function OwnerProductsListPage() {
                       </td>
 
                       {/* Interactive Active/Hidden Toggle */}
-                      <td className="py-3.5 px-4">
+                      <td className="py-3.5 px-4 hidden sm:table-cell">
                         <button
                           type="button"
                           onClick={() => handleToggleStatus(p)}
@@ -569,16 +585,18 @@ export default function OwnerProductsListPage() {
                             href={`/products/${p.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#16324F] hover:bg-slate-100 transition-colors"
+                            className="p-2 rounded-lg text-slate-400 hover:text-[#16324F] hover:bg-slate-100 transition-colors"
                             title="Preview Public Page"
+                            aria-label={`Preview ${p.name}`}
                           >
                             <ExternalLink className="w-4 h-4" />
                           </Link>
 
                           <Link
                             href={`/owner/products/${p.id}/edit`}
-                            className="p-1.5 rounded-lg text-slate-600 hover:text-[#D9601A] hover:bg-orange-50 transition-colors"
+                            className="p-2 rounded-lg text-slate-600 hover:text-[#D9601A] hover:bg-orange-50 transition-colors"
                             title="Edit Product Details"
+                            aria-label={`Edit ${p.name}`}
                           >
                             <Edit className="w-4 h-4" />
                           </Link>
@@ -587,8 +605,9 @@ export default function OwnerProductsListPage() {
                             type="button"
                             onClick={() => setConfirmDelete({ id: p.id, name: p.name })}
                             disabled={deletingId === p.id}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer disabled:opacity-50"
+                            className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer disabled:opacity-50"
                             title="Delete Product"
+                            aria-label={`Delete ${p.name}`}
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>

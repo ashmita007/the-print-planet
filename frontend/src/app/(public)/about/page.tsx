@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Factory, ShieldCheck, Truck, Users, Award, CheckCircle } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
+import PageCta from "@/components/PageCta";
 import { getSiteSettings } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
@@ -28,9 +28,8 @@ export default async function AboutPage() {
   const businessName = settings?.business_name || "THE PRINT PLANET";
   const about = settings?.about_data || {};
 
-  const heroTag = about.hero_tag || "Industrial Manufacturer & Distributor";
-  const heroTitle = about.hero_title || `About ${businessName}`;
-  const heroSubtitle = about.hero_subtitle || "Established as a dedicated production and wholesale distribution facility in Bengaluru, Karnataka, specializing in high-capacity ID card identification products, premium satin rolls, lens packaging, hardware fittings, and card fabrication machinery.";
+  const heroTitle = about.hero_title || "About us";
+  const heroSubtitle = about.hero_subtitle || "Makers of ID card products, lanyards and card machines in Bengaluru.";
   const storyTitle = about.story_title || "Engineering Precision in Identification Systems";
   const storyP1 = about.story_p1 || `At ${businessName}, our operations combine high-capacity polymer molding, ribbon slitting, and ultrasonic tooling to produce uniform badge accessories designed to meet strict institutional requirements.`;
   const storyP2 = about.story_p2 || "Whether fulfilling recurring orders of 20mm Indian Royal Blue satin rolls or delivering heavy-duty DCT4500 automatic card punch cutters, our manufacturing processes prioritize dimensional consistency, burr-free edge finishing, and reliable mechanical tensile strength.";
@@ -57,6 +56,22 @@ export default async function AboutPage() {
   const facility2Desc = about.facility_2_desc || "Full tax compliance, registered GST billing, and secure electronic trade payment workflows.";
   const facility3Title = about.facility_3_title || "High-Capacity Inventory";
   const facility3Desc = about.facility_3_desc || "Large-scale warehouse buffer with continuous availability of core lanyard rolls and crystal holders.";
+
+  const stats = [
+    { value: stat1Val, label: stat1Label },
+    { value: stat2Val, label: stat2Label },
+    { value: stat3Val, label: stat3Label },
+    { value: stat4Val, label: stat4Label },
+  ];
+
+  const points = [
+    { title: standard1Title, desc: standard1Desc },
+    { title: standard2Title, desc: standard2Desc },
+    { title: standard3Title, desc: standard3Desc },
+    { title: facility1Title, desc: facility1Desc },
+    { title: facility2Title, desc: facility2Desc },
+    { title: facility3Title, desc: facility3Desc },
+  ];
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -94,7 +109,7 @@ export default async function AboutPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
@@ -103,105 +118,43 @@ export default async function AboutPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
       />
-      <Breadcrumbs items={[{ label: "About Our Company" }]} />
+      <PageHero title={heroTitle} lead={heroSubtitle} crumbs={[{ label: "About" }]} />
 
-      {/* Hero */}
-      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
-        <div className="max-w-3xl space-y-2 sm:space-y-3">
-          <span className="text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
-            {heroTag}
-          </span>
-          <h1 className="text-2xl sm:text-5xl font-extrabold tracking-tight">
-            {heroTitle}
-          </h1>
-          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
-            {heroSubtitle}
-          </p>
-        </div>
-      </div>
-
-      {/* Industrial Mission & Production Capabilities */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
-        <div className="space-y-4 text-xs sm:text-sm text-[#1C2733] leading-relaxed">
-          <h2 className="text-xl sm:text-2xl font-bold text-[#16324F]">
-            {storyTitle}
-          </h2>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-10">
+        <h2 className="md:col-span-5 text-2xl sm:text-4xl font-extrabold tracking-tight text-[#16324F] leading-tight">
+          {storyTitle}
+        </h2>
+        <div data-reveal className="md:col-span-7 space-y-4 text-sm sm:text-base text-[#1C2733] leading-relaxed">
           <p>{storyP1}</p>
           <p>{storyP2}</p>
-          <div className="pt-2 grid grid-cols-2 gap-3">
-            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
-              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat1Val}</div>
-              <div className="text-[11px] text-[#566373]">{stat1Label}</div>
-            </div>
-            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
-              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat2Val}</div>
-              <div className="text-[11px] text-[#566373]">{stat2Label}</div>
-            </div>
-            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
-              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat3Val}</div>
-              <div className="text-[11px] text-[#566373]">{stat3Label}</div>
-            </div>
-            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
-              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat4Val}</div>
-              <div className="text-[11px] text-[#566373]">{stat4Label}</div>
-            </div>
-          </div>
         </div>
+      </section>
 
-        <div className="bg-[#F3F5F7] p-5 sm:p-8 rounded-md sm:rounded-lg border border-[#D8DEE5] space-y-4">
-          <h3 className="font-bold text-sm text-[#16324F] uppercase tracking-wider">
-            Production standards
-          </h3>
-          <div className="space-y-3 text-xs">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733]">{standard1Title}:</strong>
-                <p className="text-[#566373] mt-0.5">{standard1Desc}</p>
-              </div>
+      <section aria-label="Key numbers" className="bg-[#0E2238] text-white">
+        <dl className="max-w-7xl mx-auto px-4 sm:px-6 py-9 sm:py-12 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <dd data-count className="text-3xl sm:text-5xl font-extrabold tracking-tight tabular-nums">
+                {stat.value}
+              </dd>
+              <dt className="mt-1.5 text-sm text-slate-300">{stat.label}</dt>
             </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733]">{standard2Title}:</strong>
-                <p className="text-[#566373] mt-0.5">{standard2Desc}</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733]">{standard3Title}:</strong>
-                <p className="text-[#566373] mt-0.5">{standard3Desc}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+          ))}
+        </dl>
+      </section>
 
-      {/* Facilities Strip */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="surface-card p-6 rounded-lg space-y-2">
-          <Factory className="w-6 h-6 text-[#16324F]" />
-          <h4 className="font-bold text-sm text-[#16324F]">{facility1Title}</h4>
-          <p className="text-xs text-[#566373] leading-relaxed">
-            {facility1Desc}
-          </p>
-        </div>
-        <div className="surface-card p-6 rounded-lg space-y-2">
-          <ShieldCheck className="w-6 h-6 text-[#16324F]" />
-          <h4 className="font-bold text-sm text-[#16324F]">{facility2Title}</h4>
-          <p className="text-xs text-[#566373] leading-relaxed">
-            {facility2Desc}
-          </p>
-        </div>
-        <div className="surface-card p-6 rounded-lg space-y-2">
-          <Truck className="w-6 h-6 text-[#16324F]" />
-          <h4 className="font-bold text-sm text-[#16324F]">{facility3Title}</h4>
-          <p className="text-xs text-[#566373] leading-relaxed">
-            {facility3Desc}
-          </p>
-        </div>
-      </div>
+      <section aria-label="Standards and facilities" className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7">
+          {points.map((point) => (
+            <li key={point.title} className="border-t-2 border-[#16324F] pt-3">
+              <h3 className="font-bold text-[#16324F]">{point.title}</h3>
+              <p className="text-sm text-[#566373] mt-1 leading-relaxed">{point.desc}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <PageCta title="Visit the factory or get a price." />
     </div>
   );
 }

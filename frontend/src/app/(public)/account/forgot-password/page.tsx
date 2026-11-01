@@ -71,9 +71,9 @@ export default function ForgotPasswordPage() {
             )}
 
             <div>
-              <label className="block font-bold text-[#1C2733] mb-1">Registered Email Address</label>
+              <label htmlFor="field-registered-email-address" className="block font-bold text-[#1C2733] mb-1">Registered Email Address</label>
               <div className="relative">
-                <input
+                <input id="field-registered-email-address"
                   type="email"
                   required
                   value={email}
@@ -102,7 +102,7 @@ export default function ForgotPasswordPage() {
             <span>Back to Login</span>
           </Link>
 
-          <Link href="/bulk-orders" className="text-[#D9601A] font-bold hover:underline">
+          <Link href="/corporate" className="text-[#D9601A] font-bold hover:underline">
             New Bulk Inquiry
           </Link>
         </div>

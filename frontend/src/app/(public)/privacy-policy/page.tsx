@@ -1,19 +1,12 @@
 import React from "react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-8">
-      <Breadcrumbs items={[{ label: "Privacy Policy" }]} />
-
-      <div className="space-y-4">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">
-          Privacy Policy
-        </h1>
-        <p className="text-xs text-slate-500">Last updated: October 2026</p>
-      </div>
-
-      <div className="space-y-6 text-xs sm:text-sm text-[#1C2733] leading-relaxed">
+    <div>
+      <PageHero title="Privacy policy" lead="Last updated: October 2026" crumbs={[{ label: "Privacy" }]} />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="space-y-7 text-sm text-[#1C2733] leading-relaxed">
         <section className="space-y-2">
           <h2 className="text-base font-bold text-[#16324F]">1. Information We Collect</h2>
           <p>
@@ -40,6 +33,7 @@ export default function PrivacyPolicyPage() {
             restricted token authentication.
           </p>
         </section>
+      </div>
       </div>
     </div>
   );

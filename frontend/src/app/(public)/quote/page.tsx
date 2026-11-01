@@ -9,15 +9,10 @@ import {
   PhoneCall,
   CheckCircle2,
   AlertCircle,
-  ShieldCheck,
-  Clock,
-  Sparkles,
-  Layers,
-  ArrowRight,
   Paperclip,
   UploadCloud,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import { submitEnquiry } from "@/lib/api";
 import { useCart } from "@/lib/cart";
 
@@ -135,25 +130,13 @@ function QuoteFormContent() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
-      <Breadcrumbs items={[{ label: "Request a Quote" }]} />
-
-      {/* Hero */}
-      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
-        <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
-            <FileText className="w-3.5 h-3.5" />
-            <span>Fast-Track Commercial RFQ</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
-            Request a Custom B2B Quotation
-          </h1>
-          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
-            Receive official wholesale unit pricing, digital proof mockups, and estimated production timelines within 2 business hours. Direct factory pricing with verified GST tax invoicing.
-          </p>
-        </div>
-      </div>
-
+    <div>
+      <PageHero
+        title="Get a quote"
+        lead="Tell us what you need. We reply with a price and delivery time."
+        crumbs={[{ label: "Quote" }]}
+      />
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-8 sm:py-12">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Form (7 Cols) */}
         <div className="lg:col-span-7 surface-card rounded-lg p-6 sm:p-8">
@@ -166,14 +149,14 @@ function QuoteFormContent() {
                 Quotation request received
               </h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                Thank you, <strong>{fullName}</strong>. Our commercial sales engineering team is reviewing your specifications and will deliver your formal quotation via email and WhatsApp.
+                Thank you, <strong>{fullName}</strong>. We will send your quote by email or WhatsApp.
               </p>
               <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/products"
                   className="bg-[#16324F] hover:bg-[#0E2238] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors"
                 >
-                  Continue Browsing Products
+                  Browse products
                 </Link>
                 <button
                   type="button"
@@ -208,10 +191,10 @@ function QuoteFormContent() {
               {/* Row 1: Name & Company */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">
+                  <label htmlFor="field-your-full-name" className="block font-semibold text-[#1C2733] mb-1">
                     Your Full Name *
                   </label>
-                  <input aria-label="Your Full Name"
+                  <input id="field-your-full-name" aria-label="Your Full Name"
                     type="text"
                     required
                     value={fullName}
@@ -222,10 +205,10 @@ function QuoteFormContent() {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">
+                  <label htmlFor="field-company-organization-name" className="block font-semibold text-[#1C2733] mb-1">
                     Company / Organization Name *
                   </label>
-                  <input aria-label="Company / Organization Name"
+                  <input id="field-company-organization-name" aria-label="Company / Organization Name"
                     type="text"
                     required
                     value={companyName}
@@ -239,10 +222,10 @@ function QuoteFormContent() {
               {/* Row 2: Phone & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">
+                  <label htmlFor="field-phone-whatsapp-number" className="block font-semibold text-[#1C2733] mb-1">
                     Phone / WhatsApp Number *
                   </label>
-                  <input aria-label="Phone / WhatsApp Number"
+                  <input id="field-phone-whatsapp-number" aria-label="Phone / WhatsApp Number"
                     type="tel"
                     required
                     value={phone}
@@ -253,10 +236,10 @@ function QuoteFormContent() {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">
+                  <label htmlFor="field-business-email-address" className="block font-semibold text-[#1C2733] mb-1">
                     Business Email Address *
                   </label>
-                  <input aria-label="Business Email Address"
+                  <input id="field-business-email-address" aria-label="Business Email Address"
                     type="email"
                     required
                     value={email}
@@ -270,10 +253,10 @@ function QuoteFormContent() {
               {/* Row 3: Product Category & Quantity */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">
+                  <label htmlFor="field-primary-product-category" className="block font-semibold text-[#1C2733] mb-1">
                     Primary Product Category *
                   </label>
-                  <select aria-label="Primary Product Category"
+                  <select id="field-primary-product-category" aria-label="Primary Product Category"
                     value={productCategory}
                     onChange={(e) => setProductCategory(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] bg-white text-xs sm:text-sm"
@@ -291,10 +274,10 @@ function QuoteFormContent() {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">
+                  <label htmlFor="field-estimated-quantity-units-pieces" className="block font-semibold text-[#1C2733] mb-1">
                     Estimated Quantity (Units / Pieces) *
                   </label>
-                  <input aria-label="Estimated Quantity (Units / Pieces)"
+                  <input id="field-estimated-quantity-units-pieces" aria-label="Estimated Quantity (Units / Pieces)"
                     type="number"
                     min="1"
                     required
@@ -308,10 +291,10 @@ function QuoteFormContent() {
 
               {/* Delivery Timeline */}
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-required-target-delivery-date" className="block font-semibold text-[#1C2733] mb-1">
                   Required Target Delivery Date (Optional)
                 </label>
-                <input aria-label="Required Target Delivery Date (Optional)"
+                <input id="field-required-target-delivery-date" aria-label="Required Target Delivery Date (Optional)"
                   type="date"
                   value={deliveryDate}
                   onChange={(e) => setDeliveryDate(e.target.value)}
@@ -321,10 +304,10 @@ function QuoteFormContent() {
 
               {/* Specifications / Notes */}
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-detailed-specifications-customization-notes" className="block font-semibold text-[#1C2733] mb-1">
                   Detailed Specifications &amp; Customization Notes
                 </label>
-                <textarea aria-label="Detailed Specifications & Customization Notes"
+                <textarea id="field-detailed-specifications-customization-notes" aria-label="Detailed Specifications & Customization Notes"
                   rows={4}
                   value={customRequirements}
                   onChange={(e) => setCustomRequirements(e.target.value)}
@@ -382,83 +365,43 @@ function QuoteFormContent() {
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Submit Quotation Request &amp; Connect on WhatsApp</span>
+                      <span>Send request</span>
                     </>
                   )}
                 </button>
                 <p className="text-[11px] text-center text-slate-400 mt-2">
-                  🔒 We respect your privacy. No spam. A commercial representative will reach out shortly.
+                  We reply by email or WhatsApp.
                 </p>
               </div>
             </form>
           )}
         </div>
 
-        {/* Right Column: Assurances & Immediate Desk (5 Cols) */}
-        <div className="lg:col-span-5 space-y-5">
-          {/* Direct WhatsApp Callout */}
-          <div className="surface-card rounded-lg p-6 space-y-4">
-            <div className="flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
-              <Clock className="w-4 h-4" />
-              <span>Instant estimate</span>
-            </div>
-            <h3 className="text-lg font-bold text-[#16324F]">
-              Chat with our sales desk
-            </h3>
-            <p className="text-xs text-[#566373] leading-relaxed">
-              If your order is urgent or requires immediate same-day dispatch from Bengaluru, message us directly with your artwork on WhatsApp.
-            </p>
+        {/* Right column: the fast route and what happens next */}
+        <aside className="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
+          <div className="rounded-lg bg-[#0E2238] text-white p-6 space-y-3">
+            <h2 className="text-lg font-bold">Need it fast?</h2>
+            <p className="text-sm text-slate-300">Send your artwork on WhatsApp.</p>
             <a
               href="https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%20I%20need%20an%20urgent%20quote%20for%20bulk%20supplies."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
+              className="bg-[#217A4B] hover:bg-[#1b6540] text-white w-full py-3 px-4 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>Chat on WhatsApp (+91 97418 08034)</span>
+              +91 97418 08034
             </a>
           </div>
-
-          {/* Guarantees List */}
-          <div className="surface-card rounded-lg p-6 space-y-4">
-            <h4 className="text-sm font-bold text-[#16324F]">
-              What we guarantee
-            </h4>
-            <div className="space-y-3 text-xs text-slate-700">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-[#16324F] block">Free Digital Pre-Press Proof</strong>
-                  <span className="text-[#566373]">Review your artwork rendered on our actual lanyard straps before printing begins.</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-[#16324F] block">Factory Direct Pricing</strong>
-                  <span className="text-[#566373]">Genuine manufacturer wholesale rates with zero middleman commissions.</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-[#16324F] block">Verified GST Input Tax Credit</strong>
-                  <span className="text-[#566373]">GSTIN: 29AAQFT3909B1ZZ | Standard B2B tax invoice provided with e-way bill.</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-[#16324F] block">Pan-India Courier & Cargo</strong>
-                  <span className="text-[#566373]">Air express to metros in 24-48 hours; insured surface cargo for heavy machinery.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <ul className="px-1 space-y-2.5 text-sm text-[#1C2733]">
+            {["Free digital proof", "Factory-direct rates", "GST invoice", "Delivery across India"].map((item) => (
+              <li key={item} className="flex items-center gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#217A4B] shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
       </div>
     </div>
   );

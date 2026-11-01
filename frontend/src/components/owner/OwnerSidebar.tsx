@@ -124,17 +124,14 @@ function OwnerSidebarInner() {
       {/* Mobile Bar */}
       <div className="lg:hidden bg-[#0E2238]/95 backdrop-blur-md text-white px-4 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-30">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-[#D9601A] flex items-center justify-center font-bold text-white text-xs shadow-xs">
-            P
+          <div className="bg-white px-2 py-1 rounded-md">
+            <Image src="/logo.png" alt="The Print Planet" width={140} height={40} className="h-6 w-auto object-contain" />
           </div>
-          <div>
-            <span className="font-bold text-xs block leading-tight">THE PRINT PLANET</span>
-            <span className="text-[10px] text-slate-400 block leading-tight">Owner Console</span>
-          </div>
+          <span className="text-xs font-semibold text-white/90">Owner Console</span>
         </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
+          className="w-11 h-11 -mr-2 flex items-center justify-center rounded-lg text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
           aria-label="Toggle navigation"
           aria-expanded={mobileOpen}
           aria-controls="owner-sidebar"
@@ -182,7 +179,8 @@ function OwnerSidebarInner() {
           </Link>
           <button
             onClick={() => setMobileOpen(false)}
-            className="lg:hidden text-slate-400 hover:text-white cursor-pointer"
+            aria-label="Close navigation"
+            className="lg:hidden p-2 -mr-2 text-slate-400 hover:text-white cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>

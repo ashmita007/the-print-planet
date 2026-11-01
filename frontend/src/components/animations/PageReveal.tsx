@@ -76,12 +76,18 @@ function setupReveals(root: HTMLElement) {
       const visible = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
       if (visible.length === 0) return;
       visible.forEach((el) => observer.unobserve(el));
+      // Left to right, then down, so a grid prints in reading order.
+      visible.sort((a, b) => {
+        const boxA = a.getBoundingClientRect();
+        const boxB = b.getBoundingClientRect();
+        return boxA.top - boxB.top || boxA.left - boxB.left;
+      });
       gsap.to(visible, {
         opacity: 1,
         y: 0,
-        duration: 0.75,
+        duration: 0.6,
         ease: "power3.out",
-        stagger: 0.07,
+        stagger: 0.06,
         clearProps: CLEAR,
       });
     },
@@ -90,6 +96,93 @@ function setupReveals(root: HTMLElement) {
 
   targets.forEach((el) => observer.observe(el));
   return () => observer.disconnect();
+}
+
+/** Photos print in from the left edge; rules draw across. Once only. */
+function setupInk(root: HTMLElement) {
+  const foldLine = window.innerHeight * 0.92;
+  const below = (el: HTMLElement) => el.getBoundingClientRect().top > foldLine;
+  const photos = gsap.utils.toArray<HTMLElement>("[data-print]", root).filter(below);
+  const rules = gsap.utils.toArray<HTMLElement>("[data-rule]", root).filter(below);
+
+  gsap.set(photos, { clipPath: "inset(0 100% 0 0)" });
+  gsap.set(rules, { scaleX: 0, transformOrigin: "0 50%" });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const el = entry.target as HTMLElement;
+        if (el.hasAttribute("data-rule")) {
+          gsap.to(el, { scaleX: 1, duration: 0.8, ease: "power2.inOut", clearProps: "transform" });
+          return;
+        }
+        gsap.to(el, { clipPath: "inset(0 0% 0 0)", duration: 0.75, ease: "power3.inOut", clearProps: "clipPath" });
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px" }
+  );
+
+  [...photos, ...rules].forEach((el) => observer.observe(el));
+  return () => observer.disconnect();
+}
+
+/** One listener on the root, because catalogue cards mount and unmount with filters. */
+function setupTilt(root: HTMLElement) {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+
+  const quick = new WeakMap<HTMLElement, { x: gsap.QuickToFunc; y: gsap.QuickToFunc }>();
+  let current: HTMLElement | null = null;
+
+  const settle = (el: HTMLElement) => {
+    const q = quick.get(el);
+    q?.x(0);
+    q?.y(0);
+  };
+
+  const move = (e: PointerEvent) => {
+    const el = (e.target as Element).closest?.<HTMLElement>("[data-tilt]") ?? null;
+    if (current && current !== el) settle(current);
+    current = el;
+    if (!el) return;
+
+    let q = quick.get(el);
+    if (!q) {
+      gsap.set(el, { transformPerspective: 900 });
+      q = {
+        x: gsap.quickTo(el, "rotationY", { duration: 0.35, ease: "power3.out" }),
+        y: gsap.quickTo(el, "rotationX", { duration: 0.35, ease: "power3.out" }),
+      };
+      quick.set(el, q);
+    }
+    const box = el.getBoundingClientRect();
+    q.x(((e.clientX - box.left) / box.width - 0.5) * 5);
+    q.y(((e.clientY - box.top) / box.height - 0.5) * -5);
+  };
+  const leave = () => {
+    if (current) settle(current);
+    current = null;
+  };
+
+  root.addEventListener("pointermove", move);
+  root.addEventListener("pointerleave", leave);
+  return () => {
+    root.removeEventListener("pointermove", move);
+    root.removeEventListener("pointerleave", leave);
+  };
+}
+
+/** Timelines and progress lines that follow the scroll. */
+function setupScrub(root: HTMLElement) {
+  gsap.utils.toArray<HTMLElement>("[data-scrub-line]", root).forEach((el) => {
+    gsap.from(el, {
+      scaleX: 0,
+      transformOrigin: "0 50%",
+      ease: "none",
+      scrollTrigger: { trigger: el, start: "top 85%", end: "top 45%", scrub: true },
+    });
+  });
 }
 
 function setupParallax(root: HTMLElement) {
@@ -137,7 +230,8 @@ function setupMagnetic(root: HTMLElement) {
 
 /**
  * One motion layer for every public page. Pages stay server components and opt in
- * with data attributes: data-reveal, data-count, data-parallax, data-magnetic.
+ * with data attributes: data-reveal, data-print, data-rule, data-count, data-parallax,
+ * data-magnetic, data-tilt, data-scrub-line.
  * Headings, cards and grid items reveal automatically.
  */
 export default function PageReveal({ children }: { children: React.ReactNode }) {
@@ -153,8 +247,9 @@ export default function PageReveal({ children }: { children: React.ReactNode }) 
       // Server-rendered sections hydrate in chunks. Waiting a beat keeps GSAP's inline
       // styles off nodes React has not claimed yet, which would be a hydration mismatch.
       const start = contextSafe(() => {
-        stops = [setupReveals(el), setupCounters(el), setupMagnetic(el)];
+        stops = [setupReveals(el), setupInk(el), setupCounters(el), setupMagnetic(el), setupTilt(el)];
         setupParallax(el);
+        setupScrub(el);
       });
       const timer = window.setTimeout(start, 160);
 

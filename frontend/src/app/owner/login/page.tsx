@@ -101,11 +101,11 @@ export default function OwnerLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label className="block font-semibold text-[#1C2733] mb-1.5">
+            <label htmlFor="field-owner-username-or-email" className="block font-semibold text-[#1C2733] mb-1.5">
               Owner Username or Email
             </label>
             <div className="relative">
-              <input
+              <input id="field-owner-username-or-email"
                 type="text"
                 required
                 autoFocus
@@ -121,12 +121,12 @@ export default function OwnerLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block font-semibold text-[#1C2733]">
+              <label htmlFor="field-master-password" className="block font-semibold text-[#1C2733]">
                 Master Password
               </label>
             </div>
             <div className="relative">
-              <input
+              <input id="field-master-password"
                 type={showPassword ? "text" : "password"}
                 required
                 autoComplete="current-password"

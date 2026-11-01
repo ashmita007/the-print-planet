@@ -239,17 +239,14 @@ export default function DirectProductShowcase({
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#16324F] tracking-tight leading-[1.08]">
             Stock lines for ID card studios
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
-            Wholesale prices and specifications for rolls, holders, clips and machinery.
-          </p>
         </div>
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#D9601A] transition-colors self-start md:self-auto py-1"
+          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#566373] hover:text-[#D9601A] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
-          <span className="tabular-nums font-mono text-slate-400 font-bold">({totalCount})</span>
+          <span className="tabular-nums font-mono text-[#566373] font-bold">({totalCount})</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
@@ -259,8 +256,8 @@ export default function DirectProductShowcase({
         {/* Category Pills Header with Scroll Controls */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <div className="text-[10px] sm:text-[11px] font-medium text-slate-500 uppercase tracking-[0.12em] flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-slate-400" />
+            <div className="text-[10px] sm:text-[11px] font-medium text-[#566373] uppercase tracking-[0.12em] flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-[#566373]" />
               <span>Category</span>
             </div>
 
@@ -371,6 +368,7 @@ export default function DirectProductShowcase({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search this catalogue"
               placeholder="Search products, SKU (e.g. LAN, V2, DCT)..."
               className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-white border border-[#D8DEE5] text-xs text-[#1C2733] placeholder-[#566373] focus:outline-none focus:border-[#16324F] transition-colors"
             />
@@ -402,7 +400,7 @@ export default function DirectProductShowcase({
                 className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F3F5F7] border border-[#D8DEE5] hover:border-[#16324F] text-[11px] sm:text-xs font-semibold text-[#1C2733] hover:text-[#16324F] rounded-lg sm:rounded-md px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
                 aria-label="Open sort products modal"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#566373]" />
                 <span className="font-bold">{SORT_LABELS[sortBy]}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#566373]" />
               </button>
@@ -437,7 +435,7 @@ export default function DirectProductShowcase({
               {/* Left Item Counter */}
               <div className="text-xs text-[#566373] font-medium order-2 sm:order-1 text-center sm:text-left">
                 Showing <strong className="text-[#16324F] font-bold">{startIndex + 1}</strong>–<strong className="text-[#16324F] font-bold">{endIndex}</strong> of <strong className="text-[#16324F] font-bold">{totalCount}</strong> products
-                <span className="text-slate-400 ml-1.5">(Page {currentPage} of {totalPages})</span>
+                <span className="text-[#566373] ml-1.5">(Page {currentPage} of {totalPages})</span>
               </div>
 
               {/* Right Pagination Navigation */}
@@ -458,7 +456,7 @@ export default function DirectProductShowcase({
                 {getPageNumbers().map((num, idx) => {
                   if (num === "...") {
                     return (
-                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-slate-400 select-none">
+                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-[#566373] select-none">
                         ...
                       </span>
                     );

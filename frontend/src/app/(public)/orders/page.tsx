@@ -89,10 +89,10 @@ export default function ClientOrdersDashboardPage() {
       case "reviewing":
         return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#16324F]/10 text-[#16324F] border border-[#16324F]/20">Technical Review</span>;
       case "quoted":
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Quotation Ready</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">Quotation Ready</span>;
       case "proofing":
       case "in_production":
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">In Production</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">In Production</span>;
       case "dispatched":
       case "completed":
         return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Dispatched / Complete</span>;
@@ -121,7 +121,7 @@ export default function ClientOrdersDashboardPage() {
 
         <div className="flex items-center gap-2.5 shrink-0">
           <Link
-            href="/bulk-orders"
+            href="/corporate"
             className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5"
           >
             <PlusCircle className="w-4 h-4" />
@@ -154,12 +154,12 @@ export default function ClientOrdersDashboardPage() {
           <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.reviewing}</div>
         </div>
         <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
-          <span className="text-[11px] font-semibold text-purple-600 uppercase">Quoted</span>
-          <div className="text-xl sm:text-2xl font-extrabold text-purple-600">{metrics.quoted}</div>
+          <span className="text-[11px] font-semibold text-[#16324F] uppercase">Quoted</span>
+          <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.quoted}</div>
         </div>
         <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
-          <span className="text-[11px] font-semibold text-indigo-600 uppercase">In Production</span>
-          <div className="text-xl sm:text-2xl font-extrabold text-indigo-600">{metrics.in_production}</div>
+          <span className="text-[11px] font-semibold text-[#16324F] uppercase">In Production</span>
+          <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.in_production}</div>
         </div>
         <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
           <span className="text-[11px] font-semibold text-emerald-600 uppercase">Completed</span>
@@ -218,7 +218,7 @@ export default function ClientOrdersDashboardPage() {
                     </td>
                     <td className="px-5 py-4">
                       {o.organization_type === "school" || o.organization_type === "college" ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
+                        <span className="inline-flex items-center gap-1 text-[11px] text-[#16324F] bg-[#EDF1F6] px-2 py-0.5 rounded">
                           <GraduationCap className="w-3 h-3" />
                           <span>School</span>
                         </span>
@@ -267,7 +267,7 @@ export default function ClientOrdersDashboardPage() {
               You do not have any active bulk inquiries under this account yet. Submit your specifications to start your order.
             </p>
             <Link
-              href="/bulk-orders"
+              href="/corporate"
               className="inline-block bg-[#D9601A] text-white px-4 py-2 rounded-lg text-xs font-bold"
             >
               Start New Bulk Order

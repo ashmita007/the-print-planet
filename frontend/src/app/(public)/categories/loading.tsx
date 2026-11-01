@@ -3,7 +3,9 @@ import React from "react";
 export default function CategoriesLoading() {
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-8 anim-fade-in">
-      <div className="h-3 w-44 skeleton" />
+      <div className="h-11 flex items-center">
+        <div className="h-3 w-44 skeleton" />
+      </div>
 
       <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
         <div className="h-3 w-52 skeleton" />

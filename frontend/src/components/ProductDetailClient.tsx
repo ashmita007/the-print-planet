@@ -11,7 +11,6 @@ import {
   Truck,
   Phone,
   Mail,
-  CheckCircle2,
   ZoomIn,
   Check,
   Copy,
@@ -24,9 +23,7 @@ import {
   UploadCloud,
   FileText,
   Sliders,
-  MapPin,
   Sparkles,
-  ShieldCheck,
   Plus,
   Minus,
   Paperclip,
@@ -47,7 +44,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [modalOpen, setModalOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copiedSku, setCopiedSku] = useState(false);
-  const [activeTab, setActiveTab] = useState<"specs" | "overview" | "hardware" | "shipping">("specs");
+  const [activeTab, setActiveTab] = useState<"specs" | "overview">("specs");
 
   // Customization & Ordering options
   const moq = product.minimum_order_quantity || 1;
@@ -56,8 +53,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [selectedDimensions, setSelectedDimensions] = useState<string>(product.dimensions || "Standard");
   const [customText, setCustomText] = useState<string>("");
   const [artworkFile, setArtworkFile] = useState<File | null>(null);
-  const [pincode, setPincode] = useState<string>("");
-  const [pincodeVerified, setPincodeVerified] = useState<boolean>(false);
   const [addedSuccess, setAddedSuccess] = useState<boolean>(false);
 
   const initialImage = getProductImageUrl(product);
@@ -123,36 +118,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
   };
 
-  const checkPincode = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (pincode.trim().length === 6 && /^\d+$/.test(pincode.trim())) {
-      setPincodeVerified(true);
-    }
-  };
-
   // Highlights
-  const dynamicHighlights: { label: string; value: string }[] = [];
-  if (product.dimensions) {
-    dynamicHighlights.push({ label: "Dimensions / Format", value: product.dimensions });
-  }
-  if (product.material) {
-    dynamicHighlights.push({ label: "Material / Build", value: product.material });
-  }
-  if (product.color) {
-    dynamicHighlights.push({ label: "Color / Finish", value: product.color });
-  }
-  if (product.minimum_order_quantity) {
-    dynamicHighlights.push({ label: "Minimum Order", value: `${product.minimum_order_quantity} Units MOQ` });
-  }
-  if (product.specifications && typeof product.specifications === "object") {
-    for (const [k, v] of Object.entries(product.specifications)) {
-      if (dynamicHighlights.length >= 4) break;
-      if (v && typeof v === "string" && !dynamicHighlights.some((h) => h.label.toLowerCase() === k.toLowerCase())) {
-        dynamicHighlights.push({ label: k, value: v });
-      }
-    }
-  }
-
   const isMachine =
     product.category?.slug?.includes("machine") ||
     product.category?.name?.toLowerCase().includes("machine");
@@ -242,54 +208,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           )}
 
-          {/* Pincode Check & Delivery Guarantees */}
-          <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
-            <h4 className="font-bold text-[#16324F] text-xs uppercase tracking-wider flex items-center gap-1.5">
-              <Truck className="w-4 h-4 text-[#D9601A]" /> Delivery &amp; Pincode Check
-            </h4>
-
-            <form onSubmit={checkPincode} className="flex gap-2">
-              <div className="relative flex-1">
-                <input
-                  aria-label="Delivery pincode"
-                  type="text"
-                  maxLength={6}
-                  placeholder="Enter 6-digit delivery pincode..."
-                  value={pincode}
-                  onChange={(e) => {
-                    setPincode(e.target.value);
-                    setPincodeVerified(false);
-                  }}
-                  className="w-full bg-white border border-slate-200 rounded-md px-3 py-2 text-xs text-slate-900 outline-none focus:border-[#D9601A] font-mono"
-                />
-                <MapPin className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-[#D9601A] hover:bg-[#B94E12] text-white text-xs font-semibold rounded-md transition-colors shrink-0"
-              >
-                Check
-              </button>
-            </form>
-
-            {pincodeVerified && (
-              <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Express Courier &amp; Cargo available for pincode {pincode}. Dispatches in 24h.</span>
-              </div>
-            )}
-
-            <div className="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-slate-200">
-              <div className="p-2 bg-white rounded-lg border border-slate-200 flex items-center gap-1.5">
-                <FileCheck2 className="w-3.5 h-3.5 text-[#D9601A]" />
-                <span className="font-semibold text-slate-800">GST Invoice Ready</span>
-              </div>
-              <div className="p-2 bg-white rounded-lg border border-slate-200 flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" />
-                <span className="font-semibold text-slate-800">Factory QC Passed</span>
-              </div>
-            </div>
-          </div>
+          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#475565]">
+            <li className="flex items-center gap-1.5">
+              <FileCheck2 className="w-4 h-4 text-[#D9601A]" aria-hidden="true" /> GST invoice
+            </li>
+            <li className="flex items-center gap-1.5">
+              <Truck className="w-4 h-4 text-[#D9601A]" aria-hidden="true" /> Delivery across India
+            </li>
+          </ul>
         </div>
 
         {/* ========================================================= */}
@@ -382,10 +308,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {/* Material & Size Selector */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                <label htmlFor="field-material-finish" className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Material / Finish
                 </label>
-                <select aria-label="Material / Finish"
+                <select id="field-material-finish" aria-label="Material / Finish"
                   value={selectedMaterial}
                   onChange={(e) => setSelectedMaterial(e.target.value)}
                   className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-[#D9601A]"
@@ -399,10 +325,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                <label htmlFor="field-dimensions-format" className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Dimensions / Format
                 </label>
-                <input aria-label="Dimensions / Format"
+                <input id="field-dimensions-format" aria-label="Dimensions / Format"
                   type="text"
                   value={selectedDimensions}
                   onChange={(e) => setSelectedDimensions(e.target.value)}
@@ -413,10 +339,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
             {/* Custom Branding Text Field */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="field-custom-branding-text-organization" className="block text-xs font-semibold text-slate-700 mb-1">
                 Custom Branding Text / Organization Name (Optional)
               </label>
-              <input aria-label="Custom Branding Text / Organization Name (Optional)"
+              <input id="field-custom-branding-text-organization" aria-label="Custom Branding Text / Organization Name (Optional)"
                 type="text"
                 placeholder="e.g. Acme Corp 2026, Bangalore Tech Summit..."
                 value={customText}
@@ -532,22 +458,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           </div>
 
-          {/* Highlights 4-Grid */}
-          {dynamicHighlights.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-              {dynamicHighlights.map((item, idx) => (
-                <div key={idx} className="p-3 bg-slate-50 border border-slate-200 rounded-md">
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block truncate">
-                    {item.label}
-                  </span>
-                  <span className="font-extrabold text-slate-900 mt-0.5 block text-xs truncate">
-                    {item.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-
           {/* Content Tabs */}
           <div className="pt-4 border-t border-slate-200 space-y-4">
             <div className="flex border-b border-slate-200 gap-2 overflow-x-auto scrollbar-thin">
@@ -560,7 +470,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
               >
-                Technical Specifications
+                Specifications
               </button>
               <button
                 type="button"
@@ -571,29 +481,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
               >
-                Overview &amp; Applications
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("hardware")}
-                className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === "hardware"
-                    ? "border-[#D9601A] text-[#D9601A]"
-                    : "border-transparent text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                Workflow &amp; Ordering
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("shipping")}
-                className={`py-2 px-3 text-xs font-bold border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === "shipping"
-                    ? "border-[#D9601A] text-[#D9601A]"
-                    : "border-transparent text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                Packaging &amp; Dispatch
+                Details
               </button>
             </div>
 
@@ -604,7 +492,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <tbody>
                     <tr className="bg-slate-50">
                       <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200 w-2/5">
-                        Product Code (SKU)
+                        SKU
                       </td>
                       <td className="py-2.5 px-4 font-bold text-slate-900 font-mono border-b border-slate-200 w-3/5">
                         {product.sku}
@@ -612,7 +500,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     </tr>
                     <tr className="bg-white">
                       <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
-                        Category Sector
+                        Category
                       </td>
                       <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200 uppercase">
                         {formatCategoryName(product.category?.name || "General Catalog")}
@@ -621,7 +509,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     {product.material && (
                       <tr className="bg-slate-50">
                         <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
-                          Material / Construction
+                          Material
                         </td>
                         <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
                           {product.material}
@@ -631,7 +519,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     {product.dimensions && (
                       <tr className="bg-white">
                         <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
-                          Dimensions / Sheet Format
+                          Size
                         </td>
                         <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
                           {product.dimensions}
@@ -641,7 +529,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     {product.color && (
                       <tr className="bg-slate-50">
                         <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
-                          Color / Surface Finish
+                          Finish
                         </td>
                         <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
                           {product.color}
@@ -670,82 +558,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {/* Overview Tab */}
             {activeTab === "overview" && (
               <div className="space-y-3 text-xs text-slate-700 leading-relaxed">
-                <div className="bg-slate-50 p-4 rounded-md border border-slate-200 space-y-2">
-                  <h4 className="font-bold text-slate-900 text-xs">
-                    Industrial Application Overview
-                  </h4>
-                  <p className="whitespace-pre-line leading-relaxed">
-                    {product.description ||
-                      product.short_description ||
-                      "Manufactured specifically for ID card printers, lanyard manufacturing, corporate security, and institutional badge manufacturing."}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Workflow Tab */}
-            {activeTab === "hardware" && (
-              <div className="space-y-3 text-xs">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div className="p-3 bg-white border border-slate-200 rounded-md flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#FBF0E8] flex items-center justify-center font-bold text-[#D9601A] shrink-0 text-xs">
-                      01
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-slate-900">Pick Model &amp; Quantity</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        Select batch size, dimensions, and custom accessories.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-white border border-slate-200 rounded-md flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#FBF0E8] flex items-center justify-center font-bold text-[#D9601A] shrink-0 text-xs">
-                      02
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-slate-900">Upload Logo &amp; Approve Proof</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        Submit artwork for free 3D digital proofing and alignment verification.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-white border border-slate-200 rounded-md flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-[#FBF0E8] flex items-center justify-center font-bold text-[#D9601A] shrink-0 text-xs">
-                      03
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-slate-900">Factory Production</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        High-speed precision manufacturing with strict ISO quality standards.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-white border border-slate-200 rounded-md flex items-start gap-2.5">
-                    <div className="w-7 h-7 rounded bg-emerald-50 flex items-center justify-center font-bold text-emerald-600 shrink-0 text-xs">
-                      04
-                    </div>
-                    <div>
-                      <h5 className="font-bold text-slate-900">24–48h Dispatch</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        Insured courier transit with full tracking directly from Bangalore.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Shipping Tab */}
-            {activeTab === "shipping" && (
-              <div className="p-4 bg-white border border-slate-200 rounded-md space-y-2 text-xs text-slate-600">
-                <h5 className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <Box className="w-4 h-4 text-[#D9601A]" /> Secure Packaging Standards
-                </h5>
-                <p>
-                  Every lot is individually shrink-wrapped with moisture-absorbent desiccant and packed in heavy-duty 5-ply export master cartons for damage-free transit.
+                <p className="whitespace-pre-line leading-relaxed text-sm">
+                  {product.description || product.short_description || "Ask us for the full details of this product."}
                 </p>
               </div>
             )}
+
           </div>
         </div>
       </div>

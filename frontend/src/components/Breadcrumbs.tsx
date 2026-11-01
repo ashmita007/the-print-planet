@@ -7,14 +7,18 @@ interface BreadcrumbsProps {
     label: string;
     href?: string;
   }[];
+  tone?: "light" | "dark";
 }
 
-export default function Breadcrumbs({ items }: BreadcrumbsProps) {
+export default function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps) {
+  const dark = tone === "dark";
+  const link = dark ? "hover:text-white" : "hover:text-[#16324F]";
+
   return (
-    <nav aria-label="Breadcrumb" className="py-3 text-xs text-[#566373]">
+    <nav aria-label="Breadcrumb" className={`py-3 text-xs ${dark ? "text-slate-400" : "text-[#566373]"}`}>
       <ol className="flex items-center flex-wrap gap-1.5">
         <li className="flex items-center">
-          <Link href="/" className="hover:text-[#16324F] flex items-center gap-1">
+          <Link href="/" className={`${link} flex items-center gap-1`}>
             <Home className="w-3.5 h-3.5" />
             <span>Home</span>
           </Link>
@@ -23,11 +27,11 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
           <li key={index} className="flex items-center gap-1.5">
             <ChevronRight className="w-3 h-3 text-slate-400 shrink-0" />
             {item.href && index < items.length - 1 ? (
-              <Link href={item.href} className="hover:text-[#16324F] truncate max-w-[200px]">
+              <Link href={item.href} className={`${link} truncate max-w-[200px]`}>
                 {item.label}
               </Link>
             ) : (
-              <span className="font-semibold text-[#1C2733] truncate max-w-[250px]">
+              <span className={`font-semibold truncate max-w-[250px] ${dark ? "text-slate-200" : "text-[#1C2733]"}`}>
                 {item.label}
               </span>
             )}

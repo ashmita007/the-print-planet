@@ -1,316 +1,83 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import {
-  Printer,
-  Layers,
-  Sparkles,
-  Cpu,
-  Package,
-  ShieldCheck,
-  Scissors,
-  Palette,
-  ArrowRight,
-  PhoneCall,
-  CheckCircle2,
-  Clock,
-  Zap,
-} from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { ArrowRight } from "lucide-react";
+import PageHero from "@/components/PageHero";
+import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
-  title: "Commercial Printing Services & Manufacturing Capabilities | The Print Planet",
+  title: "Printing Services: Lanyards, RFID Cards, Packaging | The Print Planet",
   description:
-    "Explore our advanced printing capabilities including digital sublimation lanyards, UV flatbed printing, RFID smart card encoding, lens packaging fabrication, and holographic stamping.",
+    "Lanyard sublimation and screen printing, RFID card encoding, lens packaging, holographic foil, card die-cutting, lamination and kitting from Bengaluru.",
 };
 
 const SERVICES = [
-  {
-    icon: Printer,
-    title: "Digital Sublimation Lanyard Printing",
-    subtitle: "Full-Color Edge-to-Edge Photographic Transfer",
-    desc: "Continuous roll-to-roll heat transfer sublimation on pure micro-weave white satin polyester. Delivers vivid photographic graphics, smooth gradients, and razor-sharp text that will never fade, peel, or wash out.",
-    specs: ["12mm, 16mm, 20mm, 25mm widths", "Double-sided full CMYK printing", "Washfast & UV-resistant pigments", "Custom PMS Pantone color matching"],
-    badge: "High Volume Flagship",
-  },
-  {
-    icon: Palette,
-    title: "Screen Printing on Satin Ribbons",
-    subtitle: "Precision Spot Color & Raised Texture",
-    desc: "Industrial silk-screen printing tailored for single and multi-spot color corporate branding on solid-dyed satin polyester rolls. Ensures crisp typography and intense color contrast for official corporate straps.",
-    specs: ["Pantone matched ink formulations", "High tensile elastic ink bonding", "Single or repeat logo layouts", "Metallic gold & silver ink options"],
-    badge: "Fast Dispatch",
-  },
-  {
-    icon: Cpu,
-    title: "RFID Smart Card Personalization & Chip Encoding",
-    subtitle: "Contactless 13.56MHz Mifare & 125kHz LF Solutions",
-    desc: "End-to-end smart card production including thermal re-transfer printing, UID number laser engraving, magnetic stripe encoding (HiCo/LoCo), and internal contactless chip cryptographic data provisioning.",
-    specs: ["Mifare 1K/4K, NTAG, Desfire EV1/EV2", "EM4100 / TK4100 125kHz proximity", "Thermal re-transfer photo printing", "Database matched batch serialization"],
-    badge: "Enterprise Security",
-  },
-  {
-    icon: Package,
-    title: "Lens Packaging & Optical Box Manufacturing",
-    subtitle: "Custom Rigid Boxes, Sleeves & Micro-Fiber Envelopes",
-    desc: "Specialized packaging solutions engineered specifically for eyewear, lens laboratories, optical retailers, and precision optics. Custom structural box fabrication with protective foam dies and high-grade finishes.",
-    specs: ["Custom die-cut internal foam inserts", "Foil stamped optical logos", "Velvet & micro-fiber lens pouches", "Moisture & scratch resistant coatings"],
-    badge: "Optical Industry",
-  },
-  {
-    icon: Sparkles,
-    title: "Holographic Hot Stamping & Security Overlays",
-    subtitle: "Anti-Counterfeit Protection & Metallic Foiling",
-    desc: "High-precision hot stamping application of 2D/3D diffraction security holograms, signature tamper-evident panels, and lustrous gold/silver metallic foil accents directly on credentials and luxury cards.",
-    specs: ["Registered optical hologram patches", "Scratch-off pin security foils", "Gold, silver, bronze & rainbow foils", "Tamper-evident void destruct patterns"],
-    badge: "Security Standard",
-  },
-  {
-    icon: Scissors,
-    title: "High-Speed Card Die-Cutting & Punching",
-    subtitle: "ISO CR-80 Standard & Bespoke Non-Standard Shapes",
-    desc: "Automated hydraulic and servo punching services converting raw printed laminated sheets into smooth-edged CR-80 cards, custom luggage tags, contactless keyfobs, and round parking discs.",
-    specs: ["Standard ISO 7810 CR80 (85.6 × 54mm)", "Burr-free hydraulic shearing", "Corner radius R=3.18mm precision", "Custom multi-cavity bespoke dies"],
-    badge: "Precision Cutting",
-  },
-  {
-    icon: Layers,
-    title: "Industrial Lamination & Fusing Service",
-    subtitle: "Thermal Oil Pressure Lamination for Polycarbonate & PVC",
-    desc: "Multi-daylight hydraulic hot/cold fusing services for thick multi-layer card sandwiches. Flawless bonding of printed core sheets, RFID inlays, magnetic tapes, and scratch-resistant protective overlays.",
-    specs: ["Mirror glossy 8K & frosted matte", "Brushed metal texture finishes", "Layer thicknesses from 0.3mm to 1.2mm", "Bubble-free optical clarity"],
-    badge: "Heavy Industrial",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Assembly, Fitting Attachment & Kitting",
-    subtitle: "Turnkey ID Badge & Hardware Packing",
-    desc: "Complete post-print finishing including metal dog hook crimping, breakaway safety clip insertion, clear holder sleeve insertion, lanyard pairing, and individual barcoded retail or corporate bagging.",
-    specs: ["Automated metal clamp crimping", "Custom pre-collated employee kits", "Barcode & QR serial labeled packaging", "Bulk carton palletizing ready for logistics"],
-    badge: "Turnkey Finishing",
-  },
+  { title: "Lanyard sublimation", note: "Full colour on both sides. 12, 16, 20 and 25 mm." },
+  { title: "Screen-printed lanyards", note: "Spot colours, Pantone matched. Gold and silver inks." },
+  { title: "RFID cards and encoding", note: "Mifare, NTAG and EM4100, numbered to your list." },
+  { title: "Lens and optical packaging", note: "Boxes, foam inserts, foil logos and pouches." },
+  { title: "Holograms and foil", note: "Hologram patches, scratch-off panels, metallic foil." },
+  { title: "Card die-cutting", note: "CR-80 cards, key fobs, luggage tags and custom shapes." },
+  { title: "Lamination and fusing", note: "Gloss, matte and brushed finishes, 0.3 to 1.2 mm." },
+  { title: "Assembly and kitting", note: "Hooks crimped, holders fitted, packed per person." },
+];
+
+const STEPS = [
+  { title: "Proof", note: "You approve the artwork." },
+  { title: "Sample", note: "A pilot piece for large orders." },
+  { title: "Print", note: "The full run on our machines." },
+  { title: "Dispatch", note: "Checked, packed and shipped." },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
-      <Breadcrumbs items={[{ label: "Commercial Services" }]} />
+    <div>
+      <PageHero
+        title="What we print"
+        lead="Eight production lines under one roof in Bengaluru."
+        crumbs={[{ label: "Services" }]}
+      />
 
-      {/* Hero Section */}
-      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
-        <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
-            <Zap className="w-3.5 h-3.5" />
-            <span>Industrial Printing & Fabrication Solutions</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
-            Commercial Printing Capabilities & Value-Added Services
-          </h1>
-          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
-            From high-speed roll-to-roll sublimation lanyards to automated smart card chip encoding and specialized optical lens packaging, The Print Planet powers businesses with state-of-the-art machinery and certified quality standards.
-          </p>
-          <div className="pt-2 flex flex-wrap gap-3 sm:gap-4">
-            <Link
-              href="/quote"
-              className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
-            >
-              <span>Request Service Quote</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a
-              href="https://wa.me/919741808034?text=Hi%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20services."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white hover:bg-[#F3F5F7] text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-2"
-            >
-              <PhoneCall className="w-4 h-4 text-[#D9601A]" />
-              <span>WhatsApp Direct</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Production Metrics Highlights */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
-        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">50,000+</div>
-          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Cards / Day</div>
-          <div className="text-[11px] text-[#566373] mt-0.5">High-speed hydraulic production</div>
-        </div>
-        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">10,000 m</div>
-          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Lanyard Ribbon</div>
-          <div className="text-[11px] text-[#566373] mt-0.5">Sublimation & screen print rolls</div>
-        </div>
-        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">±0.1 mm</div>
-          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Cutting Precision</div>
-          <div className="text-[11px] text-[#566373] mt-0.5">Optical servo mark alignment</div>
-        </div>
-        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">24-48h</div>
-          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Rush Dispatch</div>
-          <div className="text-[11px] text-[#566373] mt-0.5">Rapid turnaround for urgent bulk runs</div>
-        </div>
-      </div>
-
-      {/* Services Grid */}
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-xl sm:text-3xl font-extrabold text-[#16324F]">
-            Comprehensive Printing & Customization Services
-          </h2>
-          <p className="text-xs sm:text-sm text-[#566373] mt-1">
-            Explore our specialized manufacturing lines designed for high-volume corporate buyers, retailers, and institutions.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
-          {SERVICES.map((srv, idx) => {
-            const IconComponent = srv.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-white rounded-lg border border-[#D8DEE5] p-5 sm:p-7 shadow-xs hover:shadow-md transition-all hover:border-[#16324F]/30 flex flex-col justify-between"
+      <section aria-label="Services" className="max-w-7xl mx-auto px-0 sm:px-6 py-6 sm:py-12">
+        <ul className="border-y border-[#D8DEE5] divide-y divide-[#D8DEE5]">
+          {SERVICES.map((service) => (
+            <li key={service.title} data-reveal>
+              <Link
+                href={`/quote?service=${encodeURIComponent(service.title)}`}
+                className="ink-row grid grid-cols-[1fr_auto] md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)_auto] items-center gap-x-6 gap-y-1 px-4 sm:px-6 py-4 sm:py-5"
               >
-                <div className="space-y-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="w-12 h-12 rounded-md bg-[#16324F]/10 text-[#16324F] flex items-center justify-center shrink-0">
-                      <IconComponent className="w-6 h-6" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-[#16324F] px-2.5 py-1 rounded-full border border-slate-200">
-                      {srv.badge}
-                    </span>
-                  </div>
+                <span className="ink-row-title text-lg sm:text-2xl font-bold tracking-tight text-[#16324F]">
+                  {service.title}
+                </span>
+                <span className="ink-row-note row-start-2 md:row-start-auto text-sm text-[#566373]">
+                  {service.note}
+                </span>
+                <ArrowRight className="ink-row-arrow row-span-2 md:row-span-1 w-5 h-5 text-[#B94E12]" aria-hidden="true" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-                  <div>
-                    <h3 className="text-base sm:text-lg font-bold text-[#16324F] leading-snug">
-                      {srv.title}
-                    </h3>
-                    <p className="text-xs font-semibold text-[#D9601A] mt-0.5">
-                      {srv.subtitle}
-                    </p>
-                    <p className="text-xs text-[#1C2733] leading-relaxed mt-2.5">
-                      {srv.desc}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-slate-100">
-                    <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                      Technical Capabilities:
-                    </div>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700">
-                      {srv.specs.map((item, i) => (
-                        <li key={i} className="flex items-center gap-1.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                          <span className="truncate">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between">
-                  <Link
-                    href={`/quote?service=${encodeURIComponent(srv.title)}`}
-                    className="text-xs font-bold text-[#16324F] hover:text-[#D9601A] transition-colors flex items-center gap-1"
-                  >
-                    <span>Request Pricing</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                  <Link
-                    href="/products"
-                    className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
-                  >
-                    View Products
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+      <section aria-labelledby="steps-heading" className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
+        <h2 id="steps-heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16324F]">
+          How an order runs
+        </h2>
+        <div className="relative mt-8">
+          <div data-scrub-line aria-hidden="true" className="hidden sm:block absolute left-0 right-0 top-[5px] h-0.5 bg-[#D9601A]" />
+          <ol className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {STEPS.map((step) => (
+              <li key={step.title} className="relative sm:pt-7">
+                <span aria-hidden="true" className="hidden sm:block absolute top-0 left-0 w-3 h-3 rounded-full bg-[#16324F] ring-4 ring-white" />
+                <h3 className="font-bold text-[#16324F]">{step.title}</h3>
+                <p className="text-sm text-[#566373] mt-1">{step.note}</p>
+              </li>
+            ))}
+          </ol>
         </div>
-      </div>
+      </section>
 
-      {/* Production Process Walkthrough */}
-      <div className="bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg p-6 sm:p-10 space-y-6">
-        <div className="max-w-2xl">
-          <span className="text-xs font-bold text-[#D9601A] uppercase tracking-wider">
-            Quality Assurance Workflow
-          </span>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-[#16324F] mt-1">
-            How We Execute Your Bulk Printing Orders
-          </h2>
-          <p className="text-xs sm:text-sm text-[#566373] mt-1">
-            Our disciplined manufacturing workflow ensures color fidelity, mechanical integrity, and on-time shipment.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#16324F] text-white flex items-center justify-center font-bold text-xs">
-              01
-            </div>
-            <h4 className="font-bold text-sm text-[#16324F]">Digital Pre-Press Proof</h4>
-            <p className="text-xs text-[#566373] leading-relaxed">
-              We review vector artwork, ensure color safety margins, and provide a digital rendering for client sign-off.
-            </p>
-          </div>
-
-          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#16324F] text-white flex items-center justify-center font-bold text-xs">
-              02
-            </div>
-            <h4 className="font-bold text-sm text-[#16324F]">Physical Sample Run</h4>
-            <p className="text-xs text-[#566373] leading-relaxed">
-              For volume corporate contracts, we produce and dispatch a physical pilot sample for approval.
-            </p>
-          </div>
-
-          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#16324F] text-white flex items-center justify-center font-bold text-xs">
-              03
-            </div>
-            <h4 className="font-bold text-sm text-[#16324F]">High-Capacity Run</h4>
-            <p className="text-xs text-[#566373] leading-relaxed">
-              Automated multi-layer hydraulic fusing, continuous heat transfer, and optical servo cutting at scale.
-            </p>
-          </div>
-
-          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#D9601A] text-white flex items-center justify-center font-bold text-xs">
-              04
-            </div>
-            <h4 className="font-bold text-sm text-[#16324F]">QC & Fast Dispatch</h4>
-            <p className="text-xs text-[#566373] leading-relaxed">
-              100% tensile and visual defect inspection followed by insured pan-India courier or freight dispatch.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom CTA Banner */}
-      <div className="surface-card p-6 sm:p-8 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-bold">Need a Custom Printing Specification?</h3>
-          <p className="text-sm text-slate-500 max-w-xl">
-            Our technical engineers assist with custom mold dies, pantone yarn dyeing, and customized optical packaging dimensions.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
-          <Link
-            href="/quote"
-            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors"
-          >
-            Submit Specifications
-          </Link>
-          <Link
-            href="/contact"
-            className="bg-white hover:bg-[#F3F5F7] text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all"
-          >
-            Contact Factory Office
-          </Link>
-        </div>
-      </div>
+      <PageCta title="Have artwork ready?" whatsappText="Hi, I would like to enquire about your printing services." />
     </div>
   );
 }

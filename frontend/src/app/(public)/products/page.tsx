@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Filter, Layers, ArrowUpDown, Search, RotateCcw, Box } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { getCategories, getProducts } from "@/lib/api";
@@ -62,31 +62,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     productsData.count;
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
-      <Breadcrumbs
-        items={[
-          { label: "Product Catalogue", href: "/products" },
+    <div>
+      <PageHero
+        title={activeCategory ? activeCategory.name : "All products"}
+        lead={activeCategory?.description || undefined}
+        crumbs={[
+          { label: "Products", href: "/products" },
           ...(activeCategory ? [{ label: activeCategory.name }] : []),
         ]}
       />
-
-      {/* Page header */}
-      <div className="border-b border-slate-200 pb-6 anim-fade-up">
-        <div className="max-w-3xl space-y-2">
-          <span className="text-[11px] font-bold text-[#D9601A] uppercase tracking-[0.14em]">
-            Official Wholesale Catalogue
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#16324F]">
-            {activeCategory ? activeCategory.name : "All Products & Equipment"}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-            {activeCategory
-              ? activeCategory.description
-              : "Complete inventory of ID card holders, color satin rolls, metal clips, dog hooks, punching machinery, and RFID cards."}
-          </p>
-        </div>
-      </div>
-
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-6">
       {/* Mobile-Only Filter & Sort Bar with Small Modal Trigger */}
       <MobileFilterSortBar
         categories={categories}
@@ -118,11 +103,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           {/* Search Filter Form */}
           <form method="get" action="/products" className="space-y-3">
             {params.category && <input type="hidden" name="category" value={params.category} />}
-            <label className="block text-xs font-bold text-slate-800">Keyword Search</label>
+            <label htmlFor="field-keyword-search" className="block text-xs font-bold text-slate-800">Keyword Search</label>
             <div className="relative">
-              <input
+              <input id="field-keyword-search"
                 type="text"
                 name="search"
+                aria-label="Search products"
                 defaultValue={params.search || ""}
                 placeholder="Model code, size..."
                 className="w-full bg-white border border-slate-200 rounded-md pl-8 pr-3 py-2 text-xs text-slate-900 outline-none focus:border-[#D9601A]"
@@ -293,6 +279,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             }}
           />
         </section>
+      </div>
       </div>
     </div>
   );

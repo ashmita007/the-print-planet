@@ -59,9 +59,9 @@ export default function ClientLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
           <div>
-            <label className="block font-bold text-[#1C2733] mb-1">Email or Username</label>
+            <label htmlFor="field-email-or-username" className="block font-bold text-[#1C2733] mb-1">Email or Username</label>
             <div className="relative">
-              <input
+              <input id="field-email-or-username"
                 type="text"
                 required
                 value={username}
@@ -75,7 +75,7 @@ export default function ClientLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block font-bold text-[#1C2733]">Password</label>
+              <label htmlFor="field-password" className="block font-bold text-[#1C2733]">Password</label>
               <Link
                 href="/account/forgot-password"
                 className="text-[11px] font-semibold text-[#D9601A] hover:underline"
@@ -84,7 +84,7 @@ export default function ClientLoginPage() {
               </Link>
             </div>
             <div className="relative">
-              <input
+              <input id="field-password"
                 type="password"
                 required
                 value={password}
@@ -109,7 +109,7 @@ export default function ClientLoginPage() {
         <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#566373]">
           <div>
             New bulk order client?{" "}
-            <Link href="/bulk-orders" className="text-[#D9601A] font-bold hover:underline">
+            <Link href="/corporate" className="text-[#D9601A] font-bold hover:underline">
               Submit your bulk inquiry to auto-register
             </Link>
           </div>

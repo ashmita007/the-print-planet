@@ -1,5 +1,7 @@
 "use client";
 
+import { ColorBar } from "@/components/animations/PrintMarks";
+import { HERO_DEFAULTS, HERO_LIMITS, heroCopy, heroHeadlineClass } from "@/lib/hero";
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -181,13 +183,10 @@ function OwnerSettingsInner() {
       setLogoUrl(s.logo_url || "");
 
       // Hero
-      setHeroBadge(s.hero_badge || "The Print Planet™ • Specialist in PVC Cards & ID Systems");
-      setHeroTitle(s.hero_title || "The Print Planet — Factory Direct");
-      setHeroSubtitle(s.hero_subtitle || s.tagline || "Specialist in PVC Cards, Lens Packaging & Commercial Printing Solutions");
-      setHeroCaption(
-        s.hero_caption ||
-          "Official portal of The Print Planet (theprintplanet.co.in) — India's verified specialist in PVC cards, CR-80 fusing sheets, lens packaging & cleaning supplies, rigid ID card holders, satin lanyard rolls, commercial printing, and industrial card die-cutting machinery with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
-      );
+      setHeroBadge(s.hero_badge || HERO_DEFAULTS.badge);
+      setHeroTitle(s.hero_title || HERO_DEFAULTS.title);
+      setHeroSubtitle(s.hero_subtitle || HERO_DEFAULTS.subtitle);
+      setHeroCaption(s.hero_caption || HERO_DEFAULTS.caption);
 
       // About
       const about = s.about_data || {};
@@ -585,8 +584,16 @@ function OwnerSettingsInner() {
     );
   }
 
+  const previewHero = heroCopy({
+    hero_badge: heroBadge,
+    hero_title: heroTitle,
+    hero_subtitle: heroSubtitle,
+    hero_caption: heroCaption,
+  });
+  const headlineLength = previewHero.title.length + previewHero.subtitle.length;
+
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
@@ -670,61 +677,47 @@ function OwnerSettingsInner() {
               </p>
             </div>
 
-            {/* Live Preview Card */}
-            <div className="bg-[#0E2238] text-white p-5 sm:p-7 rounded-md border border-white/10 shadow-inner relative overflow-hidden">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#F4A36B] flex items-center gap-1.5">
-                  <Eye className="w-3.5 h-3.5" />
-                  Live Hero Headline Preview
-                </span>
-                <span className="text-[9px] bg-white/10 px-2 py-0.5 rounded text-slate-300">
-                  Public Home View
-                </span>
-              </div>
-
-              <div className="space-y-3 max-w-xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-bold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>{heroBadge || "The Print Planet™ • India's Direct B2B Factory"}</span>
+            {/* Same copy rules and styling as the public homepage hero */}
+            <div>
+              <p className="flex items-center gap-1.5 font-semibold text-[#1C2733] mb-2">
+                <Eye className="w-3.5 h-3.5 text-[#B94E12]" />
+                How it looks on the homepage
+              </p>
+              <div className="bg-[#0E2238] text-white p-6 sm:p-10 rounded-md">
+                <div className="flex items-center gap-3 mb-5">
+                  <ColorBar />
+                  <span className="font-mono text-xs text-slate-300">{previewHero.badge}</span>
                 </div>
-
-                <div className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-                  {heroTitle || "Print Planet — Factory Direct"}
-                  <span className="block text-sm sm:text-base font-bold text-slate-200 mt-1">
-                    {heroSubtitle || "Wholesale ID Cards, Lanyard Rolls & Machinery"}
-                  </span>
-                </div>
-
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  {heroCaption || "Official portal of The Print Planet. India's leading B2B manufacturing hub for satin lanyard rolls, rigid PVC ID card holders, RFID smart cards, dog hooks, and card die cutting machinery with 24–48h pan-India dispatch."}
+                <p className={`${heroHeadlineClass(previewHero)} font-heading font-extrabold tracking-[-0.02em] leading-[1.06] max-w-2xl`}>
+                  {previewHero.title}
+                  <span className="block text-[#F4A36B]">{previewHero.subtitle}</span>
                 </p>
+                <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">{previewHero.caption}</p>
+                <div className="mt-6 inline-flex px-5 py-3 rounded-md bg-[#D9601A] font-bold text-sm">Browse products</div>
               </div>
             </div>
 
             {/* Form Fields */}
             <div className="space-y-4 pt-2">
               <div>
-                <label className="block font-bold text-[#1C2733] mb-1">
-                  Hero Top Trust Badge / Pill Text
+                <label htmlFor="field-small-line-above-the" className="block font-bold text-[#1C2733] mb-1">
+                  Small line above the headline
                 </label>
-                <input
+                <input id="field-small-line-above-the"
                   type="text"
                   value={heroBadge}
                   onChange={(e) => setHeroBadge(e.target.value)}
                   placeholder="e.g. The Print Planet™ • India's Direct B2B Factory"
                   className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
                 />
-                <span className="text-[10px] text-slate-500 mt-0.5 block">
-                  Tip: Use a bullet (•) to split between the company name and tag.
-                </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-[#1C2733] mb-1">
-                    Hero Primary Headline *
+                  <label htmlFor="field-headline" className="block font-bold text-[#1C2733] mb-1">
+                    Headline *
                   </label>
-                  <input
+                  <input id="field-headline"
                     type="text"
                     required
                     value={heroTitle}
@@ -735,10 +728,10 @@ function OwnerSettingsInner() {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#1C2733] mb-1">
-                    Hero Subtitle / Tagline *
+                  <label htmlFor="field-headline-second-line-orange" className="block font-bold text-[#1C2733] mb-1">
+                    Headline second line (orange) *
                   </label>
-                  <input
+                  <input id="field-headline-second-line-orange"
                     type="text"
                     required
                     value={heroSubtitle}
@@ -747,22 +740,27 @@ function OwnerSettingsInner() {
                     className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
                   />
                 </div>
+
+                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#B94E12] font-semibold" : "text-[#566373]"}`}>
+                  Headline total: {headlineLength} of {HERO_LIMITS.headline} characters.
+                  {headlineLength > HERO_LIMITS.headline ? " Longer headlines show smaller on the homepage." : ""}
+                </p>
               </div>
 
               <div>
-                <label className="block font-bold text-[#1C2733] mb-1">
-                  Hero Caption / Explanatory Paragraph *
+                <label htmlFor="field-line-under-the-headline" className="block font-bold text-[#1C2733] mb-1">
+                  Line under the headline *
                 </label>
-                <textarea
-                  rows={4}
+                <textarea id="field-line-under-the-headline"
+                  rows={2}
                   required
                   value={heroCaption}
                   onChange={(e) => setHeroCaption(e.target.value)}
                   placeholder="Official portal of The Print Planet..."
                   className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none leading-relaxed"
                 />
-                <span className="text-[10px] text-slate-500 mt-0.5 block">
-                  Appears directly beneath the main title on the homepage hero banner.
+                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#B94E12] font-semibold" : "text-[#566373]"}`}>
+                  {heroCaption.trim().length} of {HERO_LIMITS.caption} characters recommended.
                 </span>
               </div>
 
@@ -804,8 +802,8 @@ function OwnerSettingsInner() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">Hero Tag Pill</label>
-                  <input
+                  <label htmlFor="field-hero-tag-pill" className="block font-semibold text-[#1C2733] mb-1">Hero Tag Pill</label>
+                  <input id="field-hero-tag-pill"
                     type="text"
                     value={aboutHeroTag}
                     onChange={(e) => setAboutHeroTag(e.target.value)}
@@ -814,8 +812,8 @@ function OwnerSettingsInner() {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1C2733] mb-1">Hero Title</label>
-                  <input
+                  <label htmlFor="field-hero-title" className="block font-semibold text-[#1C2733] mb-1">Hero Title</label>
+                  <input id="field-hero-title"
                     type="text"
                     value={aboutHeroTitle}
                     onChange={(e) => setAboutHeroTitle(e.target.value)}
@@ -825,8 +823,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Hero Subtitle</label>
-                <textarea
+                <label htmlFor="field-hero-subtitle" className="block font-semibold text-[#1C2733] mb-1">Hero Subtitle</label>
+                <textarea id="field-hero-subtitle"
                   rows={2}
                   value={aboutHeroSubtitle}
                   onChange={(e) => setAboutHeroSubtitle(e.target.value)}
@@ -842,8 +840,8 @@ function OwnerSettingsInner() {
               </h3>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Section Heading</label>
-                <input
+                <label htmlFor="field-section-heading" className="block font-semibold text-[#1C2733] mb-1">Section Heading</label>
+                <input id="field-section-heading"
                   type="text"
                   value={aboutStoryTitle}
                   onChange={(e) => setAboutStoryTitle(e.target.value)}
@@ -852,8 +850,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Story Paragraph 1</label>
-                <textarea
+                <label htmlFor="field-story-paragraph-1" className="block font-semibold text-[#1C2733] mb-1">Story Paragraph 1</label>
+                <textarea id="field-story-paragraph-1"
                   rows={3}
                   value={aboutStoryP1}
                   onChange={(e) => setAboutStoryP1(e.target.value)}
@@ -862,8 +860,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Story Paragraph 2</label>
-                <textarea
+                <label htmlFor="field-story-paragraph-2" className="block font-semibold text-[#1C2733] mb-1">Story Paragraph 2</label>
+                <textarea id="field-story-paragraph-2"
                   rows={3}
                   value={aboutStoryP2}
                   onChange={(e) => setAboutStoryP2(e.target.value)}
@@ -880,8 +878,8 @@ function OwnerSettingsInner() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
-                  <label className="block font-semibold text-slate-700 mb-1">Counter 1 (Holders)</label>
-                  <input
+                  <label htmlFor="field-counter-1-holders" className="block font-semibold text-slate-700 mb-1">Counter 1 (Holders)</label>
+                  <input id="field-counter-1-holders"
                     type="text"
                     value={stat1Val}
                     onChange={(e) => setStat1Val(e.target.value)}
@@ -898,8 +896,8 @@ function OwnerSettingsInner() {
                 </div>
 
                 <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
-                  <label className="block font-semibold text-slate-700 mb-1">Counter 2 (Ribbons)</label>
-                  <input
+                  <label htmlFor="field-counter-2-ribbons" className="block font-semibold text-slate-700 mb-1">Counter 2 (Ribbons)</label>
+                  <input id="field-counter-2-ribbons"
                     type="text"
                     value={stat2Val}
                     onChange={(e) => setStat2Val(e.target.value)}
@@ -916,8 +914,8 @@ function OwnerSettingsInner() {
                 </div>
 
                 <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
-                  <label className="block font-semibold text-slate-700 mb-1">Counter 3 (Active SKUs)</label>
-                  <input
+                  <label htmlFor="field-counter-3-active-skus" className="block font-semibold text-slate-700 mb-1">Counter 3 (Active SKUs)</label>
+                  <input id="field-counter-3-active-skus"
                     type="text"
                     value={stat3Val}
                     onChange={(e) => setStat3Val(e.target.value)}
@@ -934,8 +932,8 @@ function OwnerSettingsInner() {
                 </div>
 
                 <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
-                  <label className="block font-semibold text-slate-700 mb-1">Counter 4 (Clients)</label>
-                  <input
+                  <label htmlFor="field-counter-4-clients" className="block font-semibold text-slate-700 mb-1">Counter 4 (Clients)</label>
+                  <input id="field-counter-4-clients"
                     type="text"
                     value={stat4Val}
                     onChange={(e) => setStat4Val(e.target.value)}
@@ -1099,8 +1097,8 @@ function OwnerSettingsInner() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Business Name *</label>
-                <input
+                <label htmlFor="field-business-name" className="block font-semibold text-[#1C2733] mb-1">Business Name *</label>
+                <input id="field-business-name"
                   type="text"
                   required
                   value={businessName}
@@ -1110,8 +1108,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Tagline</label>
-                <input
+                <label htmlFor="field-tagline" className="block font-semibold text-[#1C2733] mb-1">Tagline</label>
+                <input id="field-tagline"
                   type="text"
                   value={tagline}
                   onChange={(e) => setTagline(e.target.value)}
@@ -1122,8 +1120,8 @@ function OwnerSettingsInner() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Official GST Number</label>
-                <input
+                <label htmlFor="field-official-gst-number" className="block font-semibold text-[#1C2733] mb-1">Official GST Number</label>
+                <input id="field-official-gst-number"
                   type="text"
                   value={gstNumber}
                   onChange={(e) => setGstNumber(e.target.value)}
@@ -1132,8 +1130,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Custom Logo URL (optional)</label>
-                <input
+                <label htmlFor="field-custom-logo-url-optional" className="block font-semibold text-[#1C2733] mb-1">Custom Logo URL (optional)</label>
+                <input id="field-custom-logo-url-optional"
                   type="url"
                   value={logoUrl}
                   onChange={(e) => setLogoUrl(e.target.value)}
@@ -1153,8 +1151,8 @@ function OwnerSettingsInner() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Primary Phone</label>
-                <input
+                <label htmlFor="field-primary-phone" className="block font-semibold text-[#1C2733] mb-1">Primary Phone</label>
+                <input id="field-primary-phone"
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -1163,8 +1161,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">WhatsApp Trade Line</label>
-                <input
+                <label htmlFor="field-whatsapp-trade-line" className="block font-semibold text-[#1C2733] mb-1">WhatsApp Trade Line</label>
+                <input id="field-whatsapp-trade-line"
                   type="text"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
@@ -1173,8 +1171,8 @@ function OwnerSettingsInner() {
               </div>
 
               <div>
-                <label className="block font-semibold text-[#1C2733] mb-1">Official Sales Email</label>
-                <input
+                <label htmlFor="field-official-sales-email" className="block font-semibold text-[#1C2733] mb-1">Official Sales Email</label>
+                <input id="field-official-sales-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -1184,8 +1182,8 @@ function OwnerSettingsInner() {
             </div>
 
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Factory &amp; Headquarters Address</label>
-              <textarea
+              <label htmlFor="field-factory-headquarters-address" className="block font-semibold text-[#1C2733] mb-1">Factory &amp; Headquarters Address</label>
+              <textarea id="field-factory-headquarters-address"
                 rows={3}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -1194,8 +1192,8 @@ function OwnerSettingsInner() {
             </div>
 
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Footer Introduction Text</label>
-              <textarea
+              <label htmlFor="field-footer-introduction-text" className="block font-semibold text-[#1C2733] mb-1">Footer Introduction Text</label>
+              <textarea id="field-footer-introduction-text"
                 rows={3}
                 value={footerText}
                 onChange={(e) => setFooterText(e.target.value)}
@@ -1508,8 +1506,8 @@ function OwnerSettingsInner() {
 
           <form onSubmit={handleChangePassword} className="space-y-4 max-w-md">
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Current Password *</label>
-              <input
+              <label htmlFor="field-current-password" className="block font-semibold text-[#1C2733] mb-1">Current Password *</label>
+              <input id="field-current-password"
                 type="password"
                 required
                 value={currentPassword}
@@ -1519,10 +1517,10 @@ function OwnerSettingsInner() {
             </div>
 
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">
+              <label htmlFor="field-new-master-password-min" className="block font-semibold text-[#1C2733] mb-1">
                 New Master Password (min 8 characters) *
               </label>
-              <input
+              <input id="field-new-master-password-min"
                 type="password"
                 required
                 minLength={8}

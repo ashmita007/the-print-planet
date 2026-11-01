@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Layers, ArrowRight, Package, Box } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { ArrowRight } from "lucide-react";
+import PageHero from "@/components/PageHero";
 import { getCategories } from "@/lib/api";
 import { formatCategoryName } from "@/lib/formatters";
 
@@ -71,87 +71,47 @@ export default async function CategoriesIndexPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-8 sm:space-y-12">
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categoriesJsonLd) }}
       />
+      <PageHero title="Categories" crumbs={[{ label: "Categories" }]} />
 
-      <Breadcrumbs items={[{ label: "Product Categories" }]} />
-
-      {/* Page header */}
-      <div className="border-b border-[#D8DEE5] pb-6 space-y-2.5 anim-fade-up">
-        <span className="text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
-          Product taxonomy
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#16324F]">
-          Industrial product categories
-        </h1>
-        <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
-          Browse our manufacturing and wholesale trade supply categories. High-density satin lanyard rolls, optically clear PVC card holders, RFID chips, and turnkey card machinery with pan-India dispatch.
-        </p>
-      </div>
-
-      {/* Categories Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-        {mainCategories.map((cat) => {
-          const subcategories = allCategories.filter((sub) => sub.parent === cat.id);
-          return (
-            <div
-              key={cat.id}
-              className="bg-white border border-[#D8DEE5] rounded-lg p-5 sm:p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group"
-            >
-              <div className="space-y-3">
-                <div className="w-12 h-12 rounded-md bg-orange-50 text-[#D9601A] flex items-center justify-center font-bold">
-                  <Layers className="w-6 h-6" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-[#16324F] group-hover:text-[#D9601A] transition-colors uppercase tracking-wider">
-                    {formatCategoryName(cat.name)}
-                  </h2>
-                  <p className="text-xs text-[#475565] mt-1 leading-relaxed line-clamp-2">
-                    {cat.description || "Direct factory wholesale supply and trade distribution across India."}
-                  </p>
-                </div>
-
-                {subcategories.length > 0 && (
-                  <div className="pt-2 border-t border-slate-100 space-y-1.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                      Subcategories:
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D8DEE5] border border-[#D8DEE5] rounded-lg overflow-hidden">
+          {mainCategories.map((cat) => {
+            const subcategories = allCategories.filter((sub) => sub.parent === cat.id);
+            return (
+              <li key={cat.id} className="bg-white p-5 sm:p-6">
+                <Link href={`/categories/${cat.slug}`} className="group flex items-center justify-between gap-4">
+                  <span className="min-w-0">
+                    <span className="block text-xl font-bold tracking-tight text-[#16324F] group-hover:text-[#B94E12] transition-colors">
+                      {formatCategoryName(cat.name)}
                     </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {subcategories.map((sub) => (
-                        <Link
-                          key={sub.id}
-                          href={`/categories/${sub.slug}`}
-                          className="text-[10px] font-bold uppercase tracking-wider bg-slate-50 hover:bg-orange-50 text-[#16324F] hover:text-[#D9601A] px-2 py-0.5 rounded border border-slate-200 transition-colors"
-                        >
-                          {formatCategoryName(sub.name)}
-                        </Link>
-                      ))}
-                    </div>
+                    {cat.products_count > 0 && (
+                      <span className="block text-sm text-[#566373] mt-0.5">{cat.products_count} products</span>
+                    )}
+                  </span>
+                  <ArrowRight className="w-5 h-5 shrink-0 text-[#B94E12] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+                {subcategories.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {subcategories.map((sub) => (
+                      <Link
+                        key={sub.id}
+                        href={`/categories/${sub.slug}`}
+                        className="text-xs font-medium text-[#16324F] bg-[#F3F5F7] hover:bg-[#FBF0E8] hover:text-[#B94E12] px-2.5 py-1.5 rounded transition-colors"
+                      >
+                        {formatCategoryName(sub.name)}
+                      </Link>
+                    ))}
                   </div>
                 )}
-              </div>
-
-              <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                <Link
-                  href={`/categories/${cat.slug}`}
-                  className="text-xs font-bold text-[#D9601A] hover:text-[#B94E12] flex items-center gap-1 group-hover:translate-x-1 transition-transform"
-                >
-                  <span>View All Products</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-                <Link
-                  href={`/products?category=${cat.slug}`}
-                  className="text-[11px] text-[#475565] hover:text-[#16324F] font-medium"
-                >
-                  Filter Products →
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

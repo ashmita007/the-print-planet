@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileBottomBar from "@/components/MobileBottomBar";
+import RouteWipe from "@/components/animations/RouteWipe";
 import { getCategories, getSiteSettings } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
@@ -23,6 +24,7 @@ export default async function PublicLayout({
       <main className="flex-1 pb-16 sm:pb-0">{children}</main>
       <Footer categories={categories} settings={settings} />
       <MobileBottomBar settings={settings} />
+      <RouteWipe />
     </div>
   );
 }

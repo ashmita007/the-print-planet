@@ -65,6 +65,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <>
       <div
+        data-tilt
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="group bg-white border border-[#D8DEE5] hover:border-[#16324F] rounded-lg overflow-hidden transition-colors duration-200 flex flex-col h-full relative"

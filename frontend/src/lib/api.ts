@@ -804,9 +804,15 @@ export async function clientSubmitBulkOrder(formData: FormData): Promise<{
     }
     if (typeof window !== 'undefined' && data.token) {
       localStorage.setItem('client_token', data.token);
-      if (data.order?.user) {
-        localStorage.setItem('client_user', JSON.stringify(data.order.user));
-      }
+      // The order only carries a user id, so build the profile from what was submitted.
+      const orderUser = data.order?.user;
+      const profile = orderUser && typeof orderUser === 'object'
+        ? orderUser
+        : {
+            first_name: String(formData.get('contact_person') || '').trim().split(/\s+/)[0],
+            email: String(formData.get('email') || ''),
+          };
+      localStorage.setItem('client_user', JSON.stringify(profile));
       window.dispatchEvent(new Event('authChange'));
     }
     return { success: true, ...data };

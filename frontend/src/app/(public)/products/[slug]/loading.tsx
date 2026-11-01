@@ -3,7 +3,9 @@ import React from "react";
 export default function ProductDetailLoading() {
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6 anim-fade-in">
-      <div className="h-3 w-56 skeleton" />
+      <div className="h-11 flex items-center">
+        <div className="h-3 w-56 skeleton" />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
         <div className="lg:col-span-5 space-y-3">

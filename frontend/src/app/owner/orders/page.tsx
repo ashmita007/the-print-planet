@@ -46,6 +46,14 @@ const STATUS_OPTIONS = [
   { value: "cancelled", label: "Cancelled" },
 ];
 
+const SECTOR_LABELS: Record<string, string> = {
+  corporate: "Corporate",
+  school: "School",
+  college: "College",
+  reseller: "Print shop",
+  other: "Other",
+};
+
 export default function OwnerOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -150,12 +158,12 @@ export default function OwnerOrdersPage() {
       case "submitted":
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Submitted</span>;
       case "reviewing":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Reviewing</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">Reviewing</span>;
       case "quoted":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Quotation Ready</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">Quotation Ready</span>;
       case "proofing":
       case "in_production":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">In Production</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">In Production</span>;
       case "dispatched":
       case "completed":
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Dispatched / Complete</span>;
@@ -167,18 +175,16 @@ export default function OwnerOrdersPage() {
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-lg border border-[#D8DEE5] shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 bg-[#16324F]/10 rounded-md text-[#16324F]">
-              <Briefcase className="w-5 h-5 text-[#16324F]" />
-            </span>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-[#16324F]">
-              Bulk Orders &amp; Client Conversations
-            </h1>
-          </div>
-          <p className="text-xs sm:text-sm text-[#566373] mt-1 max-w-2xl">
-            Direct owner management for Corporate &amp; School volume RFQs. Chat with institutional buyers, issue quotes, and assign courier AWB tracking.
+          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
+            Sales
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16324F] mt-1">
+            Bulk orders
+          </h1>
+          <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
+            Chat with buyers, send quotations and add courier tracking.
           </p>
         </div>
 
@@ -213,6 +219,7 @@ export default function OwnerOrdersPage() {
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
+              aria-label="Search bulk orders"
               placeholder="Search by order #, company, school, contact, phone, or city..."
               value={search}
               onChange={(e) => {
@@ -226,6 +233,7 @@ export default function OwnerOrdersPage() {
           {/* Status Filter */}
           <div className="sm:col-span-3">
             <select
+              aria-label="Filter by status"
               value={statusFilter}
               onChange={(e) => {
                 setStatusFilter(e.target.value);
@@ -244,6 +252,7 @@ export default function OwnerOrdersPage() {
           {/* Org Type Filter */}
           <div className="sm:col-span-3">
             <select
+              aria-label="Filter by sector"
               value={orgTypeFilter}
               onChange={(e) => {
                 setOrgTypeFilter(e.target.value);
@@ -253,7 +262,9 @@ export default function OwnerOrdersPage() {
             >
               <option value="all">All Sectors</option>
               <option value="corporate">Corporate &amp; Enterprise</option>
-              <option value="school">Schools &amp; Universities</option>
+              <option value="school">Schools</option>
+              <option value="college">Colleges &amp; Universities</option>
+              <option value="reseller">Print shops &amp; Resellers</option>
             </select>
           </div>
         </div>
@@ -283,11 +294,11 @@ export default function OwnerOrdersPage() {
                 <tr>
                   <th className="py-3 px-4">Order #</th>
                   <th className="py-3 px-4">Organization &amp; Sector</th>
-                  <th className="py-3 px-4">Contact</th>
-                  <th className="py-3 px-4">Quantity &amp; Category</th>
-                  <th className="py-3 px-4">Quoted (₹)</th>
+                  <th className="py-3 px-4 hidden lg:table-cell">Contact</th>
+                  <th className="py-3 px-4 hidden sm:table-cell">Quantity &amp; Category</th>
+                  <th className="py-3 px-4 hidden md:table-cell">Quoted (₹)</th>
                   <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4">Chats</th>
+                  <th className="py-3 px-4 hidden sm:table-cell">Chats</th>
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -307,17 +318,12 @@ export default function OwnerOrdersPage() {
                     <td className="py-3.5 px-4">
                       <div className="font-bold text-[#1C2733]">{o.organization_name}</div>
                       <span className="inline-flex items-center gap-1 text-[10px] text-slate-500">
-                        {o.organization_type === "school" ? (
-                          <>
-                            <GraduationCap className="w-3 h-3 text-[#16324F]" />
-                            <span>School / Institution</span>
-                          </>
+                        {o.organization_type === "school" || o.organization_type === "college" ? (
+                          <GraduationCap className="w-3 h-3 text-[#16324F]" />
                         ) : (
-                          <>
-                            <Building2 className="w-3 h-3 text-[#D9601A]" />
-                            <span>Corporate Enterprise</span>
-                          </>
+                          <Building2 className="w-3 h-3 text-[#D9601A]" />
                         )}
+                        <span>{SECTOR_LABELS[o.organization_type] || "Corporate"}</span>
                         {o.city ? ` · ${o.city}` : ""}
                       </span>
                     </td>
@@ -578,10 +584,10 @@ export default function OwnerOrdersPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-update-status" className="block text-[11px] font-bold text-[#16324F] mb-1">
                       Update Status:
                     </label>
-                    <select
+                    <select id="field-update-status"
                       value={updateStatus}
                       onChange={(e) => setUpdateStatus(e.target.value)}
                       className="w-full text-xs p-2 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md outline-none"
@@ -595,10 +601,10 @@ export default function OwnerOrdersPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-quoted-amount-inr" className="block text-[11px] font-bold text-[#16324F] mb-1">
                       Quoted Amount (₹ INR):
                     </label>
-                    <input
+                    <input id="field-quoted-amount-inr"
                       type="number"
                       step="0.01"
                       placeholder="e.g. 45000"
@@ -609,10 +615,10 @@ export default function OwnerOrdersPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-courier-partner" className="block text-[11px] font-bold text-[#16324F] mb-1">
                       Courier Partner:
                     </label>
-                    <input
+                    <input id="field-courier-partner"
                       type="text"
                       placeholder="e.g. DTDC Express / Blue Dart"
                       value={courierPartner}
@@ -624,10 +630,10 @@ export default function OwnerOrdersPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="sm:col-span-3">
-                    <label className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-tracking-consignment-awb-number" className="block text-[11px] font-bold text-[#16324F] mb-1">
                       Tracking / Consignment AWB Number:
                     </label>
-                    <input
+                    <input id="field-tracking-consignment-awb-number"
                       type="text"
                       placeholder="e.g. D12345678IN"
                       value={trackingNumber}
@@ -638,10 +644,10 @@ export default function OwnerOrdersPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-[#16324F] mb-1">
+                  <label htmlFor="field-response-message-to-buyer" className="block text-[11px] font-bold text-[#16324F] mb-1">
                     Response Message to Buyer:
                   </label>
-                  <textarea
+                  <textarea id="field-response-message-to-buyer"
                     rows={3}
                     placeholder="Enter formal quote details, timeline specifications, or delivery confirmation to the customer..."
                     value={replyMessage}

@@ -47,13 +47,13 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
 
   return (
     <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0E2238]/95 backdrop-blur-md border-t border-white/10 px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-2xl">
-      <div className="flex items-center justify-around gap-1 max-w-md mx-auto">
+      <div className="grid grid-cols-5 items-center gap-1 max-w-md mx-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isItemActive = item.isActive;
           const content = (
             <div
-              className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-md transition-all duration-200 active:scale-95 ${
+              className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-md transition-all duration-200 active:scale-95 ${
                 isItemActive
                   ? "text-[#F4A36B] font-bold bg-white/[0.08]"
                   : "text-slate-300 hover:text-white"
@@ -75,7 +75,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center"
+                className="min-w-0 text-center"
               >
                 {content}
               </a>
@@ -83,7 +83,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
           }
 
           return (
-            <Link key={item.label} href={item.href} className="flex-1 text-center">
+            <Link key={item.label} href={item.href} className="min-w-0 text-center">
               {content}
             </Link>
           );
@@ -92,10 +92,10 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
         {/* Mobile Cart Trigger */}
         <button
           onClick={toggleCart}
-          className="flex-1 text-center relative"
+          className="min-w-0 text-center relative"
           aria-label="Open Cart"
         >
-          <div className="flex flex-col items-center justify-center py-1 px-1.5 rounded-md text-slate-300 hover:text-white active:scale-95 transition-all">
+          <div className="flex flex-col items-center justify-center py-1 px-0.5 rounded-md text-slate-300 hover:text-white active:scale-95 transition-all">
             <div className="relative">
               <ShoppingBag className="w-5 h-5 mb-0.5 text-slate-300" />
               {mounted && totalItems > 0 && (
@@ -111,10 +111,10 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
         {/* Get Quote Action */}
         <Link
           href="/quote"
-          className="flex-1 bg-[#D9601A] hover:bg-[#B94E12] text-white py-1.5 px-2 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
+          className="min-w-0 bg-[#D9601A] hover:bg-[#B94E12] text-white py-1.5 px-1 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
         >
           <FileText className="w-4 h-4 mb-0.5 text-white" />
-          <span className="text-[10px] tracking-tight whitespace-nowrap">
+          <span className="text-[10px] tracking-tight">
             Quote
           </span>
         </Link>

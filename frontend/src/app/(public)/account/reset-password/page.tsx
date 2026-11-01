@@ -80,9 +80,9 @@ function ResetPasswordForm() {
           )}
 
           <div>
-            <label className="block font-bold text-[#1C2733] mb-1">New Password *</label>
+            <label htmlFor="field-new-password" className="block font-bold text-[#1C2733] mb-1">New Password *</label>
             <div className="relative">
-              <input
+              <input id="field-new-password"
                 type="password"
                 required
                 value={newPassword}
@@ -95,9 +95,9 @@ function ResetPasswordForm() {
           </div>
 
           <div>
-            <label className="block font-bold text-[#1C2733] mb-1">Confirm New Password *</label>
+            <label htmlFor="field-confirm-new-password" className="block font-bold text-[#1C2733] mb-1">Confirm New Password *</label>
             <div className="relative">
-              <input
+              <input id="field-confirm-new-password"
                 type="password"
                 required
                 value={confirmPassword}

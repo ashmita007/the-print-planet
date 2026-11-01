@@ -130,9 +130,9 @@ export default function ProductsFilterModal({
         <form onSubmit={handleApply} className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 text-xs sm:text-sm">
           {/* Keyword Search */}
           <div className="space-y-1.5">
-            <label className="block font-medium text-[#1C2733]">Keyword</label>
+            <label htmlFor="field-keyword" className="block font-medium text-[#1C2733]">Keyword</label>
             <div className="relative">
-              <input
+              <input id="field-keyword"
                 type="text"
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
@@ -145,8 +145,8 @@ export default function ProductsFilterModal({
 
           {/* Category Dropdown */}
           <div className="space-y-1.5">
-            <label className="block font-medium text-[#1C2733]">Category</label>
-            <select
+            <label htmlFor="field-category" className="block font-medium text-[#1C2733]">Category</label>
+            <select id="field-category"
               value={categoryVal}
               onChange={(e) => setCategoryVal(e.target.value)}
               className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none transition-colors"

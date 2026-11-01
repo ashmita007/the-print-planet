@@ -245,10 +245,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
               {/* Full Name */}
               <div>
-                <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                <label htmlFor="field-full-name" className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                   Full Name *
                 </label>
-                <input
+                <input id="field-full-name"
                   type="text"
                   required
                   value={fullName}
@@ -261,10 +261,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               {/* Contact Phone & Email */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div>
-                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-phone" className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Phone *
                   </label>
-                  <input
+                  <input id="field-phone"
                     type="tel"
                     required
                     value={phone}
@@ -275,10 +275,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-email" className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Email *
                   </label>
-                  <input
+                  <input id="field-email"
                     type="email"
                     required
                     value={email}
@@ -292,10 +292,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               {/* Company & Quantity */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div>
-                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-company" className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Company
                   </label>
-                  <input
+                  <input id="field-company"
                     type="text"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -305,10 +305,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-quantity" className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Quantity
                   </label>
-                  <input
+                  <input id="field-quantity"
                     type="number"
                     min="1"
                     value={quantity}
@@ -321,10 +321,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
               {/* Notes / Message */}
               <div>
-                <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                <label htmlFor="field-specs-notes" className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                   Specs / Notes
                 </label>
-                <textarea
+                <textarea id="field-specs-notes"
                   rows={2}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}

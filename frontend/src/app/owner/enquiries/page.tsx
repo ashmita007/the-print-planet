@@ -155,7 +155,8 @@ export default function OwnerEnquiriesPage() {
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full sm:max-w-md">
           <input
             type="text"
-            placeholder="Search by customer name, company, email, or phone..."
+            aria-label="Search enquiries"
+              placeholder="Search by customer name, company, email, or phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg pl-8 pr-12 py-2 text-xs outline-none focus:bg-white focus:border-[#16324F] transition-colors"
@@ -170,8 +171,8 @@ export default function OwnerEnquiriesPage() {
         </form>
 
         <div className="w-full sm:w-auto flex flex-wrap items-center gap-2">
-          <label className="text-[#566373] font-semibold">Status:</label>
-          <select
+          <label htmlFor="field-status" className="text-[#566373] font-semibold">Status:</label>
+          <select id="field-status"
             value={selectedStatus}
             onChange={(e) => {
               setSelectedStatus(e.target.value);
@@ -423,8 +424,8 @@ export default function OwnerEnquiriesPage() {
 
               {/* Status Selector */}
               <div>
-                <label className="block font-bold text-[#1C2733] mb-1">Update Status</label>
-                <select
+                <label htmlFor="field-update-status" className="block font-bold text-[#1C2733] mb-1">Update Status</label>
+                <select id="field-update-status"
                   value={statusVal}
                   onChange={(e) => setStatusVal(e.target.value)}
                   className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-2 text-xs outline-none cursor-pointer"
@@ -439,10 +440,10 @@ export default function OwnerEnquiriesPage() {
 
               {/* Internal Private Notes */}
               <div>
-                <label className="block font-bold text-[#1C2733] mb-1">
+                <label htmlFor="field-private-internal-notes-staff" className="block font-bold text-[#1C2733] mb-1">
                   Private Internal Notes (Staff Only)
                 </label>
-                <textarea
+                <textarea id="field-private-internal-notes-staff"
                   rows={4}
                   value={adminNotes}
                   onChange={(e) => setAdminNotes(e.target.value)}

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
@@ -135,45 +135,21 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   const siblingSubcategories = parentCategory ? allCategories.filter((c) => c.parent === parentCategory.id) : [];
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8">
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
       />
-      <Breadcrumbs
-        items={[
-          { label: "Product Catalogue", href: "/products" },
+      <PageHero
+        title={formatCategoryName(category.name)}
+        lead={category.description || undefined}
+        crumbs={[
+          { label: "Products", href: "/products" },
           ...(parentCategory ? [{ label: parentCategory.name, href: `/categories/${parentCategory.slug}` }] : []),
           { label: category.name },
         ]}
       />
-
-      {/* Category Hero / Header */}
-      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
-        <div className="max-w-3xl space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#B94E12]">
-              {parentCategory ? "Subcategory Sector" : "Main Category Sector"}
-            </span>
-            {parentCategory && (
-              <Link
-                href={`/categories/${parentCategory.slug}`}
-                className="text-[11px] font-medium text-slate-500 hover:text-[#16324F] transition-colors inline-flex items-center gap-1"
-              >
-                <span>Part of {formatCategoryName(parentCategory.name)} &rarr;</span>
-              </Link>
-            )}
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight uppercase">
-            {formatCategoryName(category.name)}
-          </h1>
-          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
-            {category.description ||
-              "Explore full verified models, dimensions, materials, and trade prices."}
-          </p>
-        </div>
-      </div>
-
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-8">
       {/* Child Subcategories Selector Grid (if viewing Main Category) */}
       {childSubcategories.length > 0 && (
         <section className="space-y-3">
@@ -181,7 +157,6 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             <h2 className="text-sm sm:text-base font-bold text-[#16324F] uppercase tracking-wider">
               Subcategories in {formatCategoryName(category.name)} ({childSubcategories.length})
             </h2>
-            <span className="text-xs text-slate-500">Filter by specific product line</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">
             {childSubcategories.map((sub) => (
@@ -286,6 +261,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           }}
         />
       </section>
+      </div>
     </div>
   );
 }

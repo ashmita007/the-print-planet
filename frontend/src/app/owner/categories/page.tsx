@@ -204,8 +204,8 @@ export default function OwnerCategoriesPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Category Name *</label>
-              <input
+              <label htmlFor="field-category-name" className="block font-semibold text-[#1C2733] mb-1">Category Name *</label>
+              <input id="field-category-name"
                 type="text"
                 required
                 value={name}
@@ -217,8 +217,8 @@ export default function OwnerCategoriesPage() {
             </div>
 
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Parent Sector (Optional)</label>
-              <select
+              <label htmlFor="field-parent-sector-optional" className="block font-semibold text-[#1C2733] mb-1">Parent Sector (Optional)</label>
+              <select id="field-parent-sector-optional"
                 value={parentId || ""}
                 onChange={(e) => setParentId(e.target.value ? Number(e.target.value) : null)}
                 className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none text-xs"
@@ -235,8 +235,8 @@ export default function OwnerCategoriesPage() {
             </div>
 
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Custom Slug (Optional)</label>
-              <input
+              <label htmlFor="field-custom-slug-optional" className="block font-semibold text-[#1C2733] mb-1">Custom Slug (Optional)</label>
+              <input id="field-custom-slug-optional"
                 type="text"
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
@@ -246,8 +246,8 @@ export default function OwnerCategoriesPage() {
             </div>
 
             <div>
-              <label className="block font-semibold text-[#1C2733] mb-1">Display Order</label>
-              <input
+              <label htmlFor="field-display-order" className="block font-semibold text-[#1C2733] mb-1">Display Order</label>
+              <input id="field-display-order"
                 type="number"
                 value={displayOrder}
                 onChange={(e) => setDisplayOrder(parseInt(e.target.value, 10) || 0)}
@@ -257,8 +257,8 @@ export default function OwnerCategoriesPage() {
           </div>
 
           <div>
-            <label className="block font-semibold text-[#1C2733] mb-1">Category Description</label>
-            <textarea
+            <label htmlFor="field-category-description" className="block font-semibold text-[#1C2733] mb-1">Category Description</label>
+            <textarea id="field-category-description"
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -303,11 +303,11 @@ export default function OwnerCategoriesPage() {
         <table className="w-full text-left text-xs text-[#1C2733]">
           <thead className="bg-[#F3F5F7] border-b border-[#E6EBF1] text-[10px] font-semibold text-slate-500 uppercase tracking-[0.1em]">
             <tr>
-              <th className="py-3 px-4 w-12 text-center">#</th>
+              <th className="py-3 px-4 w-12 text-center hidden md:table-cell">#</th>
               <th className="py-3 px-4">Category Name</th>
-              <th className="py-3 px-4">Slug</th>
+              <th className="py-3 px-4 hidden lg:table-cell">Slug</th>
               <th className="py-3 px-4">Active Products</th>
-              <th className="py-3 px-4">Status</th>
+              <th className="py-3 px-4 hidden sm:table-cell">Status</th>
               <th className="py-3 px-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -316,11 +316,11 @@ export default function OwnerCategoriesPage() {
               <>
                 {Array.from({ length: 5 }).map((_, index) => (
                   <tr key={index}>
-                    <td className="py-3 px-4"><div className="h-3 w-4 mx-auto skeleton" /></td>
+                    <td className="py-3 px-4 hidden md:table-cell"><div className="h-3 w-4 mx-auto skeleton" /></td>
                     <td className="py-3 px-4"><div className="h-3.5 w-44 skeleton" /></td>
-                    <td className="py-3 px-4"><div className="h-3 w-32 skeleton" /></td>
+                    <td className="py-3 px-4 hidden lg:table-cell"><div className="h-3 w-32 skeleton" /></td>
                     <td className="py-3 px-4"><div className="h-3 w-12 skeleton" /></td>
-                    <td className="py-3 px-4"><div className="h-5 w-16 skeleton rounded-full" /></td>
+                    <td className="py-3 px-4 hidden sm:table-cell"><div className="h-5 w-16 skeleton rounded-full" /></td>
                     <td className="py-3 px-4"><div className="h-6 w-20 ml-auto skeleton rounded-lg" /></td>
                   </tr>
                 ))}
@@ -328,7 +328,7 @@ export default function OwnerCategoriesPage() {
             ) : (
               categories.map((c) => (
                 <tr key={c.id} className="hover:bg-[#F3F5F7] transition-colors">
-                  <td className="py-3 px-4 text-center font-bold text-slate-400">
+                  <td className="py-3 px-4 text-center font-bold text-slate-400 hidden md:table-cell">
                     {c.display_order}
                   </td>
                   <td className="py-3 px-4 text-[#16324F]">
@@ -350,7 +350,7 @@ export default function OwnerCategoriesPage() {
                       </span>
                     )}
                   </td>
-                  <td className="py-3 px-4 font-mono text-slate-500 text-[11px]">
+                  <td className="py-3 px-4 font-mono text-slate-500 text-[11px] hidden lg:table-cell">
                     {c.slug}
                   </td>
                   <td className="py-3 px-4">
@@ -358,7 +358,7 @@ export default function OwnerCategoriesPage() {
                       {c.products_count} products
                     </span>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-4 hidden sm:table-cell">
                     <span
                       className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
                         c.is_active ? "bg-green-100 text-[#217A4B]" : "bg-slate-100 text-slate-500"

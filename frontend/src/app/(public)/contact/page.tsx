@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
-import { Phone, Mail, MapPin, ShieldCheck, Clock, MessageSquare } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import PageHero from "@/components/PageHero";
 import ContactFormClient from "@/components/ContactFormClient";
 import { getSiteSettings } from "@/lib/api";
 
@@ -26,13 +26,22 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const settings = await getSiteSettings();
 
-  const businessName = settings?.business_name || "THE PRINT PLANET";
   const phone = settings?.phone || "+91 97418 08034";
   const email = settings?.email || "theprintplanet01@gmail.com";
   const address = settings?.address || "No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091, Karnataka, India";
-  const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
-  const pan = "AAQFT3909B";
   const whatsapp = settings?.whatsapp || "+91 97418 08034";
+
+  const channels = [
+    { icon: Phone, label: "Call", value: phone, href: `tel:${phone.replace(/\s+/g, "")}`, external: false },
+    {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: whatsapp,
+      href: `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hello, I am enquiring about bulk products.")}`,
+      external: true,
+    },
+    { icon: Mail, label: "Email", value: email, href: `mailto:${email}`, external: false },
+  ];
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -84,7 +93,7 @@ export default async function ContactPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-10">
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
@@ -93,103 +102,39 @@ export default async function ContactPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
       />
-      <Breadcrumbs items={[{ label: "Contact Us & Quotations" }]} />
+      <PageHero
+        title="Talk to us"
+        lead="Monday to Saturday, 10 am to 7 pm."
+        crumbs={[{ label: "Contact" }]}
+      />
 
-      {/* Hero */}
-      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
-        <div className="max-w-2xl space-y-2">
-          <span className="text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
-            Industrial Sales & Trade Desk
-          </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            Contact & Bulk Quotation Enquiry
-          </h1>
-          <p className="text-sm text-slate-500 max-w-2xl">
-            Connect with our sales engineering team for volume pricing, custom Pantone roll dyeing,
-            and machine demonstrations.
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="lg:col-span-5 lg:sticky lg:top-24">
+          <ul className="border-y border-[#D8DEE5] divide-y divide-[#D8DEE5]">
+            {channels.map(({ icon: Icon, label, value, href, external }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="ink-row flex items-center gap-4 px-3 py-4"
+                >
+                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#D9601A]" aria-hidden="true" />
+                  <span className="min-w-0">
+                    <span className="ink-row-note block text-xs text-[#566373]">{label}</span>
+                    <span className="ink-row-title block font-bold text-[#16324F] break-words">{value}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#566373] leading-relaxed">
+            <MapPin className="w-5 h-5 shrink-0 text-[#D9601A]" aria-hidden="true" />
+            <span>{address}</span>
           </p>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-        {/* Left Column: Direct Info (5 Cols) */}
-        <div className="lg:col-span-5 space-y-5 sm:space-y-6">
-          <div className="bg-[#F3F5F7] p-4 sm:p-6 rounded-md sm:rounded-lg border border-[#D8DEE5] space-y-4 sm:space-y-5 text-xs">
-            <h2 className="text-base font-bold text-[#16324F] border-b border-[#D8DEE5] pb-3">
-              Industrial Headquarters
-            </h2>
-
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733] text-xs block mb-0.5">Manufacturing & Distribution Address</strong>
-                <p className="text-[#566373] leading-relaxed">{address}</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733] text-xs block mb-0.5">Direct Trade Line</strong>
-                <a href={`tel:${phone.replace(/\s+/g, "")}`} className="text-[#16324F] font-bold hover:underline">
-                  {phone}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733] text-xs block mb-0.5">Commercial RFQ Email</strong>
-                <a href={`mailto:${email}`} className="text-[#16324F] font-bold hover:underline">
-                  {email}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733] text-xs block mb-0.5">Working Hours</strong>
-                <p className="text-[#566373]">Monday – Saturday: 10:00 AM – 7:00 PM (IST)</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-[#217A4B] shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#1C2733] text-xs block mb-0.5">Verified Tax Details</strong>
-                <p className="text-[#566373]">GST Registration: <strong className="text-[#1C2733]">{gst}</strong></p>
-                <p className="text-[#566373]">PAN: <strong className="text-[#1C2733]">{pan}</strong></p>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick WhatsApp Action Card */}
-          <div className="surface-card p-5 rounded-lg space-y-3">
-            <h3 className="font-bold text-sm">Need a quote on WhatsApp?</h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Send your roll quantities and holder requirements directly to our on-duty trade manager.
-            </p>
-            <a
-              href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}?text=Hello%2C%20I%20am%20enquiring%20about%20bulk%20ID%20card%20products%20from%20THE%20PRINT%20PLANET.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center bg-[#217A4B] hover:bg-[#1b6540] text-white font-medium text-xs py-2.5 px-4 rounded-lg transition-colors"
-            >
-              Start WhatsApp chat &rarr;
-            </a>
-          </div>
-        </div>
-
-        {/* Right Column: Interactive Form (7 Cols) */}
         <div className="lg:col-span-7 surface-card p-4 sm:p-8 rounded-lg">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-[#16324F]">Submit Commercial Enquiry / RFQ</h2>
-            <p className="text-xs text-[#566373] mt-1">
-              Please furnish complete quantity and specification details. Formal quotations are issued within 2 hours.
-            </p>
-          </div>
+          <h2 className="text-xl font-bold text-[#16324F] mb-5">Send a message</h2>
           <ContactFormClient />
         </div>
       </div>

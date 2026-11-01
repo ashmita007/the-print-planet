@@ -36,7 +36,7 @@ export default function OrderDetailPage() {
   const [sending, setSending] = useState(false);
   const [attachment, setAttachment] = useState<File | null>(null);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
 
   const fetchDetail = async () => {
     if (!orderNumber) return;
@@ -53,9 +53,13 @@ export default function OrderDetailPage() {
     return () => clearInterval(interval);
   }, [orderNumber]);
 
+  // Polling replaces the array every 10s, so react to new messages only,
+  // and scroll the chat box itself rather than the customer's page.
+  const messageCount = order?.messages?.length ?? 0;
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [order?.messages]);
+    const box = chatBoxRef.current;
+    if (box) box.scrollTo({ top: box.scrollHeight, behavior: "smooth" });
+  }, [messageCount]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -189,7 +193,7 @@ export default function OrderDetailPage() {
           </div>
 
           {/* Messages Scrollable Area */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-[#F3F5F7]">
+          <div ref={chatBoxRef} className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-[#F3F5F7]">
             {order.messages && order.messages.length > 0 ? (
               order.messages.map((m) => {
                 const isClient = m.sender_type === "client";
@@ -247,7 +251,6 @@ export default function OrderDetailPage() {
                 No messages yet. Send a note to the technical team below.
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Message Input Box */}
@@ -283,6 +286,7 @@ export default function OrderDetailPage() {
                 type="text"
                 value={newMsg}
                 onChange={(e) => setNewMsg(e.target.value)}
+                aria-label="Message to our team"
                 placeholder="Type your message, spec inquiry, or sample note..."
                 className="flex-1 bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-4 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
               />
@@ -294,6 +298,7 @@ export default function OrderDetailPage() {
               >
                 <Send className="w-4 h-4" />
                 <span className="hidden sm:inline">Send</span>
+                <span className="sr-only sm:hidden">Send message</span>
               </button>
             </div>
           </form>

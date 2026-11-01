@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Search, Layers, Box } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import { globalSearch, getCategories } from "@/lib/api";
 
@@ -20,29 +20,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   ]);
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-8">
-      <Breadcrumbs
-        items={[
-          { label: "Search Results" },
-          ...(q ? [{ label: `"${q}"` }] : []),
-        ]}
+    <div>
+      <PageHero
+        title={q ? `Results for "${q}"` : "Search"}
+        lead={q ? `${results.products.length} products, ${results.categories.length} categories` : undefined}
+        crumbs={[{ label: "Search" }]}
       />
-
-      {/* Search Header */}
-      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
-        <div className="max-w-2xl space-y-2">
-          <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#B94E12]">
-            Catalogue Search
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Search Results for &ldquo;{q}&rdquo;
-          </h1>
-          <p className="text-sm text-slate-500">
-            Found {results.products.length} product(s) and {results.categories.length} category match(es).
-          </p>
-        </div>
-      </div>
-
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-8">
       {/* Matching Categories */}
       {results.categories.length > 0 && (
         <div className="space-y-3">
@@ -100,6 +84,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             </Link>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

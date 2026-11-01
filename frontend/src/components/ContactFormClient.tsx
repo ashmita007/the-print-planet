@@ -86,10 +86,10 @@ export default function ContactFormClient() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block font-semibold text-[#1C2733] mb-1">
+          <label htmlFor="field-your-full-name" className="block font-semibold text-[#1C2733] mb-1">
             Your Full Name *
           </label>
-          <input
+          <input id="field-your-full-name"
             type="text"
             required
             value={fullName}
@@ -100,10 +100,10 @@ export default function ContactFormClient() {
         </div>
 
         <div>
-          <label className="block font-semibold text-[#1C2733] mb-1">
+          <label htmlFor="field-company-business-name" className="block font-semibold text-[#1C2733] mb-1">
             Company / Business Name
           </label>
-          <input
+          <input id="field-company-business-name"
             type="text"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
@@ -115,10 +115,10 @@ export default function ContactFormClient() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block font-semibold text-[#1C2733] mb-1">
+          <label htmlFor="field-contact-mobile-phone" className="block font-semibold text-[#1C2733] mb-1">
             Contact Mobile / Phone *
           </label>
-          <input
+          <input id="field-contact-mobile-phone"
             type="tel"
             required
             value={phone}
@@ -129,10 +129,10 @@ export default function ContactFormClient() {
         </div>
 
         <div>
-          <label className="block font-semibold text-[#1C2733] mb-1">
+          <label htmlFor="field-business-email" className="block font-semibold text-[#1C2733] mb-1">
             Business Email *
           </label>
-          <input
+          <input id="field-business-email"
             type="email"
             required
             value={email}
@@ -144,10 +144,10 @@ export default function ContactFormClient() {
       </div>
 
       <div>
-        <label className="block font-semibold text-[#1C2733] mb-1">
+        <label htmlFor="field-estimated-order-quantity-units" className="block font-semibold text-[#1C2733] mb-1">
           Estimated Order Quantity (Units / Rolls)
         </label>
-        <input
+        <input id="field-estimated-order-quantity-units"
           type="number"
           min="1"
           value={quantity}
@@ -158,10 +158,10 @@ export default function ContactFormClient() {
       </div>
 
       <div>
-        <label className="block font-semibold text-[#1C2733] mb-1">
+        <label htmlFor="field-detailed-technical-requirements-delivery" className="block font-semibold text-[#1C2733] mb-1">
           Detailed Technical Requirements &amp; Delivery Location *
         </label>
-        <textarea
+        <textarea id="field-detailed-technical-requirements-delivery"
           rows={4}
           required
           value={message}
