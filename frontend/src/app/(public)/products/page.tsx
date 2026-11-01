@@ -73,10 +73,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       {/* Page header */}
       <div className="border-b border-slate-200 pb-6 anim-fade-up">
         <div className="max-w-3xl space-y-2">
-          <span className="text-[11px] font-bold text-[#E87832] uppercase tracking-[0.14em]">
+          <span className="text-[11px] font-bold text-[#D9601A] uppercase tracking-[0.14em]">
             Official Wholesale Catalogue
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17365D]">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#16324F]">
             {activeCategory ? activeCategory.name : "All Products & Equipment"}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
@@ -100,10 +100,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       {/* Main Layout: Filter Sidebar + Products Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Filter Sidebar (Desktop only) */}
-        <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+        <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-lg border border-slate-200">
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-            <span className="font-bold text-sm text-[#17365D] flex items-center gap-1.5">
-              <Filter className="w-4 h-4 text-[#E87832]" /> Filter Catalogue
+            <span className="font-bold text-sm text-[#16324F] flex items-center gap-1.5">
+              <Filter className="w-4 h-4 text-[#D9601A]" /> Filter Catalogue
             </span>
             {(params.category || params.search || params.material || params.color || params.ordering) && (
               <Link
@@ -125,13 +125,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 name="search"
                 defaultValue={params.search || ""}
                 placeholder="Model code, size..."
-                className="w-full bg-white border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-900 outline-none focus:border-[#E87832]"
+                className="w-full bg-white border border-slate-200 rounded-md pl-8 pr-3 py-2 text-xs text-slate-900 outline-none focus:border-[#D9601A]"
               />
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             </div>
             <button
               type="submit"
-              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-2 rounded-xl text-xs font-semibold transition-colors shadow-xs"
+              className="w-full bg-[#D9601A] hover:bg-[#B94E12] text-white py-2 rounded-md text-xs font-semibold transition-colors shadow-xs"
             >
               Filter
             </button>
@@ -146,8 +146,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1 text-xs">
               <Link
                 href={`/products${params.search ? `?search=${encodeURIComponent(params.search)}` : ""}`}
-                className={`flex items-center justify-between px-3 py-2 rounded-xl transition-colors ${
-                  !params.category ? "bg-[#17365D] text-white font-bold shadow-xs" : "text-slate-700 hover:bg-white"
+                className={`flex items-center justify-between px-3 py-2 rounded-md transition-colors ${
+                  !params.category ? "bg-[#16324F] text-white font-bold shadow-xs" : "text-slate-700 hover:bg-white"
                 }`}
               >
                 <span>All Wholesale Products</span>
@@ -168,11 +168,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   <div key={mainCat.id} className="space-y-1 pt-1">
                     <Link
                       href={`/products?category=${mainCat.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
-                      className={`flex items-center justify-between px-3 py-2 rounded-xl transition-colors ${
+                      className={`flex items-center justify-between px-3 py-2 rounded-md transition-colors ${
                         isMainSelected
-                          ? "bg-[#17365D] text-white font-bold shadow-xs"
+                          ? "bg-[#16324F] text-white font-bold shadow-xs"
                           : hasSelectedChild
-                          ? "bg-[#FFF7F2] text-[#E87832] font-bold"
+                          ? "bg-[#FBF0E8] text-[#D9601A] font-bold"
                           : "text-slate-800 font-semibold hover:bg-white"
                       }`}
                     >
@@ -192,8 +192,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               href={`/products?category=${sub.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
                               className={`flex items-center justify-between px-2 py-1 rounded-lg text-[11px] transition-colors ${
                                 isSubSelected
-                                  ? "bg-[#E87832] text-white font-bold"
-                                  : "text-slate-600 hover:text-[#E87832] hover:bg-white"
+                                  ? "bg-[#D9601A] text-white font-bold"
+                                  : "text-slate-600 hover:text-[#D9601A] hover:bg-white"
                               }`}
                             >
                               <span className="truncate pr-1">{sub.name}</span>
@@ -215,16 +215,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         {/* Right Product Grid Area */}
         <section className="lg:col-span-9 space-y-6">
           {/* Top Sort & Count Bar */}
-          <div className="bg-white p-3.5 rounded-xl border border-[#DCE3EB] flex flex-wrap items-center justify-between gap-4">
-            <div className="text-xs text-[#687586]">
-              Showing <strong className="text-[#17365D]">{productsData.results.length}</strong> of{" "}
-              <strong className="text-[#17365D]">{productsData.count}</strong> products
+          <div className="bg-white p-3.5 rounded-md border border-[#D8DEE5] flex flex-wrap items-center justify-between gap-4">
+            <div className="text-xs text-[#566373]">
+              Showing <strong className="text-[#16324F]">{productsData.results.length}</strong> of{" "}
+              <strong className="text-[#16324F]">{productsData.count}</strong> products
             </div>
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2 text-xs">
               <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[#687586]">Sort by:</span>
+              <span className="text-[#566373]">Sort by:</span>
               <div className="flex items-center gap-1.5">
                 {[
                   { label: "Default", val: "display_order" },
@@ -241,8 +241,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                     }).toString()}`}
                     className={`px-2.5 py-1 rounded text-xs transition-colors ${
                       (params.ordering || "display_order") === s.val
-                        ? "bg-[#17365D] text-white font-bold"
-                        : "bg-[#F5F7FA] text-[#263445] hover:bg-slate-200"
+                        ? "bg-[#16324F] text-white font-bold"
+                        : "bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200"
                     }`}
                   >
                     {s.label}
@@ -260,17 +260,17 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               ))}
             </div>
           ) : (
-            <div className="bg-white border border-[#DCE3EB] rounded-2xl p-12 text-center space-y-4">
+            <div className="bg-white border border-[#D8DEE5] rounded-lg p-12 text-center space-y-4">
               <Box className="w-16 h-16 text-slate-300 mx-auto stroke-[1.5]" />
               <div>
-                <h3 className="text-base font-bold text-[#17365D]">No products found matching filters</h3>
-                <p className="text-xs text-[#687586] mt-1 max-w-sm mx-auto">
+                <h3 className="text-base font-bold text-[#16324F]">No products found matching filters</h3>
+                <p className="text-xs text-[#566373] mt-1 max-w-sm mx-auto">
                   Try adjusting your search keywords or clearing active filters to view all available reference products.
                 </p>
               </div>
               <Link
                 href="/products"
-                className="inline-block bg-[#17365D] text-white text-xs font-bold py-2.5 px-5 rounded-lg hover:bg-[#102742] transition-colors"
+                className="inline-block bg-[#16324F] text-white text-xs font-bold py-2.5 px-5 rounded-lg hover:bg-[#0E2238] transition-colors"
               >
                 Reset All Filters
               </Link>

@@ -149,16 +149,16 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       />
 
       {/* Category Hero / Header */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#C25E1F]">
+            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#B94E12]">
               {parentCategory ? "Subcategory Sector" : "Main Category Sector"}
             </span>
             {parentCategory && (
               <Link
                 href={`/categories/${parentCategory.slug}`}
-                className="text-[11px] font-medium text-slate-500 hover:text-[#17365D] transition-colors inline-flex items-center gap-1"
+                className="text-[11px] font-medium text-slate-500 hover:text-[#16324F] transition-colors inline-flex items-center gap-1"
               >
                 <span>Part of {formatCategoryName(parentCategory.name)} &rarr;</span>
               </Link>
@@ -178,7 +178,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {childSubcategories.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm sm:text-base font-bold text-[#17365D] uppercase tracking-wider">
+            <h2 className="text-sm sm:text-base font-bold text-[#16324F] uppercase tracking-wider">
               Subcategories in {formatCategoryName(category.name)} ({childSubcategories.length})
             </h2>
             <span className="text-xs text-slate-500">Filter by specific product line</span>
@@ -188,14 +188,14 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
               <Link
                 key={sub.id}
                 href={`/categories/${sub.slug}`}
-                className="p-3 rounded-xl bg-white border border-[#DCE3EB] hover:border-[#17365D] hover:shadow-xs transition-all flex flex-col justify-between group"
+                className="p-3 rounded-md bg-white border border-[#D8DEE5] hover:border-[#16324F] hover:shadow-xs transition-all flex flex-col justify-between group"
               >
-                <span className="text-xs font-bold text-[#263445] group-hover:text-[#17365D] transition-colors line-clamp-2 uppercase tracking-wide">
+                <span className="text-xs font-bold text-[#1C2733] group-hover:text-[#16324F] transition-colors line-clamp-2 uppercase tracking-wide">
                   {formatCategoryName(sub.name)}
                 </span>
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
                   <span>{sub.products_count || 0} products</span>
-                  <span className="text-[#E87832] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  <span className="text-[#D9601A] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
                 </div>
               </Link>
             ))}
@@ -206,15 +206,15 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {/* Sibling Subcategories Selector (if viewing Subcategory) */}
       {siblingSubcategories.length > 1 && (
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="font-bold text-[#687586] shrink-0">Related in {parentCategory?.name}:</span>
+          <span className="font-bold text-[#566373] shrink-0">Related in {parentCategory?.name}:</span>
           {siblingSubcategories.map((sib) => (
             <Link
               key={sib.id}
               href={`/categories/${sib.slug}`}
               className={`px-3 py-1.5 rounded-full shrink-0 font-semibold transition-colors ${
                 sib.slug === slug
-                  ? "bg-[#17365D] text-white"
-                  : "bg-[#F5F7FA] text-[#263445] hover:bg-slate-200 border border-[#DCE3EB]"
+                  ? "bg-[#16324F] text-white"
+                  : "bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200 border border-[#D8DEE5]"
               }`}
             >
               {sib.name}
@@ -225,10 +225,10 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
       {/* Main Sector Navigation Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 text-xs">
-        <span className="font-bold text-[#687586] shrink-0">Main Sectors:</span>
+        <span className="font-bold text-[#566373] shrink-0">Main Sectors:</span>
         <Link
           href="/products"
-          className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#F5F7FA] text-[#263445] hover:bg-slate-200 border border-[#DCE3EB]"
+          className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200 border border-[#D8DEE5]"
         >
           All 180+ Products
         </Link>
@@ -238,8 +238,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             href={`/categories/${c.slug}`}
             className={`px-3 py-1.5 rounded-full shrink-0 font-semibold transition-colors ${
               c.slug === slug || (parentCategory && parentCategory.slug === c.slug)
-                ? "bg-[#17365D] text-white"
-                : "bg-[#F5F7FA] text-[#263445] hover:bg-slate-200 border border-[#DCE3EB]"
+                ? "bg-[#16324F] text-white"
+                : "bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200 border border-[#D8DEE5]"
             }`}
           >
             {formatCategoryName(c.name)}
@@ -249,9 +249,9 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
       {/* Products Grid */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-[#DCE3EB] pb-3 gap-2">
-          <span className="text-xs font-bold text-[#687586]">
-            Showing <strong className="text-[#17365D]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
+        <div className="flex items-center justify-between border-b border-[#D8DEE5] pb-3 gap-2">
+          <span className="text-xs font-bold text-[#566373]">
+            Showing <strong className="text-[#16324F]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
           </span>
           <MobileFilterSortBar
             categories={allCategories}
@@ -269,7 +269,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             ))}
           </div>
         ) : (
-          <div className="bg-white border border-[#DCE3EB] rounded-xl p-12 text-center text-xs text-slate-500">
+          <div className="bg-white border border-[#D8DEE5] rounded-md p-12 text-center text-xs text-slate-500">
             No products currently active in this category.
           </div>
         )}

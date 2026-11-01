@@ -32,19 +32,19 @@ export default function ForgotPasswordPage() {
     <div className="max-w-md mx-auto px-4 py-12 space-y-6">
       <Breadcrumbs items={[{ label: "Client Portal", href: "/account/login" }, { label: "Forgotten Password" }]} />
 
-      <div className="bg-white border border-[#DCE3EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+      <div className="bg-white border border-[#D8DEE5] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#FFF5EE] text-[#E87832] rounded-xl flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#FFF5EE] text-[#D9601A] rounded-md flex items-center justify-center mx-auto mb-2">
             <KeyRound className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-black text-[#17365D]">Forgotten Password</h1>
-          <p className="text-xs text-[#687586]">
+          <h1 className="text-2xl font-extrabold text-[#16324F]">Forgotten Password</h1>
+          <p className="text-xs text-[#566373]">
             Enter your registered school, corporate, or buyer account email address.
           </p>
         </div>
 
         {successMsg ? (
-          <div className="bg-[#E8F8F5] border border-[#A3E4D7] text-[#1E8449] p-4 rounded-xl text-xs space-y-3">
+          <div className="bg-[#E8F8F5] border border-[#A3E4D7] text-[#1E8449] p-4 rounded-md text-xs space-y-3">
             <div className="flex items-center gap-2 font-bold">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Reset Request Dispatched</span>
@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
             <div className="pt-2">
               <Link
                 href="/account/login"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#17365D] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#16324F] hover:underline"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Return to Login</span>
@@ -65,13 +65,13 @@ export default function ForgotPasswordPage() {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
             {errorMsg && (
-              <div className="bg-[#FDEDEC] border border-[#F5B7B1] text-[#C0392B] p-3 rounded-xl text-xs font-semibold">
+              <div className="bg-[#FDEDEC] border border-[#F5B7B1] text-[#C0392B] p-3 rounded-md text-xs font-semibold">
                 {errorMsg}
               </div>
             )}
 
             <div>
-              <label className="block font-bold text-[#263445] mb-1">Registered Email Address</label>
+              <label className="block font-bold text-[#1C2733] mb-1">Registered Email Address</label>
               <div className="relative">
                 <input
                   type="email"
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="procurement@school.edu.in"
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl pl-9 pr-3 py-2.5 text-[#263445] outline-none"
+                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-3 py-2.5 text-[#1C2733] outline-none"
                 />
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full bg-[#D9601A] hover:bg-[#B94E12] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {loading ? <span>Dispatching link...</span> : <span>Send Password Reset Link</span>}
               <ArrowRight className="w-4 h-4" />
@@ -96,13 +96,13 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#687586] flex items-center justify-between">
-          <Link href="/account/login" className="text-slate-500 hover:text-[#17365D] flex items-center gap-1 font-semibold">
+        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#566373] flex items-center justify-between">
+          <Link href="/account/login" className="text-slate-500 hover:text-[#16324F] flex items-center gap-1 font-semibold">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Login</span>
           </Link>
 
-          <Link href="/bulk-orders" className="text-[#E87832] font-bold hover:underline">
+          <Link href="/bulk-orders" className="text-[#D9601A] font-bold hover:underline">
             New Bulk Inquiry
           </Link>
         </div>

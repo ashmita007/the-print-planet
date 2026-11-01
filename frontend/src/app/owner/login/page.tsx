@@ -62,7 +62,7 @@ export default function OwnerLoginPage() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-[0_24px_60px_-32px_rgba(16,39,66,0.35)] border border-[#E2E8F0] overflow-hidden anim-scale-in">
+    <div className="w-full max-w-md bg-white rounded-lg shadow-[0_24px_60px_-32px_rgba(16,39,66,0.35)] border border-[#D8DEE5] overflow-hidden anim-scale-in">
       {/* Header */}
       <div className="px-7 pt-8 pb-6 text-center space-y-3 border-b border-[#E6EBF1]">
         <Image
@@ -74,9 +74,9 @@ export default function OwnerLoginPage() {
           priority
         />
         <div className="space-y-1">
-          <h2 className="text-base font-bold text-[#17365D] tracking-tight">
+          <h1 className="text-base font-bold text-[#16324F] tracking-tight">
             Owner console
-          </h2>
+          </h1>
           <p className="text-xs text-slate-500">
             Sign in to manage the store
           </p>
@@ -86,14 +86,14 @@ export default function OwnerLoginPage() {
       {/* Form Content */}
       <div className="p-7 space-y-5">
         {errorMessage && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-start gap-2.5 anim-fade-in">
+          <div className="p-3 bg-red-50 border border-red-200 rounded-md text-red-700 text-xs flex items-start gap-2.5 anim-fade-in">
             <AlertCircle className="w-4 h-4 shrink-0 text-red-600 mt-0.5" />
             <span className="leading-relaxed font-medium">{errorMessage}</span>
           </div>
         )}
 
         {successMessage && (
-          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-start gap-2.5 anim-fade-in">
+          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 text-xs flex items-start gap-2.5 anim-fade-in">
             <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 mt-0.5" />
             <span className="leading-relaxed font-medium">{successMessage}</span>
           </div>
@@ -101,7 +101,7 @@ export default function OwnerLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label className="block font-semibold text-[#263445] mb-1.5">
+            <label className="block font-semibold text-[#1C2733] mb-1.5">
               Owner Username or Email
             </label>
             <div className="relative">
@@ -113,7 +113,7 @@ export default function OwnerLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="admin or owner email"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-9 pr-3 py-2.5 text-xs text-[#263445] outline-none transition-colors"
+                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg pl-9 pr-3 py-2.5 text-xs text-[#1C2733] outline-none transition-colors"
               />
               <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -121,7 +121,7 @@ export default function OwnerLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block font-semibold text-[#263445]">
+              <label className="block font-semibold text-[#1C2733]">
                 Master Password
               </label>
             </div>
@@ -133,7 +133,7 @@ export default function OwnerLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg pl-9 pr-10 py-2.5 text-xs text-[#263445] outline-none transition-colors"
+                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg pl-9 pr-10 py-2.5 text-xs text-[#1C2733] outline-none transition-colors"
               />
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <button
@@ -154,7 +154,7 @@ export default function OwnerLoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#17365D] hover:bg-[#102742] text-white py-3 rounded-xl font-bold text-xs tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 mt-2 cursor-pointer"
+            className="w-full bg-[#16324F] hover:bg-[#0E2238] text-white py-3 rounded-md font-bold text-xs tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 mt-2 cursor-pointer"
           >
             {isLoading ? (
               <>
@@ -170,13 +170,13 @@ export default function OwnerLoginPage() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-[#DCE3EB] text-center text-xs text-[#687586] space-y-2">
+        <div className="pt-4 border-t border-[#D8DEE5] text-center text-xs text-[#566373] space-y-2">
           <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
             <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" />
             Protected by Django PBKDF2 Password Encryption
           </p>
           <div>
-            <Link href="/" className="text-[#17365D] hover:underline font-semibold inline-flex items-center gap-1">
+            <Link href="/" className="text-[#16324F] hover:underline font-semibold inline-flex items-center gap-1">
               &larr; Return to Public Catalogue
             </Link>
           </div>

@@ -1,53 +1,64 @@
 "use client";
 
-import React from "react";
-import { motion } from "motion/react";
-import { Sparkles, ShieldCheck, Truck, Award, Zap, Layers } from "lucide-react";
+import React, { useRef } from "react";
+import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 const TICKER_ITEMS = [
-  { text: "PAN-INDIA EXPRESS DISPATCH", icon: Truck },
-  { text: "50,000+ DAILY PRODUCTION CAPACITY", icon: Zap },
-  { text: "CR-80 ISO DIE CUTTING PRECISION", icon: ShieldCheck },
-  { text: "100% INPUT TAX CREDIT (ITC) PASS-THROUGH", icon: Award },
-  { text: "FREE 3D DIGITAL PROOFING", icon: Sparkles },
-  { text: "180+ INDUSTRIAL & MERCHANDISE LINES", icon: Layers },
+  "CR-80 ISO die cutting",
+  "50,000+ units daily",
+  "Full GST input tax credit",
+  "Free digital proofs",
+  "12 / 16 / 20 / 25 mm satin",
+  "125 kHz + 13.56 MHz RFID",
+  "Pan-India dispatch",
 ];
 
 export default function MarqueeTicker() {
-  return (
-    <div className="w-full bg-[#102742] border-y border-white/10 py-3 overflow-hidden select-none relative">
-      {/* Edge gradient masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-[#102742] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-[#102742] to-transparent z-10 pointer-events-none" />
+  const root = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
 
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+
+      const loop = gsap.to(track.current, {
+        xPercent: -50,
+        duration: 36,
+        ease: "none",
+        repeat: -1,
+      });
+
+      // Scrolling pushes the belt faster, then it eases back to cruising speed.
+      ScrollTrigger.create({
+        trigger: root.current,
+        start: "top bottom",
+        end: "bottom top",
+        onToggle: (self) => loop.paused(!self.isActive),
+        onUpdate: (self) => {
+          const boost = gsap.utils.clamp(1, 5, 1 + Math.abs(self.getVelocity()) / 400);
+          gsap.killTweensOf(loop);
+          loop.timeScale(boost);
+          gsap.to(loop, { timeScale: 1, duration: 0.9, ease: "power2.out" });
+        },
+      });
+    },
+    { scope: root }
+  );
+
+  return (
+    <div
+      ref={root}
+      data-no-reveal
+      className="w-full bg-[#F3F5F7] border-b border-[#D8DEE5] py-3 overflow-hidden select-none">
       <div className="flex w-max">
-        {/* Track 1 */}
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 28,
-            ease: "linear",
-          }}
-          className="flex items-center gap-8 shrink-0 pr-8"
-        >
-          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className="flex items-center gap-2.5 text-[11px] sm:text-xs font-mono font-bold tracking-wider text-slate-200 uppercase hover:text-white transition-colors"
-              >
-                <div className="w-5 h-5 rounded-md bg-[#E87832]/20 text-[#FFA868] flex items-center justify-center shrink-0 border border-[#E87832]/35">
-                  <Icon className="w-3 h-3" />
-                </div>
-                <span>{item.text}</span>
-                <span className="text-[#E87832]/70 font-sans ml-4">✦</span>
-              </div>
-            );
-          })}
-        </motion.div>
+        <div ref={track} className="flex items-center gap-8 shrink-0 pr-8">
+          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
+            <span key={idx} className="flex items-center gap-8 font-mono text-xs text-[#475565] whitespace-nowrap">
+              {item}
+              <span aria-hidden="true" className="w-1 h-1 bg-[#D9601A]" />
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

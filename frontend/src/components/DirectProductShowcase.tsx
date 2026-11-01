@@ -14,9 +14,10 @@ import {
   Loader2,
 } from "lucide-react";
 import { Product, Category } from "@/lib/types";
-import { formatCategoryName } from "@/lib/formatters";
+import { formatProductName } from "@/lib/formatters";
 import { getProducts } from "@/lib/api";
 import ProductCard from "./ProductCard";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import SortModal, { SortOptionValue } from "./SortModal";
 
 interface DirectProductShowcaseProps {
@@ -96,14 +97,6 @@ export default function DirectProductShowcase({
     el.scrollBy({ left: offset, behavior: "smooth" });
   };
 
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    const el = categoryScrollRef.current;
-    if (!el) return;
-    if (e.deltaY !== 0 && el.scrollWidth > el.clientWidth) {
-      el.scrollLeft += e.deltaY;
-    }
-  };
-
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = categoryScrollRef.current;
     if (!el) return;
@@ -126,6 +119,24 @@ export default function DirectProductShowcase({
     isDraggingRef.current = false;
   };
 
+  // New results stagger in. The server-rendered first page is handled by PageReveal.
+  const gridRef = useRef<HTMLDivElement>(null);
+  const hasFetched = useRef(false);
+  useGSAP(
+    () => {
+      if (loading || !hasFetched.current || !gridRef.current || prefersReducedMotion()) return;
+      gsap.from(gridRef.current.children, {
+        autoAlpha: 0,
+        y: 18,
+        duration: 0.5,
+        stagger: 0.035,
+        ease: "power3.out",
+        clearProps: "transform,opacity,visibility",
+      });
+    },
+    { dependencies: [loading, items] }
+  );
+
   // Debounce search query so backend isn't spammed while typing
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -138,6 +149,7 @@ export default function DirectProductShowcase({
   const fetchProductsFromBackend = useCallback(
     async (page: number, cat: string, search: string, sort: SortOptionValue) => {
       setLoading(true);
+      hasFetched.current = true;
       try {
         const res = await getProducts({
           page,
@@ -220,24 +232,21 @@ export default function DirectProductShowcase({
   };
 
   return (
-    <section id="catalogue-section" className="max-w-7xl mx-auto px-3 sm:px-6 scroll-mt-24">
+    <section id="catalogue-section" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 scroll-mt-20">
       {/* Header with Title and B2B Badge */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <span className="text-[10px] sm:text-[11px] font-bold text-[#E87832] uppercase tracking-[0.14em]">
-            Wholesale Best Sellers
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#17365D] tracking-tight mt-1">
-            Featured Factory Products &amp; Supplies
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#16324F] tracking-tight leading-[1.08]">
+            Stock lines for ID card studios
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
-            Instant B2B pricing, technical specifications, and factory quotations for ID card rolls, holders, clips, and machinery.
+            Wholesale prices and specifications for rolls, holders, clips and machinery.
           </p>
         </div>
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#E87832] transition-colors self-start md:self-auto py-1"
+          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#D9601A] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
           <span className="tabular-nums font-mono text-slate-400 font-bold">({totalCount})</span>
@@ -246,7 +255,7 @@ export default function DirectProductShowcase({
       </div>
 
       {/* Control Bar: Category Tabs + Quick Search + Sorting */}
-      <div className="bg-[#FAFBFC] border border-[#E2E8F0] rounded-2xl p-3 sm:p-5 mb-5 sm:mb-8 space-y-3 sm:space-y-4">
+      <div className="border-y border-[#D8DEE5] py-3 sm:py-4 mb-5 sm:mb-8 space-y-3">
         {/* Category Pills Header with Scroll Controls */}
         <div>
           <div className="flex items-center justify-between mb-2">
@@ -262,19 +271,19 @@ export default function DirectProductShowcase({
                   type="button"
                   onClick={() => scrollCategory("left")}
                   disabled={!canScrollLeft}
-                  className="p-1 rounded-lg border border-[#DCE3EB] bg-white hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
+                  className="p-1 rounded-lg border border-[#D8DEE5] bg-white hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
                   aria-label="Scroll categories left"
                 >
-                  <ChevronLeft className="w-3.5 h-3.5 text-[#17365D]" />
+                  <ChevronLeft className="w-3.5 h-3.5 text-[#16324F]" />
                 </button>
                 <button
                   type="button"
                   onClick={() => scrollCategory("right")}
                   disabled={!canScrollRight}
-                  className="p-1 rounded-lg border border-[#DCE3EB] bg-white hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
+                  className="p-1 rounded-lg border border-[#D8DEE5] bg-white hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
                   aria-label="Scroll categories right"
                 >
-                  <ChevronRight className="w-3.5 h-3.5 text-[#17365D]" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#16324F]" />
                 </button>
               </div>
             )}
@@ -283,15 +292,14 @@ export default function DirectProductShowcase({
           {/* Category Horizontal Track with Edge Gradients & Mouse Drag */}
           <div className="relative">
             {canScrollLeft && (
-              <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#F5F7FA] to-transparent pointer-events-none z-10" />
+              <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#F3F5F7] to-transparent pointer-events-none z-10" />
             )}
             {canScrollRight && (
-              <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#F5F7FA] to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#F3F5F7] to-transparent pointer-events-none z-10" />
             )}
 
             <div
               ref={categoryScrollRef}
-              onWheel={handleWheel}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUpOrLeave}
@@ -308,10 +316,10 @@ export default function DirectProductShowcase({
                     block: "nearest",
                   });
                 }}
-                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-md text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                   selectedCategory === "all"
-                    ? "bg-[#17365D] text-white shadow-xs"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-[#17365D]"
+                    ? "bg-[#16324F] text-white shadow-xs"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-[#16324F]"
                 }`}
               >
                 <span>All Products</span>
@@ -334,15 +342,15 @@ export default function DirectProductShowcase({
                   }}
                   className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     selectedCategory === cat.slug
-                      ? "bg-[#17365D] text-white shadow-xs"
-                      : "bg-white text-slate-700 border border-slate-200 hover:border-[#17365D]"
+                      ? "bg-[#16324F] text-white shadow-xs"
+                      : "bg-white text-slate-700 border border-slate-200 hover:border-[#16324F]"
                   }`}
                 >
-                  <span>{formatCategoryName(cat.name)}</span>
+                  <span>{formatProductName(cat.name)}</span>
                   {cat.products_count !== undefined && (
                     <span
                       className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F5F7FA] text-[#687586]"
+                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#F3F5F7] text-[#566373]"
                       }`}
                     >
                       {cat.products_count}
@@ -355,16 +363,16 @@ export default function DirectProductShowcase({
         </div>
 
         {/* Search & Sort Row */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 pt-2 border-t border-[#DCE3EB]">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 pt-2 border-t border-[#D8DEE5]">
           {/* Quick Search Input */}
           <div className="relative w-full sm:w-80">
-            <Search className="w-3.5 h-3.5 text-[#687586] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#566373] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search products, SKU (e.g. LAN, V2, DCT)..."
-              className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-white border border-[#DCE3EB] text-xs text-[#263445] placeholder-[#687586] focus:outline-none focus:border-[#17365D] transition-colors"
+              className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-white border border-[#D8DEE5] text-xs text-[#1C2733] placeholder-[#566373] focus:outline-none focus:border-[#16324F] transition-colors"
             />
             {searchQuery && (
               <button
@@ -379,11 +387,11 @@ export default function DirectProductShowcase({
           </div>
 
           {/* Result Count & Sorting */}
-          <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#687586]">
+          <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#566373]">
             <span className="font-medium whitespace-nowrap flex items-center gap-1.5">
-              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E87832]" />}
+              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#D9601A]" />}
               <span>
-                Showing <strong className="text-[#17365D] font-bold">{totalCount > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{totalCount}</strong>
+                Showing <strong className="text-[#16324F] font-bold">{totalCount > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#16324F] font-bold">{endIndex}</strong> of <strong className="text-[#16324F] font-bold">{totalCount}</strong>
               </span>
             </span>
 
@@ -391,12 +399,12 @@ export default function DirectProductShowcase({
               <button
                 type="button"
                 onClick={() => setSortModalOpen(true)}
-                className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F8FAFC] border border-[#DCE3EB] hover:border-[#17365D] text-[11px] sm:text-xs font-semibold text-[#263445] hover:text-[#17365D] rounded-lg sm:rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-1.5 sm:gap-2 bg-white hover:bg-[#F3F5F7] border border-[#D8DEE5] hover:border-[#16324F] text-[11px] sm:text-xs font-semibold text-[#1C2733] hover:text-[#16324F] rounded-lg sm:rounded-md px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
                 aria-label="Open sort products modal"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
                 <span className="font-bold">{SORT_LABELS[sortBy]}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#687586]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#566373]" />
               </button>
             </div>
           </div>
@@ -407,8 +415,8 @@ export default function DirectProductShowcase({
       {loading ? (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
           {Array.from({ length: 8 }).map((_, idx) => (
-            <div key={idx} className="surface-card rounded-2xl p-4 space-y-3 animate-pulse border border-[#DCE3EB]">
-              <div className="w-full aspect-square bg-slate-100 rounded-xl" />
+            <div key={idx} className="surface-card rounded-lg p-4 space-y-3 animate-pulse border border-[#D8DEE5]">
+              <div className="w-full aspect-square bg-slate-100 rounded-md" />
               <div className="h-4 bg-slate-100 rounded w-3/4" />
               <div className="h-3 bg-slate-100 rounded w-1/2" />
               <div className="h-6 bg-slate-100 rounded w-1/3" />
@@ -417,7 +425,7 @@ export default function DirectProductShowcase({
         </div>
       ) : items.length > 0 ? (
         <>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
+          <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
             {items.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -425,10 +433,10 @@ export default function DirectProductShowcase({
 
           {/* Properly Aligned Backend Pagination Bar */}
           {totalPages > 1 && (
-            <div className="mt-8 pt-6 border-t border-[#DCE3EB] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-8 pt-6 border-t border-[#D8DEE5] flex flex-col sm:flex-row items-center justify-between gap-4">
               {/* Left Item Counter */}
-              <div className="text-xs text-[#687586] font-medium order-2 sm:order-1 text-center sm:text-left">
-                Showing <strong className="text-[#17365D] font-bold">{startIndex + 1}</strong>–<strong className="text-[#17365D] font-bold">{endIndex}</strong> of <strong className="text-[#17365D] font-bold">{totalCount}</strong> products
+              <div className="text-xs text-[#566373] font-medium order-2 sm:order-1 text-center sm:text-left">
+                Showing <strong className="text-[#16324F] font-bold">{startIndex + 1}</strong>–<strong className="text-[#16324F] font-bold">{endIndex}</strong> of <strong className="text-[#16324F] font-bold">{totalCount}</strong> products
                 <span className="text-slate-400 ml-1.5">(Page {currentPage} of {totalPages})</span>
               </div>
 
@@ -439,7 +447,7 @@ export default function DirectProductShowcase({
                   type="button"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage <= 1 || loading}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DCE3EB] bg-white text-xs font-semibold text-[#17365D] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#D8DEE5] bg-white text-xs font-semibold text-[#16324F] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
                   aria-label="Previous page"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
@@ -463,10 +471,10 @@ export default function DirectProductShowcase({
                       type="button"
                       onClick={() => handlePageChange(pageNum)}
                       disabled={loading}
-                      className={`min-w-[34px] h-[34px] px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
+                      className={`min-w-[34px] h-[34px] px-2.5 rounded-md text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
                         isActive
-                          ? "bg-[#17365D] text-white shadow-xs"
-                          : "bg-white text-[#263445] border border-[#DCE3EB] hover:border-[#17365D] hover:bg-slate-50"
+                          ? "bg-[#16324F] text-white shadow-xs"
+                          : "bg-white text-[#1C2733] border border-[#D8DEE5] hover:border-[#16324F] hover:bg-slate-50"
                       }`}
                       aria-label={`Page ${pageNum}`}
                       aria-current={isActive ? "page" : undefined}
@@ -481,7 +489,7 @@ export default function DirectProductShowcase({
                   type="button"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage >= totalPages || loading}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DCE3EB] bg-white text-xs font-semibold text-[#17365D] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#D8DEE5] bg-white text-xs font-semibold text-[#16324F] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
                   aria-label="Next page"
                 >
                   <span className="hidden sm:inline">Next</span>
@@ -492,10 +500,10 @@ export default function DirectProductShowcase({
           )}
         </>
       ) : (
-        <div className="bg-white border border-dashed border-[#DCE3EB] rounded-2xl p-12 text-center">
+        <div className="bg-white border border-dashed border-[#D8DEE5] rounded-lg p-12 text-center">
           <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <h3 className="font-bold text-[#17365D] text-base mb-1">No products match your filter</h3>
-          <p className="text-xs text-[#687586] max-w-sm mx-auto mb-4">
+          <h3 className="font-bold text-[#16324F] text-base mb-1">No products match your filter</h3>
+          <p className="text-xs text-[#566373] max-w-sm mx-auto mb-4">
             Try selecting &ldquo;All Products&rdquo; or adjusting your search keywords.
           </p>
           <button
@@ -504,7 +512,7 @@ export default function DirectProductShowcase({
               handleSelectCategory("all");
               setSearchQuery("");
             }}
-            className="px-4 py-2 rounded-lg bg-[#17365D] text-white text-xs font-bold hover:bg-[#102742] transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-[#16324F] text-white text-xs font-bold hover:bg-[#0E2238] transition-colors cursor-pointer"
           >
             Reset Filters
           </button>

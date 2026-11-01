@@ -10,7 +10,7 @@ export default function OwnerLoading() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, index) => (
-          <div key={index} className="surface-card p-5 rounded-2xl space-y-4">
+          <div key={index} className="surface-card p-5 rounded-lg space-y-4">
             <div className="flex items-start justify-between">
               <div className="h-2.5 w-24 skeleton" />
               <div className="w-8 h-8 skeleton rounded-lg" />
@@ -22,7 +22,7 @@ export default function OwnerLoading() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-7 surface-card rounded-2xl overflow-hidden">
+        <div className="lg:col-span-7 surface-card rounded-lg overflow-hidden">
           <div className="px-5 py-3.5 border-b border-[#E6EBF1] flex items-center justify-between">
             <div className="h-3 w-28 skeleton" />
             <div className="h-3 w-16 skeleton" />
@@ -40,7 +40,7 @@ export default function OwnerLoading() {
           </div>
         </div>
 
-        <div className="lg:col-span-5 surface-card rounded-2xl overflow-hidden">
+        <div className="lg:col-span-5 surface-card rounded-lg overflow-hidden">
           <div className="px-5 py-3.5 border-b border-[#E6EBF1]">
             <div className="h-3 w-28 skeleton" />
           </div>

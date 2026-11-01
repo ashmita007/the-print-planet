@@ -10,27 +10,27 @@ export default function EnquirySuccessPage() {
       </div>
 
       <div className="space-y-2">
-        <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#D9601A] uppercase tracking-wider">
           Enquiry Received
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">
           Thank You! Your Request Has Been Logged.
         </h1>
-        <p className="text-xs sm:text-sm text-[#687586] leading-relaxed max-w-lg mx-auto">
+        <p className="text-xs sm:text-sm text-[#566373] leading-relaxed max-w-lg mx-auto">
           Our wholesale desk has received your requirements and saved them to our database.
           A dedicated trade specialist will prepare your itemized proforma quote with volume pricing.
         </p>
       </div>
 
-      <div className="p-4 bg-[#F5F7FA] rounded-xl border border-[#DCE3EB] max-w-md mx-auto text-xs text-[#263445] space-y-2">
+      <div className="p-4 bg-[#F3F5F7] rounded-md border border-[#D8DEE5] max-w-md mx-auto text-xs text-[#1C2733] space-y-2">
         <p className="font-semibold">Need urgent same-day order confirmation?</p>
-        <p className="text-[#687586]">Connect directly with our manufacturing desk:</p>
+        <p className="text-[#566373]">Connect directly with our manufacturing desk:</p>
         <div className="pt-1 flex justify-center gap-4">
           <a
             href="tel:+919741808034"
-            className="font-bold text-[#17365D] hover:underline flex items-center gap-1"
+            className="font-bold text-[#16324F] hover:underline flex items-center gap-1"
           >
-            <Phone className="w-3.5 h-3.5 text-[#E87832]" />
+            <Phone className="w-3.5 h-3.5 text-[#D9601A]" />
             +91 97418 08034
           </a>
           <a
@@ -47,14 +47,14 @@ export default function EnquirySuccessPage() {
       <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
         <Link
           href="/products"
-          className="bg-[#17365D] hover:bg-[#102742] text-white py-2.5 px-6 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
+          className="bg-[#16324F] hover:bg-[#0E2238] text-white py-2.5 px-6 rounded-md font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
         >
           <Package className="w-4 h-4" />
           <span>Continue Browsing Catalogue</span>
         </Link>
         <Link
           href="/"
-          className="border border-[#DCE3EB] text-[#263445] hover:bg-[#F5F7FA] py-2.5 px-6 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center gap-1.5"
+          className="border border-[#D8DEE5] text-[#1C2733] hover:bg-[#F3F5F7] py-2.5 px-6 rounded-md font-semibold text-xs transition-colors flex items-center justify-center gap-1.5"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Home</span>

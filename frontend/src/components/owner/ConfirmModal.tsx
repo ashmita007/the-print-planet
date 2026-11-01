@@ -55,24 +55,24 @@ export default function ConfirmModal({
       aria-modal="true"
     >
       <div
-        className="bg-white rounded-2xl max-w-[320px] sm:max-w-md w-full p-4 sm:p-6 shadow-xl sm:shadow-2xl border border-[#DCE3EB] anim-scale-in space-y-3 sm:space-y-4"
+        className="bg-white rounded-lg max-w-[320px] sm:max-w-md w-full p-4 sm:p-6 shadow-xl sm:shadow-2xl border border-[#D8DEE5] anim-scale-in space-y-3 sm:space-y-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start gap-3 sm:gap-4">
           <div
-            className={`w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
+            className={`w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-md flex items-center justify-center shrink-0 mt-0.5 ${
               isDestructive
                 ? "bg-red-100 text-[#C0392B]"
-                : "bg-blue-100 text-[#17365D]"
+                : "bg-blue-100 text-[#16324F]"
             }`}
           >
             <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="flex-1 min-w-0 pr-1">
-            <h3 className="text-sm sm:text-base font-bold text-[#17365D] leading-snug">
+            <h3 className="text-sm sm:text-base font-bold text-[#16324F] leading-snug">
               {title}
             </h3>
-            <p className="text-[11px] sm:text-xs text-[#687586] mt-0.5 sm:mt-1 leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-[#566373] mt-0.5 sm:mt-1 leading-relaxed">
               {message}
             </p>
           </div>
@@ -86,11 +86,11 @@ export default function ConfirmModal({
           </button>
         </div>
 
-        <div className="pt-2 sm:pt-4 border-t border-[#DCE3EB] flex gap-2 sm:gap-3 justify-end">
+        <div className="pt-2 sm:pt-4 border-t border-[#D8DEE5] flex gap-2 sm:gap-3 justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-xl border border-[#DCE3EB] text-[#263445] text-xs sm:text-sm font-semibold hover:bg-[#F5F7FA] transition-colors"
+            className="flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md border border-[#D8DEE5] text-[#1C2733] text-xs sm:text-sm font-semibold hover:bg-[#F3F5F7] transition-colors"
           >
             {cancelLabel}
           </button>
@@ -100,10 +100,10 @@ export default function ConfirmModal({
               onConfirm();
               onClose();
             }}
-            className={`flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-5 rounded-lg sm:rounded-xl text-white text-xs sm:text-sm font-bold transition-colors shadow-2xs ${
+            className={`flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-5 rounded-lg sm:rounded-md text-white text-xs sm:text-sm font-bold transition-colors shadow-2xs ${
               isDestructive
                 ? "bg-[#C0392B] hover:bg-[#a93226]"
-                : "bg-[#17365D] hover:bg-[#102742]"
+                : "bg-[#16324F] hover:bg-[#0E2238]"
             }`}
           >
             {confirmLabel}

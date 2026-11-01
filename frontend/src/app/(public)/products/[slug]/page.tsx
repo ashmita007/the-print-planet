@@ -157,13 +157,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
       {/* Related Products Section */}
       {product.related_products && product.related_products.length > 0 && (
-        <section className="pt-8 sm:pt-10 border-t border-[#DCE3EB] space-y-4 sm:space-y-6">
+        <section className="pt-8 sm:pt-10 border-t border-[#D8DEE5] space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-base sm:text-xl font-bold text-[#17365D]">
+              <h2 className="text-base sm:text-xl font-bold text-[#16324F]">
                 Related Products in {formatCategoryName(product.category.name)}
               </h2>
-              <p className="text-xs sm:text-sm text-[#4E6178]">
+              <p className="text-xs sm:text-sm text-[#475565]">
                 Frequently purchased together for bulk institutional & trade supply
               </p>
             </div>

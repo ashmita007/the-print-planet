@@ -123,33 +123,33 @@ export default function BulkOrdersPage() {
       <Breadcrumbs items={[{ label: "Bulk & Corporate Orders" }]} />
 
       {/* Header Section */}
-      <div className="border-b border-[#E2E8F0] pb-8">
+      <div className="border-b border-[#D8DEE5] pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-bold text-[#E87832] uppercase tracking-[0.14em] bg-[#FFF5EE] px-3 py-1 rounded-full border border-[#E87832]/20">
+          <div className="inline-flex items-center gap-2 text-[11px] font-bold text-[#D9601A] uppercase tracking-[0.14em] bg-[#FFF5EE] px-3 py-1 rounded-full border border-[#D9601A]/20">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Dedicated Institutional &amp; Enterprise Division</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#17365D] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#16324F] tracking-tight leading-tight">
             Bulk Orders for Schools &amp; Corporate Companies
           </h1>
-          <p className="text-sm sm:text-base text-[#687586] leading-relaxed">
+          <p className="text-sm sm:text-base text-[#566373] leading-relaxed">
             Eliminate dealer markups. Partner directly with India’s verified manufacturer for school ID cards, house color satin lanyards, RFID campus smart cards, corporate badge holders, and high-volume commercial printing.
           </p>
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <Link
               href="/orders"
-              className="inline-flex items-center gap-2 bg-[#17365D] hover:bg-[#102742] text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-2xs"
+              className="inline-flex items-center gap-2 bg-[#16324F] hover:bg-[#0E2238] text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-2xs"
             >
-              <UserCheck className="w-4 h-4 text-[#E87832]" />
+              <UserCheck className="w-4 h-4 text-[#D9601A]" />
               <span>{isLoggedIn ? "Track My Orders & Messages" : "Client Portal / Order Login"}</span>
             </Link>
             <a
               href="https://wa.me/919741808034?text=Hi%2C%20I%20am%20looking%20for%20bulk%20orders%20for%20our%20school%2Fcompany."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-[#17365D] border border-[#DCE3EB] px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all"
+              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-[#16324F] border border-[#D8DEE5] px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all"
             >
-              <PhoneCall className="w-4 h-4 text-[#E87832]" />
+              <PhoneCall className="w-4 h-4 text-[#D9601A]" />
               <span>Talk to Wholesale Desk</span>
             </a>
           </div>
@@ -164,29 +164,29 @@ export default function BulkOrdersPage() {
             setOrgType("school");
             setCategoryType("school_lanyards");
           }}
-          className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden flex flex-col justify-between ${
+          className={`p-6 rounded-lg border text-left transition-all relative overflow-hidden flex flex-col justify-between ${
             orgType === "school"
-              ? "bg-[#17365D] text-white border-[#17365D] shadow-xl ring-2 ring-[#E87832]"
-              : "bg-white text-[#263445] border-[#DCE3EB] hover:border-slate-400"
+              ? "bg-[#16324F] text-white border-[#16324F] shadow-xl ring-2 ring-[#D9601A]"
+              : "bg-white text-[#1C2733] border-[#D8DEE5] hover:border-slate-400"
           }`}
         >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <div className={`p-3 rounded-xl ${orgType === "school" ? "bg-white/10 text-white" : "bg-[#FFF5EE] text-[#E87832]"}`}>
+              <div className={`p-3 rounded-md ${orgType === "school" ? "bg-white/10 text-white" : "bg-[#FFF5EE] text-[#D9601A]"}`}>
                 <GraduationCap className="w-7 h-7" />
               </div>
-              <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${orgType === "school" ? "bg-[#E87832] text-white" : "bg-slate-100 text-slate-600"}`}>
+              <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${orgType === "school" ? "bg-[#D9601A] text-white" : "bg-slate-100 text-slate-600"}`}>
                 Schools &amp; Colleges
               </span>
             </div>
             <h3 className="text-xl font-bold">Educational Institutions</h3>
-            <p className={`text-xs sm:text-sm leading-relaxed ${orgType === "school" ? "text-slate-200" : "text-[#687586]"}`}>
+            <p className={`text-xs sm:text-sm leading-relaxed ${orgType === "school" ? "text-slate-200" : "text-[#566373]"}`}>
               Specialized annual packages for student ID cards, house color custom woven lanyards, teacher badges, breakaway safety hooks, and library RFID smart cards.
             </p>
           </div>
           <div className="pt-4 border-t border-white/10 mt-4 flex items-center justify-between text-xs font-semibold">
             <span>Standard MOQ: 500+ pieces</span>
-            <span className="flex items-center gap-1 text-[#E87832]">Select School Tier &rarr;</span>
+            <span className="flex items-center gap-1 text-[#D9601A]">Select School Tier &rarr;</span>
           </div>
         </button>
 
@@ -196,56 +196,56 @@ export default function BulkOrdersPage() {
             setOrgType("corporate");
             setCategoryType("corporate_lanyards");
           }}
-          className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden flex flex-col justify-between ${
+          className={`p-6 rounded-lg border text-left transition-all relative overflow-hidden flex flex-col justify-between ${
             orgType === "corporate"
-              ? "bg-[#17365D] text-white border-[#17365D] shadow-xl ring-2 ring-[#E87832]"
-              : "bg-white text-[#263445] border-[#DCE3EB] hover:border-slate-400"
+              ? "bg-[#16324F] text-white border-[#16324F] shadow-xl ring-2 ring-[#D9601A]"
+              : "bg-white text-[#1C2733] border-[#D8DEE5] hover:border-slate-400"
           }`}
         >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <div className={`p-3 rounded-xl ${orgType === "corporate" ? "bg-white/10 text-white" : "bg-[#FFF5EE] text-[#E87832]"}`}>
+              <div className={`p-3 rounded-md ${orgType === "corporate" ? "bg-white/10 text-white" : "bg-[#FFF5EE] text-[#D9601A]"}`}>
                 <Building2 className="w-7 h-7" />
               </div>
-              <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${orgType === "corporate" ? "bg-[#E87832] text-white" : "bg-slate-100 text-slate-600"}`}>
+              <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${orgType === "corporate" ? "bg-[#D9601A] text-white" : "bg-slate-100 text-slate-600"}`}>
                 Enterprises &amp; MNCs
               </span>
             </div>
             <h3 className="text-xl font-bold">Corporate Companies</h3>
-            <p className={`text-xs sm:text-sm leading-relaxed ${orgType === "corporate" ? "text-slate-200" : "text-[#687586]"}`}>
+            <p className={`text-xs sm:text-sm leading-relaxed ${orgType === "corporate" ? "text-slate-200" : "text-[#566373]"}`}>
               Pantone-matched digital satin lanyards, executive acrylic &amp; metal card holders, 13.56MHz Mifare RFID access cards, GST tax invoicing, and nationwide branch dispatches.
             </p>
           </div>
           <div className="pt-4 border-t border-white/10 mt-4 flex items-center justify-between text-xs font-semibold">
             <span>Standard MOQ: 500 – 100,000+ pieces</span>
-            <span className="flex items-center gap-1 text-[#E87832]">Select Corporate Tier &rarr;</span>
+            <span className="flex items-center gap-1 text-[#D9601A]">Select Corporate Tier &rarr;</span>
           </div>
         </button>
       </div>
 
       {/* Main Order & Registration Section */}
       {successOrder ? (
-        <div className="bg-white border-2 border-[#2ECC71] rounded-2xl p-6 sm:p-10 text-center space-y-4 shadow-lg anim-scale-in">
+        <div className="bg-white border-2 border-[#2ECC71] rounded-lg p-6 sm:p-10 text-center space-y-4 shadow-lg anim-scale-in">
           <div className="w-16 h-16 bg-[#E8F8F5] text-[#2ECC71] rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#17365D]">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">
             Bulk Inquiry #{successOrder.order_number} Registered!
           </h2>
-          <p className="text-sm text-[#687586] max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm text-[#566373] max-w-xl mx-auto leading-relaxed">
             Your bulk order inquiry for <strong>{successOrder.organization_name}</strong> has been logged in our factory system and your conversation thread has been opened.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href={`/orders/${successOrder.order_number}`}
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md flex items-center gap-2"
+              className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-6 py-3 rounded-md font-bold text-sm transition-all shadow-md flex items-center gap-2"
             >
               <span>Open Conversation &amp; Track Order</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/orders"
-              className="bg-[#17365D] hover:bg-[#102742] text-white px-6 py-3 rounded-xl font-bold text-sm transition-all"
+              className="bg-[#16324F] hover:bg-[#0E2238] text-white px-6 py-3 rounded-md font-bold text-sm transition-all"
             >
               <span>View All My Orders</span>
             </Link>
@@ -254,18 +254,18 @@ export default function BulkOrdersPage() {
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Order Request & Account Form */}
-          <div className="lg:col-span-8 bg-white border border-[#DCE3EB] rounded-2xl p-5 sm:p-8 shadow-2xs space-y-6">
+          <div className="lg:col-span-8 bg-white border border-[#D8DEE5] rounded-lg p-5 sm:p-8 shadow-2xs space-y-6">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#17365D]">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#16324F]">
                 Bulk Order Request &amp; Account Registration
               </h2>
-              <p className="text-xs sm:text-sm text-[#687586] mt-1">
+              <p className="text-xs sm:text-sm text-[#566373] mt-1">
                 Enter your institution specifications below. Your account is automatically created to preserve all messages, quotations, and dispatch tracking in your dashboard.
               </p>
             </div>
 
             {errorMsg && (
-              <div className="bg-[#FDEDEC] border border-[#F5B7B1] text-[#C0392B] p-4 rounded-xl text-xs font-semibold">
+              <div className="bg-[#FDEDEC] border border-[#F5B7B1] text-[#C0392B] p-4 rounded-md text-xs font-semibold">
                 {errorMsg}
               </div>
             )}
@@ -273,7 +273,7 @@ export default function BulkOrdersPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">
                     {orgType === "school" ? "School / College Name *" : "Company / Enterprise Name *"}
                   </label>
                   <input
@@ -282,12 +282,12 @@ export default function BulkOrdersPage() {
                     value={orgName}
                     onChange={(e) => setOrgName(e.target.value)}
                     placeholder={orgType === "school" ? "e.g. St. Joseph Public School" : "e.g. Infosys / Tech Solutions Pvt Ltd"}
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">
                     Contact Person Name *
                   </label>
                   <input
@@ -296,14 +296,14 @@ export default function BulkOrdersPage() {
                     value={contactPerson}
                     onChange={(e) => setContactPerson(e.target.value)}
                     placeholder="e.g. Administrator / Procurement Manager"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">
                     Official Email Address *
                   </label>
                   <input
@@ -312,12 +312,12 @@ export default function BulkOrdersPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="procurement@school.edu.in"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">
                     Contact / WhatsApp Phone Number *
                   </label>
                   <input
@@ -326,55 +326,55 @@ export default function BulkOrdersPage() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">City *</label>
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">City *</label>
                   <input
                     type="text"
                     required
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">State *</label>
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">State *</label>
                   <input
                     type="text"
                     required
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">GSTIN (Optional)</label>
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">GSTIN (Optional)</label>
                   <input
                     type="text"
                     value={gstNumber}
                     onChange={(e) => setGstNumber(e.target.value)}
                     placeholder="29XXXXX..."
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">
                     Primary Product Category *
                   </label>
                   <select
                     value={categoryType}
                     onChange={(e) => setCategoryType(e.target.value)}
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   >
                     {orgType === "school" ? (
                       <>
@@ -397,7 +397,7 @@ export default function BulkOrdersPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#263445] mb-1">
+                  <label className="block text-xs font-bold text-[#1C2733] mb-1">
                     Estimated Quantity (Units) *
                   </label>
                   <input
@@ -406,13 +406,13 @@ export default function BulkOrdersPage() {
                     step={100}
                     value={quantity}
                     onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 500)}
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md px-3.5 py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#263445] mb-1">
+                <label className="block text-xs font-bold text-[#1C2733] mb-1">
                   Specific Requirements &amp; Artwork Instructions *
                 </label>
                 <textarea
@@ -421,18 +421,18 @@ export default function BulkOrdersPage() {
                   value={requirements}
                   onChange={(e) => setRequirements(e.target.value)}
                   placeholder="Describe your size (12mm/16mm/20mm), colors, fitting hook requirements, expected delivery timeline, and packaging needs..."
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl p-3 text-xs sm:text-sm text-[#263445] outline-none leading-relaxed"
+                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md p-3 text-xs sm:text-sm text-[#1C2733] outline-none leading-relaxed"
                 />
               </div>
 
               {/* Artwork / Logo Upload */}
               <div>
-                <label className="block text-xs font-bold text-[#263445] mb-1">
+                <label className="block text-xs font-bold text-[#1C2733] mb-1">
                   Upload School Crest / Corporate Logo / Spec Sheet (Optional)
                 </label>
                 <div className="flex items-center gap-3">
-                  <label className="cursor-pointer bg-[#F5F7FA] hover:bg-slate-200 text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors">
-                    <Upload className="w-4 h-4 text-[#E87832]" />
+                  <label className="cursor-pointer bg-[#F3F5F7] hover:bg-slate-200 text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-md text-xs font-bold flex items-center gap-2 transition-colors">
+                    <Upload className="w-4 h-4 text-[#D9601A]" />
                     <span>{attachment ? attachment.name : "Choose File (PDF, PNG, JPG, AI, CDR)"}</span>
                     <input
                       type="file"
@@ -458,12 +458,12 @@ export default function BulkOrdersPage() {
 
               {/* Password Registration (If not logged in) */}
               {!isLoggedIn && (
-                <div className="bg-[#FFF5EE] border border-[#E87832]/30 p-4 rounded-xl space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#17365D]">
-                    <Lock className="w-4 h-4 text-[#E87832]" />
+                <div className="bg-[#FFF5EE] border border-[#D9601A]/30 p-4 rounded-md space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#16324F]">
+                    <Lock className="w-4 h-4 text-[#D9601A]" />
                     <span>Create Account Password for Conversation &amp; Tracking *</span>
                   </div>
-                  <p className="text-[11px] text-[#687586]">
+                  <p className="text-[11px] text-[#566373]">
                     Set a secure password. You will use this password and your email to view quotes, reply to messages, and download invoices in your client dashboard.
                   </p>
                   <input
@@ -472,7 +472,7 @@ export default function BulkOrdersPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter at least 6 characters..."
-                    className="w-full bg-white border border-[#DCE3EB] focus:border-[#17365D] rounded-xl px-3.5 py-2 text-xs sm:text-sm text-[#263445] outline-none"
+                    className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-md px-3.5 py-2 text-xs sm:text-sm text-[#1C2733] outline-none"
                   />
                 </div>
               )}
@@ -480,7 +480,7 @@ export default function BulkOrdersPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#E87832] hover:bg-[#d66b28] text-white py-3.5 rounded-xl font-bold text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full bg-[#D9601A] hover:bg-[#B94E12] text-white py-3.5 rounded-md font-bold text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? (
                   <span>Submitting &amp; Registering Account...</span>
@@ -496,8 +496,8 @@ export default function BulkOrdersPage() {
 
           {/* Right Summary Column: Factory SLAs & Guarantee */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="bg-[#17365D] text-white p-6 rounded-2xl space-y-4 shadow-md">
-              <div className="flex items-center gap-2 text-[#E87832] text-xs font-bold uppercase tracking-wider">
+            <div className="bg-[#16324F] text-white p-6 rounded-lg space-y-4 shadow-md">
+              <div className="flex items-center gap-2 text-[#D9601A] text-xs font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4" />
                 <span>Direct Factory Advantage</span>
               </div>
@@ -522,23 +522,23 @@ export default function BulkOrdersPage() {
               </ul>
             </div>
 
-            <div className="bg-[#F8FAFC] border border-[#DCE3EB] p-5 rounded-2xl space-y-3">
-              <h4 className="font-bold text-xs uppercase tracking-wider text-[#17365D] flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-[#E87832]" />
+            <div className="bg-[#F3F5F7] border border-[#D8DEE5] p-5 rounded-lg space-y-3">
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#16324F] flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-[#D9601A]" />
                 <span>Turnaround Timelines</span>
               </h4>
-              <div className="space-y-2 text-xs text-[#687586]">
+              <div className="space-y-2 text-xs text-[#566373]">
                 <div className="flex justify-between py-1 border-b border-slate-200">
                   <span>Standard 1,000–5,000 rolls</span>
-                  <strong className="text-[#17365D]">2 – 3 Days</strong>
+                  <strong className="text-[#16324F]">2 – 3 Days</strong>
                 </div>
                 <div className="flex justify-between py-1 border-b border-slate-200">
                   <span>Large 10,000+ units</span>
-                  <strong className="text-[#17365D]">4 – 6 Days</strong>
+                  <strong className="text-[#16324F]">4 – 6 Days</strong>
                 </div>
                 <div className="flex justify-between py-1">
                   <span>Pan-India Transit</span>
-                  <strong className="text-[#17365D]">24 – 48 Hours</strong>
+                  <strong className="text-[#16324F]">24 – 48 Hours</strong>
                 </div>
               </div>
             </div>

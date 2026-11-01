@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import { useRouter, usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Phone,
   Mail,
@@ -30,10 +30,25 @@ import { Category, SiteSettings } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
 import { getApiUrl } from "@/lib/api";
 import { useCart } from "@/lib/cart";
+import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { useOverlay, usePresence } from "@/lib/useOverlay";
 
 const CDN_LOGO_URL =
   process.env.NEXT_PUBLIC_LOGO_URL ||
   "https://res.cloudinary.com/pmq4rert/image/upload/v1793343181/the_print_planet/brand/logo_webp.webp";
+
+const ANNOUNCEMENTS = [
+  "PAN-India Factory-Direct Dispatch | Free Digital Proofs on All Custom Orders",
+  "Corporate & Educational Bulk Enquiries: Custom Sample Kits Available",
+  "High-Speed Card Manufacturing Machinery & Satin Lanyards at Wholesale Rates",
+];
+
+const NAV_ITEMS = [
+  { href: "/corporate", label: "Corporate & Bulk" },
+  { href: "/services", label: "Custom Printing" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact" },
+];
 
 interface NavbarProps {
   categories?: Category[];
@@ -53,27 +68,123 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const [clientUser, setClientUser] = useState<any>(null);
   const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
   const [mounted, setMounted] = useState(false);
-  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+  const [searchRowOpen, setSearchRowOpen] = useState(false);
+  const [announcementIdx, setAnnouncementIdx] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const announcementRef = useRef<HTMLSpanElement>(null);
+  const cartButtonRef = useRef<HTMLButtonElement>(null);
+  const desktopSearchRef = useRef<HTMLInputElement>(null);
+  const rowSearchRef = useRef<HTMLInputElement>(null);
+  const previousTotal = useRef(0);
+
+  const { mounted: megaMenuMounted, ref: megaMenuRef } = usePresence<HTMLDivElement>(categoriesDropdownOpen, { autoAlpha: 0, y: 10, scale: 0.98 });
+  const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
+  const { mounted: drawerMounted, ref: drawerRef } = useOverlay<HTMLDivElement>(mobileMenuOpen, closeMobileMenu, { x: "-100%" });
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Rotating announcement bar messages
-  const announcements = [
-    "🚀 PAN-India Factory-Direct Dispatch | Free Digital Proofs on All Custom Orders",
-    "💼 Corporate & Educational Bulk Enquiries: Custom Sample Kits Available",
-    "⚡ High-Speed Card Manufacturing Machinery & Satin Lanyards at Wholesale Rates",
-  ];
-  const [announcementIdx, setAnnouncementIdx] = useState(0);
+  // Scroll progress line and a slightly tighter header once the page is moving.
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
 
+      gsap.fromTo(progressRef.current, { scaleX: 0 }, {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: { start: 0, end: "max", scrub: 0.3 },
+      });
+
+      ScrollTrigger.create({
+        start: 80,
+        end: "max",
+        onToggle: (self) => {
+          headerRef.current?.classList.toggle("shadow-md", self.isActive);
+          gsap.to(logoRef.current, { scale: self.isActive ? 0.88 : 1, duration: 0.3, ease: "power2.out" });
+        },
+      });
+    },
+    { scope: headerRef }
+  );
+
+  // Announcement bar: slide out, swap text, slide in.
   useEffect(() => {
+    if (prefersReducedMotion()) return;
     const timer = setInterval(() => {
-      setAnnouncementIdx((prev) => (prev + 1) % announcements.length);
+      gsap.to(announcementRef.current, {
+        y: -8,
+        autoAlpha: 0,
+        duration: 0.22,
+        ease: "power2.in",
+        onComplete: () => setAnnouncementIdx((prev) => (prev + 1) % ANNOUNCEMENTS.length),
+      });
     }, 4500);
     return () => clearInterval(timer);
-  }, [announcements.length]);
+  }, []);
+
+  useEffect(() => {
+    if (announcementIdx === 0 && !gsap.getProperty(announcementRef.current, "y")) return;
+    gsap.fromTo(announcementRef.current, { y: 8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.3, ease: "power3.out" });
+  }, [announcementIdx]);
+
+  // Cart icon reacts whenever the item count goes up.
+  useEffect(() => {
+    if (mounted && totalItems > previousTotal.current && !prefersReducedMotion()) {
+      gsap.fromTo(cartButtonRef.current, { scale: 0.8 }, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.45)" });
+    }
+    previousTotal.current = totalItems;
+  }, [totalItems, mounted]);
+
+  // ⌘K / Ctrl+K opens search, and Escape closes the mega menu.
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        if (desktopSearchRef.current?.offsetParent) {
+          desktopSearchRef.current.focus();
+        } else {
+          setSearchRowOpen(true);
+        }
+      }
+      if (e.key === "Escape") {
+        setCategoriesDropdownOpen(false);
+        setSearchRowOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (searchRowOpen) rowSearchRef.current?.focus();
+  }, [searchRowOpen]);
+
+  // Single hover pill that glides between links.
+  const movePill = (e: React.MouseEvent<HTMLElement>) => {
+    const nav = navRef.current;
+    const pill = pillRef.current;
+    if (!nav || !pill) return;
+    const navBox = nav.getBoundingClientRect();
+    const box = e.currentTarget.getBoundingClientRect();
+    const firstMove = gsap.getProperty(pill, "opacity") === 0;
+    gsap.to(pill, {
+      x: box.left - navBox.left,
+      width: box.width,
+      autoAlpha: 1,
+      duration: firstMove || prefersReducedMotion() ? 0 : 0.35,
+      ease: "power3.out",
+    });
+  };
+
+  const hidePill = () => {
+    gsap.to(pillRef.current, { autoAlpha: 0, duration: 0.2 });
+  };
 
   useEffect(() => {
     if (categories && categories.length > 0) {
@@ -138,16 +249,6 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
     };
   }, []);
 
-  // Lock body scroll on mobile menu
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = "";
-      };
-    }
-  }, [mobileMenuOpen]);
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -164,6 +265,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setMobileMenuOpen(false);
+      setSearchRowOpen(false);
     }
   };
 
@@ -171,40 +273,33 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const email = settings?.email || "theprintplanet01@gmail.com";
 
   return (
-    <header className="w-full sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <header
+      ref={headerRef}
+      className="w-full sticky -top-8 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-shadow duration-300"
+    >
       {/* 1. ANNOUNCEMENT BAR */}
-      <div className="bg-[#102742] text-white text-[11px] sm:text-xs py-1.5 px-3 sm:px-6 border-b border-white/10">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div className="h-8 flex items-center bg-[#0E2238] text-white text-[11px] sm:text-xs px-3 sm:px-6">
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-hidden flex-1">
-            <span className="w-2 h-2 rounded-full bg-[#E87832] animate-pulse shrink-0" />
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={announcementIdx}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.25 }}
-                className="text-slate-200 truncate font-medium"
-              >
-                {announcements[announcementIdx]}
-              </motion.span>
-            </AnimatePresence>
+                        <span ref={announcementRef} className="text-slate-200 truncate font-medium">
+              {ANNOUNCEMENTS[announcementIdx]}
+            </span>
           </div>
 
           <div className="hidden md:flex items-center gap-4 shrink-0 text-slate-300">
             <a
               href={`mailto:${email}`}
-              className="hover:text-[#FFA868] transition-colors flex items-center gap-1.5"
+              className="hover:text-[#F4A36B] transition-colors flex items-center gap-1.5"
             >
-              <Mail className="w-3.5 h-3.5 text-[#FFA868]" />
+              <Mail className="w-3.5 h-3.5 text-[#F4A36B]" />
               <span>{email}</span>
             </a>
             <span className="text-white/20">|</span>
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
-              className="hover:text-[#FFA868] transition-colors flex items-center gap-1.5 font-semibold tabular-nums text-white"
+              className="hover:text-[#F4A36B] transition-colors flex items-center gap-1.5 font-semibold tabular-nums text-white"
             >
-              <Phone className="w-3.5 h-3.5 text-[#FFA868]" />
+              <Phone className="w-3.5 h-3.5 text-[#F4A36B]" />
               <span>{phone}</span>
             </a>
           </div>
@@ -213,24 +308,24 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
       {/* 2. MAIN NAVIGATION BAR */}
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6">
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
+        <div className="flex items-center justify-between h-16 lg:h-[4.5rem] gap-2 sm:gap-3 xl:gap-5">
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-[#E87832] hover:bg-slate-100 rounded-lg transition-colors"
+            className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-[#D9601A] hover:bg-slate-100 rounded-lg transition-colors"
             aria-label="Open mobile navigation menu"
           >
             <Menu className="w-6 h-6" />
           </button>
 
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0 py-1" title="The Print Planet Home">
+          <Link ref={logoRef} href="/" className="flex items-center gap-2 shrink-0 py-1 origin-left mr-auto lg:mr-0" title="The Print Planet Home">
             <Image
               src={CDN_LOGO_URL}
               alt="The Print Planet — Premium Custom Printing & Merchandise"
               width={240}
               height={70}
-              className="h-10 sm:h-14 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
               priority
               unoptimized
             />
@@ -239,21 +334,24 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           {/* Search Box (Desktop) */}
           <form
             onSubmit={handleSearchSubmit}
-            className="hidden xl:flex flex-1 max-w-xs xl:max-w-sm mx-3 xl:mx-6 relative items-center"
+            role="search"
+            className="hidden xl:flex xl:order-last flex-1 min-w-0 max-w-sm relative items-center"
           >
             <div className="relative w-full group">
               <input
-                type="text"
-                placeholder="Search products, ID cards, lanyards..."
+                ref={desktopSearchRef}
+                type="search"
+                aria-label="Search products"
+                placeholder="Search products, ID cards..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F5F7FA] hover:bg-white focus:bg-white border border-[#DCE3EB] hover:border-[#17365D]/30 focus:border-[#E87832] focus:ring-4 focus:ring-[#E87832]/10 rounded-xl pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
+                className="w-full bg-[#F3F5F7] hover:bg-white focus:bg-white border border-[#D8DEE5] hover:border-[#16324F]/30 focus:border-[#D9601A] focus:ring-4 focus:ring-[#D9601A]/10 rounded-md pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#E87832] transition-colors" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#D9601A] transition-colors" />
               {searchQuery ? (
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#E87832] text-white px-2 py-0.5 rounded-md hover:bg-[#d66b28] transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#D9601A] text-white px-2 py-0.5 rounded-md hover:bg-[#B94E12] transition-colors"
                 >
                   Go
                 </button>
@@ -265,16 +363,25 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             </div>
           </form>
 
-          {/* Desktop Navigation Links with Motion.dev Interactive Hover Pill */}
+          {/* Desktop Navigation with one gliding hover pill */}
           <nav
-            onMouseLeave={() => setHoveredNav(null)}
-            className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs sm:text-[13px] font-semibold text-slate-800"
+            ref={navRef}
+            aria-label="Primary"
+            onMouseLeave={hidePill}
+            className="relative isolate hidden lg:flex items-center gap-0.5 text-[13px] font-semibold text-slate-800 shrink-0"
           >
+            <span
+              ref={pillRef}
+              aria-hidden="true"
+              style={{ opacity: 0, visibility: "hidden" }}
+              className="absolute left-0 top-0 h-full -z-10 bg-[#FBF0E8] border border-[#D9601A]/25 rounded-md"
+            />
+
             {/* Shop by Category Mega Dropdown */}
             <div
               className="relative"
               ref={dropdownRef}
-              onMouseEnter={() => setHoveredNav("category")}
+              onMouseEnter={movePill}
             >
               <button
                 type="button"
@@ -283,40 +390,33 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   setCategoriesDropdownOpen(nextState);
                   if (nextState) fetchFreshCategories();
                 }}
-                className={`relative px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors focus:outline-none cursor-pointer ${
-                  categoriesDropdownOpen ? "text-[#E87832] font-bold" : "text-[#17365D] hover:text-[#E87832]"
+                aria-expanded={categoriesDropdownOpen}
+                aria-haspopup="true"
+                className={`relative px-3 py-2 rounded-md flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer ${
+                  categoriesDropdownOpen ? "text-[#D9601A] font-bold" : "text-[#16324F] hover:text-[#D9601A]"
                 }`}
               >
-                {hoveredNav === "category" && (
-                  <motion.div
-                    layoutId="navbar-hover-pill"
-                    className="absolute inset-0 bg-[#FFF7F2] border border-[#E87832]/25 rounded-xl -z-10 shadow-2xs"
-                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                  />
-                )}
                 <span>Shop by Category</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    categoriesDropdownOpen ? "rotate-180 text-[#E87832]" : "text-slate-400"
+                    categoriesDropdownOpen ? "rotate-180 text-[#D9601A]" : "text-slate-400"
                   }`}
                 />
               </button>
 
               {/* Mega Dropdown Menu */}
-              <AnimatePresence>
-                {categoriesDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute top-full left-0 w-[640px] bg-white/98 backdrop-blur-lg border border-[#DCE3EB] rounded-2xl shadow-[0_20px_50px_-10px_rgba(16,39,66,0.18)] py-3 mt-2 z-50 overflow-hidden"
+              <>
+                {megaMenuMounted && (
+                  <div
+                    ref={megaMenuRef}
+                    data-panel
+                    className="absolute top-full left-0 w-[640px] bg-white/98 backdrop-blur-lg border border-[#D8DEE5] rounded-lg shadow-[0_20px_50px_-10px_rgba(16,39,66,0.18)] py-3 mt-2 z-50 overflow-hidden"
                   >
-                    <div className="px-5 py-2.5 border-b border-slate-100 bg-[#F8FAFC] flex items-center justify-between rounded-t-2xl">
-                      <span className="text-xs font-bold text-[#17365D] uppercase tracking-wider flex items-center gap-1.5">
-                        <Layers className="w-3.5 h-3.5 text-[#E87832]" /> Complete Catalog Collections
+                    <div className="px-5 py-2.5 border-b border-slate-100 bg-[#F3F5F7] flex items-center justify-between rounded-t-2xl">
+                      <span className="text-xs font-bold text-[#16324F] uppercase tracking-wider flex items-center gap-1.5">
+                        <Layers className="w-3.5 h-3.5 text-[#D9601A]" /> Complete Catalog Collections
                       </span>
-                      <span className="text-[10px] text-[#E87832] font-bold bg-[#FFF7F2] border border-[#E87832]/25 px-2.5 py-0.5 rounded-full">
+                      <span className="text-[10px] text-[#D9601A] font-bold bg-[#FBF0E8] border border-[#D9601A]/25 px-2.5 py-0.5 rounded-full">
                         180+ Products Available
                       </span>
                     </div>
@@ -330,12 +430,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                         return (
                           <div
                             key={mainCat.id}
-                            className="p-3 rounded-xl bg-slate-50/80 hover:bg-white border border-slate-100 hover:border-[#E87832]/40 hover:shadow-sm transition-all"
+                            className="p-3 rounded-md bg-slate-50/80 hover:bg-white border border-slate-100 hover:border-[#D9601A]/40 hover:shadow-sm transition-all"
                           >
                             <Link
                               href={`/products?category=${mainCat.slug}`}
                               onClick={() => setCategoriesDropdownOpen(false)}
-                              className="flex items-center justify-between text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors mb-1.5 uppercase tracking-wide"
+                              className="flex items-center justify-between text-xs font-bold text-[#16324F] hover:text-[#D9601A] transition-colors mb-1.5 uppercase tracking-wide"
                             >
                               <span className="truncate pr-1">{formatCategoryName(mainCat.name)}</span>
                               <span className="text-[10px] text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-normal">
@@ -349,7 +449,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                     key={sub.id}
                                     href={`/products?category=${sub.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[11px] text-slate-600 hover:text-[#E87832] truncate transition-colors font-medium"
+                                    className="block text-[11px] text-slate-600 hover:text-[#D9601A] truncate transition-colors font-medium"
                                   >
                                     {formatCategoryName(sub.name)}
                                   </Link>
@@ -358,7 +458,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                   <Link
                                     href={`/products?category=${mainCat.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[10px] font-bold text-[#E87832] hover:underline pt-0.5"
+                                    className="block text-[10px] font-bold text-[#D9601A] hover:underline pt-0.5"
                                   >
                                     +{subs.length - 3} more &rarr;
                                   </Link>
@@ -370,138 +470,141 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       })}
                     </div>
 
-                    <div className="p-3 border-t border-slate-100 bg-[#F8FAFC] flex items-center justify-between px-5 rounded-b-2xl">
+                    <div className="p-3 border-t border-slate-100 bg-[#F3F5F7] flex items-center justify-between px-5 rounded-b-2xl">
                       <span className="text-xs text-slate-500">
                         Need tailored specifications or GST invoicing?
                       </span>
                       <Link
                         href="/products"
                         onClick={() => setCategoriesDropdownOpen(false)}
-                        className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] flex items-center gap-1"
+                        className="text-xs font-bold text-[#D9601A] hover:text-[#B94E12] flex items-center gap-1"
                       >
                         <span>View All Products &rarr;</span>
                       </Link>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
+              </>
             </div>
 
-            {/* Standard Nav Items with Motion Hover Pill */}
-            {[
-              { href: "/corporate", label: "Corporate Gifting" },
-              { href: "/services", label: "Custom Printing" },
-              { href: "/bulk-orders", label: "Bulk Orders", badge: "Factory Direct" },
-              { href: "/about", label: "About Us" },
-              { href: "/contact", label: "Contact" },
-            ].map((item) => (
-              <div
-                key={item.href}
-                className="relative"
-                onMouseEnter={() => setHoveredNav(item.href)}
-              >
+            {NAV_ITEMS.map((item) => {
+              const active = pathname === item.href;
+              return (
                 <Link
+                  key={item.href}
                   href={item.href}
-                  className={`relative px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap ${
-                    pathname === item.href
-                      ? "text-[#E87832] font-bold"
-                      : item.badge
-                      ? "text-[#E87832] font-bold"
-                      : "text-slate-700 hover:text-[#E87832]"
+                  onMouseEnter={movePill}
+                  aria-current={active ? "page" : undefined}
+                  className={`relative px-3 py-2 rounded-md whitespace-nowrap transition-colors ${
+                    active ? "text-[#B94E12] font-bold" : "text-slate-700 hover:text-[#B94E12]"
                   }`}
                 >
-                  {hoveredNav === item.href && (
-                    <motion.div
-                      layoutId="navbar-hover-pill"
-                      className="absolute inset-0 bg-[#FFF7F2] border border-[#E87832]/25 rounded-xl -z-10 shadow-2xs"
-                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                    />
-                  )}
-                  <span>{item.label}</span>
-                  {item.badge && (
-                    <span className="text-[9px] font-bold bg-[#E87832]/10 text-[#E87832] border border-[#E87832]/25 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
-                      {item.badge}
-                    </span>
-                  )}
+                  {item.label}
                 </Link>
-              </div>
-            ))}
+              );
+            })}
           </nav>
 
           {/* Action Icons (Cart, Account, Request Quote) */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Cart Button with Motion Tap & Hover */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 xl:order-last">
+            {/* Compact search below xl */}
+            <button
+              type="button"
+              onClick={() => setSearchRowOpen((open) => !open)}
+              aria-label="Search products"
+              aria-expanded={searchRowOpen}
+              className="xl:hidden p-2.5 rounded-md border border-slate-200 hover:border-[#D9601A]/60 hover:bg-[#FBF0E8] text-slate-700 hover:text-[#D9601A] transition-colors shadow-2xs"
+            >
+              {searchRowOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
+            </button>
+
+            <button
+              ref={cartButtonRef}
+              type="button"
               onClick={toggleCart}
-              className="relative p-2.5 rounded-xl border border-slate-200 hover:border-[#E87832]/60 hover:bg-[#FFF7F2] text-slate-700 hover:text-[#E87832] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
+              className="relative p-2.5 rounded-md border border-slate-200 hover:border-[#D9601A]/60 hover:bg-[#FBF0E8] text-slate-700 hover:text-[#D9601A] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
               title="View Cart & Quote List"
-              aria-label="View Cart"
+              aria-label={mounted && totalItems > 0 ? `View cart, ${totalItems} items` : "View cart"}
             >
               <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110" />
               {mounted && totalItems > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#E87832] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
+                <span
+                  className="anim-scale-in absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#D9601A] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
                 >
                   {totalItems > 99 ? "99+" : totalItems}
-                </motion.span>
+                </span>
               )}
-            </motion.button>
+            </button>
 
             {/* Track Orders / Account */}
             {isClientLoggedIn ? (
               <Link
                 href="/orders"
-                className="hidden sm:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-xl text-xs font-semibold transition-colors"
+                className="hidden sm:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-md text-xs font-semibold transition-colors"
                 title="My Orders & Quotes"
               >
-                <Package className="w-4 h-4 text-[#17365D]" />
+                <Package className="w-4 h-4 text-[#16324F]" />
                 <span>Orders</span>
               </Link>
             ) : null}
 
             {/* Request a Quote Button with Motion Elevation */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -1 }}
-              whileTap={{ scale: 0.97 }}
-              className="hidden sm:block"
-            >
-              <Link
+            <Link
                 href="/quote"
-                className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#E87832] to-[#D66B28] hover:from-[#d66b28] hover:to-[#c25e1f] text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-[#E87832]/20 hover:shadow-lg hover:shadow-[#E87832]/30 transition-all whitespace-nowrap cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2.5 rounded-md text-sm font-bold transition-colors whitespace-nowrap cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
                 <span>Request Quote</span>
               </Link>
-            </motion.div>
           </div>
         </div>
       </div>
 
-      {/* 3. MOBILE NAVIGATION DRAWER */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden flex">
+      {/* Compact search row */}
+      {searchRowOpen && (
+        <div className="xl:hidden border-t border-slate-100 bg-white px-3.5 sm:px-6 py-2.5 anim-fade-in">
+          <form onSubmit={handleSearchSubmit} role="search" className="relative max-w-7xl mx-auto">
+            <input
+              ref={rowSearchRef}
+              type="search"
+              aria-label="Search products"
+              placeholder="Search products, ID cards, lanyards..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#D9601A] focus:bg-white rounded-md pl-9 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+            />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          </form>
+        </div>
+      )}
+
+      {/* Scroll progress */}
+      <div
+        ref={progressRef}
+        aria-hidden="true"
+        style={{ transform: "scaleX(0)" }}
+        className="absolute left-0 right-0 -bottom-px h-0.5 bg-[#D9601A] origin-left"
+      />
+
+      {/* 3. MOBILE NAVIGATION DRAWER: portalled because the header's backdrop-filter
+          would otherwise become the containing block and collapse this fixed layer. */}
+      {drawerMounted && createPortal(
+          <div ref={drawerRef} className="fixed inset-0 z-[60] lg:hidden flex">
             {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+            <div
+              data-backdrop
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-[#0A1128]/60 backdrop-blur-xs"
+              className="fixed inset-0 bg-[#0E2238]/60 backdrop-blur-xs"
             />
 
             {/* Drawer */}
-            <motion.div
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className="relative w-full max-w-xs sm:max-w-sm bg-white h-full shadow-2xl flex flex-col z-10"
+            <div
+              data-panel
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
+              tabIndex={-1}
+              className="relative w-full max-w-xs sm:max-w-sm bg-white h-[100dvh] shadow-2xl flex flex-col z-10 outline-none"
             >
               {/* Drawer Header */}
               <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
@@ -521,7 +624,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 </Link>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
+                  className="w-9 h-9 rounded-md flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
                   aria-label="Close navigation menu"
                 >
                   <X className="w-5 h-5" />
@@ -532,11 +635,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               <div className="p-4 border-b border-slate-100">
                 <form onSubmit={handleSearchSubmit} className="relative">
                   <input
-                    type="text"
+                    type="search"
+                    aria-label="Search products"
                     placeholder="Search products, cards, apparel..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-900 outline-none focus:border-[#E87832] focus:bg-white"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-md pl-9 pr-4 py-2 text-xs text-slate-900 outline-none focus:border-[#D9601A] focus:bg-white"
                   />
                   <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 </form>
@@ -547,25 +651,25 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span>Home</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
 
                 {/* Categories Accordion */}
-                <div className="border border-slate-100 rounded-xl overflow-hidden my-1">
+                <div className="border border-slate-100 rounded-md overflow-hidden my-1">
                   <button
                     onClick={() => setMobileCategoriesOpen(!mobileCategoriesOpen)}
                     className="w-full flex items-center justify-between p-2.5 bg-slate-50/70 text-left font-semibold hover:bg-slate-100 transition-colors"
                   >
                     <span className="flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-[#E87832]" />
+                      <Layers className="w-4 h-4 text-[#D9601A]" />
                       <span>Shop by Category</span>
                     </span>
                     <ChevronDown
                       className={`w-4 h-4 text-slate-400 transition-transform ${
-                        mobileCategoriesOpen ? "rotate-180 text-[#E87832]" : ""
+                        mobileCategoriesOpen ? "rotate-180 text-[#D9601A]" : ""
                       }`}
                     />
                   </button>
@@ -574,16 +678,16 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       <Link
                         href="/products"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#E87832] hover:bg-[#FFF7F2]"
+                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#D9601A] hover:bg-[#FBF0E8]"
                       >
-                        ★ View All 180+ Products
+                        View All 180+ Products
                       </Link>
                       {liveCategories.map((c) => (
                         <Link
                           key={c.id}
                           href={`/products?category=${c.slug}`}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#E87832] truncate"
+                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#D9601A] truncate"
                         >
                           {formatCategoryName(c.name)}
                         </Link>
@@ -595,11 +699,11 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/corporate"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-[#E87832]" />
-                    <span>Corporate Gifting</span>
+                    <Building2 className="w-4 h-4 text-[#D9601A]" />
+                    <span>Corporate &amp; Bulk Orders</span>
                   </span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
@@ -607,27 +711,16 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/services"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span>Custom Printing</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
 
                 <Link
-                  href="/bulk-orders"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-[#FFF7F2] text-[#E87832] font-bold hover:bg-[#FFEADA] transition-colors"
-                >
-                  <span>Bulk Orders &amp; RFQ</span>
-                  <span className="text-[10px] bg-[#E87832] text-white px-2 py-0.5 rounded-full">
-                    Wholesale
-                  </span>
-                </Link>
-
-                <Link
                   href="/about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span>About Us</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -636,7 +729,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/gallery"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span>Portfolio Gallery</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -645,7 +738,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span>Contact &amp; Support</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -657,7 +750,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/quote"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] text-white font-semibold text-xs shadow-md"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-md bg-[#D9601A] hover:bg-[#B94E12] text-white font-semibold text-xs shadow-md"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Request Custom Quote</span>
@@ -666,26 +759,26 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${phone.replace(/\s+/g, "")}`}
-                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-semibold hover:bg-slate-100"
+                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-md bg-white border border-slate-200 text-slate-800 text-xs font-semibold hover:bg-slate-100"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#E87832]" />
+                    <Phone className="w-3.5 h-3.5 text-[#D9601A]" />
                     <span>Call Us</span>
                   </a>
                   <a
                     href={`https://wa.me/919741808034`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs"
+                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs"
                   >
                     <MessageCircle className="w-3.5 h-3.5" />
                     <span>WhatsApp</span>
                   </a>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>,
+          document.body
+      )}
     </header>
   );
 }

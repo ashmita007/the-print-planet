@@ -5,7 +5,7 @@ export default function ProductsLoading() {
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6 anim-fade-in">
       <div className="h-3 w-44 skeleton" />
 
-      <div className="border-b border-[#DCE3EB] pb-6 space-y-3">
+      <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
         <div className="h-3 w-40 skeleton" />
         <div className="h-8 sm:h-10 w-3/4 max-w-lg skeleton" />
         <div className="h-3 w-full max-w-2xl skeleton" />
@@ -25,10 +25,10 @@ export default function ProductsLoading() {
         {Array.from({ length: 12 }).map((_, i) => (
           <div
             key={i}
-            className="bg-white border border-[#DCE3EB] rounded-2xl p-3 space-y-3"
+            className="bg-white border border-[#D8DEE5] rounded-lg p-3 space-y-3"
             style={{ animationDelay: `${Math.min(i, 8) * 45}ms` }}
           >
-            <div className="aspect-square w-full skeleton rounded-xl" />
+            <div className="aspect-square w-full skeleton rounded-md" />
             <div className="h-2.5 w-16 skeleton" />
             <div className="h-3.5 w-5/6 skeleton" />
             <div className="h-3 w-2/3 skeleton" />

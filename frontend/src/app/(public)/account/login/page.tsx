@@ -40,26 +40,26 @@ export default function ClientLoginPage() {
     <div className="max-w-md mx-auto px-4 py-12 space-y-6">
       <Breadcrumbs items={[{ label: "Client Portal", href: "/orders" }, { label: "Login" }]} />
 
-      <div className="bg-white border border-[#DCE3EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+      <div className="bg-white border border-[#D8DEE5] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#FFF5EE] text-[#E87832] rounded-xl flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#FFF5EE] text-[#D9601A] rounded-md flex items-center justify-center mx-auto mb-2">
             <UserCheck className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-black text-[#17365D]">Buyer / Client Login</h1>
-          <p className="text-xs text-[#687586]">
+          <h1 className="text-2xl font-extrabold text-[#16324F]">Buyer / Client Login</h1>
+          <p className="text-xs text-[#566373]">
             Sign in to track school &amp; corporate bulk orders and message thread history.
           </p>
         </div>
 
         {errorMsg && (
-          <div className="bg-[#FDEDEC] border border-[#F5B7B1] text-[#C0392B] p-3.5 rounded-xl text-xs font-semibold">
+          <div className="bg-[#FDEDEC] border border-[#F5B7B1] text-[#C0392B] p-3.5 rounded-md text-xs font-semibold">
             {errorMsg}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
           <div>
-            <label className="block font-bold text-[#263445] mb-1">Email or Username</label>
+            <label className="block font-bold text-[#1C2733] mb-1">Email or Username</label>
             <div className="relative">
               <input
                 type="text"
@@ -67,7 +67,7 @@ export default function ClientLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="your-email@school.edu.in"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl pl-9 pr-3 py-2.5 text-[#263445] outline-none"
+                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-3 py-2.5 text-[#1C2733] outline-none"
               />
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -75,10 +75,10 @@ export default function ClientLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block font-bold text-[#263445]">Password</label>
+              <label className="block font-bold text-[#1C2733]">Password</label>
               <Link
                 href="/account/forgot-password"
-                className="text-[11px] font-semibold text-[#E87832] hover:underline"
+                className="text-[11px] font-semibold text-[#D9601A] hover:underline"
               >
                 Forgotten Password?
               </Link>
@@ -90,7 +90,7 @@ export default function ClientLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl pl-9 pr-3 py-2.5 text-[#263445] outline-none"
+                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-3 py-2.5 text-[#1C2733] outline-none"
               />
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -99,17 +99,17 @@ export default function ClientLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#17365D] hover:bg-[#102742] text-white py-3 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full bg-[#16324F] hover:bg-[#0E2238] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? <span>Signing in...</span> : <span>Sign In &amp; View Orders</span>}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#687586]">
+        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#566373]">
           <div>
             New bulk order client?{" "}
-            <Link href="/bulk-orders" className="text-[#E87832] font-bold hover:underline">
+            <Link href="/bulk-orders" className="text-[#D9601A] font-bold hover:underline">
               Submit your bulk inquiry to auto-register
             </Link>
           </div>

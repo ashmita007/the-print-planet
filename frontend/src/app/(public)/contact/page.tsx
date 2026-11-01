@@ -96,9 +96,9 @@ export default async function ContactPage() {
       <Breadcrumbs items={[{ label: "Contact Us & Quotations" }]} />
 
       {/* Hero */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-2xl space-y-2">
-          <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <span className="text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
             Industrial Sales & Trade Desk
           </span>
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
@@ -114,59 +114,59 @@ export default async function ContactPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
         {/* Left Column: Direct Info (5 Cols) */}
         <div className="lg:col-span-5 space-y-5 sm:space-y-6">
-          <div className="bg-[#F5F7FA] p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-[#DCE3EB] space-y-4 sm:space-y-5 text-xs">
-            <h2 className="text-base font-bold text-[#17365D] border-b border-[#DCE3EB] pb-3">
+          <div className="bg-[#F3F5F7] p-4 sm:p-6 rounded-md sm:rounded-lg border border-[#D8DEE5] space-y-4 sm:space-y-5 text-xs">
+            <h2 className="text-base font-bold text-[#16324F] border-b border-[#D8DEE5] pb-3">
               Industrial Headquarters
             </h2>
 
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
+              <MapPin className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445] text-xs block mb-0.5">Manufacturing & Distribution Address</strong>
-                <p className="text-[#687586] leading-relaxed">{address}</p>
+                <strong className="text-[#1C2733] text-xs block mb-0.5">Manufacturing & Distribution Address</strong>
+                <p className="text-[#566373] leading-relaxed">{address}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
+              <Phone className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445] text-xs block mb-0.5">Direct Trade Line</strong>
-                <a href={`tel:${phone.replace(/\s+/g, "")}`} className="text-[#17365D] font-bold hover:underline">
+                <strong className="text-[#1C2733] text-xs block mb-0.5">Direct Trade Line</strong>
+                <a href={`tel:${phone.replace(/\s+/g, "")}`} className="text-[#16324F] font-bold hover:underline">
                   {phone}
                 </a>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
+              <Mail className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445] text-xs block mb-0.5">Commercial RFQ Email</strong>
-                <a href={`mailto:${email}`} className="text-[#17365D] font-bold hover:underline">
+                <strong className="text-[#1C2733] text-xs block mb-0.5">Commercial RFQ Email</strong>
+                <a href={`mailto:${email}`} className="text-[#16324F] font-bold hover:underline">
                   {email}
                 </a>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-[#E87832] shrink-0 mt-0.5" />
+              <Clock className="w-5 h-5 text-[#D9601A] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445] text-xs block mb-0.5">Working Hours</strong>
-                <p className="text-[#687586]">Monday – Saturday: 10:00 AM – 7:00 PM (IST)</p>
+                <strong className="text-[#1C2733] text-xs block mb-0.5">Working Hours</strong>
+                <p className="text-[#566373]">Monday – Saturday: 10:00 AM – 7:00 PM (IST)</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-[#217A4B] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445] text-xs block mb-0.5">Verified Tax Details</strong>
-                <p className="text-[#687586]">GST Registration: <strong className="text-[#263445]">{gst}</strong></p>
-                <p className="text-[#687586]">PAN: <strong className="text-[#263445]">{pan}</strong></p>
+                <strong className="text-[#1C2733] text-xs block mb-0.5">Verified Tax Details</strong>
+                <p className="text-[#566373]">GST Registration: <strong className="text-[#1C2733]">{gst}</strong></p>
+                <p className="text-[#566373]">PAN: <strong className="text-[#1C2733]">{pan}</strong></p>
               </div>
             </div>
           </div>
 
           {/* Quick WhatsApp Action Card */}
-          <div className="surface-card p-5 rounded-2xl space-y-3">
+          <div className="surface-card p-5 rounded-lg space-y-3">
             <h3 className="font-bold text-sm">Need a quote on WhatsApp?</h3>
             <p className="text-xs text-slate-500 leading-relaxed">
               Send your roll quantities and holder requirements directly to our on-duty trade manager.
@@ -183,10 +183,10 @@ export default async function ContactPage() {
         </div>
 
         {/* Right Column: Interactive Form (7 Cols) */}
-        <div className="lg:col-span-7 surface-card p-4 sm:p-8 rounded-2xl">
+        <div className="lg:col-span-7 surface-card p-4 sm:p-8 rounded-lg">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-[#17365D]">Submit Commercial Enquiry / RFQ</h2>
-            <p className="text-xs text-[#687586] mt-1">
+            <h2 className="text-xl font-bold text-[#16324F]">Submit Commercial Enquiry / RFQ</h2>
+            <p className="text-xs text-[#566373] mt-1">
               Please furnish complete quantity and specification details. Formal quotations are issued within 2 hours.
             </p>
           </div>

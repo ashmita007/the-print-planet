@@ -302,15 +302,17 @@ export async function ownerLogout(): Promise<void> {
   }
 }
 
-export async function ownerGetMe(): Promise<AuthUser | null> {
+/** Returns null when the token is rejected, undefined when the check itself failed. */
+export async function ownerGetMe(): Promise<AuthUser | null | undefined> {
   try {
     const res = await fetch(`${getApiUrl()}/api/v1/auth/me/`, {
       headers: { ...getAuthHeaders() },
     });
-    if (!res.ok) return null;
+    if (res.status === 401 || res.status === 403) return null;
+    if (!res.ok) return undefined;
     return await res.json();
   } catch {
-    return null;
+    return undefined;
   }
 }
 

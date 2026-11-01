@@ -80,11 +80,11 @@ export default async function CategoriesIndexPage() {
       <Breadcrumbs items={[{ label: "Product Categories" }]} />
 
       {/* Page header */}
-      <div className="border-b border-[#E2E8F0] pb-6 space-y-2.5 anim-fade-up">
-        <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+      <div className="border-b border-[#D8DEE5] pb-6 space-y-2.5 anim-fade-up">
+        <span className="text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
           Product taxonomy
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#17365D]">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#16324F]">
           Industrial product categories
         </h1>
         <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
@@ -99,17 +99,17 @@ export default async function CategoriesIndexPage() {
           return (
             <div
               key={cat.id}
-              className="bg-white border border-[#DCE3EB] rounded-2xl p-5 sm:p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group"
+              className="bg-white border border-[#D8DEE5] rounded-lg p-5 sm:p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#E87832] flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-md bg-orange-50 text-[#D9601A] flex items-center justify-center font-bold">
                   <Layers className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-[#17365D] group-hover:text-[#E87832] transition-colors uppercase tracking-wider">
+                  <h2 className="text-lg font-bold text-[#16324F] group-hover:text-[#D9601A] transition-colors uppercase tracking-wider">
                     {formatCategoryName(cat.name)}
                   </h2>
-                  <p className="text-xs text-[#4E6178] mt-1 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#475565] mt-1 leading-relaxed line-clamp-2">
                     {cat.description || "Direct factory wholesale supply and trade distribution across India."}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ export default async function CategoriesIndexPage() {
                         <Link
                           key={sub.id}
                           href={`/categories/${sub.slug}`}
-                          className="text-[10px] font-bold uppercase tracking-wider bg-slate-50 hover:bg-orange-50 text-[#17365D] hover:text-[#E87832] px-2 py-0.5 rounded border border-slate-200 transition-colors"
+                          className="text-[10px] font-bold uppercase tracking-wider bg-slate-50 hover:bg-orange-50 text-[#16324F] hover:text-[#D9601A] px-2 py-0.5 rounded border border-slate-200 transition-colors"
                         >
                           {formatCategoryName(sub.name)}
                         </Link>
@@ -137,14 +137,14 @@ export default async function CategoriesIndexPage() {
               <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
                 <Link
                   href={`/categories/${cat.slug}`}
-                  className="text-xs font-bold text-[#E87832] hover:text-[#d66b28] flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                  className="text-xs font-bold text-[#D9601A] hover:text-[#B94E12] flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                 >
                   <span>View All Products</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
                 <Link
                   href={`/products?category=${cat.slug}`}
-                  className="text-[11px] text-[#4E6178] hover:text-[#17365D] font-medium"
+                  className="text-[11px] text-[#475565] hover:text-[#16324F] font-medium"
                 >
                   Filter Products →
                 </Link>

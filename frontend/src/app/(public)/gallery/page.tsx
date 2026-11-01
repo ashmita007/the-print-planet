@@ -129,13 +129,13 @@ export default function GalleryPage() {
       <Breadcrumbs items={[{ label: "Portfolio & Gallery" }]} />
 
       {/* Hero */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Proof of Craftsmanship & Quality</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Our Portfolio & Product Sample Gallery
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -144,16 +144,16 @@ export default function GalleryPage() {
           <div className="pt-2 flex flex-wrap gap-3">
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors flex items-center gap-2"
+              className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors flex items-center gap-2"
             >
               <span>Request Custom Sample Kit</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/products"
-              className="bg-white hover:bg-slate-50 text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2"
+              className="bg-white hover:bg-slate-50 text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2"
             >
-              <Layers className="w-4 h-4 text-[#E87832]" />
+              <Layers className="w-4 h-4 text-[#D9601A]" />
               <span>Explore Full Catalogue</span>
             </Link>
           </div>
@@ -164,14 +164,14 @@ export default function GalleryPage() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-[#17365D]">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16324F]">
               Featured Production Deliverables
             </h2>
-            <p className="text-xs text-[#687586] mt-0.5">
+            <p className="text-xs text-[#566373] mt-0.5">
               Verified samples manufactured at our Bengaluru industrial facility.
             </p>
           </div>
-          <span className="text-xs font-bold text-[#E87832] bg-orange-50 border border-orange-200 px-3 py-1 rounded-full w-fit">
+          <span className="text-xs font-bold text-[#D9601A] bg-orange-50 border border-orange-200 px-3 py-1 rounded-full w-fit">
             Showing {GALLERY_ITEMS.length} Certified Showcases
           </span>
         </div>
@@ -180,7 +180,7 @@ export default function GalleryPage() {
           {GALLERY_ITEMS.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl border border-[#DCE3EB] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 hover:border-[#17365D]/40 flex flex-col group"
+              className="bg-white rounded-lg border border-[#D8DEE5] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 hover:border-[#16324F]/40 flex flex-col group"
             >
               {/* Product Image Frame */}
               <div className="relative h-56 bg-slate-50 border-b border-slate-100 flex items-center justify-center p-6 overflow-hidden">
@@ -192,7 +192,7 @@ export default function GalleryPage() {
                   className="max-h-48 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
                   unoptimized
                 />
-                <div className="absolute top-3 left-3 bg-[#17365D]/90 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider uppercase">
+                <div className="absolute top-3 left-3 bg-[#16324F]/90 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider uppercase">
                   {item.categoryLabel}
                 </div>
               </div>
@@ -200,13 +200,13 @@ export default function GalleryPage() {
               {/* Content */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="text-[11px] font-semibold text-[#E87832]">
+                  <div className="text-[11px] font-semibold text-[#D9601A]">
                     Delivered to: {item.clientSector}
                   </div>
-                  <h3 className="font-bold text-sm sm:text-base text-[#17365D] leading-snug group-hover:text-[#E87832] transition-colors">
+                  <h3 className="font-bold text-sm sm:text-base text-[#16324F] leading-snug group-hover:text-[#D9601A] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#263445] leading-relaxed">
+                  <p className="text-xs text-[#1C2733] leading-relaxed">
                     {item.description}
                   </p>
 
@@ -228,7 +228,7 @@ export default function GalleryPage() {
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <Link
                     href={`/quote?product=${encodeURIComponent(item.title)}`}
-                    className="text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors flex items-center gap-1"
+                    className="text-xs font-bold text-[#16324F] hover:text-[#D9601A] transition-colors flex items-center gap-1"
                   >
                     <span>Request Sample / Quote</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -250,20 +250,20 @@ export default function GalleryPage() {
       </div>
 
       {/* Free Sample Policy Callout */}
-      <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="surface-card p-6 sm:p-8 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
-          <div className="inline-flex items-center gap-1.5 text-[#C25E1F] text-[11px] font-medium uppercase tracking-[0.14em]">
+          <div className="inline-flex items-center gap-1.5 text-[#B94E12] text-[11px] font-medium uppercase tracking-[0.14em]">
             <ShieldCheck className="w-4 h-4" />
             <span>Guaranteed Production Match</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-black">Want to inspect physical samples before ordering?</h3>
+          <h3 className="text-xl sm:text-2xl font-extrabold">Want to inspect physical samples before ordering?</h3>
           <p className="text-sm text-slate-500 max-w-xl">
             We dispatch verified physical sample kits with satin lanyard swatches, acrylic and PVC badge holders, and metal hook fittings directly to your corporate address.
           </p>
         </div>
         <Link
           href="/quote?type=sample_kit"
-          className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all shrink-0 flex items-center gap-2"
+          className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all shrink-0 flex items-center gap-2"
         >
           <span>Order Physical Sample Kit</span>
           <ArrowRight className="w-4 h-4" />

@@ -124,7 +124,7 @@ function OwnerSidebarInner() {
       {/* Mobile Bar */}
       <div className="lg:hidden bg-[#0E2238]/95 backdrop-blur-md text-white px-4 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-30">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-[#E87832] flex items-center justify-center font-bold text-white text-xs shadow-xs">
+          <div className="w-7 h-7 rounded-lg bg-[#D9601A] flex items-center justify-center font-bold text-white text-xs shadow-xs">
             P
           </div>
           <div>
@@ -216,9 +216,9 @@ function OwnerSidebarInner() {
                       }`}
                     >
                       {isActive && (
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[2px] rounded-full bg-[#E87832]" />
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[2px] rounded-full bg-[#D9601A]" />
                       )}
-                      <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? "text-[#FFA868]" : "text-slate-500 group-hover:text-slate-300"}`} />
+                      <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? "text-[#F4A36B]" : "text-slate-500 group-hover:text-slate-300"}`} />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -260,7 +260,7 @@ function OwnerSidebarInner() {
             </div>
             <button
               onClick={handleLogout}
-              className="p-2 rounded-lg text-slate-500 hover:text-[#FFA868] hover:bg-white/[0.06] transition-colors cursor-pointer shrink-0"
+              className="p-2 rounded-lg text-slate-500 hover:text-[#F4A36B] hover:bg-white/[0.06] transition-colors cursor-pointer shrink-0"
               title="Logout from portal"
             >
               <LogOut className="w-4 h-4" />
@@ -274,7 +274,7 @@ function OwnerSidebarInner() {
 
 export default function OwnerSidebar() {
   return (
-    <Suspense fallback={<div className="w-64 bg-[#102742] min-h-screen hidden lg:block" />}>
+    <Suspense fallback={<div className="w-64 bg-[#0E2238] min-h-screen hidden lg:block" />}>
       <OwnerSidebarInner />
     </Suspense>
   );

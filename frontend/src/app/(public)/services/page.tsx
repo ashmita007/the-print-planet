@@ -97,13 +97,13 @@ export default function ServicesPage() {
       <Breadcrumbs items={[{ label: "Commercial Services" }]} />
 
       {/* Hero Section */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
             <Zap className="w-3.5 h-3.5" />
             <span>Industrial Printing & Fabrication Solutions</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Commercial Printing Capabilities & Value-Added Services
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -112,7 +112,7 @@ export default function ServicesPage() {
           <div className="pt-2 flex flex-wrap gap-3 sm:gap-4">
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
+              className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
             >
               <span>Request Service Quote</span>
               <ArrowRight className="w-4 h-4" />
@@ -121,9 +121,9 @@ export default function ServicesPage() {
               href="https://wa.me/919741808034?text=Hi%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20services."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-[#F8FAFC] text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-2"
+              className="bg-white hover:bg-[#F3F5F7] text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-2"
             >
-              <PhoneCall className="w-4 h-4 text-[#E87832]" />
+              <PhoneCall className="w-4 h-4 text-[#D9601A]" />
               <span>WhatsApp Direct</span>
             </a>
           </div>
@@ -132,35 +132,35 @@ export default function ServicesPage() {
 
       {/* Production Metrics Highlights */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
-        <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">50,000+</div>
-          <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Cards / Day</div>
-          <div className="text-[11px] text-[#687586] mt-0.5">High-speed hydraulic production</div>
+        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">50,000+</div>
+          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Cards / Day</div>
+          <div className="text-[11px] text-[#566373] mt-0.5">High-speed hydraulic production</div>
         </div>
-        <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">10,000 m</div>
-          <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Lanyard Ribbon</div>
-          <div className="text-[11px] text-[#687586] mt-0.5">Sublimation & screen print rolls</div>
+        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">10,000 m</div>
+          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Lanyard Ribbon</div>
+          <div className="text-[11px] text-[#566373] mt-0.5">Sublimation & screen print rolls</div>
         </div>
-        <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">±0.1 mm</div>
-          <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Cutting Precision</div>
-          <div className="text-[11px] text-[#687586] mt-0.5">Optical servo mark alignment</div>
+        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">±0.1 mm</div>
+          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Cutting Precision</div>
+          <div className="text-[11px] text-[#566373] mt-0.5">Optical servo mark alignment</div>
         </div>
-        <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DCE3EB] shadow-2xs">
-          <div className="text-2xl sm:text-3xl font-black text-[#17365D]">24-48h</div>
-          <div className="text-xs font-bold text-[#E87832] uppercase tracking-wide mt-1">Rush Dispatch</div>
-          <div className="text-[11px] text-[#687586] mt-0.5">Rapid turnaround for urgent bulk runs</div>
+        <div className="bg-white p-4 sm:p-5 rounded-md border border-[#D8DEE5] shadow-2xs">
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">24-48h</div>
+          <div className="text-xs font-bold text-[#D9601A] uppercase tracking-wide mt-1">Rush Dispatch</div>
+          <div className="text-[11px] text-[#566373] mt-0.5">Rapid turnaround for urgent bulk runs</div>
         </div>
       </div>
 
       {/* Services Grid */}
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl sm:text-3xl font-extrabold text-[#17365D]">
+          <h2 className="text-xl sm:text-3xl font-extrabold text-[#16324F]">
             Comprehensive Printing & Customization Services
           </h2>
-          <p className="text-xs sm:text-sm text-[#687586] mt-1">
+          <p className="text-xs sm:text-sm text-[#566373] mt-1">
             Explore our specialized manufacturing lines designed for high-volume corporate buyers, retailers, and institutions.
           </p>
         </div>
@@ -171,26 +171,26 @@ export default function ServicesPage() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-[#DCE3EB] p-5 sm:p-7 shadow-xs hover:shadow-md transition-all hover:border-[#17365D]/30 flex flex-col justify-between"
+                className="bg-white rounded-lg border border-[#D8DEE5] p-5 sm:p-7 shadow-xs hover:shadow-md transition-all hover:border-[#16324F]/30 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#17365D]/10 text-[#17365D] flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-md bg-[#16324F]/10 text-[#16324F] flex items-center justify-center shrink-0">
                       <IconComponent className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-[#17365D] px-2.5 py-1 rounded-full border border-slate-200">
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-[#16324F] px-2.5 py-1 rounded-full border border-slate-200">
                       {srv.badge}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="text-base sm:text-lg font-bold text-[#17365D] leading-snug">
+                    <h3 className="text-base sm:text-lg font-bold text-[#16324F] leading-snug">
                       {srv.title}
                     </h3>
-                    <p className="text-xs font-semibold text-[#E87832] mt-0.5">
+                    <p className="text-xs font-semibold text-[#D9601A] mt-0.5">
                       {srv.subtitle}
                     </p>
-                    <p className="text-xs text-[#263445] leading-relaxed mt-2.5">
+                    <p className="text-xs text-[#1C2733] leading-relaxed mt-2.5">
                       {srv.desc}
                     </p>
                   </div>
@@ -213,7 +213,7 @@ export default function ServicesPage() {
                 <div className="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between">
                   <Link
                     href={`/quote?service=${encodeURIComponent(srv.title)}`}
-                    className="text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors flex items-center gap-1"
+                    className="text-xs font-bold text-[#16324F] hover:text-[#D9601A] transition-colors flex items-center gap-1"
                   >
                     <span>Request Pricing</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -232,56 +232,56 @@ export default function ServicesPage() {
       </div>
 
       {/* Production Process Walkthrough */}
-      <div className="bg-[#F5F7FA] border border-[#DCE3EB] rounded-2xl p-6 sm:p-10 space-y-6">
+      <div className="bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg p-6 sm:p-10 space-y-6">
         <div className="max-w-2xl">
-          <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
+          <span className="text-xs font-bold text-[#D9601A] uppercase tracking-wider">
             Quality Assurance Workflow
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-[#17365D] mt-1">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#16324F] mt-1">
             How We Execute Your Bulk Printing Orders
           </h2>
-          <p className="text-xs sm:text-sm text-[#687586] mt-1">
+          <p className="text-xs sm:text-sm text-[#566373] mt-1">
             Our disciplined manufacturing workflow ensures color fidelity, mechanical integrity, and on-time shipment.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#17365D] text-white flex items-center justify-center font-bold text-xs">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-[#16324F] text-white flex items-center justify-center font-bold text-xs">
               01
             </div>
-            <h4 className="font-bold text-sm text-[#17365D]">Digital Pre-Press Proof</h4>
-            <p className="text-xs text-[#687586] leading-relaxed">
+            <h4 className="font-bold text-sm text-[#16324F]">Digital Pre-Press Proof</h4>
+            <p className="text-xs text-[#566373] leading-relaxed">
               We review vector artwork, ensure color safety margins, and provide a digital rendering for client sign-off.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#17365D] text-white flex items-center justify-center font-bold text-xs">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-[#16324F] text-white flex items-center justify-center font-bold text-xs">
               02
             </div>
-            <h4 className="font-bold text-sm text-[#17365D]">Physical Sample Run</h4>
-            <p className="text-xs text-[#687586] leading-relaxed">
+            <h4 className="font-bold text-sm text-[#16324F]">Physical Sample Run</h4>
+            <p className="text-xs text-[#566373] leading-relaxed">
               For volume corporate contracts, we produce and dispatch a physical pilot sample for approval.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#17365D] text-white flex items-center justify-center font-bold text-xs">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-[#16324F] text-white flex items-center justify-center font-bold text-xs">
               03
             </div>
-            <h4 className="font-bold text-sm text-[#17365D]">High-Capacity Run</h4>
-            <p className="text-xs text-[#687586] leading-relaxed">
+            <h4 className="font-bold text-sm text-[#16324F]">High-Capacity Run</h4>
+            <p className="text-xs text-[#566373] leading-relaxed">
               Automated multi-layer hydraulic fusing, continuous heat transfer, and optical servo cutting at scale.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#E87832] text-white flex items-center justify-center font-bold text-xs">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-[#D9601A] text-white flex items-center justify-center font-bold text-xs">
               04
             </div>
-            <h4 className="font-bold text-sm text-[#17365D]">QC & Fast Dispatch</h4>
-            <p className="text-xs text-[#687586] leading-relaxed">
+            <h4 className="font-bold text-sm text-[#16324F]">QC & Fast Dispatch</h4>
+            <p className="text-xs text-[#566373] leading-relaxed">
               100% tensile and visual defect inspection followed by insured pan-India courier or freight dispatch.
             </p>
           </div>
@@ -289,7 +289,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Bottom CTA Banner */}
-      <div className="surface-card p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="surface-card p-6 sm:p-8 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
           <h3 className="text-xl sm:text-2xl font-bold">Need a Custom Printing Specification?</h3>
           <p className="text-sm text-slate-500 max-w-xl">
@@ -299,13 +299,13 @@ export default function ServicesPage() {
         <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
           <Link
             href="/quote"
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors"
+            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors"
           >
             Submit Specifications
           </Link>
           <Link
             href="/contact"
-            className="bg-white hover:bg-[#F8FAFC] text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all"
+            className="bg-white hover:bg-[#F3F5F7] text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all"
           >
             Contact Factory Office
           </Link>

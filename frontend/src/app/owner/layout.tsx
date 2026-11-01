@@ -53,7 +53,7 @@ export default function OwnerLayout({
     // Verify token validity in background
     ownerGetMe().then((user) => {
       if (!isMounted) return;
-      if (!user) {
+      if (user === null) {
         localStorage.removeItem("owner_token");
         localStorage.removeItem("owner_user");
         setHasAuthToken(false);
@@ -79,8 +79,8 @@ export default function OwnerLayout({
   if (hasAuthToken !== true) {
     return (
       <div className="min-h-screen bg-[#F6F8FB] flex flex-col items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-2xl border border-[#DCE3EB] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_20px_50px_-30px_rgba(16,39,66,0.3)] flex flex-col items-center gap-4 max-w-sm w-full text-center anim-scale-in">
-          <div className="bg-[#0E2238] p-3.5 rounded-xl">
+        <div className="bg-white p-8 rounded-lg border border-[#D8DEE5] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_20px_50px_-30px_rgba(16,39,66,0.3)] flex flex-col items-center gap-4 max-w-sm w-full text-center anim-scale-in">
+          <div className="bg-[#0E2238] p-3.5 rounded-md">
             <Image
               src="/logo.png"
               alt="The Print Planet"
@@ -90,8 +90,8 @@ export default function OwnerLayout({
               priority
             />
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#17365D]">
-            <Loader2 className="w-4 h-4 animate-spin text-[#E87832]" />
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#16324F]">
+            <Loader2 className="w-4 h-4 animate-spin text-[#D9601A]" />
             <span>Securing owner management portal...</span>
           </div>
           <p className="text-[11px] text-slate-400 flex items-center gap-1">

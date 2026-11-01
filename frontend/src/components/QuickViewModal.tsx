@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
+import { createPortal } from "react-dom";
 import {
   X,
   ShoppingBag,
@@ -15,6 +15,7 @@ import {
 import { Product } from "@/lib/types";
 import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
+import { useOverlay } from "@/lib/useOverlay";
 
 interface QuickViewModalProps {
   product: Product;
@@ -33,8 +34,9 @@ export default function QuickViewModal({
     product.minimum_order_quantity || 1
   );
   const [added, setAdded] = useState(false);
+  const { mounted, ref } = useOverlay<HTMLDivElement>(isOpen, onClose, { autoAlpha: 0, y: 18, scale: 0.96 });
 
-  if (!isOpen) return null;
+  if (!mounted) return null;
 
   const imagesList =
     product.images && product.images.length > 0
@@ -59,25 +61,23 @@ export default function QuickViewModal({
     }, MOQ: ${moq} units).`
   );
 
-  return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
+  return createPortal(
+    <div ref={ref} className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4">
         {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <div
+          data-backdrop
           onClick={onClose}
-          className="fixed inset-0 bg-[#102742]/75 backdrop-blur-xs"
+          className="fixed inset-0 bg-[#0E2238]/75 backdrop-blur-xs"
         />
 
         {/* Modal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden z-10 border border-[#DCE3EB]"
+        <div
+          data-panel
+          role="dialog"
+          aria-modal="true"
+          aria-label={formatProductName(product.name)}
+          tabIndex={-1}
+          className="relative w-full max-w-3xl bg-white rounded-lg shadow-2xl overflow-hidden z-10 border border-[#D8DEE5] outline-none"
         >
           {/* Close Button */}
           <button
@@ -90,8 +90,8 @@ export default function QuickViewModal({
 
           <div className="grid grid-cols-1 md:grid-cols-2 max-h-[85vh] overflow-y-auto">
             {/* Image Gallery Column */}
-            <div className="p-5 bg-[#F8FAFC] flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#DCE3EB]">
-              <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-white border border-[#DCE3EB] p-4 flex items-center justify-center">
+            <div className="p-5 bg-[#F3F5F7] flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#D8DEE5]">
+              <div className="relative aspect-square w-full rounded-md overflow-hidden bg-white border border-[#D8DEE5] p-4 flex items-center justify-center">
                 <img
                   src={activeImage}
                   alt={product.name}
@@ -110,14 +110,16 @@ export default function QuickViewModal({
                   {imagesList.map((img, idx) => (
                     <button
                       key={idx}
+                      type="button"
+                      aria-label={`View image ${idx + 1}`}
                       onClick={() => setSelectedImage(img)}
                       className={`relative w-14 h-14 rounded-lg bg-white border overflow-hidden shrink-0 transition-all ${
-                        activeImage === img ? "border-[#E87832] ring-2 ring-[#E87832]/30" : "border-[#DCE3EB] opacity-70 hover:opacity-100"
+                        activeImage === img ? "border-[#D9601A] ring-2 ring-[#D9601A]/30" : "border-[#D8DEE5] opacity-70 hover:opacity-100"
                       }`}
                     >
                       <img
                         src={img}
-                        alt={`Thumb ${idx + 1}`}
+                        alt=""
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "/placeholder-product.svg";
                         }}
@@ -131,12 +133,12 @@ export default function QuickViewModal({
               )}
 
               {/* Quality & Delivery trust signals */}
-              <div className="mt-4 pt-3 border-t border-[#DCE3EB] flex items-center justify-between text-[11px] text-[#687586]">
+              <div className="mt-4 pt-3 border-t border-[#D8DEE5] flex items-center justify-between text-[11px] text-[#566373]">
                 <span className="flex items-center gap-1 font-medium">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" /> Factory Verified
                 </span>
                 <span className="flex items-center gap-1 font-medium">
-                  <Truck className="w-3.5 h-3.5 text-[#E87832]" /> PAN-India Dispatch
+                  <Truck className="w-3.5 h-3.5 text-[#D9601A]" /> PAN-India Dispatch
                 </span>
               </div>
             </div>
@@ -145,72 +147,72 @@ export default function QuickViewModal({
             <div className="p-5 sm:p-6 flex flex-col justify-between">
               <div className="space-y-3">
                 {product.category && (
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#E87832] bg-[#E87832]/10 px-2 py-0.5 rounded">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#D9601A] bg-[#D9601A]/10 px-2 py-0.5 rounded">
                     {formatCategoryName(product.category.name)}
                   </span>
                 )}
 
-                <h2 className="text-lg sm:text-xl font-bold text-[#17365D] leading-snug">
+                <h2 className="text-lg sm:text-xl font-bold text-[#16324F] leading-snug">
                   {formatProductName(product.name)}
                 </h2>
 
-                <div className="flex items-center gap-3 text-xs text-[#687586]">
-                  <span className="font-mono bg-[#F5F7FA] border border-[#DCE3EB] px-2 py-0.5 rounded text-[#263445]">
+                <div className="flex items-center gap-3 text-xs text-[#566373]">
+                  <span className="font-mono bg-[#F3F5F7] border border-[#D8DEE5] px-2 py-0.5 rounded text-[#1C2733]">
                     SKU: {product.sku}
                   </span>
                   {product.minimum_order_quantity && (
-                    <span className="text-[#687586] font-medium font-mono">
+                    <span className="text-[#566373] font-medium font-mono">
                       MOQ: {product.minimum_order_quantity} Units
                     </span>
                   )}
                 </div>
 
                 {/* Price */}
-                <div className="pt-2 pb-1 border-y border-[#F5F7FA]">
+                <div className="pt-2 pb-1 border-y border-[#F3F5F7]">
                   {product.price_display ? (
-                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#17365D]">
+                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#16324F]">
                       {product.price_display}
                     </div>
                   ) : product.price ? (
-                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#17365D]">
+                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#16324F]">
                       ₹{Number(product.price).toLocaleString("en-IN")}{" "}
-                      <span className="text-xs text-[#687586] font-normal">per unit</span>
+                      <span className="text-xs text-[#566373] font-normal">per unit</span>
                     </div>
                   ) : (
-                    <div className="text-base font-bold text-[#E87832]">
+                    <div className="text-base font-bold text-[#D9601A]">
                       Direct Wholesale Pricing on Request
                     </div>
                   )}
                 </div>
 
                 {/* Description excerpt */}
-                <p className="text-xs text-[#687586] leading-relaxed line-clamp-3">
+                <p className="text-xs text-[#566373] leading-relaxed line-clamp-3">
                   {product.short_description || product.description || "Premium industrial-grade materials engineered for custom printing, corporate identification, and high-volume merchandise."}
                 </p>
 
                 {/* Key specs pills */}
                 <div className="grid grid-cols-2 gap-2 text-[11px] pt-1">
                   {product.material && (
-                    <div className="p-2 rounded-lg bg-[#F5F7FA] border border-[#DCE3EB]">
-                      <span className="text-[#687586] block text-[9px] uppercase font-bold">Material</span>
-                      <span className="font-semibold text-[#263445] truncate block">{product.material}</span>
+                    <div className="p-2 rounded-lg bg-[#F3F5F7] border border-[#D8DEE5]">
+                      <span className="text-[#566373] block text-[9px] uppercase font-bold">Material</span>
+                      <span className="font-semibold text-[#1C2733] truncate block">{product.material}</span>
                     </div>
                   )}
                   {product.dimensions && (
-                    <div className="p-2 rounded-lg bg-[#F5F7FA] border border-[#DCE3EB]">
-                      <span className="text-[#687586] block text-[9px] uppercase font-bold">Dimensions</span>
-                      <span className="font-semibold text-[#263445] truncate block">{product.dimensions}</span>
+                    <div className="p-2 rounded-lg bg-[#F3F5F7] border border-[#D8DEE5]">
+                      <span className="text-[#566373] block text-[9px] uppercase font-bold">Dimensions</span>
+                      <span className="font-semibold text-[#1C2733] truncate block">{product.dimensions}</span>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="space-y-2.5 pt-5 mt-4 border-t border-[#F5F7FA]">
+              <div className="space-y-2.5 pt-5 mt-4 border-t border-[#F3F5F7]">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={handleAddToCart}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#D9601A] hover:bg-[#B94E12] active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
                   >
                     {added ? (
                       <>
@@ -229,7 +231,7 @@ export default function QuickViewModal({
                     href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#217A4B] hover:bg-[#1b633d] active:scale-98 text-white text-xs font-semibold transition-all"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#217A4B] hover:bg-[#1b633d] active:scale-98 text-white text-xs font-semibold transition-all"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>WhatsApp Quote</span>
@@ -239,7 +241,7 @@ export default function QuickViewModal({
                 <Link
                   href={`/products/${product.slug}`}
                   onClick={onClose}
-                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#687586] hover:text-[#17365D] transition-colors"
+                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#566373] hover:text-[#16324F] transition-colors"
                 >
                   <span>View Full Product Specifications</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -247,8 +249,8 @@ export default function QuickViewModal({
               </div>
             </div>
           </div>
-        </motion.div>
-      </div>
-    </AnimatePresence>
+        </div>
+    </div>,
+    document.body
   );
 }

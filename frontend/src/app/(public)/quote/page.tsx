@@ -139,13 +139,13 @@ function QuoteFormContent() {
       <Breadcrumbs items={[{ label: "Request a Quote" }]} />
 
       {/* Hero */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
             <FileText className="w-3.5 h-3.5" />
             <span>Fast-Track Commercial RFQ</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Request a Custom B2B Quotation
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -156,13 +156,13 @@ function QuoteFormContent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Form (7 Cols) */}
-        <div className="lg:col-span-7 surface-card rounded-2xl p-6 sm:p-8">
+        <div className="lg:col-span-7 surface-card rounded-lg p-6 sm:p-8">
           {isSubmitted ? (
             <div className="py-12 text-center space-y-4">
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h2 className="text-2xl font-black text-[#17365D]">
+              <h2 className="text-2xl font-extrabold text-[#16324F]">
                 Quotation request received
               </h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
@@ -171,7 +171,7 @@ function QuoteFormContent() {
               <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/products"
-                  className="bg-[#17365D] hover:bg-[#102742] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors"
+                  className="bg-[#16324F] hover:bg-[#0E2238] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors"
                 >
                   Continue Browsing Products
                 </Link>
@@ -190,16 +190,16 @@ function QuoteFormContent() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5 text-xs sm:text-sm">
               <div>
-                <h2 className="text-lg font-bold text-[#17365D]">
+                <h2 className="text-lg font-bold text-[#16324F]">
                   Tell Us About Your Requirement
                 </h2>
-                <p className="text-xs text-[#687586] mt-0.5">
+                <p className="text-xs text-[#566373] mt-0.5">
                   Fields marked with an asterisk (*) are required.
                 </p>
               </div>
 
               {errorMessage && (
-                <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 flex items-center gap-2 text-xs">
+                <div className="p-3.5 bg-red-50 border border-red-200 rounded-md text-red-700 flex items-center gap-2 text-xs">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
@@ -208,30 +208,30 @@ function QuoteFormContent() {
               {/* Row 1: Name & Company */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#263445] mb-1">
+                  <label className="block font-semibold text-[#1C2733] mb-1">
                     Your Full Name *
                   </label>
-                  <input
+                  <input aria-label="Your Full Name"
                     type="text"
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Ramesh Kumar"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] text-xs sm:text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#263445] mb-1">
+                  <label className="block font-semibold text-[#1C2733] mb-1">
                     Company / Organization Name *
                   </label>
-                  <input
+                  <input aria-label="Company / Organization Name"
                     type="text"
                     required
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="e.g. TechCorp Solutions Pvt Ltd"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] text-xs sm:text-sm"
                   />
                 </div>
               </div>
@@ -239,30 +239,30 @@ function QuoteFormContent() {
               {/* Row 2: Phone & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#263445] mb-1">
+                  <label className="block font-semibold text-[#1C2733] mb-1">
                     Phone / WhatsApp Number *
                   </label>
-                  <input
+                  <input aria-label="Phone / WhatsApp Number"
                     type="tel"
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="e.g. +91 98765 43210"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] text-xs sm:text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#263445] mb-1">
+                  <label className="block font-semibold text-[#1C2733] mb-1">
                     Business Email Address *
                   </label>
-                  <input
+                  <input aria-label="Business Email Address"
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="e.g. procurement@techcorp.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] text-xs sm:text-sm"
                   />
                 </div>
               </div>
@@ -270,13 +270,13 @@ function QuoteFormContent() {
               {/* Row 3: Product Category & Quantity */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-[#263445] mb-1">
+                  <label className="block font-semibold text-[#1C2733] mb-1">
                     Primary Product Category *
                   </label>
-                  <select
+                  <select aria-label="Primary Product Category"
                     value={productCategory}
                     onChange={(e) => setProductCategory(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] bg-white text-xs sm:text-sm"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] bg-white text-xs sm:text-sm"
                   >
                     <option value="Color & Satin Lanyard Rolls">Color & Satin Lanyard Rolls</option>
                     <option value="Custom Sublimation Printed Lanyards">Custom Sublimation Printed Lanyards</option>
@@ -291,60 +291,60 @@ function QuoteFormContent() {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#263445] mb-1">
+                  <label className="block font-semibold text-[#1C2733] mb-1">
                     Estimated Quantity (Units / Pieces) *
                   </label>
-                  <input
+                  <input aria-label="Estimated Quantity (Units / Pieces)"
                     type="number"
                     min="1"
                     required
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="e.g. 1000"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] text-xs sm:text-sm"
                   />
                 </div>
               </div>
 
               {/* Delivery Timeline */}
               <div>
-                <label className="block font-semibold text-[#263445] mb-1">
+                <label className="block font-semibold text-[#1C2733] mb-1">
                   Required Target Delivery Date (Optional)
                 </label>
-                <input
+                <input aria-label="Required Target Delivery Date (Optional)"
                   type="date"
                   value={deliveryDate}
                   onChange={(e) => setDeliveryDate(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] bg-white text-xs sm:text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] bg-white text-xs sm:text-sm"
                 />
               </div>
 
               {/* Specifications / Notes */}
               <div>
-                <label className="block font-semibold text-[#263445] mb-1">
+                <label className="block font-semibold text-[#1C2733] mb-1">
                   Detailed Specifications &amp; Customization Notes
                 </label>
-                <textarea
+                <textarea aria-label="Detailed Specifications & Customization Notes"
                   rows={4}
                   value={customRequirements}
                   onChange={(e) => setCustomRequirements(e.target.value)}
                   placeholder="Specify ribbon width (16mm/20mm), hook type (Dog hook/Fish hook), Pantone shades, single/double sided printing, chip types (Mifare 1K), or special packaging instructions."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#17365D] focus:ring-1 focus:ring-[#17365D] text-xs sm:text-sm leading-relaxed"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#16324F] focus:ring-1 focus:ring-[#16324F] text-xs sm:text-sm leading-relaxed"
                 />
               </div>
 
               {/* Optional Attachment */}
               <div>
-                <div className="flex items-center justify-between text-[#263445] text-xs mb-1 font-semibold">
+                <div className="flex items-center justify-between text-[#1C2733] text-xs mb-1 font-semibold">
                   <span className="flex items-center gap-1.5">
-                    <Paperclip className="w-3.5 h-3.5 text-[#E87832]" />
+                    <Paperclip className="w-3.5 h-3.5 text-[#D9601A]" />
                     <span>Upload Artwork, CAD, Spec Sheet or Excel List (Optional)</span>
                   </span>
                   <span className="text-[11px] text-slate-500">Max 10MB</span>
                 </div>
                 {!attachment ? (
-                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-[#E87832]/60 bg-slate-50 hover:bg-[#FFF7F2]/40 rounded-xl py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
-                    <UploadCloud className="w-4 h-4 text-[#E87832]" />
+                  <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-[#D9601A]/60 bg-slate-50 hover:bg-[#FBF0E8]/40 rounded-md py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
+                    <UploadCloud className="w-4 h-4 text-[#D9601A]" />
                     <span>Click to browse and attach your design file, artwork, or order spreadsheet</span>
                     <input
                       type="file"
@@ -354,7 +354,7 @@ function QuoteFormContent() {
                     />
                   </label>
                 ) : (
-                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl py-2 px-4 text-xs text-emerald-800">
+                  <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-md py-2 px-4 text-xs text-emerald-800">
                     <div className="flex items-center gap-2 truncate">
                       <FileText className="w-4 h-4 shrink-0 text-emerald-600" />
                       <span className="font-semibold truncate">{attachment.name}</span>
@@ -375,7 +375,7 @@ function QuoteFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white py-3.5 px-6 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full bg-[#D9601A] hover:bg-[#B94E12] active:scale-98 text-white py-3.5 px-6 rounded-md text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Submitting Quotation Request...</span>
@@ -397,15 +397,15 @@ function QuoteFormContent() {
         {/* Right Column: Assurances & Immediate Desk (5 Cols) */}
         <div className="lg:col-span-5 space-y-5">
           {/* Direct WhatsApp Callout */}
-          <div className="surface-card rounded-2xl p-6 space-y-4">
-            <div className="flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <div className="surface-card rounded-lg p-6 space-y-4">
+            <div className="flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
               <Clock className="w-4 h-4" />
               <span>Instant estimate</span>
             </div>
-            <h3 className="text-lg font-bold text-[#17365D]">
+            <h3 className="text-lg font-bold text-[#16324F]">
               Chat with our sales desk
             </h3>
-            <p className="text-xs text-[#687586] leading-relaxed">
+            <p className="text-xs text-[#566373] leading-relaxed">
               If your order is urgent or requires immediate same-day dispatch from Bengaluru, message us directly with your artwork on WhatsApp.
             </p>
             <a
@@ -420,40 +420,40 @@ function QuoteFormContent() {
           </div>
 
           {/* Guarantees List */}
-          <div className="surface-card rounded-2xl p-6 space-y-4">
-            <h4 className="text-sm font-bold text-[#17365D]">
+          <div className="surface-card rounded-lg p-6 space-y-4">
+            <h4 className="text-sm font-bold text-[#16324F]">
               What we guarantee
             </h4>
             <div className="space-y-3 text-xs text-slate-700">
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#17365D] block">Free Digital Pre-Press Proof</strong>
-                  <span className="text-[#687586]">Review your artwork rendered on our actual lanyard straps before printing begins.</span>
+                  <strong className="text-[#16324F] block">Free Digital Pre-Press Proof</strong>
+                  <span className="text-[#566373]">Review your artwork rendered on our actual lanyard straps before printing begins.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#17365D] block">Factory Direct Pricing</strong>
-                  <span className="text-[#687586]">Genuine manufacturer wholesale rates with zero middleman commissions.</span>
+                  <strong className="text-[#16324F] block">Factory Direct Pricing</strong>
+                  <span className="text-[#566373]">Genuine manufacturer wholesale rates with zero middleman commissions.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#17365D] block">Verified GST Input Tax Credit</strong>
-                  <span className="text-[#687586]">GSTIN: 29AAQFT3909B1ZZ | Standard B2B tax invoice provided with e-way bill.</span>
+                  <strong className="text-[#16324F] block">Verified GST Input Tax Credit</strong>
+                  <span className="text-[#566373]">GSTIN: 29AAQFT3909B1ZZ | Standard B2B tax invoice provided with e-way bill.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#17365D] block">Pan-India Courier & Cargo</strong>
-                  <span className="text-[#687586]">Air express to metros in 24-48 hours; insured surface cargo for heavy machinery.</span>
+                  <strong className="text-[#16324F] block">Pan-India Courier & Cargo</strong>
+                  <span className="text-[#566373]">Air express to metros in 24-48 hours; insured surface cargo for heavy machinery.</span>
                 </div>
               </div>
             </div>

@@ -2,25 +2,13 @@
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
-import {
-  ArrowRight,
-  ShieldCheck,
-  Award,
-  Truck,
-  Sparkles,
-  ShoppingBag,
-  FileText,
-  ChevronLeft,
-  ChevronRight,
-  Check,
-} from "lucide-react";
+import { ArrowRight, ShoppingBag, Check } from "lucide-react";
 import { Product, SiteSettings } from "@/lib/types";
 import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import TextReveal from "./animations/TextReveal";
-import KineticHighlight from "./animations/KineticHighlight";
-import AnimeLogoHeroEffect from "./AnimeLogoHeroEffect";
+import { ColorBar, CropMarks } from "./animations/PrintMarks";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
 interface ProductHeroShowcaseProps {
   flagshipProducts: Product[];
@@ -30,13 +18,15 @@ interface ProductHeroShowcaseProps {
 }
 
 const HERO_CATEGORIES = [
-  { id: "all", label: "★ All Flagships" },
-  { id: "machines", label: "Industrial Machines", keywords: ["machine", "cutter", "fusing", "press"] },
-  { id: "lanyards", label: "Satin Lanyard Rolls", keywords: ["lanyard", "satin", "roll", "ribbon"] },
-  { id: "holders", label: "PVC Card Holders", keywords: ["holder", "pvc", "acrylic", "clear"] },
-  { id: "rfid", label: "RFID & Smart Cards", keywords: ["rfid", "smart", "inlay", "prelam", "mifare"] },
-  { id: "hooks", label: "Clips & Hooks", keywords: ["hook", "clip", "fitting", "clamp"] },
+  { id: "all", label: "Flagships" },
+  { id: "machines", label: "Machines", keywords: ["machine", "cutter", "fusing", "press"] },
+  { id: "lanyards", label: "Lanyard rolls", keywords: ["lanyard", "satin", "roll", "ribbon"] },
+  { id: "holders", label: "Card holders", keywords: ["holder", "pvc", "acrylic", "clear"] },
+  { id: "rfid", label: "RFID cards", keywords: ["rfid", "smart", "inlay", "prelam", "mifare"] },
+  { id: "hooks", label: "Hooks & clips", keywords: ["hook", "clip", "fitting", "clamp"] },
 ];
+
+const ROTATE_SECONDS = 5;
 
 export default function ProductHeroShowcase({
   flagshipProducts,
@@ -50,28 +40,45 @@ export default function ProductHeroShowcase({
   const [selectedHeroCategory, setSelectedHeroCategory] = useState<string>("all");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [heroAdded, setHeroAdded] = useState(false);
 
+  const heroRef = useRef<HTMLElement>(null);
   const thumbScrollRef = useRef<HTMLDivElement>(null);
+  const stageImageRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const rotationRef = useRef<gsap.core.Tween | null>(null);
 
-  // Rotating headline phrases
-  const ROTATING_PHRASES = [
-    "Specialist in PVC Cards & ID Systems",
-    "Custom Lanyards & Sublimation Rolls",
-    "High-Speed Card Production Machinery",
-    "Corporate Gifting & Brand Merchandise",
-    "Lens Packaging & Commercial Printing",
-  ];
+  // Headline text is editable in owner settings, so size it to what was entered.
+  const headline = settings?.hero_title?.trim() || "Precision Custom Printing &";
+  const subheadline = settings?.hero_subtitle?.trim() || "Enterprise Merchandise";
+  const headlineSize =
+    headline.length + subheadline.length > 60
+      ? "text-[1.75rem] sm:text-4xl lg:text-[2.625rem]"
+      : "text-[2.5rem] sm:text-5xl lg:text-[3.75rem]";
 
-  const [phraseIdx, setPhraseIdx] = useState(0);
+  // Entrance: the markup starts hidden via [data-hero] in globals.css, so there is no flash.
+  useGSAP(
+    () => {
+      gsap.set("[data-hero]", { opacity: 1 });
+      if (prefersReducedMotion()) return;
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPhraseIdx((prev) => (prev + 1) % ROTATING_PHRASES.length);
-    }, 3800);
-    return () => clearInterval(timer);
-  }, [ROTATING_PHRASES.length]);
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .from("[data-word]", { yPercent: 115, duration: 0.85, stagger: 0.05 }, 0)
+        .from("[data-hero-item]", { autoAlpha: 0, y: 18, duration: 0.65, stagger: 0.08 }, 0.2)
+        .from("[data-swatch]", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.4, stagger: 0.05 }, 0.3)
+        .from("[data-hero-stage]", { autoAlpha: 0, y: 28, duration: 0.9 }, 0.15)
+        .from("[data-crop]", { autoAlpha: 0, scale: 1.8, duration: 0.5, stagger: 0.07, ease: "back.out(2)" }, 0.75);
+
+      // The proof sheet drifts up slightly against the page as the hero scrolls away.
+      gsap.to("[data-hero-sheet]", {
+        y: -36,
+        ease: "none",
+        scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
+      });
+    },
+    { scope: heroRef }
+  );
 
   // Filter pool by active hero category
   const activeProducts = useMemo(() => {
@@ -92,7 +99,6 @@ export default function ProductHeroShowcase({
 
   useEffect(() => {
     setActiveIndex(0);
-    setProgress(0);
   }, [selectedHeroCategory]);
 
   const activeProduct = activeProducts[activeIndex] || activeProducts[0];
@@ -112,286 +118,240 @@ export default function ProductHeroShowcase({
     setTimeout(() => setHeroAdded(false), 1500);
   };
 
-  // Auto-rotation progress
-  const ROTATE_INTERVAL_MS = 5000;
-  const STEP_MS = 100;
+  // Auto-rotation: the progress bar tween is the timer, so hover pauses both together.
+  useGSAP(
+    () => {
+      gsap.set(progressBarRef.current, { scaleX: 0 });
+      if (activeProducts.length <= 1 || prefersReducedMotion()) return;
+
+      rotationRef.current = gsap.to(progressBarRef.current, {
+        scaleX: 1,
+        duration: ROTATE_SECONDS,
+        ease: "none",
+        paused: isPaused,
+        onComplete: () => setActiveIndex((idx) => (idx + 1) % activeProducts.length),
+      });
+    },
+    { dependencies: [activeIndex, activeProducts.length, selectedHeroCategory], scope: heroRef, revertOnUpdate: true }
+  );
 
   useEffect(() => {
-    if (isPaused || activeProducts.length <= 1) return;
+    rotationRef.current?.paused(isPaused);
+  }, [isPaused]);
 
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          setActiveIndex((idx) => (idx + 1) % activeProducts.length);
-          return 0;
-        }
-        return prev + (STEP_MS / ROTATE_INTERVAL_MS) * 100;
-      });
-    }, STEP_MS);
+  // Slide change, skipping the first render so it doesn't fight the entrance timeline.
+  const activeProductId = activeProduct?.id;
+  const firstSlide = useRef(true);
+  useGSAP(
+    () => {
+      if (firstSlide.current) {
+        firstSlide.current = false;
+        return;
+      }
+      if (prefersReducedMotion()) return;
+      gsap.fromTo(
+        stageImageRef.current,
+        { autoAlpha: 0, xPercent: 5, scale: 0.97 },
+        { autoAlpha: 1, xPercent: 0, scale: 1, duration: 0.55, ease: "power3.out", clearProps: "transform" }
+      );
+    },
+    { dependencies: [activeProductId], scope: heroRef }
+  );
 
-    return () => clearInterval(timer);
-  }, [isPaused, activeProducts.length]);
-
-  if (!activeProduct) return null;
+  // Keep the active thumbnail visible by scrolling the strip only, never the page.
+  useEffect(() => {
+    const strip = thumbScrollRef.current;
+    const thumb = strip?.children[activeIndex] as HTMLElement | undefined;
+    if (!strip || !thumb) return;
+    strip.scrollTo({ left: thumb.offsetLeft - strip.clientWidth / 2 + thumb.clientWidth / 2, behavior: "smooth" });
+  }, [activeIndex]);
 
   return (
-    <section className="relative bg-[#102742] text-white overflow-hidden py-10 sm:py-16 lg:py-20 border-b border-slate-800">
-      {/* Precision atmospheric ambient lighting */}
-      <div className="absolute top-0 right-1/4 w-[42rem] h-[42rem] bg-[#E87832]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#17365D]/60 rounded-full blur-2xl pointer-events-none" />
-      
-      {/* Anime.js SVG Registration Animation */}
-      <AnimeLogoHeroEffect />
-
-      <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
-
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column: Headline, Value Proposition & Actions */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
-            {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#E87832]/15 border border-[#E87832]/35 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold text-[#FFA868]">
-              <span className="w-2 h-2 rounded-full bg-[#E87832] animate-pulse" />
-              <span>{settings?.hero_badge?.trim() || "THE PRINT PLANET • Factory Direct Solutions"}</span>
+    <section
+      ref={heroRef}
+      data-no-reveal
+      className="bg-[#0E2238] text-white overflow-hidden border-b border-white/10"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="lg:col-span-6">
+            <div data-hero data-hero-item className="flex items-center gap-3 mb-5">
+              <ColorBar />
+              <span className="font-mono text-xs text-slate-300">
+                {settings?.hero_badge?.trim() || "Factory direct from Bengaluru"}
+              </span>
             </div>
 
-            {/* Main Headline with Split Word Animation & Highlight */}
-            <div className="space-y-3">
-              <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-display font-black tracking-tight leading-[1.08] text-white">
-                <TextReveal
-                  text={settings?.hero_title?.trim() || "Precision Custom Printing &"}
-                  delay={0.1}
-                  staggerDelay={0.05}
-                />
-                <span className="block mt-1">
-                  <KineticHighlight>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA868] via-[#E87832] to-[#FF8C38] animate-gradient-text drop-shadow-[0_2px_14px_rgba(232,120,50,0.35)]">
-                      {settings?.hero_subtitle?.trim() || "Enterprise Merchandise"}
-                    </span>
-                  </KineticHighlight>
-                </span>
-              </h1>
+            <h1
+              data-hero
+              className={`${headlineSize} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}
+            >
+              <TextReveal text={headline} />
+              <span className="block text-[#F4A36B]">
+                <TextReveal text={subheadline} />
+              </span>
+            </h1>
 
-              <div className="h-7 sm:h-8 overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={phraseIdx}
-                    initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-xs sm:text-sm font-semibold font-mono text-[#FFA868] tracking-wide flex items-center gap-1.5"
-                  >
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#E87832] animate-ping" />
-                    <span>✦ {ROTATING_PHRASES[phraseIdx]}</span>
-                  </motion.p>
-                </AnimatePresence>
-              </div>
-            </div>
-
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
+            <p data-hero data-hero-item className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
               {settings?.hero_caption?.trim() ||
-                "India's premier specialist in PVC identification cards, satin lanyard rolls, card manufacturing machinery, custom corporate gifting, and promotional branding. Direct factory wholesale dispatch from Bangalore with 24–48h express turnaround."}
+                "PVC identification cards, satin lanyard rolls, card manufacturing machinery and corporate gifting. Wholesale dispatch from Bangalore in 24 to 48 hours."}
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div data-hero data-hero-item className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mt-7">
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white font-bold text-xs sm:text-sm shadow-lg shadow-[#E87832]/30 transition-all text-center group"
+                data-magnetic
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#D9601A] hover:bg-[#B94E12] text-white font-bold text-sm transition-colors group"
               >
-                <span>Explore Full Catalogue ({totalProductsCount}+)</span>
+                <span>Browse {totalProductsCount}+ products</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-
               <Link
                 href="/quote"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-slate-100 hover:text-white font-semibold text-xs sm:text-sm transition-all text-center"
+                className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-[#F4A36B] transition-colors"
               >
-                <FileText className="w-4 h-4 text-[#FFA868]" />
-                <span>Request Custom Quote</span>
+                Request a custom quote
               </Link>
             </div>
 
-            {/* Key Trust Signals */}
-            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-white/10 text-[11px] sm:text-xs">
-              <div className="space-y-0.5">
-                <div className="font-bold text-white text-base sm:text-lg">180+</div>
-                <div className="text-slate-400">Products &amp; Machines</div>
-              </div>
-              <div className="space-y-0.5 border-x border-white/10 px-3">
-                <div className="font-bold text-white text-base sm:text-lg">50,000+</div>
-                <div className="text-slate-400">Daily Production Capacity</div>
-              </div>
-              <div className="space-y-0.5">
-                <div className="font-bold text-white text-base sm:text-lg">100%</div>
-                <div className="text-slate-400">PAN-India Dispatch</div>
-              </div>
-            </div>
+            <dl data-hero data-hero-item className="grid grid-cols-3 mt-9 border-t border-white/15">
+              {[
+                { value: "180+", label: "Products & machines" },
+                { value: "50,000+", label: "Units a day capacity" },
+                { value: "24-48h", label: "Pan-India dispatch" },
+              ].map((stat, index) => (
+                <div key={stat.label} className={`pt-4 ${index > 0 ? "pl-4 border-l border-white/15" : ""}`}>
+                  <dd
+                    {...(index < 2 ? { "data-count": true } : {})}
+                    className="font-heading text-xl sm:text-2xl font-bold text-white tabular-nums"
+                  >
+                    {stat.value}
+                  </dd>
+                  <dt className="text-xs text-slate-400 mt-0.5">{stat.label}</dt>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          {/* Right Column: Interactive Featured Product Showcase Card */}
-          <div
-            className="lg:col-span-6 w-full"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {/* Category tabs */}
-            <div className="flex gap-1.5 overflow-x-auto pb-2 mb-3 scrollbar-none">
-              {HERO_CATEGORIES.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedHeroCategory(cat.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                    selectedHeroCategory === cat.id
-                      ? "bg-[#E87832] text-white shadow-sm"
-                      : "bg-white/[0.06] text-slate-300 hover:text-white hover:bg-white/[0.12] border border-white/10"
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Showcase Stage */}
-            <div className="bg-[#0c1e33] border border-white/15 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden backdrop-blur-sm">
-              {/* Product Badge & SKU */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFA868] bg-[#E87832]/15 border border-[#E87832]/30 px-2 py-0.5 rounded">
-                  {formatCategoryName(activeProduct.category?.name || "Featured Product")}
-                </span>
-                <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded">
-                  SKU: {activeProduct.sku}
-                </span>
-              </div>
-
-              {/* Product Image Stage */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-xl bg-white overflow-hidden p-4 mb-4 flex items-center justify-center border border-slate-200">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeProduct.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative w-full h-full flex items-center justify-center"
-                  >
-                    <img
-                      src={currentHeroImg}
-                      alt={activeProduct.name}
-                      onError={() => setCurrentHeroImg("/placeholder-product.svg")}
-                      className="w-full h-full object-contain p-2"
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Progress bar for auto-rotation */}
-                <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-200">
-                  <div
-                    className="h-full bg-[#E87832] transition-all duration-100 ease-linear"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Product Info & Quick Actions */}
-              <div className="space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="text-base sm:text-lg font-bold text-white line-clamp-1">
-                      {formatProductName(activeProduct.name)}
-                    </h3>
-                    <p className="text-xs text-slate-300 line-clamp-1 mt-0.5">
-                      {activeProduct.material ? `${activeProduct.material} • ` : ""}
-                      {activeProduct.minimum_order_quantity
-                        ? `MOQ: ${activeProduct.minimum_order_quantity} Units`
-                        : "Wholesale batch available"}
-                    </p>
-                  </div>
-
-                  <div className="text-right shrink-0">
-                    {activeProduct.price_display ? (
-                      <div className="text-base sm:text-lg font-bold text-white">
-                        {activeProduct.price_display}
-                      </div>
-                    ) : activeProduct.price ? (
-                      <div className="text-base sm:text-lg font-bold text-white">
-                        ₹{Number(activeProduct.price).toLocaleString("en-IN")}
-                      </div>
-                    ) : (
-                      <div className="text-xs font-semibold text-[#FFA868]">
-                        Wholesale Rate
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-1">
+          {activeProduct && (
+            <div
+              data-hero
+              data-hero-stage
+              className="lg:col-span-6 w-full min-w-0"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onFocusCapture={() => setIsPaused(true)}
+              onBlurCapture={() => setIsPaused(false)}
+            >
+              <div className="flex gap-5 overflow-x-auto scrollbar-none border-b border-white/15 mb-6">
+                {HERO_CATEGORIES.map((cat) => (
                   <button
-                    onClick={handleHeroAdd}
-                    className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl ${
-                      heroAdded ? "bg-[#217A4B] text-white" : "bg-[#E87832] hover:bg-[#d66b28] text-white"
-                    } font-bold text-xs transition-all shadow-xs active:scale-95`}
+                    key={cat.id}
+                    type="button"
+                    aria-pressed={selectedHeroCategory === cat.id}
+                    onClick={() => setSelectedHeroCategory(cat.id)}
+                    className={`pb-2.5 -mb-px text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors ${
+                      selectedHeroCategory === cat.id
+                        ? "text-white border-[#F4A36B]"
+                        : "text-slate-400 hover:text-white border-transparent"
+                    }`}
                   >
-                    {heroAdded ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                        <span>Added to Cart!</span>
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>Add to Order / RFQ</span>
-                      </>
-                    )}
+                    {cat.label}
                   </button>
+                ))}
+              </div>
 
-                  <Link
-                    href={`/products/${activeProduct.slug}`}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white font-semibold text-xs border border-white/15 transition-colors"
-                  >
-                    <span>View Specifications</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+              <div data-hero-sheet className="relative mx-3">
+                <CropMarks />
+                <div className="relative bg-white text-[#1C2733]">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden p-5 flex items-center justify-center">
+                    <div ref={stageImageRef} className="relative w-full h-full flex items-center justify-center">
+                      <img
+                        src={currentHeroImg}
+                        alt={formatProductName(activeProduct.name)}
+                        onError={() => setCurrentHeroImg("/placeholder-product.svg")}
+                        className="w-full h-full object-contain"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="absolute bottom-0 inset-x-0 h-0.5 bg-[#D8DEE5]">
+                      <div ref={progressBarRef} className="h-full w-full bg-[#D9601A] origin-left" style={{ transform: "scaleX(0)" }} />
+                    </div>
+                  </div>
+
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="font-mono text-[11px] text-[#566373] truncate">
+                          {activeProduct.sku}
+                        </p>
+                        <h2 className="text-base sm:text-lg font-bold text-[#16324F] leading-snug line-clamp-1 mt-0.5">
+                          {formatProductName(activeProduct.name)}
+                        </h2>
+                        <p className="text-xs text-[#566373] line-clamp-1 mt-0.5">
+                          {activeProduct.material ? `${activeProduct.material} · ` : ""}
+                          {formatCategoryName(activeProduct.category?.name || "Wholesale")}
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className="font-heading text-base sm:text-lg font-bold text-[#16324F] tabular-nums whitespace-nowrap">
+                          {activeProduct.price_display ||
+                            (activeProduct.price
+                              ? `₹${Number(activeProduct.price).toLocaleString("en-IN")}`
+                              : "On request")}
+                        </div>
+                        {activeProduct.minimum_order_quantity ? (
+                          <div className="font-mono text-[11px] text-[#566373]">
+                            MOQ {activeProduct.minimum_order_quantity}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 mt-4">
+                      <button
+                        type="button"
+                        onClick={handleHeroAdd}
+                        className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md text-white font-bold text-[13px] transition-colors ${
+                          heroAdded ? "bg-[#217A4B]" : "bg-[#D9601A] hover:bg-[#B94E12]"
+                        }`}
+                      >
+                        {heroAdded ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+                        <span>{heroAdded ? "Added" : "Add to order"}</span>
+                      </button>
+                      <Link
+                        href={`/products/${activeProduct.slug}`}
+                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md border border-[#16324F] text-[#16324F] hover:bg-[#16324F] hover:text-white font-semibold text-[13px] transition-colors"
+                      >
+                        View specifications
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Thumbnail Strip for Carousel navigation */}
-              <div
-                ref={thumbScrollRef}
-                className="flex gap-2 overflow-x-auto mt-4 pt-3 border-t border-white/10 pb-1 scrollbar-none"
-              >
+              <div ref={thumbScrollRef} className="flex gap-2 overflow-x-auto mt-6 mx-3 pb-1 scrollbar-none">
                 {activeProducts.map((p, idx) => {
-                  const thumb = getProductImageUrl(p);
                   const isSelected = idx === activeIndex;
-
                   return (
                     <button
                       key={p.id}
-                      onClick={() => {
-                        setActiveIndex(idx);
-                        setProgress(0);
-                      }}
-                      className={`relative w-11 h-11 rounded-lg overflow-hidden shrink-0 border transition-all ${
-                        isSelected ? "border-[#E87832] ring-2 ring-[#E87832]/50 scale-105" : "border-white/15 opacity-60 hover:opacity-100"
+                      type="button"
+                      aria-label={`Show ${formatProductName(p.name)}`}
+                      aria-current={isSelected}
+                      onClick={() => setActiveIndex(idx)}
+                      className={`relative w-12 h-12 shrink-0 bg-white overflow-hidden transition-opacity ${
+                        isSelected ? "outline-2 outline-offset-2 outline-[#F4A36B]" : "opacity-55 hover:opacity-100"
                       }`}
                     >
                       <img
-                        src={thumb}
-                        alt={p.name}
+                        src={getProductImageUrl(p)}
+                        alt=""
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "/placeholder-product.svg";
                         }}
-                        className="w-full h-full object-contain p-1 bg-white"
+                        className="w-full h-full object-contain p-1"
                         loading="lazy"
                         decoding="async"
                       />
@@ -400,7 +360,7 @@ export default function ProductHeroShowcase({
                 })}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

@@ -149,11 +149,11 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
       aria-labelledby="modal-headline"
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-[340px] sm:max-w-lg md:max-w-xl max-h-[92vh] sm:max-h-[88vh] flex flex-col border border-[#DCE3EB] overflow-hidden anim-scale-in"
+        className="bg-white rounded-lg shadow-2xl w-full max-w-[340px] sm:max-w-lg md:max-w-xl max-h-[92vh] sm:max-h-[88vh] flex flex-col border border-[#D8DEE5] overflow-hidden anim-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header: compact on mobile, spacious on laptop */}
-        <div className="bg-[#102742] text-white px-3.5 py-2.5 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
+        <div className="bg-[#0E2238] text-white px-3.5 py-2.5 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
           <div className="min-w-0 pr-2">
             <h2 id="modal-headline" className="text-xs sm:text-base font-bold truncate">
               Request Quotation
@@ -180,10 +180,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <CheckCircle className="w-7 h-7 sm:w-10 sm:h-10" />
               </div>
               <div className="space-y-1 sm:space-y-1.5">
-                <h3 className="text-sm sm:text-lg font-bold text-[#17365D]">
+                <h3 className="text-sm sm:text-lg font-bold text-[#16324F]">
                   Enquiry Logged!
                 </h3>
-                <p className="text-[11px] sm:text-sm text-[#687586] leading-relaxed max-w-sm mx-auto">
+                <p className="text-[11px] sm:text-sm text-[#566373] leading-relaxed max-w-sm mx-auto">
                   Our sales desk will send your quotation within 2 business hours.
                 </p>
               </div>
@@ -192,7 +192,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#217A4B] hover:bg-[#1b633d] text-white text-xs sm:text-sm font-bold py-2 sm:py-2.5 px-3 sm:px-5 rounded-lg sm:rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                  className="bg-[#217A4B] hover:bg-[#1b633d] text-white text-xs sm:text-sm font-bold py-2 sm:py-2.5 px-3 sm:px-5 rounded-lg sm:rounded-md transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>WhatsApp Fast Quote</span>
@@ -200,7 +200,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <button
                   type="button"
                   onClick={onClose}
-                  className="border border-[#DCE3EB] text-[#263445] text-xs sm:text-sm font-semibold py-1.5 sm:py-2.5 px-3 sm:px-5 rounded-lg sm:rounded-xl hover:bg-[#F5F7FA]"
+                  className="border border-[#D8DEE5] text-[#1C2733] text-xs sm:text-sm font-semibold py-1.5 sm:py-2.5 px-3 sm:px-5 rounded-lg sm:rounded-md hover:bg-[#F3F5F7]"
                 >
                   Close Window
                 </button>
@@ -209,7 +209,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
           ) : (
             <form onSubmit={handleSubmit} className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               {errorMessage && (
-                <div className="p-2 sm:p-3 bg-red-50 border border-red-200 rounded-lg sm:rounded-xl text-red-700 flex items-center gap-2 text-[11px] sm:text-xs">
+                <div className="p-2 sm:p-3 bg-red-50 border border-red-200 rounded-lg sm:rounded-md text-red-700 flex items-center gap-2 text-[11px] sm:text-xs">
                   <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-[#C0392B]" />
                   <span>{errorMessage}</span>
                 </div>
@@ -217,7 +217,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
               {/* Product Mini Identification Bar */}
               {product && (
-                <div className="bg-[#F8FAFC] p-2 sm:p-3 rounded-lg sm:rounded-xl border border-[#DCE3EB] flex items-center justify-between gap-3">
+                <div className="bg-[#F3F5F7] p-2 sm:p-3 rounded-lg sm:rounded-md border border-[#D8DEE5] flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     {product.primary_image ? (
                       <img
@@ -231,12 +231,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                       </div>
                     )}
                     <div className="min-w-0">
-                      <p className="font-bold text-[#263445] text-[11px] sm:text-sm truncate">{formatProductName(product.name)}</p>
-                      <p className="font-mono text-[9px] sm:text-xs text-[#687586] truncate">SKU: {product.sku}</p>
+                      <p className="font-bold text-[#1C2733] text-[11px] sm:text-sm truncate">{formatProductName(product.name)}</p>
+                      <p className="font-mono text-[9px] sm:text-xs text-[#566373] truncate">SKU: {product.sku}</p>
                     </div>
                   </div>
                   {product.price_display && (
-                    <span className="font-bold text-[#17365D] text-[11px] sm:text-sm shrink-0">
+                    <span className="font-bold text-[#16324F] text-[11px] sm:text-sm shrink-0">
                       {product.price_display}
                     </span>
                   )}
@@ -245,7 +245,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
               {/* Full Name */}
               <div>
-                <label className="block font-semibold text-[#263445] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                   Full Name *
                 </label>
                 <input
@@ -254,14 +254,14 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Ramesh Patel"
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
+                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none transition-colors"
                 />
               </div>
 
               {/* Contact Phone & Email */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div>
-                  <label className="block font-semibold text-[#263445] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Phone *
                   </label>
                   <input
@@ -270,12 +270,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765..."
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#263445] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Email *
                   </label>
                   <input
@@ -284,7 +284,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@email.com"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -292,7 +292,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               {/* Company & Quantity */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div>
-                  <label className="block font-semibold text-[#263445] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Company
                   </label>
                   <input
@@ -300,12 +300,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="Acme Ltd"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#263445] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Quantity
                   </label>
                   <input
@@ -314,14 +314,14 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="500 pcs"
-                    className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none transition-colors"
+                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none transition-colors"
                   />
                 </div>
               </div>
 
               {/* Notes / Message */}
               <div>
-                <label className="block font-semibold text-[#263445] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                <label className="block font-semibold text-[#1C2733] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                   Specs / Notes
                 </label>
                 <textarea
@@ -329,22 +329,22 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Colors, sizes, delivery location..."
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg sm:rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#263445] outline-none resize-none transition-colors"
+                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#1C2733] outline-none resize-none transition-colors"
                 />
               </div>
 
               {/* Optional Attachment Upload */}
               <div>
-                <div className="flex items-center justify-between text-[#263445] text-[11px] sm:text-xs mb-1 font-semibold">
+                <div className="flex items-center justify-between text-[#1C2733] text-[11px] sm:text-xs mb-1 font-semibold">
                   <span className="flex items-center gap-1">
-                    <Paperclip className="w-3 h-3 text-[#E87832]" />
+                    <Paperclip className="w-3 h-3 text-[#D9601A]" />
                     <span>Attach Specs / Artwork (Optional)</span>
                   </span>
-                  <span className="text-[10px] text-[#687586]">Max 10MB</span>
+                  <span className="text-[10px] text-[#566373]">Max 10MB</span>
                 </div>
                 {!attachment ? (
-                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#CBD5E1] hover:border-[#17365D] bg-[#F8FAFC] hover:bg-[#F1F5F9] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#475569]">
-                    <UploadCloud className="w-3.5 h-3.5 text-[#E87832]" />
+                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#CBD5E1] hover:border-[#16324F] bg-[#F3F5F7] hover:bg-[#F1F5F9] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#475569]">
+                    <UploadCloud className="w-3.5 h-3.5 text-[#D9601A]" />
                     <span>Click to attach PDF, artwork, or sample photo</span>
                     <input
                       type="file"
@@ -372,12 +372,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               </div>
 
               {/* Action Buttons: Responsive stack on mobile, row on laptop */}
-              <div className="pt-2 sm:pt-4 border-t border-[#DCE3EB] space-y-1.5 sm:space-y-0 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+              <div className="pt-2 sm:pt-4 border-t border-[#D8DEE5] space-y-1.5 sm:space-y-0 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                 <a
                   href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto text-[#217A4B] bg-[#217A4B]/10 hover:bg-[#217A4B]/20 py-1.5 sm:py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 transition-colors text-center order-2 sm:order-1"
+                  className="w-full sm:w-auto text-[#217A4B] bg-[#217A4B]/10 hover:bg-[#217A4B]/20 py-1.5 sm:py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-md font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 transition-colors text-center order-2 sm:order-1"
                 >
                   <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   <span>WhatsApp Fast Quote</span>
@@ -386,7 +386,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] active:scale-98 text-white py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
+                  className="w-full sm:w-auto bg-[#D9601A] hover:bg-[#B94E12] active:scale-98 text-white py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
                 >
                   <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>{isSubmitting ? "Sending..." : "Submit Quote Request"}</span>

@@ -210,7 +210,10 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '120/minute',          # Generous 2 requests/sec for anonymous visitors browsing products
+        # Next.js server-renders every page from one IP, so this bucket is shared by ALL
+        # visitors, and one page view costs ~7 API calls. At 120/min roughly 15 views a
+        # minute emptied the catalogue for everyone. Login and forms keep their own scopes.
+        'anon': os.environ.get('ANON_THROTTLE_RATE', '1000/minute'),
         'user': '300/minute',          # 5 requests/sec for authenticated users
         'auth': '30/minute',           # Brute-force protection on login / register / password reset
         'enquiry': '30/minute',        # Spam prevention on public contact and quote inquiries

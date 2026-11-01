@@ -7,15 +7,15 @@ export default function PrivacyPolicyPage() {
       <Breadcrumbs items={[{ label: "Privacy Policy" }]} />
 
       <div className="space-y-4">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">
           Privacy Policy
         </h1>
         <p className="text-xs text-slate-500">Last updated: October 2026</p>
       </div>
 
-      <div className="space-y-6 text-xs sm:text-sm text-[#263445] leading-relaxed">
+      <div className="space-y-6 text-xs sm:text-sm text-[#1C2733] leading-relaxed">
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#17365D]">1. Information We Collect</h2>
+          <h2 className="text-base font-bold text-[#16324F]">1. Information We Collect</h2>
           <p>
             When you request quotations, submit enquiries, or communicate with our trade desk,
             we collect your name, business email address, company name, telephone number, and
@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#17365D]">2. How We Use Commercial Information</h2>
+          <h2 className="text-base font-bold text-[#16324F]">2. How We Use Commercial Information</h2>
           <p>
             Information collected through The Print Planet is used solely to generate itemized proforma
             invoices, calculate freight costs, provide dispatch tracking, and address technical queries
@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#17365D]">3. Data Security & Storage</h2>
+          <h2 className="text-base font-bold text-[#16324F]">3. Data Security & Storage</h2>
           <p>
             Customer submissions are stored on protected PostgreSQL databases in compliance with
             industry security protocols. Owner authentication relies on salted password hashing and

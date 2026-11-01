@@ -208,8 +208,8 @@ export default function OwnerProductsListPage() {
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-white text-[#263445] px-4 py-3 rounded-xl shadow-lg border border-[#E2E8F0] text-xs flex items-center gap-2 anim-toast">
-          <Sparkles className="w-4 h-4 text-[#E87832]" />
+        <div className="fixed bottom-5 right-5 z-50 bg-white text-[#1C2733] px-4 py-3 rounded-md shadow-lg border border-[#D8DEE5] text-xs flex items-center gap-2 anim-toast">
+          <Sparkles className="w-4 h-4 text-[#D9601A]" />
           <span>{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
@@ -226,7 +226,7 @@ export default function OwnerProductsListPage() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Catalogue
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16324F] mt-1">
             Products
             <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
               {totalCount}
@@ -239,7 +239,7 @@ export default function OwnerProductsListPage() {
             type="button"
             onClick={handleExportExcel}
             disabled={isExporting}
-            className="bg-white border border-[#DCE3EB] hover:border-[#B9C6D6] hover:bg-[#F8FAFC] text-[#263445] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
+            className="bg-white border border-[#D8DEE5] hover:border-[#B9C6D6] hover:bg-[#F3F5F7] text-[#1C2733] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
             title="Download full catalogue Excel spreadsheet"
           >
             {isExporting ? (
@@ -252,7 +252,7 @@ export default function OwnerProductsListPage() {
 
           <Link
             href="/owner/import"
-            className="bg-white border border-[#DCE3EB] hover:border-[#B9C6D6] hover:bg-[#F8FAFC] text-[#263445] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
+            className="bg-white border border-[#D8DEE5] hover:border-[#B9C6D6] hover:bg-[#F3F5F7] text-[#1C2733] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 text-slate-500" />
             <span>Import</span>
@@ -260,7 +260,7 @@ export default function OwnerProductsListPage() {
 
           <Link
             href="/owner/products/new"
-            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
+            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add product</span>
@@ -269,7 +269,7 @@ export default function OwnerProductsListPage() {
       </div>
 
       {/* Visibility tabs */}
-      <div className="flex items-center gap-6 border-b border-[#E2E8F0] overflow-x-auto">
+      <div className="flex items-center gap-6 border-b border-[#D8DEE5] overflow-x-auto">
         {[
           { value: "", label: "All catalogue", count: totalCount },
           { value: "active", label: "Active", count: undefined },
@@ -285,17 +285,17 @@ export default function OwnerProductsListPage() {
                 setCurrentPage(1);
               }}
               className={`relative flex items-center gap-2 pb-3 pt-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                isActiveTab ? "text-[#17365D]" : "text-slate-500 hover:text-[#17365D]"
+                isActiveTab ? "text-[#16324F]" : "text-slate-500 hover:text-[#16324F]"
               }`}
             >
               <span>{tab.label}</span>
               {tab.count !== undefined && (
-                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#C25E1F]" : "text-slate-400"}`}>
+                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#B94E12]" : "text-slate-400"}`}>
                   {tab.count}
                 </span>
               )}
               {isActiveTab && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#E87832]" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#D9601A]" />
               )}
             </button>
           );
@@ -303,7 +303,7 @@ export default function OwnerProductsListPage() {
       </div>
 
       {selectedStatus === "hidden" && (
-        <div className="bg-[#FBF7F0] border border-[#EBDFC8] rounded-xl p-4 flex items-start gap-3 anim-fade-in">
+        <div className="bg-[#FBF7F0] border border-[#EBDFC8] rounded-md p-4 flex items-start gap-3 anim-fade-in">
           <AlertCircle className="w-4 h-4 text-[#A97A34] shrink-0 mt-0.5" />
           <div className="space-y-1">
             <h3 className="text-xs font-semibold text-[#7A5B2E]">
@@ -317,7 +317,7 @@ export default function OwnerProductsListPage() {
       )}
 
       {/* Filter / Search Toolbar */}
-      <div className="surface-card p-4 rounded-2xl space-y-3">
+      <div className="surface-card p-4 rounded-lg space-y-3">
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 text-xs">
           {/* Keyword Search */}
           <form onSubmit={handleSearchSubmit} className="relative flex-1">
@@ -326,7 +326,7 @@ export default function OwnerProductsListPage() {
               placeholder="Search by SKU, product name, or material specs..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-xl pl-9 pr-20 py-2.5 text-xs text-[#263445] outline-none transition-colors"
+              className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-20 py-2.5 text-xs text-[#1C2733] outline-none transition-colors"
             />
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             {search && (
@@ -345,7 +345,7 @@ export default function OwnerProductsListPage() {
             )}
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[#17365D] hover:bg-[#102742] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer transition-colors"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[#16324F] hover:bg-[#0E2238] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer transition-colors"
             >
               Search
             </button>
@@ -354,7 +354,7 @@ export default function OwnerProductsListPage() {
           {/* Dropdown Filters */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Category Filter */}
-            <div className="flex items-center gap-1.5 bg-[#F5F7FA] border border-[#DCE3EB] rounded-xl px-2.5 py-1">
+            <div className="flex items-center gap-1.5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1">
               <Layers className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <select
                 value={selectedCategory}
@@ -362,7 +362,7 @@ export default function OwnerProductsListPage() {
                   setSelectedCategory(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#263445] font-medium outline-none py-1 cursor-pointer"
+                className="bg-transparent text-xs text-[#1C2733] font-medium outline-none py-1 cursor-pointer"
               >
                 <option value="">All Categories ({categories.length})</option>
                 {categories.map((c) => (
@@ -374,7 +374,7 @@ export default function OwnerProductsListPage() {
             </div>
 
             {/* Status Filter */}
-            <div className="flex items-center gap-1.5 bg-[#F5F7FA] border border-[#DCE3EB] rounded-xl px-2.5 py-1">
+            <div className="flex items-center gap-1.5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1">
               <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <select
                 value={selectedStatus}
@@ -382,7 +382,7 @@ export default function OwnerProductsListPage() {
                   setSelectedStatus(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#263445] font-medium outline-none py-1 cursor-pointer"
+                className="bg-transparent text-xs text-[#1C2733] font-medium outline-none py-1 cursor-pointer"
               >
                 <option value="">All Visibility</option>
                 <option value="active">Active Only</option>
@@ -391,7 +391,7 @@ export default function OwnerProductsListPage() {
             </div>
 
             {/* Page Size Filter */}
-            <div className="flex items-center gap-1 bg-[#F5F7FA] border border-[#DCE3EB] rounded-xl px-2.5 py-1">
+            <div className="flex items-center gap-1 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md px-2.5 py-1">
               <span className="text-[11px] text-slate-500 font-semibold">Per Page:</span>
               <select
                 value={pageSize}
@@ -399,7 +399,7 @@ export default function OwnerProductsListPage() {
                   setPageSize(Number(e.target.value));
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#263445] font-bold outline-none py-1 cursor-pointer"
+                className="bg-transparent text-xs text-[#1C2733] font-bold outline-none py-1 cursor-pointer"
               >
                 <option value={10}>10</option>
                 <option value={25}>25</option>
@@ -424,10 +424,10 @@ export default function OwnerProductsListPage() {
       </div>
 
       {/* Products Table Card */}
-      <div className="bg-white rounded-2xl border border-[#DCE3EB] shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-[#D8DEE5] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#263445]">
-            <thead className="bg-[#F8FAFC] border-b border-[#DCE3EB] text-[11px] font-bold text-[#687586] uppercase tracking-wider">
+          <table className="w-full text-left text-xs text-[#1C2733]">
+            <thead className="bg-[#F3F5F7] border-b border-[#D8DEE5] text-[11px] font-bold text-[#566373] uppercase tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Product Details</th>
                 <th className="py-3.5 px-4">SKU Code</th>
@@ -437,14 +437,14 @@ export default function OwnerProductsListPage() {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#DCE3EB]">
+            <tbody className="divide-y divide-[#D8DEE5]">
               {loading ? (
                 <>
                   {Array.from({ length: 6 }).map((_, index) => (
                     <tr key={index}>
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 skeleton rounded-xl shrink-0" />
+                          <div className="w-12 h-12 skeleton rounded-md shrink-0" />
                           <div className="space-y-2">
                             <div className="h-3 w-40 skeleton" />
                             <div className="h-2.5 w-24 skeleton" />
@@ -474,12 +474,12 @@ export default function OwnerProductsListPage() {
                   return (
                     <tr
                       key={p.id}
-                      className="hover:bg-[#F5F7FA]/80 transition-colors group"
+                      className="hover:bg-[#F3F5F7]/80 transition-colors group"
                     >
                       {/* Product Thumbnail & Title */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-[#F8FAFC] border border-[#DCE3EB] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#17365D]/30 transition-colors">
+                          <div className="w-12 h-12 rounded-md bg-[#F3F5F7] border border-[#D8DEE5] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#16324F]/30 transition-colors">
                             {img ? (
                               <img
                                 src={img}
@@ -491,7 +491,7 @@ export default function OwnerProductsListPage() {
                             )}
                           </div>
                           <div className="max-w-xs">
-                            <p className="font-bold text-[#17365D] line-clamp-1 group-hover:text-[#E87832] transition-colors">
+                            <p className="font-bold text-[#16324F] line-clamp-1 group-hover:text-[#D9601A] transition-colors">
                               {formatProductName(p.name)}
                             </p>
                             <p className="text-[11px] text-slate-400 truncate mt-0.5">
@@ -522,14 +522,14 @@ export default function OwnerProductsListPage() {
 
                       {/* Category */}
                       <td className="py-3.5 px-4">
-                        <span className="bg-[#17365D]/10 text-[#17365D] px-2.5 py-1 rounded-md font-bold text-[10px] uppercase tracking-wider">
+                        <span className="bg-[#16324F]/10 text-[#16324F] px-2.5 py-1 rounded-md font-bold text-[10px] uppercase tracking-wider">
                           {formatCategoryName(p.category?.name || "Uncategorized")}
                         </span>
                       </td>
 
                       {/* Trade Price */}
                       <td className="py-3.5 px-4">
-                        <span className="font-extrabold text-[#17365D]">
+                        <span className="font-extrabold text-[#16324F]">
                           {p.price_display || (p.price ? `₹ ${p.price}` : "On Request")}
                         </span>
                         {Boolean(p.minimum_order_quantity && p.minimum_order_quantity > 1) && (
@@ -569,7 +569,7 @@ export default function OwnerProductsListPage() {
                             href={`/products/${p.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#17365D] hover:bg-slate-100 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#16324F] hover:bg-slate-100 transition-colors"
                             title="Preview Public Page"
                           >
                             <ExternalLink className="w-4 h-4" />
@@ -577,7 +577,7 @@ export default function OwnerProductsListPage() {
 
                           <Link
                             href={`/owner/products/${p.id}/edit`}
-                            className="p-1.5 rounded-lg text-slate-600 hover:text-[#E87832] hover:bg-orange-50 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-600 hover:text-[#D9601A] hover:bg-orange-50 transition-colors"
                             title="Edit Product Details"
                           >
                             <Edit className="w-4 h-4" />
@@ -603,10 +603,10 @@ export default function OwnerProductsListPage() {
                   <td colSpan={6} className="py-16 text-center">
                     {hasActiveFilters ? (
                       <div className="max-w-md mx-auto space-y-3">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+                        <div className="w-12 h-12 rounded-lg bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
                           <Search className="w-6 h-6" />
                         </div>
-                        <h3 className="text-sm font-bold text-[#17365D]">
+                        <h3 className="text-sm font-bold text-[#16324F]">
                           No products found matching filters
                         </h3>
                         <p className="text-xs text-slate-400 leading-relaxed">
@@ -615,18 +615,18 @@ export default function OwnerProductsListPage() {
                         <button
                           type="button"
                           onClick={clearAllFilters}
-                          className="bg-[#17365D] hover:bg-[#102742] text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                          className="bg-[#16324F] hover:bg-[#0E2238] text-white px-4 py-2 rounded-md text-xs font-bold transition-colors cursor-pointer"
                         >
                           Clear All Filters
                         </button>
                       </div>
                     ) : (
                       <div className="max-w-md mx-auto space-y-4">
-                        <div className="w-14 h-14 rounded-2xl bg-[#E87832]/10 text-[#E87832] flex items-center justify-center mx-auto">
+                        <div className="w-14 h-14 rounded-lg bg-[#D9601A]/10 text-[#D9601A] flex items-center justify-center mx-auto">
                           <Package className="w-7 h-7" />
                         </div>
                         <div>
-                          <h3 className="text-base font-extrabold text-[#17365D]">
+                          <h3 className="text-base font-extrabold text-[#16324F]">
                             Your Catalogue is Clean & Ready
                           </h3>
                           <p className="text-xs text-slate-500 leading-relaxed mt-1">
@@ -636,14 +636,14 @@ export default function OwnerProductsListPage() {
                         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                           <Link
                             href="/owner/products/new"
-                            className="bg-[#E87832] hover:bg-[#d66b28] text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2.5 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
                           >
                             <PlusCircle className="w-4 h-4" />
                             <span>Add First Product</span>
                           </Link>
                           <Link
                             href="/owner/import"
-                            className="bg-[#17365D] hover:bg-[#102742] text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                            className="bg-[#16324F] hover:bg-[#0E2238] text-white px-4 py-2.5 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
                           >
                             <FileSpreadsheet className="w-4 h-4" />
                             <span>Bulk Import Excel/CSV</span>
@@ -659,12 +659,12 @@ export default function OwnerProductsListPage() {
         </div>
 
         {/* World-Class Numbered Pagination Bar */}
-        <div className="p-4 border-t border-[#DCE3EB] bg-[#F8FAFC] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div className="p-4 border-t border-[#D8DEE5] bg-[#F3F5F7] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           {/* Status summary */}
           <div className="text-slate-500 text-xs">
-            Showing <strong className="text-[#17365D]">{startItem}</strong> to{" "}
-            <strong className="text-[#17365D]">{endItem}</strong> of{" "}
-            <strong className="text-[#17365D]">{totalCount}</strong> products
+            Showing <strong className="text-[#16324F]">{startItem}</strong> to{" "}
+            <strong className="text-[#16324F]">{endItem}</strong> of{" "}
+            <strong className="text-[#16324F]">{totalCount}</strong> products
           </div>
 
           {/* Page controls */}
@@ -674,7 +674,7 @@ export default function OwnerProductsListPage() {
               type="button"
               disabled={currentPage <= 1 || loading}
               onClick={() => setCurrentPage(1)}
-              className="p-1.5 bg-white border border-[#DCE3EB] rounded-lg text-slate-600 hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+              className="p-1.5 bg-white border border-[#D8DEE5] rounded-lg text-slate-600 hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
               title="First Page"
             >
               <ChevronsLeft className="w-3.5 h-3.5" />
@@ -685,7 +685,7 @@ export default function OwnerProductsListPage() {
               type="button"
               disabled={currentPage <= 1 || loading}
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              className="px-2.5 py-1.5 bg-white border border-[#DCE3EB] rounded-lg text-slate-700 font-semibold hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1.5 bg-white border border-[#D8DEE5] rounded-lg text-slate-700 font-semibold hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center gap-1 cursor-pointer"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Prev</span>
@@ -710,8 +710,8 @@ export default function OwnerProductsListPage() {
                     onClick={() => setCurrentPage(page)}
                     className={`min-w-8 h-8 px-2 rounded-lg font-bold text-xs transition-colors cursor-pointer ${
                       isActive
-                        ? "bg-[#17365D] text-white shadow-xs"
-                        : "bg-white border border-[#DCE3EB] text-slate-700 hover:bg-[#F5F7FA]"
+                        ? "bg-[#16324F] text-white shadow-xs"
+                        : "bg-white border border-[#D8DEE5] text-slate-700 hover:bg-[#F3F5F7]"
                     }`}
                   >
                     {page}
@@ -725,7 +725,7 @@ export default function OwnerProductsListPage() {
               type="button"
               disabled={currentPage >= totalPages || loading}
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              className="px-2.5 py-1.5 bg-white border border-[#DCE3EB] rounded-lg text-slate-700 font-semibold hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1.5 bg-white border border-[#D8DEE5] rounded-lg text-slate-700 font-semibold hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center gap-1 cursor-pointer"
             >
               <span className="hidden sm:inline">Next</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -736,7 +736,7 @@ export default function OwnerProductsListPage() {
               type="button"
               disabled={currentPage >= totalPages || loading}
               onClick={() => setCurrentPage(totalPages)}
-              className="p-1.5 bg-white border border-[#DCE3EB] rounded-lg text-slate-600 hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+              className="p-1.5 bg-white border border-[#D8DEE5] rounded-lg text-slate-600 hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
               title="Last Page"
             >
               <ChevronsRight className="w-3.5 h-3.5" />

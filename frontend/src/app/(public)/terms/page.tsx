@@ -7,15 +7,15 @@ export default function TermsPage() {
       <Breadcrumbs items={[{ label: "Terms & Conditions" }]} />
 
       <div className="space-y-4">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17365D]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">
           Commercial Terms & Conditions
         </h1>
         <p className="text-xs text-slate-500">Effective: October 2026</p>
       </div>
 
-      <div className="space-y-6 text-xs sm:text-sm text-[#263445] leading-relaxed">
+      <div className="space-y-6 text-xs sm:text-sm text-[#1C2733] leading-relaxed">
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#17365D]">1. Quotations and Pricing</h2>
+          <h2 className="text-base font-bold text-[#16324F]">1. Quotations and Pricing</h2>
           <p>
             All listed prices and quotations provided by The Print Planet are ex-factory wholesale
             rates in Indian Rupees (INR) unless expressly stated otherwise in formal proforma invoices.
@@ -24,7 +24,7 @@ export default function TermsPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#17365D]">2. Minimum Order Quantities (MOQ)</h2>
+          <h2 className="text-base font-bold text-[#16324F]">2. Minimum Order Quantities (MOQ)</h2>
           <p>
             Standard ID card holders, satin rolls, and hardware fittings are supplied in designated
             pack sizes (e.g. rolls of 100 meters, holder packs of 50/100 units). Custom Pantone
@@ -33,7 +33,7 @@ export default function TermsPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#17365D]">3. Machinery Warranty & Testing</h2>
+          <h2 className="text-base font-bold text-[#16324F]">3. Machinery Warranty & Testing</h2>
           <p>
             Card cutting units (DCT4500, DCT2000), card fusing laminators (DCT150), and lanyard
             printing heat presses undergo operational inspection prior to factory dispatch.

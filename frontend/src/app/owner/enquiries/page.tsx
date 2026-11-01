@@ -142,7 +142,7 @@ export default function OwnerEnquiriesPage() {
         <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
           Sales inbox
         </span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#17365D] mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16324F] mt-1">
           Enquiries
           <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
             {totalCount}
@@ -151,33 +151,33 @@ export default function OwnerEnquiriesPage() {
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="surface-card p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <div className="surface-card p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full sm:max-w-md">
           <input
             type="text"
             placeholder="Search by customer name, company, email, or phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#F5F7FA] border border-[#DCE3EB] rounded-lg pl-8 pr-12 py-2 text-xs outline-none focus:bg-white focus:border-[#17365D] transition-colors"
+            className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg pl-8 pr-12 py-2 text-xs outline-none focus:bg-white focus:border-[#16324F] transition-colors"
           />
           <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
           <button
             type="submit"
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[#17365D] hover:bg-[#102742] text-white px-2.5 py-1 rounded text-[11px] font-semibold cursor-pointer"
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[#16324F] hover:bg-[#0E2238] text-white px-2.5 py-1 rounded text-[11px] font-semibold cursor-pointer"
           >
             Find
           </button>
         </form>
 
         <div className="w-full sm:w-auto flex flex-wrap items-center gap-2">
-          <label className="text-[#687586] font-semibold">Status:</label>
+          <label className="text-[#566373] font-semibold">Status:</label>
           <select
             value={selectedStatus}
             onChange={(e) => {
               setSelectedStatus(e.target.value);
               setCurrentPage(1);
             }}
-            className="bg-[#F5F7FA] border border-[#DCE3EB] rounded-lg px-3 py-1.5 text-xs outline-none cursor-pointer"
+            className="bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-1.5 text-xs outline-none cursor-pointer"
           >
             <option value="">All Enquiries</option>
             <option value="new">New (Unreviewed)</option>
@@ -203,13 +203,13 @@ export default function OwnerEnquiriesPage() {
       {/* Grid: Master List & Detail View */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Enquiry List (7 Cols) */}
-        <div className="lg:col-span-7 surface-card rounded-2xl overflow-hidden flex flex-col">
+        <div className="lg:col-span-7 surface-card rounded-lg overflow-hidden flex flex-col">
           <div className="px-4 py-3 border-b border-[#E6EBF1] text-[11px] font-medium text-slate-500 flex items-center justify-between">
             <span>Inbox</span>
             <span>Select to review</span>
           </div>
 
-          <div className="divide-y divide-[#DCE3EB] max-h-[600px] overflow-y-auto">
+          <div className="divide-y divide-[#D8DEE5] max-h-[600px] overflow-y-auto">
             {loading ? (
               <>
                 {Array.from({ length: 6 }).map((_, index) => (
@@ -232,15 +232,15 @@ export default function OwnerEnquiriesPage() {
                   key={enq.id}
                   onClick={() => openDetail(enq)}
                   className={`p-4 transition-colors cursor-pointer text-xs space-y-1.5 ${
-                    activeEnquiry?.id === enq.id ? "bg-[#17365D]/5 border-l-4 border-l-[#17365D]" : "hover:bg-[#F5F7FA]"
+                    activeEnquiry?.id === enq.id ? "bg-[#16324F]/5 border-l-4 border-l-[#16324F]" : "hover:bg-[#F3F5F7]"
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-[#17365D] text-sm">{enq.full_name}</span>
+                    <span className="font-bold text-[#16324F] text-sm">{enq.full_name}</span>
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         enq.status === "new"
-                          ? "bg-orange-100 text-[#E87832]"
+                          ? "bg-orange-100 text-[#D9601A]"
                           : enq.status === "closed"
                           ? "bg-green-100 text-[#217A4B]"
                           : enq.status === "quoted"
@@ -252,13 +252,13 @@ export default function OwnerEnquiriesPage() {
                     </span>
                   </div>
 
-                  <div className="text-[#687586] flex items-center gap-3 text-[11px]">
+                  <div className="text-[#566373] flex items-center gap-3 text-[11px]">
                     {enq.company_name && <span>{enq.company_name}</span>}
                     <span>{enq.phone}</span>
                     <span className="truncate max-w-[150px]">{enq.email}</span>
                   </div>
 
-                  <p className="text-[#263445] line-clamp-2 text-xs italic bg-[#F8FAFC] p-2 rounded border border-[#DCE3EB]/50">
+                  <p className="text-[#1C2733] line-clamp-2 text-xs italic bg-[#F3F5F7] p-2 rounded border border-[#D8DEE5]/50">
                     &ldquo;{enq.message}&rdquo;
                   </p>
 
@@ -286,7 +286,7 @@ export default function OwnerEnquiriesPage() {
 
           {/* Numbered Pagination for Enquiries */}
           {totalCount > 0 && (
-            <div className="p-3 bg-[#F8FAFC] border-t border-[#DCE3EB] flex items-center justify-between text-xs">
+            <div className="p-3 bg-[#F3F5F7] border-t border-[#D8DEE5] flex items-center justify-between text-xs">
               <span className="text-slate-500 text-[11px]">
                 Showing {startItem} – {endItem} of {totalCount}
               </span>
@@ -295,7 +295,7 @@ export default function OwnerEnquiriesPage() {
                   type="button"
                   disabled={currentPage <= 1 || loading}
                   onClick={() => setCurrentPage(1)}
-                  className="p-1 bg-white border border-[#DCE3EB] rounded text-slate-600 hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                  className="p-1 bg-white border border-[#D8DEE5] rounded text-slate-600 hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                   title="First Page"
                 >
                   <ChevronsLeft className="w-3 h-3" />
@@ -304,18 +304,18 @@ export default function OwnerEnquiriesPage() {
                   type="button"
                   disabled={currentPage <= 1 || loading}
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  className="px-2 py-1 bg-white border border-[#DCE3EB] rounded text-slate-600 hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                  className="px-2 py-1 bg-white border border-[#D8DEE5] rounded text-slate-600 hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                 >
                   Prev
                 </button>
-                <span className="px-2 font-bold text-[#17365D]">
+                <span className="px-2 font-bold text-[#16324F]">
                   {currentPage} / {totalPages}
                 </span>
                 <button
                   type="button"
                   disabled={currentPage >= totalPages || loading}
                   onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                  className="px-2 py-1 bg-white border border-[#DCE3EB] rounded text-slate-600 hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                  className="px-2 py-1 bg-white border border-[#D8DEE5] rounded text-slate-600 hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                 >
                   Next
                 </button>
@@ -323,7 +323,7 @@ export default function OwnerEnquiriesPage() {
                   type="button"
                   disabled={currentPage >= totalPages || loading}
                   onClick={() => setCurrentPage(totalPages)}
-                  className="p-1 bg-white border border-[#DCE3EB] rounded text-slate-600 hover:bg-[#F5F7FA] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                  className="p-1 bg-white border border-[#D8DEE5] rounded text-slate-600 hover:bg-[#F3F5F7] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                   title="Last Page"
                 >
                   <ChevronsRight className="w-3 h-3" />
@@ -334,12 +334,12 @@ export default function OwnerEnquiriesPage() {
         </div>
 
         {/* Selected Detail & Note Editor (5 Cols) */}
-        <div className="lg:col-span-5 bg-white p-5 rounded-xl border border-[#DCE3EB] shadow-xs space-y-5 text-xs">
+        <div className="lg:col-span-5 bg-white p-5 rounded-md border border-[#D8DEE5] shadow-xs space-y-5 text-xs">
           {activeEnquiry ? (
             <>
-              <div className="border-b border-[#DCE3EB] pb-3 flex items-center justify-between">
+              <div className="border-b border-[#D8DEE5] pb-3 flex items-center justify-between">
                 <div>
-                  <h2 className="font-bold text-sm text-[#17365D]">Enquiry #{activeEnquiry.id} Details</h2>
+                  <h2 className="font-bold text-sm text-[#16324F]">Enquiry #{activeEnquiry.id} Details</h2>
                   <span suppressHydrationWarning className="text-[11px] text-slate-400">
                     Received on {new Date(activeEnquiry.created_at).toLocaleString()}
                   </span>
@@ -354,10 +354,10 @@ export default function OwnerEnquiriesPage() {
               )}
 
               {/* Customer Contact Box */}
-              <div className="space-y-2 bg-[#F8FAFC] p-3.5 rounded-lg border border-[#DCE3EB]">
+              <div className="space-y-2 bg-[#F3F5F7] p-3.5 rounded-lg border border-[#D8DEE5]">
                 <div className="flex items-center gap-2">
-                  <Phone className="w-3.5 h-3.5 text-[#E87832]" />
-                  <a href={`tel:${activeEnquiry.phone}`} className="font-bold text-[#17365D] hover:underline">
+                  <Phone className="w-3.5 h-3.5 text-[#D9601A]" />
+                  <a href={`tel:${activeEnquiry.phone}`} className="font-bold text-[#16324F] hover:underline">
                     {activeEnquiry.phone}
                   </a>
                   <a
@@ -371,7 +371,7 @@ export default function OwnerEnquiriesPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-[#E87832]" />
+                  <Mail className="w-3.5 h-3.5 text-[#D9601A]" />
                   <a href={`mailto:${activeEnquiry.email}`} className="font-semibold text-slate-700 hover:underline">
                     {activeEnquiry.email}
                   </a>
@@ -387,8 +387,8 @@ export default function OwnerEnquiriesPage() {
 
               {/* Message */}
               <div>
-                <label className="block font-bold text-[#263445] mb-1">Customer Message</label>
-                <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB] text-[#263445] leading-relaxed">
+                <label className="block font-bold text-[#1C2733] mb-1">Customer Message</label>
+                <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5] text-[#1C2733] leading-relaxed">
                   {activeEnquiry.message}
                 </div>
               </div>
@@ -404,7 +404,7 @@ export default function OwnerEnquiriesPage() {
                     type="button"
                     disabled={downloadingAtt}
                     onClick={() => handleDownloadAttachment(activeEnquiry.id)}
-                    className="inline-flex items-center gap-1.5 bg-[#E87832] hover:bg-[#d66b28] text-white px-3 py-1.5 rounded-md font-bold text-[11px] transition-colors cursor-pointer disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 bg-[#D9601A] hover:bg-[#B94E12] text-white px-3 py-1.5 rounded-md font-bold text-[11px] transition-colors cursor-pointer disabled:opacity-50"
                   >
                     {downloadingAtt ? (
                       <>
@@ -423,11 +423,11 @@ export default function OwnerEnquiriesPage() {
 
               {/* Status Selector */}
               <div>
-                <label className="block font-bold text-[#263445] mb-1">Update Status</label>
+                <label className="block font-bold text-[#1C2733] mb-1">Update Status</label>
                 <select
                   value={statusVal}
                   onChange={(e) => setStatusVal(e.target.value)}
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] rounded-lg px-3 py-2 text-xs outline-none cursor-pointer"
+                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-2 text-xs outline-none cursor-pointer"
                 >
                   <option value="new">New (Unreviewed)</option>
                   <option value="in_progress">In Progress</option>
@@ -439,7 +439,7 @@ export default function OwnerEnquiriesPage() {
 
               {/* Internal Private Notes */}
               <div>
-                <label className="block font-bold text-[#263445] mb-1">
+                <label className="block font-bold text-[#1C2733] mb-1">
                   Private Internal Notes (Staff Only)
                 </label>
                 <textarea
@@ -447,7 +447,7 @@ export default function OwnerEnquiriesPage() {
                   value={adminNotes}
                   onChange={(e) => setAdminNotes(e.target.value)}
                   placeholder="Record quote amounts, shipping terms, dispatch dates..."
-                  className="w-full bg-[#F5F7FA] border border-[#DCE3EB] rounded-lg p-3 text-xs outline-none resize-none focus:bg-white focus:border-[#17365D] transition-colors"
+                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg p-3 text-xs outline-none resize-none focus:bg-white focus:border-[#16324F] transition-colors"
                 />
               </div>
 
@@ -455,7 +455,7 @@ export default function OwnerEnquiriesPage() {
                 type="button"
                 onClick={handleSaveNotes}
                 disabled={saving}
-                className="w-full bg-[#17365D] hover:bg-[#102742] text-white py-2.5 rounded-lg font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="w-full bg-[#16324F] hover:bg-[#0E2238] text-white py-2.5 rounded-lg font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {saving ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />

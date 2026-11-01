@@ -86,7 +86,7 @@ export default function ContactFormClient() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block font-semibold text-[#263445] mb-1">
+          <label className="block font-semibold text-[#1C2733] mb-1">
             Your Full Name *
           </label>
           <input
@@ -95,12 +95,12 @@ export default function ContactFormClient() {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder="e.g. Ramesh Patel"
-            className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
 
         <div>
-          <label className="block font-semibold text-[#263445] mb-1">
+          <label className="block font-semibold text-[#1C2733] mb-1">
             Company / Business Name
           </label>
           <input
@@ -108,14 +108,14 @@ export default function ContactFormClient() {
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="e.g. Apex Corporate Solutions Pvt Ltd"
-            className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block font-semibold text-[#263445] mb-1">
+          <label className="block font-semibold text-[#1C2733] mb-1">
             Contact Mobile / Phone *
           </label>
           <input
@@ -124,12 +124,12 @@ export default function ContactFormClient() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="e.g. +91 97418 00000"
-            className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
 
         <div>
-          <label className="block font-semibold text-[#263445] mb-1">
+          <label className="block font-semibold text-[#1C2733] mb-1">
             Business Email *
           </label>
           <input
@@ -138,13 +138,13 @@ export default function ContactFormClient() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="e.g. purchasing@company.com"
-            className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
       </div>
 
       <div>
-        <label className="block font-semibold text-[#263445] mb-1">
+        <label className="block font-semibold text-[#1C2733] mb-1">
           Estimated Order Quantity (Units / Rolls)
         </label>
         <input
@@ -153,12 +153,12 @@ export default function ContactFormClient() {
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           placeholder="e.g. 500"
-          className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+          className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
         />
       </div>
 
       <div>
-        <label className="block font-semibold text-[#263445] mb-1">
+        <label className="block font-semibold text-[#1C2733] mb-1">
           Detailed Technical Requirements &amp; Delivery Location *
         </label>
         <textarea
@@ -167,22 +167,22 @@ export default function ContactFormClient() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Please describe required models (e.g. V2, V4 holders, 20mm Royal Blue satin rolls, DCT2000 cutter), custom printing, destination pincode..."
-          className="w-full bg-[#F5F7FA] border border-[#DCE3EB] focus:border-[#17365D] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none resize-none"
+          className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none resize-none"
         />
       </div>
 
       {/* Optional Attachment Upload */}
       <div>
-        <div className="flex items-center justify-between text-[#263445] text-xs mb-1 font-semibold">
+        <div className="flex items-center justify-between text-[#1C2733] text-xs mb-1 font-semibold">
           <span className="flex items-center gap-1.5">
-            <Paperclip className="w-3.5 h-3.5 text-[#E87832]" />
+            <Paperclip className="w-3.5 h-3.5 text-[#D9601A]" />
             <span>Attach Spec Sheet, Artwork, Sample Photo or Excel (Optional)</span>
           </span>
           <span className="text-[11px] text-slate-500">Max 10MB</span>
         </div>
         {!attachment ? (
-          <label className="flex items-center justify-center gap-2 border border-dashed border-[#CBD5E1] hover:border-[#17365D] bg-[#F8FAFC] hover:bg-[#F1F5F9] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#475569]">
-            <UploadCloud className="w-4 h-4 text-[#E87832]" />
+          <label className="flex items-center justify-center gap-2 border border-dashed border-[#CBD5E1] hover:border-[#16324F] bg-[#F3F5F7] hover:bg-[#F1F5F9] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#475569]">
+            <UploadCloud className="w-4 h-4 text-[#D9601A]" />
             <span>Click to attach file or sample photo</span>
             <input
               type="file"
@@ -213,7 +213,7 @@ export default function ContactFormClient() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] text-white px-8 py-3 rounded-xl font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50"
+          className="w-full sm:w-auto bg-[#D9601A] hover:bg-[#B94E12] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50"
         >
           {isSubmitting ? "Sending RFQ..." : "Submit Quotation Request & Enquire"}
         </button>

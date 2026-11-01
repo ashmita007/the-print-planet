@@ -30,7 +30,7 @@ export default function EditProductPage() {
           <div className="h-3 w-32 skeleton" />
           <div className="h-8 w-64 skeleton" />
         </div>
-        <div className="surface-card p-6 rounded-2xl space-y-5">
+        <div className="surface-card p-6 rounded-lg space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index} className="space-y-2">
@@ -39,7 +39,7 @@ export default function EditProductPage() {
               </div>
             ))}
           </div>
-          <div className="h-32 w-full skeleton rounded-xl" />
+          <div className="h-32 w-full skeleton rounded-md" />
           <div className="flex justify-end gap-2">
             <div className="h-9 w-24 skeleton rounded-lg" />
             <div className="h-9 w-32 skeleton rounded-lg" />
@@ -63,7 +63,7 @@ export default function EditProductPage() {
         <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
           Catalogue
         </span>
-        <h1 className="text-2xl font-bold tracking-tight text-[#17365D] mt-1">
+        <h1 className="text-2xl font-bold tracking-tight text-[#16324F] mt-1">
           Edit product
         </h1>
         <p className="text-xs text-slate-500 mt-1 truncate">{formatProductName(product.name)}</p>

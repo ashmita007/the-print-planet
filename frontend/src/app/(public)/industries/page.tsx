@@ -145,13 +145,13 @@ export default function IndustriesPage() {
       <Breadcrumbs items={[{ label: "Industries We Serve" }]} />
 
       {/* Hero */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
             <Briefcase className="w-3.5 h-3.5" />
             <span>Sector-Specific Printing Solutions</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Industries & Business Sectors We Serve
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -160,7 +160,7 @@ export default function IndustriesPage() {
           <div className="pt-2 flex flex-wrap gap-3">
             <Link
               href="/quote"
-              className="bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors flex items-center gap-2"
+              className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors flex items-center gap-2"
             >
               <span>Get Industry-Specific Quotation</span>
               <ArrowRight className="w-4 h-4" />
@@ -169,9 +169,9 @@ export default function IndustriesPage() {
               href="https://wa.me/919741808034?text=Hi%2C%20I%20would%20like%20to%20discuss%20bulk%20supplies%20for%20our%20industry."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-slate-50 text-[#17365D] border border-[#DCE3EB] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2"
+              className="bg-white hover:bg-slate-50 text-[#16324F] border border-[#D8DEE5] px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center gap-2"
             >
-              <PhoneCall className="w-4 h-4 text-[#E87832]" />
+              <PhoneCall className="w-4 h-4 text-[#D9601A]" />
               <span>Talk to Corporate Specialist</span>
             </a>
           </div>
@@ -181,10 +181,10 @@ export default function IndustriesPage() {
       {/* Industries Grid */}
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl sm:text-3xl font-black text-[#17365D]">
+          <h2 className="text-xl sm:text-3xl font-extrabold text-[#16324F]">
             Specialized Vertical Capabilities
           </h2>
-          <p className="text-xs sm:text-sm text-[#687586] mt-1">
+          <p className="text-xs sm:text-sm text-[#566373] mt-1">
             Discover tailored materials, dimensional tolerances, and accessories designed for your sector.
           </p>
         </div>
@@ -195,29 +195,29 @@ export default function IndustriesPage() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-[#DCE3EB] p-6 sm:p-8 shadow-xs hover:shadow-md transition-all hover:border-[#17365D]/30 flex flex-col justify-between"
+                className="bg-white rounded-lg border border-[#D8DEE5] p-6 sm:p-8 shadow-xs hover:shadow-md transition-all hover:border-[#16324F]/30 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#17365D] text-white flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-md bg-[#16324F] text-white flex items-center justify-center shrink-0">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-[#17365D] leading-tight">
+                      <h3 className="text-lg font-bold text-[#16324F] leading-tight">
                         {ind.title}
                       </h3>
-                      <p className="text-xs font-semibold text-[#E87832] mt-0.5">
+                      <p className="text-xs font-semibold text-[#D9601A] mt-0.5">
                         {ind.subtitle}
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#263445] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#1C2733] leading-relaxed">
                     {ind.description}
                   </p>
 
-                  <div className="bg-[#F5F7FA] p-3.5 rounded-xl border border-[#DCE3EB]/60">
-                    <div className="text-[11px] font-bold text-[#17365D] uppercase tracking-wider mb-2">
+                  <div className="bg-[#F3F5F7] p-3.5 rounded-md border border-[#D8DEE5]/60">
+                    <div className="text-[11px] font-bold text-[#16324F] uppercase tracking-wider mb-2">
                       Key Deliverables & Products:
                     </div>
                     <ul className="grid grid-cols-1 gap-1.5 text-xs text-slate-700">
@@ -231,7 +231,7 @@ export default function IndustriesPage() {
                   </div>
 
                   <div className="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5 pt-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#E87832] shrink-0" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#D9601A] shrink-0" />
                     <span>{ind.highlight}</span>
                   </div>
                 </div>
@@ -239,7 +239,7 @@ export default function IndustriesPage() {
                 <div className="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between">
                   <Link
                     href={`/quote?industry=${encodeURIComponent(ind.title)}`}
-                    className="text-xs font-bold text-[#17365D] hover:text-[#E87832] transition-colors flex items-center gap-1"
+                    className="text-xs font-bold text-[#16324F] hover:text-[#D9601A] transition-colors flex items-center gap-1"
                   >
                     <span>Request Industry Pricing</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -258,37 +258,37 @@ export default function IndustriesPage() {
       </div>
 
       {/* Enterprise Benefits */}
-      <div className="bg-[#F5F7FA] border border-[#DCE3EB] rounded-2xl p-6 sm:p-10 space-y-6">
+      <div className="bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg p-6 sm:p-10 space-y-6">
         <div className="max-w-2xl">
-          <span className="text-xs font-bold text-[#E87832] uppercase tracking-wider">
+          <span className="text-xs font-bold text-[#D9601A] uppercase tracking-wider">
             Why Leading Brands Choose Us
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-[#17365D] mt-1">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#16324F] mt-1">
             Enterprise Wholesale Standards & Guarantees
           </h2>
-          <p className="text-xs sm:text-sm text-[#687586] mt-1">
+          <p className="text-xs sm:text-sm text-[#566373] mt-1">
             We provide structured trade pricing, dedicated relationship managers, and guaranteed consistency across continuous batches.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="text-base font-bold text-[#17365D]">100% In-House Factory Control</div>
-            <p className="text-xs text-[#687586] leading-relaxed">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="text-base font-bold text-[#16324F]">100% In-House Factory Control</div>
+            <p className="text-xs text-[#566373] leading-relaxed">
               No middleman markups. From ribbon slitting to ultrasonic card sealing, every step happens inside our Bengaluru facility.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="text-base font-bold text-[#17365D]">Verified GST & B2B Billing</div>
-            <p className="text-xs text-[#687586] leading-relaxed">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="text-base font-bold text-[#16324F]">Verified GST & B2B Billing</div>
+            <p className="text-xs text-[#566373] leading-relaxed">
               Full GST input tax credit with verified GSTIN (29AAQFT3909B1ZZ) and standardized e-way bill compliant dispatches.
             </p>
           </div>
 
-          <div className="bg-white p-5 rounded-xl border border-[#DCE3EB] space-y-2">
-            <div className="text-base font-bold text-[#17365D]">Recurring Scheduled Logistics</div>
-            <p className="text-xs text-[#687586] leading-relaxed">
+          <div className="bg-white p-5 rounded-md border border-[#D8DEE5] space-y-2">
+            <div className="text-base font-bold text-[#16324F]">Recurring Scheduled Logistics</div>
+            <p className="text-xs text-[#566373] leading-relaxed">
               Set up monthly recurring stock dispatches for high-turnover institutions with reserved warehouse capacity.
             </p>
           </div>
@@ -296,7 +296,7 @@ export default function IndustriesPage() {
       </div>
 
       {/* CTA */}
-      <div className="surface-card p-6 sm:p-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="surface-card p-6 sm:p-10 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
           <h3 className="text-xl sm:text-2xl font-bold">Have an institutional RFP or bulk tender?</h3>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
@@ -305,7 +305,7 @@ export default function IndustriesPage() {
         </div>
         <Link
           href="/quote"
-          className="bg-[#E87832] hover:bg-[#d66b28] text-white px-6 py-3 rounded-lg text-xs sm:text-sm font-bold transition-colors shrink-0 flex items-center gap-2"
+          className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-6 py-3 rounded-lg text-xs sm:text-sm font-bold transition-colors shrink-0 flex items-center gap-2"
         >
           <span>Submit Corporate Tender / RFQ</span>
           <ArrowRight className="w-4 h-4" />

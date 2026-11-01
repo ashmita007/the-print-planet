@@ -107,7 +107,7 @@ export default function GoogleReviews() {
     : REVIEWS_DATA.filter((r) => r.category === activeTab);
 
   return (
-    <section className="bg-white py-16 border-t border-[#DCE3EB]">
+    <section className="bg-white py-16 border-t border-[#D8DEE5]">
       {/* Schema.org Aggregate Rating & Reviews Structured Data */}
       <script
         type="application/ld+json"
@@ -178,7 +178,7 @@ export default function GoogleReviews() {
               <span>Google reviews</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-[#17365D] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16324F] tracking-tight">
               Trusted by print studios across India
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-2xl leading-relaxed">
@@ -187,17 +187,17 @@ export default function GoogleReviews() {
           </div>
 
           {/* Google Star Rating Summary Widget */}
-          <div className="surface-card p-4 sm:p-5 rounded-2xl flex items-center gap-4 shrink-0">
+          <div className="surface-card p-4 sm:p-5 rounded-lg flex items-center gap-4 shrink-0">
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-black text-[#17365D] tabular-nums">4.9</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-[#16324F] tabular-nums">4.9</div>
               <div className="flex items-center gap-0.5 text-amber-400 mt-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                 ))}
               </div>
             </div>
-            <div className="border-l border-slate-200 pl-4 text-xs text-[#687586]">
-              <div className="font-semibold text-[#17365D] text-sm">148+ Google reviews</div>
+            <div className="border-l border-slate-200 pl-4 text-xs text-[#566373]">
+              <div className="font-semibold text-[#16324F] text-sm">148+ Google reviews</div>
               <div className="text-[11px] text-slate-500 mt-0.5">Verified B2B buyers</div>
               <div className="text-[10px] text-slate-400 mt-0.5">Sunkadakatte, Bengaluru</div>
             </div>
@@ -205,7 +205,7 @@ export default function GoogleReviews() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex items-center gap-5 overflow-x-auto pb-4 mb-2 border-b border-[#E2E8F0] scrollbar-none">
+        <div className="flex items-center gap-5 overflow-x-auto pb-4 mb-2 border-b border-[#D8DEE5] scrollbar-none">
           {[
             { id: "all", label: "All" },
             { id: "pvc", label: "PVC cards" },
@@ -218,8 +218,8 @@ export default function GoogleReviews() {
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-1 py-2 border-b-2 text-xs font-medium transition-colors whitespace-nowrap cursor-pointer ${
                 activeTab === tab.id
-                  ? "border-[#17365D] text-[#17365D]"
-                  : "border-transparent text-slate-500 hover:text-[#17365D]"
+                  ? "border-[#16324F] text-[#16324F]"
+                  : "border-transparent text-slate-500 hover:text-[#16324F]"
               }`}
             >
               {tab.label}
@@ -232,14 +232,14 @@ export default function GoogleReviews() {
           {filteredReviews.map((rev) => (
             <div
               key={rev.id}
-              className="surface-card surface-hover rounded-2xl p-5 sm:p-6 flex flex-col justify-between"
+              className="surface-card surface-hover rounded-lg p-5 sm:p-6 flex flex-col justify-between"
             >
               <div>
                 {/* Reviewer Header */}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <h3 className="font-black text-sm text-[#17365D]">{rev.author}</h3>
+                      <h3 className="font-extrabold text-sm text-[#16324F]">{rev.author}</h3>
                       <span className="text-[10px] font-medium text-emerald-700" title="Verified buyer">
                         Verified
                       </span>
@@ -284,7 +284,7 @@ export default function GoogleReviews() {
                 </div>
 
                 {/* Review Body */}
-                <p className="text-xs text-[#263445] leading-relaxed">
+                <p className="text-xs text-[#1C2733] leading-relaxed">
                   &ldquo;{rev.text}&rdquo;
                 </p>
               </div>
@@ -292,7 +292,7 @@ export default function GoogleReviews() {
               {/* Order Info Tag */}
               <div className="mt-4 pt-3 border-t border-slate-100">
                 <div className="text-[10px] text-slate-400">Purchased</div>
-                <div className="text-[11px] font-medium text-[#17365D] truncate mt-0.5">
+                <div className="text-[11px] font-medium text-[#16324F] truncate mt-0.5">
                   {rev.orderedItems}
                 </div>
               </div>
@@ -301,9 +301,9 @@ export default function GoogleReviews() {
         </div>
 
         {/* CTA to Leave Review / Request Quote */}
-        <div className="mt-10 surface-card rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-10 surface-card rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="font-black text-lg text-[#17365D]">
+            <h3 className="font-extrabold text-lg text-[#16324F]">
               Need wholesale volume pricing?
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -313,7 +313,7 @@ export default function GoogleReviews() {
           <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <Link
               href="/quote"
-              className="w-full sm:w-auto bg-[#E87832] hover:bg-[#d66b28] text-white px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-colors text-center"
+              className="w-full sm:w-auto bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-colors text-center"
             >
               Request a quote
             </Link>

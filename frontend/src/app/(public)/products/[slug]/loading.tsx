@@ -7,10 +7,10 @@ export default function ProductDetailLoading() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
         <div className="lg:col-span-5 space-y-3">
-          <div className="aspect-square w-full skeleton rounded-2xl" />
+          <div className="aspect-square w-full skeleton rounded-lg" />
           <div className="grid grid-cols-4 gap-2">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="aspect-square skeleton rounded-xl" />
+              <div key={i} className="aspect-square skeleton rounded-md" />
             ))}
           </div>
         </div>
@@ -25,7 +25,7 @@ export default function ProductDetailLoading() {
             <div className="h-6 w-24 skeleton rounded-full" />
             <div className="h-6 w-28 skeleton rounded-full" />
           </div>
-          <div className="border border-[#DCE3EB] rounded-2xl p-5 space-y-3">
+          <div className="border border-[#D8DEE5] rounded-lg p-5 space-y-3">
             <div className="h-3 w-24 skeleton" />
             <div className="h-8 w-40 skeleton" />
             <div className="h-10 w-full skeleton rounded-lg" />
@@ -36,8 +36,8 @@ export default function ProductDetailLoading() {
             <div className="h-3 w-4/5 skeleton" />
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="h-11 skeleton rounded-xl" />
-            <div className="h-11 skeleton rounded-xl" />
+            <div className="h-11 skeleton rounded-md" />
+            <div className="h-11 skeleton rounded-md" />
           </div>
           <div className="space-y-2 pt-2">
             {Array.from({ length: 4 }).map((_, i) => (

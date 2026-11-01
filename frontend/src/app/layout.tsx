@@ -1,42 +1,37 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-  weight: ["500", "600", "700"],
-});
-
-const plusJakarta = Plus_Jakarta_Sans({
+// Archivo reads like trade signage; Plex carries the spec-sheet tone in body and data.
+const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
 });
 
-const inter = Inter({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
   weight: ["400", "500", "600", "700"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 import { CartProvider } from "@/lib/cart";
 import CartDrawer from "@/components/CartDrawer";
+import MotionBridge from "@/components/animations/MotionBridge";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const viewport: Viewport = {
-  themeColor: "#0A1128",
+  themeColor: "#0E2238",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -297,11 +292,12 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${plusJakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-[#E87832] selection:text-white`}
+        className={`${plexSans.variable} ${archivo.variable} ${plexMono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-[#D9601A] selection:text-white`}
       >
         <CartProvider>
           {children}
           <CartDrawer />
+          <MotionBridge />
         </CartProvider>
       </body>
     </html>

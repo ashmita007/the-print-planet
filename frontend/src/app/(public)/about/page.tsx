@@ -106,12 +106,12 @@ export default async function AboutPage() {
       <Breadcrumbs items={[{ label: "About Our Company" }]} />
 
       {/* Hero */}
-      <div className="border-b border-[#E2E8F0] pb-6 sm:pb-8">
+      <div className="border-b border-[#D8DEE5] pb-6 sm:pb-8">
         <div className="max-w-3xl space-y-2 sm:space-y-3">
-          <span className="text-[11px] font-medium text-[#C25E1F] uppercase tracking-[0.14em]">
+          <span className="text-[11px] font-medium text-[#B94E12] uppercase tracking-[0.14em]">
             {heroTag}
           </span>
-          <h1 className="text-2xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-2xl sm:text-5xl font-extrabold tracking-tight">
             {heroTitle}
           </h1>
           <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">
@@ -122,56 +122,56 @@ export default async function AboutPage() {
 
       {/* Industrial Mission & Production Capabilities */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
-        <div className="space-y-4 text-xs sm:text-sm text-[#263445] leading-relaxed">
-          <h2 className="text-xl sm:text-2xl font-bold text-[#17365D]">
+        <div className="space-y-4 text-xs sm:text-sm text-[#1C2733] leading-relaxed">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#16324F]">
             {storyTitle}
           </h2>
           <p>{storyP1}</p>
           <p>{storyP2}</p>
           <div className="pt-2 grid grid-cols-2 gap-3">
-            <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat1Val}</div>
-              <div className="text-[11px] text-[#687586]">{stat1Label}</div>
+            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
+              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat1Val}</div>
+              <div className="text-[11px] text-[#566373]">{stat1Label}</div>
             </div>
-            <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat2Val}</div>
-              <div className="text-[11px] text-[#687586]">{stat2Label}</div>
+            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
+              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat2Val}</div>
+              <div className="text-[11px] text-[#566373]">{stat2Label}</div>
             </div>
-            <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat3Val}</div>
-              <div className="text-[11px] text-[#687586]">{stat3Label}</div>
+            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
+              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat3Val}</div>
+              <div className="text-[11px] text-[#566373]">{stat3Label}</div>
             </div>
-            <div className="p-3 bg-[#F5F7FA] rounded-lg border border-[#DCE3EB]">
-              <div className="text-lg font-black text-[#17365D] tabular-nums">{stat4Val}</div>
-              <div className="text-[11px] text-[#687586]">{stat4Label}</div>
+            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
+              <div data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">{stat4Val}</div>
+              <div className="text-[11px] text-[#566373]">{stat4Label}</div>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#F5F7FA] p-5 sm:p-8 rounded-xl sm:rounded-2xl border border-[#DCE3EB] space-y-4">
-          <h3 className="font-bold text-sm text-[#17365D] uppercase tracking-wider">
+        <div className="bg-[#F3F5F7] p-5 sm:p-8 rounded-md sm:rounded-lg border border-[#D8DEE5] space-y-4">
+          <h3 className="font-bold text-sm text-[#16324F] uppercase tracking-wider">
             Production standards
           </h3>
           <div className="space-y-3 text-xs">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445]">{standard1Title}:</strong>
-                <p className="text-[#687586] mt-0.5">{standard1Desc}</p>
+                <strong className="text-[#1C2733]">{standard1Title}:</strong>
+                <p className="text-[#566373] mt-0.5">{standard1Desc}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445]">{standard2Title}:</strong>
-                <p className="text-[#687586] mt-0.5">{standard2Desc}</p>
+                <strong className="text-[#1C2733]">{standard2Title}:</strong>
+                <p className="text-[#566373] mt-0.5">{standard2Desc}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#263445]">{standard3Title}:</strong>
-                <p className="text-[#687586] mt-0.5">{standard3Desc}</p>
+                <strong className="text-[#1C2733]">{standard3Title}:</strong>
+                <p className="text-[#566373] mt-0.5">{standard3Desc}</p>
               </div>
             </div>
           </div>
@@ -180,24 +180,24 @@ export default async function AboutPage() {
 
       {/* Facilities Strip */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="surface-card p-6 rounded-2xl space-y-2">
-          <Factory className="w-6 h-6 text-[#17365D]" />
-          <h4 className="font-bold text-sm text-[#17365D]">{facility1Title}</h4>
-          <p className="text-xs text-[#687586] leading-relaxed">
+        <div className="surface-card p-6 rounded-lg space-y-2">
+          <Factory className="w-6 h-6 text-[#16324F]" />
+          <h4 className="font-bold text-sm text-[#16324F]">{facility1Title}</h4>
+          <p className="text-xs text-[#566373] leading-relaxed">
             {facility1Desc}
           </p>
         </div>
-        <div className="surface-card p-6 rounded-2xl space-y-2">
-          <ShieldCheck className="w-6 h-6 text-[#17365D]" />
-          <h4 className="font-bold text-sm text-[#17365D]">{facility2Title}</h4>
-          <p className="text-xs text-[#687586] leading-relaxed">
+        <div className="surface-card p-6 rounded-lg space-y-2">
+          <ShieldCheck className="w-6 h-6 text-[#16324F]" />
+          <h4 className="font-bold text-sm text-[#16324F]">{facility2Title}</h4>
+          <p className="text-xs text-[#566373] leading-relaxed">
             {facility2Desc}
           </p>
         </div>
-        <div className="surface-card p-6 rounded-2xl space-y-2">
-          <Truck className="w-6 h-6 text-[#17365D]" />
-          <h4 className="font-bold text-sm text-[#17365D]">{facility3Title}</h4>
-          <p className="text-xs text-[#687586] leading-relaxed">
+        <div className="surface-card p-6 rounded-lg space-y-2">
+          <Truck className="w-6 h-6 text-[#16324F]" />
+          <h4 className="font-bold text-sm text-[#16324F]">{facility3Title}</h4>
+          <p className="text-xs text-[#566373] leading-relaxed">
             {facility3Desc}
           </p>
         </div>
