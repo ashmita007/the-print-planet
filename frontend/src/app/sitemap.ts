@@ -1,6 +1,10 @@
 import { MetadataRoute } from 'next';
 import { getCategories, getProducts } from '@/lib/api';
 
+// Built per request: the database is not reachable during the Docker build, so a
+// prerendered sitemap would contain only the static pages.
+export const dynamic = 'force-dynamic';
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://theprintplanet.co.in';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
