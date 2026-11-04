@@ -5,6 +5,8 @@ from .views import (
     ClientBulkOrdersListView,
     ClientBulkOrderDetailView,
     ClientBulkOrderMessagePostView,
+    BulkOrderAttachmentDownloadView,
+    BulkOrderMessageAttachmentDownloadView,
     TrackCheckedProductView,
     ClientCheckedProductsListView,
     OwnerBulkOrderViewSet,
@@ -21,6 +23,8 @@ urlpatterns = [
     path('my-orders/', ClientBulkOrdersListView.as_view(), name='client-bulk-orders-list'),
     path('my-orders/<str:order_number>/', ClientBulkOrderDetailView.as_view(), name='client-bulk-order-detail'),
     path('my-orders/<str:order_number>/messages/', ClientBulkOrderMessagePostView.as_view(), name='client-bulk-order-message-post'),
+    path('my-orders/<str:order_number>/attachment/', BulkOrderAttachmentDownloadView.as_view(), name='bulk-order-attachment'),
+    path('messages/<int:message_id>/attachment/', BulkOrderMessageAttachmentDownloadView.as_view(), name='bulk-order-message-attachment'),
     path('track-checked-product/<int:product_id>/', TrackCheckedProductView.as_view(), name='track-checked-product'),
     path('checked-products/', ClientCheckedProductsListView.as_view(), name='client-checked-products'),
 

@@ -5,12 +5,12 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { clientLogin } from "@/lib/api";
+import { clientLogin, safeRedirectPath } from "@/lib/api";
 
 export default function ClientLoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get("redirect") || "/orders";
+  const redirectUrl = safeRedirectPath(searchParams.get("redirect"));
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

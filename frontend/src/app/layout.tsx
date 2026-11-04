@@ -1,27 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Archivo reads like trade signage; Plex carries the spec-sheet tone in body and data.
-const archivo = Archivo({
+// Bricolage Grotesque gives headings a confident, print-shop voice; Plus Jakarta Sans
+// keeps body copy and forms clear at small sizes; JetBrains Mono sets order numbers and SKUs.
+const heading = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
   weight: ["500", "600", "700", "800"],
 });
 
-const plexSans = IBM_Plex_Sans({
+const body = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const plexMono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 import { CartProvider } from "@/lib/cart";
@@ -246,7 +247,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${plexSans.variable} ${archivo.variable} ${plexMono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-[#D9601A] selection:text-white`}
+        className={`${body.variable} ${heading.variable} ${mono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-[#D9601A] selection:text-white`}
       >
         <CartProvider>
           {children}

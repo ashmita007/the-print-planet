@@ -1,5 +1,7 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
@@ -8,6 +10,35 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+
+
+def unique_username_for(email):
+    base = ''.join(c for c in email.split('@')[0] if c.isalnum() or c in '._-')[:120] or 'buyer'
+    username, idx = base, 1
+    while User.objects.filter(username=username).exists():
+        username = f"{base}{idx}"
+        idx += 1
+    return username
+
+
+def user_payload(user):
+    return {
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'is_staff': user.is_staff,
+        'is_superuser': user.is_superuser,
+    }
+
+
+def password_problem(password, user=None):
+    try:
+        validate_password(password, user=user)
+    except DjangoValidationError as exc:
+        return ' '.join(exc.messages)
+    return ''
 
 
 class LoginView(APIView):
@@ -35,23 +66,14 @@ class LoginView(APIView):
             return Response({'error': 'Invalid email/username or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
         # Create or retrieve DRF token
+        # Token-only auth: no session cookie, so other sites cannot ride a signed-in browser.
         token, _ = Token.objects.get_or_create(user=user)
-        login(request, user)
-
         role = 'owner' if (user.is_staff or user.is_superuser) else 'client'
 
         return Response({
             'token': token.key,
             'role': role,
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'is_staff': user.is_staff,
-                'is_superuser': user.is_superuser,
-            }
+            'user': user_payload(user),
         })
 
 
@@ -65,17 +87,11 @@ class RegisterView(APIView):
         company_name = request.data.get('company_name', '').strip()
         email = request.data.get('email', '').strip().lower()
         phone = request.data.get('phone', '').strip()
-        password = request.data.get('password', '').strip()
+        password = str(request.data.get('password', ''))
 
         if not email or not password or not full_name:
             return Response(
                 {'error': 'Full name, email, and password are required.'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        if len(password) < 6:
-            return Response(
-                {'error': 'Password must be at least 6 characters long.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -86,31 +102,22 @@ class RegisterView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Generate unique username from email
-        base_username = email.split('@')[0]
-        base_username = ''.join(c for c in base_username if c.isalnum() or c in '._-') or 'buyer'
-        username = base_username
-        idx = 1
-        while User.objects.filter(username=username).exists():
-            username = f"{base_username}{idx}"
-            idx += 1
-
         name_parts = full_name.split()
-        first_name = name_parts[0] if name_parts else ''
-        last_name = " ".join(name_parts[1:]) if len(name_parts) > 1 else ''
-
-        user = User.objects.create_user(
-            username=username,
+        user = User(
+            username=unique_username_for(email),
             email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,
+            first_name=name_parts[0] if name_parts else '',
+            last_name=" ".join(name_parts[1:]),
             is_staff=False,
-            is_superuser=False
+            is_superuser=False,
         )
+        problem = password_problem(password, user)
+        if problem:
+            return Response({'error': problem, 'field': 'password'}, status=status.HTTP_400_BAD_REQUEST)
+        user.set_password(password)
+        user.save()
 
         token, _ = Token.objects.get_or_create(user=user)
-        login(request, user)
 
         # Link any past guest enquiries made with this email address
         try:
@@ -126,15 +133,7 @@ class RegisterView(APIView):
             'message': 'Account registered successfully',
             'token': token.key,
             'role': 'client',
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'is_staff': False,
-                'is_superuser': False,
-            }
+            'user': user_payload(user),
         }, status=status.HTTP_201_CREATED)
 
 
@@ -161,13 +160,9 @@ class CurrentUserView(APIView):
 
     def get(self, request):
         user = request.user
-        return Response({
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'is_staff': user.is_staff,
-            'is_superuser': user.is_superuser,
-        })
+        payload = user_payload(user)
+        payload['role'] = 'owner' if (user.is_staff or user.is_superuser) else 'client'
+        return Response(payload)
 
 
 class ChangePasswordView(APIView):
@@ -181,12 +176,13 @@ class ChangePasswordView(APIView):
         if not current_password or not new_password:
             return Response({'error': 'Both current and new password are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if len(new_password) < 8:
-            return Response({'error': 'New password must be at least 8 characters long.'}, status=status.HTTP_400_BAD_REQUEST)
-
         user = request.user
         if not user.check_password(current_password):
             return Response({'error': 'Current password is incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        problem = password_problem(new_password, user)
+        if problem:
+            return Response({'error': problem}, status=status.HTTP_400_BAD_REQUEST)
 
         user.set_password(new_password)
         user.save()
@@ -224,7 +220,8 @@ class RequestPasswordResetView(APIView):
         # Dispatch via email provider if available
         try:
             from apps.enquiries.services import send_resend_email, send_brevo_email
-            reset_url = f"{request.build_absolute_uri('/')}account/reset-password?uid={uid}&token={token}"
+            site = settings.FRONTEND_URL or request.build_absolute_uri('/').rstrip('/')
+            reset_url = f"{site}/account/reset-password?uid={uid}&token={token}"
             subject = "Password Reset Request — The Print Planet"
             html_body = f"""
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #E2E8F0; border-radius: 12px;">
@@ -241,11 +238,12 @@ class RequestPasswordResetView(APIView):
         except Exception:
             pass
 
-        return Response({
-            'message': 'If this email is registered in our portal, password reset instructions have been generated.',
-            'debug_reset_token': token if (user.is_staff or settings.DEBUG) else None,
-            'uid': uid if (user.is_staff or settings.DEBUG) else None,
-        }, status=status.HTTP_200_OK)
+        # Same response as an unknown email. The token is only echoed in local DEBUG;
+        # returning it for staff handed anyone the owner's reset link.
+        payload = {'message': 'If this email is registered in our portal, a password reset link has been dispatched.'}
+        if settings.DEBUG:
+            payload.update({'debug_reset_token': token, 'uid': uid})
+        return Response(payload, status=status.HTTP_200_OK)
 
 
 class ConfirmPasswordResetView(APIView):
@@ -256,13 +254,10 @@ class ConfirmPasswordResetView(APIView):
     def post(self, request):
         uidb64 = request.data.get('uid', '').strip()
         token = request.data.get('token', '').strip()
-        new_password = request.data.get('new_password', '').strip()
+        new_password = str(request.data.get('new_password', ''))
 
         if not uidb64 or not token or not new_password:
             return Response({'error': 'UID, reset token, and new password are required.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        if len(new_password) < 6:
-            return Response({'error': 'Password must be at least 6 characters long.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
@@ -272,6 +267,10 @@ class ConfirmPasswordResetView(APIView):
 
         if not default_token_generator.check_token(user, token):
             return Response({'error': 'Invalid or expired password reset token. Please request a new one.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        problem = password_problem(new_password, user)
+        if problem:
+            return Response({'error': problem}, status=status.HTTP_400_BAD_REQUEST)
 
         user.set_password(new_password)
         user.save()

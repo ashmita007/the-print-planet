@@ -14,7 +14,7 @@ import {
   Phone,
   X,
 } from "lucide-react";
-import { clientLogin, clientSubmitBulkOrder } from "@/lib/api";
+import { clearClientSession, clientLogin, clientSubmitBulkOrder, clientVerifySession } from "@/lib/api";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import TextReveal from "@/components/animations/TextReveal";
 import { ColorBar, CropMarks } from "@/components/animations/PrintMarks";
@@ -145,13 +145,27 @@ export default function BulkOrderDesk() {
     try {
       const saved = sessionStorage.getItem(DRAFT_KEY);
       if (saved) setForm({ ...EMPTY_DRAFT, ...JSON.parse(saved) });
-      const token = localStorage.getItem("client_token") || localStorage.getItem("owner_token");
-      const user = localStorage.getItem("client_user") || localStorage.getItem("owner_user");
-      if (token && user) applyUser(JSON.parse(user));
     } catch {
       // A corrupt draft just starts the form fresh.
     }
     setDraftReady(true);
+
+    // Trust a stored sign-in only after the server confirms it belongs to a buyer account.
+    let cancelled = false;
+    clientVerifySession().then((profile) => {
+      if (cancelled) return;
+      if (profile) applyUser(profile);
+      else if (profile === undefined) {
+        try {
+          const stored = localStorage.getItem("client_user");
+          if (stored) applyUser(JSON.parse(stored));
+        } catch {}
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -244,7 +258,9 @@ export default function BulkOrderDesk() {
     setLoginLoading(true);
     const res = await clientLogin({ username: loginId.trim(), password: loginPassword });
     setLoginLoading(false);
-    if (res.success) {
+    if (res.success && res.role === "owner") {
+      setLoginError("That is an owner account. Use a buyer account to place bulk orders.");
+    } else if (res.success) {
       applyUser(res.user);
       setAccountMode("new");
       setSubmitError("");
@@ -302,10 +318,20 @@ export default function BulkOrderDesk() {
     }
 
     const message = Array.isArray(res.error) ? res.error[0] : res.error;
-    if (res.requires_login || /password/i.test(String(message))) {
+    if (currentUser && /token|credentials|authenticat/i.test(String(message))) {
+      // The saved sign-in expired: drop it and ask again.
+      clearClientSession();
+      setCurrentUser(null);
+      setAccountMode("login");
+      setLoginId(form.email.trim());
+      setSubmitError("Your sign-in expired. Log in again to send your order.");
+    } else if (res.requires_login) {
       setAccountMode("login");
       setLoginId(form.email.trim());
       setSubmitError("This email already has an account. Log in to send your order.");
+    } else if (/password/i.test(String(message))) {
+      touch("password");
+      setSubmitError(String(message));
     } else {
       setSubmitError(String(message || "We could not send your order. Please try again, or message us on WhatsApp."));
     }
@@ -976,6 +1002,17 @@ export default function BulkOrderDesk() {
                               Ordering as <strong className="text-[#16324F]">{currentUser.first_name || currentUser.username}</strong>
                               {currentUser.email ? ` (${currentUser.email})` : ""}
                             </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                clearClientSession();
+                                setCurrentUser(null);
+                                setAccountMode("login");
+                              }}
+                              className="ml-1 text-[13px] font-semibold text-[#B94E12] hover:underline underline-offset-2"
+                            >
+                              Not you? Switch account
+                            </button>
                           </p>
                         ) : accountMode === "login" ? (
                           <form data-step-item onSubmit={handleLogin} className="bg-[#F3F5F7] p-4 sm:p-5 rounded-md space-y-4">

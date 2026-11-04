@@ -1,5 +1,6 @@
 import os
 import json
+from io import BytesIO
 from datetime import datetime
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.views import APIView
@@ -7,10 +8,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import transaction
 from django.db.models import Q, Count
-from django.http import HttpResponse, Http404
+from django.http import FileResponse, HttpResponse, Http404
+
+from apps.authentication.views import unique_username_for
 
 from apps.catalog.views import StandardResultsSetPagination
 from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive, UserCheckedProduct
@@ -21,11 +27,51 @@ from .serializers import (
     BulkOrderMessageSerializer,
     ConversationBackupArchiveSerializer,
     UserCheckedProductSerializer,
+    attachment_error,
+    safe_link,
 )
 
 
+def client_orders_for(user):
+    """Orders a client may see: strictly the ones their own account placed.
+
+    Matching on the order's email field let anyone who registered, or typed, a
+    victim's address read that victim's orders, so ownership is the user FK only.
+    """
+    return BulkOrder.objects.filter(user=user)
+
+
+def _parse_checked_product_ids(raw):
+    if not raw:
+        return []
+    if isinstance(raw, str):
+        try:
+            raw = json.loads(raw)
+        except (ValueError, TypeError):
+            raw = raw.split(',')
+    if not isinstance(raw, (list, tuple)):
+        raw = [raw]
+    ids = []
+    for value in raw:
+        try:
+            ids.append(int(str(value).strip()))
+        except (TypeError, ValueError):
+            continue
+    return ids
+
+
+def _attachment_response(file_field):
+    if not file_field:
+        raise Http404("No attachment.")
+    try:
+        handle = file_field.open('rb')
+    except (FileNotFoundError, OSError):
+        raise Http404("Attachment file is missing.")
+    return FileResponse(handle, as_attachment=True, filename=os.path.basename(file_field.name))
+
+
 class BulkOrderSubmitView(APIView):
-    """Submits a School or Corporate bulk order. Enforces or provides seamless user registration."""
+    """Submits a bulk order. Anonymous buyers must sign in or create their own account."""
     permission_classes = [permissions.AllowAny]
     throttle_scope = 'bulk_order'
     parser_classes = [MultiPartParser, FormParser, JSONParser]
@@ -34,120 +80,106 @@ class BulkOrderSubmitView(APIView):
         user = request.user if request.user.is_authenticated else None
         token_key = None
 
-        # If user is not logged in, registration or credentials are required
-        if not user:
-            email = request.data.get('email', '').strip().lower()
-            password = request.data.get('password', '').strip()
-            contact_person = request.data.get('contact_person', '').strip()
-            organization_name = request.data.get('organization_name', '').strip()
-
-            if not email:
-                return Response(
-                    {'error': 'Email is required for registration and order tracking.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            # Check if user already exists
-            existing_user = User.objects.filter(email__iexact=email).first()
-            if existing_user:
-                if not password:
-                    return Response({
-                        'error': 'An account with this email already exists. Please log in or enter your account password to submit.',
-                        'requires_login': True
-                    }, status=status.HTTP_401_UNAUTHORIZED)
-                
-                auth_user = authenticate(request, username=existing_user.username, password=password)
-                if not auth_user:
-                    return Response({'error': 'Incorrect password for existing account.'}, status=status.HTTP_401_UNAUTHORIZED)
-                user = auth_user
-            else:
-                # Create a new user account
-                if not password:
-                    return Response(
-                        {'error': 'Please set an account password so you can log in and track your bulk order conversation.'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-                
-                base_username = email.split('@')[0]
-                base_username = ''.join(c for c in base_username if c.isalnum() or c in '._-') or 'buyer'
-                username = base_username
-                idx = 1
-                while User.objects.filter(username=username).exists():
-                    username = f"{base_username}{idx}"
-                    idx += 1
-
-                names = contact_person.split()
-                first_name = names[0] if names else ''
-                last_name = " ".join(names[1:]) if len(names) > 1 else ''
-
-                user = User.objects.create_user(
-                    username=username,
-                    email=email,
-                    password=password,
-                    first_name=first_name,
-                    last_name=last_name
-                )
-
-            token, _ = Token.objects.get_or_create(user=user)
-            token_key = token.key
-            login(request, user)
-
-        # Process order creation
+        # Validate the order first so a bad form never leaves behind a stray account.
         serializer = BulkOrderCreateSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        order = serializer.save(user=user)
+        with transaction.atomic():
+            if not user:
+                email = serializer.validated_data['email']
+                password = str(request.data.get('password', ''))
+                contact_person = serializer.validated_data.get('contact_person', '').strip()
 
-        # Attach any products the user explicitly checked/explored
-        checked_product_ids = request.data.get('checked_product_ids')
-        if checked_product_ids:
-            if isinstance(checked_product_ids, str):
-                try:
-                    checked_product_ids = json.loads(checked_product_ids)
-                except Exception:
-                    checked_product_ids = [int(x.strip()) for x in checked_product_ids.split(',') if x.strip().isdigit()]
-            if isinstance(checked_product_ids, list):
-                order.checked_products.set(checked_product_ids)
+                existing_user = User.objects.filter(email__iexact=email).first()
+                if existing_user:
+                    if not password:
+                        return Response({
+                            'error': 'An account with this email already exists. Please log in to submit.',
+                            'requires_login': True,
+                        }, status=status.HTTP_401_UNAUTHORIZED)
+                    auth_user = authenticate(request, username=existing_user.username, password=password)
+                    if not auth_user:
+                        return Response({
+                            'error': 'Incorrect password for existing account.',
+                            'requires_login': True,
+                        }, status=status.HTTP_401_UNAUTHORIZED)
+                    user = auth_user
+                else:
+                    if not password:
+                        return Response(
+                            {'error': 'Please set an account password so you can log in and track your bulk order.'},
+                            status=status.HTTP_400_BAD_REQUEST,
+                        )
+                    names = contact_person.split()
+                    candidate = User(
+                        username=unique_username_for(email),
+                        email=email,
+                        first_name=names[0] if names else '',
+                        last_name=' '.join(names[1:]),
+                    )
+                    try:
+                        validate_password(password, user=candidate)
+                    except DjangoValidationError as exc:
+                        return Response({'error': ' '.join(exc.messages), 'field': 'password'},
+                                        status=status.HTTP_400_BAD_REQUEST)
+                    candidate.set_password(password)
+                    candidate.save()
+                    user = candidate
 
-        # Set attachment url if uploaded
-        if order.attachment:
-            order.attachment_url = f"/api/v1/bulk-orders/my-orders/{order.order_number}/attachment/"
-            order.save(update_fields=['attachment_url'])
+                token, _ = Token.objects.get_or_create(user=user)
+                token_key = token.key
 
-        # Create initial conversation thread entry
-        initial_msg_text = (
-            f"Bulk Order Inquiry initiated for {order.organization_name} ({order.get_organization_type_display()}).\n"
-            f"Quantity: {order.estimated_quantity} units | Category: {order.category_type}.\n\n"
-            f"Requirements:\n{order.requirements}"
-        )
-        BulkOrderMessage.objects.create(
-            order=order,
-            sender=user,
-            sender_type='client',
-            sender_name=order.contact_person or user.get_full_name() or user.username,
-            message=initial_msg_text,
-            attachment_url=order.attachment_url or ''
-        )
+            order = serializer.save(user=user)
 
-        # Automated welcome system message
-        BulkOrderMessage.objects.create(
-            order=order,
-            sender=None,
-            sender_type='system',
-            sender_name='Print Planet Systems',
-            message=(
-                f"Thank you for your bulk inquiry #{order.order_number}! Our factory technical team at "
-                f"Sunkadakatte, Bangalore is reviewing your specifications. A formal B2B quotation and "
-                f"spec verification will be posted directly to this conversation thread within 2–4 business hours."
+            checked_ids = _parse_checked_product_ids(request.data.get('checked_product_ids'))
+            if checked_ids:
+                from apps.catalog.models import Product
+                order.checked_products.set(Product.objects.filter(id__in=checked_ids, is_active=True))
+
+            if order.attachment:
+                order.attachment_url = f"/api/v1/bulk-orders/my-orders/{order.order_number}/attachment/"
+                order.save(update_fields=['attachment_url'])
+
+            BulkOrderMessage.objects.create(
+                order=order,
+                sender=user,
+                sender_type='client',
+                sender_name=order.contact_person or user.get_full_name() or user.username,
+                message=(
+                    f"Bulk Order Inquiry initiated for {order.organization_name} ({order.get_organization_type_display()}).\n"
+                    f"Quantity: {order.estimated_quantity} units | Category: {order.category_type}.\n\n"
+                    f"Requirements:\n{order.requirements}"
+                ),
+                attachment_url=order.attachment_url or '',
             )
-        )
+            BulkOrderMessage.objects.create(
+                order=order,
+                sender=None,
+                sender_type='system',
+                sender_name='Print Planet Systems',
+                message=(
+                    f"Thank you for your bulk inquiry #{order.order_number}! Our factory technical team at "
+                    f"Sunkadakatte, Bangalore is reviewing your specifications. A formal B2B quotation and "
+                    f"spec verification will be posted directly to this conversation thread within 2–4 business hours."
+                ),
+            )
 
+        user_payload = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'is_staff': user.is_staff,
+            'is_superuser': user.is_superuser,
+        }
         return Response({
             'message': 'Bulk order inquiry submitted successfully!',
             'order_number': order.order_number,
-            'token': token_key or getattr(getattr(user, 'auth_token', None), 'key', None),
-            'order': BulkOrderDetailSerializer(order).data
+            'token': token_key,
+            'user': user_payload if token_key else None,
+            'order': BulkOrderDetailSerializer(order).data,
         }, status=status.HTTP_201_CREATED)
 
 
@@ -187,23 +219,20 @@ class ClientCheckedProductsListView(generics.ListAPIView):
 
 
 class ClientBulkOrdersListView(generics.ListAPIView):
-    """Returns all bulk orders for the authenticated client with status counts."""
+    """Returns the authenticated client's own bulk orders with status counts."""
     serializer_class = BulkOrderListSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        user = self.request.user
-        return BulkOrder.objects.filter(
-            Q(user=user) | Q(email__iexact=user.email)
-        ).select_related('product').prefetch_related('messages')
+        return client_orders_for(self.request.user).select_related('product').annotate(
+            messages_total=Count('messages')
+        ).order_by('-created_at')
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
-        user = request.user
-        qs = BulkOrder.objects.filter(Q(user=user) | Q(email__iexact=user.email))
-        
-        counts = {
+        qs = client_orders_for(request.user)
+        response.data['summary_metrics'] = {
             'total': qs.count(),
             'submitted': qs.filter(status='submitted').count(),
             'reviewing': qs.filter(status='reviewing').count(),
@@ -211,67 +240,79 @@ class ClientBulkOrdersListView(generics.ListAPIView):
             'in_production': qs.filter(status__in=['proofing', 'in_production']).count(),
             'completed': qs.filter(status__in=['dispatched', 'completed']).count(),
         }
-        response.data['summary_metrics'] = counts
         return response
 
 
 class ClientBulkOrderDetailView(generics.RetrieveAPIView):
-    """Retrieves full order details and message conversation for a specific bulk order."""
+    """Retrieves full order details and conversation for one of the client's own orders."""
     serializer_class = BulkOrderDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'order_number'
 
     def get_queryset(self):
-        user = self.request.user
-        return BulkOrder.objects.filter(
-            Q(user=user) | Q(email__iexact=user.email)
-        ).select_related('product').prefetch_related('messages')
+        return client_orders_for(self.request.user).select_related('product').prefetch_related('messages')
 
 
 class ClientBulkOrderMessagePostView(APIView):
-    """Allows client to send a message in the bulk order conversation."""
+    """Allows the order's owner to send a message in the bulk order conversation."""
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def post(self, request, order_number):
         user = request.user
-        order = BulkOrder.objects.filter(
-            Q(order_number=order_number) & (Q(user=user) | Q(email__iexact=user.email))
-        ).first()
-
+        order = client_orders_for(user).filter(order_number=order_number).first()
         if not order:
             return Response({'error': 'Bulk order not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-        msg_text = request.data.get('message', '').strip()
-        if not msg_text:
+        msg_text = str(request.data.get('message', '')).strip()
+        file_obj = request.FILES.get('attachment')
+        if not msg_text and not file_obj:
             return Response({'error': 'Message content cannot be empty.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        file_obj = request.FILES.get('attachment')
-        attachment_url = ''
         if file_obj:
-            # save attachment
-            msg = BulkOrderMessage.objects.create(
-                order=order,
-                sender=user,
-                sender_type='client',
-                sender_name=order.contact_person or user.get_full_name() or user.username,
-                message=msg_text,
-                attachment=file_obj
-            )
-            attachment_url = f"/api/v1/bulk-orders/messages/{msg.id}/attachment/"
-            msg.attachment_url = attachment_url
+            error = attachment_error(file_obj)
+            if error:
+                return Response({'error': error}, status=status.HTTP_400_BAD_REQUEST)
+
+        msg = BulkOrderMessage.objects.create(
+            order=order,
+            sender=user,
+            sender_type='client',
+            sender_name=order.contact_person or user.get_full_name() or user.username,
+            message=msg_text or f"Shared a file: {file_obj.name}",
+            attachment=file_obj,
+        )
+        if file_obj:
+            msg.attachment_url = f"/api/v1/bulk-orders/messages/{msg.id}/attachment/"
             msg.save(update_fields=['attachment_url'])
-        else:
-            msg = BulkOrderMessage.objects.create(
-                order=order,
-                sender=user,
-                sender_type='client',
-                sender_name=order.contact_person or user.get_full_name() or user.username,
-                message=msg_text,
-                attachment_url=request.data.get('attachment_url', '')
-            )
 
         return Response(BulkOrderMessageSerializer(msg).data, status=status.HTTP_201_CREATED)
+
+
+class BulkOrderAttachmentDownloadView(APIView):
+    """Streams an order's attachment to the client who placed it, or to staff."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, order_number):
+        qs = BulkOrder.objects.all() if request.user.is_staff else client_orders_for(request.user)
+        order = qs.filter(order_number=order_number).first()
+        if not order:
+            raise Http404("Bulk order not found.")
+        return _attachment_response(order.attachment)
+
+
+class BulkOrderMessageAttachmentDownloadView(APIView):
+    """Streams a conversation attachment to the order's client, or to staff."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, message_id):
+        qs = BulkOrderMessage.objects.select_related('order')
+        if not request.user.is_staff:
+            qs = qs.filter(order__user=request.user)
+        msg = qs.filter(id=message_id).first()
+        if not msg:
+            raise Http404("Attachment not found.")
+        return _attachment_response(msg.attachment)
 
 
 class OwnerBulkOrderViewSet(viewsets.ModelViewSet):
@@ -344,7 +385,7 @@ class OwnerBulkOrderViewSet(viewsets.ModelViewSet):
             sender_type='owner',
             sender_name="The Print Planet Support",
             message=msg_text,
-            attachment_url=request.data.get('attachment_url', '')
+            attachment_url=safe_link(request.data.get('attachment_url', '')),
         )
 
         return Response({
@@ -432,7 +473,9 @@ class OwnerConversationBackupDownloadView(APIView):
         for col in ws2.columns:
             ws2.column_dimensions[get_column_letter(col[0].column)].width = 26
 
-        buffer = openpyxl.writer.excel.save_virtual_workbook(wb)
+        stream = BytesIO()
+        wb.save(stream)
+        buffer = stream.getvalue()
         timestamp = datetime.now().strftime('%Y%m%d-%H%M')
         filename = f"the-print-planet-bulk-orders-and-conversations-{timestamp}.xlsx"
 

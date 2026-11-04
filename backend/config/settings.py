@@ -159,7 +159,7 @@ def configure_sqlite_pragmas(sender, connection, **kwargs):
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 8}},
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
@@ -240,8 +240,11 @@ STORAGES = {
 }
 
 # CORS & CSRF Configuration
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+# Auth travels in the Authorization header, never cookies, so cross-origin requests
+# never need credentials. Reflecting every origin *with* credentials would let any
+# site read a signed-in buyer's orders, so the two are never combined.
+CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', 'False').strip().lower() in ('1', 'true', 'yes')
+CORS_ALLOW_CREDENTIALS = not CORS_ALLOW_ALL_ORIGINS
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -347,6 +350,9 @@ BREVO_SENDER_EMAIL = os.environ.get('BREVO_SENDER_EMAIL', 'theprintplanet01@gmai
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '').strip()
 RESEND_FROM_EMAIL = os.environ.get('RESEND_FROM_EMAIL', 'The Print Planet <onboarding@resend.dev>').strip()
 EMAIL_WEBHOOK_URL = os.environ.get('EMAIL_WEBHOOK_URL', '').strip()
+
+# Public storefront origin, used for links in outgoing emails (password reset etc.)
+FRONTEND_URL = (os.environ.get('FRONTEND_URL') or os.environ.get('NEXT_PUBLIC_SITE_URL') or '').strip().rstrip('/')
 
 # Security Headers & Cookie Policies
 SECURE_CONTENT_TYPE_NOSNIFF = True

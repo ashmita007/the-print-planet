@@ -716,15 +716,93 @@ export async function ownerSyncCloudDatabase(action: 'backup' | 'restore' = 'bac
 // CLIENT PORTAL & BULK ORDERS API CALLS
 // ==========================================
 
+// The buyer portal has its own session, separate from the owner's: a client token
+// only ever reaches the buyer endpoints, which the backend scopes to that account.
 export const getClientAuthHeaders = (): Record<string, string> => {
   if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('client_token') || localStorage.getItem('owner_token');
+    const token = localStorage.getItem('client_token');
     if (token) {
       return { Authorization: `Token ${token}` };
     }
   }
   return {};
 };
+
+export type ClientProfile = {
+  id?: number;
+  username?: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+};
+
+export function clearClientSession(): void {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem('client_token');
+  localStorage.removeItem('client_user');
+  window.dispatchEvent(new Event('authChange'));
+}
+
+/** Only same-site paths are allowed as post-login destinations. */
+export function safeRedirectPath(value: string | null | undefined, fallback = '/orders'): string {
+  if (!value || !value.startsWith('/') || value.startsWith('//') || value.startsWith('/\\')) return fallback;
+  return value;
+}
+
+/**
+ * Confirms the stored buyer token with the server.
+ * Returns the profile, null when signed out or the token was rejected (it is then cleared),
+ * or undefined when the server could not be reached (the session is kept).
+ */
+export async function clientVerifySession(): Promise<ClientProfile | null | undefined> {
+  const headers = getClientAuthHeaders();
+  if (!headers.Authorization) return null;
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/me/`, { headers, cache: 'no-store' });
+    if (res.status === 401 || res.status === 403) {
+      clearClientSession();
+      return null;
+    }
+    if (!res.ok) return undefined;
+    const me = await res.json();
+    if (me.role === 'owner') {
+      // Owner tokens belong in the owner console, not the buyer portal.
+      clearClientSession();
+      return null;
+    }
+    const profile: ClientProfile = {
+      id: me.id, username: me.username, email: me.email, first_name: me.first_name, last_name: me.last_name,
+    };
+    localStorage.setItem('client_user', JSON.stringify(profile));
+    return profile;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Downloads a protected attachment with the caller's token, since a plain link cannot send it. */
+export async function downloadProtectedFile(url: string, as: 'client' | 'owner' = 'client'): Promise<{ success: boolean; error?: string }> {
+  const headers = as === 'owner' ? getAuthHeaders() : getClientAuthHeaders();
+  try {
+    const target = url.startsWith('/') ? `${getApiUrl()}${url}` : url;
+    const res = await fetch(target, { headers, cache: 'no-store' });
+    if (!res.ok) return { success: false, error: res.status === 404 ? 'File not found.' : 'You are not allowed to open this file.' };
+    const disposition = res.headers.get('Content-Disposition') || '';
+    const match = /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i.exec(disposition);
+    const filename = match ? decodeURIComponent(match[1]) : url.split('/').filter(Boolean).pop() || 'attachment';
+    const blobUrl = URL.createObjectURL(await res.blob());
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 30_000);
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'Download failed.' };
+  }
+}
 
 export async function clientRegister(data: {
   full_name: string;
@@ -772,6 +850,8 @@ export async function clientLogin(data: {
       if (resData.role === 'owner') {
         localStorage.setItem('owner_token', resData.token);
         localStorage.setItem('owner_user', JSON.stringify(resData.user));
+        localStorage.removeItem('client_token');
+        localStorage.removeItem('client_user');
       } else {
         localStorage.setItem('client_token', resData.token);
         localStorage.setItem('client_user', JSON.stringify(resData.user));
@@ -809,14 +889,10 @@ export async function clientSubmitBulkOrder(formData: FormData): Promise<{
     }
     if (typeof window !== 'undefined' && data.token) {
       localStorage.setItem('client_token', data.token);
-      // The order only carries a user id, so build the profile from what was submitted.
-      const orderUser = data.order?.user;
-      const profile = orderUser && typeof orderUser === 'object'
-        ? orderUser
-        : {
-            first_name: String(formData.get('contact_person') || '').trim().split(/\s+/)[0],
-            email: String(formData.get('email') || ''),
-          };
+      const profile = data.user || {
+        first_name: String(formData.get('contact_person') || '').trim().split(/\s+/)[0],
+        email: String(formData.get('email') || ''),
+      };
       localStorage.setItem('client_user', JSON.stringify(profile));
       window.dispatchEvent(new Event('authChange'));
     }
@@ -831,14 +907,19 @@ export async function clientGetBulkOrders(): Promise<{
   count: number;
   summary_metrics?: any;
   error?: string;
+  unauthorized?: boolean;
 }> {
   try {
     const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/`, {
       headers: getClientAuthHeaders(),
       cache: 'no-store',
     });
+    if (res.status === 401 || res.status === 403) {
+      clearClientSession();
+      return { results: [], count: 0, unauthorized: true, error: 'Please log in again.' };
+    }
     if (!res.ok) {
-      return { results: [], count: 0, error: 'Unauthorized or failed to fetch orders.' };
+      return { results: [], count: 0, error: 'Failed to fetch orders.' };
     }
     const data = await res.json();
     return data;
@@ -847,12 +928,17 @@ export async function clientGetBulkOrders(): Promise<{
   }
 }
 
-export async function clientGetBulkOrderDetail(orderNumber: string): Promise<any | null> {
+/** Returns the order, 'unauthorized' when the session is gone, or null when not found / not yours. */
+export async function clientGetBulkOrderDetail(orderNumber: string): Promise<any | 'unauthorized' | null> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${orderNumber}/`, {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${encodeURIComponent(orderNumber)}/`, {
       headers: getClientAuthHeaders(),
       cache: 'no-store',
     });
+    if (res.status === 401 || res.status === 403) {
+      clearClientSession();
+      return 'unauthorized';
+    }
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -871,7 +957,7 @@ export async function clientPostBulkOrderMessage(orderNumber: string, message: s
     if (file) {
       formData.append('attachment', file);
     }
-    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${orderNumber}/messages/`, {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${encodeURIComponent(orderNumber)}/messages/`, {
       method: 'POST',
       headers: getClientAuthHeaders(),
       body: formData,
@@ -886,19 +972,12 @@ export async function clientPostBulkOrderMessage(orderNumber: string, message: s
 
 export async function clientLogout(): Promise<void> {
   try {
-    const token = localStorage.getItem('client_token') || localStorage.getItem('owner_token');
-    if (token) {
-      await fetch(`${getApiUrl()}/api/v1/auth/logout/`, {
-        method: 'POST',
-        headers: { Authorization: `Token ${token}` },
-      });
+    const headers = getClientAuthHeaders();
+    if (headers.Authorization) {
+      await fetch(`${getApiUrl()}/api/v1/auth/logout/`, { method: 'POST', headers });
     }
   } catch {}
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('client_token');
-    localStorage.removeItem('client_user');
-    window.dispatchEvent(new Event('authChange'));
-  }
+  clearClientSession();
 }
 
 export async function requestForgotPassword(email: string): Promise<{ success: boolean; message?: string; error?: string }> {

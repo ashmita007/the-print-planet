@@ -20,7 +20,7 @@ import {
   User,
 } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { clientGetBulkOrders, clientGetCheckedProducts, clientLogout } from "@/lib/api";
+import { clientGetBulkOrders, clientGetCheckedProducts, clientLogout, clientVerifySession } from "@/lib/api";
 import { BulkOrder } from "@/lib/types";
 
 export default function ClientOrdersDashboardPage() {
@@ -38,33 +38,36 @@ export default function ClientOrdersDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState<any>(null);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("client_token") || localStorage.getItem("owner_token");
-      const userStr = localStorage.getItem("client_user") || localStorage.getItem("owner_user");
-      if (!token) {
-        router.push("/account/login?redirect=/orders");
-        return;
-      }
-      if (userStr) {
+    let cancelled = false;
+    const toLogin = () => router.replace("/account/login?redirect=/orders");
+
+    (async () => {
+      const profile = await clientVerifySession();
+      if (cancelled) return;
+      if (profile === null) return toLogin();
+      if (profile) setUser(profile);
+      else {
         try {
-          setUser(JSON.parse(userStr));
+          setUser(JSON.parse(localStorage.getItem("client_user") || "null"));
         } catch {}
       }
 
-      Promise.all([
-        clientGetBulkOrders(),
-        clientGetCheckedProducts(),
-      ]).then(([ordersData, checkedData]) => {
-        setOrders(ordersData.results || []);
-        if (ordersData.summary_metrics) {
-          setMetrics(ordersData.summary_metrics);
-        }
-        setCheckedProducts(checkedData.results || []);
-        setLoading(false);
-      });
-    }
+      const [ordersData, checkedData] = await Promise.all([clientGetBulkOrders(), clientGetCheckedProducts()]);
+      if (cancelled) return;
+      if (ordersData.unauthorized) return toLogin();
+      setOrders(ordersData.results || []);
+      if (ordersData.summary_metrics) setMetrics(ordersData.summary_metrics);
+      setLoadError(ordersData.error || "");
+      setCheckedProducts(checkedData.results || []);
+      setLoading(false);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [router]);
 
   const handleLogout = async () => {
@@ -181,6 +184,7 @@ export default function ClientOrdersDashboardPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search order #, school, city..."
+              aria-label="Search your orders"
               className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#1C2733] outline-none"
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
@@ -188,7 +192,11 @@ export default function ClientOrdersDashboardPage() {
         </div>
 
         {loading ? (
-          <div className="p-12 text-center text-xs text-slate-400">Loading your orders &amp; conversation records...</div>
+          <div role="status" className="p-12 text-center text-sm text-slate-500">Loading your orders&hellip;</div>
+        ) : loadError ? (
+          <div role="alert" className="p-12 text-center text-sm font-medium text-[#C0392B]">
+            We could not load your orders right now. Please refresh in a moment.
+          </div>
         ) : filteredOrders.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">

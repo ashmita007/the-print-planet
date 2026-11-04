@@ -33,6 +33,7 @@ import {
   ownerReplyBulkOrder,
   ownerDownloadConversationsBackup,
 } from "@/lib/api";
+import AttachmentLink from "@/components/orders/AttachmentLink";
 
 const STATUS_OPTIONS = [
   { value: "all", label: "All Statuses" },
@@ -453,16 +454,15 @@ export default function OwnerOrdersPage() {
                   ) : (
                     <div className="text-slate-400 italic">No tracking consignment yet</div>
                   )}
-                  {selectedOrder.attachment && (
-                    <a
-                      href={selectedOrder.attachment_url || selectedOrder.attachment}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  {(selectedOrder.attachment_url || selectedOrder.attachment) && (
+                    <AttachmentLink
+                      as="owner"
+                      url={selectedOrder.attachment_url || selectedOrder.attachment || ""}
                       className="inline-flex items-center gap-1 text-[#D9601A] hover:underline font-bold pt-1"
                     >
                       <Paperclip className="w-3 h-3" />
                       <span>Download Attached Spec/File</span>
-                    </a>
+                    </AttachmentLink>
                   )}
                 </div>
               </div>
@@ -544,17 +544,16 @@ export default function OwnerOrdersPage() {
                           >
                             <p className="whitespace-pre-line">{msg.message}</p>
                             {msg.attachment_url && (
-                              <a
-                                href={msg.attachment_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                              <AttachmentLink
+                                as="owner"
+                                url={msg.attachment_url}
                                 className={`inline-flex items-center gap-1 text-[11px] font-bold mt-2 underline ${
                                   isOwner ? "text-[#F4A36B]" : "text-[#D9601A]"
                                 }`}
                               >
                                 <Paperclip className="w-3 h-3" />
                                 <span>View Attachment</span>
-                              </a>
+                              </AttachmentLink>
                             )}
                           </div>
                         </div>

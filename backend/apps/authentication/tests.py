@@ -61,3 +61,33 @@ class AuthenticationApiTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.owner.refresh_from_db()
         self.assertTrue(self.owner.check_password('BrandNewPassword456!'))
+
+
+from django.test import override_settings
+
+
+class PasswordResetSecurityTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        User.objects.create_superuser('boss', 'boss@pp.in', 'BossPass!2026')
+
+    @override_settings(DEBUG=False)
+    def test_reset_token_never_returned_for_owner(self):
+        res = self.client.post('/api/v1/auth/forgot-password/', {'email': 'boss@pp.in'})
+        self.assertEqual(res.status_code, 200)
+        self.assertNotIn('debug_reset_token', res.data)
+        self.assertNotIn('uid', res.data)
+
+    def test_register_rejects_weak_password(self):
+        res = self.client.post('/api/v1/auth/register/', {
+            'full_name': 'Weak User', 'email': 'weak@x.com', 'phone': '1', 'password': '12345678'})
+        self.assertEqual(res.status_code, 400)
+
+    def test_me_returns_profile_and_role(self):
+        self.client.post('/api/v1/auth/register/', {
+            'full_name': 'Jane Buyer', 'email': 'jane@buyer.com', 'phone': '1', 'password': 'Jane#Buyer2026'})
+        user = User.objects.get(email='jane@buyer.com')
+        self.client.force_authenticate(user=user)
+        res = self.client.get('/api/v1/auth/me/')
+        self.assertEqual(res.data['first_name'], 'Jane')
+        self.assertEqual(res.data['role'], 'client')

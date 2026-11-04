@@ -128,10 +128,14 @@ from django.views.static import serve
 from django.urls import re_path
 from django.http import HttpResponseForbidden
 
+# Customer uploads: only reachable through the authorised download endpoints.
+PRIVATE_MEDIA_PREFIXES = ('enquiries/', 'bulk_orders/', 'bulk_messages/')
+
+
 def secure_media_serve(request, path, document_root=None, show_indexes=False):
     """Prevents unauthorized public access to customer enquiry attachments."""
-    if path.startswith('enquiries/'):
-        return HttpResponseForbidden("Direct access to private customer enquiry attachments is prohibited.")
+    if path.startswith(PRIVATE_MEDIA_PREFIXES):
+        return HttpResponseForbidden("Direct access to private customer attachments is prohibited.")
     return serve(request, path, document_root=document_root, show_indexes=show_indexes)
 
 urlpatterns += [

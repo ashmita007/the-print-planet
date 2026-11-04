@@ -55,7 +55,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   line-height: 1.55;
 }
 
