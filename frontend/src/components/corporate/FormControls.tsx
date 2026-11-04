@@ -5,7 +5,7 @@ import { AlertCircle, Check } from "lucide-react";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
 export const inputClass =
-  "w-full bg-white border border-[#C9D1DA] hover:border-[#8896A5] focus:border-[#16324F] focus:ring-2 focus:ring-[#16324F]/15 aria-[invalid=true]:border-[#C0392B] aria-[invalid=true]:focus:ring-[#C0392B]/15 rounded-md px-3.5 py-3 text-[15px] text-[#1C2733] placeholder:text-[#8896A5] outline-none transition-colors";
+  "w-full bg-[#FFFFFF] border border-[#B9C3CF] hover:border-[#6C7A89] focus:border-[#22272E] focus:ring-2 focus:ring-[#22272E]/15 aria-[invalid=true]:border-[#C0392B] aria-[invalid=true]:focus:ring-[#C0392B]/15 rounded-md px-3.5 py-3 text-[15px] text-[#22272E] placeholder:text-[#6C7A89] outline-none transition-colors";
 
 interface FieldProps {
   id: string;
@@ -33,10 +33,10 @@ export function Field({ id, label, optional, hint, error, valid, attempt = 0, ch
   return (
     <div ref={root}>
       <div className="flex items-baseline justify-between gap-2 mb-1.5">
-        <label htmlFor={id} className="text-sm font-semibold text-[#1C2733]">
+        <label htmlFor={id} className="text-sm font-semibold text-[#22272E]">
           {label}
         </label>
-        {optional && <span className="text-xs text-[#566373]">Optional</span>}
+        {optional && <span className="text-xs text-[#5B6877]">Optional</span>}
       </div>
       <div className="relative">
         {children}
@@ -50,7 +50,7 @@ export function Field({ id, label, optional, hint, error, valid, attempt = 0, ch
           <span>{error}</span>
         </p>
       ) : hint ? (
-        <p id={`${id}-hint`} className="mt-1.5 text-[13px] text-[#566373]">
+        <p id={`${id}-hint`} className="mt-1.5 text-[13px] text-[#5B6877]">
           {hint}
         </p>
       ) : null}
@@ -70,7 +70,7 @@ interface ChipGroupProps {
 export function ChipGroup({ legend, options, value, onChange, allowClear }: ChipGroupProps) {
   return (
     <fieldset>
-      <legend className="text-sm font-semibold text-[#1C2733] mb-2">{legend}</legend>
+      <legend className="text-sm font-semibold text-[#22272E] mb-2">{legend}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
           const selected = value === option.value;
@@ -82,8 +82,8 @@ export function ChipGroup({ legend, options, value, onChange, allowClear }: Chip
               onClick={() => onChange(selected && allowClear ? "" : option.value)}
               className={`min-h-11 px-3.5 py-2 rounded-md border text-sm font-semibold tabular-nums transition-colors ${
                 selected
-                  ? "bg-[#16324F] border-[#16324F] text-white"
-                  : "bg-white border-[#C9D1DA] text-[#1C2733] hover:border-[#16324F]"
+                  ? "bg-[#22272E] border-[#22272E] text-white"
+                  : "bg-[#FFFFFF] border-[#B9C3CF] text-[#22272E] hover:border-[#22272E]"
               }`}
             >
               {option.label}

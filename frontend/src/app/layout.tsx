@@ -32,7 +32,7 @@ import MotionBridge from "@/components/animations/MotionBridge";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const viewport: Viewport = {
-  themeColor: "#0E2238",
+  themeColor: "#22272E",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -247,7 +247,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${body.variable} ${heading.variable} ${mono.variable} font-sans min-h-screen bg-white text-slate-900 antialiased selection:bg-[#D9601A] selection:text-white`}
+        className={`${body.variable} ${heading.variable} ${mono.variable} font-sans min-h-screen bg-[#FAFBFD] text-[#22272E] antialiased selection:bg-[#B9C3CF] selection:text-[#22272E]`}
       >
         <CartProvider>
           {children}

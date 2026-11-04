@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). India's direct B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and card machinery.",
     start_url: '/',
     display: 'standalone',
-    background_color: '#FFFFFF',
-    theme_color: '#16324F',
+    background_color: '#FAFBFD',
+    theme_color: '#22272E',
     icons: [
       {
         src: '/favicon.ico',

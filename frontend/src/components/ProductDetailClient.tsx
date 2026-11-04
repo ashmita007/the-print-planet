@@ -177,7 +177,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <span>In Stock • Ready to Dispatch in 24–48h</span>
             </div>
 
-            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-[#D9601A] transition-colors">
+            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-[#5B6877] transition-colors">
               <ZoomIn className="w-4 h-4" />
             </div>
           </div>
@@ -192,7 +192,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   onClick={() => setSelectedImage(imgUrl)}
                   className={`w-16 h-16 rounded-md bg-slate-50 border p-1 shrink-0 overflow-hidden transition-all ${
                     selectedImage === imgUrl
-                      ? "border-[#D9601A] ring-2 ring-[#D9601A]/25 shadow-xs"
+                      ? "border-[#B9C3CF] ring-2 ring-[#B9C3CF]/25 shadow-xs"
                       : "border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100"
                   }`}
                   aria-label={`Select product image ${idx + 1}`}
@@ -207,12 +207,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           )}
 
-          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#475565]">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#4E5A67]">
             <li className="flex items-center gap-1.5">
-              <FileCheck2 className="w-4 h-4 text-[#D9601A]" aria-hidden="true" /> GST invoice
+              <FileCheck2 className="w-4 h-4 text-[#5B6877]" aria-hidden="true" /> GST invoice
             </li>
             <li className="flex items-center gap-1.5">
-              <Truck className="w-4 h-4 text-[#D9601A]" aria-hidden="true" /> Delivery across India
+              <Truck className="w-4 h-4 text-[#5B6877]" aria-hidden="true" /> Delivery across India
             </li>
           </ul>
         </div>
@@ -226,7 +226,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <Link
                 href={`/categories/${product.category.slug}`}
-                className="text-[11px] font-bold uppercase tracking-wider text-[#D9601A] hover:underline"
+                className="text-[11px] font-bold uppercase tracking-wider text-[#5B6877] hover:underline"
               >
                 {formatCategoryName(product.category.name)}
               </Link>
@@ -247,7 +247,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </button>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#16324F] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#22272E] tracking-tight leading-snug">
               {formatProductName(product.name)}
             </h1>
 
@@ -265,16 +265,16 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   Wholesale Factory Price
                 </span>
                 {product.price_display ? (
-                  <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F] tracking-tight tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[#22272E] tracking-tight tabular-nums">
                     {product.price_display}
                   </div>
                 ) : product.price ? (
-                  <div className="text-2xl sm:text-3xl font-extrabold text-[#16324F] tracking-tight">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[#22272E] tracking-tight">
                     ₹{Number(product.price).toLocaleString("en-IN")}{" "}
                     <span className="text-xs font-semibold text-slate-500">/ unit</span>
                   </div>
                 ) : (
-                  <div className="text-xl font-bold text-[#D9601A]">
+                  <div className="text-xl font-bold text-[#5B6877]">
                     Direct Wholesale Quote
                   </div>
                 )}
@@ -298,10 +298,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
 
           {/* Customization Options Box */}
-          <div className="p-5 bg-white rounded-lg border border-slate-200 shadow-xs space-y-4">
+          <div className="p-5 bg-[#FFFFFF] rounded-lg border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Sliders className="w-4 h-4 text-[#D9601A]" />
-              <h3 className="text-sm font-bold text-[#16324F]">Configure &amp; Customize</h3>
+              <Sliders className="w-4 h-4 text-[#5B6877]" />
+              <h3 className="text-sm font-bold text-[#22272E]">Configure &amp; Customize</h3>
             </div>
 
             {/* Material & Size Selector */}
@@ -313,7 +313,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <select id="field-material-finish" aria-label="Material / Finish"
                   value={selectedMaterial}
                   onChange={(e) => setSelectedMaterial(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-[#D9601A]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-[#B9C3CF]"
                 >
                   {availableMaterials.map((mat) => (
                     <option key={mat} value={mat}>
@@ -331,7 +331,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   type="text"
                   value={selectedDimensions}
                   onChange={(e) => setSelectedDimensions(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-[#D9601A]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-[#B9C3CF]"
                 />
               </div>
             </div>
@@ -346,7 +346,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 placeholder="e.g. Acme Corp 2026, Bangalore Tech Summit..."
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs text-slate-900 placeholder-slate-400 outline-none focus:border-[#D9601A]"
+                className="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-xs text-slate-900 placeholder-slate-400 outline-none focus:border-[#B9C3CF]"
               />
             </div>
 
@@ -355,9 +355,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Upload Artwork or Logo (PDF, AI, CDR, PNG, JPG under 10MB)
               </label>
-              <label className="border-2 border-dashed border-slate-200 hover:border-[#D9601A]/60 rounded-md p-3 flex items-center justify-between gap-3 cursor-pointer bg-slate-50/50 hover:bg-[#FBF0E8]/40 transition-colors">
+              <label className="border-2 border-dashed border-slate-200 hover:border-[#B9C3CF]/60 rounded-md p-3 flex items-center justify-between gap-3 cursor-pointer bg-slate-50/50 hover:bg-[#EDF1F6]/40 transition-colors">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#D9601A]/10 text-[#D9601A] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#22272E]/10 text-[#5B6877] flex items-center justify-center shrink-0">
                     <UploadCloud className="w-4 h-4" />
                   </div>
                   <div className="text-left">
@@ -375,7 +375,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   accept=".pdf,.ai,.cdr,.png,.jpg,.jpeg,.zip"
                   className="hidden"
                 />
-                <span className="text-[11px] font-bold text-[#D9601A] px-3 py-1 bg-white border border-slate-200 rounded-lg shadow-2xs">
+                <span className="text-[11px] font-bold text-[#5B6877] px-3 py-1 bg-[#FFFFFF] border border-slate-200 rounded-lg shadow-2xs">
                   Browse
                 </span>
               </label>
@@ -421,7 +421,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-[#D9601A] hover:bg-[#B94E12] active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+                className="bg-[#22272E] hover:bg-[#363D47] active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
               >
                 {addedSuccess ? (
                   <>
@@ -439,7 +439,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="bg-[#0E2238] hover:bg-slate-800 active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+                className="bg-[#22272E] hover:bg-slate-800 active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs transition-all flex items-center justify-center gap-1.5"
               >
                 <FileText className="w-4 h-4" />
                 <span>Formal Quotation</span>
@@ -460,7 +460,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* Description and specifications stay in the page, so buyers and search engines both get them. */}
           <div className="pt-4 border-t border-slate-200 space-y-6">
             <section aria-labelledby="product-details">
-              <h2 id="product-details" className="text-lg font-bold text-[#16324F]">
+              <h2 id="product-details" className="text-lg font-bold text-[#22272E]">
                 Product details
               </h2>
               <p className="mt-2 whitespace-pre-line leading-relaxed text-sm text-slate-700">
@@ -469,7 +469,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </section>
 
             <section aria-labelledby="product-specs" className="space-y-2">
-              <h2 id="product-specs" className="text-lg font-bold text-[#16324F]">
+              <h2 id="product-specs" className="text-lg font-bold text-[#22272E]">
                 Specifications
               </h2>
             {/* Specs Table */}
@@ -484,7 +484,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         {product.sku}
                       </td>
                     </tr>
-                    <tr className="bg-white">
+                    <tr className="bg-[#FFFFFF]">
                       <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
                         Category
                       </td>
@@ -503,7 +503,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       </tr>
                     )}
                     {product.dimensions && (
-                      <tr className="bg-white">
+                      <tr className="bg-[#FFFFFF]">
                         <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
                           Size
                         </td>
@@ -526,7 +526,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       Object.entries(product.specifications).map(([key, val], idx) => (
                         <tr
                           key={key}
-                          className={idx % 2 === 0 ? "bg-slate-50" : "bg-white"}
+                          className={idx % 2 === 0 ? "bg-slate-50" : "bg-[#FFFFFF]"}
                         >
                           <td className="py-2.5 px-4 font-semibold text-slate-500 border-b border-slate-200">
                             {key}
@@ -547,7 +547,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       {/* Mobile Sticky Bottom Action Bar */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-2.5 px-3 flex items-center justify-between gap-2 shadow-xl">
         <div className="min-w-0 pr-1">
-          <div className="text-base font-extrabold text-[#16324F] truncate leading-none">
+          <div className="text-base font-extrabold text-[#22272E] truncate leading-none">
             {product.price_display || (product.price ? `₹${product.price}` : "Wholesale Quote")}
           </div>
           <span className="text-[9px] font-mono text-slate-500 truncate block mt-0.5">
@@ -559,7 +559,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <button
             type="button"
             onClick={handleAddToCart}
-            className="bg-[#D9601A] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
+            className="bg-[#22272E] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             <span>Add to Cart</span>
@@ -568,7 +568,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="bg-[#0E2238] text-white py-2 px-3 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
+            className="bg-[#22272E] text-white py-2 px-3 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
           >
             <span>Quote</span>
           </button>

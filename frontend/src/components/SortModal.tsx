@@ -96,13 +96,13 @@ export default function SortModal({
       aria-labelledby="sort-modal-title"
     >
       <div
-        className="bg-white rounded-lg shadow-xl sm:shadow-2xl w-full max-w-[320px] sm:max-w-md border border-[#D8DEE5] overflow-hidden anim-scale-in"
+        className="bg-[#FFFFFF] rounded-lg shadow-xl sm:shadow-2xl w-full max-w-[320px] sm:max-w-md border border-[#DFE6EE] overflow-hidden anim-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Responsive Header */}
-        <div className="bg-[#0E2238] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
+        <div className="bg-[#22272E] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-2.5">
-            <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9601A]" />
+            <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#5B6877]" />
             <h3 id="sort-modal-title" className="text-xs sm:text-base font-bold tracking-tight">
               Sort Catalogue
             </h3>
@@ -130,17 +130,17 @@ export default function SortModal({
                 onClick={() => handleSelect(opt.id)}
                 className={`w-full py-2 sm:py-2.5 px-3 sm:px-4 rounded-md text-left transition-all flex items-center justify-between text-xs sm:text-sm font-semibold ${
                   isSelected
-                    ? "bg-[#16324F] text-white shadow-xs"
-                    : "bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-100 border border-[#D8DEE5]/60"
+                    ? "bg-[#22272E] text-white shadow-xs"
+                    : "bg-[#EDF1F6] text-[#22272E] hover:bg-slate-100 border border-[#DFE6EE]/60"
                 }`}
               >
                 <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isSelected ? "text-[#D9601A]" : "text-[#566373]"}`} />
+                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isSelected ? "text-[#5B6877]" : "text-[#5B6877]"}`} />
                   <span className="truncate">{opt.label}</span>
                   {opt.tag && (
                     <span
                       className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider ${
-                        isSelected ? "bg-white/20 text-white" : "bg-[#D9601A]/10 text-[#D9601A]"
+                        isSelected ? "bg-white/20 text-white" : "bg-[#22272E]/10 text-[#5B6877]"
                       }`}
                     >
                       {opt.tag}

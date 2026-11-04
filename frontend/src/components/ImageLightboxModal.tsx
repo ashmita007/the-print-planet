@@ -137,9 +137,9 @@ export default function ImageLightboxModal({
               key={idx}
               type="button"
               onClick={() => setCurrentIndex(idx)}
-              className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all shrink-0 bg-white p-0.5 ${
+              className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all shrink-0 bg-[#FFFFFF] p-0.5 ${
                 idx === currentIndex
-                  ? "border-[#D9601A] scale-105 shadow-md"
+                  ? "border-[#B9C3CF] scale-105 shadow-md"
                   : "border-white/20 opacity-60 hover:opacity-100"
               }`}
             >

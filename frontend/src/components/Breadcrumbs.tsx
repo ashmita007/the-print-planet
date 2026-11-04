@@ -12,10 +12,10 @@ interface BreadcrumbsProps {
 
 export default function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps) {
   const dark = tone === "dark";
-  const link = dark ? "hover:text-white" : "hover:text-[#16324F]";
+  const link = dark ? "hover:text-white" : "hover:text-[#22272E]";
 
   return (
-    <nav aria-label="Breadcrumb" className={`py-3 text-xs ${dark ? "text-slate-400" : "text-[#566373]"}`}>
+    <nav aria-label="Breadcrumb" className={`py-3 text-xs ${dark ? "text-slate-400" : "text-[#5B6877]"}`}>
       <ol className="flex items-center flex-wrap gap-1.5">
         <li className="flex items-center">
           <Link href="/" className={`${link} flex items-center gap-1`}>
@@ -31,7 +31,7 @@ export default function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps)
                 {item.label}
               </Link>
             ) : (
-              <span className={`font-semibold truncate max-w-[250px] ${dark ? "text-slate-200" : "text-[#1C2733]"}`}>
+              <span className={`font-semibold truncate max-w-[250px] ${dark ? "text-slate-200" : "text-[#22272E]"}`}>
                 {item.label}
               </span>
             )}

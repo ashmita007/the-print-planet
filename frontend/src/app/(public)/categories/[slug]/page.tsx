@@ -174,7 +174,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {childSubcategories.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm sm:text-base font-bold text-[#16324F] uppercase tracking-wider">
+            <h2 className="text-sm sm:text-base font-bold text-[#22272E] uppercase tracking-wider">
               Subcategories in {formatCategoryName(category.name)} ({childSubcategories.length})
             </h2>
           </div>
@@ -183,14 +183,14 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
               <Link
                 key={sub.id}
                 href={`/categories/${sub.slug}`}
-                className="p-3 rounded-md bg-white border border-[#D8DEE5] hover:border-[#16324F] hover:shadow-xs transition-all flex flex-col justify-between group"
+                className="p-3 rounded-md bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] hover:shadow-xs transition-all flex flex-col justify-between group"
               >
-                <span className="text-xs font-bold text-[#1C2733] group-hover:text-[#16324F] transition-colors line-clamp-2 uppercase tracking-wide">
+                <span className="text-xs font-bold text-[#22272E] group-hover:text-[#22272E] transition-colors line-clamp-2 uppercase tracking-wide">
                   {formatCategoryName(sub.name)}
                 </span>
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
                   <span>{sub.products_count || 0} products</span>
-                  <span className="text-[#D9601A] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  <span className="text-[#5B6877] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
                 </div>
               </Link>
             ))}
@@ -201,15 +201,15 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {/* Sibling Subcategories Selector (if viewing Subcategory) */}
       {siblingSubcategories.length > 1 && (
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="font-bold text-[#566373] shrink-0">Related in {parentCategory?.name}:</span>
+          <span className="font-bold text-[#5B6877] shrink-0">Related in {parentCategory?.name}:</span>
           {siblingSubcategories.map((sib) => (
             <Link
               key={sib.id}
               href={`/categories/${sib.slug}`}
               className={`px-3 py-1.5 rounded-full shrink-0 font-semibold transition-colors ${
                 sib.slug === slug
-                  ? "bg-[#16324F] text-white"
-                  : "bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200 border border-[#D8DEE5]"
+                  ? "bg-[#22272E] text-white"
+                  : "bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200 border border-[#DFE6EE]"
               }`}
             >
               {sib.name}
@@ -220,10 +220,10 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
       {/* Main Sector Navigation Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 text-xs">
-        <span className="font-bold text-[#566373] shrink-0">Main Sectors:</span>
+        <span className="font-bold text-[#5B6877] shrink-0">Main Sectors:</span>
         <Link
           href="/products"
-          className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200 border border-[#D8DEE5]"
+          className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200 border border-[#DFE6EE]"
         >
           All 180+ Products
         </Link>
@@ -233,8 +233,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             href={`/categories/${c.slug}`}
             className={`px-3 py-1.5 rounded-full shrink-0 font-semibold transition-colors ${
               c.slug === slug || (parentCategory && parentCategory.slug === c.slug)
-                ? "bg-[#16324F] text-white"
-                : "bg-[#F3F5F7] text-[#1C2733] hover:bg-slate-200 border border-[#D8DEE5]"
+                ? "bg-[#22272E] text-white"
+                : "bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200 border border-[#DFE6EE]"
             }`}
           >
             {formatCategoryName(c.name)}
@@ -244,9 +244,9 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
       {/* Products Grid */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-[#D8DEE5] pb-3 gap-2">
-          <span className="text-xs font-bold text-[#566373]">
-            Showing <strong className="text-[#16324F]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
+        <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3 gap-2">
+          <span className="text-xs font-bold text-[#5B6877]">
+            Showing <strong className="text-[#22272E]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
           </span>
           <MobileFilterSortBar
             categories={allCategories}
@@ -264,7 +264,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             ))}
           </div>
         ) : (
-          <div className="bg-white border border-[#D8DEE5] rounded-md p-12 text-center text-xs text-slate-500">
+          <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-md p-12 text-center text-xs text-slate-500">
             No products currently active in this category.
           </div>
         )}
@@ -283,12 +283,12 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       </section>
 
       {seo && (
-        <section aria-labelledby="category-guide" className="border-t border-[#D8DEE5] pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <section aria-labelledby="category-guide" className="border-t border-[#DFE6EE] pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
-            <h2 id="category-guide" className="text-2xl font-extrabold tracking-tight text-[#16324F]">
+            <h2 id="category-guide" className="text-2xl font-extrabold tracking-tight text-[#22272E]">
               Choosing {seo.h1.toLowerCase().replace(/\bid\b/, "ID").replace(/\bpvc\b/, "PVC").replace(/\brfid\b/, "RFID")}
             </h2>
-            <div className="mt-3 space-y-3 text-sm text-[#1C2733] leading-relaxed max-w-xl">
+            <div className="mt-3 space-y-3 text-sm text-[#22272E] leading-relaxed max-w-xl">
               {seo.about.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}

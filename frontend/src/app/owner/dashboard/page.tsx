@@ -136,11 +136,11 @@ export default function OwnerDashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-7 surface-card rounded-lg overflow-hidden">
-            <div className="px-5 py-3.5 border-b border-[#E6EBF1] flex items-center justify-between">
+            <div className="px-5 py-3.5 border-b border-[#DFE6EE] flex items-center justify-between">
               <div className="h-3 w-32 skeleton" />
               <div className="h-3 w-16 skeleton" />
             </div>
-            <div className="divide-y divide-[#F0F3F7]">
+            <div className="divide-y divide-[#EDF1F6]">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="px-5 py-4 space-y-2.5">
                   <div className="flex items-center justify-between">
@@ -153,10 +153,10 @@ export default function OwnerDashboardPage() {
             </div>
           </div>
           <div className="lg:col-span-5 surface-card rounded-lg overflow-hidden">
-            <div className="px-5 py-3.5 border-b border-[#E6EBF1]">
+            <div className="px-5 py-3.5 border-b border-[#DFE6EE]">
               <div className="h-3 w-32 skeleton" />
             </div>
-            <div className="divide-y divide-[#F0F3F7]">
+            <div className="divide-y divide-[#EDF1F6]">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="px-5 py-4 flex items-center justify-between gap-3">
                   <div className="space-y-2 flex-1">
@@ -180,8 +180,8 @@ export default function OwnerDashboardPage() {
         <div
           className={`fixed bottom-5 right-5 z-[60] max-w-sm px-4 py-3 rounded-md border text-xs font-medium flex items-start gap-2.5 shadow-lg anim-toast ${
             backupNotice.type === "success"
-              ? "bg-white border-emerald-200 text-[#217A4B]"
-              : "bg-white border-red-200 text-red-700"
+              ? "bg-[#FFFFFF] border-emerald-200 text-[#217A4B]"
+              : "bg-[#FFFFFF] border-red-200 text-red-700"
           }`}
         >
           {backupNotice.type === "success" ? (
@@ -206,7 +206,7 @@ export default function OwnerDashboardPage() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Owner dashboard
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16324F] mt-1">Overview</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#22272E] mt-1">Overview</h1>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -214,7 +214,7 @@ export default function OwnerDashboardPage() {
             onClick={handleEmailBackup}
             disabled={backupEmailLoading}
             title="Generate multi-sheet Excel backup and email it to the owner inbox"
-            className="bg-white border border-[#D8DEE5] hover:border-[#B9C6D6] hover:bg-[#F3F5F7] text-[#1C2733] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#22272E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
           >
             {backupEmailLoading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -228,7 +228,7 @@ export default function OwnerDashboardPage() {
             onClick={handleDownloadBackup}
             disabled={backupDownloadLoading}
             title="Direct download full database as .xlsx"
-            className="bg-white border border-[#D8DEE5] hover:border-[#B9C6D6] hover:bg-[#F3F5F7] text-[#1C2733] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#22272E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
           >
             {backupDownloadLoading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -242,19 +242,19 @@ export default function OwnerDashboardPage() {
             onClick={handleDownloadConversationsBackup}
             disabled={backupConvLoading}
             title="Download dedicated backup of all customer conversations, messages & bulk order threads"
-            className="bg-white border border-[#D8DEE5] hover:border-[#16324F] hover:bg-[#F3F5F7] text-[#16324F] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] hover:bg-[#EDF1F6] text-[#22272E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
           >
             {backupConvLoading ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#D9601A]" />
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#5B6877]" />
             ) : (
-              <Download className="w-3.5 h-3.5 text-[#D9601A]" />
+              <Download className="w-3.5 h-3.5 text-[#5B6877]" />
             )}
             <span>Backup Conversations</span>
           </button>
 
           <Link
             href="/owner/products/new"
-            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs"
+            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add product</span>
@@ -262,7 +262,7 @@ export default function OwnerDashboardPage() {
 
           <Link
             href="/owner/import"
-            className="bg-white border border-[#D8DEE5] hover:border-[#B9C6D6] hover:bg-[#F3F5F7] text-[#16324F] px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs"
+            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#22272E] px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 text-slate-500" />
             <span>Import</span>
@@ -279,7 +279,7 @@ export default function OwnerDashboardPage() {
             icon: Briefcase,
             href: "/owner/orders",
             note: `${(metrics as any)?.pending_bulk_orders || 0} need quotes`,
-            noteTone: "text-[#D9601A] font-bold",
+            noteTone: "text-[#5B6877] font-bold",
             accent: true,
           },
           {
@@ -306,7 +306,7 @@ export default function OwnerDashboardPage() {
             icon: Inbox,
             href: "/owner/enquiries",
             note: "Awaiting response",
-            noteTone: "text-[#B94E12]",
+            noteTone: "text-[#4E5A67]",
             accent: true,
           },
           {
@@ -333,8 +333,8 @@ export default function OwnerDashboardPage() {
                 <div
                   className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                     card.accent
-                      ? "bg-[#FDF0E7] text-[#B94E12]"
-                      : "bg-[#F3F5F7] text-[#52627A]"
+                      ? "bg-[#EDF1F6] text-[#4E5A67]"
+                      : "bg-[#EDF1F6] text-[#4E5A67]"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -342,7 +342,7 @@ export default function OwnerDashboardPage() {
               </div>
               <div
                 className={`text-[28px] leading-none font-bold tracking-tight tabular-nums ${
-                  card.accent ? "text-[#B94E12]" : "text-[#16324F]"
+                  card.accent ? "text-[#4E5A67]" : "text-[#22272E]"
                 }`}
               >
                 {card.value}
@@ -357,27 +357,27 @@ export default function OwnerDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Recent Enquiries (7 Cols) */}
         <div className="lg:col-span-7 surface-card rounded-lg overflow-hidden anim-fade-up stagger-3">
-          <div className="px-5 py-3.5 border-b border-[#E6EBF1] flex items-center justify-between">
-            <h2 className="text-[13px] font-semibold text-[#16324F]">Recent customer RFQs</h2>
+          <div className="px-5 py-3.5 border-b border-[#DFE6EE] flex items-center justify-between">
+            <h2 className="text-[13px] font-semibold text-[#22272E]">Recent customer RFQs</h2>
             <Link
               href="/owner/enquiries"
-              className="text-[11px] font-medium text-slate-500 hover:text-[#B94E12] transition-colors"
+              className="text-[11px] font-medium text-slate-500 hover:text-[#4E5A67] transition-colors"
             >
               View all &rarr;
             </Link>
           </div>
 
-          <div className="divide-y divide-[#D8DEE5] text-xs">
+          <div className="divide-y divide-[#DFE6EE] text-xs">
             {recentEnquiries.length > 0 ? (
               recentEnquiries.map((enq) => (
-                <div key={enq.id} className="px-5 py-3.5 hover:bg-[#F3F5F7] transition-colors duration-150 space-y-1.5">
+                <div key={enq.id} className="px-5 py-3.5 hover:bg-[#EDF1F6] transition-colors duration-150 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-[#1C2733]">{enq.full_name}</span>
+                    <span className="font-bold text-[#22272E]">{enq.full_name}</span>
                     <span className="flex items-center gap-1.5 text-[10px] font-medium capitalize text-slate-500">
                       <span
                         className={`w-1.5 h-1.5 rounded-full ${
                           enq.status === "new"
-                            ? "bg-[#D9601A]"
+                            ? "bg-[#22272E]"
                             : enq.status === "quoted"
                             ? "bg-[#217A4B]"
                             : "bg-slate-400"
@@ -412,28 +412,28 @@ export default function OwnerDashboardPage() {
 
         {/* Right Column: Recently Updated Products (5 Cols) */}
         <div className="lg:col-span-5 surface-card rounded-lg overflow-hidden anim-fade-up stagger-4">
-          <div className="px-5 py-3.5 border-b border-[#E6EBF1] flex items-center justify-between">
-            <h2 className="text-[13px] font-semibold text-[#16324F]">Active catalogue</h2>
+          <div className="px-5 py-3.5 border-b border-[#DFE6EE] flex items-center justify-between">
+            <h2 className="text-[13px] font-semibold text-[#22272E]">Active catalogue</h2>
             <Link
               href="/owner/products"
-              className="text-[11px] font-medium text-slate-500 hover:text-[#B94E12] transition-colors"
+              className="text-[11px] font-medium text-slate-500 hover:text-[#4E5A67] transition-colors"
             >
               Manage &rarr;
             </Link>
           </div>
 
-          <div className="divide-y divide-[#D8DEE5] text-xs">
+          <div className="divide-y divide-[#DFE6EE] text-xs">
             {recentProducts.map((p) => (
-              <div key={p.id} className="px-5 py-3.5 flex items-center justify-between gap-3 hover:bg-[#F3F5F7] transition-colors duration-150">
+              <div key={p.id} className="px-5 py-3.5 flex items-center justify-between gap-3 hover:bg-[#EDF1F6] transition-colors duration-150">
                 <div className="truncate">
-                  <p className="font-medium text-[#1C2733] truncate">{formatProductName(p.name)}</p>
+                  <p className="font-medium text-[#22272E] truncate">{formatProductName(p.name)}</p>
                   <p className="text-[11px] text-slate-500 tabular-nums">
                     {p.sku} • <span className="uppercase">{formatCategoryName(p.category.name)}</span>
                   </p>
                 </div>
                 <Link
                   href={`/owner/products/${p.id}/edit`}
-                  className="text-[11px] font-medium text-slate-500 hover:text-[#B94E12] transition-colors shrink-0"
+                  className="text-[11px] font-medium text-slate-500 hover:text-[#4E5A67] transition-colors shrink-0"
                 >
                   Edit
                 </Link>

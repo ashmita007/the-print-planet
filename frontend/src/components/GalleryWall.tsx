@@ -58,8 +58,8 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
             onClick={() => choose(group)}
             className={`shrink-0 min-h-10 px-4 rounded-lg text-sm font-semibold border transition-colors cursor-pointer ${
               active === group
-                ? "bg-[#16324F] border-[#16324F] text-white"
-                : "bg-white border-[#D8DEE5] text-[#16324F] hover:border-[#16324F]"
+                ? "bg-[#22272E] border-[#22272E] text-white"
+                : "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:border-[#22272E]"
             }`}
           >
             {group}
@@ -75,7 +75,7 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
             data-tilt
             href={`/quote?product=${encodeURIComponent(piece.title)}`}
             style={active === "All" || active === piece.group ? undefined : { display: "none" }}
-            className={`group flex flex-col overflow-hidden rounded-lg bg-[#F3F5F7] border border-[#D8DEE5] hover:border-[#16324F] transition-colors ${
+            className={`group flex flex-col overflow-hidden rounded-lg bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#22272E] transition-colors ${
               index === 0 ? "col-span-2 lg:row-span-2" : ""
             }`}
           >
@@ -89,9 +89,9 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
                 unoptimized
               />
             </div>
-            <div className="flex items-end justify-between gap-2 p-3 sm:p-4 bg-white border-t border-[#D8DEE5]">
-              <span className="text-sm sm:text-base font-bold text-[#16324F] leading-snug">{piece.title}</span>
-              <ArrowRight className="w-4 h-4 shrink-0 mb-0.5 text-[#B94E12] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            <div className="flex items-end justify-between gap-2 p-3 sm:p-4 bg-[#FFFFFF] border-t border-[#DFE6EE]">
+              <span className="text-sm sm:text-base font-bold text-[#22272E] leading-snug">{piece.title}</span>
+              <ArrowRight className="w-4 h-4 shrink-0 mb-0.5 text-[#4E5A67] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </div>
           </Link>
         ))}

@@ -90,12 +90,12 @@ export default function ClientOrdersDashboardPage() {
       case "submitted":
         return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Submitted</span>;
       case "reviewing":
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#16324F]/10 text-[#16324F] border border-[#16324F]/20">Technical Review</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#22272E]/10 text-[#22272E] border border-[#22272E]/20">Technical Review</span>;
       case "quoted":
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">Quotation Ready</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE]">Quotation Ready</span>;
       case "proofing":
       case "in_production":
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">In Production</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE]">In Production</span>;
       case "dispatched":
       case "completed":
         return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Dispatched / Complete</span>;
@@ -109,15 +109,15 @@ export default function ClientOrdersDashboardPage() {
       <Breadcrumbs items={[{ label: "Client Portal", href: "/orders" }, { label: "My Bulk Orders" }]} />
 
       {/* Header bar */}
-      <div className="bg-white border border-[#D8DEE5] p-5 sm:p-6 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs">
+      <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 sm:p-6 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#D9601A]">
+          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#5B6877]">
             Client Orders &amp; Conversation Tracking
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#16324F]">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#22272E]">
             Welcome, {user?.first_name || user?.username || "Client"}
           </h1>
-          <p className="text-xs sm:text-sm text-[#566373] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#5B6877] mt-0.5">
             Track your bulk order quotations, sample proofs, production status, and direct factory conversations.
           </p>
         </div>
@@ -125,7 +125,7 @@ export default function ClientOrdersDashboardPage() {
         <div className="flex items-center gap-2.5 shrink-0">
           <Link
             href="/corporate"
-            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5"
+            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5"
           >
             <PlusCircle className="w-4 h-4" />
             <span>New Bulk Inquiry</span>
@@ -134,7 +134,7 @@ export default function ClientOrdersDashboardPage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="bg-[#F3F5F7] hover:bg-slate-200 text-[#1C2733] px-3.5 py-2.5 rounded-md text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5"
+            className="bg-[#EDF1F6] hover:bg-slate-200 text-[#22272E] px-3.5 py-2.5 rounded-md text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5"
           >
             <LogOut className="w-4 h-4 text-slate-500" />
             <span>Log out</span>
@@ -144,37 +144,37 @@ export default function ClientOrdersDashboardPage() {
 
       {/* Metrics Summary Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 rounded-md space-y-1">
           <span className="text-[11px] font-semibold text-slate-400 uppercase">Total Orders</span>
-          <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.total}</div>
+          <div className="text-xl sm:text-2xl font-extrabold text-[#22272E]">{metrics.total}</div>
         </div>
-        <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 rounded-md space-y-1">
           <span className="text-[11px] font-semibold text-amber-600 uppercase">Submitted</span>
           <div className="text-xl sm:text-2xl font-extrabold text-amber-600">{metrics.submitted}</div>
         </div>
-        <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
-          <span className="text-[11px] font-semibold text-[#16324F] uppercase">Reviewing</span>
-          <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.reviewing}</div>
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 rounded-md space-y-1">
+          <span className="text-[11px] font-semibold text-[#22272E] uppercase">Reviewing</span>
+          <div className="text-xl sm:text-2xl font-extrabold text-[#22272E]">{metrics.reviewing}</div>
         </div>
-        <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
-          <span className="text-[11px] font-semibold text-[#16324F] uppercase">Quoted</span>
-          <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.quoted}</div>
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 rounded-md space-y-1">
+          <span className="text-[11px] font-semibold text-[#22272E] uppercase">Quoted</span>
+          <div className="text-xl sm:text-2xl font-extrabold text-[#22272E]">{metrics.quoted}</div>
         </div>
-        <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
-          <span className="text-[11px] font-semibold text-[#16324F] uppercase">In Production</span>
-          <div className="text-xl sm:text-2xl font-extrabold text-[#16324F]">{metrics.in_production}</div>
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 rounded-md space-y-1">
+          <span className="text-[11px] font-semibold text-[#22272E] uppercase">In Production</span>
+          <div className="text-xl sm:text-2xl font-extrabold text-[#22272E]">{metrics.in_production}</div>
         </div>
-        <div className="bg-white border border-[#D8DEE5] p-4 rounded-md space-y-1">
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 rounded-md space-y-1">
           <span className="text-[11px] font-semibold text-emerald-600 uppercase">Completed</span>
           <div className="text-xl sm:text-2xl font-extrabold text-emerald-600">{metrics.completed}</div>
         </div>
       </div>
 
       {/* Orders Filter & List Table */}
-      <div className="bg-white border border-[#D8DEE5] rounded-lg overflow-hidden shadow-2xs space-y-4">
-        <div className="p-4 sm:p-5 border-b border-[#E6EBF1] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <h2 className="text-base font-bold text-[#16324F] flex items-center gap-2">
-            <Package className="w-4 h-4 text-[#D9601A]" />
+      <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg overflow-hidden shadow-2xs space-y-4">
+        <div className="p-4 sm:p-5 border-b border-[#DFE6EE] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <h2 className="text-base font-bold text-[#22272E] flex items-center gap-2">
+            <Package className="w-4 h-4 text-[#5B6877]" />
             <span>Orders &amp; Message Threads ({filteredOrders.length})</span>
           </h2>
 
@@ -185,7 +185,7 @@ export default function ClientOrdersDashboardPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search order #, school, city..."
               aria-label="Search your orders"
-              className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#1C2733] outline-none"
+              className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#22272E] outline-none"
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
           </div>
@@ -200,7 +200,7 @@ export default function ClientOrdersDashboardPage() {
         ) : filteredOrders.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#F3F5F7] border-b border-[#E6EBF1] text-[#566373] font-semibold uppercase tracking-wider">
+              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#5B6877] font-semibold uppercase tracking-wider">
                 <tr>
                   <th className="px-5 py-3">Order Number</th>
                   <th className="px-5 py-3">Organization</th>
@@ -212,21 +212,21 @@ export default function ClientOrdersDashboardPage() {
                   <th className="px-5 py-3 text-right">Conversation</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#EEF2F7]">
+              <tbody className="divide-y divide-[#EDF1F6]">
                 {filteredOrders.map((o) => (
                   <tr key={o.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-5 py-4 font-mono font-bold text-[#16324F]">
-                      <Link href={`/orders/${o.order_number}`} className="hover:text-[#D9601A] transition-colors underline">
+                    <td className="px-5 py-4 font-mono font-bold text-[#22272E]">
+                      <Link href={`/orders/${o.order_number}`} className="hover:text-[#5B6877] transition-colors underline">
                         {o.order_number}
                       </Link>
                     </td>
-                    <td className="px-5 py-4 font-medium text-[#1C2733]">
+                    <td className="px-5 py-4 font-medium text-[#22272E]">
                       <div>{o.organization_name}</div>
                       <div className="text-[10px] text-slate-400">{o.city || "Bengaluru"}</div>
                     </td>
                     <td className="px-5 py-4">
                       {o.organization_type === "school" || o.organization_type === "college" ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] text-[#16324F] bg-[#EDF1F6] px-2 py-0.5 rounded">
+                        <span className="inline-flex items-center gap-1 text-[11px] text-[#22272E] bg-[#EDF1F6] px-2 py-0.5 rounded">
                           <GraduationCap className="w-3 h-3" />
                           <span>School</span>
                         </span>
@@ -237,7 +237,7 @@ export default function ClientOrdersDashboardPage() {
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-4 font-semibold text-[#16324F]">
+                    <td className="px-5 py-4 font-semibold text-[#22272E]">
                       {o.estimated_quantity?.toLocaleString()} pcs
                     </td>
                     <td className="px-5 py-4">
@@ -256,9 +256,9 @@ export default function ClientOrdersDashboardPage() {
                     <td className="px-5 py-4 text-right">
                       <Link
                         href={`/orders/${o.order_number}`}
-                        className="inline-flex items-center gap-1.5 bg-[#16324F] hover:bg-[#0E2238] text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs"
+                        className="inline-flex items-center gap-1.5 bg-[#22272E] hover:bg-[#363D47] text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs"
                       >
-                        <MessageSquare className="w-3.5 h-3.5 text-[#D9601A]" />
+                        <MessageSquare className="w-3.5 h-3.5 text-[#5B6877]" />
                         <span>Chat ({o.messages_count || 1})</span>
                       </Link>
                     </td>
@@ -270,13 +270,13 @@ export default function ClientOrdersDashboardPage() {
         ) : (
           <div className="p-12 text-center space-y-4">
             <Package className="w-12 h-12 text-slate-300 mx-auto" />
-            <h3 className="text-sm font-bold text-[#16324F]">No Bulk Orders Found</h3>
-            <p className="text-xs text-[#566373] max-w-sm mx-auto">
+            <h3 className="text-sm font-bold text-[#22272E]">No Bulk Orders Found</h3>
+            <p className="text-xs text-[#5B6877] max-w-sm mx-auto">
               You do not have any active bulk inquiries under this account yet. Submit your specifications to start your order.
             </p>
             <Link
               href="/corporate"
-              className="inline-block bg-[#D9601A] text-white px-4 py-2 rounded-lg text-xs font-bold"
+              className="inline-block bg-[#22272E] text-white px-4 py-2 rounded-lg text-xs font-bold"
             >
               Start New Bulk Order
             </Link>
@@ -285,10 +285,10 @@ export default function ClientOrdersDashboardPage() {
       </div>
       {/* Products Checked by User Section */}
       {checkedProducts.length > 0 && (
-        <div className="bg-white border border-[#D8DEE5] rounded-lg p-5 sm:p-6 shadow-2xs space-y-4">
+        <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-5 sm:p-6 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-[#16324F] uppercase tracking-wider flex items-center gap-2">
-              <Package className="w-4 h-4 text-[#D9601A]" />
+            <h3 className="text-sm font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-2">
+              <Package className="w-4 h-4 text-[#5B6877]" />
               <span>Products You Explored &amp; Checked ({checkedProducts.length})</span>
             </h3>
             <span className="text-[11px] text-slate-400">Available to add directly into your bulk quotation</span>
@@ -303,14 +303,14 @@ export default function ClientOrdersDashboardPage() {
                 <Link
                   key={item.id}
                   href={`/products/${p.slug}`}
-                  className="p-2.5 rounded-md border border-[#D8DEE5] hover:border-[#16324F] hover:shadow-sm bg-[#F3F5F7] transition-all group flex flex-col justify-between"
+                  className="p-2.5 rounded-md border border-[#DFE6EE] hover:border-[#22272E] hover:shadow-sm bg-[#EDF1F6] transition-all group flex flex-col justify-between"
                 >
-                  <div className="w-full aspect-square bg-white rounded-lg p-1.5 mb-2 overflow-hidden flex items-center justify-center border border-slate-100">
+                  <div className="w-full aspect-square bg-[#FFFFFF] rounded-lg p-1.5 mb-2 overflow-hidden flex items-center justify-center border border-slate-100">
                     <img src={imgUrl} alt={p.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform" />
                   </div>
                   <div>
                     <span className="text-[9px] font-mono text-slate-400 uppercase block">{p.sku}</span>
-                    <h4 className="text-xs font-bold text-[#16324F] group-hover:text-[#D9601A] transition-colors truncate">
+                    <h4 className="text-xs font-bold text-[#22272E] group-hover:text-[#5B6877] transition-colors truncate">
                       {p.name}
                     </h4>
                   </div>

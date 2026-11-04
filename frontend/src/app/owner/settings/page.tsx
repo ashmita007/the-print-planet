@@ -560,7 +560,7 @@ function OwnerSettingsInner() {
           </div>
           <div className="h-10 w-32 skeleton rounded-lg" />
         </div>
-        <div className="flex gap-6 border-b border-[#D8DEE5] pb-3">
+        <div className="flex gap-6 border-b border-[#DFE6EE] pb-3">
           {Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="h-3 w-16 skeleton" />
           ))}
@@ -600,7 +600,7 @@ function OwnerSettingsInner() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Configuration
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16324F] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#22272E] mt-1">
             Store settings
           </h1>
           <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
@@ -611,7 +611,7 @@ function OwnerSettingsInner() {
         <button
           onClick={handleSaveAll}
           disabled={saving}
-          className="inline-flex items-center justify-center gap-1.5 bg-[#D9601A] hover:bg-[#B94E12] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] disabled:opacity-50 shrink-0 cursor-pointer"
+          className="inline-flex items-center justify-center gap-1.5 bg-[#22272E] hover:bg-[#363D47] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] disabled:opacity-50 shrink-0 cursor-pointer"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           <span>{saving ? "Publishing..." : "Publish changes"}</span>
@@ -634,7 +634,7 @@ function OwnerSettingsInner() {
       )}
 
       {/* Tabs */}
-      <div className="flex items-center gap-6 border-b border-[#D8DEE5] overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-6 border-b border-[#DFE6EE] overflow-x-auto scrollbar-none">
         {[
           { id: "hero", label: "Hero", icon: Sparkles },
           { id: "about", label: "About", icon: Info },
@@ -650,13 +650,13 @@ function OwnerSettingsInner() {
               type="button"
               onClick={() => handleTabChange(tab.id as typeof activeTab)}
               className={`relative flex items-center gap-1.5 pb-3 pt-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                isActive ? "text-[#16324F]" : "text-slate-500 hover:text-[#16324F]"
+                isActive ? "text-[#22272E]" : "text-slate-500 hover:text-[#22272E]"
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#B94E12]" : "text-slate-400"}`} />
+              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#4E5A67]" : "text-slate-400"}`} />
               <span>{tab.label}</span>
               {isActive && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#D9601A]" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#22272E]" />
               )}
             </button>
           );
@@ -667,40 +667,40 @@ function OwnerSettingsInner() {
       {activeTab === "hero" && (
         <div className="space-y-6">
           <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
-            <div className="border-b border-[#D8DEE5] pb-3">
-              <h2 className="text-sm font-semibold text-[#16324F] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#D9601A]" />
+            <div className="border-b border-[#DFE6EE] pb-3">
+              <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#5B6877]" />
                 Homepage Hero Banner &amp; Headline Editor
               </h2>
-              <p className="text-[11px] text-[#566373] mt-0.5">
+              <p className="text-[11px] text-[#5B6877] mt-0.5">
                 Customize the high-impact headline, category pill, and primary caption displayed at the very top of the homepage.
               </p>
             </div>
 
             {/* Same copy rules and styling as the public homepage hero */}
             <div>
-              <p className="flex items-center gap-1.5 font-semibold text-[#1C2733] mb-2">
-                <Eye className="w-3.5 h-3.5 text-[#B94E12]" />
+              <p className="flex items-center gap-1.5 font-semibold text-[#22272E] mb-2">
+                <Eye className="w-3.5 h-3.5 text-[#4E5A67]" />
                 How it looks on the homepage
               </p>
-              <div className="bg-[#0E2238] text-white p-6 sm:p-10 rounded-md">
+              <div className="bg-[#22272E] text-white p-6 sm:p-10 rounded-md">
                 <div className="flex items-center gap-3 mb-5">
                   <ColorBar />
                   <span className="font-mono text-xs text-slate-300">{previewHero.badge}</span>
                 </div>
                 <p className={`${heroHeadlineClass(previewHero)} font-heading font-extrabold tracking-[-0.02em] leading-[1.06] max-w-2xl`}>
                   {previewHero.title}
-                  <span className="block text-[#F4A36B]">{previewHero.subtitle}</span>
+                  <span className="block text-[#B9C3CF]">{previewHero.subtitle}</span>
                 </p>
                 <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">{previewHero.caption}</p>
-                <div className="mt-6 inline-flex px-5 py-3 rounded-md bg-[#D9601A] font-bold text-sm">Browse products</div>
+                <div className="mt-6 inline-flex px-5 py-3 rounded-md bg-[#B9C3CF] text-[#22272E] font-bold text-sm">Browse products</div>
               </div>
             </div>
 
             {/* Form Fields */}
             <div className="space-y-4 pt-2">
               <div>
-                <label htmlFor="field-small-line-above-the" className="block font-bold text-[#1C2733] mb-1">
+                <label htmlFor="field-small-line-above-the" className="block font-bold text-[#22272E] mb-1">
                   Small line above the headline
                 </label>
                 <input id="field-small-line-above-the"
@@ -708,13 +708,13 @@ function OwnerSettingsInner() {
                   value={heroBadge}
                   onChange={(e) => setHeroBadge(e.target.value)}
                   placeholder="e.g. The Print Planet™ • India's Direct B2B Factory"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="field-headline" className="block font-bold text-[#1C2733] mb-1">
+                  <label htmlFor="field-headline" className="block font-bold text-[#22272E] mb-1">
                     Headline *
                   </label>
                   <input id="field-headline"
@@ -723,12 +723,12 @@ function OwnerSettingsInner() {
                     value={heroTitle}
                     onChange={(e) => setHeroTitle(e.target.value)}
                     placeholder="e.g. Print Planet — Factory Direct"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none font-semibold"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="field-headline-second-line-orange" className="block font-bold text-[#1C2733] mb-1">
+                  <label htmlFor="field-headline-second-line-orange" className="block font-bold text-[#22272E] mb-1">
                     Headline second line (orange) *
                   </label>
                   <input id="field-headline-second-line-orange"
@@ -737,18 +737,18 @@ function OwnerSettingsInner() {
                     value={heroSubtitle}
                     onChange={(e) => setHeroSubtitle(e.target.value)}
                     placeholder="e.g. Wholesale ID Cards, Lanyard Rolls & Machinery"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
                   />
                 </div>
 
-                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#B94E12] font-semibold" : "text-[#566373]"}`}>
+                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#4E5A67] font-semibold" : "text-[#5B6877]"}`}>
                   Headline total: {headlineLength} of {HERO_LIMITS.headline} characters.
                   {headlineLength > HERO_LIMITS.headline ? " Longer headlines show smaller on the homepage." : ""}
                 </p>
               </div>
 
               <div>
-                <label htmlFor="field-line-under-the-headline" className="block font-bold text-[#1C2733] mb-1">
+                <label htmlFor="field-line-under-the-headline" className="block font-bold text-[#22272E] mb-1">
                   Line under the headline *
                 </label>
                 <textarea id="field-line-under-the-headline"
@@ -757,9 +757,9 @@ function OwnerSettingsInner() {
                   value={heroCaption}
                   onChange={(e) => setHeroCaption(e.target.value)}
                   placeholder="Official portal of The Print Planet..."
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 text-xs outline-none leading-relaxed"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none leading-relaxed"
                 />
-                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#B94E12] font-semibold" : "text-[#566373]"}`}>
+                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#4E5A67] font-semibold" : "text-[#5B6877]"}`}>
                   {heroCaption.trim().length} of {HERO_LIMITS.caption} characters recommended.
                 </span>
               </div>
@@ -769,7 +769,7 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={handleSaveHero}
                   disabled={saving}
-                  className="bg-[#16324F] hover:bg-[#0E2238] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                  className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
                 >
                   {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
                   <span>{saving ? "Saving Hero..." : "Save Homepage Hero"}</span>
@@ -784,168 +784,168 @@ function OwnerSettingsInner() {
       {activeTab === "about" && (
         <div className="space-y-6">
           <div className="surface-card p-6 rounded-lg space-y-6 text-xs">
-            <div className="border-b border-[#D8DEE5] pb-3">
-              <h2 className="text-sm font-semibold text-[#16324F] flex items-center gap-2">
-                <Info className="w-4 h-4 text-[#D9601A]" />
+            <div className="border-b border-[#DFE6EE] pb-3">
+              <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
+                <Info className="w-4 h-4 text-[#5B6877]" />
                 Dynamic About Us Content Management System (CMS)
               </h2>
-              <p className="text-[11px] text-[#566373] mt-0.5">
+              <p className="text-[11px] text-[#5B6877] mt-0.5">
                 Edit factory background, mission story, daily output statistics counters, and quality standards for the public <code>/about</code> page.
               </p>
             </div>
 
             {/* Section 1: Hero Banner on About Page */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#16324F]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
                 1. About Page Hero Banner
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="field-hero-tag-pill" className="block font-semibold text-[#1C2733] mb-1">Hero Tag Pill</label>
+                  <label htmlFor="field-hero-tag-pill" className="block font-semibold text-[#22272E] mb-1">Hero Tag Pill</label>
                   <input id="field-hero-tag-pill"
                     type="text"
                     value={aboutHeroTag}
                     onChange={(e) => setAboutHeroTag(e.target.value)}
-                    className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="field-hero-title" className="block font-semibold text-[#1C2733] mb-1">Hero Title</label>
+                  <label htmlFor="field-hero-title" className="block font-semibold text-[#22272E] mb-1">Hero Title</label>
                   <input id="field-hero-title"
                     type="text"
                     value={aboutHeroTitle}
                     onChange={(e) => setAboutHeroTitle(e.target.value)}
-                    className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="field-hero-subtitle" className="block font-semibold text-[#1C2733] mb-1">Hero Subtitle</label>
+                <label htmlFor="field-hero-subtitle" className="block font-semibold text-[#22272E] mb-1">Hero Subtitle</label>
                 <textarea id="field-hero-subtitle"
                   rows={2}
                   value={aboutHeroSubtitle}
                   onChange={(e) => setAboutHeroSubtitle(e.target.value)}
-                  className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-lg px-3 py-2 text-xs outline-none resize-none leading-relaxed"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none resize-none leading-relaxed"
                 />
               </div>
             </div>
 
             {/* Section 2: Story & Manufacturing Mission */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#16324F]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
                 2. Manufacturing Mission &amp; Background Story
               </h3>
 
               <div>
-                <label htmlFor="field-section-heading" className="block font-semibold text-[#1C2733] mb-1">Section Heading</label>
+                <label htmlFor="field-section-heading" className="block font-semibold text-[#22272E] mb-1">Section Heading</label>
                 <input id="field-section-heading"
                   type="text"
                   value={aboutStoryTitle}
                   onChange={(e) => setAboutStoryTitle(e.target.value)}
-                  className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-lg px-3 py-2 text-xs outline-none font-semibold"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none font-semibold"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-story-paragraph-1" className="block font-semibold text-[#1C2733] mb-1">Story Paragraph 1</label>
+                <label htmlFor="field-story-paragraph-1" className="block font-semibold text-[#22272E] mb-1">Story Paragraph 1</label>
                 <textarea id="field-story-paragraph-1"
                   rows={3}
                   value={aboutStoryP1}
                   onChange={(e) => setAboutStoryP1(e.target.value)}
-                  className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-story-paragraph-2" className="block font-semibold text-[#1C2733] mb-1">Story Paragraph 2</label>
+                <label htmlFor="field-story-paragraph-2" className="block font-semibold text-[#22272E] mb-1">Story Paragraph 2</label>
                 <textarea id="field-story-paragraph-2"
                   rows={3}
                   value={aboutStoryP2}
                   onChange={(e) => setAboutStoryP2(e.target.value)}
-                  className="w-full bg-white border border-[#D8DEE5] focus:border-[#16324F] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
                 />
               </div>
             </div>
 
             {/* Section 3: Daily Output Statistics Counters */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#16324F]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
                 3. Factory Output Counters (Displayed in Stats Grid)
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE]">
                   <label htmlFor="field-counter-1-holders" className="block font-semibold text-slate-700 mb-1">Counter 1 (Holders)</label>
                   <input id="field-counter-1-holders"
                     type="text"
                     value={stat1Val}
                     onChange={(e) => setStat1Val(e.target.value)}
                     placeholder="e.g. 50,000+"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#16324F] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
                   />
                   <input
                     type="text"
                     value={stat1Label}
                     onChange={(e) => setStat1Label(e.target.value)}
                     placeholder="Holders Produced Daily"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE]">
                   <label htmlFor="field-counter-2-ribbons" className="block font-semibold text-slate-700 mb-1">Counter 2 (Ribbons)</label>
                   <input id="field-counter-2-ribbons"
                     type="text"
                     value={stat2Val}
                     onChange={(e) => setStat2Val(e.target.value)}
                     placeholder="e.g. 10,000+ m"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#16324F] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
                   />
                   <input
                     type="text"
                     value={stat2Label}
                     onChange={(e) => setStat2Label(e.target.value)}
                     placeholder="Daily Satin Ribbon Output"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE]">
                   <label htmlFor="field-counter-3-active-skus" className="block font-semibold text-slate-700 mb-1">Counter 3 (Active SKUs)</label>
                   <input id="field-counter-3-active-skus"
                     type="text"
                     value={stat3Val}
                     onChange={(e) => setStat3Val(e.target.value)}
                     placeholder="e.g. 180+"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#16324F] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
                   />
                   <input
                     type="text"
                     value={stat3Label}
                     onChange={(e) => setStat3Label(e.target.value)}
                     placeholder="Active Commercial SKUs"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5]">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE]">
                   <label htmlFor="field-counter-4-clients" className="block font-semibold text-slate-700 mb-1">Counter 4 (Clients)</label>
                   <input id="field-counter-4-clients"
                     type="text"
                     value={stat4Val}
                     onChange={(e) => setStat4Val(e.target.value)}
                     placeholder="e.g. 500+"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#16324F] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
                   />
                   <input
                     type="text"
                     value={stat4Label}
                     onChange={(e) => setStat4Label(e.target.value)}
                     placeholder="Institutional Clients Across India"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none"
                   />
                 </div>
               </div>
@@ -953,59 +953,59 @@ function OwnerSettingsInner() {
 
             {/* Section 4: Quality & Core Production Standards */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#16324F]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
                 4. Quality &amp; Core Standards
               </h3>
 
               <div className="space-y-3">
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5] space-y-2">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE] space-y-2">
                   <input
                     type="text"
                     value={standard1Title}
                     onChange={(e) => setStandard1Title(e.target.value)}
                     placeholder="Standard 1 Title (e.g. ISO CR-80 Standard Compliance)"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-bold text-[#16324F] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
                   />
                   <textarea
                     rows={2}
                     value={standard1Desc}
                     onChange={(e) => setStandard1Desc(e.target.value)}
                     placeholder="Standard 1 Description..."
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none resize-none leading-relaxed"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none resize-none leading-relaxed"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5] space-y-2">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE] space-y-2">
                   <input
                     type="text"
                     value={standard2Title}
                     onChange={(e) => setStandard2Title(e.target.value)}
                     placeholder="Standard 2 Title (e.g. Pure Grade Polyvinyl Chloride)"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-bold text-[#16324F] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
                   />
                   <textarea
                     rows={2}
                     value={standard2Desc}
                     onChange={(e) => setStandard2Desc(e.target.value)}
                     placeholder="Standard 2 Description..."
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none resize-none leading-relaxed"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none resize-none leading-relaxed"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5] space-y-2">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE] space-y-2">
                   <input
                     type="text"
                     value={standard3Title}
                     onChange={(e) => setStandard3Title(e.target.value)}
                     placeholder="Standard 3 Title (e.g. Rigid Hardware Attachments)"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-bold text-[#16324F] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
                   />
                   <textarea
                     rows={2}
                     value={standard3Desc}
                     onChange={(e) => setStandard3Desc(e.target.value)}
                     placeholder="Standard 3 Description..."
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none resize-none leading-relaxed"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none resize-none leading-relaxed"
                   />
                 </div>
               </div>
@@ -1013,59 +1013,59 @@ function OwnerSettingsInner() {
 
             {/* Section 5: Facilities Strip */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#16324F]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
                 5. Facility Pillars
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5] space-y-2">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE] space-y-2">
                   <input
                     type="text"
                     value={facility1Title}
                     onChange={(e) => setFacility1Title(e.target.value)}
                     placeholder="Facility 1 Title"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-bold text-[#16324F] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
                   />
                   <textarea
                     rows={3}
                     value={facility1Desc}
                     onChange={(e) => setFacility1Desc(e.target.value)}
                     placeholder="Facility 1 Description..."
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none resize-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none resize-none"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5] space-y-2">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE] space-y-2">
                   <input
                     type="text"
                     value={facility2Title}
                     onChange={(e) => setFacility2Title(e.target.value)}
                     placeholder="Facility 2 Title"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-bold text-[#16324F] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
                   />
                   <textarea
                     rows={3}
                     value={facility2Desc}
                     onChange={(e) => setFacility2Desc(e.target.value)}
                     placeholder="Facility 2 Description..."
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none resize-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none resize-none"
                   />
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-[#D8DEE5] space-y-2">
+                <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#DFE6EE] space-y-2">
                   <input
                     type="text"
                     value={facility3Title}
                     onChange={(e) => setFacility3Title(e.target.value)}
                     placeholder="Facility 3 Title"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs font-bold text-[#16324F] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
                   />
                   <textarea
                     rows={3}
                     value={facility3Desc}
                     onChange={(e) => setFacility3Desc(e.target.value)}
                     placeholder="Facility 3 Description..."
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded px-2.5 py-1.5 text-xs outline-none resize-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs outline-none resize-none"
                   />
                 </div>
               </div>
@@ -1076,7 +1076,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleSaveAbout}
                 disabled={saving}
-                className="bg-[#16324F] hover:bg-[#0E2238] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
               >
                 {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
                 <span>{saving ? "Saving About Us..." : "Save About Us CMS"}</span>
@@ -1090,53 +1090,53 @@ function OwnerSettingsInner() {
       {activeTab === "identity" && (
         <form onSubmit={handleSaveIdentity} className="space-y-6 text-xs">
           <div className="surface-card p-6 rounded-lg space-y-5">
-            <h2 className="text-sm font-semibold text-[#16324F] border-b border-[#D8DEE5] pb-2 flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-[#D9601A]" />
+            <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-[#5B6877]" />
               Store Legal Identity &amp; Branding
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="field-business-name" className="block font-semibold text-[#1C2733] mb-1">Business Name *</label>
+                <label htmlFor="field-business-name" className="block font-semibold text-[#22272E] mb-1">Business Name *</label>
                 <input id="field-business-name"
                   type="text"
                   required
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-bold text-[#16324F]"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-bold text-[#22272E]"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-tagline" className="block font-semibold text-[#1C2733] mb-1">Tagline</label>
+                <label htmlFor="field-tagline" className="block font-semibold text-[#22272E] mb-1">Tagline</label>
                 <input id="field-tagline"
                   type="text"
                   value={tagline}
                   onChange={(e) => setTagline(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="field-official-gst-number" className="block font-semibold text-[#1C2733] mb-1">Official GST Number</label>
+                <label htmlFor="field-official-gst-number" className="block font-semibold text-[#22272E] mb-1">Official GST Number</label>
                 <input id="field-official-gst-number"
                   type="text"
                   value={gstNumber}
                   onChange={(e) => setGstNumber(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-mono font-bold"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono font-bold"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-custom-logo-url-optional" className="block font-semibold text-[#1C2733] mb-1">Custom Logo URL (optional)</label>
+                <label htmlFor="field-custom-logo-url-optional" className="block font-semibold text-[#22272E] mb-1">Custom Logo URL (optional)</label>
                 <input id="field-custom-logo-url-optional"
                   type="url"
                   value={logoUrl}
                   onChange={(e) => setLogoUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
@@ -1144,60 +1144,60 @@ function OwnerSettingsInner() {
 
           {/* Contact Strip Details */}
           <div className="surface-card p-6 rounded-lg space-y-5">
-            <h2 className="text-sm font-semibold text-[#16324F] border-b border-[#D8DEE5] pb-2 flex items-center gap-2">
+            <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
               <Phone className="w-4 h-4 text-[#217A4B]" />
               Trade Contact &amp; Dispatch Desk
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label htmlFor="field-primary-phone" className="block font-semibold text-[#1C2733] mb-1">Primary Phone</label>
+                <label htmlFor="field-primary-phone" className="block font-semibold text-[#22272E] mb-1">Primary Phone</label>
                 <input id="field-primary-phone"
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-semibold"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-semibold"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-whatsapp-trade-line" className="block font-semibold text-[#1C2733] mb-1">WhatsApp Trade Line</label>
+                <label htmlFor="field-whatsapp-trade-line" className="block font-semibold text-[#22272E] mb-1">WhatsApp Trade Line</label>
                 <input id="field-whatsapp-trade-line"
                   type="text"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-semibold text-emerald-700"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-semibold text-emerald-700"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-official-sales-email" className="block font-semibold text-[#1C2733] mb-1">Official Sales Email</label>
+                <label htmlFor="field-official-sales-email" className="block font-semibold text-[#22272E] mb-1">Official Sales Email</label>
                 <input id="field-official-sales-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="field-factory-headquarters-address" className="block font-semibold text-[#1C2733] mb-1">Factory &amp; Headquarters Address</label>
+              <label htmlFor="field-factory-headquarters-address" className="block font-semibold text-[#22272E] mb-1">Factory &amp; Headquarters Address</label>
               <textarea id="field-factory-headquarters-address"
                 rows={3}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
               />
             </div>
 
             <div>
-              <label htmlFor="field-footer-introduction-text" className="block font-semibold text-[#1C2733] mb-1">Footer Introduction Text</label>
+              <label htmlFor="field-footer-introduction-text" className="block font-semibold text-[#22272E] mb-1">Footer Introduction Text</label>
               <textarea id="field-footer-introduction-text"
                 rows={3}
                 value={footerText}
                 onChange={(e) => setFooterText(e.target.value)}
-                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
               />
             </div>
           </div>
@@ -1206,7 +1206,7 @@ function OwnerSettingsInner() {
             <button
               type="submit"
               disabled={saving}
-              className="bg-[#16324F] hover:bg-[#0E2238] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-2"
+              className="bg-[#22272E] hover:bg-[#363D47] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               <span>{saving ? "Saving Identity..." : "Save Identity Settings"}</span>
@@ -1218,8 +1218,8 @@ function OwnerSettingsInner() {
       {/* TAB 4: DATABASE & CLOUD SYNC */}
       {activeTab === "database" && (
         <div className="surface-card p-6 rounded-lg space-y-6 text-xs anim-fade-up">
-          <div className="border-b border-[#E6EBF1] pb-4">
-            <h2 className="text-sm font-semibold text-[#16324F] flex items-center gap-2">
+          <div className="border-b border-[#DFE6EE] pb-4">
+            <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
               <Database className="w-4 h-4 text-slate-400" />
               Backup &amp; recovery
             </h2>
@@ -1254,14 +1254,14 @@ function OwnerSettingsInner() {
           )}
 
           {/* Email delivery diagnostics */}
-          <div className="border border-[#E6EBF1] rounded-md p-4 bg-[#F3F5F7] space-y-3">
+          <div className="border border-[#DFE6EE] rounded-md p-4 bg-[#EDF1F6] space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-start gap-2.5">
-                <span className="p-2 bg-white border border-[#E6EBF1] text-slate-500 rounded-lg shrink-0">
+                <span className="p-2 bg-[#FFFFFF] border border-[#DFE6EE] text-slate-500 rounded-lg shrink-0">
                   <Mail className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-[#16324F] text-xs sm:text-sm">
+                  <h3 className="font-semibold text-[#22272E] text-xs sm:text-sm">
                     Transactional email
                   </h3>
                   <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
@@ -1273,7 +1273,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleTestEmail}
                 disabled={emailTestLoading}
-                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#16324F] hover:bg-[#0E2238] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#22272E] hover:bg-[#363D47] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer shrink-0"
               >
                 {emailTestLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1306,32 +1306,32 @@ function OwnerSettingsInner() {
             {emailDiagnostics && (
               <div className="space-y-2">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
-                  <div className="bg-white border border-[#D8DEE5] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#566373]">Provider</div>
-                    <div className="font-bold text-[#16324F] mt-0.5 uppercase">
+                  <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#5B6877]">Provider</div>
+                    <div className="font-bold text-[#22272E] mt-0.5 uppercase">
                       {emailDiagnostics.config?.provider || "none"}
                     </div>
                   </div>
-                  <div className="bg-white border border-[#D8DEE5] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#566373]">Sender</div>
-                    <div className="font-bold text-[#16324F] mt-0.5 truncate">
+                  <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#5B6877]">Sender</div>
+                    <div className="font-bold text-[#22272E] mt-0.5 truncate">
                       {emailDiagnostics.config?.active_sender_email || emailDiagnostics.config?.brevo_sender_email || emailDiagnostics.config?.resend_from_email || "Not set"}
                     </div>
                   </div>
-                  <div className="bg-white border border-[#D8DEE5] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#566373]">Sender Status</div>
+                  <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#5B6877]">Sender Status</div>
                     <div className={`font-bold mt-0.5 ${emailDiagnostics.sender_verified ? "text-[#217A4B]" : "text-red-600"}`}>
                       {emailDiagnostics.sender_verified ? "Verified" : "Not verified"}
                     </div>
                   </div>
                 </div>
                 {emailDiagnostics.resend && (
-                  <div className="bg-white border border-[#D8DEE5] rounded-lg p-2.5 text-[11px] text-slate-600 space-y-1">
+                  <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5 text-[11px] text-slate-600 space-y-1">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <span className="font-medium text-[#16324F]">Resend</span>
+                      <span className="font-medium text-[#22272E]">Resend</span>
                       <span>Key: {emailDiagnostics.resend.key_valid ? "valid" : "not validated"}</span>
                       <span>Domains: {emailDiagnostics.resend.domains?.length || 0}</span>
-                      {emailDiagnostics.resend.sandbox && <span className="text-[#B94E12]">Sandbox sender</span>}
+                      {emailDiagnostics.resend.sandbox && <span className="text-[#4E5A67]">Sandbox sender</span>}
                     </div>
                     {emailDiagnostics.resend.note && (
                       <p className="text-slate-500 leading-relaxed">{emailDiagnostics.resend.note}</p>
@@ -1353,14 +1353,14 @@ function OwnerSettingsInner() {
           </div>
 
           {/* Cloud auto-persistence */}
-          <div className="border border-[#E6EBF1] rounded-md p-4 bg-[#F3F5F7] space-y-3">
+          <div className="border border-[#DFE6EE] rounded-md p-4 bg-[#EDF1F6] space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-start gap-2.5">
-                <span className="p-2 bg-white border border-[#E6EBF1] text-slate-500 rounded-lg shrink-0 mt-0.5">
+                <span className="p-2 bg-[#FFFFFF] border border-[#DFE6EE] text-slate-500 rounded-lg shrink-0 mt-0.5">
                   <CloudUpload className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-[#16324F] text-xs sm:text-sm flex items-center gap-2">
+                  <h3 className="font-semibold text-[#22272E] text-xs sm:text-sm flex items-center gap-2">
                     Cloud auto-persistence
                     <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#217A4B]">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B]" />
@@ -1377,7 +1377,7 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={() => handleCloudSync("backup")}
                   disabled={cloudSyncLoading || cloudRestoreLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#16324F] hover:bg-[#0E2238] text-white rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#22272E] hover:bg-[#363D47] text-white rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {cloudSyncLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1390,7 +1390,7 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={() => handleCloudSync("restore")}
                   disabled={cloudSyncLoading || cloudRestoreLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 text-[#16324F] border border-[#D8DEE5] rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFFFFF] hover:bg-slate-50 text-[#22272E] border border-[#DFE6EE] rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {cloudRestoreLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1404,13 +1404,13 @@ function OwnerSettingsInner() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-            <div className="border border-[#D8DEE5] rounded-lg p-4 bg-[#F3F5F7] flex flex-col justify-between space-y-3">
+            <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
-                <div className="flex items-center gap-1.5 text-[#16324F] font-bold mb-1">
+                <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
                   <Mail className="w-4 h-4 text-[#217A4B]" />
                   <span>Email Full DB Backup</span>
                 </div>
-                <p className="text-[11px] text-[#566373] leading-relaxed">
+                <p className="text-[11px] text-[#5B6877] leading-relaxed">
                   Generates a live database snapshot and emails it as an Excel attachment directly to <strong>{email || "theprintplanet01@gmail.com"}</strong>.
                 </p>
               </div>
@@ -1429,13 +1429,13 @@ function OwnerSettingsInner() {
               </button>
             </div>
 
-            <div className="border border-[#D8DEE5] rounded-lg p-4 bg-[#F3F5F7] flex flex-col justify-between space-y-3">
+            <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
-                <div className="flex items-center gap-1.5 text-[#16324F] font-bold mb-1">
-                  <Download className="w-4 h-4 text-[#16324F]" />
+                <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
+                  <Download className="w-4 h-4 text-[#22272E]" />
                   <span>Direct DB Download</span>
                 </div>
-                <p className="text-[11px] text-[#566373] leading-relaxed">
+                <p className="text-[11px] text-[#5B6877] leading-relaxed">
                   Immediately compiles and downloads the full multi-sheet database workbook (.xlsx) to your computer.
                 </p>
               </div>
@@ -1443,7 +1443,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleDownloadBackup}
                 disabled={backupDownloadLoading}
-                className="w-full bg-[#16324F] hover:bg-[#0E2238] text-white py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
+                className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
               >
                 {backupDownloadLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1454,13 +1454,13 @@ function OwnerSettingsInner() {
               </button>
             </div>
 
-            <div className="border border-[#D8DEE5] rounded-lg p-4 bg-[#F3F5F7] flex flex-col justify-between space-y-3">
+            <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
-                <div className="flex items-center gap-1.5 text-[#16324F] font-bold mb-1">
-                  <FileSpreadsheet className="w-4 h-4 text-[#D9601A]" />
+                <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
+                  <FileSpreadsheet className="w-4 h-4 text-[#5B6877]" />
                   <span>Catalog &amp; Images Export</span>
                 </div>
-                <p className="text-[11px] text-[#566373] leading-relaxed">
+                <p className="text-[11px] text-[#5B6877] leading-relaxed">
                   Exports all catalog products with SKU, category, trade pricing, and image URLs formatted for client onboarding.
                 </p>
               </div>
@@ -1468,7 +1468,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleExportCatalog}
                 disabled={exportCatalogLoading}
-                className="w-full bg-white border border-[#D8DEE5] hover:bg-[#F3F5F7] text-[#16324F] py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-2xs"
+                className="w-full bg-[#FFFFFF] border border-[#DFE6EE] hover:bg-[#EDF1F6] text-[#22272E] py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-2xs"
               >
                 {exportCatalogLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1485,8 +1485,8 @@ function OwnerSettingsInner() {
       {/* TAB 5: SECURITY CREDENTIALS */}
       {activeTab === "security" && (
         <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
-          <h2 className="text-sm font-semibold text-[#16324F] border-b border-[#D8DEE5] pb-2 flex items-center gap-1.5">
-            <Lock className="w-4 h-4 text-[#D9601A]" />
+          <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-1.5">
+            <Lock className="w-4 h-4 text-[#5B6877]" />
             Change Owner Master Password
           </h2>
 
@@ -1506,18 +1506,18 @@ function OwnerSettingsInner() {
 
           <form onSubmit={handleChangePassword} className="space-y-4 max-w-md">
             <div>
-              <label htmlFor="field-current-password" className="block font-semibold text-[#1C2733] mb-1">Current Password *</label>
+              <label htmlFor="field-current-password" className="block font-semibold text-[#22272E] mb-1">Current Password *</label>
               <input id="field-current-password"
                 type="password"
                 required
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3.5 py-2.5 outline-none"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3.5 py-2.5 outline-none"
               />
             </div>
 
             <div>
-              <label htmlFor="field-new-master-password-min" className="block font-semibold text-[#1C2733] mb-1">
+              <label htmlFor="field-new-master-password-min" className="block font-semibold text-[#22272E] mb-1">
                 New Master Password (min 8 characters) *
               </label>
               <input id="field-new-master-password-min"
@@ -1526,14 +1526,14 @@ function OwnerSettingsInner() {
                 minLength={8}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3.5 py-2.5 outline-none"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3.5 py-2.5 outline-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={passSubmitting}
-              className="bg-[#16324F] hover:bg-[#0E2238] text-white px-6 py-2.5 rounded-md font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
+              className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-md font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
             >
               {passSubmitting ? "Updating Password..." : "Update Owner Password"}
             </button>
@@ -1546,7 +1546,7 @@ function OwnerSettingsInner() {
 
 export default function OwnerSettingsPage() {
   return (
-    <Suspense fallback={<div className="py-20 text-center text-xs text-[#566373]">Loading configuration...</div>}>
+    <Suspense fallback={<div className="py-20 text-center text-xs text-[#5B6877]">Loading configuration...</div>}>
       <OwnerSettingsInner />
     </Suspense>
   );

@@ -68,10 +68,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         data-tilt
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="group bg-white border border-[#D8DEE5] hover:border-[#16324F] rounded-lg overflow-hidden transition-colors duration-200 flex flex-col h-full relative"
+        className="group bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] rounded-lg overflow-hidden transition-colors duration-200 flex flex-col h-full relative"
       >
         {/* Image Container with 1:1 Aspect Ratio */}
-        <div className="relative w-full pt-[100%] bg-white overflow-hidden block">
+        <div className="relative w-full pt-[100%] bg-[#FFFFFF] overflow-hidden block">
           {!imgLoaded && !hasError && (
             <div className="absolute inset-0 skeleton" />
           )}
@@ -132,7 +132,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               type="button"
               onClick={handleOpenQuickView}
-              className="bg-white/95 hover:bg-[#16324F] hover:text-white text-[#1C2733] text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md border border-[#D8DEE5] hover:border-[#16324F] transition-all flex items-center gap-1.5 backdrop-blur-xs"
+              className="bg-white/95 hover:bg-[#22272E] hover:text-white text-[#22272E] text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md border border-[#DFE6EE] hover:border-[#22272E] transition-all flex items-center gap-1.5 backdrop-blur-xs"
             >
               <Eye className="w-3.5 h-3.5" />
               <span>Quick View</span>
@@ -147,40 +147,40 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.category && (
               <Link
                 href={`/products?category=${product.category.slug}`}
-                className="text-[11px] text-[#566373] hover:text-[#B94E12] block truncate mb-1 transition-colors"
+                className="text-[11px] text-[#5B6877] hover:text-[#4E5A67] block truncate mb-1 transition-colors"
               >
                 {formatProductName(product.category.name)}
               </Link>
             )}
 
             {/* Product Title */}
-            <h3 className="text-sm font-semibold text-[#16324F] line-clamp-2 leading-snug min-h-[2.5rem]">
+            <h3 className="text-sm font-semibold text-[#22272E] line-clamp-2 leading-snug min-h-[2.5rem]">
               <Link href={`/products/${product.slug}`} title={product.name}>
                 {formatProductName(product.name)}
               </Link>
             </h3>
 
-            <p className="font-mono text-[11px] text-[#566373] truncate mt-1">{product.sku}</p>
+            <p className="font-mono text-[11px] text-[#5B6877] truncate mt-1">{product.sku}</p>
           </div>
 
           {/* Pricing & Actions */}
           <div className="flex items-end justify-between gap-2">
             <div className="min-w-0 flex-1">
               {product.price_display ? (
-                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#16324F] truncate">
+                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#22272E] truncate">
                   {product.price_display}
                 </div>
               ) : product.price ? (
-                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#16324F] truncate">
+                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#22272E] truncate">
                   ₹{Number(product.price).toLocaleString("en-IN")}
                 </div>
               ) : (
-                <div className="text-[13px] font-semibold text-[#566373]">
+                <div className="text-[13px] font-semibold text-[#5B6877]">
                   Price on Request
                 </div>
               )}
               {product.minimum_order_quantity && (
-                <span className="text-[9px] sm:text-[10px] text-[#566373] font-mono block mt-0.5">
+                <span className="text-[9px] sm:text-[10px] text-[#5B6877] font-mono block mt-0.5">
                   MOQ {product.minimum_order_quantity}
                 </span>
               )}
@@ -194,7 +194,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 className={`w-9 h-9 rounded-md ${
                   added
                     ? "bg-[#217A4B] text-white"
-                    : "bg-[#D9601A] hover:bg-[#B94E12] text-white"
+                    : "bg-[#22272E] hover:bg-[#363D47] text-white"
                 } flex items-center justify-center transition-colors`}
                 title={added ? "Added to Quote Cart!" : "Add to Quote Cart"}
                 aria-label={`Add ${formatProductName(product.name)} to cart`}

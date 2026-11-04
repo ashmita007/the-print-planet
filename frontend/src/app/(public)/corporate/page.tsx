@@ -52,7 +52,7 @@ export default function CorporatePage() {
         <Breadcrumbs items={[{ label: "Corporate & Bulk Orders" }]} />
         <Link
           href="/orders"
-          className="shrink-0 text-[13px] font-semibold text-[#16324F] underline decoration-[#C9D1DA] underline-offset-4 hover:decoration-[#D9601A] transition-colors"
+          className="shrink-0 text-[13px] font-semibold text-[#22272E] underline decoration-[#B9C3CF] underline-offset-4 hover:decoration-[#B9C3CF] transition-colors"
         >
           Track my orders
         </Link>
@@ -60,10 +60,10 @@ export default function CorporatePage() {
 
       <BulkOrderDesk />
 
-      <section className="bg-[#F3F5F7]">
+      <section className="bg-[#EDF1F6]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#16324F] tracking-tight leading-[1.08]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight leading-[1.08]">
               Good to know
             </h2>
           </div>

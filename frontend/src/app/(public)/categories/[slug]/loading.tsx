@@ -8,7 +8,7 @@ export default function CategoryDetailLoading() {
         <div className="h-3 w-56 skeleton" />
       </div>
 
-      <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
+      <div className="border-b border-[#DFE6EE] pb-6 space-y-3">
         <div className="h-3 w-36 skeleton" />
         <div className="h-9 sm:h-10 w-2/3 max-w-md skeleton" />
         <div className="h-3 w-full max-w-2xl skeleton" />

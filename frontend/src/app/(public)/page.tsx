@@ -9,6 +9,11 @@ import BuyingFacts from "@/components/BuyingFacts";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
 import GoogleReviews from "@/components/GoogleReviews";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
+import BrandStatement from "@/components/home/BrandStatement";
+import BulkInkBand from "@/components/home/BulkInkBand";
+import Marquee from "@/components/home/Marquee";
+
+const PRODUCT_WORDS = ["PVC cards", "Satin lanyards", "ID card holders", "RFID cards", "Badge reels", "Card machines"];
 import {
   getCategories,
   getFeaturedProducts,
@@ -137,6 +142,12 @@ export default async function HomePage() {
         settings={settings}
       />
 
+      {/* Product words run with the scroll */}
+      <Marquee items={PRODUCT_WORDS} label="What we make" className="text-[#22272E] mt-6" />
+
+      {/* Who we are, set large */}
+      <BrandStatement />
+
       {/* Product families, led by real photos */}
       <ProductLines />
 
@@ -153,12 +164,12 @@ export default async function HomePage() {
       {/* Machines */}
       <section aria-labelledby="machines-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="flex items-baseline justify-between gap-4 mb-6">
-          <h2 id="machines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#16324F] tracking-tight">
+          <h2 id="machines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight">
             Card and lanyard machines
           </h2>
           <Link
             href="/categories/machines"
-            className="shrink-0 text-sm font-semibold text-[#B94E12] hover:underline underline-offset-4"
+            className="shrink-0 text-sm font-semibold text-[#4E5A67] hover:underline underline-offset-4"
           >
             View all
           </Link>
@@ -169,6 +180,9 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Bulk orders: ink band that opens with a circle wipe */}
+      <BulkInkBand whatsapp={settings?.whatsapp} />
 
       {/* Why buy here, in four facts */}
       <BuyingFacts />
@@ -195,7 +209,7 @@ export default async function HomePage() {
 
         <div className="space-y-8">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#16324F]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
               Common questions
             </h2>
           </div>

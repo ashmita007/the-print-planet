@@ -77,19 +77,19 @@ export default function Pagination({
   return (
     <nav
       aria-label="Pagination Navigation"
-      className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 sm:pt-8 border-t border-[#D8DEE5]"
+      className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 sm:pt-8 border-t border-[#DFE6EE]"
     >
       {/* Item Range Counter */}
       {totalCount !== undefined && totalCount > 0 ? (
-        <p className="text-xs text-[#566373] text-center sm:text-left order-2 sm:order-1 font-medium">
-          Showing <span className="font-bold text-[#16324F]">{startItem}</span>–
-          <span className="font-bold text-[#16324F]">{endItem}</span> of{" "}
-          <span className="font-bold text-[#16324F]">{totalCount}</span> products
+        <p className="text-xs text-[#5B6877] text-center sm:text-left order-2 sm:order-1 font-medium">
+          Showing <span className="font-bold text-[#22272E]">{startItem}</span>–
+          <span className="font-bold text-[#22272E]">{endItem}</span> of{" "}
+          <span className="font-bold text-[#22272E]">{totalCount}</span> products
         </p>
       ) : (
-        <p className="text-xs text-[#566373] text-center sm:text-left order-2 sm:order-1 font-medium">
-          Page <span className="font-bold text-[#16324F]">{currentPage}</span> of{" "}
-          <span className="font-bold text-[#16324F]">{totalPages}</span>
+        <p className="text-xs text-[#5B6877] text-center sm:text-left order-2 sm:order-1 font-medium">
+          Page <span className="font-bold text-[#22272E]">{currentPage}</span> of{" "}
+          <span className="font-bold text-[#22272E]">{totalPages}</span>
         </p>
       )}
 
@@ -102,8 +102,8 @@ export default function Pagination({
             aria-label="Go to first page"
             className={`hidden sm:flex w-8 h-8 rounded-lg items-center justify-center transition-colors border ${
               hasPrevious
-                ? "bg-white border-[#D8DEE5] text-[#1C2733] hover:bg-[#F3F5F7] hover:text-[#16324F]"
-                : "bg-[#F3F5F7] border-slate-200 text-slate-300 pointer-events-none"
+                ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E]"
+                : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
             }`}
           >
             <ChevronsLeft className="w-3.5 h-3.5" />
@@ -116,8 +116,8 @@ export default function Pagination({
           aria-label="Previous page"
           className={`flex items-center gap-1 px-2.5 sm:px-3 h-8 rounded-lg text-xs font-semibold transition-colors border ${
             hasPrevious
-              ? "bg-white border-[#D8DEE5] text-[#1C2733] hover:bg-[#F3F5F7] hover:text-[#16324F] shadow-2xs"
-              : "bg-[#F3F5F7] border-slate-200 text-slate-300 pointer-events-none"
+              ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E] shadow-2xs"
+              : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
           }`}
         >
           <ChevronLeft className="w-3.5 h-3.5" />
@@ -149,8 +149,8 @@ export default function Pagination({
                 aria-current={isCurrent ? "page" : undefined}
                 className={`w-8 h-8 rounded-lg text-xs font-bold flex items-center justify-center transition-all ${
                   isCurrent
-                    ? "bg-[#16324F] text-white shadow-xs border border-[#16324F]"
-                    : "bg-white border border-[#D8DEE5] text-[#1C2733] hover:bg-[#F3F5F7] hover:border-slate-300 hover:text-[#16324F]"
+                    ? "bg-[#22272E] text-white shadow-xs border border-[#22272E]"
+                    : "bg-[#FFFFFF] border border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:border-slate-300 hover:text-[#22272E]"
                 }`}
               >
                 {pageNum}
@@ -165,8 +165,8 @@ export default function Pagination({
           aria-label="Next page"
           className={`flex items-center gap-1 px-2.5 sm:px-3 h-8 rounded-lg text-xs font-semibold transition-colors border ${
             hasNext
-              ? "bg-white border-[#D8DEE5] text-[#1C2733] hover:bg-[#F3F5F7] hover:text-[#16324F] shadow-2xs"
-              : "bg-[#F3F5F7] border-slate-200 text-slate-300 pointer-events-none"
+              ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E] shadow-2xs"
+              : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
           }`}
         >
           <span className="hidden sm:inline">Next</span>
@@ -180,8 +180,8 @@ export default function Pagination({
             aria-label="Go to last page"
             className={`hidden sm:flex w-8 h-8 rounded-lg items-center justify-center transition-colors border ${
               hasNext
-                ? "bg-white border-[#D8DEE5] text-[#1C2733] hover:bg-[#F3F5F7] hover:text-[#16324F]"
-                : "bg-[#F3F5F7] border-slate-200 text-slate-300 pointer-events-none"
+                ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E]"
+                : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
             }`}
           >
             <ChevronsRight className="w-3.5 h-3.5" />

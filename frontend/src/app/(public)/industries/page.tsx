@@ -43,19 +43,19 @@ export default function IndustriesPage() {
       />
 
       <section aria-label="Industries" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D8DEE5] border border-[#D8DEE5] rounded-lg overflow-hidden">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#DFE6EE] border border-[#DFE6EE] rounded-lg overflow-hidden">
           {INDUSTRIES.map(({ icon: Icon, title, note }) => (
-            <li key={title} className="bg-white">
+            <li key={title} className="bg-[#FFFFFF]">
               <Link
                 href={`/quote?industry=${encodeURIComponent(title)}`}
                 className="ink-row flex items-center gap-4 p-5 sm:p-6 h-full"
               >
-                <Icon className="ink-row-note w-7 h-7 shrink-0 text-[#16324F]" aria-hidden="true" />
+                <Icon className="ink-row-note w-7 h-7 shrink-0 text-[#22272E]" aria-hidden="true" />
                 <span className="flex-1 min-w-0">
-                  <span className="ink-row-title block text-lg font-bold tracking-tight text-[#16324F]">{title}</span>
-                  <span className="ink-row-note block text-sm text-[#566373] mt-0.5">{note}</span>
+                  <span className="ink-row-title block text-lg font-bold tracking-tight text-[#22272E]">{title}</span>
+                  <span className="ink-row-note block text-sm text-[#5B6877] mt-0.5">{note}</span>
                 </span>
-                <ArrowRight className="ink-row-arrow w-5 h-5 shrink-0 text-[#B94E12]" aria-hidden="true" />
+                <ArrowRight className="ink-row-arrow w-5 h-5 shrink-0 text-[#4E5A67]" aria-hidden="true" />
               </Link>
             </li>
           ))}

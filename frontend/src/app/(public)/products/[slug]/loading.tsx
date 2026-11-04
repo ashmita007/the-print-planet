@@ -27,7 +27,7 @@ export default function ProductDetailLoading() {
             <div className="h-6 w-24 skeleton rounded-full" />
             <div className="h-6 w-28 skeleton rounded-full" />
           </div>
-          <div className="border border-[#D8DEE5] rounded-lg p-5 space-y-3">
+          <div className="border border-[#DFE6EE] rounded-lg p-5 space-y-3">
             <div className="h-3 w-24 skeleton" />
             <div className="h-8 w-40 skeleton" />
             <div className="h-10 w-full skeleton rounded-lg" />
@@ -43,7 +43,7 @@ export default function ProductDetailLoading() {
           </div>
           <div className="space-y-2 pt-2">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-[#F0F3F7]">
+              <div key={i} className="flex items-center justify-between py-2 border-b border-[#EDF1F6]">
                 <div className="h-3 w-24 skeleton" />
                 <div className="h-3 w-32 skeleton" />
               </div>

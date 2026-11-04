@@ -159,12 +159,12 @@ export default function OwnerOrdersPage() {
       case "submitted":
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Submitted</span>;
       case "reviewing":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">Reviewing</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE]">Reviewing</span>;
       case "quoted":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">Quotation Ready</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE]">Quotation Ready</span>;
       case "proofing":
       case "in_production":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#16324F] border border-[#D8DEE5]">In Production</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE]">In Production</span>;
       case "dispatched":
       case "completed":
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Dispatched / Complete</span>;
@@ -181,7 +181,7 @@ export default function OwnerOrdersPage() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Sales
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16324F] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#22272E] mt-1">
             Bulk orders
           </h1>
           <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
@@ -194,17 +194,17 @@ export default function OwnerOrdersPage() {
             type="button"
             onClick={handleDownloadBackup}
             disabled={backupLoading}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[#D8DEE5] bg-white hover:bg-slate-50 text-[#16324F] text-xs font-bold transition-all shadow-2xs cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[#DFE6EE] bg-[#FFFFFF] hover:bg-slate-50 text-[#22272E] text-xs font-bold transition-all shadow-2xs cursor-pointer disabled:opacity-50"
             title="Download full Excel archive of all customer messages & bulk orders"
           >
-            <Download className="w-4 h-4 text-[#D9601A]" />
+            <Download className="w-4 h-4 text-[#5B6877]" />
             <span>{backupLoading ? "Generating..." : "Download Conversations (.xlsx)"}</span>
           </button>
 
           <button
             type="button"
             onClick={() => fetchOrders()}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md bg-[#16324F] hover:bg-[#0E2238] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
             <span>Refresh</span>
@@ -213,7 +213,7 @@ export default function OwnerOrdersPage() {
       </div>
 
       {/* Search and Filters Bar */}
-      <div className="bg-white p-4 sm:p-5 rounded-lg border border-[#D8DEE5] shadow-2xs space-y-4">
+      <div className="bg-[#FFFFFF] p-4 sm:p-5 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
           {/* Search */}
           <div className="sm:col-span-6 relative">
@@ -227,7 +227,7 @@ export default function OwnerOrdersPage() {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md outline-none text-[#1C2733] transition-all"
+              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md outline-none text-[#22272E] transition-all"
             />
           </div>
 
@@ -240,7 +240,7 @@ export default function OwnerOrdersPage() {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full py-2 px-3 text-xs sm:text-sm bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md outline-none text-[#1C2733]"
+              className="w-full py-2 px-3 text-xs sm:text-sm bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md outline-none text-[#22272E]"
             >
               {STATUS_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -259,7 +259,7 @@ export default function OwnerOrdersPage() {
                 setOrgTypeFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full py-2 px-3 text-xs sm:text-sm bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md outline-none text-[#1C2733]"
+              className="w-full py-2 px-3 text-xs sm:text-sm bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md outline-none text-[#22272E]"
             >
               <option value="all">All Sectors</option>
               <option value="corporate">Corporate &amp; Enterprise</option>
@@ -272,16 +272,16 @@ export default function OwnerOrdersPage() {
       </div>
 
       {/* Orders Table & List */}
-      <div className="bg-white rounded-lg border border-[#D8DEE5] shadow-2xs overflow-hidden">
+      <div className="bg-[#FFFFFF] rounded-lg border border-[#DFE6EE] shadow-2xs overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-slate-400 space-y-3">
-            <RefreshCw className="w-6 h-6 animate-spin mx-auto text-[#D9601A]" />
+            <RefreshCw className="w-6 h-6 animate-spin mx-auto text-[#5B6877]" />
             <p className="text-xs">Loading institutional bulk orders...</p>
           </div>
         ) : orders.length === 0 ? (
           <div className="p-12 text-center text-slate-500 space-y-3">
             <Briefcase className="w-10 h-10 mx-auto text-slate-300" />
-            <h3 className="font-bold text-base text-[#16324F]">No bulk orders found</h3>
+            <h3 className="font-bold text-base text-[#22272E]">No bulk orders found</h3>
             <p className="text-xs text-slate-400">
               {search || statusFilter !== "all" || orgTypeFilter !== "all"
                 ? "Try clearing your search query or filters."
@@ -291,7 +291,7 @@ export default function OwnerOrdersPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#F3F5F7] border-b border-[#D8DEE5] text-[#566373] font-bold uppercase tracking-wider text-[10px]">
+              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#5B6877] font-bold uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="py-3 px-4">Order #</th>
                   <th className="py-3 px-4">Organization &amp; Sector</th>
@@ -303,44 +303,44 @@ export default function OwnerOrdersPage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#EEF2F7]">
+              <tbody className="divide-y divide-[#EDF1F6]">
                 {orders.map((o) => (
                   <tr
                     key={o.id}
                     className="hover:bg-slate-50/80 transition-colors cursor-pointer"
                     onClick={() => handleOpenDetail(o.id)}
                   >
-                    <td className="py-3.5 px-4 font-mono font-bold text-[#16324F]">
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#22272E]">
                       {o.order_number}
                       <span className="block text-[10px] text-slate-400 font-sans font-normal">
                         {new Date(o.created_at).toLocaleDateString("en-IN")}
                       </span>
                     </td>
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-[#1C2733]">{o.organization_name}</div>
+                      <div className="font-bold text-[#22272E]">{o.organization_name}</div>
                       <span className="inline-flex items-center gap-1 text-[10px] text-slate-500">
                         {o.organization_type === "school" || o.organization_type === "college" ? (
-                          <GraduationCap className="w-3 h-3 text-[#16324F]" />
+                          <GraduationCap className="w-3 h-3 text-[#22272E]" />
                         ) : (
-                          <Building2 className="w-3 h-3 text-[#D9601A]" />
+                          <Building2 className="w-3 h-3 text-[#5B6877]" />
                         )}
                         <span>{SECTOR_LABELS[o.organization_type] || "Corporate"}</span>
                         {o.city ? ` · ${o.city}` : ""}
                       </span>
                     </td>
                     <td className="py-3.5 px-4">
-                      <div className="text-[#1C2733] font-medium">{o.contact_person}</div>
+                      <div className="text-[#22272E] font-medium">{o.contact_person}</div>
                       <div className="text-[10px] text-slate-400">{o.phone || o.email}</div>
                     </td>
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-[#16324F]">
+                      <div className="font-bold text-[#22272E]">
                         {Number(o.estimated_quantity).toLocaleString("en-IN")} units
                       </div>
                       <div className="text-[10px] text-slate-500 capitalize">
                         {o.category_type.replace(/_/g, " ")}
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-[#1C2733]">
+                    <td className="py-3.5 px-4 font-semibold text-[#22272E]">
                       {o.quoted_amount ? (
                         <span className="text-emerald-700 font-bold">
                           ₹{Number(o.quoted_amount).toLocaleString("en-IN")}
@@ -352,7 +352,7 @@ export default function OwnerOrdersPage() {
                     <td className="py-3.5 px-4">{getStatusBadge(o.status, o.status_label)}</td>
                     <td className="py-3.5 px-4">
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-semibold">
-                        <MessageSquare className="w-3 h-3 text-[#16324F]" />
+                        <MessageSquare className="w-3 h-3 text-[#22272E]" />
                         <span>{o.messages_count ?? o.messages?.length ?? 0}</span>
                       </span>
                     </td>
@@ -363,7 +363,7 @@ export default function OwnerOrdersPage() {
                           e.stopPropagation();
                           handleOpenDetail(o.id);
                         }}
-                        className="inline-flex items-center gap-1 bg-[#16324F] hover:bg-[#0E2238] text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-2xs"
+                        className="inline-flex items-center gap-1 bg-[#22272E] hover:bg-[#363D47] text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-2xs"
                       >
                         <span>Open &amp; Reply</span>
                         <ChevronRight className="w-3 h-3" />
@@ -380,12 +380,12 @@ export default function OwnerOrdersPage() {
       {/* Selected Order Detail & Two-Way Conversation Modal */}
       {selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs">
-          <div className="bg-white rounded-lg border border-[#D8DEE5] shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95">
+          <div className="bg-[#FFFFFF] rounded-lg border border-[#DFE6EE] shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95">
             {/* Modal Header */}
-            <div className="p-4 sm:p-6 bg-[#16324F] text-white flex items-center justify-between shrink-0">
+            <div className="p-4 sm:p-6 bg-[#22272E] text-white flex items-center justify-between shrink-0">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono uppercase bg-white/10 px-2.5 py-0.5 rounded-md text-[#F4A36B]">
+                  <span className="text-xs font-mono uppercase bg-white/10 px-2.5 py-0.5 rounded-md text-[#B9C3CF]">
                     #{selectedOrder.order_number}
                   </span>
                   {getStatusBadge(selectedOrder.status, selectedOrder.status_label)}
@@ -407,22 +407,22 @@ export default function OwnerOrdersPage() {
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
               {/* Order Specs & Contact Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-[#F3F5F7] border border-[#D8DEE5] p-4 rounded-md space-y-1 text-xs">
+                <div className="bg-[#EDF1F6] border border-[#DFE6EE] p-4 rounded-md space-y-1 text-xs">
                   <span className="text-[10px] uppercase font-bold text-slate-400">Client Contact</span>
-                  <div className="font-bold text-[#16324F]">{selectedOrder.contact_person}</div>
+                  <div className="font-bold text-[#22272E]">{selectedOrder.contact_person}</div>
                   <div className="flex items-center gap-1 text-slate-500">
-                    <Phone className="w-3 h-3 text-[#D9601A]" />
+                    <Phone className="w-3 h-3 text-[#5B6877]" />
                     <span>{selectedOrder.phone}</span>
                   </div>
                   <div className="flex items-center gap-1 text-slate-500 truncate">
-                    <Mail className="w-3 h-3 text-[#D9601A]" />
+                    <Mail className="w-3 h-3 text-[#5B6877]" />
                     <span className="truncate">{selectedOrder.email}</span>
                   </div>
                 </div>
 
-                <div className="bg-[#F3F5F7] border border-[#D8DEE5] p-4 rounded-md space-y-1 text-xs">
+                <div className="bg-[#EDF1F6] border border-[#DFE6EE] p-4 rounded-md space-y-1 text-xs">
                   <span className="text-[10px] uppercase font-bold text-slate-400">Order Specs</span>
-                  <div className="font-bold text-[#16324F]">
+                  <div className="font-bold text-[#22272E]">
                     {Number(selectedOrder.estimated_quantity).toLocaleString("en-IN")} units
                   </div>
                   <div className="text-slate-600 capitalize">
@@ -441,7 +441,7 @@ export default function OwnerOrdersPage() {
                   )}
                 </div>
 
-                <div className="bg-[#F3F5F7] border border-[#D8DEE5] p-4 rounded-md space-y-1 text-xs">
+                <div className="bg-[#EDF1F6] border border-[#DFE6EE] p-4 rounded-md space-y-1 text-xs">
                   <span className="text-[10px] uppercase font-bold text-slate-400">Quotation &amp; Courier</span>
                   <div className="font-bold text-emerald-700 text-sm">
                     {selectedOrder.quoted_amount ? `₹${Number(selectedOrder.quoted_amount).toLocaleString("en-IN")}` : "No Quote Issued Yet"}
@@ -458,7 +458,7 @@ export default function OwnerOrdersPage() {
                     <AttachmentLink
                       as="owner"
                       url={selectedOrder.attachment_url || selectedOrder.attachment || ""}
-                      className="inline-flex items-center gap-1 text-[#D9601A] hover:underline font-bold pt-1"
+                      className="inline-flex items-center gap-1 text-[#5B6877] hover:underline font-bold pt-1"
                     >
                       <Paperclip className="w-3 h-3" />
                       <span>Download Attached Spec/File</span>
@@ -473,7 +473,7 @@ export default function OwnerOrdersPage() {
                   <span className="font-bold text-amber-900 uppercase text-[10px] tracking-wide">
                     Client Requirements / Notes:
                   </span>
-                  <p className="text-[#1C2733] whitespace-pre-line leading-relaxed">
+                  <p className="text-[#22272E] whitespace-pre-line leading-relaxed">
                     {selectedOrder.requirements}
                   </p>
                 </div>
@@ -482,15 +482,15 @@ export default function OwnerOrdersPage() {
               {/* Explored/Checked Products */}
               {selectedOrder.checked_products && selectedOrder.checked_products.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold text-[#16324F] uppercase tracking-wider flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#D9601A]" />
+                  <h4 className="text-xs font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#5B6877]" />
                     <span>Products Explored By User Prior to Bulk Inquiry:</span>
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedOrder.checked_products.map((p: any) => (
                       <span
                         key={p.id}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 text-[#16324F] text-xs font-medium border border-slate-200"
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 text-[#22272E] text-xs font-medium border border-slate-200"
                       >
                         <span>{p.name}</span>
                         {p.sku && <span className="text-[10px] text-slate-400 font-mono">({p.sku})</span>}
@@ -502,12 +502,12 @@ export default function OwnerOrdersPage() {
 
               {/* Conversation Messages Thread */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-[#16324F] uppercase tracking-wider flex items-center gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 text-[#16324F]" />
+                <h4 className="text-xs font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-1.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#22272E]" />
                   <span>Conversation History ({selectedOrder.messages?.length || 0} messages)</span>
                 </h4>
 
-                <div className="space-y-3 border border-[#D8DEE5] rounded-lg p-4 bg-[#F3F5F7] max-h-72 overflow-y-auto">
+                <div className="space-y-3 border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] max-h-72 overflow-y-auto">
                   {selectedOrder.messages?.length === 0 ? (
                     <p className="text-xs text-slate-400 italic text-center py-4">No conversation messages yet.</p>
                   ) : (
@@ -531,15 +531,15 @@ export default function OwnerOrdersPage() {
                           className={`flex flex-col ${isOwner ? "items-end" : "items-start"}`}
                         >
                           <div className="flex items-center gap-1.5 text-[10px] text-slate-400 mb-1">
-                            <span className="font-bold text-[#16324F]">{msg.sender_name}</span>
+                            <span className="font-bold text-[#22272E]">{msg.sender_name}</span>
                             <span>·</span>
                             <span>{new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
                           </div>
                           <div
                             className={`p-3.5 rounded-lg max-w-lg text-xs leading-relaxed ${
                               isOwner
-                                ? "bg-[#16324F] text-white rounded-tr-none shadow-2xs"
-                                : "bg-white text-[#1C2733] border border-[#D8DEE5] rounded-tl-none shadow-2xs"
+                                ? "bg-[#22272E] text-white rounded-tr-none shadow-2xs"
+                                : "bg-[#FFFFFF] text-[#22272E] border border-[#DFE6EE] rounded-tl-none shadow-2xs"
                             }`}
                           >
                             <p className="whitespace-pre-line">{msg.message}</p>
@@ -548,7 +548,7 @@ export default function OwnerOrdersPage() {
                                 as="owner"
                                 url={msg.attachment_url}
                                 className={`inline-flex items-center gap-1 text-[11px] font-bold mt-2 underline ${
-                                  isOwner ? "text-[#F4A36B]" : "text-[#D9601A]"
+                                  isOwner ? "text-[#B9C3CF]" : "text-[#5B6877]"
                                 }`}
                               >
                                 <Paperclip className="w-3 h-3" />
@@ -564,8 +564,8 @@ export default function OwnerOrdersPage() {
               </div>
 
               {/* Owner Reply & Update Form */}
-              <form onSubmit={handleSendReply} className="bg-white border border-[#D8DEE5] p-4 sm:p-5 rounded-lg space-y-4 shadow-sm">
-                <h4 className="text-xs font-bold text-[#16324F] uppercase tracking-wider">
+              <form onSubmit={handleSendReply} className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 sm:p-5 rounded-lg space-y-4 shadow-sm">
+                <h4 className="text-xs font-bold text-[#22272E] uppercase tracking-wider">
                   Post Owner Response &amp; Update Order Status
                 </h4>
 
@@ -583,13 +583,13 @@ export default function OwnerOrdersPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label htmlFor="field-update-status" className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-update-status" className="block text-[11px] font-bold text-[#22272E] mb-1">
                       Update Status:
                     </label>
                     <select id="field-update-status"
                       value={updateStatus}
                       onChange={(e) => setUpdateStatus(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md outline-none"
+                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none"
                     >
                       {STATUS_OPTIONS.filter((o) => o.value !== "all").map((opt) => (
                         <option key={opt.value} value={opt.value}>
@@ -600,7 +600,7 @@ export default function OwnerOrdersPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="field-quoted-amount-inr" className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-quoted-amount-inr" className="block text-[11px] font-bold text-[#22272E] mb-1">
                       Quoted Amount (₹ INR):
                     </label>
                     <input id="field-quoted-amount-inr"
@@ -609,12 +609,12 @@ export default function OwnerOrdersPage() {
                       placeholder="e.g. 45000"
                       value={quotedAmount}
                       onChange={(e) => setQuotedAmount(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md outline-none"
+                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="field-courier-partner" className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-courier-partner" className="block text-[11px] font-bold text-[#22272E] mb-1">
                       Courier Partner:
                     </label>
                     <input id="field-courier-partner"
@@ -622,14 +622,14 @@ export default function OwnerOrdersPage() {
                       placeholder="e.g. DTDC Express / Blue Dart"
                       value={courierPartner}
                       onChange={(e) => setCourierPartner(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md outline-none"
+                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="sm:col-span-3">
-                    <label htmlFor="field-tracking-consignment-awb-number" className="block text-[11px] font-bold text-[#16324F] mb-1">
+                    <label htmlFor="field-tracking-consignment-awb-number" className="block text-[11px] font-bold text-[#22272E] mb-1">
                       Tracking / Consignment AWB Number:
                     </label>
                     <input id="field-tracking-consignment-awb-number"
@@ -637,13 +637,13 @@ export default function OwnerOrdersPage() {
                       placeholder="e.g. D12345678IN"
                       value={trackingNumber}
                       onChange={(e) => setTrackingNumber(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md outline-none font-mono"
+                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none font-mono"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="field-response-message-to-buyer" className="block text-[11px] font-bold text-[#16324F] mb-1">
+                  <label htmlFor="field-response-message-to-buyer" className="block text-[11px] font-bold text-[#22272E] mb-1">
                     Response Message to Buyer:
                   </label>
                   <textarea id="field-response-message-to-buyer"
@@ -651,7 +651,7 @@ export default function OwnerOrdersPage() {
                     placeholder="Enter formal quote details, timeline specifications, or delivery confirmation to the customer..."
                     value={replyMessage}
                     onChange={(e) => setReplyMessage(e.target.value)}
-                    className="w-full text-xs p-3 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md outline-none focus:border-[#16324F] focus:bg-white transition-all"
+                    className="w-full text-xs p-3 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none focus:border-[#22272E] focus:bg-[#FFFFFF] transition-all"
                   />
                 </div>
 
@@ -659,14 +659,14 @@ export default function OwnerOrdersPage() {
                   <button
                     type="button"
                     onClick={() => setSelectedOrder(null)}
-                    className="px-4 py-2 rounded-md border border-[#D8DEE5] text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
+                    className="px-4 py-2 rounded-md border border-[#DFE6EE] text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
                   >
                     Close
                   </button>
                   <button
                     type="submit"
                     disabled={replySubmitting}
-                    className="px-5 py-2 rounded-md bg-[#D9601A] hover:bg-[#B94E12] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                    className="px-5 py-2 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>{replySubmitting ? "Sending..." : "Post Reply & Update Order"}</span>

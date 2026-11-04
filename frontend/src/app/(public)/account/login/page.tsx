@@ -40,13 +40,13 @@ export default function ClientLoginPage() {
     <div className="max-w-md mx-auto px-4 py-12 space-y-6">
       <Breadcrumbs items={[{ label: "Client Portal", href: "/orders" }, { label: "Login" }]} />
 
-      <div className="bg-white border border-[#D8DEE5] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
+      <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#FFF5EE] text-[#D9601A] rounded-md flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#EDF1F6] text-[#5B6877] rounded-md flex items-center justify-center mx-auto mb-2">
             <UserCheck className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-extrabold text-[#16324F]">Buyer / Client Login</h1>
-          <p className="text-xs text-[#566373]">
+          <h1 className="text-2xl font-extrabold text-[#22272E]">Buyer / Client Login</h1>
+          <p className="text-xs text-[#5B6877]">
             Sign in to track school &amp; corporate bulk orders and message thread history.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function ClientLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
           <div>
-            <label htmlFor="field-email-or-username" className="block font-bold text-[#1C2733] mb-1">Email or Username</label>
+            <label htmlFor="field-email-or-username" className="block font-bold text-[#22272E] mb-1">Email or Username</label>
             <div className="relative">
               <input id="field-email-or-username"
                 type="text"
@@ -67,7 +67,7 @@ export default function ClientLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="your-email@school.edu.in"
-                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-3 py-2.5 text-[#1C2733] outline-none"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#22272E] outline-none"
               />
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -75,10 +75,10 @@ export default function ClientLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label htmlFor="field-password" className="block font-bold text-[#1C2733]">Password</label>
+              <label htmlFor="field-password" className="block font-bold text-[#22272E]">Password</label>
               <Link
                 href="/account/forgot-password"
-                className="text-[11px] font-semibold text-[#D9601A] hover:underline"
+                className="text-[11px] font-semibold text-[#5B6877] hover:underline"
               >
                 Forgotten Password?
               </Link>
@@ -90,7 +90,7 @@ export default function ClientLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-3 py-2.5 text-[#1C2733] outline-none"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#22272E] outline-none"
               />
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -99,17 +99,17 @@ export default function ClientLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#16324F] hover:bg-[#0E2238] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? <span>Signing in...</span> : <span>Sign In &amp; View Orders</span>}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#566373]">
+        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#5B6877]">
           <div>
             New bulk order client?{" "}
-            <Link href="/corporate" className="text-[#D9601A] font-bold hover:underline">
+            <Link href="/corporate" className="text-[#5B6877] font-bold hover:underline">
               Submit your bulk inquiry to auto-register
             </Link>
           </div>

@@ -38,7 +38,7 @@ function FooterLinks({ title, links }: { title: string; links: { href: string; l
       <ul className="space-y-2.5 text-sm text-slate-300">
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className="hover:text-[#F4A36B] transition-colors">
+            <Link href={link.href} className="hover:text-[#B9C3CF] transition-colors">
               {link.label}
             </Link>
           </li>
@@ -57,11 +57,11 @@ export default function Footer({ settings }: FooterProps) {
   const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
 
   return (
-    <footer className="bg-[#0E2238] text-white pt-12 sm:pt-16 pb-24 sm:pb-8">
+    <footer className="bg-[#22272E] text-white pt-12 sm:pt-16 pb-24 sm:pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 border-b border-white/10">
           <div className="col-span-2 lg:col-span-4 space-y-4">
-            <div className="bg-white px-3 py-2 rounded-md inline-block">
+            <div className="bg-[#FFFFFF] px-3 py-2 rounded-md inline-block">
               <Image
                 src={CDN_LOGO_URL}
                 alt={businessName}
@@ -88,7 +88,7 @@ export default function Footer({ settings }: FooterProps) {
                 href="https://www.linkedin.com/company/the-print-planet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#D9601A] text-slate-300 hover:text-white border border-white/10 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#22272E] border border-white/10 flex items-center justify-center transition-colors"
                 title="LinkedIn"
                 aria-label="LinkedIn"
               >
@@ -100,7 +100,7 @@ export default function Footer({ settings }: FooterProps) {
                 href="https://www.instagram.com/theprintplanet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#D9601A] text-slate-300 hover:text-white border border-white/10 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#22272E] border border-white/10 flex items-center justify-center transition-colors"
                 title="Instagram"
                 aria-label="Instagram"
               >
@@ -112,7 +112,7 @@ export default function Footer({ settings }: FooterProps) {
                 href="https://www.indiamart.com/theprintplanet/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 h-8 rounded-lg bg-white/10 hover:bg-[#D9601A] text-slate-300 hover:text-white border border-white/10 flex items-center justify-center text-[11px] font-semibold transition-colors"
+                className="px-2.5 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#22272E] border border-white/10 flex items-center justify-center text-[11px] font-semibold transition-colors"
                 title="IndiaMART Verified Seller"
               >
                 IndiaMART
@@ -130,20 +130,20 @@ export default function Footer({ settings }: FooterProps) {
           <div className="col-span-2 lg:col-span-4 space-y-3 text-sm text-slate-300">
             <h2 className="text-xs font-bold text-white mb-3.5">Reach us</h2>
             <a href={`tel:${phone.replace(/\s+/g, "")}`} className="flex items-center gap-2.5 hover:text-white">
-              <Phone className="w-4 h-4 text-[#F4A36B] shrink-0" />
+              <Phone className="w-4 h-4 text-[#B9C3CF] shrink-0" />
               {phone}
             </a>
             <a href={`mailto:${email}`} className="flex items-center gap-2.5 hover:text-white break-all">
-              <Mail className="w-4 h-4 text-[#F4A36B] shrink-0" />
+              <Mail className="w-4 h-4 text-[#B9C3CF] shrink-0" />
               {email}
             </a>
             <p className="flex items-start gap-2.5">
-              <MapPin className="w-4 h-4 text-[#F4A36B] shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-[#B9C3CF] shrink-0 mt-0.5" />
               <span>{address}</span>
             </p>
             <Link
               href="/quote"
-              className="inline-flex items-center justify-center mt-1 py-2.5 px-5 rounded-lg bg-[#D9601A] hover:bg-[#B94E12] text-white font-bold transition-colors"
+              className="inline-flex items-center justify-center mt-1 py-2.5 px-5 rounded-lg bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] font-bold transition-colors"
             >
               Get a quote
             </Link>

@@ -2,10 +2,10 @@
 
 import React, { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, PRINT_EASE, prefersReducedMotion } from "@/lib/gsap";
 
-const COVER_SECONDS = 0.2;
-const UNCOVER_SECONDS = 0.34;
+const COVER_SECONDS = 0.45;
+const UNCOVER_SECONDS = 0.5;
 // A link can fail or be cancelled, so the plates never wait on it for long.
 const GIVE_UP_MS = 1400;
 
@@ -24,7 +24,7 @@ function isInternalPageLink(event: MouseEvent): HTMLAnchorElement | null {
 }
 
 /**
- * Two plates pull across on click and clear once the new route has committed. The click
+ * Two circles grow from the click point and close again once the new route has committed. The click
  * gets feedback at once, which matters here because every public route is server rendered.
  */
 export default function RouteWipe() {
@@ -35,6 +35,7 @@ export default function RouteWipe() {
   const landed = useRef(false);
   const pending = useRef(false);
   const uncover = useRef<() => void>(() => {});
+  const origin = useRef("50% 50%");
 
   useEffect(() => {
     const plates = () => root.current?.querySelectorAll<HTMLElement>("[data-plate]");
@@ -52,14 +53,14 @@ export default function RouteWipe() {
       pending.current = false;
       covered.current = false;
       gsap.to(mark() ?? [], { opacity: 0, duration: 0.1 });
+      // The circles close back into the point the visitor clicked, ink first.
       gsap.to(Array.from(items).reverse(), {
-        xPercent: 101,
+        clipPath: `circle(0% at ${origin.current})`,
         duration: UNCOVER_SECONDS,
         ease: "power3.inOut",
-        stagger: 0.05,
+        stagger: 0.06,
         overwrite: true,
         onComplete: () => {
-          gsap.set(items, { xPercent: -101 });
           if (root.current) root.current.style.visibility = "hidden";
         },
       });
@@ -72,18 +73,20 @@ export default function RouteWipe() {
       covered.current = true;
       landed.current = false;
       pending.current = false;
+      origin.current = `${event.clientX}px ${event.clientY}px`;
       if (root.current) root.current.style.visibility = "visible";
-      gsap.set(items, { xPercent: -101, overwrite: true });
+      gsap.set(items, { clipPath: `circle(0% at ${origin.current})`, overwrite: true });
       gsap.fromTo(
         mark() ?? [],
         { opacity: 0, scale: 0.7, rotation: -45 },
         { opacity: 1, scale: 1, rotation: 0, duration: 0.24, delay: 0.1, ease: "power3.out" }
       );
+      // A gold circle grows from the click, with ink close behind it.
       gsap.to(items, {
-        xPercent: 0,
+        clipPath: `circle(150% at ${origin.current})`,
         duration: COVER_SECONDS,
-        ease: "power2.out",
-        stagger: 0.04,
+        ease: PRINT_EASE,
+        stagger: 0.07,
         onComplete: () => {
           landed.current = true;
           if (pending.current) uncover.current();
@@ -114,14 +117,14 @@ export default function RouteWipe() {
       className="fixed inset-0 z-[120] overflow-hidden pointer-events-none"
       style={{ visibility: "hidden" }}
     >
-      <div data-plate className="absolute inset-0 bg-[#D9601A]" />
-      <div data-plate className="absolute inset-0 bg-[#0E2238]" />
+      <div data-plate className="absolute inset-0 bg-[#B9C3CF]" style={{ clipPath: "circle(0% at 50% 50%)" }} />
+      <div data-plate className="absolute inset-0 bg-[#22272E]" style={{ clipPath: "circle(0% at 50% 50%)" }} />
       <svg
         data-reg-mark
         viewBox="0 0 48 48"
         className="absolute left-1/2 top-1/2 w-12 h-12 -ml-6 -mt-6 opacity-0"
         fill="none"
-        stroke="#F4A36B"
+        stroke="#B9C3CF"
         strokeWidth="1.5"
       >
         <circle cx="24" cy="24" r="13" />

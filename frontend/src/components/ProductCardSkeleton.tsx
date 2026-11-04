@@ -1,7 +1,7 @@
 /** Mirrors ProductCard's box model, so nothing jumps when real products arrive. */
 export default function ProductCardSkeleton() {
   return (
-    <div className="bg-white border border-[#D8DEE5] rounded-lg overflow-hidden flex flex-col h-full">
+    <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg overflow-hidden flex flex-col h-full">
       <div className="w-full aspect-square skeleton !rounded-none" />
       <div className="p-3 sm:p-3.5 min-h-[153px] sm:min-h-[160px] flex flex-col flex-1 justify-between gap-2.5">
         <div>

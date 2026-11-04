@@ -27,12 +27,12 @@ export default async function ProductLines() {
   return (
     <section aria-labelledby="lines-heading" className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16">
       <div className="flex items-baseline justify-between gap-4 mb-6">
-        <h2 id="lines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#16324F] tracking-tight">
+        <h2 id="lines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight">
           Shop by product
         </h2>
         <Link
           href="/categories"
-          className="shrink-0 text-sm font-semibold text-[#B94E12] hover:underline underline-offset-4"
+          className="shrink-0 text-sm font-semibold text-[#4E5A67] hover:underline underline-offset-4"
         >
           All categories
         </Link>
@@ -46,7 +46,7 @@ export default async function ProductLines() {
               key={line.slug}
               data-tilt
               href={`/categories/${line.slug}`}
-              className={`group flex flex-col overflow-hidden rounded-lg bg-[#F3F5F7] hover:bg-[#FBF0E8] transition-colors ${line.span}`}
+              className={`group flex flex-col overflow-hidden rounded-lg bg-[#EDF1F6] hover:bg-[#EDF1F6] transition-colors ${line.span}`}
             >
               <span className="relative block flex-1 min-h-40 sm:min-h-52 m-3 sm:m-4 mb-0 sm:mb-0">
                 <img
@@ -59,12 +59,12 @@ export default async function ProductLines() {
               </span>
               <span className="flex items-end justify-between gap-2 p-3 sm:p-4">
                 <span className="min-w-0">
-                  <span className="block font-heading text-[15px] sm:text-lg font-bold text-[#16324F] leading-tight">
+                  <span className="block font-heading text-[15px] sm:text-lg font-bold text-[#22272E] leading-tight">
                     {line.label}
                   </span>
-                  <span className="block font-mono text-xs text-[#566373] mt-0.5">{line.count} products</span>
+                  <span className="block font-mono text-xs text-[#5B6877] mt-0.5">{line.count} products</span>
                 </span>
-                <ArrowUpRight className="w-5 h-5 shrink-0 text-[#16324F] group-hover:text-[#D9601A] transition-colors" />
+                <ArrowUpRight className="w-5 h-5 shrink-0 text-[#22272E] group-hover:text-[#5B6877] transition-colors" />
               </span>
             </Link>
           ))}

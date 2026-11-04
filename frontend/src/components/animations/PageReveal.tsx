@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useRef } from "react";
-import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { gsap, PRINT_EASE, ScrollTrigger, SplitText, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
-const REVEAL_SELECTOR = "h2, [data-reveal], .surface-card, .grid > *";
+const REVEAL_SELECTOR = "[data-reveal], .surface-card, .grid > *";
+// Headings split into lines that rise and straighten, one after another.
+const SPLIT_SELECTOR = "h2, .display-xl, [data-split]";
 const REVEAL_EXCLUDE = "form, .sticky, [data-no-reveal]";
 const CLEAR = "transform,opacity";
 
@@ -67,7 +69,7 @@ function setupReveals(root: HTMLElement) {
   });
 
   // Opacity, not visibility: hidden sections must stay reachable by keyboard and Ctrl+F.
-  gsap.set(targets, { opacity: 0, y: 26 });
+  gsap.set(targets, { opacity: 0, y: 40, skewY: 2.5, transformOrigin: "0 0" });
 
   // IntersectionObserver rather than ScrollTrigger: catalogue filters and lazy images
   // change page height constantly, and a stale trigger would leave content hidden.
@@ -85,9 +87,10 @@ function setupReveals(root: HTMLElement) {
       gsap.to(visible, {
         opacity: 1,
         y: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        stagger: 0.06,
+        skewY: 0,
+        duration: 0.9,
+        ease: PRINT_EASE,
+        stagger: 0.08,
         clearProps: CLEAR,
       });
     },
@@ -96,6 +99,135 @@ function setupReveals(root: HTMLElement) {
 
   targets.forEach((el) => observer.observe(el));
   return () => observer.disconnect();
+}
+
+/** Splits headings into masked lines; each rises from below while un-skewing. */
+function setupSplitHeadings(root: HTMLElement) {
+  const foldLine = window.innerHeight * 0.92;
+  const headings = Array.from(root.querySelectorAll<HTMLElement>(SPLIT_SELECTOR)).filter(
+    (el) =>
+      !el.closest(REVEAL_EXCLUDE) &&
+      !el.closest("[data-split-skip], [data-marquee]") &&
+      el.textContent?.trim()
+  );
+
+  const splits: SplitText[] = [];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const lines = (entry.target as HTMLElement).querySelectorAll<HTMLElement>("[data-line]");
+        gsap.to(lines, {
+          yPercent: 0,
+          skewY: 0,
+          opacity: 1,
+          duration: 1,
+          ease: PRINT_EASE,
+          stagger: 0.12,
+        });
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px" }
+  );
+
+  headings.forEach((el) => {
+    // Headings already on screen at load keep their place; no first-paint flash.
+    if (el.getBoundingClientRect().top <= foldLine) return;
+    const split = SplitText.create(el, {
+      type: "lines",
+      mask: "lines",
+      linesClass: "split-line",
+      aria: "auto",
+      autoSplit: true,
+      onSplit: (self) => {
+        self.lines.forEach((line) => line.setAttribute("data-line", ""));
+        gsap.set(self.lines, { yPercent: 110, skewY: 7, opacity: 0, transformOrigin: "0 0" });
+      },
+    });
+    splits.push(split);
+    observer.observe(el);
+  });
+
+  return () => {
+    observer.disconnect();
+    splits.forEach((split) => split.revert());
+  };
+}
+
+/** Ink sections open as a circle growing from their top edge as they scroll in. */
+function setupInkWipes(root: HTMLElement) {
+  gsap.utils.toArray<HTMLElement>("[data-wipe]", root).forEach((el) => {
+    gsap.fromTo(
+      el,
+      { clipPath: "circle(12% at 50% 0%)" },
+      {
+        clipPath: "circle(150% at 50% 0%)",
+        ease: "none",
+        scrollTrigger: { trigger: el, start: "top 95%", end: "top 25%", scrub: 0.6 },
+      }
+    );
+  });
+}
+
+/** Endless strips that run with the scroll: faster when scrolling, reversing with it. */
+function setupMarquees(root: HTMLElement) {
+  const tweens = gsap.utils.toArray<HTMLElement>("[data-marquee]", root).map((el) => {
+    const track = el.querySelector<HTMLElement>(".marquee-track");
+    if (!track) return null;
+    // A second copy makes the loop seamless; it is hidden from assistive tech.
+    const copy = track.cloneNode(true) as HTMLElement;
+    copy.setAttribute("aria-hidden", "true");
+    el.appendChild(copy);
+
+    const reverse = el.dataset.marquee === "reverse";
+    const tween = gsap.fromTo(
+      [track, copy],
+      { xPercent: reverse ? -100 : 0 },
+      { xPercent: reverse ? 0 : -100, duration: Number(el.dataset.speed) || 28, ease: "none", repeat: -1 }
+    );
+    return { tween, copy };
+  }).filter(Boolean) as Array<{ tween: gsap.core.Tween; copy: HTMLElement }>;
+
+  if (tweens.length === 0) return () => {};
+
+  const trigger = ScrollTrigger.create({
+    onUpdate: (self) => {
+      const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 400, 4);
+      tweens.forEach(({ tween }) => {
+        gsap.to(tween, { timeScale: boost * self.direction, duration: 0.2, overwrite: true });
+        gsap.to(tween, { timeScale: self.direction, duration: 1.2, delay: 0.2, ease: PRINT_EASE });
+      });
+    },
+  });
+
+  return () => {
+    trigger.kill();
+    tweens.forEach(({ tween, copy }) => {
+      tween.kill();
+      copy.remove();
+    });
+  };
+}
+
+/** Large type leans a little with scroll speed, then settles. */
+function setupVelocitySkew(root: HTMLElement) {
+  const targets = gsap.utils.toArray<HTMLElement>("[data-skew]", root);
+  if (targets.length === 0) return () => {};
+  const setters = targets.map((el) => gsap.quickTo(el, "skewY", { duration: 0.5, ease: PRINT_EASE }));
+  const trigger = ScrollTrigger.create({
+    onUpdate: (self) => {
+      const skew = gsap.utils.clamp(-4, 4, self.getVelocity() / -300);
+      setters.forEach((set) => set(skew));
+    },
+  });
+  const settle = gsap.delayedCall(0.15, () => setters.forEach((set) => set(0))).pause();
+  const onScrollEnd = () => settle.restart(true);
+  window.addEventListener("scrollend", onScrollEnd);
+  return () => {
+    trigger.kill();
+    window.removeEventListener("scrollend", onScrollEnd);
+  };
 }
 
 /** Photos print in from the left edge; rules draw across. Once only. */
@@ -231,8 +363,8 @@ function setupMagnetic(root: HTMLElement) {
 /**
  * One motion layer for every public page. Pages stay server components and opt in
  * with data attributes: data-reveal, data-print, data-rule, data-count, data-parallax,
- * data-magnetic, data-tilt, data-scrub-line.
- * Headings, cards and grid items reveal automatically.
+ * data-magnetic, data-tilt, data-scrub-line, data-wipe, data-marquee, data-skew, data-split.
+ * Headings split into rising lines; cards and grid items reveal automatically.
  */
 export default function PageReveal({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
@@ -247,9 +379,19 @@ export default function PageReveal({ children }: { children: React.ReactNode }) 
       // Server-rendered sections hydrate in chunks. Waiting a beat keeps GSAP's inline
       // styles off nodes React has not claimed yet, which would be a hydration mismatch.
       const start = contextSafe(() => {
-        stops = [setupReveals(el), setupInk(el), setupCounters(el), setupMagnetic(el), setupTilt(el)];
+        stops = [
+          setupSplitHeadings(el),
+          setupReveals(el),
+          setupInk(el),
+          setupCounters(el),
+          setupMagnetic(el),
+          setupTilt(el),
+          setupMarquees(el),
+          setupVelocitySkew(el),
+        ];
         setupParallax(el);
         setupScrub(el);
+        setupInkWipes(el);
       });
       const timer = window.setTimeout(start, 160);
 

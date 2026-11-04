@@ -437,16 +437,16 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-6xl pb-16">
       {/* Top Header Strip with Live Actions */}
-      <div className="bg-white p-4 rounded-md border border-[#D8DEE5] shadow-2xs flex flex-wrap items-center justify-between gap-3 sticky top-4 z-30">
+      <div className="bg-[#FFFFFF] p-4 rounded-md border border-[#DFE6EE] shadow-2xs flex flex-wrap items-center justify-between gap-3 sticky top-4 z-30">
         <div className="flex items-center gap-3">
           <Link
             href="/owner/products"
-            className="text-xs font-semibold text-[#16324F] hover:underline flex items-center gap-1.5"
+            className="text-xs font-semibold text-[#22272E] hover:underline flex items-center gap-1.5"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Products
           </Link>
           <span className="text-slate-300">|</span>
-          <span className="text-xs text-[#566373] font-medium">
+          <span className="text-xs text-[#5B6877] font-medium">
             Status:{" "}
             <strong className={isActive ? "text-[#217A4B]" : "text-amber-600"}>
               {isActive ? "Public Catalogue" : "Draft (Hidden)"}
@@ -458,7 +458,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <button
             type="button"
             onClick={() => setShowLivePreview(!showLivePreview)}
-            className="bg-[#F3F5F7] hover:bg-slate-200 text-[#1C2733] px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors border border-[#D8DEE5]"
+            className="bg-[#EDF1F6] hover:bg-slate-200 text-[#22272E] px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors border border-[#DFE6EE]"
           >
             {showLivePreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
             <span>{showLivePreview ? "Hide Live Card" : "Preview Live Card"}</span>
@@ -467,7 +467,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <button
             type="submit"
             disabled={submitting}
-            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-6 py-2 rounded-lg text-xs font-bold transition-all shadow-md disabled:opacity-50 flex items-center gap-1.5"
+            className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2 rounded-lg text-xs font-bold transition-all shadow-md disabled:opacity-50 flex items-center gap-1.5"
           >
             {submitting ? (
               <>
@@ -503,10 +503,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         {/* Left Columns: Dynamic Builder Form */}
         <div className={`space-y-6 ${showLivePreview ? "lg:col-span-8" : "lg:col-span-12"}`}>
           {/* Section 1: Basic Identity & Dynamic Category */}
-          <div className="bg-white p-5 sm:p-6 rounded-lg border border-[#D8DEE5] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#D8DEE5] pb-3">
-              <h2 className="text-sm font-bold text-[#16324F] flex items-center gap-2">
-                <Tag className="w-4 h-4 text-[#D9601A]" />
+          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
+              <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
+                <Tag className="w-4 h-4 text-[#5B6877]" />
                 <span>1. Core Product Identity & Category</span>
               </h2>
             </div>
@@ -515,14 +515,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               {/* Product Name */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-[#1C2733]">
+                  <label className="font-semibold text-[#22272E]">
                     Product Commercial Name *
                   </label>
                   {name && (
                     <button
                       type="button"
                       onClick={() => setName(formatProductName(name))}
-                      className="text-[10px] text-[#D9601A] hover:underline font-bold flex items-center gap-0.5"
+                      className="text-[10px] text-[#5B6877] hover:underline font-bold flex items-center gap-0.5"
                     >
                       <Sparkles className="w-2.5 h-2.5" />
                       <span>Format Proper Case</span>
@@ -537,7 +537,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   onBlur={() => setName(formatProductName(name))}
                   aria-label="Product name"
               placeholder="e.g. 20MM Indian Royal Blue Colour Satin Lanyard Roll"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3.5 py-2.5 outline-none font-medium text-[#1C2733] text-sm"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 outline-none font-medium text-[#22272E] text-sm"
                 />
                 <p className="text-[10px] text-slate-400 mt-1">
                   Auto-formats on blur to professional Title Case while preserving technical codes (PVC, RFID, ID, GSM, A4).
@@ -547,11 +547,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               {/* Category Assignment with Quick Add Button */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-[#1C2733]">Category Line *</label>
+                  <label className="font-semibold text-[#22272E]">Category Line *</label>
                   <button
                     type="button"
                     onClick={() => setShowCatCreator(!showCatCreator)}
-                    className="text-[11px] font-bold text-[#D9601A] hover:underline flex items-center gap-1"
+                    className="text-[11px] font-bold text-[#5B6877] hover:underline flex items-center gap-1"
                   >
                     <FolderPlus className="w-3 h-3" />
                     <span>{showCatCreator ? "Close Creator" : "+ Quick Create Category"}</span>
@@ -562,7 +562,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   aria-label="Category line"
                   value={String(categoryId)}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-medium text-[#1C2733] uppercase"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-medium text-[#22272E] uppercase"
                 >
                   <option value="" disabled>
                     -- Select Verified Category --
@@ -595,9 +595,9 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
                 {/* Inline Quick Category Creator */}
                 {showCatCreator && (
-                  <div className="mt-3 p-4 bg-[#F3F5F7] border border-[#D9601A]/30 rounded-md space-y-3 anim-fade-up">
+                  <div className="mt-3 p-4 bg-[#EDF1F6] border border-[#B9C3CF]/30 rounded-md space-y-3 anim-fade-up">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-[#16324F] text-xs">
+                      <span className="font-bold text-[#22272E] text-xs">
                         Create New Category On-The-Fly
                       </span>
                       <span className="text-[10px] text-slate-500">Auto-assigns upon creation</span>
@@ -608,14 +608,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                         placeholder="Category Name (e.g. Silicone Wristbands)"
                         value={newCatName}
                         onChange={(e) => setNewCatName(e.target.value)}
-                        className="bg-white border border-[#D8DEE5] rounded-lg px-3 py-1.5 text-xs outline-none"
+                        className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg px-3 py-1.5 text-xs outline-none"
                       />
                       <input
                         type="text"
                         placeholder="Description (Optional)"
                         value={newCatDesc}
                         onChange={(e) => setNewCatDesc(e.target.value)}
-                        className="bg-white border border-[#D8DEE5] rounded-lg px-3 py-1.5 text-xs outline-none"
+                        className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg px-3 py-1.5 text-xs outline-none"
                       />
                     </div>
                     <div className="flex justify-end gap-2">
@@ -630,7 +630,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                         type="button"
                         onClick={handleCreateCategory}
                         disabled={creatingCat || !newCatName.trim()}
-                        className="bg-[#16324F] text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#0E2238] disabled:opacity-50"
+                        className="bg-[#22272E] text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#363D47] disabled:opacity-50"
                       >
                         {creatingCat ? "Creating..." : "Save Category"}
                       </button>
@@ -643,14 +643,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="font-semibold text-[#1C2733]">SKU (Product Code) *</label>
+                    <label className="font-semibold text-[#22272E]">SKU (Product Code) *</label>
                     <button
                       type="button"
                       onClick={generateDynamicSKU}
-                      className="text-[11px] font-bold text-[#16324F] hover:underline flex items-center gap-1"
+                      className="text-[11px] font-bold text-[#22272E] hover:underline flex items-center gap-1"
                       title="Auto generate industrial SKU"
                     >
-                      <Sparkles className="w-3 h-3 text-[#D9601A]" />
+                      <Sparkles className="w-3 h-3 text-[#5B6877]" />
                       <span>Auto-Generate</span>
                     </button>
                   </div>
@@ -661,28 +661,28 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     onChange={(e) => setSku(e.target.value)}
                     aria-label="SKU"
               placeholder="e.g. LAN-RB-20M"
-                    className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-mono font-bold text-[#16324F]"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono font-bold text-[#22272E]"
                   />
                 </div>
 
                 {/* Toggles */}
                 <div className="flex items-center gap-6 pt-5">
-                  <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#1C2733]">
+                  <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#22272E]">
                     <input
                       type="checkbox"
                       checked={isActive}
                       onChange={(e) => setIsActive(e.target.checked)}
-                      className="rounded border-slate-300 text-[#16324F] w-4 h-4"
+                      className="rounded border-slate-300 text-[#22272E] w-4 h-4"
                     />
                     <span>Active in Public Catalogue</span>
                   </label>
 
-                  <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#1C2733]">
+                  <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#22272E]">
                     <input
                       type="checkbox"
                       checked={isFeatured}
                       onChange={(e) => setIsFeatured(e.target.checked)}
-                      className="rounded border-slate-300 text-[#D9601A] w-4 h-4"
+                      className="rounded border-slate-300 text-[#5B6877] w-4 h-4"
                     />
                     <span>Featured Hero</span>
                   </label>
@@ -691,7 +691,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
               {/* Short Description */}
               <div>
-                <label htmlFor="field-single-line-subtitle-summary" className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-single-line-subtitle-summary" className="block font-semibold text-[#22272E] mb-1">
                   Single-Line Subtitle / Summary
                 </label>
                 <input id="field-single-line-subtitle-summary"
@@ -699,13 +699,13 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   value={shortDesc}
                   onChange={(e) => setShortDesc(e.target.value)}
                   placeholder="e.g. 20mm premium gloss single satin lanyard roll with heat-transfer capability."
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
 
               {/* Full Description */}
               <div>
-                <label htmlFor="field-full-application-technical-description" className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-full-application-technical-description" className="block font-semibold text-[#22272E] mb-1">
                   Full Application & Technical Description
                 </label>
                 <textarea id="field-full-application-technical-description"
@@ -713,24 +713,24 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   placeholder="Detail industrial specifications, compatible clips, temperature resistance, and packaging units..."
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
                 />
               </div>
             </div>
           </div>
 
           {/* Section 2: Pricing, MOQ & B2B Visibility */}
-          <div className="bg-white p-5 sm:p-6 rounded-lg border border-[#D8DEE5] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#D8DEE5] pb-3">
-              <h2 className="text-sm font-bold text-[#16324F] flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-[#D9601A]" />
+          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
+              <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
+                <DollarSign className="w-4 h-4 text-[#5B6877]" />
                 <span>2. Commercial Pricing & Minimum Order Quantity</span>
               </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <label htmlFor="field-numeric-price-inr" className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-numeric-price-inr" className="block font-semibold text-[#22272E] mb-1">
                   Numeric Price (INR)
                 </label>
                 <input id="field-numeric-price-inr"
@@ -739,17 +739,17 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder="e.g. 225.00"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none font-bold text-[#16324F]"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-bold text-[#22272E]"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-[#1C2733]">Price Display Tag</label>
+                  <label className="font-semibold text-[#22272E]">Price Display Tag</label>
                   <button
                     type="button"
                     onClick={autoSuggestPriceDisplay}
-                    className="text-[10px] font-bold text-[#D9601A] hover:underline"
+                    className="text-[10px] font-bold text-[#5B6877] hover:underline"
                     title="Auto-format display price"
                   >
                     Auto-Format
@@ -761,12 +761,12 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   onChange={(e) => setPriceDisplay(e.target.value)}
                   placeholder="e.g. ₹ 225 / Roll"
                       aria-label="Price label"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-minimum-order-moq" className="block font-semibold text-[#1C2733] mb-1">
+                <label htmlFor="field-minimum-order-moq" className="block font-semibold text-[#22272E] mb-1">
                   Minimum Order (MOQ)
                 </label>
                 <input id="field-minimum-order-moq"
@@ -774,14 +774,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   value={moq}
                   onChange={(e) => setMoq(e.target.value)}
                   placeholder="e.g. 50"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
 
             {/* Visibility Mode */}
             <div className="pt-2 text-xs">
-              <label className="block font-semibold text-[#1C2733] mb-1.5">
+              <label className="block font-semibold text-[#22272E] mb-1.5">
                 B2B Price Display Mode
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -790,8 +790,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   onClick={() => setPriceVisibility(true)}
                   className={`p-2 rounded-lg border text-center font-semibold transition-all ${
                     priceVisibility
-                      ? "bg-[#16324F] text-white border-[#16324F]"
-                      : "bg-[#F3F5F7] text-[#566373] border-[#D8DEE5] hover:bg-slate-200"
+                      ? "bg-[#22272E] text-white border-[#22272E]"
+                      : "bg-[#EDF1F6] text-[#5B6877] border-[#DFE6EE] hover:bg-slate-200"
                   }`}
                 >
                   Show Live B2B Price
@@ -801,8 +801,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   onClick={() => setPriceVisibility(false)}
                   className={`p-2 rounded-lg border text-center font-semibold transition-all ${
                     !priceVisibility
-                      ? "bg-[#16324F] text-white border-[#16324F]"
-                      : "bg-[#F3F5F7] text-[#566373] border-[#D8DEE5] hover:bg-slate-200"
+                      ? "bg-[#22272E] text-white border-[#22272E]"
+                      : "bg-[#EDF1F6] text-[#5B6877] border-[#DFE6EE] hover:bg-slate-200"
                   }`}
                 >
                   Price on Request (Hide Live Rate)
@@ -812,59 +812,59 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           </div>
 
           {/* Section 3: Physical & Material Highlights */}
-          <div className="bg-white p-5 sm:p-6 rounded-lg border border-[#D8DEE5] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#D8DEE5] pb-3">
-              <h2 className="text-sm font-bold text-[#16324F] flex items-center gap-2">
-                <Box className="w-4 h-4 text-[#D9601A]" />
+          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
+              <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
+                <Box className="w-4 h-4 text-[#5B6877]" />
                 <span>3. Physical Specifications & Dimensions</span>
               </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <label htmlFor="field-primary-material" className="block font-semibold text-[#1C2733] mb-1">Primary Material</label>
+                <label htmlFor="field-primary-material" className="block font-semibold text-[#22272E] mb-1">Primary Material</label>
                 <input id="field-primary-material"
                   type="text"
                   value={material}
                   onChange={(e) => setMaterial(e.target.value)}
                   placeholder="e.g. Polyester / Satin"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-dimensions-gauge" className="block font-semibold text-[#1C2733] mb-1">Dimensions / Gauge</label>
+                <label htmlFor="field-dimensions-gauge" className="block font-semibold text-[#22272E] mb-1">Dimensions / Gauge</label>
                 <input id="field-dimensions-gauge"
                   type="text"
                   value={dimensions}
                   onChange={(e) => setDimensions(e.target.value)}
                   placeholder="e.g. 20 mm x 100 m"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-color-finish" className="block font-semibold text-[#1C2733] mb-1">Color / Finish</label>
+                <label htmlFor="field-color-finish" className="block font-semibold text-[#22272E] mb-1">Color / Finish</label>
                 <input id="field-color-finish"
                   type="text"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
                   placeholder="e.g. Royal Blue"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
           </div>
 
           {/* Section 4: Dynamic Technical Specifications Builder with Presets */}
-          <div className="bg-white p-5 sm:p-6 rounded-lg border border-[#D8DEE5] shadow-2xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D8DEE5] pb-3">
+          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DFE6EE] pb-3">
               <div>
-                <h2 className="text-sm font-bold text-[#16324F] flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#D9601A]" />
+                <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
+                  <Sliders className="w-4 h-4 text-[#5B6877]" />
                   <span>4. Dynamic Technical Specification Key-Values</span>
                 </h2>
-                <p className="text-[11px] text-[#566373] mt-0.5">
+                <p className="text-[11px] text-[#5B6877] mt-0.5">
                   Appears in detailed product technical table on public pages.
                 </p>
               </div>
@@ -872,14 +872,14 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <button
                 type="button"
                 onClick={handleAddSpec}
-                className="text-xs font-bold text-[#D9601A] hover:underline flex items-center gap-1 self-start sm:self-auto"
+                className="text-xs font-bold text-[#5B6877] hover:underline flex items-center gap-1 self-start sm:self-auto"
               >
                 <Plus className="w-3.5 h-3.5" /> Add Attribute
               </button>
             </div>
 
             {/* Quick Presets Injector */}
-            <div className="p-3 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md space-y-1.5">
+            <div className="p-3 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md space-y-1.5">
               <span className="text-[10px] font-medium text-slate-500 uppercase tracking-[0.14em] block">
                 Quick Industrial Spec Presets (Click to add):
               </span>
@@ -889,9 +889,9 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     key={preset.name}
                     type="button"
                     onClick={() => handleApplyPreset(preset)}
-                    className="text-[11px] font-semibold bg-white border border-[#D8DEE5] hover:border-[#16324F] hover:text-[#16324F] text-[#1C2733] px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1"
+                    className="text-[11px] font-semibold bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] hover:text-[#22272E] text-[#22272E] px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1"
                   >
-                    <Plus className="w-3 h-3 text-[#D9601A]" />
+                    <Plus className="w-3 h-3 text-[#5B6877]" />
                     <span>{preset.name}</span>
                   </button>
                 ))}
@@ -908,7 +908,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                       aria-label="Attribute name"
                     value={spec.key}
                     onChange={(e) => handleSpecChange(idx, "key", e.target.value)}
-                    className="w-2/5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-2 outline-none font-semibold text-[#1C2733]"
+                    className="w-2/5 bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3 py-2 outline-none font-semibold text-[#22272E]"
                   />
                   <input
                     type="text"
@@ -916,7 +916,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                       aria-label="Attribute value"
                     value={spec.value}
                     onChange={(e) => handleSpecChange(idx, "value", e.target.value)}
-                    className="w-3/5 bg-[#F3F5F7] border border-[#D8DEE5] rounded-lg px-3 py-2 outline-none text-[#1C2733]"
+                    className="w-3/5 bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3 py-2 outline-none text-[#22272E]"
                   />
                   <button
                     type="button"
@@ -932,13 +932,13 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           </div>
 
           {/* Section 5: Cloudinary Image Upload & Media Management */}
-          <div className="bg-white p-5 sm:p-6 rounded-lg border border-[#D8DEE5] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#D8DEE5] pb-3">
-              <h2 className="text-sm font-bold text-[#16324F] flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#D9601A]" />
+          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
+              <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-[#5B6877]" />
                 <span>5. High-Resolution Product Images</span>
               </h2>
-              <span className="text-[11px] text-[#566373]">
+              <span className="text-[11px] text-[#5B6877]">
                 {images.length} asset(s) attached
               </span>
             </div>
@@ -955,8 +955,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 onDrop={handleDrop}
                 className={`p-5 border-2 border-dashed rounded-md text-center space-y-2 transition-all cursor-pointer block select-none group ${
                   isDragging
-                    ? "border-[#D9601A] bg-orange-50/50 scale-[1.01]"
-                    : "border-[#D8DEE5] hover:border-[#16324F] hover:bg-[#F0F4F8] bg-[#F3F5F7]"
+                    ? "border-[#B9C3CF] bg-orange-50/50 scale-[1.01]"
+                    : "border-[#DFE6EE] hover:border-[#22272E] hover:bg-[#EDF1F6] bg-[#EDF1F6]"
                 }`}
               >
                 <input
@@ -968,11 +968,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 />
                 <Upload
                   className={`w-7 h-7 mx-auto transition-transform group-hover:scale-110 ${
-                    isDragging ? "text-[#D9601A]" : "text-[#16324F]"
+                    isDragging ? "text-[#5B6877]" : "text-[#22272E]"
                   }`}
                 />
                 <div>
-                  <span className="font-bold text-[#16324F] block text-xs group-hover:text-[#D9601A] transition-colors">
+                  <span className="font-bold text-[#22272E] block text-xs group-hover:text-[#5B6877] transition-colors">
                     Upload from Device (Cloudinary)
                   </span>
                   <p className="text-[11px] text-slate-500 mt-1">
@@ -980,7 +980,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   </p>
                 </div>
                 {uploadingImage && (
-                  <div className="pt-1 text-[#D9601A] font-semibold flex items-center justify-center gap-1.5 text-xs anim-fade-in">
+                  <div className="pt-1 text-[#5B6877] font-semibold flex items-center justify-center gap-1.5 text-xs anim-fade-in">
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                     <span>Uploading asset to Cloudinary CDN...</span>
                   </div>
@@ -988,9 +988,9 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               </label>
 
               {/* Direct Image URL input */}
-              <div className="p-4 bg-[#F3F5F7] border border-[#D8DEE5] rounded-md space-y-2 flex flex-col justify-between">
+              <div className="p-4 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md space-y-2 flex flex-col justify-between">
                 <div>
-                  <span className="font-bold text-[#1C2733] block">Or Add Image Direct URL</span>
+                  <span className="font-bold text-[#22272E] block">Or Add Image Direct URL</span>
                   <p className="text-[11px] text-slate-500">Paste an external CDN or Cloudinary URL</p>
                 </div>
                 <div className="flex gap-2">
@@ -1000,12 +1000,12 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                       aria-label="Image URL"
                     value={imageUrlInput}
                     onChange={(e) => setImageUrlInput(e.target.value)}
-                    className="flex-1 bg-white border border-[#D8DEE5] rounded-lg px-3 py-1.5 text-xs outline-none"
+                    className="flex-1 bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg px-3 py-1.5 text-xs outline-none"
                   />
                   <button
                     type="button"
                     onClick={handleAddImageUrl}
-                    className="bg-[#16324F] text-white px-3.5 py-1.5 rounded-lg font-bold hover:bg-[#0E2238] shrink-0"
+                    className="bg-[#22272E] text-white px-3.5 py-1.5 rounded-lg font-bold hover:bg-[#363D47] shrink-0"
                   >
                     Add
                   </button>
@@ -1019,20 +1019,20 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 {images.map((img, idx) => (
                   <div
                     key={idx}
-                    className={`relative bg-[#F3F5F7] border rounded-md p-2 flex flex-col items-center gap-2 transition-all ${
+                    className={`relative bg-[#EDF1F6] border rounded-md p-2 flex flex-col items-center gap-2 transition-all ${
                       img.isPrimary
-                        ? "border-[#D9601A] ring-2 ring-[#D9601A]/30 shadow-xs"
-                        : "border-[#D8DEE5] hover:border-slate-400"
+                        ? "border-[#B9C3CF] ring-2 ring-[#B9C3CF]/30 shadow-xs"
+                        : "border-[#DFE6EE] hover:border-slate-400"
                     }`}
                   >
-                    <div className="w-full pt-[100%] relative rounded-lg overflow-hidden bg-white border border-slate-200">
+                    <div className="w-full pt-[100%] relative rounded-lg overflow-hidden bg-[#FFFFFF] border border-slate-200">
                       <img
                         src={img.url}
                         alt={`Asset ${idx + 1}`}
                         className="absolute inset-0 w-full h-full object-contain p-1.5"
                       />
                       {img.isPrimary && (
-                        <span className="absolute top-1 left-1 bg-[#D9601A] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-2xs">
+                        <span className="absolute top-1 left-1 bg-[#22272E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-2xs">
                           Primary
                         </span>
                       )}
@@ -1043,7 +1043,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                         type="button"
                         onClick={() => handleSetPrimaryImage(idx)}
                         className={`flex items-center gap-1 font-semibold ${
-                          img.isPrimary ? "text-[#D9601A]" : "text-slate-500 hover:text-[#16324F]"
+                          img.isPrimary ? "text-[#5B6877]" : "text-slate-500 hover:text-[#22272E]"
                         }`}
                       >
                         <Star className={`w-3 h-3 ${img.isPrimary ? "fill-current" : ""}`} />
@@ -1061,7 +1061,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 ))}
               </div>
             ) : (
-              <div className="p-4 bg-slate-50 border border-dashed border-[#D8DEE5] rounded-md text-center text-xs text-slate-400">
+              <div className="p-4 bg-slate-50 border border-dashed border-[#DFE6EE] rounded-md text-center text-xs text-slate-400">
                 No images added yet. Upload an image above or a fallback placeholder will be displayed.
               </div>
             )}
@@ -1071,9 +1071,9 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         {/* Right Column: Live Interactive Public Preview (4 Cols) */}
         {showLivePreview && (
           <div className="lg:col-span-4 sticky top-24 space-y-4">
-            <div className="bg-[#0E2238] text-white p-4 rounded-lg shadow-md space-y-3 border border-white/10">
+            <div className="bg-[#22272E] text-white p-4 rounded-lg shadow-md space-y-3 border border-white/10">
               <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                <span className="text-[11px] font-bold text-[#D9601A] uppercase tracking-wider flex items-center gap-1.5">
+                <span className="text-[11px] font-bold text-[#5B6877] uppercase tracking-wider flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Real-Time Public Preview</span>
                 </span>
@@ -1085,9 +1085,9 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               </p>
 
               {/* Live Rendered Product Card */}
-              <div className="bg-white rounded-md overflow-hidden shadow-lg border border-slate-200 text-[#1C2733]">
+              <div className="bg-[#FFFFFF] rounded-md overflow-hidden shadow-lg border border-slate-200 text-[#22272E]">
                 {/* Image Stage */}
-                <div className="relative w-full pt-[100%] bg-[#F3F5F7] border-b border-[#D8DEE5]">
+                <div className="relative w-full pt-[100%] bg-[#EDF1F6] border-b border-[#DFE6EE]">
                   {primaryPreviewImg ? (
                     <img
                       src={primaryPreviewImg}
@@ -1109,7 +1109,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   {/* Featured Badge */}
                   <div className="absolute top-2 left-2 flex flex-col gap-1">
                     {isFeatured && (
-                      <span className="bg-[#16324F] text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shadow-2xs">
+                      <span className="bg-[#22272E] text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shadow-2xs">
                         Featured
                       </span>
                     )}
@@ -1119,7 +1119,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   </div>
 
                   {/* SKU Pill */}
-                  <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-xs border border-slate-200 text-[#1C2733] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shadow-2xs max-w-[85%] truncate">
+                  <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-xs border border-slate-200 text-[#22272E] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shadow-2xs max-w-[85%] truncate">
                     {sku || "SKU-AUTO"}
                   </div>
                 </div>
@@ -1127,10 +1127,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 {/* Content details */}
                 <div className="p-3 space-y-2">
                   <div>
-                    <span className="text-[9px] font-semibold text-[#566373] block truncate">
+                    <span className="text-[9px] font-semibold text-[#5B6877] block truncate">
                       {activeCategory?.name || "Uncategorized"}
                     </span>
-                    <h3 className="text-xs font-bold text-[#1C2733] line-clamp-2 leading-snug min-h-[2rem]">
+                    <h3 className="text-xs font-bold text-[#22272E] line-clamp-2 leading-snug min-h-[2rem]">
                       {name || "Untitled Product"}
                     </h3>
                   </div>
@@ -1138,24 +1138,24 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   {/* Badges */}
                   <div className="flex flex-wrap gap-1">
                     {material && (
-                      <span className="text-[9px] bg-[#F3F5F7] text-[#1C2733] border border-[#D8DEE5] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
+                      <span className="text-[9px] bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
                         {material}
                       </span>
                     )}
                     {dimensions && (
-                      <span className="text-[9px] bg-[#F3F5F7] text-[#1C2733] border border-[#D8DEE5] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
+                      <span className="text-[9px] bg-[#EDF1F6] text-[#22272E] border border-[#DFE6EE] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
                         {dimensions}
                       </span>
                     )}
                   </div>
 
                   {/* Pricing */}
-                  <div className="pt-2 border-t border-[#F3F5F7] flex items-baseline justify-between">
+                  <div className="pt-2 border-t border-[#EDF1F6] flex items-baseline justify-between">
                     <div>
-                      <span className="text-[8px] uppercase font-bold text-[#566373] block">
+                      <span className="text-[8px] uppercase font-bold text-[#5B6877] block">
                         B2B Trade Price
                       </span>
-                      <span className="text-xs font-extrabold text-[#16324F] block truncate">
+                      <span className="text-xs font-extrabold text-[#22272E] block truncate">
                         {!priceVisibility
                           ? "Price on Request"
                           : priceDisplay ||
@@ -1172,10 +1172,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
 
                   {/* Action Buttons */}
                   <div className="grid grid-cols-2 gap-1.5 pt-1">
-                    <span className="text-[10px] font-semibold py-1 rounded-md border border-[#D8DEE5] text-[#1C2733] text-center bg-[#F3F5F7]">
+                    <span className="text-[10px] font-semibold py-1 rounded-md border border-[#DFE6EE] text-[#22272E] text-center bg-[#EDF1F6]">
                       Details
                     </span>
-                    <span className="text-[10px] font-bold py-1 rounded-md bg-[#D9601A] text-white text-center shadow-2xs">
+                    <span className="text-[10px] font-bold py-1 rounded-md bg-[#22272E] text-white text-center shadow-2xs">
                       Quote
                     </span>
                   </div>
@@ -1201,17 +1201,17 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       </div>
 
       {/* Bottom Floating Publish Bar */}
-      <div className="pt-4 border-t border-[#D8DEE5] flex items-center justify-between">
+      <div className="pt-4 border-t border-[#DFE6EE] flex items-center justify-between">
         <Link
           href="/owner/products"
-          className="text-xs font-semibold text-[#566373] hover:text-[#16324F]"
+          className="text-xs font-semibold text-[#5B6877] hover:text-[#22272E]"
         >
           Cancel & Return
         </Link>
         <button
           type="submit"
           disabled={submitting}
-          className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-all shadow-md disabled:opacity-50 flex items-center gap-2"
+          className="bg-[#22272E] hover:bg-[#363D47] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-all shadow-md disabled:opacity-50 flex items-center gap-2"
         >
           {submitting ? (
             <>

@@ -7,7 +7,7 @@ export default function CategoriesLoading() {
         <div className="h-3 w-44 skeleton" />
       </div>
 
-      <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
+      <div className="border-b border-[#DFE6EE] pb-6 space-y-3">
         <div className="h-3 w-52 skeleton" />
         <div className="h-8 sm:h-10 w-2/3 max-w-lg skeleton" />
         <div className="h-3 w-full max-w-2xl skeleton" />
@@ -15,7 +15,7 @@ export default function CategoriesLoading() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="bg-white border border-[#D8DEE5] rounded-lg p-5 sm:p-6 space-y-4">
+          <div key={i} className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-5 sm:p-6 space-y-4">
             <div className="w-12 h-12 skeleton rounded-md" />
             <div className="space-y-2">
               <div className="h-4 w-3/4 skeleton" />

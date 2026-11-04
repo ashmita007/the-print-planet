@@ -278,7 +278,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
       className="w-full sticky -top-8 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-shadow duration-300"
     >
       {/* 1. ANNOUNCEMENT BAR */}
-      <div className="h-8 flex items-center bg-[#0E2238] text-white text-[11px] sm:text-xs px-3 sm:px-6">
+      <div className="h-8 flex items-center bg-[#22272E] text-white text-[11px] sm:text-xs px-3 sm:px-6">
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-hidden flex-1">
                         <span ref={announcementRef} className="text-slate-200 truncate font-medium">
@@ -289,17 +289,17 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           <div className="hidden md:flex items-center gap-4 shrink-0 text-slate-300">
             <a
               href={`mailto:${email}`}
-              className="hover:text-[#F4A36B] transition-colors flex items-center gap-1.5"
+              className="hover:text-[#B9C3CF] transition-colors flex items-center gap-1.5"
             >
-              <Mail className="w-3.5 h-3.5 text-[#F4A36B]" />
+              <Mail className="w-3.5 h-3.5 text-[#B9C3CF]" />
               <span>{email}</span>
             </a>
             <span className="text-white/20">|</span>
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
-              className="hover:text-[#F4A36B] transition-colors flex items-center gap-1.5 font-semibold tabular-nums text-white"
+              className="hover:text-[#B9C3CF] transition-colors flex items-center gap-1.5 font-semibold tabular-nums text-white"
             >
-              <Phone className="w-3.5 h-3.5 text-[#F4A36B]" />
+              <Phone className="w-3.5 h-3.5 text-[#B9C3CF]" />
               <span>{phone}</span>
             </a>
           </div>
@@ -312,7 +312,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-[#D9601A] hover:bg-slate-100 rounded-lg transition-colors"
+            className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-[#5B6877] hover:bg-slate-100 rounded-lg transition-colors"
             aria-label="Open mobile navigation menu"
           >
             <Menu className="w-6 h-6" />
@@ -345,18 +345,18 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 placeholder="Search products, ID cards..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F3F5F7] hover:bg-white focus:bg-white border border-[#D8DEE5] hover:border-[#16324F]/30 focus:border-[#D9601A] focus:ring-4 focus:ring-[#D9601A]/10 rounded-md pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
+                className="w-full bg-[#EDF1F6] hover:bg-[#FFFFFF] focus:bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E]/30 focus:border-[#B9C3CF] focus:ring-4 focus:ring-[#B9C3CF]/10 rounded-md pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#D9601A] transition-colors" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#5B6877] transition-colors" />
               {searchQuery ? (
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#D9601A] text-white px-2 py-0.5 rounded-md hover:bg-[#B94E12] transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#22272E] text-white px-2 py-0.5 rounded-md hover:bg-[#363D47] transition-colors"
                 >
                   Go
                 </button>
               ) : (
-                <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-2xs pointer-events-none">
+                <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-400 bg-[#FFFFFF] border border-slate-200 px-1.5 py-0.5 rounded shadow-2xs pointer-events-none">
                   ⌘K
                 </span>
               )}
@@ -374,7 +374,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               ref={pillRef}
               aria-hidden="true"
               style={{ opacity: 0, visibility: "hidden" }}
-              className="absolute left-0 top-0 h-full -z-10 bg-[#FBF0E8] border border-[#D9601A]/25 rounded-md"
+              className="absolute left-0 top-0 h-full -z-10 bg-[#EDF1F6] border border-[#B9C3CF]/25 rounded-md"
             />
 
             {/* Shop by Category Mega Dropdown */}
@@ -393,13 +393,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 aria-expanded={categoriesDropdownOpen}
                 aria-haspopup="true"
                 className={`relative px-3 py-2 rounded-md flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer ${
-                  categoriesDropdownOpen ? "text-[#D9601A] font-bold" : "text-[#16324F] hover:text-[#D9601A]"
+                  categoriesDropdownOpen ? "text-[#5B6877] font-bold" : "text-[#22272E] hover:text-[#5B6877]"
                 }`}
               >
                 <span>Shop by Category</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    categoriesDropdownOpen ? "rotate-180 text-[#D9601A]" : "text-slate-400"
+                    categoriesDropdownOpen ? "rotate-180 text-[#5B6877]" : "text-slate-400"
                   }`}
                 />
               </button>
@@ -410,13 +410,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   <div
                     ref={megaMenuRef}
                     data-panel
-                    className="absolute top-full left-0 w-[640px] bg-white/98 backdrop-blur-lg border border-[#D8DEE5] rounded-lg shadow-[0_20px_50px_-10px_rgba(16,39,66,0.18)] py-3 mt-2 z-50 overflow-hidden"
+                    className="absolute top-full left-0 w-[640px] bg-white/98 backdrop-blur-lg border border-[#DFE6EE] rounded-lg shadow-[0_20px_50px_-10px_rgba(16,39,66,0.18)] py-3 mt-2 z-50 overflow-hidden"
                   >
-                    <div className="px-5 py-2.5 border-b border-slate-100 bg-[#F3F5F7] flex items-center justify-between rounded-t-2xl">
-                      <span className="text-xs font-bold text-[#16324F] uppercase tracking-wider flex items-center gap-1.5">
-                        <Layers className="w-3.5 h-3.5 text-[#D9601A]" /> Complete Catalog Collections
+                    <div className="px-5 py-2.5 border-b border-slate-100 bg-[#EDF1F6] flex items-center justify-between rounded-t-2xl">
+                      <span className="text-xs font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-1.5">
+                        <Layers className="w-3.5 h-3.5 text-[#5B6877]" /> Complete Catalog Collections
                       </span>
-                      <span className="text-[10px] text-[#D9601A] font-bold bg-[#FBF0E8] border border-[#D9601A]/25 px-2.5 py-0.5 rounded-full">
+                      <span className="text-[10px] text-[#5B6877] font-bold bg-[#EDF1F6] border border-[#B9C3CF]/25 px-2.5 py-0.5 rounded-full">
                         180+ Products Available
                       </span>
                     </div>
@@ -430,15 +430,15 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                         return (
                           <div
                             key={mainCat.id}
-                            className="p-3 rounded-md bg-slate-50/80 hover:bg-white border border-slate-100 hover:border-[#D9601A]/40 hover:shadow-sm transition-all"
+                            className="p-3 rounded-md bg-slate-50/80 hover:bg-[#FFFFFF] border border-slate-100 hover:border-[#B9C3CF]/40 hover:shadow-sm transition-all"
                           >
                             <Link
                               href={`/products?category=${mainCat.slug}`}
                               onClick={() => setCategoriesDropdownOpen(false)}
-                              className="flex items-center justify-between text-xs font-bold text-[#16324F] hover:text-[#D9601A] transition-colors mb-1.5 uppercase tracking-wide"
+                              className="flex items-center justify-between text-xs font-bold text-[#22272E] hover:text-[#5B6877] transition-colors mb-1.5 uppercase tracking-wide"
                             >
                               <span className="truncate pr-1">{formatCategoryName(mainCat.name)}</span>
-                              <span className="text-[10px] text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-normal">
+                              <span className="text-[10px] text-slate-500 bg-[#FFFFFF] border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-normal">
                                 {mainCat.products_count || 0}
                               </span>
                             </Link>
@@ -449,7 +449,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                     key={sub.id}
                                     href={`/products?category=${sub.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[11px] text-slate-600 hover:text-[#D9601A] truncate transition-colors font-medium"
+                                    className="block text-[11px] text-slate-600 hover:text-[#5B6877] truncate transition-colors font-medium"
                                   >
                                     {formatCategoryName(sub.name)}
                                   </Link>
@@ -458,7 +458,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                   <Link
                                     href={`/products?category=${mainCat.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[10px] font-bold text-[#D9601A] hover:underline pt-0.5"
+                                    className="block text-[10px] font-bold text-[#5B6877] hover:underline pt-0.5"
                                   >
                                     +{subs.length - 3} more &rarr;
                                   </Link>
@@ -470,14 +470,14 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       })}
                     </div>
 
-                    <div className="p-3 border-t border-slate-100 bg-[#F3F5F7] flex items-center justify-between px-5 rounded-b-2xl">
+                    <div className="p-3 border-t border-slate-100 bg-[#EDF1F6] flex items-center justify-between px-5 rounded-b-2xl">
                       <span className="text-xs text-slate-500">
                         Need tailored specifications or GST invoicing?
                       </span>
                       <Link
                         href="/products"
                         onClick={() => setCategoriesDropdownOpen(false)}
-                        className="text-xs font-bold text-[#D9601A] hover:text-[#B94E12] flex items-center gap-1"
+                        className="text-xs font-bold text-[#5B6877] hover:text-[#4E5A67] flex items-center gap-1"
                       >
                         <span>View All Products &rarr;</span>
                       </Link>
@@ -496,7 +496,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   onMouseEnter={movePill}
                   aria-current={active ? "page" : undefined}
                   className={`relative px-3 py-2 rounded-md whitespace-nowrap transition-colors ${
-                    active ? "text-[#B94E12] font-bold" : "text-slate-700 hover:text-[#B94E12]"
+                    active ? "text-[#4E5A67] font-bold" : "text-slate-700 hover:text-[#4E5A67]"
                   }`}
                 >
                   {item.label}
@@ -513,7 +513,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               onClick={() => setSearchRowOpen((open) => !open)}
               aria-label="Search products"
               aria-expanded={searchRowOpen}
-              className="xl:hidden p-2.5 rounded-md border border-slate-200 hover:border-[#D9601A]/60 hover:bg-[#FBF0E8] text-slate-700 hover:text-[#D9601A] transition-colors shadow-2xs"
+              className="xl:hidden p-2.5 rounded-md border border-slate-200 hover:border-[#B9C3CF]/60 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#5B6877] transition-colors shadow-2xs"
             >
               {searchRowOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
             </button>
@@ -522,14 +522,14 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               ref={cartButtonRef}
               type="button"
               onClick={toggleCart}
-              className="relative p-2.5 rounded-md border border-slate-200 hover:border-[#D9601A]/60 hover:bg-[#FBF0E8] text-slate-700 hover:text-[#D9601A] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
+              className="relative p-2.5 rounded-md border border-slate-200 hover:border-[#B9C3CF]/60 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#5B6877] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
               title="View Cart & Quote List"
               aria-label={mounted && totalItems > 0 ? `View cart, ${totalItems} items` : "View cart"}
             >
               <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110" />
               {mounted && totalItems > 0 && (
                 <span
-                  className="anim-scale-in absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#D9601A] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
+                  className="anim-scale-in absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#22272E] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
                 >
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>
@@ -543,7 +543,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 className="hidden sm:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-md text-xs font-semibold transition-colors"
                 title="My Orders & Quotes"
               >
-                <Package className="w-4 h-4 text-[#16324F]" />
+                <Package className="w-4 h-4 text-[#22272E]" />
                 <span>Orders</span>
               </Link>
             ) : null}
@@ -551,7 +551,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             {/* Request a Quote Button with Motion Elevation */}
             <Link
                 href="/quote"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#D9601A] hover:bg-[#B94E12] text-white px-4 py-2.5 rounded-md text-sm font-bold transition-colors whitespace-nowrap cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2.5 rounded-md text-sm font-bold transition-colors whitespace-nowrap cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
                 <span>Request Quote</span>
@@ -562,7 +562,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
       {/* Compact search row */}
       {searchRowOpen && (
-        <div className="xl:hidden border-t border-slate-100 bg-white px-3.5 sm:px-6 py-2.5 anim-fade-in">
+        <div className="xl:hidden border-t border-slate-100 bg-[#FFFFFF] px-3.5 sm:px-6 py-2.5 anim-fade-in">
           <form onSubmit={handleSearchSubmit} role="search" className="relative max-w-7xl mx-auto">
             <input
               ref={rowSearchRef}
@@ -571,7 +571,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               placeholder="Search products, ID cards, lanyards..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#D9601A] focus:bg-white rounded-md pl-9 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
+              className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#B9C3CF] focus:bg-[#FFFFFF] rounded-md pl-9 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors"
             />
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           </form>
@@ -583,7 +583,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
         ref={progressRef}
         aria-hidden="true"
         style={{ transform: "scaleX(0)" }}
-        className="absolute left-0 right-0 -bottom-px h-0.5 bg-[#D9601A] origin-left"
+        className="absolute left-0 right-0 -bottom-px h-0.5 bg-[#22272E] origin-left"
       />
 
       {/* 3. MOBILE NAVIGATION DRAWER: portalled because the header's backdrop-filter
@@ -594,7 +594,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             <div
               data-backdrop
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-[#0E2238]/60 backdrop-blur-xs"
+              className="fixed inset-0 bg-[#22272E]/60 backdrop-blur-xs"
             />
 
             {/* Drawer */}
@@ -604,7 +604,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               aria-modal="true"
               aria-label="Navigation menu"
               tabIndex={-1}
-              className="relative w-full max-w-xs sm:max-w-sm bg-white h-[100dvh] shadow-2xl flex flex-col z-10 outline-none"
+              className="relative w-full max-w-xs sm:max-w-sm bg-[#FFFFFF] h-[100dvh] shadow-2xl flex flex-col z-10 outline-none"
             >
               {/* Drawer Header */}
               <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
@@ -640,7 +640,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     placeholder="Search products, cards, apparel..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-md pl-9 pr-4 py-2 text-xs text-slate-900 outline-none focus:border-[#D9601A] focus:bg-white"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-md pl-9 pr-4 py-2 text-xs text-slate-900 outline-none focus:border-[#B9C3CF] focus:bg-[#FFFFFF]"
                   />
                   <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 </form>
@@ -664,21 +664,21 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     className="w-full flex items-center justify-between p-2.5 bg-slate-50/70 text-left font-semibold hover:bg-slate-100 transition-colors"
                   >
                     <span className="flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-[#D9601A]" />
+                      <Layers className="w-4 h-4 text-[#5B6877]" />
                       <span>Shop by Category</span>
                     </span>
                     <ChevronDown
                       className={`w-4 h-4 text-slate-400 transition-transform ${
-                        mobileCategoriesOpen ? "rotate-180 text-[#D9601A]" : ""
+                        mobileCategoriesOpen ? "rotate-180 text-[#5B6877]" : ""
                       }`}
                     />
                   </button>
                   {mobileCategoriesOpen && (
-                    <div className="p-2 space-y-1 bg-white border-t border-slate-100 max-h-56 overflow-y-auto">
+                    <div className="p-2 space-y-1 bg-[#FFFFFF] border-t border-slate-100 max-h-56 overflow-y-auto">
                       <Link
                         href="/products"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#D9601A] hover:bg-[#FBF0E8]"
+                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#5B6877] hover:bg-[#EDF1F6]"
                       >
                         View All 180+ Products
                       </Link>
@@ -687,7 +687,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                           key={c.id}
                           href={`/products?category=${c.slug}`}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#D9601A] truncate"
+                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#5B6877] truncate"
                         >
                           {formatCategoryName(c.name)}
                         </Link>
@@ -702,7 +702,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-[#D9601A]" />
+                    <Building2 className="w-4 h-4 text-[#5B6877]" />
                     <span>Corporate &amp; Bulk Orders</span>
                   </span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -750,7 +750,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/quote"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-md bg-[#D9601A] hover:bg-[#B94E12] text-white font-semibold text-xs shadow-md"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white font-semibold text-xs shadow-md"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Request Custom Quote</span>
@@ -759,9 +759,9 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${phone.replace(/\s+/g, "")}`}
-                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-md bg-white border border-slate-200 text-slate-800 text-xs font-semibold hover:bg-slate-100"
+                    className="flex items-center justify-center gap-1.5 py-2.5 rounded-md bg-[#FFFFFF] border border-slate-200 text-slate-800 text-xs font-semibold hover:bg-slate-100"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#D9601A]" />
+                    <Phone className="w-3.5 h-3.5 text-[#5B6877]" />
                     <span>Call Us</span>
                   </a>
                   <a

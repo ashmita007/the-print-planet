@@ -60,13 +60,13 @@ export default function PrintRegisterSection() {
       ref={rootRef}
       data-no-reveal
       aria-labelledby="register-heading"
-      className="bg-[#0E2238] text-white overflow-hidden min-h-svh flex items-center"
+      className="bg-[#22272E] text-white overflow-hidden min-h-svh flex items-center"
     >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-center">
         <div className="lg:col-span-4 order-2 lg:order-1">
           <h2 id="register-heading" className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06]">
             Four inks.
-            <span className="block text-[#F4A36B]">One print.</span>
+            <span className="block text-[#B9C3CF]">One print.</span>
           </h2>
 
           <ul className="mt-5 space-y-2.5 max-w-sm">
@@ -90,7 +90,7 @@ export default function PrintRegisterSection() {
           <div data-register-end className="mt-6">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-sm font-bold text-white underline decoration-[#F4A36B] underline-offset-4 hover:text-[#F4A36B] transition-colors group"
+              className="inline-flex items-center gap-2 text-sm font-bold text-white underline decoration-[#B9C3CF] underline-offset-4 hover:text-[#B9C3CF] transition-colors group"
             >
               <span>See custom printing</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

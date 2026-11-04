@@ -36,13 +36,13 @@ export default function MobileFilterSortBar({
     <button
       type="button"
       onClick={() => setFilterModalOpen(true)}
-      className="inline-flex items-center gap-1.5 bg-[#16324F] hover:bg-[#0E2238] active:bg-[#0c1f35] text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-2xs shrink-0"
+      className="inline-flex items-center gap-1.5 bg-[#22272E] hover:bg-[#363D47] active:bg-[#0c1f35] text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-2xs shrink-0"
       aria-label="Open filter and sort modal"
     >
-      <Filter className="w-3.5 h-3.5 text-[#D9601A]" />
+      <Filter className="w-3.5 h-3.5 text-[#5B6877]" />
       <span>Filter & Sort</span>
       {activeFiltersCount > 0 && (
-        <span className="w-4 h-4 rounded-full bg-[#D9601A] text-white text-[10px] font-extrabold flex items-center justify-center ml-0.5">
+        <span className="w-4 h-4 rounded-full bg-[#22272E] text-white text-[10px] font-extrabold flex items-center justify-center ml-0.5">
           {activeFiltersCount}
         </span>
       )}
@@ -54,9 +54,9 @@ export default function MobileFilterSortBar({
       {buttonOnly ? (
         triggerButton
       ) : (
-        <div className="lg:hidden bg-white p-3 rounded-md border border-[#D8DEE5] flex items-center justify-between gap-2 shadow-2xs">
-          <span className="text-xs text-[#566373] font-medium">
-            Showing <strong className="text-[#16324F] font-bold">{totalCount}</strong> products
+        <div className="lg:hidden bg-[#FFFFFF] p-3 rounded-md border border-[#DFE6EE] flex items-center justify-between gap-2 shadow-2xs">
+          <span className="text-xs text-[#5B6877] font-medium">
+            Showing <strong className="text-[#22272E] font-bold">{totalCount}</strong> products
           </span>
           {triggerButton}
         </div>

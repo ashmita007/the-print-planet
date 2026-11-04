@@ -110,7 +110,7 @@ export default async function ContactPage() {
 
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <div className="lg:col-span-5 lg:sticky lg:top-24">
-          <ul className="border-y border-[#D8DEE5] divide-y divide-[#D8DEE5]">
+          <ul className="border-y border-[#DFE6EE] divide-y divide-[#DFE6EE]">
             {channels.map(({ icon: Icon, label, value, href, external }) => (
               <li key={label}>
                 <a
@@ -118,23 +118,23 @@ export default async function ContactPage() {
                   {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="ink-row flex items-center gap-4 px-3 py-4"
                 >
-                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#D9601A]" aria-hidden="true" />
+                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#5B6877]" aria-hidden="true" />
                   <span className="min-w-0">
-                    <span className="ink-row-note block text-xs text-[#566373]">{label}</span>
-                    <span className="ink-row-title block font-bold text-[#16324F] break-words">{value}</span>
+                    <span className="ink-row-note block text-xs text-[#5B6877]">{label}</span>
+                    <span className="ink-row-title block font-bold text-[#22272E] break-words">{value}</span>
                   </span>
                 </a>
               </li>
             ))}
           </ul>
-          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#566373] leading-relaxed">
-            <MapPin className="w-5 h-5 shrink-0 text-[#D9601A]" aria-hidden="true" />
+          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#5B6877] leading-relaxed">
+            <MapPin className="w-5 h-5 shrink-0 text-[#5B6877]" aria-hidden="true" />
             <span>{address}</span>
           </p>
         </div>
 
         <div className="lg:col-span-7 surface-card p-4 sm:p-8 rounded-lg">
-          <h2 className="text-xl font-bold text-[#16324F] mb-5">Send a message</h2>
+          <h2 className="text-xl font-bold text-[#22272E] mb-5">Send a message</h2>
           <ContactFormClient />
         </div>
       </div>

@@ -40,20 +40,20 @@ export default function ServicesPage() {
       />
 
       <section aria-label="Services" className="max-w-7xl mx-auto px-0 sm:px-6 py-6 sm:py-12">
-        <ul className="border-y border-[#D8DEE5] divide-y divide-[#D8DEE5]">
+        <ul className="border-y border-[#DFE6EE] divide-y divide-[#DFE6EE]">
           {SERVICES.map((service) => (
             <li key={service.title} data-reveal>
               <Link
                 href={`/quote?service=${encodeURIComponent(service.title)}`}
                 className="ink-row grid grid-cols-[1fr_auto] md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)_auto] items-center gap-x-6 gap-y-1 px-4 sm:px-6 py-4 sm:py-5"
               >
-                <span className="ink-row-title text-lg sm:text-2xl font-bold tracking-tight text-[#16324F]">
+                <span className="ink-row-title text-lg sm:text-2xl font-bold tracking-tight text-[#22272E]">
                   {service.title}
                 </span>
-                <span className="ink-row-note row-start-2 md:row-start-auto text-sm text-[#566373]">
+                <span className="ink-row-note row-start-2 md:row-start-auto text-sm text-[#5B6877]">
                   {service.note}
                 </span>
-                <ArrowRight className="ink-row-arrow row-span-2 md:row-span-1 w-5 h-5 text-[#B94E12]" aria-hidden="true" />
+                <ArrowRight className="ink-row-arrow row-span-2 md:row-span-1 w-5 h-5 text-[#4E5A67]" aria-hidden="true" />
               </Link>
             </li>
           ))}
@@ -61,17 +61,17 @@ export default function ServicesPage() {
       </section>
 
       <section aria-labelledby="steps-heading" className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
-        <h2 id="steps-heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16324F]">
+        <h2 id="steps-heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#22272E]">
           How an order runs
         </h2>
         <div className="relative mt-8">
-          <div data-scrub-line aria-hidden="true" className="hidden sm:block absolute left-0 right-0 top-[5px] h-0.5 bg-[#D9601A]" />
+          <div data-scrub-line aria-hidden="true" className="hidden sm:block absolute left-0 right-0 top-[5px] h-0.5 bg-[#22272E]" />
           <ol className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             {STEPS.map((step) => (
               <li key={step.title} className="relative sm:pt-7">
-                <span aria-hidden="true" className="hidden sm:block absolute top-0 left-0 w-3 h-3 rounded-full bg-[#16324F] ring-4 ring-white" />
-                <h3 className="font-bold text-[#16324F]">{step.title}</h3>
-                <p className="text-sm text-[#566373] mt-1">{step.note}</p>
+                <span aria-hidden="true" className="hidden sm:block absolute top-0 left-0 w-3 h-3 rounded-full bg-[#22272E] ring-4 ring-white" />
+                <h3 className="font-bold text-[#22272E]">{step.title}</h3>
+                <p className="text-sm text-[#5B6877] mt-1">{step.note}</p>
               </li>
             ))}
           </ol>

@@ -63,15 +63,15 @@ const REVIEWS_DATA: ReviewItem[] = [
 
 export default function GoogleReviews() {
   return (
-    <section aria-labelledby="reviews-heading" className="bg-[#F3F5F7] py-12 sm:py-16">
+    <section aria-labelledby="reviews-heading" className="bg-[#EDF1F6] py-12 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-end justify-between gap-4">
-        <h2 id="reviews-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#16324F]">
+        <h2 id="reviews-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
           What buyers say
         </h2>
-        <p className="shrink-0 flex items-center gap-2 text-sm text-[#475565]">
-          <Star className="w-5 h-5 fill-[#D9601A] text-[#D9601A]" aria-hidden="true" />
+        <p className="shrink-0 flex items-center gap-2 text-sm text-[#4E5A67]">
+          <Star className="w-5 h-5 fill-[#B9C3CF] text-[#5B6877]" aria-hidden="true" />
           <span>
-            <strong data-count className="text-lg font-extrabold text-[#16324F] tabular-nums">4.9</strong> on Google
+            <strong data-count className="text-lg font-extrabold text-[#22272E] tabular-nums">4.9</strong> on Google
           </span>
         </p>
       </div>
@@ -85,16 +85,16 @@ export default function GoogleReviews() {
           <li
             key={rev.id}
             data-no-reveal
-            className="snap-center sm:snap-start shrink-0 w-[85vw] sm:w-[380px] bg-white border border-[#D8DEE5] rounded-lg p-5 flex flex-col"
+            className="snap-center sm:snap-start shrink-0 w-[85vw] sm:w-[380px] bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-5 flex flex-col"
           >
             <div className="flex gap-0.5" aria-label={`${rev.rating} out of 5`}>
               {[...Array(rev.rating)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#D9601A] text-[#D9601A]" aria-hidden="true" />
+                <Star key={i} className="w-4 h-4 fill-[#B9C3CF] text-[#5B6877]" aria-hidden="true" />
               ))}
             </div>
-            <p className="mt-3 text-sm text-[#1C2733] leading-relaxed line-clamp-5 flex-1">{rev.text}</p>
-            <p className="mt-4 text-sm font-bold text-[#16324F]">{rev.author}</p>
-            <p className="text-xs text-[#566373]">{rev.city}</p>
+            <p className="mt-3 text-sm text-[#22272E] leading-relaxed line-clamp-5 flex-1">{rev.text}</p>
+            <p className="mt-4 text-sm font-bold text-[#22272E]">{rev.author}</p>
+            <p className="text-xs text-[#5B6877]">{rev.city}</p>
           </li>
         ))}
       </ul>

@@ -62,7 +62,7 @@ const INKS = [
 
 const KEY_INDEX = 3;
 /** Black ink vanishes on the navy page, so the key plate reads as grey until it lands. */
-const KEY_SEPARATED = new Color("#A9B8C8");
+const KEY_SEPARATED = new Color("#B9C3CF");
 
 const dotVertex = /* glsl */ `
   attribute float aCover;
@@ -186,9 +186,9 @@ function canvasTexture(width: number, height: number, paint: (ctx: CanvasRenderi
 
 function ribbonTexture(fontFamily: string) {
   const texture = canvasTexture(2048, 128, (ctx) => {
-    ctx.fillStyle = "#D9601A";
+    ctx.fillStyle = "#B9C3CF";
     ctx.fillRect(0, 0, 2048, 128);
-    ctx.fillStyle = "#B94E12";
+    ctx.fillStyle = "#A9B5C3";
     ctx.fillRect(0, 0, 2048, 7);
     ctx.fillRect(0, 121, 2048, 7);
     ctx.fillStyle = "#FFFFFF";
@@ -271,9 +271,9 @@ function cardTexture(band: string) {
     ctx.fillRect(98, 22, 60, 12);
 
     // Photo block.
-    ctx.fillStyle = "#D8DEE5";
+    ctx.fillStyle = "#DFE6EE";
     ctx.fillRect(68, 74, 120, 136);
-    ctx.fillStyle = "#566373";
+    ctx.fillStyle = "#5B6877";
     ctx.beginPath();
     ctx.arc(128, 126, 30, 0, Math.PI * 2);
     ctx.fill();
@@ -282,11 +282,11 @@ function cardTexture(band: string) {
     ctx.fill();
 
     // Name lines and barcode.
-    ctx.fillStyle = "#16324F";
+    ctx.fillStyle = "#22272E";
     ctx.fillRect(48, 234, 160, 16);
-    ctx.fillStyle = "#8896A5";
+    ctx.fillStyle = "#6C7A89";
     ctx.fillRect(72, 262, 112, 10);
-    ctx.fillStyle = "#0E2238";
+    ctx.fillStyle = "#363D47";
     const bars = [4, 2, 6, 3, 2, 5, 2, 4, 6, 2, 3, 5, 2, 4, 3, 6, 2, 4];
     let x = 48;
     bars.forEach((bar, i) => {
@@ -314,7 +314,7 @@ export function createPrintPlanet(canvas: HTMLCanvasElement, options: PlanetOpti
   const viewLight = sun.position.clone().normalize();
 
   // Unprinted stock: the white of the paper the inks land on.
-  const paperMaterial = new MeshStandardMaterial({ color: "#F4F1E8", roughness: 0.92, transparent: true, opacity: 0 });
+  const paperMaterial = new MeshStandardMaterial({ color: "#EDF1F6", roughness: 0.92, transparent: true, opacity: 0 });
   const paperGeometry = new SphereGeometry(0.985, 48, 32);
   const paper = new Mesh(paperGeometry, paperMaterial);
   paper.renderOrder = 0;
@@ -378,7 +378,7 @@ export function createPrintPlanet(canvas: HTMLCanvasElement, options: PlanetOpti
   ringGroup.add(ribbon);
 
   const cardGeometry = buildCardGeometry();
-  const cards = ["#16324F", "#D9601A", "#00A0DC"].map((band, index) => {
+  const cards = ["#22272E", "#B9C3CF", "#00A0DC"].map((band, index) => {
     const map = cardTexture(band);
     const material = new MeshStandardMaterial({ map, roughness: 0.34, side: DoubleSide });
     const mesh = new Mesh(cardGeometry, material);

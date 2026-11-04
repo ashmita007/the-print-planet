@@ -8,7 +8,7 @@ export default function ProductsLoading() {
         <div className="h-3 w-44 skeleton" />
       </div>
 
-      <div className="border-b border-[#D8DEE5] pb-6">
+      <div className="border-b border-[#DFE6EE] pb-6">
         <div className="max-w-3xl space-y-3 min-h-[148px] sm:min-h-[97px]">
           <div className="h-3 w-48 skeleton" />
           <div className="h-9 sm:h-10 w-3/4 max-w-lg skeleton" />
@@ -16,7 +16,7 @@ export default function ProductsLoading() {
         </div>
       </div>
 
-      <div className="lg:hidden h-[58px] bg-white p-3 rounded-md border border-[#D8DEE5] flex items-center justify-between gap-2">
+      <div className="lg:hidden h-[58px] bg-[#FFFFFF] p-3 rounded-md border border-[#DFE6EE] flex items-center justify-between gap-2">
         <div className="h-3 w-32 skeleton" />
         <div className="h-8 w-24 skeleton rounded-lg" />
       </div>
@@ -35,7 +35,7 @@ export default function ProductsLoading() {
         </div>
 
         <div className="lg:col-span-9 space-y-6">
-          <div className="min-h-[132px] md:min-h-[58px] bg-white p-3.5 rounded-md border border-[#D8DEE5] flex flex-wrap items-center justify-between gap-4">
+          <div className="min-h-[132px] md:min-h-[58px] bg-[#FFFFFF] p-3.5 rounded-md border border-[#DFE6EE] flex flex-wrap items-center justify-between gap-4">
             <div className="h-3 w-36 skeleton" />
             <div className="flex gap-1.5">
               <div className="h-6 w-16 skeleton rounded" />

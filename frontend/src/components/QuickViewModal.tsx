@@ -67,7 +67,7 @@ export default function QuickViewModal({
         <div
           data-backdrop
           onClick={onClose}
-          className="fixed inset-0 bg-[#0E2238]/75 backdrop-blur-xs"
+          className="fixed inset-0 bg-[#22272E]/75 backdrop-blur-xs"
         />
 
         {/* Modal Window */}
@@ -77,7 +77,7 @@ export default function QuickViewModal({
           aria-modal="true"
           aria-label={formatProductName(product.name)}
           tabIndex={-1}
-          className="relative w-full max-w-3xl bg-white rounded-lg shadow-2xl overflow-hidden z-10 border border-[#D8DEE5] outline-none"
+          className="relative w-full max-w-3xl bg-[#FFFFFF] rounded-lg shadow-2xl overflow-hidden z-10 border border-[#DFE6EE] outline-none"
         >
           {/* Close Button */}
           <button
@@ -90,8 +90,8 @@ export default function QuickViewModal({
 
           <div className="grid grid-cols-1 md:grid-cols-2 max-h-[85vh] overflow-y-auto">
             {/* Image Gallery Column */}
-            <div className="p-5 bg-[#F3F5F7] flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#D8DEE5]">
-              <div className="relative aspect-square w-full rounded-md overflow-hidden bg-white border border-[#D8DEE5] p-4 flex items-center justify-center">
+            <div className="p-5 bg-[#EDF1F6] flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#DFE6EE]">
+              <div className="relative aspect-square w-full rounded-md overflow-hidden bg-[#FFFFFF] border border-[#DFE6EE] p-4 flex items-center justify-center">
                 <img
                   src={activeImage}
                   alt={product.name}
@@ -113,8 +113,8 @@ export default function QuickViewModal({
                       type="button"
                       aria-label={`View image ${idx + 1}`}
                       onClick={() => setSelectedImage(img)}
-                      className={`relative w-14 h-14 rounded-lg bg-white border overflow-hidden shrink-0 transition-all ${
-                        activeImage === img ? "border-[#D9601A] ring-2 ring-[#D9601A]/30" : "border-[#D8DEE5] opacity-70 hover:opacity-100"
+                      className={`relative w-14 h-14 rounded-lg bg-[#FFFFFF] border overflow-hidden shrink-0 transition-all ${
+                        activeImage === img ? "border-[#B9C3CF] ring-2 ring-[#B9C3CF]/30" : "border-[#DFE6EE] opacity-70 hover:opacity-100"
                       }`}
                     >
                       <img
@@ -133,12 +133,12 @@ export default function QuickViewModal({
               )}
 
               {/* Quality & Delivery trust signals */}
-              <div className="mt-4 pt-3 border-t border-[#D8DEE5] flex items-center justify-between text-[11px] text-[#566373]">
+              <div className="mt-4 pt-3 border-t border-[#DFE6EE] flex items-center justify-between text-[11px] text-[#5B6877]">
                 <span className="flex items-center gap-1 font-medium">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" /> Factory Verified
                 </span>
                 <span className="flex items-center gap-1 font-medium">
-                  <Truck className="w-3.5 h-3.5 text-[#D9601A]" /> PAN-India Dispatch
+                  <Truck className="w-3.5 h-3.5 text-[#5B6877]" /> PAN-India Dispatch
                 </span>
               </div>
             </div>
@@ -147,72 +147,72 @@ export default function QuickViewModal({
             <div className="p-5 sm:p-6 flex flex-col justify-between">
               <div className="space-y-3">
                 {product.category && (
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#D9601A] bg-[#D9601A]/10 px-2 py-0.5 rounded">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#5B6877] bg-[#22272E]/10 px-2 py-0.5 rounded">
                     {formatCategoryName(product.category.name)}
                   </span>
                 )}
 
-                <h2 className="text-lg sm:text-xl font-bold text-[#16324F] leading-snug">
+                <h2 className="text-lg sm:text-xl font-bold text-[#22272E] leading-snug">
                   {formatProductName(product.name)}
                 </h2>
 
-                <div className="flex items-center gap-3 text-xs text-[#566373]">
-                  <span className="font-mono bg-[#F3F5F7] border border-[#D8DEE5] px-2 py-0.5 rounded text-[#1C2733]">
+                <div className="flex items-center gap-3 text-xs text-[#5B6877]">
+                  <span className="font-mono bg-[#EDF1F6] border border-[#DFE6EE] px-2 py-0.5 rounded text-[#22272E]">
                     SKU: {product.sku}
                   </span>
                   {product.minimum_order_quantity && (
-                    <span className="text-[#566373] font-medium font-mono">
+                    <span className="text-[#5B6877] font-medium font-mono">
                       MOQ: {product.minimum_order_quantity} Units
                     </span>
                   )}
                 </div>
 
                 {/* Price */}
-                <div className="pt-2 pb-1 border-y border-[#F3F5F7]">
+                <div className="pt-2 pb-1 border-y border-[#EDF1F6]">
                   {product.price_display ? (
-                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#16324F]">
+                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#22272E]">
                       {product.price_display}
                     </div>
                   ) : product.price ? (
-                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#16324F]">
+                    <div className="text-xl sm:text-2xl font-bold font-mono text-[#22272E]">
                       ₹{Number(product.price).toLocaleString("en-IN")}{" "}
-                      <span className="text-xs text-[#566373] font-normal">per unit</span>
+                      <span className="text-xs text-[#5B6877] font-normal">per unit</span>
                     </div>
                   ) : (
-                    <div className="text-base font-bold text-[#D9601A]">
+                    <div className="text-base font-bold text-[#5B6877]">
                       Direct Wholesale Pricing on Request
                     </div>
                   )}
                 </div>
 
                 {/* Description excerpt */}
-                <p className="text-xs text-[#566373] leading-relaxed line-clamp-3">
+                <p className="text-xs text-[#5B6877] leading-relaxed line-clamp-3">
                   {product.short_description || product.description || "Premium industrial-grade materials engineered for custom printing, corporate identification, and high-volume merchandise."}
                 </p>
 
                 {/* Key specs pills */}
                 <div className="grid grid-cols-2 gap-2 text-[11px] pt-1">
                   {product.material && (
-                    <div className="p-2 rounded-lg bg-[#F3F5F7] border border-[#D8DEE5]">
-                      <span className="text-[#566373] block text-[9px] uppercase font-bold">Material</span>
-                      <span className="font-semibold text-[#1C2733] truncate block">{product.material}</span>
+                    <div className="p-2 rounded-lg bg-[#EDF1F6] border border-[#DFE6EE]">
+                      <span className="text-[#5B6877] block text-[9px] uppercase font-bold">Material</span>
+                      <span className="font-semibold text-[#22272E] truncate block">{product.material}</span>
                     </div>
                   )}
                   {product.dimensions && (
-                    <div className="p-2 rounded-lg bg-[#F3F5F7] border border-[#D8DEE5]">
-                      <span className="text-[#566373] block text-[9px] uppercase font-bold">Dimensions</span>
-                      <span className="font-semibold text-[#1C2733] truncate block">{product.dimensions}</span>
+                    <div className="p-2 rounded-lg bg-[#EDF1F6] border border-[#DFE6EE]">
+                      <span className="text-[#5B6877] block text-[9px] uppercase font-bold">Dimensions</span>
+                      <span className="font-semibold text-[#22272E] truncate block">{product.dimensions}</span>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="space-y-2.5 pt-5 mt-4 border-t border-[#F3F5F7]">
+              <div className="space-y-2.5 pt-5 mt-4 border-t border-[#EDF1F6]">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={handleAddToCart}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#D9601A] hover:bg-[#B94E12] active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#22272E] hover:bg-[#363D47] active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
                   >
                     {added ? (
                       <>
@@ -241,7 +241,7 @@ export default function QuickViewModal({
                 <Link
                   href={`/products/${product.slug}`}
                   onClick={onClose}
-                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#566373] hover:text-[#16324F] transition-colors"
+                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#5B6877] hover:text-[#22272E] transition-colors"
                 >
                   <span>View Full Product Specifications</span>
                   <ExternalLink className="w-3.5 h-3.5" />

@@ -166,7 +166,7 @@ export default function ProductHeroShowcase({
     <section
       ref={heroRef}
       data-no-reveal
-      className="bg-[#0E2238] text-white overflow-hidden border-b border-white/10"
+      className="bg-[#22272E] text-white overflow-hidden border-b border-white/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -178,7 +178,7 @@ export default function ProductHeroShowcase({
 
             <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}>
               <TextReveal text={copy.title} />
-              <span className="block text-[#F4A36B]">
+              <span className="block text-[#B9C3CF]">
                 <TextReveal text={copy.subtitle} />
               </span>
             </p>
@@ -195,14 +195,14 @@ export default function ProductHeroShowcase({
               <Link
                 href="/products"
                 data-magnetic
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#D9601A] hover:bg-[#B94E12] text-white font-bold text-sm transition-colors group"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] font-bold text-sm transition-colors group"
               >
                 <span>Browse {totalProductsCount}+ products</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/quote"
-                className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-[#F4A36B] transition-colors"
+                className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-[#B9C3CF] transition-colors"
               >
                 Request a custom quote
               </Link>
@@ -228,7 +228,7 @@ export default function ProductHeroShowcase({
                     onClick={() => setSelectedHeroCategory(cat.id)}
                     className={`pb-2.5 -mb-px text-[13px] font-semibold whitespace-nowrap border-b-2 transition-colors ${
                       selectedHeroCategory === cat.id
-                        ? "text-white border-[#F4A36B]"
+                        ? "text-white border-[#B9C3CF]"
                         : "text-slate-400 hover:text-white border-transparent"
                     }`}
                   >
@@ -239,7 +239,7 @@ export default function ProductHeroShowcase({
 
               <div data-hero-sheet className="relative mx-3">
                 <CropMarks />
-                <div className="relative bg-white text-[#1C2733]">
+                <div className="relative bg-[#FFFFFF] text-[#22272E]">
                   <div className="relative aspect-[16/10] w-full overflow-hidden p-5 flex items-center justify-center">
                     <div ref={stageImageRef} className="relative w-full h-full flex items-center justify-center">
                       <img
@@ -251,34 +251,34 @@ export default function ProductHeroShowcase({
                         decoding="async"
                       />
                     </div>
-                    <div className="absolute bottom-0 inset-x-0 h-0.5 bg-[#D8DEE5]">
-                      <div ref={progressBarRef} className="h-full w-full bg-[#D9601A] origin-left" style={{ transform: "scaleX(0)" }} />
+                    <div className="absolute bottom-0 inset-x-0 h-0.5 bg-[#DFE6EE]">
+                      <div ref={progressBarRef} className="h-full w-full bg-[#22272E] origin-left" style={{ transform: "scaleX(0)" }} />
                     </div>
                   </div>
 
                   <div className="p-4 sm:p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
-                        <p className="font-mono text-[11px] text-[#566373] truncate">
+                        <p className="font-mono text-[11px] text-[#5B6877] truncate">
                           {activeProduct.sku}
                         </p>
-                        <h2 className="text-base sm:text-lg font-bold text-[#16324F] leading-snug line-clamp-1 mt-0.5">
+                        <h2 className="text-base sm:text-lg font-bold text-[#22272E] leading-snug line-clamp-1 mt-0.5">
                           {formatProductName(activeProduct.name)}
                         </h2>
-                        <p className="text-xs text-[#566373] line-clamp-1 mt-0.5">
+                        <p className="text-xs text-[#5B6877] line-clamp-1 mt-0.5">
                           {activeProduct.material ? `${activeProduct.material} · ` : ""}
                           {formatCategoryName(activeProduct.category?.name || "Wholesale")}
                         </p>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="font-heading text-base sm:text-lg font-bold text-[#16324F] tabular-nums whitespace-nowrap">
+                        <div className="font-heading text-base sm:text-lg font-bold text-[#22272E] tabular-nums whitespace-nowrap">
                           {activeProduct.price_display ||
                             (activeProduct.price
                               ? `₹${Number(activeProduct.price).toLocaleString("en-IN")}`
                               : "On request")}
                         </div>
                         {activeProduct.minimum_order_quantity ? (
-                          <div className="font-mono text-[11px] text-[#566373]">
+                          <div className="font-mono text-[11px] text-[#5B6877]">
                             MOQ {activeProduct.minimum_order_quantity}
                           </div>
                         ) : null}
@@ -290,7 +290,7 @@ export default function ProductHeroShowcase({
                         type="button"
                         onClick={handleHeroAdd}
                         className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md text-white font-bold text-[13px] transition-colors ${
-                          heroAdded ? "bg-[#217A4B]" : "bg-[#D9601A] hover:bg-[#B94E12]"
+                          heroAdded ? "bg-[#217A4B]" : "bg-[#22272E] hover:bg-[#363D47]"
                         }`}
                       >
                         {heroAdded ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
@@ -298,7 +298,7 @@ export default function ProductHeroShowcase({
                       </button>
                       <Link
                         href={`/products/${activeProduct.slug}`}
-                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md border border-[#16324F] text-[#16324F] hover:bg-[#16324F] hover:text-white font-semibold text-[13px] transition-colors"
+                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md border border-[#22272E] text-[#22272E] hover:bg-[#22272E] hover:text-white font-semibold text-[13px] transition-colors"
                       >
                         View specifications
                       </Link>
@@ -317,8 +317,8 @@ export default function ProductHeroShowcase({
                       aria-label={`Show ${formatProductName(p.name)}`}
                       aria-current={isSelected}
                       onClick={() => setActiveIndex(idx)}
-                      className={`relative w-12 h-12 shrink-0 bg-white overflow-hidden transition-opacity ${
-                        isSelected ? "outline-2 outline-offset-2 outline-[#F4A36B]" : "opacity-55 hover:opacity-100"
+                      className={`relative w-12 h-12 shrink-0 bg-[#FFFFFF] overflow-hidden transition-opacity ${
+                        isSelected ? "outline-2 outline-offset-2 outline-[#B9C3CF]" : "opacity-55 hover:opacity-100"
                       }`}
                     >
                       <img

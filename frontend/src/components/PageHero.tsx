@@ -41,7 +41,7 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
   );
 
   return (
-    <header ref={root} className="relative overflow-hidden bg-[#0E2238] text-white">
+    <header ref={root} className="relative overflow-hidden bg-[#22272E] text-white">
       <div data-hero-dots aria-hidden="true" className="page-hero-dots absolute inset-0 -top-[20%]" />
 
       <div data-hero className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-9 sm:pb-14">
@@ -68,7 +68,7 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
         </div>
       </div>
 
-      <div data-hero-rule aria-hidden="true" className="h-[3px] bg-[#D9601A]" />
+      <div data-hero-rule aria-hidden="true" className="h-[3px] bg-[#22272E]" />
     </header>
   );
 }

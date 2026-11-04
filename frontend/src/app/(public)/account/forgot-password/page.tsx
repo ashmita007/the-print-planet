@@ -32,13 +32,13 @@ export default function ForgotPasswordPage() {
     <div className="max-w-md mx-auto px-4 py-12 space-y-6">
       <Breadcrumbs items={[{ label: "Client Portal", href: "/account/login" }, { label: "Forgotten Password" }]} />
 
-      <div className="bg-white border border-[#D8DEE5] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
+      <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#FFF5EE] text-[#D9601A] rounded-md flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#EDF1F6] text-[#5B6877] rounded-md flex items-center justify-center mx-auto mb-2">
             <KeyRound className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-extrabold text-[#16324F]">Forgotten Password</h1>
-          <p className="text-xs text-[#566373]">
+          <h1 className="text-2xl font-extrabold text-[#22272E]">Forgotten Password</h1>
+          <p className="text-xs text-[#5B6877]">
             Enter your registered school, corporate, or buyer account email address.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
             <div className="pt-2">
               <Link
                 href="/account/login"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#16324F] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#22272E] hover:underline"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Return to Login</span>
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
             )}
 
             <div>
-              <label htmlFor="field-registered-email-address" className="block font-bold text-[#1C2733] mb-1">Registered Email Address</label>
+              <label htmlFor="field-registered-email-address" className="block font-bold text-[#22272E] mb-1">Registered Email Address</label>
               <div className="relative">
                 <input id="field-registered-email-address"
                   type="email"
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="procurement@school.edu.in"
-                  className="w-full bg-[#F3F5F7] border border-[#D8DEE5] focus:border-[#16324F] focus:bg-white rounded-md pl-9 pr-3 py-2.5 text-[#1C2733] outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#22272E] outline-none"
                 />
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#D9601A] hover:bg-[#B94E12] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {loading ? <span>Dispatching link...</span> : <span>Send Password Reset Link</span>}
               <ArrowRight className="w-4 h-4" />
@@ -96,13 +96,13 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <div className="text-center pt-2 border-t border-[#EEF2F7] text-xs text-[#566373] flex items-center justify-between">
-          <Link href="/account/login" className="text-slate-500 hover:text-[#16324F] flex items-center gap-1 font-semibold">
+        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#5B6877] flex items-center justify-between">
+          <Link href="/account/login" className="text-slate-500 hover:text-[#22272E] flex items-center gap-1 font-semibold">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Login</span>
           </Link>
 
-          <Link href="/corporate" className="text-[#D9601A] font-bold hover:underline">
+          <Link href="/corporate" className="text-[#5B6877] font-bold hover:underline">
             New Bulk Inquiry
           </Link>
         </div>

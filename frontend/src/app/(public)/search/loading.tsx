@@ -8,7 +8,7 @@ export default function SearchLoading() {
         <div className="h-3 w-32 skeleton" />
       </div>
 
-      <div className="border-b border-[#D8DEE5] pb-6 space-y-3">
+      <div className="border-b border-[#DFE6EE] pb-6 space-y-3">
         <div className="h-3 w-28 skeleton" />
         <div className="h-8 w-2/3 max-w-md skeleton" />
         <div className="h-3 w-56 skeleton" />

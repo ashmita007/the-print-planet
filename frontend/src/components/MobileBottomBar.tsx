@@ -46,7 +46,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
   ];
 
   return (
-    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0E2238]/95 backdrop-blur-md border-t border-white/10 px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-2xl">
+    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#22272E]/95 backdrop-blur-md border-t border-white/10 px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-2xl">
       <div className="grid grid-cols-5 items-center gap-1 max-w-md mx-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -55,13 +55,13 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
             <div
               className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-md transition-all duration-200 active:scale-95 ${
                 isItemActive
-                  ? "text-[#F4A36B] font-bold bg-white/[0.08]"
+                  ? "text-[#B9C3CF] font-bold bg-white/[0.08]"
                   : "text-slate-300 hover:text-white"
               }`}
             >
               <Icon
                 className={`w-5 h-5 mb-0.5 ${
-                  isItemActive ? "text-[#F4A36B]" : "text-slate-300"
+                  isItemActive ? "text-[#B9C3CF]" : "text-slate-300"
                 }`}
               />
               <span className="text-[10px] tracking-tight">{item.label}</span>
@@ -99,7 +99,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
             <div className="relative">
               <ShoppingBag className="w-5 h-5 mb-0.5 text-slate-300" />
               {mounted && totalItems > 0 && (
-                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-[#D9601A] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-[#B9C3CF] text-[#22272E] text-[9px] font-bold rounded-full flex items-center justify-center">
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>
               )}
@@ -111,7 +111,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
         {/* Get Quote Action */}
         <Link
           href="/quote"
-          className="min-w-0 bg-[#D9601A] hover:bg-[#B94E12] text-white py-1.5 px-1 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
+          className="min-w-0 bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] py-1.5 px-1 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
         >
           <FileText className="w-4 h-4 mb-0.5 text-white" />
           <span className="text-[10px] tracking-tight">

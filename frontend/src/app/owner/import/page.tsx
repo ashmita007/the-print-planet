@@ -87,7 +87,7 @@ export default function BulkImportPage() {
         <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
           Catalogue
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16324F] mt-1">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#22272E] mt-1">
           Bulk import
         </h1>
         <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
@@ -104,20 +104,20 @@ export default function BulkImportPage() {
 
       {/* Step 1: Upload & Validate File */}
       <div className="surface-card p-6 rounded-lg space-y-4 text-xs">
-        <h2 className="text-sm font-bold text-[#16324F] border-b border-[#D8DEE5] pb-2">
+        <h2 className="text-sm font-bold text-[#22272E] border-b border-[#DFE6EE] pb-2">
           Step 1: Select Excel (.xlsx), CSV, or JSON Data File
         </h2>
 
-        <label className="border border-dashed border-[#CBD5E1] hover:border-[#94A3B8] hover:bg-[#F3F5F7] rounded-lg p-8 text-center space-y-3 bg-[#F3F5F7] transition-all cursor-pointer block select-none group">
+        <label className="border border-dashed border-[#B9C3CF] hover:border-[#6C7A89] hover:bg-[#EDF1F6] rounded-lg p-8 text-center space-y-3 bg-[#EDF1F6] transition-all cursor-pointer block select-none group">
           <input
             type="file"
             accept=".xlsx,.csv,.json"
             onChange={handleFileChange}
             className="hidden"
           />
-          <FileSpreadsheet className="w-10 h-10 text-[#16324F] mx-auto group-hover:scale-110 transition-transform" />
+          <FileSpreadsheet className="w-10 h-10 text-[#22272E] mx-auto group-hover:scale-110 transition-transform" />
           <div>
-            <span className="bg-[#16324F] group-hover:bg-[#0E2238] text-white px-5 py-2.5 rounded-md font-bold text-xs inline-block transition-colors shadow-xs">
+            <span className="bg-[#22272E] group-hover:bg-[#363D47] text-white px-5 py-2.5 rounded-md font-bold text-xs inline-block transition-colors shadow-xs">
               Choose Excel (.xlsx) / CSV / JSON File
             </span>
             <p className="text-[11px] text-slate-500 mt-2">
@@ -127,7 +127,7 @@ export default function BulkImportPage() {
 
           {selectedFile && (
             <div className="pt-2">
-              <span className="font-bold text-[#16324F] bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg inline-block">
+              <span className="font-bold text-[#22272E] bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg inline-block">
                 Selected: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
               </span>
             </div>
@@ -139,7 +139,7 @@ export default function BulkImportPage() {
             type="button"
             onClick={handleValidate}
             disabled={isValidating}
-            className="bg-[#D9601A] hover:bg-[#B94E12] text-white px-6 py-2.5 rounded-lg font-bold text-xs transition-colors disabled:opacity-50"
+            className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-lg font-bold text-xs transition-colors disabled:opacity-50"
           >
             {isValidating ? "Validating Columns & Detecting Duplicates..." : "Validate & Preview Rows"}
           </button>
@@ -149,8 +149,8 @@ export default function BulkImportPage() {
       {/* Step 2: Validation Preview Table */}
       {validationResult && !executionResult && (
         <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#D8DEE5] pb-3">
-            <h2 className="text-sm font-bold text-[#16324F]">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#DFE6EE] pb-3">
+            <h2 className="text-sm font-bold text-[#22272E]">
               Step 2: Pre-Import Inspection & Strategy
             </h2>
 
@@ -168,17 +168,17 @@ export default function BulkImportPage() {
 
           {/* Validation Counters */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div className="p-3 bg-[#F3F5F7] rounded-lg border border-[#D8DEE5]">
+            <div className="p-3 bg-[#EDF1F6] rounded-lg border border-[#DFE6EE]">
               <span className="text-[11px] text-slate-500 font-semibold block">Total Rows</span>
-              <strong className="text-xl font-extrabold tabular-nums text-[#16324F]">{validationResult.total_rows}</strong>
+              <strong className="text-xl font-extrabold tabular-nums text-[#22272E]">{validationResult.total_rows}</strong>
             </div>
             <div className="p-3 bg-green-50 rounded-lg border border-green-200">
               <span className="text-[11px] text-[#217A4B] font-semibold block">New Products</span>
               <strong className="text-xl font-extrabold tabular-nums text-[#217A4B]">{validationResult.new_count}</strong>
             </div>
             <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-              <span className="text-[11px] text-[#D9601A] font-semibold block">Existing SKUs</span>
-              <strong className="text-xl font-extrabold tabular-nums text-[#D9601A]">{validationResult.existing_count}</strong>
+              <span className="text-[11px] text-[#5B6877] font-semibold block">Existing SKUs</span>
+              <strong className="text-xl font-extrabold tabular-nums text-[#5B6877]">{validationResult.existing_count}</strong>
             </div>
             <div className="p-3 bg-red-50 rounded-lg border border-red-200">
               <span className="text-[11px] text-[#C0392B] font-semibold block">Invalid Rows</span>
@@ -187,29 +187,29 @@ export default function BulkImportPage() {
           </div>
 
           {/* Strategy Selection */}
-          <div className="p-4 bg-[#F3F5F7] rounded-md border border-[#D8DEE5] space-y-2">
-            <span className="font-bold text-[#1C2733] block">Duplicate Handling Strategy:</span>
+          <div className="p-4 bg-[#EDF1F6] rounded-md border border-[#DFE6EE] space-y-2">
+            <span className="font-bold text-[#22272E] block">Duplicate Handling Strategy:</span>
             <div className="flex flex-wrap gap-6">
-              <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#1C2733]">
+              <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#22272E]">
                 <input
                   type="radio"
                   name="strategy"
                   value="skip"
                   checked={strategy === "skip"}
                   onChange={() => setStrategy("skip")}
-                  className="text-[#16324F]"
+                  className="text-[#22272E]"
                 />
                 <span>Skip Existing (Preserve existing catalog data, only add new)</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#1C2733]">
+              <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#22272E]">
                 <input
                   type="radio"
                   name="strategy"
                   value="update"
                   checked={strategy === "update"}
                   onChange={() => setStrategy("update")}
-                  className="text-[#16324F]"
+                  className="text-[#22272E]"
                 />
                 <span>Update Existing (Overwrite matching SKUs with new specs)</span>
               </label>
@@ -217,9 +217,9 @@ export default function BulkImportPage() {
           </div>
 
           {/* Preview Rows Table */}
-          <div className="border border-[#D8DEE5] rounded-lg overflow-x-auto max-h-72">
+          <div className="border border-[#DFE6EE] rounded-lg overflow-x-auto max-h-72">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#F3F5F7] border-b border-[#D8DEE5] text-[10px] font-bold text-slate-500 uppercase sticky top-0">
+              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[10px] font-bold text-slate-500 uppercase sticky top-0">
                 <tr>
                   <th className="p-2.5">Row</th>
                   <th className="p-2.5">Product Name</th>
@@ -233,7 +233,7 @@ export default function BulkImportPage() {
                 {validationResult.preview?.map((row: any) => (
                   <tr key={row.row_index} className="hover:bg-slate-50">
                     <td className="p-2.5 font-bold text-slate-400">{row.row_index}</td>
-                    <td className="p-2.5 font-semibold text-[#16324F] truncate max-w-xs">{row.name}</td>
+                    <td className="p-2.5 font-semibold text-[#22272E] truncate max-w-xs">{row.name}</td>
                     <td className="p-2.5 font-mono text-slate-600">{row.sku}</td>
                     <td className="p-2.5 text-slate-600">{row.category_slug}</td>
                     <td className="p-2.5 font-bold">{row.price ? `₹ ${row.price}` : "—"}</td>
@@ -242,7 +242,7 @@ export default function BulkImportPage() {
                         className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
                           row.status === "new"
                             ? "bg-green-100 text-[#217A4B]"
-                            : "bg-orange-100 text-[#D9601A]"
+                            : "bg-orange-100 text-[#5B6877]"
                         }`}
                       >
                         {row.status === "new" ? "New" : "Existing"}
@@ -258,7 +258,7 @@ export default function BulkImportPage() {
             <button
               type="button"
               onClick={() => setValidationResult(null)}
-              className="px-4 py-2 border border-[#D8DEE5] rounded-lg font-semibold text-slate-600 hover:bg-slate-50"
+              className="px-4 py-2 border border-[#DFE6EE] rounded-lg font-semibold text-slate-600 hover:bg-slate-50"
             >
               Cancel / Choose Another File
             </button>
@@ -278,18 +278,18 @@ export default function BulkImportPage() {
 
       {/* Step 3: Execution Result Confirmation */}
       {executionResult && (
-        <div className="bg-white p-8 rounded-md border border-green-200 shadow-md text-center space-y-4">
+        <div className="bg-[#FFFFFF] p-8 rounded-md border border-green-200 shadow-md text-center space-y-4">
           <CheckCircle className="w-16 h-16 text-[#217A4B] mx-auto" />
-          <h2 className="text-xl font-extrabold text-[#16324F]">Bulk Import Finished Successfully!</h2>
-          <div className="flex justify-center gap-6 text-xs text-[#1C2733]">
+          <h2 className="text-xl font-extrabold text-[#22272E]">Bulk Import Finished Successfully!</h2>
+          <div className="flex justify-center gap-6 text-xs text-[#22272E]">
             <div>Imported: <strong className="text-[#217A4B] text-base">{executionResult.imported_count}</strong></div>
-            <div>Updated: <strong className="text-[#D9601A] text-base">{executionResult.updated_count}</strong></div>
+            <div>Updated: <strong className="text-[#5B6877] text-base">{executionResult.updated_count}</strong></div>
             <div>Skipped: <strong className="text-slate-500 text-base">{executionResult.skipped_count}</strong></div>
           </div>
           <div className="pt-4 flex justify-center gap-4">
             <Link
               href="/owner/products"
-              className="bg-[#16324F] hover:bg-[#0E2238] text-white px-6 py-2.5 rounded-lg font-bold text-xs"
+              className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-lg font-bold text-xs"
             >
               View Products Table
             </Link>
@@ -300,7 +300,7 @@ export default function BulkImportPage() {
                 setValidationResult(null);
                 setSelectedFile(null);
               }}
-              className="border border-[#D8DEE5] px-6 py-2.5 rounded-lg font-semibold text-xs hover:bg-[#F3F5F7]"
+              className="border border-[#DFE6EE] px-6 py-2.5 rounded-lg font-semibold text-xs hover:bg-[#EDF1F6]"
             >
               Import Another File
             </button>

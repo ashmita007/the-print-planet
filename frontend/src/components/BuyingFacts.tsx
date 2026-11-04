@@ -14,7 +14,7 @@ const WHATSAPP = "https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%2
 
 export default function BuyingFacts() {
   return (
-    <section className="bg-[#0E2238] text-white">
+    <section className="bg-[#22272E] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <ColorBar className="mb-6" />
         <dl className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 border-b border-white/15 pb-8">
@@ -32,7 +32,7 @@ export default function BuyingFacts() {
             <Link
               href="/corporate"
               data-magnetic
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#D9601A] hover:bg-[#B94E12] font-bold text-sm transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] font-bold text-sm transition-colors"
             >
               <span>Start a bulk order</span>
               <ArrowRight className="w-4 h-4" />
