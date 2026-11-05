@@ -21,7 +21,7 @@ export default function Marquee({ items, reverse = false, speed = 28, className 
       role={label ? "region" : undefined}
       className={`marquee py-6 sm:py-8 border-y border-current/15 ${className}`}
     >
-      <ul data-split-skip className="marquee-track display-xl !text-[clamp(2rem,5vw,4.25rem)]">
+      <ul className="marquee-track display-xl !text-[clamp(2rem,5vw,4.25rem)]">
         {items.map((item) => (
           <li key={item} className="flex items-center gap-12">
             <span>{item}</span>

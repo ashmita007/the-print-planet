@@ -427,18 +427,6 @@ html.lenis body {
     text-transform: uppercase;
   }
 
-  /* Line masks for the rise-and-unskew reveal. */
-  .line-mask {
-    display: block;
-    overflow: hidden;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
-  }
-  .line-mask > span {
-    display: inline-block;
-    will-change: transform;
-  }
-
   /* Ink section revealed with an expanding circle. */
   .ink-section {
     background: var(--color-ink);

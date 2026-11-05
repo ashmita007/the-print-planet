@@ -5,7 +5,7 @@ export default function BrandStatement() {
   return (
     <section aria-labelledby="statement-heading" className="max-w-7xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-16 text-center">
       <p className="eyebrow text-[#5B6877] mb-6">About The Print Planet</p>
-      <h2 id="statement-heading" data-split-skip className="display-xl text-[#22272E]">
+      <h2 id="statement-heading" className="display-xl text-[#22272E]">
         <span data-reveal className="block">Welcome to</span>
         <span data-reveal className="block">
           the print
