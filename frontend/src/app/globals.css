@@ -402,8 +402,8 @@ html.lenis body {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
-    line-height: 0.92;
-    font-size: clamp(2.6rem, 7.4vw, 6.75rem);
+    line-height: 1;
+    font-size: clamp(1.9rem, 4.4vw, 3.75rem);
   }
   .display-note {
     display: inline-block;
@@ -411,7 +411,7 @@ html.lenis body {
     max-width: 11ch;
     margin: 0 0.6em;
     font-family: var(--font-sans), sans-serif;
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: 0.04em;
@@ -425,6 +425,18 @@ html.lenis body {
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  /* Line masks for the rise-and-unskew reveal. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .line-mask > span {
+    display: inline-block;
+    will-change: transform;
   }
 
   /* Ink section revealed with an expanding circle. */
@@ -442,8 +454,8 @@ html.lenis body {
   .marquee-track {
     display: flex;
     flex-shrink: 0;
-    gap: 3rem;
-    padding-right: 3rem;
+    gap: 2rem;
+    padding-right: 2rem;
     will-change: transform;
   }
 }

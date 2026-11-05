@@ -9,8 +9,8 @@ export default function BulkInkBand({ whatsapp }: { whatsapp?: string }) {
   const phone = (whatsapp || "919741808034").replace(/\D/g, "");
   return (
     <section data-wipe aria-labelledby="bulk-band-heading" className="ink-section mt-8 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid lg:grid-cols-12 gap-10 items-center">
-        <h2 id="bulk-band-heading" className="lg:col-span-7 display-xl">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 grid lg:grid-cols-12 gap-10 items-center">
+        <h2 id="bulk-band-heading" data-split-skip className="lg:col-span-7 display-xl">
           <span data-reveal className="block">Order for</span>
           <span data-reveal className="block">
             the whole
