@@ -9,7 +9,6 @@ import BuyingFacts from "@/components/BuyingFacts";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
 import GoogleReviews from "@/components/GoogleReviews";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
-import BrandStatement from "@/components/home/BrandStatement";
 import BulkInkBand from "@/components/home/BulkInkBand";
 import Marquee from "@/components/home/Marquee";
 
@@ -144,9 +143,6 @@ export default async function HomePage() {
 
       {/* Product words run with the scroll */}
       <Marquee items={PRODUCT_WORDS} label="What we make" className="text-[#22272E] mt-6" />
-
-      {/* Who we are, set large */}
-      <BrandStatement />
 
       {/* Product families, led by real photos */}
       <ProductLines />
