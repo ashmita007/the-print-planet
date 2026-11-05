@@ -4,13 +4,15 @@ import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
 import ProductHeroShowcase from "@/components/ProductHeroShowcase";
 import PrintRegisterSection from "@/components/planet/PrintRegisterSection";
-import ProductLines from "@/components/ProductLines";
 import BuyingFacts from "@/components/BuyingFacts";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
 import GoogleReviews from "@/components/GoogleReviews";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 import BulkInkBand from "@/components/home/BulkInkBand";
 import Marquee from "@/components/home/Marquee";
+import CategoryShowcase from "@/components/home/CategoryShowcase";
+import HowItWorks from "@/components/home/HowItWorks";
+import StatsStrip from "@/components/home/StatsStrip";
 
 const PRODUCT_WORDS = ["PVC cards", "Satin lanyards", "ID card holders", "RFID cards", "Badge reels", "Card machines"];
 import {
@@ -141,11 +143,14 @@ export default async function HomePage() {
         settings={settings}
       />
 
+      {/* Live numbers and service badges, overlapping the hero edge */}
+      <StatsStrip productCount={productsData?.count || productsList.length} />
+
       {/* Product words run with the scroll */}
       <Marquee items={PRODUCT_WORDS} label="What we make" className="text-[#22272E] mt-6" />
 
-      {/* Product families, led by real photos */}
-      <ProductLines />
+      {/* Product families: one print ink each, circle-wipe between them */}
+      <CategoryShowcase />
 
       {/* 2. Direct Catalogue & Best Sellers with Category Tabs */}
       <DirectProductShowcase
@@ -176,6 +181,9 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Quote, proof, print, dispatch */}
+      <HowItWorks />
 
       {/* Bulk orders: ink band that opens with a circle wipe */}
       <BulkInkBand whatsapp={settings?.whatsapp} />

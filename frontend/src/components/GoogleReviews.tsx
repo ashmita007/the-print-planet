@@ -1,5 +1,6 @@
 import React from "react";
 import { Star } from "lucide-react";
+import ReviewCarousel from "@/components/home/ReviewCarousel";
 
 interface ReviewItem {
   id: string;
@@ -76,28 +77,7 @@ export default function GoogleReviews() {
         </p>
       </div>
 
-      <ul
-        tabIndex={0}
-        aria-label="Customer reviews, scroll sideways"
-        className="mt-6 flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-2 px-4 sm:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
-      >
-        {REVIEWS_DATA.map((rev) => (
-          <li
-            key={rev.id}
-            data-no-reveal
-            className="snap-center sm:snap-start shrink-0 w-[85vw] sm:w-[380px] bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-5 flex flex-col"
-          >
-            <div className="flex gap-0.5" aria-label={`${rev.rating} out of 5`}>
-              {[...Array(rev.rating)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#B9C3CF] text-[#5B6877]" aria-hidden="true" />
-              ))}
-            </div>
-            <p className="mt-3 text-sm text-[#22272E] leading-relaxed line-clamp-5 flex-1">{rev.text}</p>
-            <p className="mt-4 text-sm font-bold text-[#22272E]">{rev.author}</p>
-            <p className="text-xs text-[#5B6877]">{rev.city}</p>
-          </li>
-        ))}
-      </ul>
+      <ReviewCarousel reviews={REVIEWS_DATA} />
     </section>
   );
 }
