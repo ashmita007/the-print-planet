@@ -177,7 +177,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <span>In Stock • Ready to Dispatch in 24–48h</span>
             </div>
 
-            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-[#5B6877] transition-colors">
+            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-[#3F4A56] transition-colors">
               <ZoomIn className="w-4 h-4" />
             </div>
           </div>
@@ -207,12 +207,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           )}
 
-          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#4E5A67]">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#36404B]">
             <li className="flex items-center gap-1.5">
-              <FileCheck2 className="w-4 h-4 text-[#5B6877]" aria-hidden="true" /> GST invoice
+              <FileCheck2 className="w-4 h-4 text-[#3F4A56]" aria-hidden="true" /> GST invoice
             </li>
             <li className="flex items-center gap-1.5">
-              <Truck className="w-4 h-4 text-[#5B6877]" aria-hidden="true" /> Delivery across India
+              <Truck className="w-4 h-4 text-[#3F4A56]" aria-hidden="true" /> Delivery across India
             </li>
           </ul>
         </div>
@@ -226,7 +226,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <Link
                 href={`/categories/${product.category.slug}`}
-                className="text-[11px] font-bold uppercase tracking-wider text-[#5B6877] hover:underline"
+                className="text-[11px] font-bold uppercase tracking-wider text-[#3F4A56] hover:underline"
               >
                 {formatCategoryName(product.category.name)}
               </Link>
@@ -274,7 +274,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     <span className="text-xs font-semibold text-slate-500">/ unit</span>
                   </div>
                 ) : (
-                  <div className="text-xl font-bold text-[#5B6877]">
+                  <div className="text-xl font-bold text-[#3F4A56]">
                     Direct Wholesale Quote
                   </div>
                 )}
@@ -300,7 +300,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* Customization Options Box */}
           <div className="p-5 bg-[#FFFFFF] rounded-lg border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Sliders className="w-4 h-4 text-[#5B6877]" />
+              <Sliders className="w-4 h-4 text-[#3F4A56]" />
               <h3 className="text-sm font-bold text-[#22272E]">Configure &amp; Customize</h3>
             </div>
 
@@ -357,7 +357,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </label>
               <label className="border-2 border-dashed border-slate-200 hover:border-[#B9C3CF]/60 rounded-md p-3 flex items-center justify-between gap-3 cursor-pointer bg-slate-50/50 hover:bg-[#EDF1F6]/40 transition-colors">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#22272E]/10 text-[#5B6877] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#22272E]/10 text-[#3F4A56] flex items-center justify-center shrink-0">
                     <UploadCloud className="w-4 h-4" />
                   </div>
                   <div className="text-left">
@@ -375,7 +375,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   accept=".pdf,.ai,.cdr,.png,.jpg,.jpeg,.zip"
                   className="hidden"
                 />
-                <span className="text-[11px] font-bold text-[#5B6877] px-3 py-1 bg-[#FFFFFF] border border-slate-200 rounded-lg shadow-2xs">
+                <span className="text-[11px] font-bold text-[#3F4A56] px-3 py-1 bg-[#FFFFFF] border border-slate-200 rounded-lg shadow-2xs">
                   Browse
                 </span>
               </label>
@@ -421,7 +421,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-[#22272E] hover:bg-[#363D47] active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+                className="bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#22272E] py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
               >
                 {addedSuccess ? (
                   <>

@@ -273,7 +273,7 @@ function cardTexture(band: string) {
     // Photo block.
     ctx.fillStyle = "#DFE6EE";
     ctx.fillRect(68, 74, 120, 136);
-    ctx.fillStyle = "#5B6877";
+    ctx.fillStyle = "#3F4A56";
     ctx.beginPath();
     ctx.arc(128, 126, 30, 0, Math.PI * 2);
     ctx.fill();

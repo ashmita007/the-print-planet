@@ -17,7 +17,7 @@ export default function PageCta({ title, whatsappText = "Hi, I would like a quot
           <Link
             href="/quote"
             data-magnetic
-            className="inline-flex items-center gap-2 bg-[#22272E] hover:bg-[#363D47] text-white px-5 py-3 rounded-lg text-sm font-bold transition-colors"
+            className="inline-flex items-center gap-2 bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-5 py-3 rounded-lg text-sm font-bold transition-colors"
           >
             Get a quote
             <ArrowRight className="w-4 h-4" />

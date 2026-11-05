@@ -171,7 +171,7 @@ export default function OwnerEnquiriesPage() {
         </form>
 
         <div className="w-full sm:w-auto flex flex-wrap items-center gap-2">
-          <label htmlFor="field-status" className="text-[#5B6877] font-semibold">Status:</label>
+          <label htmlFor="field-status" className="text-[#3F4A56] font-semibold">Status:</label>
           <select id="field-status"
             value={selectedStatus}
             onChange={(e) => {
@@ -241,7 +241,7 @@ export default function OwnerEnquiriesPage() {
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         enq.status === "new"
-                          ? "bg-orange-100 text-[#5B6877]"
+                          ? "bg-orange-100 text-[#3F4A56]"
                           : enq.status === "closed"
                           ? "bg-green-100 text-[#217A4B]"
                           : enq.status === "quoted"
@@ -253,7 +253,7 @@ export default function OwnerEnquiriesPage() {
                     </span>
                   </div>
 
-                  <div className="text-[#5B6877] flex items-center gap-3 text-[11px]">
+                  <div className="text-[#3F4A56] flex items-center gap-3 text-[11px]">
                     {enq.company_name && <span>{enq.company_name}</span>}
                     <span>{enq.phone}</span>
                     <span className="truncate max-w-[150px]">{enq.email}</span>
@@ -357,7 +357,7 @@ export default function OwnerEnquiriesPage() {
               {/* Customer Contact Box */}
               <div className="space-y-2 bg-[#EDF1F6] p-3.5 rounded-lg border border-[#DFE6EE]">
                 <div className="flex items-center gap-2">
-                  <Phone className="w-3.5 h-3.5 text-[#5B6877]" />
+                  <Phone className="w-3.5 h-3.5 text-[#3F4A56]" />
                   <a href={`tel:${activeEnquiry.phone}`} className="font-bold text-[#22272E] hover:underline">
                     {activeEnquiry.phone}
                   </a>
@@ -372,7 +372,7 @@ export default function OwnerEnquiriesPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-[#5B6877]" />
+                  <Mail className="w-3.5 h-3.5 text-[#3F4A56]" />
                   <a href={`mailto:${activeEnquiry.email}`} className="font-semibold text-slate-700 hover:underline">
                     {activeEnquiry.email}
                   </a>

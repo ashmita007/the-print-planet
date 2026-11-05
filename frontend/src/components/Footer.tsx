@@ -130,20 +130,20 @@ export default function Footer({ settings }: FooterProps) {
           <div className="col-span-2 lg:col-span-4 space-y-3 text-sm text-slate-300">
             <h2 className="text-xs font-bold text-white mb-3.5">Reach us</h2>
             <a href={`tel:${phone.replace(/\s+/g, "")}`} className="flex items-center gap-2.5 hover:text-white">
-              <Phone className="w-4 h-4 text-[#B9C3CF] shrink-0" />
+              <Phone className="w-4 h-4 text-[#FF8A3D] shrink-0" />
               {phone}
             </a>
             <a href={`mailto:${email}`} className="flex items-center gap-2.5 hover:text-white break-all">
-              <Mail className="w-4 h-4 text-[#B9C3CF] shrink-0" />
+              <Mail className="w-4 h-4 text-[#FF8A3D] shrink-0" />
               {email}
             </a>
             <p className="flex items-start gap-2.5">
-              <MapPin className="w-4 h-4 text-[#B9C3CF] shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-[#FF8A3D] shrink-0 mt-0.5" />
               <span>{address}</span>
             </p>
             <Link
               href="/quote"
-              className="inline-flex items-center justify-center mt-1 py-2.5 px-5 rounded-lg bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] font-bold transition-colors"
+              className="inline-flex items-center justify-center mt-1 py-2.5 px-5 rounded-lg bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold transition-colors"
             >
               Get a quote
             </Link>

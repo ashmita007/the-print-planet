@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 
 export type Review = { id: string; author: string; role: string; city: string; rating: number; text: string };
 
-const INKS = ["#22272E", "#5B6877", "#B9C3CF", "#6C7A89"];
+const INKS = ["#F26B1D", "#22272E", "#3F4A56", "#B9C3CF"];
 
 /**
  * Review cards in a native scroll-snap track: swipe on touch, drag with a mouse,
@@ -92,7 +92,7 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
               <div className="flex items-center justify-between">
                 <div className="flex gap-0.5" role="img" aria-label={`${review.rating} out of 5 stars`}>
                   {[...Array(review.rating)].map((_, s) => (
-                    <Star key={s} className="w-4 h-4 fill-[#22272E] text-[#22272E]" aria-hidden="true" />
+                    <Star key={s} className="w-4 h-4 fill-[#F26B1D] text-[#F26B1D]" aria-hidden="true" />
                   ))}
                 </div>
                 <Quote className="w-8 h-8 opacity-90" style={{ color: ink }} aria-hidden="true" />
@@ -102,13 +102,13 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
                 <span
                   aria-hidden="true"
                   className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-extrabold text-sm"
-                  style={{ background: ink, color: ink === "#B9C3CF" ? "#22272E" : "#FFFFFF" }}
+                  style={{ background: ink, color: ink === "#B9C3CF" || ink === "#F26B1D" ? "#22272E" : "#FFFFFF" }}
                 >
                   {review.author.split(" ").map((part) => part[0]).slice(0, 2).join("")}
                 </span>
                 <div className="min-w-0">
                   <p className="text-sm font-bold text-[#22272E] truncate">{review.author}</p>
-                  <p className="text-xs text-[#5B6877] truncate">{review.role} · {review.city}</p>
+                  <p className="text-xs text-[#3F4A56] truncate">{review.role} · {review.city}</p>
                 </div>
               </div>
             </li>
@@ -119,7 +119,7 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-4 flex items-center gap-6">
         <div className="relative flex-1 h-1 rounded-full bg-[#DFE6EE] overflow-hidden" aria-hidden="true">
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#22272E] to-[#6C7A89] transition-[width] duration-200"
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#F26B1D] to-[#FF8A3D] transition-[width] duration-200"
             style={{ width: `${Math.max(12, progress * 100)}%` }}
           />
         </div>

@@ -15,7 +15,7 @@ export default function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps)
   const link = dark ? "hover:text-white" : "hover:text-[#22272E]";
 
   return (
-    <nav aria-label="Breadcrumb" className={`py-3 text-xs ${dark ? "text-slate-400" : "text-[#5B6877]"}`}>
+    <nav aria-label="Breadcrumb" className={`py-3 text-xs ${dark ? "text-slate-400" : "text-[#3F4A56]"}`}>
       <ol className="flex items-center flex-wrap gap-1.5">
         <li className="flex items-center">
           <Link href="/" className={`${link} flex items-center gap-1`}>

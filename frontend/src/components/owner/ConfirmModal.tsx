@@ -72,7 +72,7 @@ export default function ConfirmModal({
             <h3 className="text-sm sm:text-base font-bold text-[#22272E] leading-snug">
               {title}
             </h3>
-            <p className="text-[11px] sm:text-xs text-[#5B6877] mt-0.5 sm:mt-1 leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-[#3F4A56] mt-0.5 sm:mt-1 leading-relaxed">
               {message}
             </p>
           </div>

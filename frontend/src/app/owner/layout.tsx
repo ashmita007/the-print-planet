@@ -91,7 +91,7 @@ export default function OwnerLayout({
             />
           </div>
           <div className="flex items-center gap-2 text-xs font-semibold text-[#22272E]">
-            <Loader2 className="w-4 h-4 animate-spin text-[#5B6877]" />
+            <Loader2 className="w-4 h-4 animate-spin text-[#3F4A56]" />
             <span>Securing owner management portal...</span>
           </div>
           <p className="text-[11px] text-slate-400 flex items-center gap-1">

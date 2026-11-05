@@ -23,7 +23,7 @@ const SLIDES: Omit<ShowcaseSlide, "image" | "count" | "products">[] = [
     slug: "id-card-holder",
     title: "ID card holders",
     blurb: "Crystal, semi-transparent and executive holders in vertical and horizontal formats.",
-    ink: "#5B6877",
+    ink: "#3F4A56",
     onInk: "#FFFFFF",
   },
   {

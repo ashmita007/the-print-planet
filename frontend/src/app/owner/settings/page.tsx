@@ -653,7 +653,7 @@ function OwnerSettingsInner() {
                 isActive ? "text-[#22272E]" : "text-slate-500 hover:text-[#22272E]"
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#4E5A67]" : "text-slate-400"}`} />
+              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#36404B]" : "text-slate-400"}`} />
               <span>{tab.label}</span>
               {isActive && (
                 <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#22272E]" />
@@ -669,10 +669,10 @@ function OwnerSettingsInner() {
           <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
             <div className="border-b border-[#DFE6EE] pb-3">
               <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#5B6877]" />
+                <Sparkles className="w-4 h-4 text-[#3F4A56]" />
                 Homepage Hero Banner &amp; Headline Editor
               </h2>
-              <p className="text-[11px] text-[#5B6877] mt-0.5">
+              <p className="text-[11px] text-[#3F4A56] mt-0.5">
                 Customize the high-impact headline, category pill, and primary caption displayed at the very top of the homepage.
               </p>
             </div>
@@ -680,7 +680,7 @@ function OwnerSettingsInner() {
             {/* Same copy rules and styling as the public homepage hero */}
             <div>
               <p className="flex items-center gap-1.5 font-semibold text-[#22272E] mb-2">
-                <Eye className="w-3.5 h-3.5 text-[#4E5A67]" />
+                <Eye className="w-3.5 h-3.5 text-[#36404B]" />
                 How it looks on the homepage
               </p>
               <div className="bg-[#22272E] text-white p-6 sm:p-10 rounded-md">
@@ -741,7 +741,7 @@ function OwnerSettingsInner() {
                   />
                 </div>
 
-                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#4E5A67] font-semibold" : "text-[#5B6877]"}`}>
+                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#36404B] font-semibold" : "text-[#3F4A56]"}`}>
                   Headline total: {headlineLength} of {HERO_LIMITS.headline} characters.
                   {headlineLength > HERO_LIMITS.headline ? " Longer headlines show smaller on the homepage." : ""}
                 </p>
@@ -759,7 +759,7 @@ function OwnerSettingsInner() {
                   placeholder="Official portal of The Print Planet..."
                   className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none leading-relaxed"
                 />
-                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#4E5A67] font-semibold" : "text-[#5B6877]"}`}>
+                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#36404B] font-semibold" : "text-[#3F4A56]"}`}>
                   {heroCaption.trim().length} of {HERO_LIMITS.caption} characters recommended.
                 </span>
               </div>
@@ -786,10 +786,10 @@ function OwnerSettingsInner() {
           <div className="surface-card p-6 rounded-lg space-y-6 text-xs">
             <div className="border-b border-[#DFE6EE] pb-3">
               <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
-                <Info className="w-4 h-4 text-[#5B6877]" />
+                <Info className="w-4 h-4 text-[#3F4A56]" />
                 Dynamic About Us Content Management System (CMS)
               </h2>
-              <p className="text-[11px] text-[#5B6877] mt-0.5">
+              <p className="text-[11px] text-[#3F4A56] mt-0.5">
                 Edit factory background, mission story, daily output statistics counters, and quality standards for the public <code>/about</code> page.
               </p>
             </div>
@@ -1091,7 +1091,7 @@ function OwnerSettingsInner() {
         <form onSubmit={handleSaveIdentity} className="space-y-6 text-xs">
           <div className="surface-card p-6 rounded-lg space-y-5">
             <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-[#5B6877]" />
+              <Building2 className="w-4 h-4 text-[#3F4A56]" />
               Store Legal Identity &amp; Branding
             </h2>
 
@@ -1307,19 +1307,19 @@ function OwnerSettingsInner() {
               <div className="space-y-2">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#5B6877]">Provider</div>
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#3F4A56]">Provider</div>
                     <div className="font-bold text-[#22272E] mt-0.5 uppercase">
                       {emailDiagnostics.config?.provider || "none"}
                     </div>
                   </div>
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#5B6877]">Sender</div>
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#3F4A56]">Sender</div>
                     <div className="font-bold text-[#22272E] mt-0.5 truncate">
                       {emailDiagnostics.config?.active_sender_email || emailDiagnostics.config?.brevo_sender_email || emailDiagnostics.config?.resend_from_email || "Not set"}
                     </div>
                   </div>
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#5B6877]">Sender Status</div>
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#3F4A56]">Sender Status</div>
                     <div className={`font-bold mt-0.5 ${emailDiagnostics.sender_verified ? "text-[#217A4B]" : "text-red-600"}`}>
                       {emailDiagnostics.sender_verified ? "Verified" : "Not verified"}
                     </div>
@@ -1331,7 +1331,7 @@ function OwnerSettingsInner() {
                       <span className="font-medium text-[#22272E]">Resend</span>
                       <span>Key: {emailDiagnostics.resend.key_valid ? "valid" : "not validated"}</span>
                       <span>Domains: {emailDiagnostics.resend.domains?.length || 0}</span>
-                      {emailDiagnostics.resend.sandbox && <span className="text-[#4E5A67]">Sandbox sender</span>}
+                      {emailDiagnostics.resend.sandbox && <span className="text-[#36404B]">Sandbox sender</span>}
                     </div>
                     {emailDiagnostics.resend.note && (
                       <p className="text-slate-500 leading-relaxed">{emailDiagnostics.resend.note}</p>
@@ -1410,7 +1410,7 @@ function OwnerSettingsInner() {
                   <Mail className="w-4 h-4 text-[#217A4B]" />
                   <span>Email Full DB Backup</span>
                 </div>
-                <p className="text-[11px] text-[#5B6877] leading-relaxed">
+                <p className="text-[11px] text-[#3F4A56] leading-relaxed">
                   Generates a live database snapshot and emails it as an Excel attachment directly to <strong>{email || "theprintplanet01@gmail.com"}</strong>.
                 </p>
               </div>
@@ -1435,7 +1435,7 @@ function OwnerSettingsInner() {
                   <Download className="w-4 h-4 text-[#22272E]" />
                   <span>Direct DB Download</span>
                 </div>
-                <p className="text-[11px] text-[#5B6877] leading-relaxed">
+                <p className="text-[11px] text-[#3F4A56] leading-relaxed">
                   Immediately compiles and downloads the full multi-sheet database workbook (.xlsx) to your computer.
                 </p>
               </div>
@@ -1457,10 +1457,10 @@ function OwnerSettingsInner() {
             <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
-                  <FileSpreadsheet className="w-4 h-4 text-[#5B6877]" />
+                  <FileSpreadsheet className="w-4 h-4 text-[#3F4A56]" />
                   <span>Catalog &amp; Images Export</span>
                 </div>
-                <p className="text-[11px] text-[#5B6877] leading-relaxed">
+                <p className="text-[11px] text-[#3F4A56] leading-relaxed">
                   Exports all catalog products with SKU, category, trade pricing, and image URLs formatted for client onboarding.
                 </p>
               </div>
@@ -1486,7 +1486,7 @@ function OwnerSettingsInner() {
       {activeTab === "security" && (
         <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
           <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-1.5">
-            <Lock className="w-4 h-4 text-[#5B6877]" />
+            <Lock className="w-4 h-4 text-[#3F4A56]" />
             Change Owner Master Password
           </h2>
 
@@ -1546,7 +1546,7 @@ function OwnerSettingsInner() {
 
 export default function OwnerSettingsPage() {
   return (
-    <Suspense fallback={<div className="py-20 text-center text-xs text-[#5B6877]">Loading configuration...</div>}>
+    <Suspense fallback={<div className="py-20 text-center text-xs text-[#3F4A56]">Loading configuration...</div>}>
       <OwnerSettingsInner />
     </Suspense>
   );

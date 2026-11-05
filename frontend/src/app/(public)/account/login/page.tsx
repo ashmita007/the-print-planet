@@ -42,11 +42,11 @@ export default function ClientLoginPage() {
 
       <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#EDF1F6] text-[#5B6877] rounded-md flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#EDF1F6] text-[#3F4A56] rounded-md flex items-center justify-center mx-auto mb-2">
             <UserCheck className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-extrabold text-[#22272E]">Buyer / Client Login</h1>
-          <p className="text-xs text-[#5B6877]">
+          <p className="text-xs text-[#3F4A56]">
             Sign in to track school &amp; corporate bulk orders and message thread history.
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function ClientLoginPage() {
               <label htmlFor="field-password" className="block font-bold text-[#22272E]">Password</label>
               <Link
                 href="/account/forgot-password"
-                className="text-[11px] font-semibold text-[#5B6877] hover:underline"
+                className="text-[11px] font-semibold text-[#3F4A56] hover:underline"
               >
                 Forgotten Password?
               </Link>
@@ -99,17 +99,17 @@ export default function ClientLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? <span>Signing in...</span> : <span>Sign In &amp; View Orders</span>}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#5B6877]">
+        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#3F4A56]">
           <div>
             New bulk order client?{" "}
-            <Link href="/corporate" className="text-[#5B6877] font-bold hover:underline">
+            <Link href="/corporate" className="text-[#3F4A56] font-bold hover:underline">
               Submit your bulk inquiry to auto-register
             </Link>
           </div>

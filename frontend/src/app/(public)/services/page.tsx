@@ -50,10 +50,10 @@ export default function ServicesPage() {
                 <span className="ink-row-title text-lg sm:text-2xl font-bold tracking-tight text-[#22272E]">
                   {service.title}
                 </span>
-                <span className="ink-row-note row-start-2 md:row-start-auto text-sm text-[#5B6877]">
+                <span className="ink-row-note row-start-2 md:row-start-auto text-sm text-[#3F4A56]">
                   {service.note}
                 </span>
-                <ArrowRight className="ink-row-arrow row-span-2 md:row-span-1 w-5 h-5 text-[#4E5A67]" aria-hidden="true" />
+                <ArrowRight className="ink-row-arrow row-span-2 md:row-span-1 w-5 h-5 text-[#36404B]" aria-hidden="true" />
               </Link>
             </li>
           ))}
@@ -65,13 +65,13 @@ export default function ServicesPage() {
           How an order runs
         </h2>
         <div className="relative mt-8">
-          <div data-scrub-line aria-hidden="true" className="hidden sm:block absolute left-0 right-0 top-[5px] h-0.5 bg-[#22272E]" />
+          <div data-scrub-line aria-hidden="true" className="hidden sm:block absolute left-0 right-0 top-[5px] h-0.5 bg-[#F26B1D]" />
           <ol className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             {STEPS.map((step) => (
               <li key={step.title} className="relative sm:pt-7">
                 <span aria-hidden="true" className="hidden sm:block absolute top-0 left-0 w-3 h-3 rounded-full bg-[#22272E] ring-4 ring-white" />
                 <h3 className="font-bold text-[#22272E]">{step.title}</h3>
-                <p className="text-sm text-[#5B6877] mt-1">{step.note}</p>
+                <p className="text-sm text-[#3F4A56] mt-1">{step.note}</p>
               </li>
             ))}
           </ol>

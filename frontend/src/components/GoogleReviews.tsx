@@ -69,8 +69,8 @@ export default function GoogleReviews() {
         <h2 id="reviews-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
           What buyers say
         </h2>
-        <p className="shrink-0 flex items-center gap-2 text-sm text-[#4E5A67]">
-          <Star className="w-5 h-5 fill-[#B9C3CF] text-[#5B6877]" aria-hidden="true" />
+        <p className="shrink-0 flex items-center gap-2 text-sm text-[#36404B]">
+          <Star className="w-5 h-5 fill-[#F26B1D] text-[#F26B1D]" aria-hidden="true" />
           <span>
             <strong data-count className="text-lg font-extrabold text-[#22272E] tabular-nums">4.9</strong> on Google
           </span>

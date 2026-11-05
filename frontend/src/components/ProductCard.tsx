@@ -147,7 +147,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.category && (
               <Link
                 href={`/products?category=${product.category.slug}`}
-                className="text-[11px] text-[#5B6877] hover:text-[#4E5A67] block truncate mb-1 transition-colors"
+                className="text-[11px] text-[#3F4A56] hover:text-[#36404B] block truncate mb-1 transition-colors"
               >
                 {formatProductName(product.category.name)}
               </Link>
@@ -160,7 +160,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               </Link>
             </h3>
 
-            <p className="font-mono text-[11px] text-[#5B6877] truncate mt-1">{product.sku}</p>
+            <p className="font-mono text-[11px] text-[#3F4A56] truncate mt-1">{product.sku}</p>
           </div>
 
           {/* Pricing & Actions */}
@@ -175,12 +175,12 @@ export default function ProductCard({ product }: ProductCardProps) {
                   ₹{Number(product.price).toLocaleString("en-IN")}
                 </div>
               ) : (
-                <div className="text-[13px] font-semibold text-[#5B6877]">
+                <div className="text-[13px] font-semibold text-[#3F4A56]">
                   Price on Request
                 </div>
               )}
               {product.minimum_order_quantity && (
-                <span className="text-[9px] sm:text-[10px] text-[#5B6877] font-mono block mt-0.5">
+                <span className="text-[9px] sm:text-[10px] text-[#3F4A56] font-mono block mt-0.5">
                   MOQ {product.minimum_order_quantity}
                 </span>
               )}
@@ -194,7 +194,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 className={`w-9 h-9 rounded-md ${
                   added
                     ? "bg-[#217A4B] text-white"
-                    : "bg-[#22272E] hover:bg-[#363D47] text-white"
+                    : "bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E]"
                 } flex items-center justify-center transition-colors`}
                 title={added ? "Added to Quote Cart!" : "Add to Quote Cart"}
                 aria-label={`Add ${formatProductName(product.name)} to cart`}

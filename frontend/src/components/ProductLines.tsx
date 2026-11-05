@@ -32,7 +32,7 @@ export default async function ProductLines() {
         </h2>
         <Link
           href="/categories"
-          className="shrink-0 text-sm font-semibold text-[#4E5A67] hover:underline underline-offset-4"
+          className="shrink-0 text-sm font-semibold text-[#36404B] hover:underline underline-offset-4"
         >
           All categories
         </Link>
@@ -62,9 +62,9 @@ export default async function ProductLines() {
                   <span className="block font-heading text-[15px] sm:text-lg font-bold text-[#22272E] leading-tight">
                     {line.label}
                   </span>
-                  <span className="block font-mono text-xs text-[#5B6877] mt-0.5">{line.count} products</span>
+                  <span className="block font-mono text-xs text-[#3F4A56] mt-0.5">{line.count} products</span>
                 </span>
-                <ArrowUpRight className="w-5 h-5 shrink-0 text-[#22272E] group-hover:text-[#5B6877] transition-colors" />
+                <ArrowUpRight className="w-5 h-5 shrink-0 text-[#22272E] group-hover:text-[#3F4A56] transition-colors" />
               </span>
             </Link>
           ))}

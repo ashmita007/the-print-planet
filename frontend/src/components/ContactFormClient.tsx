@@ -175,14 +175,14 @@ export default function ContactFormClient() {
       <div>
         <div className="flex items-center justify-between text-[#22272E] text-xs mb-1 font-semibold">
           <span className="flex items-center gap-1.5">
-            <Paperclip className="w-3.5 h-3.5 text-[#5B6877]" />
+            <Paperclip className="w-3.5 h-3.5 text-[#3F4A56]" />
             <span>Attach Spec Sheet, Artwork, Sample Photo or Excel (Optional)</span>
           </span>
           <span className="text-[11px] text-slate-500">Max 10MB</span>
         </div>
         {!attachment ? (
-          <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#4E5A67]">
-            <UploadCloud className="w-4 h-4 text-[#5B6877]" />
+          <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#36404B]">
+            <UploadCloud className="w-4 h-4 text-[#3F4A56]" />
             <span>Click to attach file or sample photo</span>
             <input
               type="file"
@@ -213,7 +213,7 @@ export default function ContactFormClient() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto bg-[#22272E] hover:bg-[#363D47] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50"
+          className="w-full sm:w-auto bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50"
         >
           {isSubmitting ? "Sending RFQ..." : "Submit Quotation Request & Enquire"}
         </button>

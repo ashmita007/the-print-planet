@@ -88,7 +88,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-lg border border-slate-200">
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
             <span className="font-bold text-sm text-[#22272E] flex items-center gap-1.5">
-              <Filter className="w-4 h-4 text-[#5B6877]" /> Filter Catalogue
+              <Filter className="w-4 h-4 text-[#3F4A56]" /> Filter Catalogue
             </span>
             {(params.category || params.search || params.material || params.color || params.ordering) && (
               <Link
@@ -117,7 +117,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             </div>
             <button
               type="submit"
-              className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-2 rounded-md text-xs font-semibold transition-colors shadow-xs"
+              className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-2 rounded-md text-xs font-semibold transition-colors shadow-xs"
             >
               Filter
             </button>
@@ -158,7 +158,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                         isMainSelected
                           ? "bg-[#22272E] text-white font-bold shadow-xs"
                           : hasSelectedChild
-                          ? "bg-[#EDF1F6] text-[#5B6877] font-bold"
+                          ? "bg-[#EDF1F6] text-[#3F4A56] font-bold"
                           : "text-slate-800 font-semibold hover:bg-[#FFFFFF]"
                       }`}
                     >
@@ -179,7 +179,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               className={`flex items-center justify-between px-2 py-1 rounded-lg text-[11px] transition-colors ${
                                 isSubSelected
                                   ? "bg-[#22272E] text-white font-bold"
-                                  : "text-slate-600 hover:text-[#5B6877] hover:bg-[#FFFFFF]"
+                                  : "text-slate-600 hover:text-[#3F4A56] hover:bg-[#FFFFFF]"
                               }`}
                             >
                               <span className="truncate pr-1">{sub.name}</span>
@@ -202,7 +202,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <section className="lg:col-span-9 space-y-6">
           {/* Top Sort & Count Bar */}
           <div className="bg-[#FFFFFF] p-3.5 rounded-md border border-[#DFE6EE] flex flex-wrap items-center justify-between gap-4">
-            <div className="text-xs text-[#5B6877]">
+            <div className="text-xs text-[#3F4A56]">
               Showing <strong className="text-[#22272E]">{productsData.results.length}</strong> of{" "}
               <strong className="text-[#22272E]">{productsData.count}</strong> products
             </div>
@@ -210,7 +210,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2 text-xs">
               <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[#5B6877]">Sort by:</span>
+              <span className="text-[#3F4A56]">Sort by:</span>
               <div className="flex items-center gap-1.5">
                 {[
                   { label: "Default", val: "display_order" },
@@ -250,13 +250,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               <Box className="w-16 h-16 text-slate-300 mx-auto stroke-[1.5]" />
               <div>
                 <h3 className="text-base font-bold text-[#22272E]">No products found matching filters</h3>
-                <p className="text-xs text-[#5B6877] mt-1 max-w-sm mx-auto">
+                <p className="text-xs text-[#3F4A56] mt-1 max-w-sm mx-auto">
                   Try adjusting your search keywords or clearing active filters to view all available reference products.
                 </p>
               </div>
               <Link
                 href="/products"
-                className="inline-block bg-[#22272E] text-white text-xs font-bold py-2.5 px-5 rounded-lg hover:bg-[#363D47] transition-colors"
+                className="inline-block bg-[#F26B1D] text-[#22272E] text-xs font-bold py-2.5 px-5 rounded-lg hover:bg-[#FF8A3D] transition-colors"
               >
                 Reset All Filters
               </Link>

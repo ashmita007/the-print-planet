@@ -68,7 +68,7 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
         </div>
       </div>
 
-      <div data-hero-rule aria-hidden="true" className="h-[3px] bg-[#22272E]" />
+      <div data-hero-rule aria-hidden="true" className="h-[3px] bg-[#F26B1D]" />
     </header>
   );
 }

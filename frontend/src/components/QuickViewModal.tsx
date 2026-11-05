@@ -133,12 +133,12 @@ export default function QuickViewModal({
               )}
 
               {/* Quality & Delivery trust signals */}
-              <div className="mt-4 pt-3 border-t border-[#DFE6EE] flex items-center justify-between text-[11px] text-[#5B6877]">
+              <div className="mt-4 pt-3 border-t border-[#DFE6EE] flex items-center justify-between text-[11px] text-[#3F4A56]">
                 <span className="flex items-center gap-1 font-medium">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" /> Factory Verified
                 </span>
                 <span className="flex items-center gap-1 font-medium">
-                  <Truck className="w-3.5 h-3.5 text-[#5B6877]" /> PAN-India Dispatch
+                  <Truck className="w-3.5 h-3.5 text-[#3F4A56]" /> PAN-India Dispatch
                 </span>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function QuickViewModal({
             <div className="p-5 sm:p-6 flex flex-col justify-between">
               <div className="space-y-3">
                 {product.category && (
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#5B6877] bg-[#22272E]/10 px-2 py-0.5 rounded">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#3F4A56] bg-[#22272E]/10 px-2 py-0.5 rounded">
                     {formatCategoryName(product.category.name)}
                   </span>
                 )}
@@ -156,12 +156,12 @@ export default function QuickViewModal({
                   {formatProductName(product.name)}
                 </h2>
 
-                <div className="flex items-center gap-3 text-xs text-[#5B6877]">
+                <div className="flex items-center gap-3 text-xs text-[#3F4A56]">
                   <span className="font-mono bg-[#EDF1F6] border border-[#DFE6EE] px-2 py-0.5 rounded text-[#22272E]">
                     SKU: {product.sku}
                   </span>
                   {product.minimum_order_quantity && (
-                    <span className="text-[#5B6877] font-medium font-mono">
+                    <span className="text-[#3F4A56] font-medium font-mono">
                       MOQ: {product.minimum_order_quantity} Units
                     </span>
                   )}
@@ -176,17 +176,17 @@ export default function QuickViewModal({
                   ) : product.price ? (
                     <div className="text-xl sm:text-2xl font-bold font-mono text-[#22272E]">
                       ₹{Number(product.price).toLocaleString("en-IN")}{" "}
-                      <span className="text-xs text-[#5B6877] font-normal">per unit</span>
+                      <span className="text-xs text-[#3F4A56] font-normal">per unit</span>
                     </div>
                   ) : (
-                    <div className="text-base font-bold text-[#5B6877]">
+                    <div className="text-base font-bold text-[#3F4A56]">
                       Direct Wholesale Pricing on Request
                     </div>
                   )}
                 </div>
 
                 {/* Description excerpt */}
-                <p className="text-xs text-[#5B6877] leading-relaxed line-clamp-3">
+                <p className="text-xs text-[#3F4A56] leading-relaxed line-clamp-3">
                   {product.short_description || product.description || "Premium industrial-grade materials engineered for custom printing, corporate identification, and high-volume merchandise."}
                 </p>
 
@@ -194,13 +194,13 @@ export default function QuickViewModal({
                 <div className="grid grid-cols-2 gap-2 text-[11px] pt-1">
                   {product.material && (
                     <div className="p-2 rounded-lg bg-[#EDF1F6] border border-[#DFE6EE]">
-                      <span className="text-[#5B6877] block text-[9px] uppercase font-bold">Material</span>
+                      <span className="text-[#3F4A56] block text-[9px] uppercase font-bold">Material</span>
                       <span className="font-semibold text-[#22272E] truncate block">{product.material}</span>
                     </div>
                   )}
                   {product.dimensions && (
                     <div className="p-2 rounded-lg bg-[#EDF1F6] border border-[#DFE6EE]">
-                      <span className="text-[#5B6877] block text-[9px] uppercase font-bold">Dimensions</span>
+                      <span className="text-[#3F4A56] block text-[9px] uppercase font-bold">Dimensions</span>
                       <span className="font-semibold text-[#22272E] truncate block">{product.dimensions}</span>
                     </div>
                   )}
@@ -212,7 +212,7 @@ export default function QuickViewModal({
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={handleAddToCart}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#22272E] hover:bg-[#363D47] active:scale-98 text-white text-xs font-semibold shadow-xs transition-all"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#22272E] text-xs font-semibold shadow-xs transition-all"
                   >
                     {added ? (
                       <>
@@ -241,7 +241,7 @@ export default function QuickViewModal({
                 <Link
                   href={`/products/${product.slug}`}
                   onClick={onClose}
-                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#5B6877] hover:text-[#22272E] transition-colors"
+                  className="w-full flex items-center justify-center gap-1 text-center py-2 text-xs font-semibold text-[#3F4A56] hover:text-[#22272E] transition-colors"
                 >
                   <span>View Full Product Specifications</span>
                   <ExternalLink className="w-3.5 h-3.5" />

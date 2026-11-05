@@ -52,7 +52,7 @@ export default function CorporatePage() {
         <Breadcrumbs items={[{ label: "Corporate & Bulk Orders" }]} />
         <Link
           href="/orders"
-          className="shrink-0 text-[13px] font-semibold text-[#22272E] underline decoration-[#B9C3CF] underline-offset-4 hover:decoration-[#B9C3CF] transition-colors"
+          className="shrink-0 text-[13px] font-semibold text-[#22272E] underline decoration-[#B9C3CF] underline-offset-4 hover:decoration-[#F26B1D] transition-colors"
         >
           Track my orders
         </Link>

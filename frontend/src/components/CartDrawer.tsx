@@ -69,14 +69,14 @@ export default function CartDrawer() {
             {/* Header */}
             <div className="p-4 sm:p-5 border-b border-[#DFE6EE] flex items-center justify-between bg-[#EDF1F6]">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-md bg-[#22272E]/10 text-[#5B6877] flex items-center justify-center font-bold">
-                  <ShoppingBag className="w-5 h-5 text-[#5B6877]" />
+                <div className="w-9 h-9 rounded-md bg-[#22272E]/10 text-[#3F4A56] flex items-center justify-center font-bold">
+                  <ShoppingBag className="w-5 h-5 text-[#3F4A56]" />
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-bold text-[#22272E] leading-tight">
                     Your Order &amp; Quote Cart
                   </h2>
-                  <p className="text-xs text-[#5B6877]">
+                  <p className="text-xs text-[#3F4A56]">
                     {totalItems} item{totalItems !== 1 ? "s" : ""} selected for production
                   </p>
                 </div>
@@ -92,7 +92,7 @@ export default function CartDrawer() {
 
             {/* Proof banner */}
             <div className="px-4 py-2.5 bg-[#EDF1F6] border-b border-[#B9C3CF]/20 flex items-center gap-2 text-xs text-[#22272E] font-medium">
-              <ShieldCheck className="w-4 h-4 text-[#5B6877] shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-[#3F4A56] shrink-0" />
               <span>Includes Free Digital Artwork Proofing on all orders</span>
             </div>
 
@@ -100,19 +100,19 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500 space-y-4">
-                  <div className="w-16 h-16 rounded-lg bg-[#EDF1F6] flex items-center justify-center text-[#5B6877]">
+                  <div className="w-16 h-16 rounded-lg bg-[#EDF1F6] flex items-center justify-center text-[#3F4A56]">
                     <ShoppingBag className="w-8 h-8 stroke-[1.5]" />
                   </div>
                   <div className="space-y-1">
                     <h3 className="font-semibold text-[#22272E] text-base">Your cart is currently empty</h3>
-                    <p className="text-xs text-[#5B6877] max-w-xs">
+                    <p className="text-xs text-[#3F4A56] max-w-xs">
                       Explore our catalogue of ID cards, lanyards, custom apparel, machinery, and promotional gifts.
                     </p>
                   </div>
                   <Link
                     href="/products"
                     onClick={closeCart}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white text-xs font-semibold shadow-md transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] text-xs font-semibold shadow-md transition-colors"
                   >
                     Browse Catalogue
                     <ArrowRight className="w-4 h-4" />
@@ -160,12 +160,12 @@ export default function CartDrawer() {
                           </button>
                         </div>
 
-                        <div className="text-[11px] font-mono text-[#5B6877] mt-0.5">
+                        <div className="text-[11px] font-mono text-[#3F4A56] mt-0.5">
                           SKU: {item.sku}
                         </div>
 
                         {item.options?.material && (
-                          <div className="text-[10px] text-[#5B6877] mt-0.5">
+                          <div className="text-[10px] text-[#3F4A56] mt-0.5">
                             Material: <span className="font-medium text-[#22272E]">{item.options.material}</span>
                           </div>
                         )}
@@ -199,7 +199,7 @@ export default function CartDrawer() {
                               ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                             </span>
                           ) : (
-                            <span className="text-[11px] font-semibold text-[#5B6877]">
+                            <span className="text-[11px] font-semibold text-[#3F4A56]">
                               Wholesale Quote
                             </span>
                           )}
@@ -217,18 +217,18 @@ export default function CartDrawer() {
               <div className="p-4 sm:p-5 border-t border-[#DFE6EE] bg-[#EDF1F6] space-y-3">
                 {subtotal > 0 && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-[#5B6877] font-medium">Estimated Product Value:</span>
+                    <span className="text-[#3F4A56] font-medium">Estimated Product Value:</span>
                     <span className="text-lg font-bold font-mono text-[#22272E]">{formattedSubtotal}</span>
                   </div>
                 )}
 
-                <div className="flex items-center justify-between text-[11px] text-[#5B6877]">
+                <div className="flex items-center justify-between text-[11px] text-[#3F4A56]">
                   <span className="flex items-center gap-1 font-medium">
-                    <Truck className="w-3.5 h-3.5 text-[#5B6877]" /> PAN-India Dispatch Available
+                    <Truck className="w-3.5 h-3.5 text-[#3F4A56]" /> PAN-India Dispatch Available
                   </span>
                   <button
                     onClick={clearCart}
-                    className="text-[#5B6877] hover:text-[#C0392B] underline text-[11px]"
+                    className="text-[#3F4A56] hover:text-[#C0392B] underline text-[11px]"
                   >
                     Clear Cart
                   </button>
@@ -238,7 +238,7 @@ export default function CartDrawer() {
                   <Link
                     href={`/quote?cart=true`}
                     onClick={closeCart}
-                    className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white font-semibold text-xs sm:text-sm shadow-sm hover:shadow transition-all text-center"
+                    className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-semibold text-xs sm:text-sm shadow-sm hover:shadow transition-all text-center"
                   >
                     <FileText className="w-4 h-4 shrink-0" />
                     Request RFQ
@@ -255,7 +255,7 @@ export default function CartDrawer() {
                   </a>
                 </div>
 
-                <p className="text-[10px] text-center text-[#5B6877] leading-tight">
+                <p className="text-[10px] text-center text-[#3F4A56] leading-tight">
                   Official GST Invoicing &amp; Tax Input Credits available for all enterprise clients.
                 </p>
               </div>

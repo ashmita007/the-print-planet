@@ -446,7 +446,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Products
           </Link>
           <span className="text-slate-300">|</span>
-          <span className="text-xs text-[#5B6877] font-medium">
+          <span className="text-xs text-[#3F4A56] font-medium">
             Status:{" "}
             <strong className={isActive ? "text-[#217A4B]" : "text-amber-600"}>
               {isActive ? "Public Catalogue" : "Draft (Hidden)"}
@@ -506,7 +506,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
               <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
-                <Tag className="w-4 h-4 text-[#5B6877]" />
+                <Tag className="w-4 h-4 text-[#3F4A56]" />
                 <span>1. Core Product Identity & Category</span>
               </h2>
             </div>
@@ -522,7 +522,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     <button
                       type="button"
                       onClick={() => setName(formatProductName(name))}
-                      className="text-[10px] text-[#5B6877] hover:underline font-bold flex items-center gap-0.5"
+                      className="text-[10px] text-[#3F4A56] hover:underline font-bold flex items-center gap-0.5"
                     >
                       <Sparkles className="w-2.5 h-2.5" />
                       <span>Format Proper Case</span>
@@ -551,7 +551,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   <button
                     type="button"
                     onClick={() => setShowCatCreator(!showCatCreator)}
-                    className="text-[11px] font-bold text-[#5B6877] hover:underline flex items-center gap-1"
+                    className="text-[11px] font-bold text-[#3F4A56] hover:underline flex items-center gap-1"
                   >
                     <FolderPlus className="w-3 h-3" />
                     <span>{showCatCreator ? "Close Creator" : "+ Quick Create Category"}</span>
@@ -650,7 +650,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                       className="text-[11px] font-bold text-[#22272E] hover:underline flex items-center gap-1"
                       title="Auto generate industrial SKU"
                     >
-                      <Sparkles className="w-3 h-3 text-[#5B6877]" />
+                      <Sparkles className="w-3 h-3 text-[#3F4A56]" />
                       <span>Auto-Generate</span>
                     </button>
                   </div>
@@ -682,7 +682,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                       type="checkbox"
                       checked={isFeatured}
                       onChange={(e) => setIsFeatured(e.target.checked)}
-                      className="rounded border-slate-300 text-[#5B6877] w-4 h-4"
+                      className="rounded border-slate-300 text-[#3F4A56] w-4 h-4"
                     />
                     <span>Featured Hero</span>
                   </label>
@@ -723,7 +723,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
               <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-[#5B6877]" />
+                <DollarSign className="w-4 h-4 text-[#3F4A56]" />
                 <span>2. Commercial Pricing & Minimum Order Quantity</span>
               </h2>
             </div>
@@ -749,7 +749,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   <button
                     type="button"
                     onClick={autoSuggestPriceDisplay}
-                    className="text-[10px] font-bold text-[#5B6877] hover:underline"
+                    className="text-[10px] font-bold text-[#3F4A56] hover:underline"
                     title="Auto-format display price"
                   >
                     Auto-Format
@@ -791,7 +791,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   className={`p-2 rounded-lg border text-center font-semibold transition-all ${
                     priceVisibility
                       ? "bg-[#22272E] text-white border-[#22272E]"
-                      : "bg-[#EDF1F6] text-[#5B6877] border-[#DFE6EE] hover:bg-slate-200"
+                      : "bg-[#EDF1F6] text-[#3F4A56] border-[#DFE6EE] hover:bg-slate-200"
                   }`}
                 >
                   Show Live B2B Price
@@ -802,7 +802,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   className={`p-2 rounded-lg border text-center font-semibold transition-all ${
                     !priceVisibility
                       ? "bg-[#22272E] text-white border-[#22272E]"
-                      : "bg-[#EDF1F6] text-[#5B6877] border-[#DFE6EE] hover:bg-slate-200"
+                      : "bg-[#EDF1F6] text-[#3F4A56] border-[#DFE6EE] hover:bg-slate-200"
                   }`}
                 >
                   Price on Request (Hide Live Rate)
@@ -815,7 +815,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
               <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
-                <Box className="w-4 h-4 text-[#5B6877]" />
+                <Box className="w-4 h-4 text-[#3F4A56]" />
                 <span>3. Physical Specifications & Dimensions</span>
               </h2>
             </div>
@@ -861,10 +861,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DFE6EE] pb-3">
               <div>
                 <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#5B6877]" />
+                  <Sliders className="w-4 h-4 text-[#3F4A56]" />
                   <span>4. Dynamic Technical Specification Key-Values</span>
                 </h2>
-                <p className="text-[11px] text-[#5B6877] mt-0.5">
+                <p className="text-[11px] text-[#3F4A56] mt-0.5">
                   Appears in detailed product technical table on public pages.
                 </p>
               </div>
@@ -872,7 +872,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
               <button
                 type="button"
                 onClick={handleAddSpec}
-                className="text-xs font-bold text-[#5B6877] hover:underline flex items-center gap-1 self-start sm:self-auto"
+                className="text-xs font-bold text-[#3F4A56] hover:underline flex items-center gap-1 self-start sm:self-auto"
               >
                 <Plus className="w-3.5 h-3.5" /> Add Attribute
               </button>
@@ -891,7 +891,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                     onClick={() => handleApplyPreset(preset)}
                     className="text-[11px] font-semibold bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] hover:text-[#22272E] text-[#22272E] px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1"
                   >
-                    <Plus className="w-3 h-3 text-[#5B6877]" />
+                    <Plus className="w-3 h-3 text-[#3F4A56]" />
                     <span>{preset.name}</span>
                   </button>
                 ))}
@@ -935,10 +935,10 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
               <h2 className="text-sm font-bold text-[#22272E] flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#5B6877]" />
+                <ImageIcon className="w-4 h-4 text-[#3F4A56]" />
                 <span>5. High-Resolution Product Images</span>
               </h2>
-              <span className="text-[11px] text-[#5B6877]">
+              <span className="text-[11px] text-[#3F4A56]">
                 {images.length} asset(s) attached
               </span>
             </div>
@@ -968,11 +968,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 />
                 <Upload
                   className={`w-7 h-7 mx-auto transition-transform group-hover:scale-110 ${
-                    isDragging ? "text-[#5B6877]" : "text-[#22272E]"
+                    isDragging ? "text-[#3F4A56]" : "text-[#22272E]"
                   }`}
                 />
                 <div>
-                  <span className="font-bold text-[#22272E] block text-xs group-hover:text-[#5B6877] transition-colors">
+                  <span className="font-bold text-[#22272E] block text-xs group-hover:text-[#3F4A56] transition-colors">
                     Upload from Device (Cloudinary)
                   </span>
                   <p className="text-[11px] text-slate-500 mt-1">
@@ -980,7 +980,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   </p>
                 </div>
                 {uploadingImage && (
-                  <div className="pt-1 text-[#5B6877] font-semibold flex items-center justify-center gap-1.5 text-xs anim-fade-in">
+                  <div className="pt-1 text-[#3F4A56] font-semibold flex items-center justify-center gap-1.5 text-xs anim-fade-in">
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                     <span>Uploading asset to Cloudinary CDN...</span>
                   </div>
@@ -1043,7 +1043,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                         type="button"
                         onClick={() => handleSetPrimaryImage(idx)}
                         className={`flex items-center gap-1 font-semibold ${
-                          img.isPrimary ? "text-[#5B6877]" : "text-slate-500 hover:text-[#22272E]"
+                          img.isPrimary ? "text-[#3F4A56]" : "text-slate-500 hover:text-[#22272E]"
                         }`}
                       >
                         <Star className={`w-3 h-3 ${img.isPrimary ? "fill-current" : ""}`} />
@@ -1073,7 +1073,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
           <div className="lg:col-span-4 sticky top-24 space-y-4">
             <div className="bg-[#22272E] text-white p-4 rounded-lg shadow-md space-y-3 border border-white/10">
               <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                <span className="text-[11px] font-bold text-[#5B6877] uppercase tracking-wider flex items-center gap-1.5">
+                <span className="text-[11px] font-bold text-[#3F4A56] uppercase tracking-wider flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Real-Time Public Preview</span>
                 </span>
@@ -1127,7 +1127,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                 {/* Content details */}
                 <div className="p-3 space-y-2">
                   <div>
-                    <span className="text-[9px] font-semibold text-[#5B6877] block truncate">
+                    <span className="text-[9px] font-semibold text-[#3F4A56] block truncate">
                       {activeCategory?.name || "Uncategorized"}
                     </span>
                     <h3 className="text-xs font-bold text-[#22272E] line-clamp-2 leading-snug min-h-[2rem]">
@@ -1152,7 +1152,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
                   {/* Pricing */}
                   <div className="pt-2 border-t border-[#EDF1F6] flex items-baseline justify-between">
                     <div>
-                      <span className="text-[8px] uppercase font-bold text-[#5B6877] block">
+                      <span className="text-[8px] uppercase font-bold text-[#3F4A56] block">
                         B2B Trade Price
                       </span>
                       <span className="text-xs font-extrabold text-[#22272E] block truncate">
@@ -1204,7 +1204,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       <div className="pt-4 border-t border-[#DFE6EE] flex items-center justify-between">
         <Link
           href="/owner/products"
-          className="text-xs font-semibold text-[#5B6877] hover:text-[#22272E]"
+          className="text-xs font-semibold text-[#3F4A56] hover:text-[#22272E]"
         >
           Cancel & Return
         </Link>

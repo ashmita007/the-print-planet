@@ -5,7 +5,7 @@ import { AlertCircle, Check } from "lucide-react";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
 export const inputClass =
-  "w-full bg-[#FFFFFF] border border-[#B9C3CF] hover:border-[#6C7A89] focus:border-[#22272E] focus:ring-2 focus:ring-[#22272E]/15 aria-[invalid=true]:border-[#C0392B] aria-[invalid=true]:focus:ring-[#C0392B]/15 rounded-md px-3.5 py-3 text-[15px] text-[#22272E] placeholder:text-[#6C7A89] outline-none transition-colors";
+  "w-full bg-[#FFFFFF] border border-[#B9C3CF] hover:border-[#6C7A89] focus:border-[#22272E] focus:ring-2 focus:ring-[#22272E]/15 aria-[invalid=true]:border-[#C0392B] aria-[invalid=true]:focus:ring-[#C0392B]/15 rounded-md px-3.5 py-3 text-[15px] text-[#22272E] placeholder:text-[#4A5562] outline-none transition-colors";
 
 interface FieldProps {
   id: string;
@@ -36,7 +36,7 @@ export function Field({ id, label, optional, hint, error, valid, attempt = 0, ch
         <label htmlFor={id} className="text-sm font-semibold text-[#22272E]">
           {label}
         </label>
-        {optional && <span className="text-xs text-[#5B6877]">Optional</span>}
+        {optional && <span className="text-xs text-[#3F4A56]">Optional</span>}
       </div>
       <div className="relative">
         {children}
@@ -50,7 +50,7 @@ export function Field({ id, label, optional, hint, error, valid, attempt = 0, ch
           <span>{error}</span>
         </p>
       ) : hint ? (
-        <p id={`${id}-hint`} className="mt-1.5 text-[13px] text-[#5B6877]">
+        <p id={`${id}-hint`} className="mt-1.5 text-[13px] text-[#3F4A56]">
           {hint}
         </p>
       ) : null}

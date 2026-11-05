@@ -243,10 +243,10 @@ export default function DirectProductShowcase({
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#5B6877] hover:text-[#5B6877] transition-colors self-start md:self-auto py-1"
+          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#3F4A56] hover:text-[#3F4A56] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
-          <span className="tabular-nums font-mono text-[#5B6877] font-bold">({totalCount})</span>
+          <span className="tabular-nums font-mono text-[#3F4A56] font-bold">({totalCount})</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
@@ -256,8 +256,8 @@ export default function DirectProductShowcase({
         {/* Category Pills Header with Scroll Controls */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <div className="text-[10px] sm:text-[11px] font-medium text-[#5B6877] uppercase tracking-[0.12em] flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-[#5B6877]" />
+            <div className="text-[10px] sm:text-[11px] font-medium text-[#3F4A56] uppercase tracking-[0.12em] flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-[#3F4A56]" />
               <span>Category</span>
             </div>
 
@@ -347,7 +347,7 @@ export default function DirectProductShowcase({
                   {cat.products_count !== undefined && (
                     <span
                       className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#EDF1F6] text-[#5B6877]"
+                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#EDF1F6] text-[#3F4A56]"
                       }`}
                     >
                       {cat.products_count}
@@ -363,14 +363,14 @@ export default function DirectProductShowcase({
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 pt-2 border-t border-[#DFE6EE]">
           {/* Quick Search Input */}
           <div className="relative w-full sm:w-80">
-            <Search className="w-3.5 h-3.5 text-[#5B6877] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#3F4A56] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search this catalogue"
               placeholder="Search products, SKU (e.g. LAN, V2, DCT)..."
-              className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-[#FFFFFF] border border-[#DFE6EE] text-xs text-[#22272E] placeholder-[#5B6877] focus:outline-none focus:border-[#22272E] transition-colors"
+              className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-[#FFFFFF] border border-[#DFE6EE] text-xs text-[#22272E] placeholder-[#3F4A56] focus:outline-none focus:border-[#22272E] transition-colors"
             />
             {searchQuery && (
               <button
@@ -385,9 +385,9 @@ export default function DirectProductShowcase({
           </div>
 
           {/* Result Count & Sorting */}
-          <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#5B6877]">
+          <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#3F4A56]">
             <span className="font-medium whitespace-nowrap flex items-center gap-1.5">
-              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#5B6877]" />}
+              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#3F4A56]" />}
               <span>
                 Showing <strong className="text-[#22272E] font-bold">{totalCount > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#22272E] font-bold">{endIndex}</strong> of <strong className="text-[#22272E] font-bold">{totalCount}</strong>
               </span>
@@ -400,9 +400,9 @@ export default function DirectProductShowcase({
                 className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FFFFFF] hover:bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#22272E] text-[11px] sm:text-xs font-semibold text-[#22272E] hover:text-[#22272E] rounded-lg sm:rounded-md px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
                 aria-label="Open sort products modal"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#5B6877]" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#3F4A56]" />
                 <span className="font-bold">{SORT_LABELS[sortBy]}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#5B6877]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#3F4A56]" />
               </button>
             </div>
           </div>
@@ -433,9 +433,9 @@ export default function DirectProductShowcase({
           {totalPages > 1 && (
             <div className="mt-8 pt-6 border-t border-[#DFE6EE] flex flex-col sm:flex-row items-center justify-between gap-4">
               {/* Left Item Counter */}
-              <div className="text-xs text-[#5B6877] font-medium order-2 sm:order-1 text-center sm:text-left">
+              <div className="text-xs text-[#3F4A56] font-medium order-2 sm:order-1 text-center sm:text-left">
                 Showing <strong className="text-[#22272E] font-bold">{startIndex + 1}</strong>–<strong className="text-[#22272E] font-bold">{endIndex}</strong> of <strong className="text-[#22272E] font-bold">{totalCount}</strong> products
-                <span className="text-[#5B6877] ml-1.5">(Page {currentPage} of {totalPages})</span>
+                <span className="text-[#3F4A56] ml-1.5">(Page {currentPage} of {totalPages})</span>
               </div>
 
               {/* Right Pagination Navigation */}
@@ -456,7 +456,7 @@ export default function DirectProductShowcase({
                 {getPageNumbers().map((num, idx) => {
                   if (num === "...") {
                     return (
-                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-[#5B6877] select-none">
+                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-[#3F4A56] select-none">
                         ...
                       </span>
                     );
@@ -501,7 +501,7 @@ export default function DirectProductShowcase({
         <div className="bg-[#FFFFFF] border border-dashed border-[#DFE6EE] rounded-lg p-12 text-center">
           <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />
           <h3 className="font-bold text-[#22272E] text-base mb-1">No products match your filter</h3>
-          <p className="text-xs text-[#5B6877] max-w-sm mx-auto mb-4">
+          <p className="text-xs text-[#3F4A56] max-w-sm mx-auto mb-4">
             Try selecting &ldquo;All Products&rdquo; or adjusting your search keywords.
           </p>
           <button
@@ -510,7 +510,7 @@ export default function DirectProductShowcase({
               handleSelectCategory("all");
               setSearchQuery("");
             }}
-            className="px-4 py-2 rounded-lg bg-[#22272E] text-white text-xs font-bold hover:bg-[#363D47] transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-[#F26B1D] text-[#22272E] text-xs font-bold hover:bg-[#FF8A3D] transition-colors cursor-pointer"
           >
             Reset Filters
           </button>

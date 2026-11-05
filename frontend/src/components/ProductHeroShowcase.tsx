@@ -178,7 +178,7 @@ export default function ProductHeroShowcase({
 
             <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}>
               <TextReveal text={copy.title} />
-              <span className="block text-[#B9C3CF]">
+              <span className="block text-[#FF8A3D]">
                 <TextReveal text={copy.subtitle} />
               </span>
             </p>
@@ -195,14 +195,14 @@ export default function ProductHeroShowcase({
               <Link
                 href="/products"
                 data-magnetic
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] font-bold text-sm transition-colors group"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold text-sm transition-colors group"
               >
                 <span>Browse {totalProductsCount}+ products</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/quote"
-                className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-[#B9C3CF] transition-colors"
+                className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-[#F26B1D] transition-colors"
               >
                 Request a custom quote
               </Link>
@@ -252,20 +252,20 @@ export default function ProductHeroShowcase({
                       />
                     </div>
                     <div className="absolute bottom-0 inset-x-0 h-0.5 bg-[#DFE6EE]">
-                      <div ref={progressBarRef} className="h-full w-full bg-[#22272E] origin-left" style={{ transform: "scaleX(0)" }} />
+                      <div ref={progressBarRef} className="h-full w-full bg-[#F26B1D] origin-left" style={{ transform: "scaleX(0)" }} />
                     </div>
                   </div>
 
                   <div className="p-4 sm:p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
-                        <p className="font-mono text-[11px] text-[#5B6877] truncate">
+                        <p className="font-mono text-[11px] text-[#3F4A56] truncate">
                           {activeProduct.sku}
                         </p>
                         <h2 className="text-base sm:text-lg font-bold text-[#22272E] leading-snug line-clamp-1 mt-0.5">
                           {formatProductName(activeProduct.name)}
                         </h2>
-                        <p className="text-xs text-[#5B6877] line-clamp-1 mt-0.5">
+                        <p className="text-xs text-[#3F4A56] line-clamp-1 mt-0.5">
                           {activeProduct.material ? `${activeProduct.material} · ` : ""}
                           {formatCategoryName(activeProduct.category?.name || "Wholesale")}
                         </p>
@@ -278,7 +278,7 @@ export default function ProductHeroShowcase({
                               : "On request")}
                         </div>
                         {activeProduct.minimum_order_quantity ? (
-                          <div className="font-mono text-[11px] text-[#5B6877]">
+                          <div className="font-mono text-[11px] text-[#3F4A56]">
                             MOQ {activeProduct.minimum_order_quantity}
                           </div>
                         ) : null}
@@ -290,7 +290,7 @@ export default function ProductHeroShowcase({
                         type="button"
                         onClick={handleHeroAdd}
                         className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md text-white font-bold text-[13px] transition-colors ${
-                          heroAdded ? "bg-[#217A4B]" : "bg-[#22272E] hover:bg-[#363D47]"
+                          heroAdded ? "bg-[#217A4B]" : "bg-[#F26B1D] hover:bg-[#FF8A3D]"
                         }`}
                       >
                         {heroAdded ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}

@@ -177,8 +177,8 @@ export default function BulkImportPage() {
               <strong className="text-xl font-extrabold tabular-nums text-[#217A4B]">{validationResult.new_count}</strong>
             </div>
             <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-              <span className="text-[11px] text-[#5B6877] font-semibold block">Existing SKUs</span>
-              <strong className="text-xl font-extrabold tabular-nums text-[#5B6877]">{validationResult.existing_count}</strong>
+              <span className="text-[11px] text-[#3F4A56] font-semibold block">Existing SKUs</span>
+              <strong className="text-xl font-extrabold tabular-nums text-[#3F4A56]">{validationResult.existing_count}</strong>
             </div>
             <div className="p-3 bg-red-50 rounded-lg border border-red-200">
               <span className="text-[11px] text-[#C0392B] font-semibold block">Invalid Rows</span>
@@ -242,7 +242,7 @@ export default function BulkImportPage() {
                         className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
                           row.status === "new"
                             ? "bg-green-100 text-[#217A4B]"
-                            : "bg-orange-100 text-[#5B6877]"
+                            : "bg-orange-100 text-[#3F4A56]"
                         }`}
                       >
                         {row.status === "new" ? "New" : "Existing"}
@@ -283,7 +283,7 @@ export default function BulkImportPage() {
           <h2 className="text-xl font-extrabold text-[#22272E]">Bulk Import Finished Successfully!</h2>
           <div className="flex justify-center gap-6 text-xs text-[#22272E]">
             <div>Imported: <strong className="text-[#217A4B] text-base">{executionResult.imported_count}</strong></div>
-            <div>Updated: <strong className="text-[#5B6877] text-base">{executionResult.updated_count}</strong></div>
+            <div>Updated: <strong className="text-[#3F4A56] text-base">{executionResult.updated_count}</strong></div>
             <div>Skipped: <strong className="text-slate-500 text-base">{executionResult.skipped_count}</strong></div>
           </div>
           <div className="pt-4 flex justify-center gap-4">

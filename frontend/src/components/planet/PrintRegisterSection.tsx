@@ -66,7 +66,7 @@ export default function PrintRegisterSection() {
         <div className="lg:col-span-4 order-2 lg:order-1">
           <h2 id="register-heading" className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06]">
             Four inks.
-            <span className="block text-[#B9C3CF]">One print.</span>
+            <span className="block text-[#FF8A3D]">One print.</span>
           </h2>
 
           <ul className="mt-5 space-y-2.5 max-w-sm">

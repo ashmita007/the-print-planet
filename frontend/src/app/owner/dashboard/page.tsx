@@ -245,9 +245,9 @@ export default function OwnerDashboardPage() {
             className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] hover:bg-[#EDF1F6] text-[#22272E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
           >
             {backupConvLoading ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#5B6877]" />
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#3F4A56]" />
             ) : (
-              <Download className="w-3.5 h-3.5 text-[#5B6877]" />
+              <Download className="w-3.5 h-3.5 text-[#3F4A56]" />
             )}
             <span>Backup Conversations</span>
           </button>
@@ -279,7 +279,7 @@ export default function OwnerDashboardPage() {
             icon: Briefcase,
             href: "/owner/orders",
             note: `${(metrics as any)?.pending_bulk_orders || 0} need quotes`,
-            noteTone: "text-[#5B6877] font-bold",
+            noteTone: "text-[#3F4A56] font-bold",
             accent: true,
           },
           {
@@ -306,7 +306,7 @@ export default function OwnerDashboardPage() {
             icon: Inbox,
             href: "/owner/enquiries",
             note: "Awaiting response",
-            noteTone: "text-[#4E5A67]",
+            noteTone: "text-[#36404B]",
             accent: true,
           },
           {
@@ -333,8 +333,8 @@ export default function OwnerDashboardPage() {
                 <div
                   className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                     card.accent
-                      ? "bg-[#EDF1F6] text-[#4E5A67]"
-                      : "bg-[#EDF1F6] text-[#4E5A67]"
+                      ? "bg-[#EDF1F6] text-[#36404B]"
+                      : "bg-[#EDF1F6] text-[#36404B]"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -342,7 +342,7 @@ export default function OwnerDashboardPage() {
               </div>
               <div
                 className={`text-[28px] leading-none font-bold tracking-tight tabular-nums ${
-                  card.accent ? "text-[#4E5A67]" : "text-[#22272E]"
+                  card.accent ? "text-[#36404B]" : "text-[#22272E]"
                 }`}
               >
                 {card.value}
@@ -361,7 +361,7 @@ export default function OwnerDashboardPage() {
             <h2 className="text-[13px] font-semibold text-[#22272E]">Recent customer RFQs</h2>
             <Link
               href="/owner/enquiries"
-              className="text-[11px] font-medium text-slate-500 hover:text-[#4E5A67] transition-colors"
+              className="text-[11px] font-medium text-slate-500 hover:text-[#36404B] transition-colors"
             >
               View all &rarr;
             </Link>
@@ -416,7 +416,7 @@ export default function OwnerDashboardPage() {
             <h2 className="text-[13px] font-semibold text-[#22272E]">Active catalogue</h2>
             <Link
               href="/owner/products"
-              className="text-[11px] font-medium text-slate-500 hover:text-[#4E5A67] transition-colors"
+              className="text-[11px] font-medium text-slate-500 hover:text-[#36404B] transition-colors"
             >
               Manage &rarr;
             </Link>
@@ -433,7 +433,7 @@ export default function OwnerDashboardPage() {
                 </div>
                 <Link
                   href={`/owner/products/${p.id}/edit`}
-                  className="text-[11px] font-medium text-slate-500 hover:text-[#4E5A67] transition-colors shrink-0"
+                  className="text-[11px] font-medium text-slate-500 hover:text-[#36404B] transition-colors shrink-0"
                 >
                   Edit
                 </Link>

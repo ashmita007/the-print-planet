@@ -47,7 +47,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 className="bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#22272E] p-3.5 rounded-md flex items-center justify-between text-xs font-bold text-[#22272E] transition-colors"
               >
                 <span>{c.name}</span>
-                <span className="text-[#5B6877]">&rarr;</span>
+                <span className="text-[#3F4A56]">&rarr;</span>
               </Link>
             ))}
           </div>
@@ -79,7 +79,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <div className="surface-card rounded-lg p-12 text-center space-y-4">
             <Box className="w-16 h-16 text-slate-300 mx-auto" />
             <h3 className="text-base font-bold text-[#22272E]">No items matched your query</h3>
-            <p className="text-xs text-[#5B6877] max-w-sm mx-auto">
+            <p className="text-xs text-[#3F4A56] max-w-sm mx-auto">
               Please check your spelling or browse the full category list to discover relevant models.
             </p>
             <Link

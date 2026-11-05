@@ -53,9 +53,9 @@ export default function IndustriesPage() {
                 <Icon className="ink-row-note w-7 h-7 shrink-0 text-[#22272E]" aria-hidden="true" />
                 <span className="flex-1 min-w-0">
                   <span className="ink-row-title block text-lg font-bold tracking-tight text-[#22272E]">{title}</span>
-                  <span className="ink-row-note block text-sm text-[#5B6877] mt-0.5">{note}</span>
+                  <span className="ink-row-note block text-sm text-[#3F4A56] mt-0.5">{note}</span>
                 </span>
-                <ArrowRight className="ink-row-arrow w-5 h-5 shrink-0 text-[#4E5A67]" aria-hidden="true" />
+                <ArrowRight className="ink-row-arrow w-5 h-5 shrink-0 text-[#36404B]" aria-hidden="true" />
               </Link>
             </li>
           ))}

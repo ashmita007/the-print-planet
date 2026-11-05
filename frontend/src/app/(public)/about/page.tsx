@@ -148,7 +148,7 @@ export default async function AboutPage() {
           {points.map((point) => (
             <li key={point.title} className="border-t-2 border-[#22272E] pt-3">
               <h3 className="font-bold text-[#22272E]">{point.title}</h3>
-              <p className="text-sm text-[#5B6877] mt-1 leading-relaxed">{point.desc}</p>
+              <p className="text-sm text-[#3F4A56] mt-1 leading-relaxed">{point.desc}</p>
             </li>
           ))}
         </ul>

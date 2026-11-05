@@ -154,7 +154,7 @@ function QuoteFormContent() {
               <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/products"
-                  className="bg-[#22272E] hover:bg-[#363D47] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors"
+                  className="bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-5 py-2.5 rounded-lg text-xs font-bold transition-colors"
                 >
                   Browse products
                 </Link>
@@ -176,7 +176,7 @@ function QuoteFormContent() {
                 <h2 className="text-lg font-bold text-[#22272E]">
                   Tell Us About Your Requirement
                 </h2>
-                <p className="text-xs text-[#5B6877] mt-0.5">
+                <p className="text-xs text-[#3F4A56] mt-0.5">
                   Fields marked with an asterisk (*) are required.
                 </p>
               </div>
@@ -320,14 +320,14 @@ function QuoteFormContent() {
               <div>
                 <div className="flex items-center justify-between text-[#22272E] text-xs mb-1 font-semibold">
                   <span className="flex items-center gap-1.5">
-                    <Paperclip className="w-3.5 h-3.5 text-[#5B6877]" />
+                    <Paperclip className="w-3.5 h-3.5 text-[#3F4A56]" />
                     <span>Upload Artwork, CAD, Spec Sheet or Excel List (Optional)</span>
                   </span>
                   <span className="text-[11px] text-slate-500">Max 10MB</span>
                 </div>
                 {!attachment ? (
                   <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-[#B9C3CF]/60 bg-slate-50 hover:bg-[#EDF1F6]/40 rounded-md py-3 px-4 cursor-pointer transition-all text-xs text-slate-600">
-                    <UploadCloud className="w-4 h-4 text-[#5B6877]" />
+                    <UploadCloud className="w-4 h-4 text-[#3F4A56]" />
                     <span>Click to browse and attach your design file, artwork, or order spreadsheet</span>
                     <input
                       type="file"
@@ -358,7 +358,7 @@ function QuoteFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#22272E] hover:bg-[#363D47] active:scale-98 text-white py-3.5 px-6 rounded-md text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#22272E] py-3.5 px-6 rounded-md text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <span>Submitting Quotation Request...</span>

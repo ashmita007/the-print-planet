@@ -209,7 +209,7 @@ export default function OwnerProductsListPage() {
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 bg-[#FFFFFF] text-[#22272E] px-4 py-3 rounded-md shadow-lg border border-[#DFE6EE] text-xs flex items-center gap-2 anim-toast">
-          <Sparkles className="w-4 h-4 text-[#5B6877]" />
+          <Sparkles className="w-4 h-4 text-[#3F4A56]" />
           <span>{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
@@ -290,7 +290,7 @@ export default function OwnerProductsListPage() {
             >
               <span>{tab.label}</span>
               {tab.count !== undefined && (
-                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#4E5A67]" : "text-slate-400"}`}>
+                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#36404B]" : "text-slate-400"}`}>
                   {tab.count}
                 </span>
               )}
@@ -431,7 +431,7 @@ export default function OwnerProductsListPage() {
       <div className="bg-[#FFFFFF] rounded-lg border border-[#DFE6EE] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-[#22272E]">
-            <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[11px] font-bold text-[#5B6877] uppercase tracking-wider">
+            <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[11px] font-bold text-[#3F4A56] uppercase tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Product Details</th>
                 <th className="py-3.5 px-4 hidden lg:table-cell">SKU Code</th>
@@ -495,7 +495,7 @@ export default function OwnerProductsListPage() {
                             )}
                           </div>
                           <div className="max-w-xs min-w-0">
-                            <p className="font-bold text-[#22272E] line-clamp-2 lg:line-clamp-1 group-hover:text-[#5B6877] transition-colors">
+                            <p className="font-bold text-[#22272E] line-clamp-2 lg:line-clamp-1 group-hover:text-[#3F4A56] transition-colors">
                               {formatProductName(p.name)}
                             </p>
                             <p className="text-[11px] text-slate-400 truncate mt-0.5">
@@ -538,7 +538,7 @@ export default function OwnerProductsListPage() {
 
                       {/* Category */}
                       <td className="py-3.5 px-4 hidden xl:table-cell max-w-44">
-                        <span className="line-clamp-2 text-[11px] font-semibold text-[#4E5A67]">
+                        <span className="line-clamp-2 text-[11px] font-semibold text-[#36404B]">
                           {formatCategoryName(p.category?.name || "Uncategorized")}
                         </span>
                       </td>
@@ -594,7 +594,7 @@ export default function OwnerProductsListPage() {
 
                           <Link
                             href={`/owner/products/${p.id}/edit`}
-                            className="p-2 rounded-lg text-slate-600 hover:text-[#5B6877] hover:bg-orange-50 transition-colors"
+                            className="p-2 rounded-lg text-slate-600 hover:text-[#3F4A56] hover:bg-orange-50 transition-colors"
                             title="Edit Product Details"
                             aria-label={`Edit ${p.name}`}
                           >
@@ -641,7 +641,7 @@ export default function OwnerProductsListPage() {
                       </div>
                     ) : (
                       <div className="max-w-md mx-auto space-y-4">
-                        <div className="w-14 h-14 rounded-lg bg-[#22272E]/10 text-[#5B6877] flex items-center justify-center mx-auto">
+                        <div className="w-14 h-14 rounded-lg bg-[#22272E]/10 text-[#3F4A56] flex items-center justify-center mx-auto">
                           <Package className="w-7 h-7" />
                         </div>
                         <div>

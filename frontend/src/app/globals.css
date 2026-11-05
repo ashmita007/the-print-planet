@@ -18,17 +18,18 @@
   --color-brand-bgMain: #FAFBFD;
   --color-brand-bgAlt: #EDF1F6;
   --color-brand-textMain: #22272E;
-  --color-brand-textSecondary: #5B6877;
+  --color-brand-textSecondary: #3F4A56;
   --color-brand-border: #DFE6EE;
   --color-brand-success: #217A4B;
   --color-brand-error: #C0392B;
 
-  /* Slate palette: #FAFBFD page, #DFE6EE rules, #B9C3CF accent, #6C7A89 muted, #22272E ink. */
+  /* Slate palette (#FAFBFD, #DFE6EE, #B9C3CF, #6C7A89, #22272E) with an orange accent for actions. */
   --color-page: #FAFBFD;
   --color-surface: #FFFFFF;
   --color-ink: #22272E;
-  --color-accent: #B9C3CF;
-  --color-accent-text: #5B6877;
+  --color-accent: #F26B1D;
+  --color-accent-hover: #FF8A3D;
+  --color-accent-text: #3F4A56;
   --color-accent-soft: #B9C3CF;
   --ease-print: cubic-bezier(0.33, 1, 0.68, 1);
 }
@@ -41,7 +42,7 @@
   --color-brand-bgMain: #FAFBFD;
   --color-brand-bgAlt: #EDF1F6;
   --color-brand-textMain: #22272E;
-  --color-brand-textSecondary: #5B6877;
+  --color-brand-textSecondary: #3F4A56;
   --color-brand-border: #DFE6EE;
   --color-brand-success: #217A4B;
   --color-brand-error: #C0392B;
@@ -68,7 +69,7 @@ body {
 }
 
 ::selection {
-  background-color: #B9C3CF;
+  background-color: #F26B1D;
   color: #22272E;
 }
 
@@ -369,7 +370,7 @@ html.lenis body {
     inset: 6px;
   }
   .btn-stamp:hover {
-    background: #dfe6ee;
+    background: var(--color-accent-hover);
   }
   .btn-stamp-ink {
     background: var(--color-ink);

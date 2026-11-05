@@ -247,7 +247,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${body.variable} ${heading.variable} ${mono.variable} font-sans min-h-screen bg-[#FAFBFD] text-[#22272E] antialiased selection:bg-[#B9C3CF] selection:text-[#22272E]`}
+        className={`${body.variable} ${heading.variable} ${mono.variable} font-sans min-h-screen bg-[#FAFBFD] text-[#22272E] antialiased selection:bg-[#F26B1D] selection:text-[#22272E]`}
       >
         <CartProvider>
           {children}

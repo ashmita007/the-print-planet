@@ -14,7 +14,7 @@ export default function BulkInkBand({ whatsapp }: { whatsapp?: string }) {
           <span data-reveal className="block">Order for</span>
           <span data-reveal className="block">
             the whole
-            <span className="display-note hidden md:inline-block text-[#B9C3CF]">100 to 1,00,000 pieces</span>
+            <span className="display-note hidden md:inline-block text-[#FF8A3D]">100 to 1,00,000 pieces</span>
           </span>
           <span data-reveal className="block">team.</span>
         </h2>

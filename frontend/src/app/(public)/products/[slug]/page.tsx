@@ -167,7 +167,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               <h2 className="text-base sm:text-xl font-bold text-[#22272E]">
                 Related Products in {formatCategoryName(product.category.name)}
               </h2>
-              <p className="text-xs sm:text-sm text-[#4E5A67]">
+              <p className="text-xs sm:text-sm text-[#36404B]">
                 Frequently purchased together for bulk institutional & trade supply
               </p>
             </div>

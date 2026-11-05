@@ -35,17 +35,17 @@ function FaqRow({ item, open, onToggle }: { item: FaqItem; open: boolean; onTogg
           type="button"
           onClick={onToggle}
           aria-expanded={open}
-          className="w-full flex items-center justify-between gap-4 py-4 text-left text-sm sm:text-base font-bold text-[#22272E] hover:text-[#4E5A67] transition-colors"
+          className="w-full flex items-center justify-between gap-4 py-4 text-left text-sm sm:text-base font-bold text-[#22272E] hover:text-[#36404B] transition-colors"
         >
           <span>{item.question}</span>
           <ChevronDown
-            className={`w-4 h-4 shrink-0 text-[#5B6877] transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+            className={`w-4 h-4 shrink-0 text-[#3F4A56] transition-transform duration-300 ${open ? "rotate-180" : ""}`}
           />
         </button>
       </h3>
       {/* Stays in the DOM when closed so answers remain crawlable for FAQPage schema */}
       <div ref={panel} className="overflow-hidden" style={{ height: open ? "auto" : 0 }}>
-        <p className="pb-4 pr-8 text-xs sm:text-sm text-[#4E5A67] leading-relaxed">{item.answer}</p>
+        <p className="pb-4 pr-8 text-xs sm:text-sm text-[#36404B] leading-relaxed">{item.answer}</p>
       </div>
     </div>
   );

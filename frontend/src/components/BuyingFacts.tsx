@@ -32,7 +32,7 @@ export default function BuyingFacts() {
             <Link
               href="/corporate"
               data-magnetic
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] font-bold text-sm transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold text-sm transition-colors"
             >
               <span>Start a bulk order</span>
               <ArrowRight className="w-4 h-4" />

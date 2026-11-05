@@ -170,7 +170,7 @@ export default function OwnerLoginPage() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-[#DFE6EE] text-center text-xs text-[#5B6877] space-y-2">
+        <div className="pt-4 border-t border-[#DFE6EE] text-center text-xs text-[#3F4A56] space-y-2">
           <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
             <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" />
             Protected by Django PBKDF2 Password Encryption

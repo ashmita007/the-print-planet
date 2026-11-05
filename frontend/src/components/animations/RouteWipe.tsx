@@ -117,7 +117,7 @@ export default function RouteWipe() {
       className="fixed inset-0 z-[120] overflow-hidden pointer-events-none"
       style={{ visibility: "hidden" }}
     >
-      <div data-plate className="absolute inset-0 bg-[#B9C3CF]" style={{ clipPath: "circle(0% at 50% 50%)" }} />
+      <div data-plate className="absolute inset-0 bg-[#F26B1D]" style={{ clipPath: "circle(0% at 50% 50%)" }} />
       <div data-plate className="absolute inset-0 bg-[#22272E]" style={{ clipPath: "circle(0% at 50% 50%)" }} />
       <svg
         data-reg-mark

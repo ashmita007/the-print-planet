@@ -472,7 +472,7 @@ export default function BulkOrderDesk() {
           </div>
           <h1 data-hero className="text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold tracking-[-0.02em] leading-[1.04] max-w-3xl">
             <TextReveal text="Bulk orders, direct" />{" "}
-            <span className="block text-[#B9C3CF]">
+            <span className="block text-[#FF8A3D]">
               <TextReveal text="from our factory." />
             </span>
           </h1>
@@ -513,7 +513,7 @@ export default function BulkOrderDesk() {
                   <h2 data-success-item className="mt-5 text-2xl sm:text-3xl font-extrabold text-[#22272E]">
                     Order {orderNumber} received
                   </h2>
-                  <p data-success-item className="mt-2 text-[15px] text-[#4E5A67] max-w-xl leading-relaxed">
+                  <p data-success-item className="mt-2 text-[15px] text-[#36404B] max-w-xl leading-relaxed">
                     Thanks, {form.contactPerson.split(" ")[0] || "and welcome"}. Your order for {form.orgName} is in our factory queue, and your account is ready.
                   </p>
 
@@ -525,10 +525,10 @@ export default function BulkOrderDesk() {
                       ["We dispatch", "Tracking details are added to your order."],
                     ].map(([title, detail], index) => (
                       <li data-success-item key={title} className="grid grid-cols-[2.5rem_1fr] py-3.5 border-b border-[#DFE6EE]">
-                        <span className="font-mono text-[13px] text-[#4E5A67] pt-0.5">0{index + 1}</span>
+                        <span className="font-mono text-[13px] text-[#36404B] pt-0.5">0{index + 1}</span>
                         <div>
                           <p className="text-[15px] font-bold text-[#22272E]">{title}</p>
-                          <p className="text-sm text-[#4E5A67] mt-0.5">{detail}</p>
+                          <p className="text-sm text-[#36404B] mt-0.5">{detail}</p>
                         </div>
                       </li>
                     ))}
@@ -537,7 +537,7 @@ export default function BulkOrderDesk() {
                   <div data-success-item className="mt-7 flex flex-col sm:flex-row gap-3">
                     <Link
                       href={orderNumber ? `/orders/${orderNumber}` : "/orders"}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white font-bold text-[15px] transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold text-[15px] transition-colors"
                     >
                       <span>Open my order</span>
                       <ArrowRight className="w-4 h-4" />
@@ -556,7 +556,7 @@ export default function BulkOrderDesk() {
                   <div className="px-5 sm:px-8 pt-6">
                     <ol className="relative flex justify-between">
                       <div aria-hidden="true" className="absolute top-3.5 left-3.5 right-3.5 h-0.5 bg-[#DFE6EE]">
-                        <div ref={progressRef} className="h-full w-full bg-[#22272E] origin-left" style={{ transform: "scaleX(0)" }} />
+                        <div ref={progressRef} className="h-full w-full bg-[#F26B1D] origin-left" style={{ transform: "scaleX(0)" }} />
                       </div>
                       {STEPS.map((label, index) => {
                         const done = index < step;
@@ -574,14 +574,14 @@ export default function BulkOrderDesk() {
                                 className={`w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-mono font-semibold transition-colors duration-300 ${
                                   done || current
                                     ? "bg-[#22272E] text-white"
-                                    : "bg-[#FFFFFF] text-[#5B6877] border-2 border-[#DFE6EE]"
+                                    : "bg-[#FFFFFF] text-[#3F4A56] border-2 border-[#DFE6EE]"
                                 }`}
                               >
                                 {done ? <Check className="w-4 h-4" /> : index + 1}
                               </span>
                               <span
                                 className={`hidden sm:block text-[13px] font-semibold ${
-                                  current ? "text-[#22272E]" : "text-[#5B6877] group-enabled:group-hover:text-[#22272E]"
+                                  current ? "text-[#22272E]" : "text-[#3F4A56] group-enabled:group-hover:text-[#22272E]"
                                 }`}
                               >
                                 {label}
@@ -594,7 +594,7 @@ export default function BulkOrderDesk() {
                   </div>
 
                   <div ref={panelRef} className="p-5 sm:p-8">
-                    <p className="sm:hidden font-mono text-xs text-[#5B6877] mb-1">
+                    <p className="sm:hidden font-mono text-xs text-[#3F4A56] mb-1">
                       Step {step + 1} of {STEPS.length}
                     </p>
 
@@ -604,7 +604,7 @@ export default function BulkOrderDesk() {
                           <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-extrabold text-[#22272E] outline-none">
                             What do you need?
                           </h2>
-                          <p className="text-[15px] text-[#4E5A67] mt-1">Pick the closest match. We will confirm every detail with you.</p>
+                          <p className="text-[15px] text-[#36404B] mt-1">Pick the closest match. We will confirm every detail with you.</p>
                         </div>
 
                         <div data-step-item>
@@ -633,7 +633,7 @@ export default function BulkOrderDesk() {
                                 >
                                   <span>
                                     <span className="block text-[15px] font-bold text-[#22272E]">{line.label}</span>
-                                    <span className="block text-[13px] text-[#5B6877] mt-0.5">{line.detail}</span>
+                                    <span className="block text-[13px] text-[#3F4A56] mt-0.5">{line.detail}</span>
                                   </span>
                                   <span
                                     aria-hidden="true"
@@ -707,7 +707,7 @@ export default function BulkOrderDesk() {
                                 style={{ left: "52%" }}
                               />
                             </div>
-                            <div className="mt-2 flex text-[12px] text-[#5B6877]">
+                            <div className="mt-2 flex text-[12px] text-[#3F4A56]">
                               <span className="flex-[52]">Wholesale rate</span>
                               <span className="flex-[26]">Up to 20% off</span>
                               <span className="flex-[22]">Contract</span>
@@ -747,7 +747,7 @@ export default function BulkOrderDesk() {
                           <div>
                             <div className="flex items-baseline justify-between mb-1.5">
                               <span className="text-sm font-semibold text-[#22272E]">Logo, artwork or spec sheet</span>
-                              <span className="text-xs text-[#5B6877]">Optional</span>
+                              <span className="text-xs text-[#3F4A56]">Optional</span>
                             </div>
                             {attachment ? (
                               <div className="flex items-center justify-between gap-3 p-3 border border-[#B9C3CF] rounded-md">
@@ -759,7 +759,7 @@ export default function BulkOrderDesk() {
                                   type="button"
                                   onClick={() => setAttachment(null)}
                                   aria-label={`Remove ${attachment.name}`}
-                                  className="p-1.5 text-[#5B6877] hover:text-[#C0392B] transition-colors"
+                                  className="p-1.5 text-[#3F4A56] hover:text-[#C0392B] transition-colors"
                                 >
                                   <X className="w-4 h-4" />
                                 </button>
@@ -780,8 +780,8 @@ export default function BulkOrderDesk() {
                                   dragging ? "border-[#B9C3CF] bg-[#EDF1F6]" : "border-[#6C7A89] hover:border-[#22272E]"
                                 }`}
                               >
-                                <FileUp className="w-5 h-5 text-[#4E5A67] shrink-0" />
-                                <span className="text-sm text-[#4E5A67]">
+                                <FileUp className="w-5 h-5 text-[#36404B] shrink-0" />
+                                <span className="text-sm text-[#36404B]">
                                   <span className="font-semibold text-[#22272E]">Choose a file</span> or drop it here. PDF, PNG, JPG, AI or CDR, up to 15 MB.
                                 </span>
                                 <input
@@ -803,7 +803,7 @@ export default function BulkOrderDesk() {
                         <div data-step-item className="flex justify-end">
                           <button
                             type="submit"
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white font-bold text-[15px] transition-colors"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold text-[15px] transition-colors"
                           >
                             <span>Continue</span>
                             <ArrowRight className="w-4 h-4" />
@@ -818,7 +818,7 @@ export default function BulkOrderDesk() {
                           <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-extrabold text-[#22272E] outline-none">
                             Who should we quote?
                           </h2>
-                          <p className="text-[15px] text-[#4E5A67] mt-1">We use this for your quotation, GST invoice and delivery.</p>
+                          <p className="text-[15px] text-[#36404B] mt-1">We use this for your quotation, GST invoice and delivery.</p>
                         </div>
 
                         <div data-step-item className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -952,7 +952,7 @@ export default function BulkOrderDesk() {
                           </button>
                           <button
                             type="submit"
-                            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-[#22272E] hover:bg-[#363D47] text-white font-bold text-[15px] transition-colors"
+                            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold text-[15px] transition-colors"
                           >
                             <span>Review order</span>
                             <ArrowRight className="w-4 h-4" />
@@ -967,20 +967,20 @@ export default function BulkOrderDesk() {
                           <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-extrabold text-[#22272E] outline-none">
                             Check and send
                           </h2>
-                          <p className="text-[15px] text-[#4E5A67] mt-1">Nothing is charged now. This request gets you a formal quotation.</p>
+                          <p className="text-[15px] text-[#36404B] mt-1">Nothing is charged now. This request gets you a formal quotation.</p>
                         </div>
 
                         <dl data-step-item className="border-t border-[#DFE6EE]">
                           {reviewRows.map((row) => (
                             <div key={row.label} className="grid grid-cols-[6.5rem_1fr_auto] sm:grid-cols-[8rem_1fr_auto] gap-3 py-3 border-b border-[#DFE6EE] items-baseline">
-                              <dt className="text-[13px] text-[#5B6877]">{row.label}</dt>
+                              <dt className="text-[13px] text-[#3F4A56]">{row.label}</dt>
                               <dd className="text-[15px] text-[#22272E] min-w-0 break-words line-clamp-3">{row.value}</dd>
                               <dd>
                                 <button
                                   type="button"
                                   onClick={() => goTo(row.step)}
                                   aria-label={`Edit ${row.label}`}
-                                  className="text-[13px] font-semibold text-[#4E5A67] hover:underline underline-offset-2"
+                                  className="text-[13px] font-semibold text-[#36404B] hover:underline underline-offset-2"
                                 >
                                   Edit
                                 </button>
@@ -996,7 +996,7 @@ export default function BulkOrderDesk() {
                         )}
 
                         {currentUser ? (
-                          <p data-step-item className="flex items-center gap-2 text-sm text-[#4E5A67]">
+                          <p data-step-item className="flex items-center gap-2 text-sm text-[#36404B]">
                             <Check className="w-4 h-4 text-[#217A4B] shrink-0" />
                             <span>
                               Ordering as <strong className="text-[#22272E]">{currentUser.first_name || currentUser.username}</strong>
@@ -1009,7 +1009,7 @@ export default function BulkOrderDesk() {
                                 setCurrentUser(null);
                                 setAccountMode("login");
                               }}
-                              className="ml-1 text-[13px] font-semibold text-[#4E5A67] hover:underline underline-offset-2"
+                              className="ml-1 text-[13px] font-semibold text-[#36404B] hover:underline underline-offset-2"
                             >
                               Not you? Switch account
                             </button>
@@ -1021,7 +1021,7 @@ export default function BulkOrderDesk() {
                               <button
                                 type="button"
                                 onClick={() => setAccountMode("new")}
-                                className="text-[13px] font-semibold text-[#4E5A67] hover:underline underline-offset-2"
+                                className="text-[13px] font-semibold text-[#36404B] hover:underline underline-offset-2"
                               >
                                 Create a new one instead
                               </button>
@@ -1051,13 +1051,13 @@ export default function BulkOrderDesk() {
                               />
                             </Field>
                             <div className="flex items-center justify-between gap-3">
-                              <Link href="/account/forgot-password" className="text-[13px] font-semibold text-[#4E5A67] hover:underline underline-offset-2">
+                              <Link href="/account/forgot-password" className="text-[13px] font-semibold text-[#36404B] hover:underline underline-offset-2">
                                 Forgot password?
                               </Link>
                               <button
                                 type="submit"
                                 disabled={loginLoading}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#22272E] hover:bg-[#363D47] disabled:opacity-60 text-white font-bold text-sm transition-colors"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] disabled:opacity-60 text-[#22272E] font-bold text-sm transition-colors"
                               >
                                 {loginLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                                 <span>{loginLoading ? "Logging in" : "Log in"}</span>
@@ -1092,7 +1092,7 @@ export default function BulkOrderDesk() {
                                   type="button"
                                   onClick={() => setShowPassword((shown) => !shown)}
                                   aria-label={showPassword ? "Hide password" : "Show password"}
-                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 text-[#5B6877] hover:text-[#22272E] transition-colors"
+                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 text-[#3F4A56] hover:text-[#22272E] transition-colors"
                                 >
                                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                 </button>
@@ -1116,7 +1116,7 @@ export default function BulkOrderDesk() {
                                       setLoginId(form.email.trim());
                                       setAccountMode("login");
                                     }}
-                                    className="text-sm font-semibold text-[#4E5A67] hover:underline underline-offset-2"
+                                    className="text-sm font-semibold text-[#36404B] hover:underline underline-offset-2"
                                   >
                                     I already have an account
                                   </button>
@@ -1124,7 +1124,7 @@ export default function BulkOrderDesk() {
                                 <button
                                   type="submit"
                                   disabled={submitting}
-                                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-[#22272E] hover:bg-[#363D47] disabled:opacity-60 text-white font-bold text-[15px] transition-colors"
+                                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] disabled:opacity-60 text-[#22272E] font-bold text-[15px] transition-colors"
                                 >
                                   {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                                   <span>{submitting ? "Sending your order" : "Send for quotation"}</span>
@@ -1154,14 +1154,14 @@ export default function BulkOrderDesk() {
               </p>
 
               <div className="mt-5 pt-5 border-t border-white/15">
-                <p data-tier-swap className="text-[15px] font-bold text-[#B9C3CF]">{tier.discount}</p>
+                <p data-tier-swap className="text-[15px] font-bold text-[#FF8A3D]">{tier.discount}</p>
                 <p data-tier-swap className="text-sm text-slate-300 mt-0.5">
                   {tier.name} · {tier.turnaround}
                 </p>
                 <ul className="mt-4 space-y-2">
                   {tier.features.map((feature) => (
                     <li data-tier-swap key={`${tier.id}-${feature}`} className="flex items-start gap-2 text-sm text-slate-200">
-                      <Check className="w-4 h-4 text-[#B9C3CF] shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-[#FF8A3D] shrink-0 mt-0.5" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -1193,7 +1193,7 @@ export default function BulkOrderDesk() {
         <h2 className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight leading-[1.08]">
           Larger orders earn better terms
         </h2>
-        <p className="mt-3 text-[15px] text-[#4E5A67] max-w-xl">
+        <p className="mt-3 text-[15px] text-[#36404B] max-w-xl">
           Your final price depends on the product and specification, and is confirmed in your formal GST quotation.
         </p>
 
@@ -1207,11 +1207,11 @@ export default function BulkOrderDesk() {
                   active ? "bg-[#EDF1F6]" : ""
                 }`}
               >
-                <p className="text-sm font-semibold text-[#4E5A67]">{item.name}</p>
+                <p className="text-sm font-semibold text-[#36404B]">{item.name}</p>
                 <p className="mt-1 font-heading text-2xl font-extrabold text-[#22272E] tabular-nums">{item.volume}</p>
-                <p className="text-[13px] text-[#5B6877]">units</p>
-                <p className="mt-3 text-[15px] font-bold text-[#4E5A67]">{item.discount}</p>
-                <p className="text-sm text-[#4E5A67]">{item.turnaround}</p>
+                <p className="text-[13px] text-[#3F4A56]">units</p>
+                <p className="mt-3 text-[15px] font-bold text-[#36404B]">{item.discount}</p>
+                <p className="text-sm text-[#36404B]">{item.turnaround}</p>
                 <ul className="mt-4 mb-5 space-y-1.5 flex-1">
                   {item.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2 text-sm text-[#22272E]">
@@ -1226,7 +1226,7 @@ export default function BulkOrderDesk() {
                   disabled={orderNumber !== null}
                   className={`w-full py-3 rounded-md font-bold text-sm transition-colors disabled:opacity-50 ${
                     active
-                      ? "bg-[#22272E] hover:bg-[#363D47] text-white"
+                      ? "bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E]"
                       : "border border-[#22272E] text-[#22272E] hover:bg-[#22272E] hover:text-white"
                   }`}
                 >

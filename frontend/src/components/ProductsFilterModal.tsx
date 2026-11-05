@@ -208,7 +208,7 @@ export default function ProductsFilterModal({
           <div className="pt-2 sm:pt-4 border-t border-[#DFE6EE] space-y-2">
             <button
               type="submit"
-              className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-2.5 sm:py-3 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5"
+              className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-2.5 sm:py-3 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5"
             >
               <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Apply Filters</span>

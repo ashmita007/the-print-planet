@@ -183,7 +183,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <h3 className="text-sm sm:text-lg font-bold text-[#22272E]">
                   Enquiry Logged!
                 </h3>
-                <p className="text-[11px] sm:text-sm text-[#5B6877] leading-relaxed max-w-sm mx-auto">
+                <p className="text-[11px] sm:text-sm text-[#3F4A56] leading-relaxed max-w-sm mx-auto">
                   Our sales desk will send your quotation within 2 business hours.
                 </p>
               </div>
@@ -232,7 +232,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     )}
                     <div className="min-w-0">
                       <p className="font-bold text-[#22272E] text-[11px] sm:text-sm truncate">{formatProductName(product.name)}</p>
-                      <p className="font-mono text-[9px] sm:text-xs text-[#5B6877] truncate">SKU: {product.sku}</p>
+                      <p className="font-mono text-[9px] sm:text-xs text-[#3F4A56] truncate">SKU: {product.sku}</p>
                     </div>
                   </div>
                   {product.price_display && (
@@ -337,14 +337,14 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               <div>
                 <div className="flex items-center justify-between text-[#22272E] text-[11px] sm:text-xs mb-1 font-semibold">
                   <span className="flex items-center gap-1">
-                    <Paperclip className="w-3 h-3 text-[#5B6877]" />
+                    <Paperclip className="w-3 h-3 text-[#3F4A56]" />
                     <span>Attach Specs / Artwork (Optional)</span>
                   </span>
-                  <span className="text-[10px] text-[#5B6877]">Max 10MB</span>
+                  <span className="text-[10px] text-[#3F4A56]">Max 10MB</span>
                 </div>
                 {!attachment ? (
-                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#4E5A67]">
-                    <UploadCloud className="w-3.5 h-3.5 text-[#5B6877]" />
+                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#36404B]">
+                    <UploadCloud className="w-3.5 h-3.5 text-[#3F4A56]" />
                     <span>Click to attach PDF, artwork, or sample photo</span>
                     <input
                       type="file"
@@ -386,7 +386,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-[#22272E] hover:bg-[#363D47] active:scale-98 text-white py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
+                  className="w-full sm:w-auto bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#22272E] py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
                 >
                   <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>{isSubmitting ? "Sending..." : "Submit Quote Request"}</span>

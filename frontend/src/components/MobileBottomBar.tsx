@@ -55,13 +55,13 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
             <div
               className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-md transition-all duration-200 active:scale-95 ${
                 isItemActive
-                  ? "text-[#B9C3CF] font-bold bg-white/[0.08]"
+                  ? "text-[#FF8A3D] font-bold bg-white/[0.08]"
                   : "text-slate-300 hover:text-white"
               }`}
             >
               <Icon
                 className={`w-5 h-5 mb-0.5 ${
-                  isItemActive ? "text-[#B9C3CF]" : "text-slate-300"
+                  isItemActive ? "text-[#FF8A3D]" : "text-slate-300"
                 }`}
               />
               <span className="text-[10px] tracking-tight">{item.label}</span>
@@ -99,7 +99,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
             <div className="relative">
               <ShoppingBag className="w-5 h-5 mb-0.5 text-slate-300" />
               {mounted && totalItems > 0 && (
-                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-[#B9C3CF] text-[#22272E] text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-[#F26B1D] text-[#22272E] text-[9px] font-bold rounded-full flex items-center justify-center">
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>
               )}
@@ -111,7 +111,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
         {/* Get Quote Action */}
         <Link
           href="/quote"
-          className="min-w-0 bg-[#B9C3CF] hover:bg-[#DFE6EE] text-[#22272E] py-1.5 px-1 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
+          className="min-w-0 bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-1.5 px-1 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
         >
           <FileText className="w-4 h-4 mb-0.5 text-white" />
           <span className="text-[10px] tracking-tight">

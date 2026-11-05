@@ -81,13 +81,13 @@ export default function Pagination({
     >
       {/* Item Range Counter */}
       {totalCount !== undefined && totalCount > 0 ? (
-        <p className="text-xs text-[#5B6877] text-center sm:text-left order-2 sm:order-1 font-medium">
+        <p className="text-xs text-[#3F4A56] text-center sm:text-left order-2 sm:order-1 font-medium">
           Showing <span className="font-bold text-[#22272E]">{startItem}</span>–
           <span className="font-bold text-[#22272E]">{endItem}</span> of{" "}
           <span className="font-bold text-[#22272E]">{totalCount}</span> products
         </p>
       ) : (
-        <p className="text-xs text-[#5B6877] text-center sm:text-left order-2 sm:order-1 font-medium">
+        <p className="text-xs text-[#3F4A56] text-center sm:text-left order-2 sm:order-1 font-medium">
           Page <span className="font-bold text-[#22272E]">{currentPage}</span> of{" "}
           <span className="font-bold text-[#22272E]">{totalPages}</span>
         </p>

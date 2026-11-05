@@ -118,17 +118,17 @@ export default async function ContactPage() {
                   {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="ink-row flex items-center gap-4 px-3 py-4"
                 >
-                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#5B6877]" aria-hidden="true" />
+                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#3F4A56]" aria-hidden="true" />
                   <span className="min-w-0">
-                    <span className="ink-row-note block text-xs text-[#5B6877]">{label}</span>
+                    <span className="ink-row-note block text-xs text-[#3F4A56]">{label}</span>
                     <span className="ink-row-title block font-bold text-[#22272E] break-words">{value}</span>
                   </span>
                 </a>
               </li>
             ))}
           </ul>
-          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#5B6877] leading-relaxed">
-            <MapPin className="w-5 h-5 shrink-0 text-[#5B6877]" aria-hidden="true" />
+          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#3F4A56] leading-relaxed">
+            <MapPin className="w-5 h-5 shrink-0 text-[#3F4A56]" aria-hidden="true" />
             <span>{address}</span>
           </p>
         </div>

@@ -8,14 +8,14 @@ const STEPS = [
     title: "Ask for a quote",
     detail: "Send the product, quantity and artwork. A quotation comes back within 2 to 4 business hours.",
     time: "2–4 hours",
-    ink: "#22272E",
+    ink: "#F26B1D",
   },
   {
     icon: FileCheck2,
     title: "Approve the proof",
     detail: "You get a digital proof first. Orders over 2,500 pieces also get a physical pilot sample.",
     time: "Before printing",
-    ink: "#5B6877",
+    ink: "#3F4A56",
   },
   {
     icon: Printer,
@@ -38,7 +38,7 @@ export default function HowItWorks() {
   return (
     <section aria-labelledby="how-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
       <div className="max-w-2xl">
-        <p className="eyebrow text-[#5B6877]">How ordering works</p>
+        <p className="eyebrow text-[#C2410C]">How ordering works</p>
         <h2 id="how-heading" className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
           From quote to your door in four steps
         </h2>
@@ -47,7 +47,7 @@ export default function HowItWorks() {
       <ol className="relative mt-12 grid gap-10 lg:gap-6 lg:grid-cols-4">
         {/* The line runs behind the step markers on wide screens. */}
         <div aria-hidden="true" className="hidden lg:block absolute left-6 right-6 top-6 h-0.5 bg-[#DFE6EE]">
-          <div data-scrub-line className="h-full w-full bg-gradient-to-r from-[#22272E] via-[#5B6877] to-[#B9C3CF]" />
+          <div data-scrub-line className="h-full w-full bg-gradient-to-r from-[#F26B1D] via-[#3F4A56] to-[#B9C3CF]" />
         </div>
 
         {STEPS.map((step, i) => {
@@ -62,11 +62,11 @@ export default function HowItWorks() {
                 <Icon className="w-5 h-5" aria-hidden="true" />
               </span>
               <div className="lg:mt-6">
-                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#5B6877]">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#3F4A56]">
                   Step {i + 1} · {step.time}
                 </p>
                 <h3 className="mt-1.5 text-lg font-extrabold text-[#22272E]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#4E5A67] max-w-xs">{step.detail}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#36404B] max-w-xs">{step.detail}</p>
               </div>
             </li>
           );

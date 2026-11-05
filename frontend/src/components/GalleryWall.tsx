@@ -91,7 +91,7 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
             </div>
             <div className="flex items-end justify-between gap-2 p-3 sm:p-4 bg-[#FFFFFF] border-t border-[#DFE6EE]">
               <span className="text-sm sm:text-base font-bold text-[#22272E] leading-snug">{piece.title}</span>
-              <ArrowRight className="w-4 h-4 shrink-0 mb-0.5 text-[#4E5A67] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              <ArrowRight className="w-4 h-4 shrink-0 mb-0.5 text-[#36404B] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </div>
           </Link>
         ))}

@@ -34,11 +34,11 @@ export default function ForgotPasswordPage() {
 
       <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#EDF1F6] text-[#5B6877] rounded-md flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#EDF1F6] text-[#3F4A56] rounded-md flex items-center justify-center mx-auto mb-2">
             <KeyRound className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-extrabold text-[#22272E]">Forgotten Password</h1>
-          <p className="text-xs text-[#5B6877]">
+          <p className="text-xs text-[#3F4A56]">
             Enter your registered school, corporate, or buyer account email address.
           </p>
         </div>
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {loading ? <span>Dispatching link...</span> : <span>Send Password Reset Link</span>}
               <ArrowRight className="w-4 h-4" />
@@ -96,13 +96,13 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#5B6877] flex items-center justify-between">
+        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#3F4A56] flex items-center justify-between">
           <Link href="/account/login" className="text-slate-500 hover:text-[#22272E] flex items-center gap-1 font-semibold">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Login</span>
           </Link>
 
-          <Link href="/corporate" className="text-[#5B6877] font-bold hover:underline">
+          <Link href="/corporate" className="text-[#3F4A56] font-bold hover:underline">
             New Bulk Inquiry
           </Link>
         </div>

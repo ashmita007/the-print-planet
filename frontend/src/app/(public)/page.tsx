@@ -170,7 +170,7 @@ export default async function HomePage() {
           </h2>
           <Link
             href="/categories/machines"
-            className="shrink-0 text-sm font-semibold text-[#4E5A67] hover:underline underline-offset-4"
+            className="shrink-0 text-sm font-semibold text-[#36404B] hover:underline underline-offset-4"
           >
             View all
           </Link>

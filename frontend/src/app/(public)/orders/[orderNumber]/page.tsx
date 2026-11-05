@@ -133,11 +133,11 @@ export default function OrderDetailPage() {
               <span className="font-mono font-extrabold text-lg sm:text-xl text-[#22272E]">
                 {order.order_number}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#5B6877] border border-[#B9C3CF]/30">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#3F4A56] border border-[#B9C3CF]/30">
                 {order.status_label || order.status}
               </span>
             </div>
-            <p className="text-xs text-[#5B6877] mt-0.5">
+            <p className="text-xs text-[#3F4A56] mt-0.5">
               Initiated on {new Date(order.created_at).toLocaleDateString()} for{" "}
               <strong>{order.organization_name}</strong> ({order.organization_type_label})
             </p>
@@ -216,7 +216,7 @@ export default function OrderDetailPage() {
                   return (
                     <div key={m.id} className="text-center my-3">
                       <div className="inline-block bg-slate-200/70 border border-slate-300 text-slate-700 text-[11px] px-3.5 py-1.5 rounded-full max-w-lg leading-relaxed">
-                        <Sparkles className="w-3 h-3 text-[#5B6877] inline mr-1 -mt-0.5" />
+                        <Sparkles className="w-3 h-3 text-[#3F4A56] inline mr-1 -mt-0.5" />
                         {m.message}
                       </div>
                     </div>
@@ -246,7 +246,7 @@ export default function OrderDetailPage() {
                         <div className="mt-2 pt-2 border-t border-white/20">
                           <AttachmentLink
                             url={m.attachment_url}
-                            className="inline-flex items-center gap-1 text-[11px] font-semibold underline text-[#B9C3CF]"
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold underline text-[#FF8A3D]"
                           >
                             <Paperclip className="w-3 h-3" />
                             <span>Download attached file</span>
@@ -312,7 +312,7 @@ export default function OrderDetailPage() {
               <button
                 type="submit"
                 disabled={sending || (!newMsg.trim() && !attachment)}
-                className="bg-[#22272E] hover:bg-[#363D47] disabled:opacity-40 text-white px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 shrink-0"
+                className="bg-[#F26B1D] hover:bg-[#FF8A3D] disabled:opacity-40 text-[#22272E] px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 shrink-0"
               >
                 <Send className="w-4 h-4" />
                 <span className="hidden sm:inline">Send</span>
@@ -326,7 +326,7 @@ export default function OrderDetailPage() {
         <div className="lg:col-span-4 space-y-5">
           <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 rounded-lg space-y-4 shadow-2xs">
             <h4 className="font-bold text-sm text-[#22272E] flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#5B6877]" />
+              <FileText className="w-4 h-4 text-[#3F4A56]" />
               <span>Order Requirements</span>
             </h4>
 
@@ -337,16 +337,16 @@ export default function OrderDetailPage() {
             {order.attachment_url && (
               <AttachmentLink
                 url={order.attachment_url}
-                className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-2"
+                className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-2"
               >
-                <Download className="w-4 h-4 text-[#5B6877]" />
+                <Download className="w-4 h-4 text-[#3F4A56]" />
                 <span>Download Uploaded Artwork / Crest</span>
               </AttachmentLink>
             )}
           </div>
 
           <div className="bg-[#22272E] text-white p-5 rounded-lg space-y-3">
-            <div className="text-[11px] font-bold text-[#5B6877] uppercase tracking-wider">
+            <div className="text-[11px] font-bold text-[#3F4A56] uppercase tracking-wider">
               Need Instant Assistance?
             </div>
             <p className="text-xs text-slate-200 leading-relaxed">
@@ -357,14 +357,14 @@ export default function OrderDetailPage() {
                 href="tel:+919741808034"
                 className="bg-white/10 hover:bg-white/15 px-3.5 py-2 rounded-md text-xs font-semibold flex items-center gap-2"
               >
-                <Phone className="w-3.5 h-3.5 text-[#5B6877]" />
+                <Phone className="w-3.5 h-3.5 text-[#3F4A56]" />
                 <span>+91 97418 08034</span>
               </a>
               <a
                 href="mailto:theprintplanet01@gmail.com"
                 className="bg-white/10 hover:bg-white/15 px-3.5 py-2 rounded-md text-xs font-semibold flex items-center gap-2"
               >
-                <Mail className="w-3.5 h-3.5 text-[#5B6877]" />
+                <Mail className="w-3.5 h-3.5 text-[#3F4A56]" />
                 <span>theprintplanet01@gmail.com</span>
               </a>
             </div>

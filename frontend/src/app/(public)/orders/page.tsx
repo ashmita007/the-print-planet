@@ -111,13 +111,13 @@ export default function ClientOrdersDashboardPage() {
       {/* Header bar */}
       <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 sm:p-6 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#5B6877]">
+          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#3F4A56]">
             Client Orders &amp; Conversation Tracking
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#22272E]">
             Welcome, {user?.first_name || user?.username || "Client"}
           </h1>
-          <p className="text-xs sm:text-sm text-[#5B6877] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#3F4A56] mt-0.5">
             Track your bulk order quotations, sample proofs, production status, and direct factory conversations.
           </p>
         </div>
@@ -125,7 +125,7 @@ export default function ClientOrdersDashboardPage() {
         <div className="flex items-center gap-2.5 shrink-0">
           <Link
             href="/corporate"
-            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5"
+            className="bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5"
           >
             <PlusCircle className="w-4 h-4" />
             <span>New Bulk Inquiry</span>
@@ -174,7 +174,7 @@ export default function ClientOrdersDashboardPage() {
       <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg overflow-hidden shadow-2xs space-y-4">
         <div className="p-4 sm:p-5 border-b border-[#DFE6EE] flex flex-col sm:flex-row items-center justify-between gap-3">
           <h2 className="text-base font-bold text-[#22272E] flex items-center gap-2">
-            <Package className="w-4 h-4 text-[#5B6877]" />
+            <Package className="w-4 h-4 text-[#3F4A56]" />
             <span>Orders &amp; Message Threads ({filteredOrders.length})</span>
           </h2>
 
@@ -200,7 +200,7 @@ export default function ClientOrdersDashboardPage() {
         ) : filteredOrders.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#5B6877] font-semibold uppercase tracking-wider">
+              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#3F4A56] font-semibold uppercase tracking-wider">
                 <tr>
                   <th className="px-5 py-3">Order Number</th>
                   <th className="px-5 py-3">Organization</th>
@@ -216,7 +216,7 @@ export default function ClientOrdersDashboardPage() {
                 {filteredOrders.map((o) => (
                   <tr key={o.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-5 py-4 font-mono font-bold text-[#22272E]">
-                      <Link href={`/orders/${o.order_number}`} className="hover:text-[#5B6877] transition-colors underline">
+                      <Link href={`/orders/${o.order_number}`} className="hover:text-[#3F4A56] transition-colors underline">
                         {o.order_number}
                       </Link>
                     </td>
@@ -256,9 +256,9 @@ export default function ClientOrdersDashboardPage() {
                     <td className="px-5 py-4 text-right">
                       <Link
                         href={`/orders/${o.order_number}`}
-                        className="inline-flex items-center gap-1.5 bg-[#22272E] hover:bg-[#363D47] text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs"
+                        className="inline-flex items-center gap-1.5 bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs"
                       >
-                        <MessageSquare className="w-3.5 h-3.5 text-[#5B6877]" />
+                        <MessageSquare className="w-3.5 h-3.5 text-[#3F4A56]" />
                         <span>Chat ({o.messages_count || 1})</span>
                       </Link>
                     </td>
@@ -271,7 +271,7 @@ export default function ClientOrdersDashboardPage() {
           <div className="p-12 text-center space-y-4">
             <Package className="w-12 h-12 text-slate-300 mx-auto" />
             <h3 className="text-sm font-bold text-[#22272E]">No Bulk Orders Found</h3>
-            <p className="text-xs text-[#5B6877] max-w-sm mx-auto">
+            <p className="text-xs text-[#3F4A56] max-w-sm mx-auto">
               You do not have any active bulk inquiries under this account yet. Submit your specifications to start your order.
             </p>
             <Link
@@ -288,7 +288,7 @@ export default function ClientOrdersDashboardPage() {
         <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-5 sm:p-6 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-2">
-              <Package className="w-4 h-4 text-[#5B6877]" />
+              <Package className="w-4 h-4 text-[#3F4A56]" />
               <span>Products You Explored &amp; Checked ({checkedProducts.length})</span>
             </h3>
             <span className="text-[11px] text-slate-400">Available to add directly into your bulk quotation</span>
@@ -310,7 +310,7 @@ export default function ClientOrdersDashboardPage() {
                   </div>
                   <div>
                     <span className="text-[9px] font-mono text-slate-400 uppercase block">{p.sku}</span>
-                    <h4 className="text-xs font-bold text-[#22272E] group-hover:text-[#5B6877] transition-colors truncate">
+                    <h4 className="text-xs font-bold text-[#22272E] group-hover:text-[#3F4A56] transition-colors truncate">
                       {p.name}
                     </h4>
                   </div>

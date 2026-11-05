@@ -102,7 +102,7 @@ export default function SortModal({
         {/* Responsive Header */}
         <div className="bg-[#22272E] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-2.5">
-            <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#5B6877]" />
+            <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#3F4A56]" />
             <h3 id="sort-modal-title" className="text-xs sm:text-base font-bold tracking-tight">
               Sort Catalogue
             </h3>
@@ -135,12 +135,12 @@ export default function SortModal({
                 }`}
               >
                 <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isSelected ? "text-[#5B6877]" : "text-[#5B6877]"}`} />
+                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isSelected ? "text-[#3F4A56]" : "text-[#3F4A56]"}`} />
                   <span className="truncate">{opt.label}</span>
                   {opt.tag && (
                     <span
                       className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider ${
-                        isSelected ? "bg-white/20 text-white" : "bg-[#22272E]/10 text-[#5B6877]"
+                        isSelected ? "bg-white/20 text-white" : "bg-[#22272E]/10 text-[#3F4A56]"
                       }`}
                     >
                       {opt.tag}

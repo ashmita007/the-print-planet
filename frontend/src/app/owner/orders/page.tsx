@@ -197,7 +197,7 @@ export default function OwnerOrdersPage() {
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[#DFE6EE] bg-[#FFFFFF] hover:bg-slate-50 text-[#22272E] text-xs font-bold transition-all shadow-2xs cursor-pointer disabled:opacity-50"
             title="Download full Excel archive of all customer messages & bulk orders"
           >
-            <Download className="w-4 h-4 text-[#5B6877]" />
+            <Download className="w-4 h-4 text-[#3F4A56]" />
             <span>{backupLoading ? "Generating..." : "Download Conversations (.xlsx)"}</span>
           </button>
 
@@ -275,7 +275,7 @@ export default function OwnerOrdersPage() {
       <div className="bg-[#FFFFFF] rounded-lg border border-[#DFE6EE] shadow-2xs overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-slate-400 space-y-3">
-            <RefreshCw className="w-6 h-6 animate-spin mx-auto text-[#5B6877]" />
+            <RefreshCw className="w-6 h-6 animate-spin mx-auto text-[#3F4A56]" />
             <p className="text-xs">Loading institutional bulk orders...</p>
           </div>
         ) : orders.length === 0 ? (
@@ -291,7 +291,7 @@ export default function OwnerOrdersPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#5B6877] font-bold uppercase tracking-wider text-[10px]">
+              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#3F4A56] font-bold uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="py-3 px-4">Order #</th>
                   <th className="py-3 px-4">Organization &amp; Sector</th>
@@ -322,7 +322,7 @@ export default function OwnerOrdersPage() {
                         {o.organization_type === "school" || o.organization_type === "college" ? (
                           <GraduationCap className="w-3 h-3 text-[#22272E]" />
                         ) : (
-                          <Building2 className="w-3 h-3 text-[#5B6877]" />
+                          <Building2 className="w-3 h-3 text-[#3F4A56]" />
                         )}
                         <span>{SECTOR_LABELS[o.organization_type] || "Corporate"}</span>
                         {o.city ? ` · ${o.city}` : ""}
@@ -411,11 +411,11 @@ export default function OwnerOrdersPage() {
                   <span className="text-[10px] uppercase font-bold text-slate-400">Client Contact</span>
                   <div className="font-bold text-[#22272E]">{selectedOrder.contact_person}</div>
                   <div className="flex items-center gap-1 text-slate-500">
-                    <Phone className="w-3 h-3 text-[#5B6877]" />
+                    <Phone className="w-3 h-3 text-[#3F4A56]" />
                     <span>{selectedOrder.phone}</span>
                   </div>
                   <div className="flex items-center gap-1 text-slate-500 truncate">
-                    <Mail className="w-3 h-3 text-[#5B6877]" />
+                    <Mail className="w-3 h-3 text-[#3F4A56]" />
                     <span className="truncate">{selectedOrder.email}</span>
                   </div>
                 </div>
@@ -458,7 +458,7 @@ export default function OwnerOrdersPage() {
                     <AttachmentLink
                       as="owner"
                       url={selectedOrder.attachment_url || selectedOrder.attachment || ""}
-                      className="inline-flex items-center gap-1 text-[#5B6877] hover:underline font-bold pt-1"
+                      className="inline-flex items-center gap-1 text-[#3F4A56] hover:underline font-bold pt-1"
                     >
                       <Paperclip className="w-3 h-3" />
                       <span>Download Attached Spec/File</span>
@@ -483,7 +483,7 @@ export default function OwnerOrdersPage() {
               {selectedOrder.checked_products && selectedOrder.checked_products.length > 0 && (
                 <div className="space-y-2">
                   <h4 className="text-xs font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#5B6877]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#3F4A56]" />
                     <span>Products Explored By User Prior to Bulk Inquiry:</span>
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -548,7 +548,7 @@ export default function OwnerOrdersPage() {
                                 as="owner"
                                 url={msg.attachment_url}
                                 className={`inline-flex items-center gap-1 text-[11px] font-bold mt-2 underline ${
-                                  isOwner ? "text-[#B9C3CF]" : "text-[#5B6877]"
+                                  isOwner ? "text-[#B9C3CF]" : "text-[#3F4A56]"
                                 }`}
                               >
                                 <Paperclip className="w-3 h-3" />

@@ -26,7 +26,7 @@ export default function ErrorBoundary({
             Operational Error
           </span>
           <h1 className="text-2xl font-extrabold text-[#22272E]">Something Went Wrong</h1>
-          <p className="text-xs text-[#5B6877] leading-relaxed">
+          <p className="text-xs text-[#3F4A56] leading-relaxed">
             An unexpected error occurred while communicating with the service. Please retry the request.
           </p>
         </div>
@@ -34,7 +34,7 @@ export default function ErrorBoundary({
           <button
             type="button"
             onClick={() => reset()}
-            className="bg-[#22272E] hover:bg-[#363D47] text-white py-2.5 px-5 rounded-lg flex items-center justify-center gap-1.5"
+            className="bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-2.5 px-5 rounded-lg flex items-center justify-center gap-1.5"
           >
             <RotateCcw className="w-3.5 h-3.5" /> Retry Request
           </button>

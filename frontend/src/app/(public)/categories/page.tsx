@@ -86,14 +86,14 @@ export default async function CategoriesIndexPage() {
               <li key={cat.id} className="bg-[#FFFFFF] p-5 sm:p-6">
                 <Link href={`/categories/${cat.slug}`} className="group flex items-center justify-between gap-4">
                   <span className="min-w-0">
-                    <span className="block text-xl font-bold tracking-tight text-[#22272E] group-hover:text-[#4E5A67] transition-colors">
+                    <span className="block text-xl font-bold tracking-tight text-[#22272E] group-hover:text-[#36404B] transition-colors">
                       {formatCategoryName(cat.name)}
                     </span>
                     {cat.products_count > 0 && (
-                      <span className="block text-sm text-[#5B6877] mt-0.5">{cat.products_count} products</span>
+                      <span className="block text-sm text-[#3F4A56] mt-0.5">{cat.products_count} products</span>
                     )}
                   </span>
-                  <ArrowRight className="w-5 h-5 shrink-0 text-[#4E5A67] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                  <ArrowRight className="w-5 h-5 shrink-0 text-[#36404B] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
                 {subcategories.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-1.5">
@@ -101,7 +101,7 @@ export default async function CategoriesIndexPage() {
                       <Link
                         key={sub.id}
                         href={`/categories/${sub.slug}`}
-                        className="text-xs font-medium text-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] hover:text-[#4E5A67] px-2.5 py-1.5 rounded transition-colors"
+                        className="text-xs font-medium text-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] hover:text-[#36404B] px-2.5 py-1.5 rounded transition-colors"
                       >
                         {formatCategoryName(sub.name)}
                       </Link>

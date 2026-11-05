@@ -25,7 +25,7 @@ export default function Marquee({ items, reverse = false, speed = 28, className 
         {items.map((item) => (
           <li key={item} className="flex items-center gap-8">
             <span>{item}</span>
-            <svg aria-hidden="true" viewBox="0 0 24 24" className="w-[0.45em] h-[0.45em] text-[#B9C3CF]" fill="currentColor">
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="w-[0.45em] h-[0.45em] text-[#F26B1D]" fill="currentColor">
               <path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z" />
             </svg>
           </li>

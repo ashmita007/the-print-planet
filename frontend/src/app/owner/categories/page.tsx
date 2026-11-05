@@ -342,9 +342,9 @@ export default function OwnerCategoriesPage() {
                       </span>
                     ) : (
                       <span className="flex items-center gap-1.5 text-[#22272E] font-extrabold uppercase tracking-wide">
-                        <Layers className="w-3.5 h-3.5 text-[#5B6877]" />
+                        <Layers className="w-3.5 h-3.5 text-[#3F4A56]" />
                         <span>{formatCategoryName(c.name)}</span>
-                        <span className="text-[9px] bg-[#EDF1F6] text-[#4E5A67] px-1.5 py-0.5 rounded font-medium uppercase tracking-wider">
+                        <span className="text-[9px] bg-[#EDF1F6] text-[#36404B] px-1.5 py-0.5 rounded font-medium uppercase tracking-wider">
                           Main Sector
                         </span>
                       </span>
@@ -372,7 +372,7 @@ export default function OwnerCategoriesPage() {
                       <button
                         type="button"
                         onClick={() => startEdit(c)}
-                        className="p-1 text-slate-600 hover:text-[#5B6877]"
+                        className="p-1 text-slate-600 hover:text-[#3F4A56]"
                         title="Edit category"
                       >
                         <Edit className="w-3.5 h-3.5" />

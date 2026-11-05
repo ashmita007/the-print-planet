@@ -11,8 +11,8 @@ const BADGES = [
 /** Live product count and service facts, each topped with a palette-shade bar. */
 export default function StatsStrip({ productCount }: { productCount: number }) {
   const stats = [
-    { value: `${productCount}+`, label: "Products in the catalogue", ink: "#22272E", count: true },
-    { value: "36", label: "States and union territories served", ink: "#5B6877", count: true },
+    { value: `${productCount}+`, label: "Products in the catalogue", ink: "#F26B1D", count: true },
+    { value: "36", label: "States and union territories served", ink: "#3F4A56", count: true },
     { value: "24–48h", label: "Dispatch time across India", ink: "#6C7A89", count: false },
     { value: "100", label: "Pieces minimum for bulk orders", ink: "#B9C3CF", count: true },
   ];
@@ -30,7 +30,7 @@ export default function StatsStrip({ productCount }: { productCount: number }) {
               <dd className="font-heading text-3xl sm:text-4xl font-extrabold text-[#22272E] tabular-nums">
                 {stat.count ? <span data-count>{stat.value}</span> : stat.value}
               </dd>
-              <dt className="mt-1 text-sm text-[#5B6877]">{stat.label}</dt>
+              <dt className="mt-1 text-sm text-[#3F4A56]">{stat.label}</dt>
             </div>
           ))}
         </dl>
@@ -39,7 +39,7 @@ export default function StatsStrip({ productCount }: { productCount: number }) {
             const Icon = badge.icon;
             return (
               <li key={badge.label} className="flex items-center gap-2 text-sm font-semibold text-[#22272E]">
-                <Icon className="w-4 h-4 text-[#4E5A67]" aria-hidden="true" />
+                <Icon className="w-4 h-4 text-[#C2410C]" aria-hidden="true" />
                 {badge.label}
               </li>
             );
