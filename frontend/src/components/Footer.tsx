@@ -57,8 +57,9 @@ export default function Footer({ settings }: FooterProps) {
   const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
 
   return (
-    <footer className="bg-[#22272E] text-white pt-12 sm:pt-16 pb-24 sm:pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer className="relative bg-[#121418] text-white overflow-hidden pt-12 sm:pt-16 pb-24 sm:pb-8">
+      <div aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 border-b border-white/10">
           <div className="col-span-2 lg:col-span-4 space-y-4">
             <div className="bg-[#FFFFFF] px-3 py-2 rounded-md inline-block">
@@ -88,7 +89,7 @@ export default function Footer({ settings }: FooterProps) {
                 href="https://www.linkedin.com/company/the-print-planet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#22272E] border border-white/10 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#121418] border border-white/10 flex items-center justify-center transition-colors"
                 title="LinkedIn"
                 aria-label="LinkedIn"
               >
@@ -100,7 +101,7 @@ export default function Footer({ settings }: FooterProps) {
                 href="https://www.instagram.com/theprintplanet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#22272E] border border-white/10 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#121418] border border-white/10 flex items-center justify-center transition-colors"
                 title="Instagram"
                 aria-label="Instagram"
               >
@@ -112,7 +113,7 @@ export default function Footer({ settings }: FooterProps) {
                 href="https://www.indiamart.com/theprintplanet/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#22272E] border border-white/10 flex items-center justify-center text-[11px] font-semibold transition-colors"
+                className="px-2.5 h-8 rounded-lg bg-white/10 hover:bg-[#B9C3CF] text-slate-300 hover:text-[#121418] border border-white/10 flex items-center justify-center text-[11px] font-semibold transition-colors"
                 title="IndiaMART Verified Seller"
               >
                 IndiaMART
@@ -143,7 +144,7 @@ export default function Footer({ settings }: FooterProps) {
             </p>
             <Link
               href="/quote"
-              className="inline-flex items-center justify-center mt-1 py-2.5 px-5 rounded-lg bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold transition-colors"
+              className="inline-flex items-center justify-center mt-1 py-2.5 px-5 rounded-lg bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] font-bold transition-colors"
             >
               Get a quote
             </Link>

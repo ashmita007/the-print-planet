@@ -41,7 +41,7 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
   );
 
   return (
-    <header ref={root} className="relative overflow-hidden bg-[#22272E] text-white">
+    <header ref={root} className="relative overflow-hidden bg-[#121418] text-white">
       <div data-hero-dots aria-hidden="true" className="page-hero-dots absolute inset-0 -top-[20%]" />
 
       <div data-hero className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-9 sm:pb-14">
@@ -49,7 +49,7 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
 
         <div className="mt-5 sm:mt-9 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-3xl">
-            <h1 className="relative w-fit text-[2.1rem] leading-[1.06] sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em]">
+            <h1 className="relative w-fit text-[2.1rem] leading-[1.04] sm:text-5xl lg:text-6xl font-hero font-extrabold tracking-[-0.03em]">
               <TextReveal text={title} />
               <CropMarks />
             </h1>

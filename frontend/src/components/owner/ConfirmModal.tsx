@@ -63,16 +63,16 @@ export default function ConfirmModal({
             className={`w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-md flex items-center justify-center shrink-0 mt-0.5 ${
               isDestructive
                 ? "bg-red-100 text-[#C0392B]"
-                : "bg-blue-100 text-[#22272E]"
+                : "bg-blue-100 text-[#121418]"
             }`}
           >
             <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="flex-1 min-w-0 pr-1">
-            <h3 className="text-sm sm:text-base font-bold text-[#22272E] leading-snug">
+            <h3 className="text-sm sm:text-base font-bold text-[#121418] leading-snug">
               {title}
             </h3>
-            <p className="text-[11px] sm:text-xs text-[#3F4A56] mt-0.5 sm:mt-1 leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-[#353C45] mt-0.5 sm:mt-1 leading-relaxed">
               {message}
             </p>
           </div>
@@ -90,7 +90,7 @@ export default function ConfirmModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md border border-[#DFE6EE] text-[#22272E] text-xs sm:text-sm font-semibold hover:bg-[#EDF1F6] transition-colors"
+            className="flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md border border-[#DFE6EE] text-[#121418] text-xs sm:text-sm font-semibold hover:bg-[#EDF1F6] transition-colors"
           >
             {cancelLabel}
           </button>
@@ -103,7 +103,7 @@ export default function ConfirmModal({
             className={`flex-1 sm:flex-initial py-1.5 sm:py-2 px-3 sm:px-5 rounded-lg sm:rounded-md text-white text-xs sm:text-sm font-bold transition-colors shadow-2xs ${
               isDestructive
                 ? "bg-[#C0392B] hover:bg-[#a93226]"
-                : "bg-[#22272E] hover:bg-[#363D47]"
+                : "bg-[#121418] hover:bg-[#2A2F37]"
             }`}
           >
             {confirmLabel}

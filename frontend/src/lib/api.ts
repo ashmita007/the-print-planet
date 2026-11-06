@@ -199,14 +199,20 @@ export async function submitEnquiry(payload: {
       formData.append('attachment', payload.attachment);
       if (payload.attachment_url) formData.append('attachment_url', payload.attachment_url);
 
+      const authHeaders = getClientAuthHeaders();
       res = await fetch(`${getApiUrl()}/api/v1/enquiries/`, {
         method: 'POST',
+        headers: authHeaders.Authorization ? { Authorization: authHeaders.Authorization } : undefined,
         body: formData,
       });
     } else {
+      const authHeaders = getClientAuthHeaders();
       res = await fetch(`${getApiUrl()}/api/v1/enquiries/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(authHeaders.Authorization ? { Authorization: authHeaders.Authorization } : {}),
+        },
         body: JSON.stringify(payload),
       });
     }

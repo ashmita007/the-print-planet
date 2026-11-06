@@ -208,8 +208,8 @@ export default function OwnerProductsListPage() {
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-[#FFFFFF] text-[#22272E] px-4 py-3 rounded-md shadow-lg border border-[#DFE6EE] text-xs flex items-center gap-2 anim-toast">
-          <Sparkles className="w-4 h-4 text-[#3F4A56]" />
+        <div className="fixed bottom-5 right-5 z-50 bg-[#FFFFFF] text-[#121418] px-4 py-3 rounded-md shadow-lg border border-[#DFE6EE] text-xs flex items-center gap-2 anim-toast">
+          <Sparkles className="w-4 h-4 text-[#353C45]" />
           <span>{toastMessage}</span>
           <button
             onClick={() => setToastMessage(null)}
@@ -226,7 +226,7 @@ export default function OwnerProductsListPage() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Catalogue
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#22272E] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
             Products
             <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
               {totalCount}
@@ -239,7 +239,7 @@ export default function OwnerProductsListPage() {
             type="button"
             onClick={handleExportExcel}
             disabled={isExporting}
-            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#22272E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
+            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#121418] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
             title="Download full catalogue Excel spreadsheet"
           >
             {isExporting ? (
@@ -252,7 +252,7 @@ export default function OwnerProductsListPage() {
 
           <Link
             href="/owner/import"
-            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#22272E] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
+            className="bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#121418] px-3.5 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 text-slate-500" />
             <span>Import</span>
@@ -260,7 +260,7 @@ export default function OwnerProductsListPage() {
 
           <Link
             href="/owner/products/new"
-            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
+            className="bg-[#121418] hover:bg-[#2A2F37] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add product</span>
@@ -285,17 +285,17 @@ export default function OwnerProductsListPage() {
                 setCurrentPage(1);
               }}
               className={`relative flex items-center gap-2 pb-3 pt-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                isActiveTab ? "text-[#22272E]" : "text-slate-500 hover:text-[#22272E]"
+                isActiveTab ? "text-[#121418]" : "text-slate-500 hover:text-[#121418]"
               }`}
             >
               <span>{tab.label}</span>
               {tab.count !== undefined && (
-                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#36404B]" : "text-slate-400"}`}>
+                <span className={`text-[10px] tabular-nums ${isActiveTab ? "text-[#2B323B]" : "text-slate-400"}`}>
                   {tab.count}
                 </span>
               )}
               {isActiveTab && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#22272E]" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#121418]" />
               )}
             </button>
           );
@@ -327,7 +327,7 @@ export default function OwnerProductsListPage() {
               placeholder="Search by SKU, product name, or material specs..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md pl-9 pr-20 py-2.5 text-xs text-[#22272E] outline-none transition-colors"
+              className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-md pl-9 pr-20 py-2.5 text-xs text-[#121418] outline-none transition-colors"
             />
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             {search && (
@@ -346,7 +346,7 @@ export default function OwnerProductsListPage() {
             )}
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[#22272E] hover:bg-[#363D47] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer transition-colors"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-[#121418] hover:bg-[#2A2F37] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer transition-colors"
             >
               Search
             </button>
@@ -364,7 +364,7 @@ export default function OwnerProductsListPage() {
                   setSelectedCategory(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#22272E] font-medium outline-none py-1 cursor-pointer min-w-0 w-full"
+                className="bg-transparent text-xs text-[#121418] font-medium outline-none py-1 cursor-pointer min-w-0 w-full"
               >
                 <option value="">All Categories ({categories.length})</option>
                 {categories.map((c) => (
@@ -385,7 +385,7 @@ export default function OwnerProductsListPage() {
                   setSelectedStatus(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#22272E] font-medium outline-none py-1 cursor-pointer"
+                className="bg-transparent text-xs text-[#121418] font-medium outline-none py-1 cursor-pointer"
               >
                 <option value="">All Visibility</option>
                 <option value="active">Active Only</option>
@@ -403,7 +403,7 @@ export default function OwnerProductsListPage() {
                   setPageSize(Number(e.target.value));
                   setCurrentPage(1);
                 }}
-                className="bg-transparent text-xs text-[#22272E] font-bold outline-none py-1 cursor-pointer"
+                className="bg-transparent text-xs text-[#121418] font-bold outline-none py-1 cursor-pointer"
               >
                 <option value={10}>10</option>
                 <option value={25}>25</option>
@@ -430,8 +430,8 @@ export default function OwnerProductsListPage() {
       {/* Products Table Card */}
       <div className="bg-[#FFFFFF] rounded-lg border border-[#DFE6EE] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#22272E]">
-            <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[11px] font-bold text-[#3F4A56] uppercase tracking-wider">
+          <table className="w-full text-left text-xs text-[#121418]">
+            <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[11px] font-bold text-[#353C45] uppercase tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Product Details</th>
                 <th className="py-3.5 px-4 hidden lg:table-cell">SKU Code</th>
@@ -483,7 +483,7 @@ export default function OwnerProductsListPage() {
                       {/* Product Thumbnail & Title */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-md bg-[#EDF1F6] border border-[#DFE6EE] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#22272E]/30 transition-colors">
+                          <div className="w-12 h-12 rounded-md bg-[#EDF1F6] border border-[#DFE6EE] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#121418]/30 transition-colors">
                             {img ? (
                               <img
                                 src={img}
@@ -495,7 +495,7 @@ export default function OwnerProductsListPage() {
                             )}
                           </div>
                           <div className="max-w-xs min-w-0">
-                            <p className="font-bold text-[#22272E] line-clamp-2 lg:line-clamp-1 group-hover:text-[#3F4A56] transition-colors">
+                            <p className="font-bold text-[#121418] line-clamp-2 lg:line-clamp-1 group-hover:text-[#353C45] transition-colors">
                               {formatProductName(p.name)}
                             </p>
                             <p className="text-[11px] text-slate-400 truncate mt-0.5">
@@ -504,7 +504,7 @@ export default function OwnerProductsListPage() {
                               {p.color ? ` • ${p.color}` : ""}
                             </p>
                             {/* Columns hidden on small screens move under the name. */}
-                            <p className="md:hidden text-[11px] font-bold text-[#22272E] mt-0.5">
+                            <p className="md:hidden text-[11px] font-bold text-[#121418] mt-0.5">
                               {p.price_display || (p.price ? `₹ ${p.price}` : "On Request")}
                             </p>
                             <button
@@ -538,14 +538,14 @@ export default function OwnerProductsListPage() {
 
                       {/* Category */}
                       <td className="py-3.5 px-4 hidden xl:table-cell max-w-44">
-                        <span className="line-clamp-2 text-[11px] font-semibold text-[#36404B]">
+                        <span className="line-clamp-2 text-[11px] font-semibold text-[#2B323B]">
                           {formatCategoryName(p.category?.name || "Uncategorized")}
                         </span>
                       </td>
 
                       {/* Trade Price */}
                       <td className="py-3.5 px-4 hidden md:table-cell whitespace-nowrap">
-                        <span className="font-extrabold text-[#22272E]">
+                        <span className="font-extrabold text-[#121418]">
                           {p.price_display || (p.price ? `₹ ${p.price}` : "On Request")}
                         </span>
                         {Boolean(p.minimum_order_quantity && p.minimum_order_quantity > 1) && (
@@ -585,7 +585,7 @@ export default function OwnerProductsListPage() {
                             href={`/products/${p.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-lg text-slate-400 hover:text-[#22272E] hover:bg-slate-100 transition-colors"
+                            className="p-2 rounded-lg text-slate-400 hover:text-[#121418] hover:bg-slate-100 transition-colors"
                             title="Preview Public Page"
                             aria-label={`Preview ${p.name}`}
                           >
@@ -594,7 +594,7 @@ export default function OwnerProductsListPage() {
 
                           <Link
                             href={`/owner/products/${p.id}/edit`}
-                            className="p-2 rounded-lg text-slate-600 hover:text-[#3F4A56] hover:bg-orange-50 transition-colors"
+                            className="p-2 rounded-lg text-slate-600 hover:text-[#353C45] hover:bg-orange-50 transition-colors"
                             title="Edit Product Details"
                             aria-label={`Edit ${p.name}`}
                           >
@@ -625,7 +625,7 @@ export default function OwnerProductsListPage() {
                         <div className="w-12 h-12 rounded-lg bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
                           <Search className="w-6 h-6" />
                         </div>
-                        <h3 className="text-sm font-bold text-[#22272E]">
+                        <h3 className="text-sm font-bold text-[#121418]">
                           No products found matching filters
                         </h3>
                         <p className="text-xs text-slate-400 leading-relaxed">
@@ -634,18 +634,18 @@ export default function OwnerProductsListPage() {
                         <button
                           type="button"
                           onClick={clearAllFilters}
-                          className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2 rounded-md text-xs font-bold transition-colors cursor-pointer"
+                          className="bg-[#121418] hover:bg-[#2A2F37] text-white px-4 py-2 rounded-md text-xs font-bold transition-colors cursor-pointer"
                         >
                           Clear All Filters
                         </button>
                       </div>
                     ) : (
                       <div className="max-w-md mx-auto space-y-4">
-                        <div className="w-14 h-14 rounded-lg bg-[#22272E]/10 text-[#3F4A56] flex items-center justify-center mx-auto">
+                        <div className="w-14 h-14 rounded-lg bg-[#121418]/10 text-[#353C45] flex items-center justify-center mx-auto">
                           <Package className="w-7 h-7" />
                         </div>
                         <div>
-                          <h3 className="text-base font-extrabold text-[#22272E]">
+                          <h3 className="text-base font-extrabold text-[#121418]">
                             Your Catalogue is Clean & Ready
                           </h3>
                           <p className="text-xs text-slate-500 leading-relaxed mt-1">
@@ -655,14 +655,14 @@ export default function OwnerProductsListPage() {
                         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                           <Link
                             href="/owner/products/new"
-                            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2.5 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                            className="bg-[#121418] hover:bg-[#2A2F37] text-white px-4 py-2.5 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
                           >
                             <PlusCircle className="w-4 h-4" />
                             <span>Add First Product</span>
                           </Link>
                           <Link
                             href="/owner/import"
-                            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2.5 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                            className="bg-[#121418] hover:bg-[#2A2F37] text-white px-4 py-2.5 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
                           >
                             <FileSpreadsheet className="w-4 h-4" />
                             <span>Bulk Import Excel/CSV</span>
@@ -681,9 +681,9 @@ export default function OwnerProductsListPage() {
         <div className="p-4 border-t border-[#DFE6EE] bg-[#EDF1F6] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           {/* Status summary */}
           <div className="text-slate-500 text-xs">
-            Showing <strong className="text-[#22272E]">{startItem}</strong> to{" "}
-            <strong className="text-[#22272E]">{endItem}</strong> of{" "}
-            <strong className="text-[#22272E]">{totalCount}</strong> products
+            Showing <strong className="text-[#121418]">{startItem}</strong> to{" "}
+            <strong className="text-[#121418]">{endItem}</strong> of{" "}
+            <strong className="text-[#121418]">{totalCount}</strong> products
           </div>
 
           {/* Page controls */}
@@ -729,7 +729,7 @@ export default function OwnerProductsListPage() {
                     onClick={() => setCurrentPage(page)}
                     className={`min-w-8 h-8 px-2 rounded-lg font-bold text-xs transition-colors cursor-pointer ${
                       isActive
-                        ? "bg-[#22272E] text-white shadow-xs"
+                        ? "bg-[#121418] text-white shadow-xs"
                         : "bg-[#FFFFFF] border border-[#DFE6EE] text-slate-700 hover:bg-[#EDF1F6]"
                     }`}
                   >

@@ -9,7 +9,7 @@ const SLIDES: Omit<ShowcaseSlide, "image" | "count" | "products">[] = [
     slug: "pvc-id-card-consumable",
     title: "PVC card sheets",
     blurb: "Inkjet and laser fusing sheets, overlays and core sheets for ID cards that do not peel or fade.",
-    ink: "#22272E",
+    ink: "#121418",
     onInk: "#FFFFFF",
   },
   {
@@ -17,13 +17,13 @@ const SLIDES: Omit<ShowcaseSlide, "image" | "count" | "products">[] = [
     title: "Lanyard rolls",
     blurb: "Indian satin rolls in 12 to 25 mm for sublimation printing, in white and solid colours.",
     ink: "#DFE6EE",
-    onInk: "#22272E",
+    onInk: "#121418",
   },
   {
     slug: "id-card-holder",
     title: "ID card holders",
     blurb: "Crystal, semi-transparent and executive holders in vertical and horizontal formats.",
-    ink: "#3F4A56",
+    ink: "#353C45",
     onInk: "#FFFFFF",
   },
   {
@@ -31,7 +31,7 @@ const SLIDES: Omit<ShowcaseSlide, "image" | "count" | "products">[] = [
     title: "Card machines",
     blurb: "Fusing, cutting and lanyard heat press machines, with a live video demo before you pay.",
     ink: "#B9C3CF",
-    onInk: "#22272E",
+    onInk: "#121418",
   },
 ];
 

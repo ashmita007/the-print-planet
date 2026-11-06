@@ -86,7 +86,7 @@ export default function ContactFormClient() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="field-your-full-name" className="block font-semibold text-[#22272E] mb-1">
+          <label htmlFor="field-your-full-name" className="block font-semibold text-[#121418] mb-1">
             Your Full Name *
           </label>
           <input id="field-your-full-name"
@@ -95,12 +95,12 @@ export default function ContactFormClient() {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder="e.g. Ramesh Patel"
-            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
 
         <div>
-          <label htmlFor="field-company-business-name" className="block font-semibold text-[#22272E] mb-1">
+          <label htmlFor="field-company-business-name" className="block font-semibold text-[#121418] mb-1">
             Company / Business Name
           </label>
           <input id="field-company-business-name"
@@ -108,14 +108,14 @@ export default function ContactFormClient() {
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="e.g. Apex Corporate Solutions Pvt Ltd"
-            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="field-contact-mobile-phone" className="block font-semibold text-[#22272E] mb-1">
+          <label htmlFor="field-contact-mobile-phone" className="block font-semibold text-[#121418] mb-1">
             Contact Mobile / Phone *
           </label>
           <input id="field-contact-mobile-phone"
@@ -124,12 +124,12 @@ export default function ContactFormClient() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="e.g. +91 97418 00000"
-            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
 
         <div>
-          <label htmlFor="field-business-email" className="block font-semibold text-[#22272E] mb-1">
+          <label htmlFor="field-business-email" className="block font-semibold text-[#121418] mb-1">
             Business Email *
           </label>
           <input id="field-business-email"
@@ -138,13 +138,13 @@ export default function ContactFormClient() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="e.g. purchasing@company.com"
-            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+            className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="field-estimated-order-quantity-units" className="block font-semibold text-[#22272E] mb-1">
+        <label htmlFor="field-estimated-order-quantity-units" className="block font-semibold text-[#121418] mb-1">
           Estimated Order Quantity (Units / Rolls)
         </label>
         <input id="field-estimated-order-quantity-units"
@@ -153,12 +153,12 @@ export default function ContactFormClient() {
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           placeholder="e.g. 500"
-          className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+          className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
         />
       </div>
 
       <div>
-        <label htmlFor="field-detailed-technical-requirements-delivery" className="block font-semibold text-[#22272E] mb-1">
+        <label htmlFor="field-detailed-technical-requirements-delivery" className="block font-semibold text-[#121418] mb-1">
           Detailed Technical Requirements &amp; Delivery Location *
         </label>
         <textarea id="field-detailed-technical-requirements-delivery"
@@ -167,22 +167,22 @@ export default function ContactFormClient() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Please describe required models (e.g. V2, V4 holders, 20mm Royal Blue satin rolls, DCT2000 cutter), custom printing, destination pincode..."
-          className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none resize-none"
+          className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none resize-none"
         />
       </div>
 
       {/* Optional Attachment Upload */}
       <div>
-        <div className="flex items-center justify-between text-[#22272E] text-xs mb-1 font-semibold">
+        <div className="flex items-center justify-between text-[#121418] text-xs mb-1 font-semibold">
           <span className="flex items-center gap-1.5">
-            <Paperclip className="w-3.5 h-3.5 text-[#3F4A56]" />
+            <Paperclip className="w-3.5 h-3.5 text-[#353C45]" />
             <span>Attach Spec Sheet, Artwork, Sample Photo or Excel (Optional)</span>
           </span>
           <span className="text-[11px] text-slate-500">Max 10MB</span>
         </div>
         {!attachment ? (
-          <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#36404B]">
-            <UploadCloud className="w-4 h-4 text-[#3F4A56]" />
+          <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#121418] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2.5 px-3 cursor-pointer transition-all text-xs text-[#2B323B]">
+            <UploadCloud className="w-4 h-4 text-[#353C45]" />
             <span>Click to attach file or sample photo</span>
             <input
               type="file"
@@ -213,7 +213,7 @@ export default function ContactFormClient() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50"
+          className="w-full sm:w-auto bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50"
         >
           {isSubmitting ? "Sending RFQ..." : "Submit Quotation Request & Enquire"}
         </button>

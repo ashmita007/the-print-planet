@@ -12,7 +12,7 @@ const BADGES = [
 export default function StatsStrip({ productCount }: { productCount: number }) {
   const stats = [
     { value: `${productCount}+`, label: "Products in the catalogue", ink: "#F26B1D", count: true },
-    { value: "36", label: "States and union territories served", ink: "#3F4A56", count: true },
+    { value: "36", label: "States and union territories served", ink: "#353C45", count: true },
     { value: "24–48h", label: "Dispatch time across India", ink: "#6C7A89", count: false },
     { value: "100", label: "Pieces minimum for bulk orders", ink: "#B9C3CF", count: true },
   ];
@@ -27,10 +27,10 @@ export default function StatsStrip({ productCount }: { productCount: number }) {
               className={`relative p-5 sm:p-7 ${i % 2 === 1 ? "border-l" : ""} ${i >= 2 ? "border-t lg:border-t-0" : ""} lg:border-l lg:first:border-l-0 border-[#DFE6EE]`}
             >
               <span aria-hidden="true" className="absolute top-0 left-5 sm:left-7 w-10 h-1 rounded-b" style={{ background: stat.ink }} />
-              <dd className="font-heading text-3xl sm:text-4xl font-extrabold text-[#22272E] tabular-nums">
+              <dd className="font-heading text-3xl sm:text-4xl font-extrabold text-[#121418] tabular-nums">
                 {stat.count ? <span data-count>{stat.value}</span> : stat.value}
               </dd>
-              <dt className="mt-1 text-sm text-[#3F4A56]">{stat.label}</dt>
+              <dt className="mt-1 text-sm text-[#353C45]">{stat.label}</dt>
             </div>
           ))}
         </dl>
@@ -38,7 +38,7 @@ export default function StatsStrip({ productCount }: { productCount: number }) {
           {BADGES.map((badge) => {
             const Icon = badge.icon;
             return (
-              <li key={badge.label} className="flex items-center gap-2 text-sm font-semibold text-[#22272E]">
+              <li key={badge.label} className="flex items-center gap-2 text-sm font-semibold text-[#121418]">
                 <Icon className="w-4 h-4 text-[#C2410C]" aria-hidden="true" />
                 {badge.label}
               </li>

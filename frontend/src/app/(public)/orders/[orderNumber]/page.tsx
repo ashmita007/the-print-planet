@@ -102,13 +102,13 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center space-y-4">
-        <h2 className="text-xl font-bold text-[#22272E]">Order Not Found or Unauthorized</h2>
+        <h2 className="text-xl font-bold text-[#121418]">Order Not Found or Unauthorized</h2>
         <p className="text-xs text-slate-500">
           The requested bulk order inquiry could not be retrieved. Please check your credentials or return to your orders list.
         </p>
         <Link
           href="/orders"
-          className="inline-block bg-[#22272E] text-white px-5 py-2.5 rounded-md text-xs font-bold"
+          className="inline-block bg-[#121418] text-white px-5 py-2.5 rounded-md text-xs font-bold"
         >
           Back to My Orders
         </Link>
@@ -130,14 +130,14 @@ export default function OrderDetailPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#DFE6EE] pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono font-extrabold text-lg sm:text-xl text-[#22272E]">
+              <span className="font-mono font-extrabold text-lg sm:text-xl text-[#121418]">
                 {order.order_number}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#3F4A56] border border-[#B9C3CF]/30">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EDF1F6] text-[#353C45] border border-[#B9C3CF]/30">
                 {order.status_label || order.status}
               </span>
             </div>
-            <p className="text-xs text-[#3F4A56] mt-0.5">
+            <p className="text-xs text-[#353C45] mt-0.5">
               Initiated on {new Date(order.created_at).toLocaleDateString()} for{" "}
               <strong>{order.organization_name}</strong> ({order.organization_type_label})
             </p>
@@ -169,21 +169,21 @@ export default function OrderDetailPage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
           <div>
             <span className="text-slate-400 block text-[10px] uppercase">Quantity</span>
-            <strong className="text-[#22272E] font-bold text-sm">
+            <strong className="text-[#121418] font-bold text-sm">
               {order.estimated_quantity?.toLocaleString()} pcs
             </strong>
           </div>
           <div>
             <span className="text-slate-400 block text-[10px] uppercase">Category</span>
-            <strong className="text-[#22272E] capitalize">{order.category_type?.replace(/_/g, " ")}</strong>
+            <strong className="text-[#121418] capitalize">{order.category_type?.replace(/_/g, " ")}</strong>
           </div>
           <div>
             <span className="text-slate-400 block text-[10px] uppercase">Location</span>
-            <strong className="text-[#22272E]">{order.city}, {order.state}</strong>
+            <strong className="text-[#121418]">{order.city}, {order.state}</strong>
           </div>
           <div>
             <span className="text-slate-400 block text-[10px] uppercase">Contact Person</span>
-            <strong className="text-[#22272E]">{order.contact_person} ({order.phone})</strong>
+            <strong className="text-[#121418]">{order.contact_person} ({order.phone})</strong>
           </div>
         </div>
       </div>
@@ -196,7 +196,7 @@ export default function OrderDetailPage() {
           <div className="p-4 border-b border-[#DFE6EE] bg-[#EDF1F6] flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <h3 className="font-bold text-xs sm:text-sm text-[#22272E]">
+              <h3 className="font-bold text-xs sm:text-sm text-[#121418]">
                 Direct Factory Conversation &amp; Proofing Thread
               </h3>
             </div>
@@ -216,7 +216,7 @@ export default function OrderDetailPage() {
                   return (
                     <div key={m.id} className="text-center my-3">
                       <div className="inline-block bg-slate-200/70 border border-slate-300 text-slate-700 text-[11px] px-3.5 py-1.5 rounded-full max-w-lg leading-relaxed">
-                        <Sparkles className="w-3 h-3 text-[#3F4A56] inline mr-1 -mt-0.5" />
+                        <Sparkles className="w-3 h-3 text-[#353C45] inline mr-1 -mt-0.5" />
                         {m.message}
                       </div>
                     </div>
@@ -237,8 +237,8 @@ export default function OrderDetailPage() {
                     <div
                       className={`max-w-[85%] sm:max-w-lg rounded-lg p-3.5 text-xs sm:text-sm leading-relaxed shadow-2xs ${
                         isClient
-                          ? "bg-[#22272E] text-white rounded-tr-none"
-                          : "bg-[#FFFFFF] text-[#22272E] border border-[#DFE6EE] rounded-tl-none"
+                          ? "bg-[#121418] text-white rounded-tr-none"
+                          : "bg-[#FFFFFF] text-[#121418] border border-[#DFE6EE] rounded-tl-none"
                       }`}
                     >
                       <div className="whitespace-pre-wrap">{m.message}</div>
@@ -285,7 +285,7 @@ export default function OrderDetailPage() {
             )}
 
             <div className="flex items-center gap-2">
-              <label className="cursor-pointer p-2.5 rounded-md hover:bg-slate-100 text-slate-500 transition-colors focus-within:ring-2 focus-within:ring-[#22272E]">
+              <label className="cursor-pointer p-2.5 rounded-md hover:bg-slate-100 text-slate-500 transition-colors focus-within:ring-2 focus-within:ring-[#121418]">
                 <Paperclip className="w-5 h-5 text-slate-400" aria-hidden="true" />
                 <span className="sr-only">Attach a file</span>
                 <input
@@ -306,13 +306,13 @@ export default function OrderDetailPage() {
                 onChange={(e) => setNewMsg(e.target.value)}
                 aria-label="Message to our team"
                 placeholder="Type your message, spec inquiry, or sample note..."
-                className="flex-1 bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md px-4 py-2.5 text-xs sm:text-sm text-[#22272E] outline-none"
+                className="flex-1 bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-md px-4 py-2.5 text-xs sm:text-sm text-[#121418] outline-none"
               />
 
               <button
                 type="submit"
                 disabled={sending || (!newMsg.trim() && !attachment)}
-                className="bg-[#F26B1D] hover:bg-[#FF8A3D] disabled:opacity-40 text-[#22272E] px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 shrink-0"
+                className="bg-[#F26B1D] hover:bg-[#FF8A3D] disabled:opacity-40 text-[#121418] px-4 py-2.5 rounded-md font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 shrink-0"
               >
                 <Send className="w-4 h-4" />
                 <span className="hidden sm:inline">Send</span>
@@ -325,28 +325,28 @@ export default function OrderDetailPage() {
         {/* Right: Order Requirements & Specs Card */}
         <div className="lg:col-span-4 space-y-5">
           <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 rounded-lg space-y-4 shadow-2xs">
-            <h4 className="font-bold text-sm text-[#22272E] flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#3F4A56]" />
+            <h4 className="font-bold text-sm text-[#121418] flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#353C45]" />
               <span>Order Requirements</span>
             </h4>
 
-            <div className="bg-[#EDF1F6] p-3.5 rounded-md border border-slate-200 text-xs text-[#22272E] whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
+            <div className="bg-[#EDF1F6] p-3.5 rounded-md border border-slate-200 text-xs text-[#121418] whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
               {order.requirements}
             </div>
 
             {order.attachment_url && (
               <AttachmentLink
                 url={order.attachment_url}
-                className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-2"
+                className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] py-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-2"
               >
-                <Download className="w-4 h-4 text-[#3F4A56]" />
+                <Download className="w-4 h-4 text-[#353C45]" />
                 <span>Download Uploaded Artwork / Crest</span>
               </AttachmentLink>
             )}
           </div>
 
-          <div className="bg-[#22272E] text-white p-5 rounded-lg space-y-3">
-            <div className="text-[11px] font-bold text-[#3F4A56] uppercase tracking-wider">
+          <div className="bg-[#121418] text-white p-5 rounded-lg space-y-3">
+            <div className="text-[11px] font-bold text-[#353C45] uppercase tracking-wider">
               Need Instant Assistance?
             </div>
             <p className="text-xs text-slate-200 leading-relaxed">
@@ -357,14 +357,14 @@ export default function OrderDetailPage() {
                 href="tel:+919741808034"
                 className="bg-white/10 hover:bg-white/15 px-3.5 py-2 rounded-md text-xs font-semibold flex items-center gap-2"
               >
-                <Phone className="w-3.5 h-3.5 text-[#3F4A56]" />
+                <Phone className="w-3.5 h-3.5 text-[#353C45]" />
                 <span>+91 97418 08034</span>
               </a>
               <a
                 href="mailto:theprintplanet01@gmail.com"
                 className="bg-white/10 hover:bg-white/15 px-3.5 py-2 rounded-md text-xs font-semibold flex items-center gap-2"
               >
-                <Mail className="w-3.5 h-3.5 text-[#3F4A56]" />
+                <Mail className="w-3.5 h-3.5 text-[#353C45]" />
                 <span>theprintplanet01@gmail.com</span>
               </a>
             </div>

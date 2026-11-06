@@ -177,7 +177,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <span>In Stock • Ready to Dispatch in 24–48h</span>
             </div>
 
-            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-[#3F4A56] transition-colors">
+            <div className="absolute top-3 right-3 text-slate-400 group-hover:text-[#353C45] transition-colors">
               <ZoomIn className="w-4 h-4" />
             </div>
           </div>
@@ -207,12 +207,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           )}
 
-          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#36404B]">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-[#2B323B]">
             <li className="flex items-center gap-1.5">
-              <FileCheck2 className="w-4 h-4 text-[#3F4A56]" aria-hidden="true" /> GST invoice
+              <FileCheck2 className="w-4 h-4 text-[#353C45]" aria-hidden="true" /> GST invoice
             </li>
             <li className="flex items-center gap-1.5">
-              <Truck className="w-4 h-4 text-[#3F4A56]" aria-hidden="true" /> Delivery across India
+              <Truck className="w-4 h-4 text-[#353C45]" aria-hidden="true" /> Delivery across India
             </li>
           </ul>
         </div>
@@ -226,7 +226,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <Link
                 href={`/categories/${product.category.slug}`}
-                className="text-[11px] font-bold uppercase tracking-wider text-[#3F4A56] hover:underline"
+                className="text-[11px] font-bold uppercase tracking-wider text-[#353C45] hover:underline"
               >
                 {formatCategoryName(product.category.name)}
               </Link>
@@ -247,7 +247,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </button>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#22272E] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight leading-snug">
               {formatProductName(product.name)}
             </h1>
 
@@ -265,16 +265,16 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   Wholesale Factory Price
                 </span>
                 {product.price_display ? (
-                  <div className="text-2xl sm:text-3xl font-extrabold text-[#22272E] tracking-tight tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight tabular-nums">
                     {product.price_display}
                   </div>
                 ) : product.price ? (
-                  <div className="text-2xl sm:text-3xl font-extrabold text-[#22272E] tracking-tight">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight">
                     ₹{Number(product.price).toLocaleString("en-IN")}{" "}
                     <span className="text-xs font-semibold text-slate-500">/ unit</span>
                   </div>
                 ) : (
-                  <div className="text-xl font-bold text-[#3F4A56]">
+                  <div className="text-xl font-bold text-[#353C45]">
                     Direct Wholesale Quote
                   </div>
                 )}
@@ -300,8 +300,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* Customization Options Box */}
           <div className="p-5 bg-[#FFFFFF] rounded-lg border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Sliders className="w-4 h-4 text-[#3F4A56]" />
-              <h3 className="text-sm font-bold text-[#22272E]">Configure &amp; Customize</h3>
+              <Sliders className="w-4 h-4 text-[#353C45]" />
+              <h3 className="text-sm font-bold text-[#121418]">Configure &amp; Customize</h3>
             </div>
 
             {/* Material & Size Selector */}
@@ -357,7 +357,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </label>
               <label className="border-2 border-dashed border-slate-200 hover:border-[#B9C3CF]/60 rounded-md p-3 flex items-center justify-between gap-3 cursor-pointer bg-slate-50/50 hover:bg-[#EDF1F6]/40 transition-colors">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#22272E]/10 text-[#3F4A56] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#121418]/10 text-[#353C45] flex items-center justify-center shrink-0">
                     <UploadCloud className="w-4 h-4" />
                   </div>
                   <div className="text-left">
@@ -375,7 +375,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   accept=".pdf,.ai,.cdr,.png,.jpg,.jpeg,.zip"
                   className="hidden"
                 />
-                <span className="text-[11px] font-bold text-[#3F4A56] px-3 py-1 bg-[#FFFFFF] border border-slate-200 rounded-lg shadow-2xs">
+                <span className="text-[11px] font-bold text-[#353C45] px-3 py-1 bg-[#FFFFFF] border border-slate-200 rounded-lg shadow-2xs">
                   Browse
                 </span>
               </label>
@@ -421,7 +421,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#22272E] py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+                className="bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#121418] py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
               >
                 {addedSuccess ? (
                   <>
@@ -439,7 +439,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="bg-[#22272E] hover:bg-slate-800 active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+                className="bg-[#121418] hover:bg-slate-800 active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs transition-all flex items-center justify-center gap-1.5"
               >
                 <FileText className="w-4 h-4" />
                 <span>Formal Quotation</span>
@@ -460,7 +460,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* Description and specifications stay in the page, so buyers and search engines both get them. */}
           <div className="pt-4 border-t border-slate-200 space-y-6">
             <section aria-labelledby="product-details">
-              <h2 id="product-details" className="text-lg font-bold text-[#22272E]">
+              <h2 id="product-details" className="text-lg font-bold text-[#121418]">
                 Product details
               </h2>
               <p className="mt-2 whitespace-pre-line leading-relaxed text-sm text-slate-700">
@@ -469,7 +469,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </section>
 
             <section aria-labelledby="product-specs" className="space-y-2">
-              <h2 id="product-specs" className="text-lg font-bold text-[#22272E]">
+              <h2 id="product-specs" className="text-lg font-bold text-[#121418]">
                 Specifications
               </h2>
             {/* Specs Table */}
@@ -547,7 +547,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       {/* Mobile Sticky Bottom Action Bar */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-2.5 px-3 flex items-center justify-between gap-2 shadow-xl">
         <div className="min-w-0 pr-1">
-          <div className="text-base font-extrabold text-[#22272E] truncate leading-none">
+          <div className="text-base font-extrabold text-[#121418] truncate leading-none">
             {product.price_display || (product.price ? `₹${product.price}` : "Wholesale Quote")}
           </div>
           <span className="text-[9px] font-mono text-slate-500 truncate block mt-0.5">
@@ -559,7 +559,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <button
             type="button"
             onClick={handleAddToCart}
-            className="bg-[#22272E] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
+            className="bg-[#121418] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             <span>Add to Cart</span>
@@ -568,7 +568,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="bg-[#22272E] text-white py-2 px-3 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
+            className="bg-[#121418] text-white py-2 px-3 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
           >
             <span>Quote</span>
           </button>

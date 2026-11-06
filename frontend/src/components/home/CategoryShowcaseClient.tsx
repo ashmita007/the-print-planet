@@ -85,8 +85,8 @@ export default function CategoryShowcaseClient({ slides }: { slides: ShowcaseSli
   };
 
   const dark = slide.onInk === "#FFFFFF";
-  const muted = dark ? "text-white" : "text-[#22272E]";
-  const rule = dark ? "border-white/25" : "border-[#22272E]/20";
+  const muted = dark ? "text-white" : "text-[#121418]";
+  const rule = dark ? "border-white/25" : "border-[#121418]/20";
 
   return (
     <section
@@ -113,7 +113,7 @@ export default function CategoryShowcaseClient({ slides }: { slides: ShowcaseSli
             <span className="tabular-nums">
               {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </span>
-            <span className={`h-px w-10 ${dark ? "bg-white/50" : "bg-[#22272E]/40"}`} aria-hidden="true" />
+            <span className={`h-px w-10 ${dark ? "bg-white/50" : "bg-[#121418]/40"}`} aria-hidden="true" />
             <span>{slide.count} products</span>
           </p>
           <h2 className="display-xl mt-4" data-split-skip>{slide.title}</h2>
@@ -144,7 +144,7 @@ export default function CategoryShowcaseClient({ slides }: { slides: ShowcaseSli
         </div>
 
         <div ref={imageRef} className="lg:col-span-6">
-          <div className={`relative aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] border ${dark ? "border-white/15" : "border-[#22272E]/10"}`}>
+          <div className={`relative aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] border ${dark ? "border-white/15" : "border-[#121418]/10"}`}>
             {slide.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={slide.image} alt={slide.title} className="w-full h-full object-contain p-6" loading="lazy" />
@@ -160,7 +160,7 @@ export default function CategoryShowcaseClient({ slides }: { slides: ShowcaseSli
             type="button"
             onClick={(e) => goTo(index - 1, e.currentTarget)}
             aria-label="Previous product family"
-            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-colors ${dark ? "border-white/60 hover:bg-white hover:text-[#22272E]" : "border-[#22272E]/60 hover:bg-[#22272E] hover:text-white"}`}
+            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-colors ${dark ? "border-white/60 hover:bg-white hover:text-[#121418]" : "border-[#121418]/60 hover:bg-[#121418] hover:text-white"}`}
           >
             <ArrowLeft className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -168,7 +168,7 @@ export default function CategoryShowcaseClient({ slides }: { slides: ShowcaseSli
             type="button"
             onClick={(e) => goTo(index + 1, e.currentTarget)}
             aria-label="Next product family"
-            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-colors ${dark ? "border-white/60 hover:bg-white hover:text-[#22272E]" : "border-[#22272E]/60 hover:bg-[#22272E] hover:text-white"}`}
+            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-colors ${dark ? "border-white/60 hover:bg-white hover:text-[#121418]" : "border-[#121418]/60 hover:bg-[#121418] hover:text-white"}`}
           >
             <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -184,7 +184,7 @@ export default function CategoryShowcaseClient({ slides }: { slides: ShowcaseSli
               aria-selected={i === index}
               aria-label={item.title}
               onClick={(e) => goTo(i, e.currentTarget)}
-              className={`h-3 rounded-full transition-all duration-300 ring-2 ${i === index ? "w-10" : "w-3"} ${dark ? "ring-white/70" : "ring-[#22272E]/50"}`}
+              className={`h-3 rounded-full transition-all duration-300 ring-2 ${i === index ? "w-10" : "w-3"} ${dark ? "ring-white/70" : "ring-[#121418]/50"}`}
               style={{ background: item.ink }}
             />
           ))}

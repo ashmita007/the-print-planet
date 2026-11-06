@@ -153,7 +153,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header: compact on mobile, spacious on laptop */}
-        <div className="bg-[#22272E] text-white px-3.5 py-2.5 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
+        <div className="bg-[#121418] text-white px-3.5 py-2.5 sm:px-6 sm:py-4 flex items-center justify-between shrink-0">
           <div className="min-w-0 pr-2">
             <h2 id="modal-headline" className="text-xs sm:text-base font-bold truncate">
               Request Quotation
@@ -180,10 +180,10 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <CheckCircle className="w-7 h-7 sm:w-10 sm:h-10" />
               </div>
               <div className="space-y-1 sm:space-y-1.5">
-                <h3 className="text-sm sm:text-lg font-bold text-[#22272E]">
+                <h3 className="text-sm sm:text-lg font-bold text-[#121418]">
                   Enquiry Logged!
                 </h3>
-                <p className="text-[11px] sm:text-sm text-[#3F4A56] leading-relaxed max-w-sm mx-auto">
+                <p className="text-[11px] sm:text-sm text-[#353C45] leading-relaxed max-w-sm mx-auto">
                   Our sales desk will send your quotation within 2 business hours.
                 </p>
               </div>
@@ -200,7 +200,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <button
                   type="button"
                   onClick={onClose}
-                  className="border border-[#DFE6EE] text-[#22272E] text-xs sm:text-sm font-semibold py-1.5 sm:py-2.5 px-3 sm:px-5 rounded-lg sm:rounded-md hover:bg-[#EDF1F6]"
+                  className="border border-[#DFE6EE] text-[#121418] text-xs sm:text-sm font-semibold py-1.5 sm:py-2.5 px-3 sm:px-5 rounded-lg sm:rounded-md hover:bg-[#EDF1F6]"
                 >
                   Close Window
                 </button>
@@ -231,12 +231,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                       </div>
                     )}
                     <div className="min-w-0">
-                      <p className="font-bold text-[#22272E] text-[11px] sm:text-sm truncate">{formatProductName(product.name)}</p>
-                      <p className="font-mono text-[9px] sm:text-xs text-[#3F4A56] truncate">SKU: {product.sku}</p>
+                      <p className="font-bold text-[#121418] text-[11px] sm:text-sm truncate">{formatProductName(product.name)}</p>
+                      <p className="font-mono text-[9px] sm:text-xs text-[#353C45] truncate">SKU: {product.sku}</p>
                     </div>
                   </div>
                   {product.price_display && (
-                    <span className="font-bold text-[#22272E] text-[11px] sm:text-sm shrink-0">
+                    <span className="font-bold text-[#121418] text-[11px] sm:text-sm shrink-0">
                       {product.price_display}
                     </span>
                   )}
@@ -245,7 +245,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
 
               {/* Full Name */}
               <div>
-                <label htmlFor="field-full-name" className="block font-semibold text-[#22272E] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                <label htmlFor="field-full-name" className="block font-semibold text-[#121418] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                   Full Name *
                 </label>
                 <input id="field-full-name"
@@ -254,14 +254,14 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Ramesh Patel"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#22272E] outline-none transition-colors"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none transition-colors"
                 />
               </div>
 
               {/* Contact Phone & Email */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div>
-                  <label htmlFor="field-phone" className="block font-semibold text-[#22272E] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-phone" className="block font-semibold text-[#121418] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Phone *
                   </label>
                   <input id="field-phone"
@@ -270,12 +270,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765..."
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#22272E] outline-none transition-colors"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="field-email" className="block font-semibold text-[#22272E] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-email" className="block font-semibold text-[#121418] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Email *
                   </label>
                   <input id="field-email"
@@ -284,7 +284,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@email.com"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#22272E] outline-none transition-colors"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -292,7 +292,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
               {/* Company & Quantity */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <div>
-                  <label htmlFor="field-company" className="block font-semibold text-[#22272E] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-company" className="block font-semibold text-[#121418] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Company
                   </label>
                   <input id="field-company"
@@ -300,12 +300,12 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="Acme Ltd"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#22272E] outline-none transition-colors"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="field-quantity" className="block font-semibold text-[#22272E] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                  <label htmlFor="field-quantity" className="block font-semibold text-[#121418] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                     Quantity
                   </label>
                   <input id="field-quantity"
@@ -314,14 +314,14 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="500 pcs"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#22272E] outline-none transition-colors"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none transition-colors"
                   />
                 </div>
               </div>
 
               {/* Notes / Message */}
               <div>
-                <label htmlFor="field-specs-notes" className="block font-semibold text-[#22272E] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
+                <label htmlFor="field-specs-notes" className="block font-semibold text-[#121418] text-[11px] sm:text-xs mb-0.5 sm:mb-1">
                   Specs / Notes
                 </label>
                 <textarea id="field-specs-notes"
@@ -329,22 +329,22 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Colors, sizes, delivery location..."
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#22272E] outline-none resize-none transition-colors"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none resize-none transition-colors"
                 />
               </div>
 
               {/* Optional Attachment Upload */}
               <div>
-                <div className="flex items-center justify-between text-[#22272E] text-[11px] sm:text-xs mb-1 font-semibold">
+                <div className="flex items-center justify-between text-[#121418] text-[11px] sm:text-xs mb-1 font-semibold">
                   <span className="flex items-center gap-1">
-                    <Paperclip className="w-3 h-3 text-[#3F4A56]" />
+                    <Paperclip className="w-3 h-3 text-[#353C45]" />
                     <span>Attach Specs / Artwork (Optional)</span>
                   </span>
-                  <span className="text-[10px] text-[#3F4A56]">Max 10MB</span>
+                  <span className="text-[10px] text-[#353C45]">Max 10MB</span>
                 </div>
                 {!attachment ? (
-                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#22272E] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#36404B]">
-                    <UploadCloud className="w-3.5 h-3.5 text-[#3F4A56]" />
+                  <label className="flex items-center justify-center gap-2 border border-dashed border-[#B9C3CF] hover:border-[#121418] bg-[#EDF1F6] hover:bg-[#EDF1F6] rounded-lg py-2 px-3 cursor-pointer transition-all text-[11px] text-[#2B323B]">
+                    <UploadCloud className="w-3.5 h-3.5 text-[#353C45]" />
                     <span>Click to attach PDF, artwork, or sample photo</span>
                     <input
                       type="file"
@@ -386,7 +386,7 @@ export default function EnquiryModal({ product, isOpen, onClose }: EnquiryModalP
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#22272E] py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
+                  className="w-full sm:w-auto bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#121418] py-2 sm:py-2.5 px-4 sm:px-6 rounded-lg sm:rounded-md font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 order-1 sm:order-2"
                 >
                   <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>{isSubmitting ? "Sending..." : "Submit Quote Request"}</span>

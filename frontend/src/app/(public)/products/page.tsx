@@ -87,8 +87,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         {/* Left Filter Sidebar (Desktop only) */}
         <aside className="hidden lg:block lg:col-span-3 space-y-6 bg-slate-50 p-5 rounded-lg border border-slate-200">
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-            <span className="font-bold text-sm text-[#22272E] flex items-center gap-1.5">
-              <Filter className="w-4 h-4 text-[#3F4A56]" /> Filter Catalogue
+            <span className="font-bold text-sm text-[#121418] flex items-center gap-1.5">
+              <Filter className="w-4 h-4 text-[#353C45]" /> Filter Catalogue
             </span>
             {(params.category || params.search || params.material || params.color || params.ordering) && (
               <Link
@@ -117,7 +117,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             </div>
             <button
               type="submit"
-              className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-2 rounded-md text-xs font-semibold transition-colors shadow-xs"
+              className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] py-2 rounded-md text-xs font-semibold transition-colors shadow-xs"
             >
               Filter
             </button>
@@ -133,7 +133,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               <Link
                 href={`/products${params.search ? `?search=${encodeURIComponent(params.search)}` : ""}`}
                 className={`flex items-center justify-between px-3 py-2 rounded-md transition-colors ${
-                  !params.category ? "bg-[#22272E] text-white font-bold shadow-xs" : "text-slate-700 hover:bg-[#FFFFFF]"
+                  !params.category ? "bg-[#121418] text-white font-bold shadow-xs" : "text-slate-700 hover:bg-[#FFFFFF]"
                 }`}
               >
                 <span>All Wholesale Products</span>
@@ -156,9 +156,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                       href={`/products?category=${mainCat.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
                       className={`flex items-center justify-between px-3 py-2 rounded-md transition-colors ${
                         isMainSelected
-                          ? "bg-[#22272E] text-white font-bold shadow-xs"
+                          ? "bg-[#121418] text-white font-bold shadow-xs"
                           : hasSelectedChild
-                          ? "bg-[#EDF1F6] text-[#3F4A56] font-bold"
+                          ? "bg-[#EDF1F6] text-[#353C45] font-bold"
                           : "text-slate-800 font-semibold hover:bg-[#FFFFFF]"
                       }`}
                     >
@@ -178,8 +178,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               href={`/products?category=${sub.slug}${params.search ? `&search=${encodeURIComponent(params.search)}` : ""}`}
                               className={`flex items-center justify-between px-2 py-1 rounded-lg text-[11px] transition-colors ${
                                 isSubSelected
-                                  ? "bg-[#22272E] text-white font-bold"
-                                  : "text-slate-600 hover:text-[#3F4A56] hover:bg-[#FFFFFF]"
+                                  ? "bg-[#121418] text-white font-bold"
+                                  : "text-slate-600 hover:text-[#353C45] hover:bg-[#FFFFFF]"
                               }`}
                             >
                               <span className="truncate pr-1">{sub.name}</span>
@@ -202,15 +202,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <section className="lg:col-span-9 space-y-6">
           {/* Top Sort & Count Bar */}
           <div className="bg-[#FFFFFF] p-3.5 rounded-md border border-[#DFE6EE] flex flex-wrap items-center justify-between gap-4">
-            <div className="text-xs text-[#3F4A56]">
-              Showing <strong className="text-[#22272E]">{productsData.results.length}</strong> of{" "}
-              <strong className="text-[#22272E]">{productsData.count}</strong> products
+            <div className="text-xs text-[#353C45]">
+              Showing <strong className="text-[#121418]">{productsData.results.length}</strong> of{" "}
+              <strong className="text-[#121418]">{productsData.count}</strong> products
             </div>
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2 text-xs">
               <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[#3F4A56]">Sort by:</span>
+              <span className="text-[#353C45]">Sort by:</span>
               <div className="flex items-center gap-1.5">
                 {[
                   { label: "Default", val: "display_order" },
@@ -227,8 +227,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                     }).toString()}`}
                     className={`px-2.5 py-1 rounded text-xs transition-colors ${
                       (params.ordering || "display_order") === s.val
-                        ? "bg-[#22272E] text-white font-bold"
-                        : "bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200"
+                        ? "bg-[#121418] text-white font-bold"
+                        : "bg-[#EDF1F6] text-[#121418] hover:bg-slate-200"
                     }`}
                   >
                     {s.label}
@@ -249,14 +249,14 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-12 text-center space-y-4">
               <Box className="w-16 h-16 text-slate-300 mx-auto stroke-[1.5]" />
               <div>
-                <h3 className="text-base font-bold text-[#22272E]">No products found matching filters</h3>
-                <p className="text-xs text-[#3F4A56] mt-1 max-w-sm mx-auto">
+                <h3 className="text-base font-bold text-[#121418]">No products found matching filters</h3>
+                <p className="text-xs text-[#353C45] mt-1 max-w-sm mx-auto">
                   Try adjusting your search keywords or clearing active filters to view all available reference products.
                 </p>
               </div>
               <Link
                 href="/products"
-                className="inline-block bg-[#F26B1D] text-[#22272E] text-xs font-bold py-2.5 px-5 rounded-lg hover:bg-[#FF8A3D] transition-colors"
+                className="inline-block bg-[#F26B1D] text-[#121418] text-xs font-bold py-2.5 px-5 rounded-lg hover:bg-[#FF8A3D] transition-colors"
               >
                 Reset All Filters
               </Link>

@@ -74,7 +74,7 @@ export default function OwnerLoginPage() {
           priority
         />
         <div className="space-y-1">
-          <h1 className="text-base font-bold text-[#22272E] tracking-tight">
+          <h1 className="text-base font-bold text-[#121418] tracking-tight">
             Owner console
           </h1>
           <p className="text-xs text-slate-500">
@@ -101,7 +101,7 @@ export default function OwnerLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label htmlFor="field-owner-username-or-email" className="block font-semibold text-[#22272E] mb-1.5">
+            <label htmlFor="field-owner-username-or-email" className="block font-semibold text-[#121418] mb-1.5">
               Owner Username or Email
             </label>
             <div className="relative">
@@ -113,7 +113,7 @@ export default function OwnerLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="admin or owner email"
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg pl-9 pr-3 py-2.5 text-xs text-[#22272E] outline-none transition-colors"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg pl-9 pr-3 py-2.5 text-xs text-[#121418] outline-none transition-colors"
               />
               <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -121,7 +121,7 @@ export default function OwnerLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="field-master-password" className="block font-semibold text-[#22272E]">
+              <label htmlFor="field-master-password" className="block font-semibold text-[#121418]">
                 Master Password
               </label>
             </div>
@@ -133,7 +133,7 @@ export default function OwnerLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg pl-9 pr-10 py-2.5 text-xs text-[#22272E] outline-none transition-colors"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg pl-9 pr-10 py-2.5 text-xs text-[#121418] outline-none transition-colors"
               />
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <button
@@ -154,7 +154,7 @@ export default function OwnerLoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-3 rounded-md font-bold text-xs tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 mt-2 cursor-pointer"
+            className="w-full bg-[#121418] hover:bg-[#2A2F37] text-white py-3 rounded-md font-bold text-xs tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 mt-2 cursor-pointer"
           >
             {isLoading ? (
               <>
@@ -170,13 +170,13 @@ export default function OwnerLoginPage() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-[#DFE6EE] text-center text-xs text-[#3F4A56] space-y-2">
+        <div className="pt-4 border-t border-[#DFE6EE] text-center text-xs text-[#353C45] space-y-2">
           <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
             <ShieldCheck className="w-3.5 h-3.5 text-[#217A4B]" />
             Protected by Django PBKDF2 Password Encryption
           </p>
           <div>
-            <Link href="/" className="text-[#22272E] hover:underline font-semibold inline-flex items-center gap-1">
+            <Link href="/" className="text-[#121418] hover:underline font-semibold inline-flex items-center gap-1">
               &larr; Return to Public Catalogue
             </Link>
           </div>

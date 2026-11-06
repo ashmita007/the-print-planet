@@ -20,7 +20,14 @@ class PublicEnquiryCreateView(generics.CreateAPIView):
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def perform_create(self, serializer):
-        enquiry = serializer.save()
+        user = self.request.user if (self.request.user and self.request.user.is_authenticated) else None
+        if not user:
+            email = serializer.validated_data.get('email', '').strip().lower()
+            if email:
+                from django.contrib.auth.models import User
+                user = User.objects.filter(email__iexact=email).first()
+
+        enquiry = serializer.save(user=user)
         if enquiry.attachment and not enquiry.attachment_url:
             try:
                 enquiry.attachment_url = f"/api/v1/owner/enquiries/{enquiry.id}/attachment/"

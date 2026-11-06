@@ -122,7 +122,7 @@ function OwnerSidebarInner() {
   return (
     <>
       {/* Mobile Bar */}
-      <div className="lg:hidden bg-[#22272E]/95 backdrop-blur-md text-white px-4 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-30">
+      <div className="lg:hidden bg-[#121418]/95 backdrop-blur-md text-white px-4 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-30">
         <div className="flex items-center gap-2">
           <div className="bg-[#FFFFFF] px-2 py-1 rounded-md">
             <Image src="/logo.png" alt="The Print Planet" width={140} height={40} className="h-6 w-auto object-contain" />
@@ -152,7 +152,7 @@ function OwnerSidebarInner() {
       {/* Sidebar Container */}
       <aside
         id="owner-sidebar"
-        className={`fixed lg:static inset-y-0 left-0 z-50 lg:z-auto w-72 sm:w-64 bg-[#22272E] text-white flex flex-col shrink-0 h-dvh lg:h-auto lg:min-h-screen border-r border-white/[0.06] shadow-2xl lg:shadow-none transition-transform duration-300 ease-out ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 lg:z-auto w-72 sm:w-64 bg-[#121418] text-white flex flex-col shrink-0 h-dvh lg:h-auto lg:min-h-screen border-r border-white/[0.06] shadow-2xl lg:shadow-none transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
@@ -272,7 +272,7 @@ function OwnerSidebarInner() {
 
 export default function OwnerSidebar() {
   return (
-    <Suspense fallback={<div className="w-64 bg-[#22272E] min-h-screen hidden lg:block" />}>
+    <Suspense fallback={<div className="w-64 bg-[#121418] min-h-screen hidden lg:block" />}>
       <OwnerSidebarInner />
     </Suspense>
   );

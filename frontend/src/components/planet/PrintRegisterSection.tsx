@@ -60,11 +60,12 @@ export default function PrintRegisterSection() {
       ref={rootRef}
       data-no-reveal
       aria-labelledby="register-heading"
-      className="bg-[#22272E] text-white overflow-hidden min-h-svh flex items-center"
+      className="relative bg-[#121418] text-white overflow-hidden min-h-svh flex items-center"
     >
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-center">
+      <div aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-center">
         <div className="lg:col-span-4 order-2 lg:order-1">
-          <h2 id="register-heading" className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06]">
+          <h2 id="register-heading" className="font-hero text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.04]">
             Four inks.
             <span className="block text-[#FF8A3D]">One print.</span>
           </h2>

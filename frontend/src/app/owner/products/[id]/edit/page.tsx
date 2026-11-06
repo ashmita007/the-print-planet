@@ -63,7 +63,7 @@ export default function EditProductPage() {
         <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
           Catalogue
         </span>
-        <h1 className="text-2xl font-bold tracking-tight text-[#22272E] mt-1">
+        <h1 className="text-2xl font-bold tracking-tight text-[#121418] mt-1">
           Edit product
         </h1>
         <p className="text-xs text-slate-500 mt-1 truncate">{formatProductName(product.name)}</p>

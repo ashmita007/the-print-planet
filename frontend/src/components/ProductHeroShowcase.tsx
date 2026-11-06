@@ -72,6 +72,13 @@ export default function ProductHeroShowcase({
         ease: "none",
         scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
       });
+
+      // Subtle parallax drift for the precision background dots
+      gsap.to("[data-hero-dots]", {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
+      });
     },
     { scope: heroRef }
   );
@@ -166,9 +173,11 @@ export default function ProductHeroShowcase({
     <section
       ref={heroRef}
       data-no-reveal
-      className="bg-[#22272E] text-white overflow-hidden border-b border-white/10"
+      className="relative bg-[#121418] text-white overflow-hidden border-b border-white/10"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 lg:py-16">
+      <div data-hero-dots aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           <div className="lg:col-span-6">
             <div data-hero data-hero-item className="flex items-center gap-3 mb-5">
@@ -176,9 +185,9 @@ export default function ProductHeroShowcase({
               <span className="font-mono text-xs text-slate-300">{copy.badge}</span>
             </div>
 
-            <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-extrabold tracking-[-0.02em] leading-[1.06] text-white`}>
+            <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.03em] leading-[1.04] text-white`}>
               <TextReveal text={copy.title} />
-              <span className="block text-[#FF8A3D]">
+              <span className="block text-[#FF8A3D] font-hero">
                 <TextReveal text={copy.subtitle} />
               </span>
             </p>
@@ -195,7 +204,7 @@ export default function ProductHeroShowcase({
               <Link
                 href="/products"
                 data-magnetic
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-bold text-sm transition-colors group"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] font-bold text-sm transition-colors group"
               >
                 <span>Browse {totalProductsCount}+ products</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -239,7 +248,7 @@ export default function ProductHeroShowcase({
 
               <div data-hero-sheet className="relative mx-3">
                 <CropMarks />
-                <div className="relative bg-[#FFFFFF] text-[#22272E]">
+                <div className="relative bg-[#FFFFFF] text-[#121418]">
                   <div className="relative aspect-[16/10] w-full overflow-hidden p-5 flex items-center justify-center">
                     <div ref={stageImageRef} className="relative w-full h-full flex items-center justify-center">
                       <img
@@ -259,26 +268,26 @@ export default function ProductHeroShowcase({
                   <div className="p-4 sm:p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
-                        <p className="font-mono text-[11px] text-[#3F4A56] truncate">
+                        <p className="font-mono text-[11px] text-[#353C45] truncate">
                           {activeProduct.sku}
                         </p>
-                        <h2 className="text-base sm:text-lg font-bold text-[#22272E] leading-snug line-clamp-1 mt-0.5">
+                        <h2 className="text-base sm:text-lg font-bold text-[#121418] leading-snug line-clamp-1 mt-0.5">
                           {formatProductName(activeProduct.name)}
                         </h2>
-                        <p className="text-xs text-[#3F4A56] line-clamp-1 mt-0.5">
+                        <p className="text-xs text-[#353C45] line-clamp-1 mt-0.5">
                           {activeProduct.material ? `${activeProduct.material} · ` : ""}
                           {formatCategoryName(activeProduct.category?.name || "Wholesale")}
                         </p>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="font-heading text-base sm:text-lg font-bold text-[#22272E] tabular-nums whitespace-nowrap">
+                        <div className="font-heading text-base sm:text-lg font-bold text-[#121418] tabular-nums whitespace-nowrap">
                           {activeProduct.price_display ||
                             (activeProduct.price
                               ? `₹${Number(activeProduct.price).toLocaleString("en-IN")}`
                               : "On request")}
                         </div>
                         {activeProduct.minimum_order_quantity ? (
-                          <div className="font-mono text-[11px] text-[#3F4A56]">
+                          <div className="font-mono text-[11px] text-[#353C45]">
                             MOQ {activeProduct.minimum_order_quantity}
                           </div>
                         ) : null}
@@ -298,7 +307,7 @@ export default function ProductHeroShowcase({
                       </button>
                       <Link
                         href={`/products/${activeProduct.slug}`}
-                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md border border-[#22272E] text-[#22272E] hover:bg-[#22272E] hover:text-white font-semibold text-[13px] transition-colors"
+                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md border border-[#121418] text-[#121418] hover:bg-[#121418] hover:text-white font-semibold text-[13px] transition-colors"
                       >
                         View specifications
                       </Link>

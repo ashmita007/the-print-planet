@@ -118,23 +118,23 @@ export default async function ContactPage() {
                   {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="ink-row flex items-center gap-4 px-3 py-4"
                 >
-                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#3F4A56]" aria-hidden="true" />
+                  <Icon className="ink-row-note w-5 h-5 shrink-0 text-[#353C45]" aria-hidden="true" />
                   <span className="min-w-0">
-                    <span className="ink-row-note block text-xs text-[#3F4A56]">{label}</span>
-                    <span className="ink-row-title block font-bold text-[#22272E] break-words">{value}</span>
+                    <span className="ink-row-note block text-xs text-[#353C45]">{label}</span>
+                    <span className="ink-row-title block font-bold text-[#121418] break-words">{value}</span>
                   </span>
                 </a>
               </li>
             ))}
           </ul>
-          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#3F4A56] leading-relaxed">
-            <MapPin className="w-5 h-5 shrink-0 text-[#3F4A56]" aria-hidden="true" />
+          <p className="mt-4 px-3 flex items-start gap-3 text-sm text-[#353C45] leading-relaxed">
+            <MapPin className="w-5 h-5 shrink-0 text-[#353C45]" aria-hidden="true" />
             <span>{address}</span>
           </p>
         </div>
 
         <div className="lg:col-span-7 surface-card p-4 sm:p-8 rounded-lg">
-          <h2 className="text-xl font-bold text-[#22272E] mb-5">Send a message</h2>
+          <h2 className="text-xl font-bold text-[#121418] mb-5">Send a message</h2>
           <ContactFormClient />
         </div>
       </div>

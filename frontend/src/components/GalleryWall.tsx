@@ -58,8 +58,8 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
             onClick={() => choose(group)}
             className={`shrink-0 min-h-10 px-4 rounded-lg text-sm font-semibold border transition-colors cursor-pointer ${
               active === group
-                ? "bg-[#22272E] border-[#22272E] text-white"
-                : "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:border-[#22272E]"
+                ? "bg-[#121418] border-[#121418] text-white"
+                : "bg-[#FFFFFF] border-[#DFE6EE] text-[#121418] hover:border-[#121418]"
             }`}
           >
             {group}
@@ -75,7 +75,7 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
             data-tilt
             href={`/quote?product=${encodeURIComponent(piece.title)}`}
             style={active === "All" || active === piece.group ? undefined : { display: "none" }}
-            className={`group flex flex-col overflow-hidden rounded-lg bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#22272E] transition-colors ${
+            className={`group flex flex-col overflow-hidden rounded-lg bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#121418] transition-colors ${
               index === 0 ? "col-span-2 lg:row-span-2" : ""
             }`}
           >
@@ -90,8 +90,8 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
               />
             </div>
             <div className="flex items-end justify-between gap-2 p-3 sm:p-4 bg-[#FFFFFF] border-t border-[#DFE6EE]">
-              <span className="text-sm sm:text-base font-bold text-[#22272E] leading-snug">{piece.title}</span>
-              <ArrowRight className="w-4 h-4 shrink-0 mb-0.5 text-[#36404B] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+              <span className="text-sm sm:text-base font-bold text-[#121418] leading-snug">{piece.title}</span>
+              <ArrowRight className="w-4 h-4 shrink-0 mb-0.5 text-[#2B323B] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </div>
           </Link>
         ))}

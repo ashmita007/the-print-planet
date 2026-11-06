@@ -147,7 +147,7 @@ export default async function HomePage() {
       <StatsStrip productCount={productsData?.count || productsList.length} />
 
       {/* Product words run with the scroll */}
-      <Marquee items={PRODUCT_WORDS} label="What we make" className="text-[#22272E] mt-6" />
+      <Marquee items={PRODUCT_WORDS} label="What we make" className="text-[#121418] mt-6" />
 
       {/* Product families: one print ink each, circle-wipe between them */}
       <CategoryShowcase />
@@ -165,12 +165,12 @@ export default async function HomePage() {
       {/* Machines */}
       <section aria-labelledby="machines-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="flex items-baseline justify-between gap-4 mb-6">
-          <h2 id="machines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight">
+          <h2 id="machines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#121418] tracking-tight">
             Card and lanyard machines
           </h2>
           <Link
             href="/categories/machines"
-            className="shrink-0 text-sm font-semibold text-[#36404B] hover:underline underline-offset-4"
+            className="shrink-0 text-sm font-semibold text-[#2B323B] hover:underline underline-offset-4"
           >
             View all
           </Link>
@@ -213,7 +213,7 @@ export default async function HomePage() {
 
         <div className="space-y-8">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#121418]">
               Common questions
             </h2>
           </div>

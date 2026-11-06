@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Enquiry(models.Model):
@@ -10,6 +11,13 @@ class Enquiry(models.Model):
         ('spam', 'Spam'),
     ]
 
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='enquiries'
+    )
     full_name = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255, blank=True, default='')
     email = models.EmailField()

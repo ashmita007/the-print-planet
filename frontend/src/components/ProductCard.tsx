@@ -68,7 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         data-tilt
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="group bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] rounded-lg overflow-hidden transition-colors duration-200 flex flex-col h-full relative"
+        className="group bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#121418] rounded-lg overflow-hidden transition-colors duration-200 flex flex-col h-full relative"
       >
         {/* Image Container with 1:1 Aspect Ratio */}
         <div className="relative w-full pt-[100%] bg-[#FFFFFF] overflow-hidden block">
@@ -132,7 +132,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               type="button"
               onClick={handleOpenQuickView}
-              className="bg-white/95 hover:bg-[#22272E] hover:text-white text-[#22272E] text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md border border-[#DFE6EE] hover:border-[#22272E] transition-all flex items-center gap-1.5 backdrop-blur-xs"
+              className="bg-white/95 hover:bg-[#121418] hover:text-white text-[#121418] text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md border border-[#DFE6EE] hover:border-[#121418] transition-all flex items-center gap-1.5 backdrop-blur-xs"
             >
               <Eye className="w-3.5 h-3.5" />
               <span>Quick View</span>
@@ -147,40 +147,40 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.category && (
               <Link
                 href={`/products?category=${product.category.slug}`}
-                className="text-[11px] text-[#3F4A56] hover:text-[#36404B] block truncate mb-1 transition-colors"
+                className="text-[11px] text-[#353C45] hover:text-[#2B323B] block truncate mb-1 transition-colors"
               >
                 {formatProductName(product.category.name)}
               </Link>
             )}
 
             {/* Product Title */}
-            <h3 className="text-sm font-semibold text-[#22272E] line-clamp-2 leading-snug min-h-[2.5rem]">
+            <h3 className="text-sm font-semibold text-[#121418] line-clamp-2 leading-snug min-h-[2.5rem]">
               <Link href={`/products/${product.slug}`} title={product.name}>
                 {formatProductName(product.name)}
               </Link>
             </h3>
 
-            <p className="font-mono text-[11px] text-[#3F4A56] truncate mt-1">{product.sku}</p>
+            <p className="font-mono text-[11px] text-[#353C45] truncate mt-1">{product.sku}</p>
           </div>
 
           {/* Pricing & Actions */}
           <div className="flex items-end justify-between gap-2">
             <div className="min-w-0 flex-1">
               {product.price_display ? (
-                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#22272E] truncate">
+                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#121418] truncate">
                   {product.price_display}
                 </div>
               ) : product.price ? (
-                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#22272E] truncate">
+                <div className="font-heading text-sm sm:text-[15px] font-bold tabular-nums text-[#121418] truncate">
                   ₹{Number(product.price).toLocaleString("en-IN")}
                 </div>
               ) : (
-                <div className="text-[13px] font-semibold text-[#3F4A56]">
+                <div className="text-[13px] font-semibold text-[#353C45]">
                   Price on Request
                 </div>
               )}
               {product.minimum_order_quantity && (
-                <span className="text-[9px] sm:text-[10px] text-[#3F4A56] font-mono block mt-0.5">
+                <span className="text-[9px] sm:text-[10px] text-[#353C45] font-mono block mt-0.5">
                   MOQ {product.minimum_order_quantity}
                 </span>
               )}
@@ -194,7 +194,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 className={`w-9 h-9 rounded-md ${
                   added
                     ? "bg-[#217A4B] text-white"
-                    : "bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E]"
+                    : "bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418]"
                 } flex items-center justify-center transition-colors`}
                 title={added ? "Added to Quote Cart!" : "Add to Quote Cart"}
                 aria-label={`Add ${formatProductName(product.name)} to cart`}

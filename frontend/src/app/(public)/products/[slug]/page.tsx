@@ -164,10 +164,10 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <section className="pt-8 sm:pt-10 border-t border-[#DFE6EE] space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-base sm:text-xl font-bold text-[#22272E]">
+              <h2 className="text-base sm:text-xl font-bold text-[#121418]">
                 Related Products in {formatCategoryName(product.category.name)}
               </h2>
-              <p className="text-xs sm:text-sm text-[#36404B]">
+              <p className="text-xs sm:text-sm text-[#2B323B]">
                 Frequently purchased together for bulk institutional & trade supply
               </p>
             </div>

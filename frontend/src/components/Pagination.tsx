@@ -81,15 +81,15 @@ export default function Pagination({
     >
       {/* Item Range Counter */}
       {totalCount !== undefined && totalCount > 0 ? (
-        <p className="text-xs text-[#3F4A56] text-center sm:text-left order-2 sm:order-1 font-medium">
-          Showing <span className="font-bold text-[#22272E]">{startItem}</span>–
-          <span className="font-bold text-[#22272E]">{endItem}</span> of{" "}
-          <span className="font-bold text-[#22272E]">{totalCount}</span> products
+        <p className="text-xs text-[#353C45] text-center sm:text-left order-2 sm:order-1 font-medium">
+          Showing <span className="font-bold text-[#121418]">{startItem}</span>–
+          <span className="font-bold text-[#121418]">{endItem}</span> of{" "}
+          <span className="font-bold text-[#121418]">{totalCount}</span> products
         </p>
       ) : (
-        <p className="text-xs text-[#3F4A56] text-center sm:text-left order-2 sm:order-1 font-medium">
-          Page <span className="font-bold text-[#22272E]">{currentPage}</span> of{" "}
-          <span className="font-bold text-[#22272E]">{totalPages}</span>
+        <p className="text-xs text-[#353C45] text-center sm:text-left order-2 sm:order-1 font-medium">
+          Page <span className="font-bold text-[#121418]">{currentPage}</span> of{" "}
+          <span className="font-bold text-[#121418]">{totalPages}</span>
         </p>
       )}
 
@@ -102,7 +102,7 @@ export default function Pagination({
             aria-label="Go to first page"
             className={`hidden sm:flex w-8 h-8 rounded-lg items-center justify-center transition-colors border ${
               hasPrevious
-                ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E]"
+                ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#121418] hover:bg-[#EDF1F6] hover:text-[#121418]"
                 : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
             }`}
           >
@@ -116,7 +116,7 @@ export default function Pagination({
           aria-label="Previous page"
           className={`flex items-center gap-1 px-2.5 sm:px-3 h-8 rounded-lg text-xs font-semibold transition-colors border ${
             hasPrevious
-              ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E] shadow-2xs"
+              ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#121418] hover:bg-[#EDF1F6] hover:text-[#121418] shadow-2xs"
               : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
           }`}
         >
@@ -149,8 +149,8 @@ export default function Pagination({
                 aria-current={isCurrent ? "page" : undefined}
                 className={`w-8 h-8 rounded-lg text-xs font-bold flex items-center justify-center transition-all ${
                   isCurrent
-                    ? "bg-[#22272E] text-white shadow-xs border border-[#22272E]"
-                    : "bg-[#FFFFFF] border border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:border-slate-300 hover:text-[#22272E]"
+                    ? "bg-[#121418] text-white shadow-xs border border-[#121418]"
+                    : "bg-[#FFFFFF] border border-[#DFE6EE] text-[#121418] hover:bg-[#EDF1F6] hover:border-slate-300 hover:text-[#121418]"
                 }`}
               >
                 {pageNum}
@@ -165,7 +165,7 @@ export default function Pagination({
           aria-label="Next page"
           className={`flex items-center gap-1 px-2.5 sm:px-3 h-8 rounded-lg text-xs font-semibold transition-colors border ${
             hasNext
-              ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E] shadow-2xs"
+              ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#121418] hover:bg-[#EDF1F6] hover:text-[#121418] shadow-2xs"
               : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
           }`}
         >
@@ -180,7 +180,7 @@ export default function Pagination({
             aria-label="Go to last page"
             className={`hidden sm:flex w-8 h-8 rounded-lg items-center justify-center transition-colors border ${
               hasNext
-                ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#22272E] hover:bg-[#EDF1F6] hover:text-[#22272E]"
+                ? "bg-[#FFFFFF] border-[#DFE6EE] text-[#121418] hover:bg-[#EDF1F6] hover:text-[#121418]"
                 : "bg-[#EDF1F6] border-slate-200 text-slate-300 pointer-events-none"
             }`}
           >

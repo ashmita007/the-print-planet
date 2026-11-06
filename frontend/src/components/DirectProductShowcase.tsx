@@ -38,8 +38,9 @@ export default function DirectProductShowcase({
   products: legacyProducts = [],
   initialProducts = [],
   initialTotalCount = 0,
-  categories,
+  categories = [],
 }: DirectProductShowcaseProps) {
+  const safeCategories = Array.isArray(categories) ? categories : [];
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
@@ -236,17 +237,17 @@ export default function DirectProductShowcase({
       {/* Header with Title and B2B Badge */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight leading-[1.08]">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121418] tracking-tight leading-[1.08]">
             Stock lines for ID card studios
           </h2>
         </div>
 
         <Link
           href="/products"
-          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#3F4A56] hover:text-[#3F4A56] transition-colors self-start md:self-auto py-1"
+          className="group inline-flex items-center gap-1.5 text-xs font-semibold text-[#353C45] hover:text-[#353C45] transition-colors self-start md:self-auto py-1"
         >
           <span>View full catalogue</span>
-          <span className="tabular-nums font-mono text-[#3F4A56] font-bold">({totalCount})</span>
+          <span className="tabular-nums font-mono text-[#353C45] font-bold">({totalCount})</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
@@ -256,8 +257,8 @@ export default function DirectProductShowcase({
         {/* Category Pills Header with Scroll Controls */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <div className="text-[10px] sm:text-[11px] font-medium text-[#3F4A56] uppercase tracking-[0.12em] flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-[#3F4A56]" />
+            <div className="text-[10px] sm:text-[11px] font-medium text-[#353C45] uppercase tracking-[0.12em] flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-[#353C45]" />
               <span>Category</span>
             </div>
 
@@ -271,7 +272,7 @@ export default function DirectProductShowcase({
                   className="p-1 rounded-lg border border-[#DFE6EE] bg-[#FFFFFF] hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
                   aria-label="Scroll categories left"
                 >
-                  <ChevronLeft className="w-3.5 h-3.5 text-[#22272E]" />
+                  <ChevronLeft className="w-3.5 h-3.5 text-[#121418]" />
                 </button>
                 <button
                   type="button"
@@ -280,7 +281,7 @@ export default function DirectProductShowcase({
                   className="p-1 rounded-lg border border-[#DFE6EE] bg-[#FFFFFF] hover:bg-slate-100 disabled:opacity-30 disabled:pointer-events-none transition-colors shadow-2xs cursor-pointer"
                   aria-label="Scroll categories right"
                 >
-                  <ChevronRight className="w-3.5 h-3.5 text-[#22272E]" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#121418]" />
                 </button>
               </div>
             )}
@@ -315,16 +316,16 @@ export default function DirectProductShowcase({
                 }}
                 className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-md text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                   selectedCategory === "all"
-                    ? "bg-[#22272E] text-white shadow-xs"
-                    : "bg-[#FFFFFF] text-slate-700 border border-slate-200 hover:border-[#22272E]"
+                    ? "bg-[#121418] text-white shadow-xs"
+                    : "bg-[#FFFFFF] text-slate-700 border border-slate-200 hover:border-[#121418]"
                 }`}
               >
                 <span>All Products</span>
               </button>
 
-              {(categories.filter((c) => !c.parent).length > 0
-                ? categories.filter((c) => !c.parent)
-                : categories
+              {(safeCategories.filter((c) => !c.parent).length > 0
+                ? safeCategories.filter((c) => !c.parent)
+                : safeCategories
               ).map((cat) => (
                 <button
                   key={cat.id}
@@ -339,15 +340,15 @@ export default function DirectProductShowcase({
                   }}
                   className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     selectedCategory === cat.slug
-                      ? "bg-[#22272E] text-white shadow-xs"
-                      : "bg-[#FFFFFF] text-slate-700 border border-slate-200 hover:border-[#22272E]"
+                      ? "bg-[#121418] text-white shadow-xs"
+                      : "bg-[#FFFFFF] text-slate-700 border border-slate-200 hover:border-[#121418]"
                   }`}
                 >
                   <span>{formatProductName(cat.name)}</span>
                   {cat.products_count !== undefined && (
                     <span
                       className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#EDF1F6] text-[#3F4A56]"
+                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#EDF1F6] text-[#353C45]"
                       }`}
                     >
                       {cat.products_count}
@@ -363,14 +364,14 @@ export default function DirectProductShowcase({
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 pt-2 border-t border-[#DFE6EE]">
           {/* Quick Search Input */}
           <div className="relative w-full sm:w-80">
-            <Search className="w-3.5 h-3.5 text-[#3F4A56] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#353C45] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search this catalogue"
               placeholder="Search products, SKU (e.g. LAN, V2, DCT)..."
-              className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-[#FFFFFF] border border-[#DFE6EE] text-xs text-[#22272E] placeholder-[#3F4A56] focus:outline-none focus:border-[#22272E] transition-colors"
+              className="w-full pl-8.5 pr-8 py-1.5 sm:py-2 rounded-lg bg-[#FFFFFF] border border-[#DFE6EE] text-xs text-[#121418] placeholder-[#353C45] focus:outline-none focus:border-[#121418] transition-colors"
             />
             {searchQuery && (
               <button
@@ -385,11 +386,11 @@ export default function DirectProductShowcase({
           </div>
 
           {/* Result Count & Sorting */}
-          <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#3F4A56]">
+          <div className="flex items-center justify-between w-full sm:w-auto gap-3 text-[11px] sm:text-xs text-[#353C45]">
             <span className="font-medium whitespace-nowrap flex items-center gap-1.5">
-              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#3F4A56]" />}
+              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#353C45]" />}
               <span>
-                Showing <strong className="text-[#22272E] font-bold">{totalCount > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#22272E] font-bold">{endIndex}</strong> of <strong className="text-[#22272E] font-bold">{totalCount}</strong>
+                Showing <strong className="text-[#121418] font-bold">{totalCount > 0 ? startIndex + 1 : 0}</strong>–<strong className="text-[#121418] font-bold">{endIndex}</strong> of <strong className="text-[#121418] font-bold">{totalCount}</strong>
               </span>
             </span>
 
@@ -397,12 +398,12 @@ export default function DirectProductShowcase({
               <button
                 type="button"
                 onClick={() => setSortModalOpen(true)}
-                className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FFFFFF] hover:bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#22272E] text-[11px] sm:text-xs font-semibold text-[#22272E] hover:text-[#22272E] rounded-lg sm:rounded-md px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FFFFFF] hover:bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#121418] text-[11px] sm:text-xs font-semibold text-[#121418] hover:text-[#121418] rounded-lg sm:rounded-md px-2.5 sm:px-3 py-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
                 aria-label="Open sort products modal"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#3F4A56]" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#353C45]" />
                 <span className="font-bold">{SORT_LABELS[sortBy]}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#3F4A56]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#353C45]" />
               </button>
             </div>
           </div>
@@ -433,9 +434,9 @@ export default function DirectProductShowcase({
           {totalPages > 1 && (
             <div className="mt-8 pt-6 border-t border-[#DFE6EE] flex flex-col sm:flex-row items-center justify-between gap-4">
               {/* Left Item Counter */}
-              <div className="text-xs text-[#3F4A56] font-medium order-2 sm:order-1 text-center sm:text-left">
-                Showing <strong className="text-[#22272E] font-bold">{startIndex + 1}</strong>–<strong className="text-[#22272E] font-bold">{endIndex}</strong> of <strong className="text-[#22272E] font-bold">{totalCount}</strong> products
-                <span className="text-[#3F4A56] ml-1.5">(Page {currentPage} of {totalPages})</span>
+              <div className="text-xs text-[#353C45] font-medium order-2 sm:order-1 text-center sm:text-left">
+                Showing <strong className="text-[#121418] font-bold">{startIndex + 1}</strong>–<strong className="text-[#121418] font-bold">{endIndex}</strong> of <strong className="text-[#121418] font-bold">{totalCount}</strong> products
+                <span className="text-[#353C45] ml-1.5">(Page {currentPage} of {totalPages})</span>
               </div>
 
               {/* Right Pagination Navigation */}
@@ -445,7 +446,7 @@ export default function DirectProductShowcase({
                   type="button"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage <= 1 || loading}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#DFE6EE] bg-[#FFFFFF] text-xs font-semibold text-[#22272E] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#DFE6EE] bg-[#FFFFFF] text-xs font-semibold text-[#121418] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
                   aria-label="Previous page"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
@@ -456,7 +457,7 @@ export default function DirectProductShowcase({
                 {getPageNumbers().map((num, idx) => {
                   if (num === "...") {
                     return (
-                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-[#3F4A56] select-none">
+                      <span key={`dots-${idx}`} className="px-2 py-1 text-xs text-[#353C45] select-none">
                         ...
                       </span>
                     );
@@ -471,8 +472,8 @@ export default function DirectProductShowcase({
                       disabled={loading}
                       className={`min-w-[34px] h-[34px] px-2.5 rounded-md text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
                         isActive
-                          ? "bg-[#22272E] text-white shadow-xs"
-                          : "bg-[#FFFFFF] text-[#22272E] border border-[#DFE6EE] hover:border-[#22272E] hover:bg-slate-50"
+                          ? "bg-[#121418] text-white shadow-xs"
+                          : "bg-[#FFFFFF] text-[#121418] border border-[#DFE6EE] hover:border-[#121418] hover:bg-slate-50"
                       }`}
                       aria-label={`Page ${pageNum}`}
                       aria-current={isActive ? "page" : undefined}
@@ -487,7 +488,7 @@ export default function DirectProductShowcase({
                   type="button"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage >= totalPages || loading}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#DFE6EE] bg-[#FFFFFF] text-xs font-semibold text-[#22272E] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-[#DFE6EE] bg-[#FFFFFF] text-xs font-semibold text-[#121418] hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-2xs cursor-pointer"
                   aria-label="Next page"
                 >
                   <span className="hidden sm:inline">Next</span>
@@ -500,8 +501,8 @@ export default function DirectProductShowcase({
       ) : (
         <div className="bg-[#FFFFFF] border border-dashed border-[#DFE6EE] rounded-lg p-12 text-center">
           <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <h3 className="font-bold text-[#22272E] text-base mb-1">No products match your filter</h3>
-          <p className="text-xs text-[#3F4A56] max-w-sm mx-auto mb-4">
+          <h3 className="font-bold text-[#121418] text-base mb-1">No products match your filter</h3>
+          <p className="text-xs text-[#353C45] max-w-sm mx-auto mb-4">
             Try selecting &ldquo;All Products&rdquo; or adjusting your search keywords.
           </p>
           <button
@@ -510,7 +511,7 @@ export default function DirectProductShowcase({
               handleSelectCategory("all");
               setSearchQuery("");
             }}
-            className="px-4 py-2 rounded-lg bg-[#F26B1D] text-[#22272E] text-xs font-bold hover:bg-[#FF8A3D] transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-[#F26B1D] text-[#121418] text-xs font-bold hover:bg-[#FF8A3D] transition-colors cursor-pointer"
           >
             Reset Filters
           </button>

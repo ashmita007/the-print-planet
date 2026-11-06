@@ -273,7 +273,7 @@ function cardTexture(band: string) {
     // Photo block.
     ctx.fillStyle = "#DFE6EE";
     ctx.fillRect(68, 74, 120, 136);
-    ctx.fillStyle = "#3F4A56";
+    ctx.fillStyle = "#353C45";
     ctx.beginPath();
     ctx.arc(128, 126, 30, 0, Math.PI * 2);
     ctx.fill();
@@ -282,11 +282,11 @@ function cardTexture(band: string) {
     ctx.fill();
 
     // Name lines and barcode.
-    ctx.fillStyle = "#22272E";
+    ctx.fillStyle = "#121418";
     ctx.fillRect(48, 234, 160, 16);
     ctx.fillStyle = "#6C7A89";
     ctx.fillRect(72, 262, 112, 10);
-    ctx.fillStyle = "#363D47";
+    ctx.fillStyle = "#2A2F37";
     const bars = [4, 2, 6, 3, 2, 5, 2, 4, 6, 2, 3, 5, 2, 4, 3, 6, 2, 4];
     let x = 48;
     bars.forEach((bar, i) => {
@@ -378,7 +378,7 @@ export function createPrintPlanet(canvas: HTMLCanvasElement, options: PlanetOpti
   ringGroup.add(ribbon);
 
   const cardGeometry = buildCardGeometry();
-  const cards = ["#22272E", "#B9C3CF", "#00A0DC"].map((band, index) => {
+  const cards = ["#121418", "#B9C3CF", "#00A0DC"].map((band, index) => {
     const map = cardTexture(band);
     const material = new MeshStandardMaterial({ map, roughness: 0.34, side: DoubleSide });
     const mesh = new Mesh(cardGeometry, material);

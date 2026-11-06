@@ -15,7 +15,7 @@ const STEPS = [
     title: "Approve the proof",
     detail: "You get a digital proof first. Orders over 2,500 pieces also get a physical pilot sample.",
     time: "Before printing",
-    ink: "#3F4A56",
+    ink: "#353C45",
   },
   {
     icon: Printer,
@@ -39,7 +39,7 @@ export default function HowItWorks() {
     <section aria-labelledby="how-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
       <div className="max-w-2xl">
         <p className="eyebrow text-[#C2410C]">How ordering works</p>
-        <h2 id="how-heading" className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
+        <h2 id="how-heading" className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-[#121418]">
           From quote to your door in four steps
         </h2>
       </div>
@@ -47,7 +47,7 @@ export default function HowItWorks() {
       <ol className="relative mt-12 grid gap-10 lg:gap-6 lg:grid-cols-4">
         {/* The line runs behind the step markers on wide screens. */}
         <div aria-hidden="true" className="hidden lg:block absolute left-6 right-6 top-6 h-0.5 bg-[#DFE6EE]">
-          <div data-scrub-line className="h-full w-full bg-gradient-to-r from-[#F26B1D] via-[#3F4A56] to-[#B9C3CF]" />
+          <div data-scrub-line className="h-full w-full bg-gradient-to-r from-[#F26B1D] via-[#353C45] to-[#B9C3CF]" />
         </div>
 
         {STEPS.map((step, i) => {
@@ -57,16 +57,16 @@ export default function HowItWorks() {
             <li key={step.title} className="relative flex lg:block gap-5">
               <span
                 className="relative z-10 shrink-0 w-12 h-12 rounded-full flex items-center justify-center ring-8 ring-[#FAFBFD]"
-                style={{ background: step.ink, color: lightInk ? "#22272E" : "#FFFFFF" }}
+                style={{ background: step.ink, color: lightInk ? "#121418" : "#FFFFFF" }}
               >
                 <Icon className="w-5 h-5" aria-hidden="true" />
               </span>
               <div className="lg:mt-6">
-                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#3F4A56]">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#353C45]">
                   Step {i + 1} · {step.time}
                 </p>
-                <h3 className="mt-1.5 text-lg font-extrabold text-[#22272E]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#36404B] max-w-xs">{step.detail}</p>
+                <h3 className="mt-1.5 text-lg font-extrabold text-[#121418]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#2B323B] max-w-xs">{step.detail}</p>
               </div>
             </li>
           );

@@ -25,10 +25,12 @@ import {
   MessageCircle,
   HelpCircle,
   ChevronRight,
+  LogOut,
+  UserCheck,
 } from "lucide-react";
 import { Category, SiteSettings } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, clientLogout } from "@/lib/api";
 import { useCart } from "@/lib/cart";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { useOverlay, usePresence } from "@/lib/useOverlay";
@@ -66,11 +68,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isClientLoggedIn, setIsClientLoggedIn] = useState(false);
   const [clientUser, setClientUser] = useState<any>(null);
-  const [liveCategories, setLiveCategories] = useState<Category[]>(categories);
+  const [liveCategories, setLiveCategories] = useState<Category[]>(Array.isArray(categories) ? categories : []);
   const [mounted, setMounted] = useState(false);
   const [searchRowOpen, setSearchRowOpen] = useState(false);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const accountMenuRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
@@ -187,7 +191,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   };
 
   useEffect(() => {
-    if (categories && categories.length > 0) {
+    if (Array.isArray(categories) && categories.length > 0) {
       setLiveCategories(categories);
     }
   }, [categories]);
@@ -200,8 +204,9 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
       });
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setLiveCategories(data);
+        const list = Array.isArray(data) ? data : (Array.isArray(data?.results) ? data.results : []);
+        if (list.length > 0) {
+          setLiveCategories(list);
         }
       }
     } catch {
@@ -249,11 +254,14 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
     };
   }, []);
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setCategoriesDropdownOpen(false);
+      }
+      if (accountMenuRef.current && !accountMenuRef.current.contains(e.target as Node)) {
+        setAccountMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -271,6 +279,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
   const phone = settings?.phone || "+91 97418 08034";
   const email = settings?.email || "theprintplanet01@gmail.com";
+  const safeCategories = Array.isArray(liveCategories) ? liveCategories : [];
 
   return (
     <header
@@ -278,7 +287,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
       className="w-full sticky -top-8 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-shadow duration-300"
     >
       {/* 1. ANNOUNCEMENT BAR */}
-      <div className="h-8 flex items-center bg-[#22272E] text-white text-[11px] sm:text-xs px-3 sm:px-6">
+      <div className="h-8 flex items-center bg-[#121418] text-white text-[11px] sm:text-xs px-3 sm:px-6">
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-hidden flex-1">
                         <span ref={announcementRef} className="text-slate-200 truncate font-medium">
@@ -312,7 +321,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-[#3F4A56] hover:bg-slate-100 rounded-lg transition-colors"
+            className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-[#353C45] hover:bg-slate-100 rounded-lg transition-colors"
             aria-label="Open mobile navigation menu"
           >
             <Menu className="w-6 h-6" />
@@ -345,13 +354,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 placeholder="Search products, ID cards..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#EDF1F6] hover:bg-[#FFFFFF] focus:bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E]/30 focus:border-[#B9C3CF] focus:ring-4 focus:ring-[#B9C3CF]/10 rounded-md pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
+                className="w-full bg-[#EDF1F6] hover:bg-[#FFFFFF] focus:bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#121418]/30 focus:border-[#B9C3CF] focus:ring-4 focus:ring-[#B9C3CF]/10 rounded-md pl-9 pr-14 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 transition-all outline-none"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#3F4A56] transition-colors" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-[#353C45] transition-colors" />
               {searchQuery ? (
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#F26B1D] text-[#22272E] px-2 py-0.5 rounded-md hover:bg-[#FF8A3D] transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold bg-[#F26B1D] text-[#121418] px-2 py-0.5 rounded-md hover:bg-[#FF8A3D] transition-colors"
                 >
                   Go
                 </button>
@@ -393,13 +402,13 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 aria-expanded={categoriesDropdownOpen}
                 aria-haspopup="true"
                 className={`relative px-3 py-2 rounded-md flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer ${
-                  categoriesDropdownOpen ? "text-[#3F4A56] font-bold" : "text-[#22272E] hover:text-[#3F4A56]"
+                  categoriesDropdownOpen ? "text-[#353C45] font-bold" : "text-[#121418] hover:text-[#353C45]"
                 }`}
               >
                 <span>Shop by Category</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    categoriesDropdownOpen ? "rotate-180 text-[#3F4A56]" : "text-slate-400"
+                    categoriesDropdownOpen ? "rotate-180 text-[#353C45]" : "text-slate-400"
                   }`}
                 />
               </button>
@@ -413,20 +422,20 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     className="absolute top-full left-0 w-[640px] bg-white/98 backdrop-blur-lg border border-[#DFE6EE] rounded-lg shadow-[0_20px_50px_-10px_rgba(16,39,66,0.18)] py-3 mt-2 z-50 overflow-hidden"
                   >
                     <div className="px-5 py-2.5 border-b border-slate-100 bg-[#EDF1F6] flex items-center justify-between rounded-t-2xl">
-                      <span className="text-xs font-bold text-[#22272E] uppercase tracking-wider flex items-center gap-1.5">
-                        <Layers className="w-3.5 h-3.5 text-[#3F4A56]" /> Complete Catalog Collections
+                      <span className="text-xs font-bold text-[#121418] uppercase tracking-wider flex items-center gap-1.5">
+                        <Layers className="w-3.5 h-3.5 text-[#353C45]" /> Complete Catalog Collections
                       </span>
-                      <span className="text-[10px] text-[#3F4A56] font-bold bg-[#EDF1F6] border border-[#B9C3CF]/25 px-2.5 py-0.5 rounded-full">
+                      <span className="text-[10px] text-[#353C45] font-bold bg-[#EDF1F6] border border-[#B9C3CF]/25 px-2.5 py-0.5 rounded-full">
                         180+ Products Available
                       </span>
                     </div>
 
                     <div className="max-h-[460px] overflow-y-auto p-4 grid grid-cols-2 gap-3">
-                      {(liveCategories.filter((c) => !c.parent).length > 0
-                        ? liveCategories.filter((c) => !c.parent)
-                        : liveCategories.slice(0, 8)
+                      {(safeCategories.filter((c) => !c.parent).length > 0
+                        ? safeCategories.filter((c) => !c.parent)
+                        : safeCategories.slice(0, 8)
                       ).map((mainCat) => {
-                        const subs = liveCategories.filter((c) => c.parent === mainCat.id);
+                        const subs = safeCategories.filter((c) => c.parent === mainCat.id);
                         return (
                           <div
                             key={mainCat.id}
@@ -435,7 +444,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                             <Link
                               href={`/products?category=${mainCat.slug}`}
                               onClick={() => setCategoriesDropdownOpen(false)}
-                              className="flex items-center justify-between text-xs font-bold text-[#22272E] hover:text-[#3F4A56] transition-colors mb-1.5 uppercase tracking-wide"
+                              className="flex items-center justify-between text-xs font-bold text-[#121418] hover:text-[#353C45] transition-colors mb-1.5 uppercase tracking-wide"
                             >
                               <span className="truncate pr-1">{formatCategoryName(mainCat.name)}</span>
                               <span className="text-[10px] text-slate-500 bg-[#FFFFFF] border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-normal">
@@ -449,7 +458,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                     key={sub.id}
                                     href={`/products?category=${sub.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[11px] text-slate-600 hover:text-[#3F4A56] truncate transition-colors font-medium"
+                                    className="block text-[11px] text-slate-600 hover:text-[#353C45] truncate transition-colors font-medium"
                                   >
                                     {formatCategoryName(sub.name)}
                                   </Link>
@@ -458,7 +467,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                                   <Link
                                     href={`/products?category=${mainCat.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[10px] font-bold text-[#3F4A56] hover:underline pt-0.5"
+                                    className="block text-[10px] font-bold text-[#353C45] hover:underline pt-0.5"
                                   >
                                     +{subs.length - 3} more &rarr;
                                   </Link>
@@ -477,7 +486,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       <Link
                         href="/products"
                         onClick={() => setCategoriesDropdownOpen(false)}
-                        className="text-xs font-bold text-[#3F4A56] hover:text-[#36404B] flex items-center gap-1"
+                        className="text-xs font-bold text-[#353C45] hover:text-[#2B323B] flex items-center gap-1"
                       >
                         <span>View All Products &rarr;</span>
                       </Link>
@@ -496,7 +505,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   onMouseEnter={movePill}
                   aria-current={active ? "page" : undefined}
                   className={`relative px-3 py-2 rounded-md whitespace-nowrap transition-colors ${
-                    active ? "text-[#36404B] font-bold" : "text-slate-700 hover:text-[#36404B]"
+                    active ? "text-[#2B323B] font-bold" : "text-slate-700 hover:text-[#2B323B]"
                   }`}
                 >
                   {item.label}
@@ -513,7 +522,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               onClick={() => setSearchRowOpen((open) => !open)}
               aria-label="Search products"
               aria-expanded={searchRowOpen}
-              className="xl:hidden p-2.5 rounded-md border border-slate-200 hover:border-[#B9C3CF]/60 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#3F4A56] transition-colors shadow-2xs"
+              className="xl:hidden p-2.5 rounded-md border border-slate-200 hover:border-[#B9C3CF]/60 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#353C45] transition-colors shadow-2xs"
             >
               {searchRowOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
             </button>
@@ -522,36 +531,91 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               ref={cartButtonRef}
               type="button"
               onClick={toggleCart}
-              className="relative p-2.5 rounded-md border border-slate-200 hover:border-[#B9C3CF]/60 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#3F4A56] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
+              className="relative p-2.5 rounded-md border border-slate-200 hover:border-[#B9C3CF]/60 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#353C45] transition-all flex items-center justify-center group shadow-2xs cursor-pointer"
               title="View Cart & Quote List"
               aria-label={mounted && totalItems > 0 ? `View cart, ${totalItems} items` : "View cart"}
             >
               <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110" />
               {mounted && totalItems > 0 && (
                 <span
-                  className="anim-scale-in absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#22272E] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
+                  className="anim-scale-in absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#121418] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm"
                 >
                   {totalItems > 99 ? "99+" : totalItems}
                 </span>
               )}
             </button>
 
-            {/* Track Orders / Account */}
+            {/* Track Orders / Account / Sign In */}
             {isClientLoggedIn ? (
+              <div className="relative hidden sm:block" ref={accountMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+                  className="flex items-center gap-1.5 bg-[#EDF1F6] hover:bg-slate-200 text-[#121418] px-3 py-2 rounded-md text-xs font-bold transition-colors cursor-pointer"
+                  title="My Account & Orders"
+                >
+                  <User className="w-3.5 h-3.5 text-[#353C45]" />
+                  <span className="max-w-[100px] truncate">
+                    {clientUser?.first_name || clientUser?.username || "Account"}
+                  </span>
+                  <ChevronDown className={`w-3 h-3 text-slate-500 transition-transform ${accountMenuOpen ? "rotate-180" : ""}`} />
+                </button>
+
+                {accountMenuOpen && (
+                  <div className="absolute right-0 top-full mt-1.5 w-52 bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg shadow-xl py-1.5 z-50 text-xs">
+                    <div className="px-3.5 py-2.5 border-b border-slate-100 bg-[#EDF1F6]">
+                      <p className="font-bold text-[#121418] truncate">
+                        {clientUser?.first_name ? `${clientUser.first_name} ${clientUser.last_name || ""}`.trim() : clientUser?.username || "Client"}
+                      </p>
+                      <p className="text-[10px] text-[#353C45] truncate">{clientUser?.email || ""}</p>
+                    </div>
+                    <Link
+                      href="/orders"
+                      onClick={() => setAccountMenuOpen(false)}
+                      className="flex items-center gap-2 px-3.5 py-2 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#121418] font-medium transition-colors"
+                    >
+                      <Package className="w-3.5 h-3.5 text-[#353C45]" />
+                      <span>My Orders &amp; Chats</span>
+                    </Link>
+                    <Link
+                      href="/account"
+                      onClick={() => setAccountMenuOpen(false)}
+                      className="flex items-center gap-2 px-3.5 py-2 hover:bg-[#EDF1F6] text-slate-700 hover:text-[#121418] font-medium transition-colors"
+                    >
+                      <User className="w-3.5 h-3.5 text-[#353C45]" />
+                      <span>Profile &amp; Settings</span>
+                    </Link>
+                    <div className="border-t border-slate-100 my-1" />
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        setAccountMenuOpen(false);
+                        await clientLogout();
+                        router.push("/account/login");
+                      }}
+                      className="w-full text-left flex items-center gap-2 px-3.5 py-2 text-red-600 hover:bg-red-50 font-bold transition-colors cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
               <Link
-                href="/orders"
-                className="hidden sm:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-md text-xs font-semibold transition-colors"
-                title="My Orders & Quotes"
+                href="/account/login"
+                className="hidden sm:flex items-center gap-1.5 bg-[#EDF1F6] hover:bg-slate-200 text-[#121418] px-3 py-2 rounded-md text-xs font-bold transition-colors"
+                title="Client Sign In"
               >
-                <Package className="w-4 h-4 text-[#22272E]" />
-                <span>Orders</span>
+                <User className="w-3.5 h-3.5 text-[#353C45]" />
+                <span>Sign In</span>
               </Link>
-            ) : null}
+            )}
 
             {/* Request a Quote Button with Motion Elevation */}
             <Link
                 href="/quote"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] px-4 py-2.5 rounded-md text-sm font-bold transition-colors whitespace-nowrap cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] px-4 py-2.5 rounded-md text-sm font-bold transition-colors whitespace-nowrap cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
                 <span>Request Quote</span>
@@ -594,7 +658,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             <div
               data-backdrop
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-[#22272E]/60 backdrop-blur-xs"
+              className="fixed inset-0 bg-[#121418]/60 backdrop-blur-xs"
             />
 
             {/* Drawer */}
@@ -646,6 +710,76 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 </form>
               </div>
 
+              {/* Mobile Client Authentication Block */}
+              <div className="p-4 border-b border-slate-100 bg-[#EDF1F6]">
+                {isClientLoggedIn ? (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-[#121418] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                          {(clientUser?.first_name?.[0] || clientUser?.username?.[0] || "U").toUpperCase()}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-[#121418] truncate">
+                            {clientUser?.first_name ? `${clientUser.first_name} ${clientUser.last_name || ""}`.trim() : clientUser?.username || "Client"}
+                          </p>
+                          <p className="text-[10px] text-[#353C45] truncate">{clientUser?.email || ""}</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          setMobileMenuOpen(false);
+                          await clientLogout();
+                          router.push("/account/login");
+                        }}
+                        className="text-[11px] font-bold text-red-600 hover:underline flex items-center gap-1 cursor-pointer shrink-0"
+                      >
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <Link
+                        href="/orders"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-1.5 py-2 px-2 bg-[#FFFFFF] border border-[#DFE6EE] rounded-md text-xs font-bold text-[#121418] shadow-2xs"
+                      >
+                        <Package className="w-3.5 h-3.5 text-[#353C45]" />
+                        <span>My Orders</span>
+                      </Link>
+                      <Link
+                        href="/account"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-1.5 py-2 px-2 bg-[#FFFFFF] border border-[#DFE6EE] rounded-md text-xs font-bold text-[#121418] shadow-2xs"
+                      >
+                        <User className="w-3.5 h-3.5 text-[#353C45]" />
+                        <span>Profile Hub</span>
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href="/account/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#121418] text-white rounded-md text-xs font-bold shadow-2xs"
+                    >
+                      <User className="w-3.5 h-3.5" />
+                      <span>Sign In</span>
+                    </Link>
+                    <Link
+                      href="/account/register"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#FFFFFF] border border-[#DFE6EE] text-[#121418] rounded-md text-xs font-bold hover:bg-slate-50"
+                    >
+                      <UserCheck className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Register</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
               {/* Navigation Links */}
               <div className="flex-1 overflow-y-auto p-4 space-y-1 text-sm font-semibold text-slate-800">
                 <Link
@@ -664,12 +798,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     className="w-full flex items-center justify-between p-2.5 bg-slate-50/70 text-left font-semibold hover:bg-slate-100 transition-colors"
                   >
                     <span className="flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-[#3F4A56]" />
+                      <Layers className="w-4 h-4 text-[#353C45]" />
                       <span>Shop by Category</span>
                     </span>
                     <ChevronDown
                       className={`w-4 h-4 text-slate-400 transition-transform ${
-                        mobileCategoriesOpen ? "rotate-180 text-[#3F4A56]" : ""
+                        mobileCategoriesOpen ? "rotate-180 text-[#353C45]" : ""
                       }`}
                     />
                   </button>
@@ -678,16 +812,16 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       <Link
                         href="/products"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#3F4A56] hover:bg-[#EDF1F6]"
+                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#353C45] hover:bg-[#EDF1F6]"
                       >
                         View All 180+ Products
                       </Link>
-                      {liveCategories.map((c) => (
+                      {safeCategories.map((c) => (
                         <Link
                           key={c.id}
                           href={`/products?category=${c.slug}`}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#3F4A56] truncate"
+                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#353C45] truncate"
                         >
                           {formatCategoryName(c.name)}
                         </Link>
@@ -702,7 +836,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                   className="flex items-center justify-between p-2.5 rounded-md hover:bg-slate-50 transition-colors"
                 >
                   <span className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-[#3F4A56]" />
+                    <Building2 className="w-4 h-4 text-[#353C45]" />
                     <span>Corporate &amp; Bulk Orders</span>
                   </span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -750,7 +884,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                 <Link
                   href="/quote"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] font-semibold text-xs shadow-md"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] font-semibold text-xs shadow-md"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Request Custom Quote</span>
@@ -761,7 +895,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     href={`tel:${phone.replace(/\s+/g, "")}`}
                     className="flex items-center justify-center gap-1.5 py-2.5 rounded-md bg-[#FFFFFF] border border-slate-200 text-slate-800 text-xs font-semibold hover:bg-slate-100"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#3F4A56]" />
+                    <Phone className="w-3.5 h-3.5 text-[#353C45]" />
                     <span>Call Us</span>
                   </a>
                   <a

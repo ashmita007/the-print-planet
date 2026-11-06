@@ -80,7 +80,7 @@ export default function OwnerLayout({
     return (
       <div className="min-h-screen bg-[#F3F6F9] flex flex-col items-center justify-center p-4">
         <div className="bg-[#FFFFFF] p-8 rounded-lg border border-[#DFE6EE] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_20px_50px_-30px_rgba(16,39,66,0.3)] flex flex-col items-center gap-4 max-w-sm w-full text-center anim-scale-in">
-          <div className="bg-[#22272E] p-3.5 rounded-md">
+          <div className="bg-[#121418] p-3.5 rounded-md">
             <Image
               src="/logo.png"
               alt="The Print Planet"
@@ -90,8 +90,8 @@ export default function OwnerLayout({
               priority
             />
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#22272E]">
-            <Loader2 className="w-4 h-4 animate-spin text-[#3F4A56]" />
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#121418]">
+            <Loader2 className="w-4 h-4 animate-spin text-[#353C45]" />
             <span>Securing owner management portal...</span>
           </div>
           <p className="text-[11px] text-slate-400 flex items-center gap-1">

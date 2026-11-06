@@ -174,7 +174,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {childSubcategories.length > 0 && (
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm sm:text-base font-bold text-[#22272E] uppercase tracking-wider">
+            <h2 className="text-sm sm:text-base font-bold text-[#121418] uppercase tracking-wider">
               Subcategories in {formatCategoryName(category.name)} ({childSubcategories.length})
             </h2>
           </div>
@@ -183,14 +183,14 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
               <Link
                 key={sub.id}
                 href={`/categories/${sub.slug}`}
-                className="p-3 rounded-md bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#22272E] hover:shadow-xs transition-all flex flex-col justify-between group"
+                className="p-3 rounded-md bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#121418] hover:shadow-xs transition-all flex flex-col justify-between group"
               >
-                <span className="text-xs font-bold text-[#22272E] group-hover:text-[#22272E] transition-colors line-clamp-2 uppercase tracking-wide">
+                <span className="text-xs font-bold text-[#121418] group-hover:text-[#121418] transition-colors line-clamp-2 uppercase tracking-wide">
                   {formatCategoryName(sub.name)}
                 </span>
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
                   <span>{sub.products_count || 0} products</span>
-                  <span className="text-[#3F4A56] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  <span className="text-[#353C45] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
                 </div>
               </Link>
             ))}
@@ -201,15 +201,15 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {/* Sibling Subcategories Selector (if viewing Subcategory) */}
       {siblingSubcategories.length > 1 && (
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="font-bold text-[#3F4A56] shrink-0">Related in {parentCategory?.name}:</span>
+          <span className="font-bold text-[#353C45] shrink-0">Related in {parentCategory?.name}:</span>
           {siblingSubcategories.map((sib) => (
             <Link
               key={sib.id}
               href={`/categories/${sib.slug}`}
               className={`px-3 py-1.5 rounded-full shrink-0 font-semibold transition-colors ${
                 sib.slug === slug
-                  ? "bg-[#22272E] text-white"
-                  : "bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200 border border-[#DFE6EE]"
+                  ? "bg-[#121418] text-white"
+                  : "bg-[#EDF1F6] text-[#121418] hover:bg-slate-200 border border-[#DFE6EE]"
               }`}
             >
               {sib.name}
@@ -220,10 +220,10 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
 
       {/* Main Sector Navigation Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 text-xs">
-        <span className="font-bold text-[#3F4A56] shrink-0">Main Sectors:</span>
+        <span className="font-bold text-[#353C45] shrink-0">Main Sectors:</span>
         <Link
           href="/products"
-          className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200 border border-[#DFE6EE]"
+          className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#EDF1F6] text-[#121418] hover:bg-slate-200 border border-[#DFE6EE]"
         >
           All 180+ Products
         </Link>
@@ -233,8 +233,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             href={`/categories/${c.slug}`}
             className={`px-3 py-1.5 rounded-full shrink-0 font-semibold transition-colors ${
               c.slug === slug || (parentCategory && parentCategory.slug === c.slug)
-                ? "bg-[#22272E] text-white"
-                : "bg-[#EDF1F6] text-[#22272E] hover:bg-slate-200 border border-[#DFE6EE]"
+                ? "bg-[#121418] text-white"
+                : "bg-[#EDF1F6] text-[#121418] hover:bg-slate-200 border border-[#DFE6EE]"
             }`}
           >
             {formatCategoryName(c.name)}
@@ -245,8 +245,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {/* Products Grid */}
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3 gap-2">
-          <span className="text-xs font-bold text-[#3F4A56]">
-            Showing <strong className="text-[#22272E]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
+          <span className="text-xs font-bold text-[#353C45]">
+            Showing <strong className="text-[#121418]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
           </span>
           <MobileFilterSortBar
             categories={allCategories}
@@ -285,10 +285,10 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {seo && (
         <section aria-labelledby="category-guide" className="border-t border-[#DFE6EE] pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
-            <h2 id="category-guide" className="text-2xl font-extrabold tracking-tight text-[#22272E]">
+            <h2 id="category-guide" className="text-2xl font-extrabold tracking-tight text-[#121418]">
               Choosing {seo.h1.toLowerCase().replace(/\bid\b/, "ID").replace(/\bpvc\b/, "PVC").replace(/\brfid\b/, "RFID")}
             </h2>
-            <div className="mt-3 space-y-3 text-sm text-[#22272E] leading-relaxed max-w-xl">
+            <div className="mt-3 space-y-3 text-sm text-[#121418] leading-relaxed max-w-xl">
               {seo.about.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}

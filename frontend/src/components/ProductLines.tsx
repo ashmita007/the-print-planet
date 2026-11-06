@@ -27,12 +27,12 @@ export default async function ProductLines() {
   return (
     <section aria-labelledby="lines-heading" className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16">
       <div className="flex items-baseline justify-between gap-4 mb-6">
-        <h2 id="lines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#22272E] tracking-tight">
+        <h2 id="lines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#121418] tracking-tight">
           Shop by product
         </h2>
         <Link
           href="/categories"
-          className="shrink-0 text-sm font-semibold text-[#36404B] hover:underline underline-offset-4"
+          className="shrink-0 text-sm font-semibold text-[#2B323B] hover:underline underline-offset-4"
         >
           All categories
         </Link>
@@ -59,12 +59,12 @@ export default async function ProductLines() {
               </span>
               <span className="flex items-end justify-between gap-2 p-3 sm:p-4">
                 <span className="min-w-0">
-                  <span className="block font-heading text-[15px] sm:text-lg font-bold text-[#22272E] leading-tight">
+                  <span className="block font-heading text-[15px] sm:text-lg font-bold text-[#121418] leading-tight">
                     {line.label}
                   </span>
-                  <span className="block font-mono text-xs text-[#3F4A56] mt-0.5">{line.count} products</span>
+                  <span className="block font-mono text-xs text-[#353C45] mt-0.5">{line.count} products</span>
                 </span>
-                <ArrowUpRight className="w-5 h-5 shrink-0 text-[#22272E] group-hover:text-[#3F4A56] transition-colors" />
+                <ArrowUpRight className="w-5 h-5 shrink-0 text-[#121418] group-hover:text-[#353C45] transition-colors" />
               </span>
             </Link>
           ))}

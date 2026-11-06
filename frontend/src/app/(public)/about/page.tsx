@@ -121,16 +121,16 @@ export default async function AboutPage() {
       <PageHero title={heroTitle} lead={heroSubtitle} crumbs={[{ label: "About" }]} />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-10">
-        <h2 className="md:col-span-5 text-2xl sm:text-4xl font-extrabold tracking-tight text-[#22272E] leading-tight">
+        <h2 className="md:col-span-5 text-2xl sm:text-4xl font-extrabold tracking-tight text-[#121418] leading-tight">
           {storyTitle}
         </h2>
-        <div data-reveal className="md:col-span-7 space-y-4 text-sm sm:text-base text-[#22272E] leading-relaxed">
+        <div data-reveal className="md:col-span-7 space-y-4 text-sm sm:text-base text-[#121418] leading-relaxed">
           <p>{storyP1}</p>
           <p>{storyP2}</p>
         </div>
       </section>
 
-      <section aria-label="Key numbers" className="bg-[#22272E] text-white">
+      <section aria-label="Key numbers" className="bg-[#121418] text-white">
         <dl className="max-w-7xl mx-auto px-4 sm:px-6 py-9 sm:py-12 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
           {stats.map((stat) => (
             <div key={stat.label}>
@@ -146,9 +146,9 @@ export default async function AboutPage() {
       <section aria-label="Standards and facilities" className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7">
           {points.map((point) => (
-            <li key={point.title} className="border-t-2 border-[#22272E] pt-3">
-              <h3 className="font-bold text-[#22272E]">{point.title}</h3>
-              <p className="text-sm text-[#3F4A56] mt-1 leading-relaxed">{point.desc}</p>
+            <li key={point.title} className="border-t-2 border-[#121418] pt-3">
+              <h3 className="font-bold text-[#121418]">{point.title}</h3>
+              <p className="text-sm text-[#353C45] mt-1 leading-relaxed">{point.desc}</p>
             </li>
           ))}
         </ul>

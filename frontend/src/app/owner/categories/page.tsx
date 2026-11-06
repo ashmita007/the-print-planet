@@ -156,7 +156,7 @@ export default function OwnerCategoriesPage() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Catalogue structure
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#22272E] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
             Categories
             <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
               {categories.length}
@@ -168,7 +168,7 @@ export default function OwnerCategoriesPage() {
           <button
             type="button"
             onClick={startCreate}
-            className="bg-[#22272E] hover:bg-[#363D47] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
+            className="bg-[#121418] hover:bg-[#2A2F37] text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>New category</span>
@@ -187,7 +187,7 @@ export default function OwnerCategoriesPage() {
       {(isCreating || editingCategory) && (
         <form onSubmit={handleSave} className="surface-card p-6 rounded-lg space-y-4 text-xs anim-fade-up">
           <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
-            <h2 className="font-bold text-sm text-[#22272E]">
+            <h2 className="font-bold text-sm text-[#121418]">
               {isCreating ? "Create New Category" : `Edit Category: ${editingCategory?.name}`}
             </h2>
             <button type="button" onClick={cancelForm} className="text-slate-400 hover:text-slate-600">
@@ -204,7 +204,7 @@ export default function OwnerCategoriesPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div>
-              <label htmlFor="field-category-name" className="block font-semibold text-[#22272E] mb-1">Category Name *</label>
+              <label htmlFor="field-category-name" className="block font-semibold text-[#121418] mb-1">Category Name *</label>
               <input id="field-category-name"
                 type="text"
                 required
@@ -212,16 +212,16 @@ export default function OwnerCategoriesPage() {
                 onChange={(e) => handleNameChange(e.target.value)}
                 onBlur={() => setName(formatCategoryName(name))}
                 placeholder="e.g. COLOR ID CARD LANYARD ROLL"
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs font-bold uppercase tracking-wide"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs font-bold uppercase tracking-wide"
               />
             </div>
 
             <div>
-              <label htmlFor="field-parent-sector-optional" className="block font-semibold text-[#22272E] mb-1">Parent Sector (Optional)</label>
+              <label htmlFor="field-parent-sector-optional" className="block font-semibold text-[#121418] mb-1">Parent Sector (Optional)</label>
               <select id="field-parent-sector-optional"
                 value={parentId || ""}
                 onChange={(e) => setParentId(e.target.value ? Number(e.target.value) : null)}
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs"
               >
                 <option value="">None (Top-Level Main Sector)</option>
                 {categories
@@ -235,45 +235,45 @@ export default function OwnerCategoriesPage() {
             </div>
 
             <div>
-              <label htmlFor="field-custom-slug-optional" className="block font-semibold text-[#22272E] mb-1">Custom Slug (Optional)</label>
+              <label htmlFor="field-custom-slug-optional" className="block font-semibold text-[#121418] mb-1">Custom Slug (Optional)</label>
               <input id="field-custom-slug-optional"
                 type="text"
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
                 placeholder="color-id-card-lanyard-roll"
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono text-xs"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono text-xs"
               />
             </div>
 
             <div>
-              <label htmlFor="field-display-order" className="block font-semibold text-[#22272E] mb-1">Display Order</label>
+              <label htmlFor="field-display-order" className="block font-semibold text-[#121418] mb-1">Display Order</label>
               <input id="field-display-order"
                 type="number"
                 value={displayOrder}
                 onChange={(e) => setDisplayOrder(parseInt(e.target.value, 10) || 0)}
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="field-category-description" className="block font-semibold text-[#22272E] mb-1">Category Description</label>
+            <label htmlFor="field-category-description" className="block font-semibold text-[#121418] mb-1">Category Description</label>
             <textarea id="field-category-description"
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Summary of products and materials in this group..."
-              className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none"
+              className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none"
             />
           </div>
 
           <div className="flex items-center justify-between pt-2">
-            <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#22272E]">
+            <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#121418]">
               <input
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="rounded border-slate-300 text-[#22272E] w-4 h-4"
+                className="rounded border-slate-300 text-[#121418] w-4 h-4"
               />
               <span>Active in Public Menu & Catalogue</span>
             </label>
@@ -289,7 +289,7 @@ export default function OwnerCategoriesPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-[#22272E] hover:bg-[#363D47] text-white px-5 py-2 rounded-lg font-bold transition-colors disabled:opacity-50"
+                className="bg-[#121418] hover:bg-[#2A2F37] text-white px-5 py-2 rounded-lg font-bold transition-colors disabled:opacity-50"
               >
                 {submitting ? "Saving..." : "Save Category"}
               </button>
@@ -300,7 +300,7 @@ export default function OwnerCategoriesPage() {
 
       {/* Categories Table */}
       <div className="surface-card rounded-lg overflow-hidden">
-        <table className="w-full text-left text-xs text-[#22272E]">
+        <table className="w-full text-left text-xs text-[#121418]">
           <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[10px] font-semibold text-slate-500 uppercase tracking-[0.1em]">
             <tr>
               <th className="py-3 px-4 w-12 text-center hidden md:table-cell">#</th>
@@ -331,7 +331,7 @@ export default function OwnerCategoriesPage() {
                   <td className="py-3 px-4 text-center font-bold text-slate-400 hidden md:table-cell">
                     {c.display_order}
                   </td>
-                  <td className="py-3 px-4 text-[#22272E]">
+                  <td className="py-3 px-4 text-[#121418]">
                     {c.parent ? (
                       <span className="flex items-center gap-1.5 pl-4 text-slate-700 font-medium">
                         <span className="text-slate-400">↳</span>
@@ -341,10 +341,10 @@ export default function OwnerCategoriesPage() {
                         </span>
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1.5 text-[#22272E] font-extrabold uppercase tracking-wide">
-                        <Layers className="w-3.5 h-3.5 text-[#3F4A56]" />
+                      <span className="flex items-center gap-1.5 text-[#121418] font-extrabold uppercase tracking-wide">
+                        <Layers className="w-3.5 h-3.5 text-[#353C45]" />
                         <span>{formatCategoryName(c.name)}</span>
-                        <span className="text-[9px] bg-[#EDF1F6] text-[#36404B] px-1.5 py-0.5 rounded font-medium uppercase tracking-wider">
+                        <span className="text-[9px] bg-[#EDF1F6] text-[#2B323B] px-1.5 py-0.5 rounded font-medium uppercase tracking-wider">
                           Main Sector
                         </span>
                       </span>
@@ -372,7 +372,7 @@ export default function OwnerCategoriesPage() {
                       <button
                         type="button"
                         onClick={() => startEdit(c)}
-                        className="p-1 text-slate-600 hover:text-[#3F4A56]"
+                        className="p-1 text-slate-600 hover:text-[#353C45]"
                         title="Edit category"
                       >
                         <Edit className="w-3.5 h-3.5" />

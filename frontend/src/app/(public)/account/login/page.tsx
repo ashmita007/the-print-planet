@@ -42,11 +42,11 @@ export default function ClientLoginPage() {
 
       <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 bg-[#EDF1F6] text-[#3F4A56] rounded-md flex items-center justify-center mx-auto mb-2">
+          <div className="w-12 h-12 bg-[#EDF1F6] text-[#353C45] rounded-md flex items-center justify-center mx-auto mb-2">
             <UserCheck className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-extrabold text-[#22272E]">Buyer / Client Login</h1>
-          <p className="text-xs text-[#3F4A56]">
+          <h1 className="text-2xl font-extrabold text-[#121418]">Buyer / Client Login</h1>
+          <p className="text-xs text-[#353C45]">
             Sign in to track school &amp; corporate bulk orders and message thread history.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function ClientLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
           <div>
-            <label htmlFor="field-email-or-username" className="block font-bold text-[#22272E] mb-1">Email or Username</label>
+            <label htmlFor="field-email-or-username" className="block font-bold text-[#121418] mb-1">Email or Username</label>
             <div className="relative">
               <input id="field-email-or-username"
                 type="text"
@@ -67,7 +67,7 @@ export default function ClientLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="your-email@school.edu.in"
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#22272E] outline-none"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#121418] outline-none"
               />
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -75,10 +75,10 @@ export default function ClientLoginPage() {
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label htmlFor="field-password" className="block font-bold text-[#22272E]">Password</label>
+              <label htmlFor="field-password" className="block font-bold text-[#121418]">Password</label>
               <Link
                 href="/account/forgot-password"
-                className="text-[11px] font-semibold text-[#3F4A56] hover:underline"
+                className="text-[11px] font-semibold text-[#353C45] hover:underline"
               >
                 Forgotten Password?
               </Link>
@@ -90,7 +90,7 @@ export default function ClientLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#22272E] outline-none"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#121418] outline-none"
               />
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
@@ -99,19 +99,29 @@ export default function ClientLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#22272E] py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? <span>Signing in...</span> : <span>Sign In &amp; View Orders</span>}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-[#EDF1F6] text-xs text-[#3F4A56]">
+        <div className="text-center pt-3 border-t border-[#EDF1F6] text-xs text-[#353C45] space-y-2">
           <div>
-            New bulk order client?{" "}
-            <Link href="/corporate" className="text-[#3F4A56] font-bold hover:underline">
-              Submit your bulk inquiry to auto-register
+            Don&apos;t have an account yet?{" "}
+            <Link
+              href={`/account/register${redirectUrl !== "/orders" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}
+              className="text-[#121418] font-bold hover:underline"
+            >
+              Create Account
             </Link>
+          </div>
+          <div className="text-[11px] text-slate-500">
+            Or{" "}
+            <Link href="/corporate" className="text-[#353C45] hover:underline">
+              submit a bulk inquiry
+            </Link>{" "}
+            to auto-create an account.
           </div>
         </div>
       </div>

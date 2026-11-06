@@ -31,7 +31,7 @@ export default function BulkInkBand({ whatsapp }: { whatsapp?: string }) {
               href={`https://wa.me/${phone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-stamp btn-stamp-outline text-[#FAFBFD] hover:!bg-[#FAFBFD] hover:!text-[#22272E]"
+              className="btn-stamp btn-stamp-outline text-[#FAFBFD] hover:!bg-[#FAFBFD] hover:!text-[#121418]"
             >
               WhatsApp us
             </a>

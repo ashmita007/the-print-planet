@@ -50,12 +50,12 @@ export default function IndustriesPage() {
                 href={`/quote?industry=${encodeURIComponent(title)}`}
                 className="ink-row flex items-center gap-4 p-5 sm:p-6 h-full"
               >
-                <Icon className="ink-row-note w-7 h-7 shrink-0 text-[#22272E]" aria-hidden="true" />
+                <Icon className="ink-row-note w-7 h-7 shrink-0 text-[#121418]" aria-hidden="true" />
                 <span className="flex-1 min-w-0">
-                  <span className="ink-row-title block text-lg font-bold tracking-tight text-[#22272E]">{title}</span>
-                  <span className="ink-row-note block text-sm text-[#3F4A56] mt-0.5">{note}</span>
+                  <span className="ink-row-title block text-lg font-bold tracking-tight text-[#121418]">{title}</span>
+                  <span className="ink-row-note block text-sm text-[#353C45] mt-0.5">{note}</span>
                 </span>
-                <ArrowRight className="ink-row-arrow w-5 h-5 shrink-0 text-[#36404B]" aria-hidden="true" />
+                <ArrowRight className="ink-row-arrow w-5 h-5 shrink-0 text-[#2B323B]" aria-hidden="true" />
               </Link>
             </li>
           ))}

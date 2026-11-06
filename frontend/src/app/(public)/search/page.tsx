@@ -36,7 +36,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* Matching Categories */}
       {results.categories.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#22272E]">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#121418]">
             Matching Categories
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -44,10 +44,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <Link
                 key={c.id}
                 href={`/categories/${c.slug}`}
-                className="bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#22272E] p-3.5 rounded-md flex items-center justify-between text-xs font-bold text-[#22272E] transition-colors"
+                className="bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#121418] p-3.5 rounded-md flex items-center justify-between text-xs font-bold text-[#121418] transition-colors"
               >
                 <span>{c.name}</span>
-                <span className="text-[#3F4A56]">&rarr;</span>
+                <span className="text-[#353C45]">&rarr;</span>
               </Link>
             ))}
           </div>
@@ -57,7 +57,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* Matching Products */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-2 gap-2">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#22272E]">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#121418]">
             Matching Products ({results.products.length})
           </h2>
           <MobileFilterSortBar
@@ -78,13 +78,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         ) : (
           <div className="surface-card rounded-lg p-12 text-center space-y-4">
             <Box className="w-16 h-16 text-slate-300 mx-auto" />
-            <h3 className="text-base font-bold text-[#22272E]">No items matched your query</h3>
-            <p className="text-xs text-[#3F4A56] max-w-sm mx-auto">
+            <h3 className="text-base font-bold text-[#121418]">No items matched your query</h3>
+            <p className="text-xs text-[#353C45] max-w-sm mx-auto">
               Please check your spelling or browse the full category list to discover relevant models.
             </p>
             <Link
               href="/products"
-              className="inline-block bg-[#22272E] text-white text-xs font-bold py-2 px-5 rounded-lg"
+              className="inline-block bg-[#121418] text-white text-xs font-bold py-2 px-5 rounded-lg"
             >
               View Entire Catalogue
             </Link>

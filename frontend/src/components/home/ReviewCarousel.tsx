@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 
 export type Review = { id: string; author: string; role: string; city: string; rating: number; text: string };
 
-const INKS = ["#F26B1D", "#22272E", "#3F4A56", "#B9C3CF"];
+const INKS = ["#F26B1D", "#121418", "#353C45", "#B9C3CF"];
 
 /**
  * Review cards in a native scroll-snap track: swipe on touch, drag with a mouse,
@@ -78,7 +78,7 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
           if (e.key === "ArrowRight") step(1);
           if (e.key === "ArrowLeft") step(-1);
         }}
-        className="mt-8 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-4 px-4 sm:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] cursor-grab active:cursor-grabbing select-none focus-visible:outline-2 focus-visible:outline-[#22272E]"
+        className="mt-8 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-4 px-4 sm:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] cursor-grab active:cursor-grabbing select-none focus-visible:outline-2 focus-visible:outline-[#121418]"
       >
         {reviews.map((review, i) => {
           const ink = INKS[i % INKS.length];
@@ -97,18 +97,18 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
                 </div>
                 <Quote className="w-8 h-8 opacity-90" style={{ color: ink }} aria-hidden="true" />
               </div>
-              <p className="mt-4 text-[15px] text-[#22272E] leading-relaxed line-clamp-6 flex-1">{review.text}</p>
+              <p className="mt-4 text-[15px] text-[#121418] leading-relaxed line-clamp-6 flex-1">{review.text}</p>
               <div className="mt-5 pt-4 border-t border-[#DFE6EE] flex items-center gap-3">
                 <span
                   aria-hidden="true"
                   className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-extrabold text-sm"
-                  style={{ background: ink, color: ink === "#B9C3CF" || ink === "#F26B1D" ? "#22272E" : "#FFFFFF" }}
+                  style={{ background: ink, color: ink === "#B9C3CF" || ink === "#F26B1D" ? "#121418" : "#FFFFFF" }}
                 >
                   {review.author.split(" ").map((part) => part[0]).slice(0, 2).join("")}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-[#22272E] truncate">{review.author}</p>
-                  <p className="text-xs text-[#3F4A56] truncate">{review.role} · {review.city}</p>
+                  <p className="text-sm font-bold text-[#121418] truncate">{review.author}</p>
+                  <p className="text-xs text-[#353C45] truncate">{review.role} · {review.city}</p>
                 </div>
               </div>
             </li>
@@ -129,7 +129,7 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
             onClick={() => step(-1)}
             disabled={atStart}
             aria-label="Previous reviews"
-            className="w-11 h-11 rounded-full border border-[#22272E]/30 flex items-center justify-center text-[#22272E] hover:bg-[#22272E] hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#22272E] transition-colors"
+            className="w-11 h-11 rounded-full border border-[#121418]/30 flex items-center justify-center text-[#121418] hover:bg-[#121418] hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#121418] transition-colors"
           >
             <ArrowLeft className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -138,7 +138,7 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
             onClick={() => step(1)}
             disabled={atEnd}
             aria-label="Next reviews"
-            className="w-11 h-11 rounded-full border border-[#22272E]/30 flex items-center justify-center text-[#22272E] hover:bg-[#22272E] hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#22272E] transition-colors"
+            className="w-11 h-11 rounded-full border border-[#121418]/30 flex items-center justify-center text-[#121418] hover:bg-[#121418] hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#121418] transition-colors"
           >
             <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </button>

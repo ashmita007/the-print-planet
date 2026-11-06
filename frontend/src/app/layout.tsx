@@ -1,21 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Sora, DM_Sans, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-// Bricolage Grotesque gives headings a confident, print-shop voice; Plus Jakarta Sans
-// keeps body copy and forms clear at small sizes; JetBrains Mono sets order numbers and SKUs.
-const heading = Bricolage_Grotesque({
+// Sora gives crisp geometric voice; Plus Jakarta Sans sets punchy, authoritative hero headlines;
+// DM Sans keeps body copy clear; JetBrains Mono sets order numbers and SKUs.
+const heroFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-hero",
+  display: "swap",
+  weight: ["500", "600", "700", "800"],
+});
+
+const heading = Sora({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
   weight: ["500", "600", "700", "800"],
 });
 
-const body = Plus_Jakarta_Sans({
+const body = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const mono = JetBrains_Mono({
@@ -32,7 +39,7 @@ import MotionBridge from "@/components/animations/MotionBridge";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const viewport: Viewport = {
-  themeColor: "#22272E",
+  themeColor: "#121418",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -247,7 +254,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${body.variable} ${heading.variable} ${mono.variable} font-sans min-h-screen bg-[#FAFBFD] text-[#22272E] antialiased selection:bg-[#F26B1D] selection:text-[#22272E]`}
+        className={`${body.variable} ${heading.variable} ${heroFont.variable} ${mono.variable} font-sans min-h-screen bg-[#FAFBFD] text-[#121418] antialiased selection:bg-[#F26B1D] selection:text-[#121418]`}
       >
         <CartProvider>
           {children}

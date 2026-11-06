@@ -66,13 +66,13 @@ export default function GoogleReviews() {
   return (
     <section aria-labelledby="reviews-heading" className="bg-[#EDF1F6] py-12 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-end justify-between gap-4">
-        <h2 id="reviews-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#22272E]">
+        <h2 id="reviews-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#121418]">
           What buyers say
         </h2>
-        <p className="shrink-0 flex items-center gap-2 text-sm text-[#36404B]">
+        <p className="shrink-0 flex items-center gap-2 text-sm text-[#2B323B]">
           <Star className="w-5 h-5 fill-[#F26B1D] text-[#F26B1D]" aria-hidden="true" />
           <span>
-            <strong data-count className="text-lg font-extrabold text-[#22272E] tabular-nums">4.9</strong> on Google
+            <strong data-count className="text-lg font-extrabold text-[#121418] tabular-nums">4.9</strong> on Google
           </span>
         </p>
       </div>

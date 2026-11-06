@@ -6,9 +6,9 @@ export default function TermsPage() {
     <div>
       <PageHero title="Terms and conditions" lead="Effective: October 2026" crumbs={[{ label: "Terms" }]} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <div className="space-y-7 text-sm text-[#22272E] leading-relaxed">
+      <div className="space-y-7 text-sm text-[#121418] leading-relaxed">
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#22272E]">1. Quotations and Pricing</h2>
+          <h2 className="text-base font-bold text-[#121418]">1. Quotations and Pricing</h2>
           <p>
             All listed prices and quotations provided by The Print Planet are ex-factory wholesale
             rates in Indian Rupees (INR) unless expressly stated otherwise in formal proforma invoices.
@@ -17,7 +17,7 @@ export default function TermsPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#22272E]">2. Minimum Order Quantities (MOQ)</h2>
+          <h2 className="text-base font-bold text-[#121418]">2. Minimum Order Quantities (MOQ)</h2>
           <p>
             Standard ID card holders, satin rolls, and hardware fittings are supplied in designated
             pack sizes (e.g. rolls of 100 meters, holder packs of 50/100 units). Custom Pantone
@@ -26,7 +26,7 @@ export default function TermsPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#22272E]">3. Machinery Warranty & Testing</h2>
+          <h2 className="text-base font-bold text-[#121418]">3. Machinery Warranty & Testing</h2>
           <p>
             Card cutting units (DCT4500, DCT2000), card fusing laminators (DCT150), and lanyard
             printing heat presses undergo operational inspection prior to factory dispatch.

@@ -600,7 +600,7 @@ function OwnerSettingsInner() {
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
             Configuration
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#22272E] mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
             Store settings
           </h1>
           <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
@@ -611,7 +611,7 @@ function OwnerSettingsInner() {
         <button
           onClick={handleSaveAll}
           disabled={saving}
-          className="inline-flex items-center justify-center gap-1.5 bg-[#22272E] hover:bg-[#363D47] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] disabled:opacity-50 shrink-0 cursor-pointer"
+          className="inline-flex items-center justify-center gap-1.5 bg-[#121418] hover:bg-[#2A2F37] text-white px-5 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] disabled:opacity-50 shrink-0 cursor-pointer"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           <span>{saving ? "Publishing..." : "Publish changes"}</span>
@@ -650,13 +650,13 @@ function OwnerSettingsInner() {
               type="button"
               onClick={() => handleTabChange(tab.id as typeof activeTab)}
               className={`relative flex items-center gap-1.5 pb-3 pt-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                isActive ? "text-[#22272E]" : "text-slate-500 hover:text-[#22272E]"
+                isActive ? "text-[#121418]" : "text-slate-500 hover:text-[#121418]"
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#36404B]" : "text-slate-400"}`} />
+              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#2B323B]" : "text-slate-400"}`} />
               <span>{tab.label}</span>
               {isActive && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#22272E]" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[#121418]" />
               )}
             </button>
           );
@@ -668,22 +668,22 @@ function OwnerSettingsInner() {
         <div className="space-y-6">
           <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
             <div className="border-b border-[#DFE6EE] pb-3">
-              <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#3F4A56]" />
+              <h2 className="text-sm font-semibold text-[#121418] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#353C45]" />
                 Homepage Hero Banner &amp; Headline Editor
               </h2>
-              <p className="text-[11px] text-[#3F4A56] mt-0.5">
+              <p className="text-[11px] text-[#353C45] mt-0.5">
                 Customize the high-impact headline, category pill, and primary caption displayed at the very top of the homepage.
               </p>
             </div>
 
             {/* Same copy rules and styling as the public homepage hero */}
             <div>
-              <p className="flex items-center gap-1.5 font-semibold text-[#22272E] mb-2">
-                <Eye className="w-3.5 h-3.5 text-[#36404B]" />
+              <p className="flex items-center gap-1.5 font-semibold text-[#121418] mb-2">
+                <Eye className="w-3.5 h-3.5 text-[#2B323B]" />
                 How it looks on the homepage
               </p>
-              <div className="bg-[#22272E] text-white p-6 sm:p-10 rounded-md">
+              <div className="bg-[#121418] text-white p-6 sm:p-10 rounded-md">
                 <div className="flex items-center gap-3 mb-5">
                   <ColorBar />
                   <span className="font-mono text-xs text-slate-300">{previewHero.badge}</span>
@@ -693,14 +693,14 @@ function OwnerSettingsInner() {
                   <span className="block text-[#B9C3CF]">{previewHero.subtitle}</span>
                 </p>
                 <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">{previewHero.caption}</p>
-                <div className="mt-6 inline-flex px-5 py-3 rounded-md bg-[#B9C3CF] text-[#22272E] font-bold text-sm">Browse products</div>
+                <div className="mt-6 inline-flex px-5 py-3 rounded-md bg-[#B9C3CF] text-[#121418] font-bold text-sm">Browse products</div>
               </div>
             </div>
 
             {/* Form Fields */}
             <div className="space-y-4 pt-2">
               <div>
-                <label htmlFor="field-small-line-above-the" className="block font-bold text-[#22272E] mb-1">
+                <label htmlFor="field-small-line-above-the" className="block font-bold text-[#121418] mb-1">
                   Small line above the headline
                 </label>
                 <input id="field-small-line-above-the"
@@ -708,13 +708,13 @@ function OwnerSettingsInner() {
                   value={heroBadge}
                   onChange={(e) => setHeroBadge(e.target.value)}
                   placeholder="e.g. The Print Planet™ • India's Direct B2B Factory"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="field-headline" className="block font-bold text-[#22272E] mb-1">
+                  <label htmlFor="field-headline" className="block font-bold text-[#121418] mb-1">
                     Headline *
                   </label>
                   <input id="field-headline"
@@ -723,12 +723,12 @@ function OwnerSettingsInner() {
                     value={heroTitle}
                     onChange={(e) => setHeroTitle(e.target.value)}
                     placeholder="e.g. Print Planet — Factory Direct"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none font-semibold"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="field-headline-second-line-orange" className="block font-bold text-[#22272E] mb-1">
+                  <label htmlFor="field-headline-second-line-orange" className="block font-bold text-[#121418] mb-1">
                     Headline second line (orange) *
                   </label>
                   <input id="field-headline-second-line-orange"
@@ -737,18 +737,18 @@ function OwnerSettingsInner() {
                     value={heroSubtitle}
                     onChange={(e) => setHeroSubtitle(e.target.value)}
                     placeholder="e.g. Wholesale ID Cards, Lanyard Rolls & Machinery"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none"
                   />
                 </div>
 
-                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#36404B] font-semibold" : "text-[#3F4A56]"}`}>
+                <p className={`sm:col-span-2 text-[11px] ${headlineLength > HERO_LIMITS.headline ? "text-[#2B323B] font-semibold" : "text-[#353C45]"}`}>
                   Headline total: {headlineLength} of {HERO_LIMITS.headline} characters.
                   {headlineLength > HERO_LIMITS.headline ? " Longer headlines show smaller on the homepage." : ""}
                 </p>
               </div>
 
               <div>
-                <label htmlFor="field-line-under-the-headline" className="block font-bold text-[#22272E] mb-1">
+                <label htmlFor="field-line-under-the-headline" className="block font-bold text-[#121418] mb-1">
                   Line under the headline *
                 </label>
                 <textarea id="field-line-under-the-headline"
@@ -757,9 +757,9 @@ function OwnerSettingsInner() {
                   value={heroCaption}
                   onChange={(e) => setHeroCaption(e.target.value)}
                   placeholder="Official portal of The Print Planet..."
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none leading-relaxed"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none leading-relaxed"
                 />
-                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#36404B] font-semibold" : "text-[#3F4A56]"}`}>
+                <span className={`text-[11px] mt-0.5 block ${heroCaption.trim().length > HERO_LIMITS.caption ? "text-[#2B323B] font-semibold" : "text-[#353C45]"}`}>
                   {heroCaption.trim().length} of {HERO_LIMITS.caption} characters recommended.
                 </span>
               </div>
@@ -769,7 +769,7 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={handleSaveHero}
                   disabled={saving}
-                  className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                  className="bg-[#121418] hover:bg-[#2A2F37] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
                 >
                   {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
                   <span>{saving ? "Saving Hero..." : "Save Homepage Hero"}</span>
@@ -785,94 +785,94 @@ function OwnerSettingsInner() {
         <div className="space-y-6">
           <div className="surface-card p-6 rounded-lg space-y-6 text-xs">
             <div className="border-b border-[#DFE6EE] pb-3">
-              <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
-                <Info className="w-4 h-4 text-[#3F4A56]" />
+              <h2 className="text-sm font-semibold text-[#121418] flex items-center gap-2">
+                <Info className="w-4 h-4 text-[#353C45]" />
                 Dynamic About Us Content Management System (CMS)
               </h2>
-              <p className="text-[11px] text-[#3F4A56] mt-0.5">
+              <p className="text-[11px] text-[#353C45] mt-0.5">
                 Edit factory background, mission story, daily output statistics counters, and quality standards for the public <code>/about</code> page.
               </p>
             </div>
 
             {/* Section 1: Hero Banner on About Page */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#121418]">
                 1. About Page Hero Banner
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="field-hero-tag-pill" className="block font-semibold text-[#22272E] mb-1">Hero Tag Pill</label>
+                  <label htmlFor="field-hero-tag-pill" className="block font-semibold text-[#121418] mb-1">Hero Tag Pill</label>
                   <input id="field-hero-tag-pill"
                     type="text"
                     value={aboutHeroTag}
                     onChange={(e) => setAboutHeroTag(e.target.value)}
-                    className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#121418] rounded-lg px-3 py-2 text-xs outline-none"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="field-hero-title" className="block font-semibold text-[#22272E] mb-1">Hero Title</label>
+                  <label htmlFor="field-hero-title" className="block font-semibold text-[#121418] mb-1">Hero Title</label>
                   <input id="field-hero-title"
                     type="text"
                     value={aboutHeroTitle}
                     onChange={(e) => setAboutHeroTitle(e.target.value)}
-                    className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#121418] rounded-lg px-3 py-2 text-xs outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="field-hero-subtitle" className="block font-semibold text-[#22272E] mb-1">Hero Subtitle</label>
+                <label htmlFor="field-hero-subtitle" className="block font-semibold text-[#121418] mb-1">Hero Subtitle</label>
                 <textarea id="field-hero-subtitle"
                   rows={2}
                   value={aboutHeroSubtitle}
                   onChange={(e) => setAboutHeroSubtitle(e.target.value)}
-                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none resize-none leading-relaxed"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#121418] rounded-lg px-3 py-2 text-xs outline-none resize-none leading-relaxed"
                 />
               </div>
             </div>
 
             {/* Section 2: Story & Manufacturing Mission */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#121418]">
                 2. Manufacturing Mission &amp; Background Story
               </h3>
 
               <div>
-                <label htmlFor="field-section-heading" className="block font-semibold text-[#22272E] mb-1">Section Heading</label>
+                <label htmlFor="field-section-heading" className="block font-semibold text-[#121418] mb-1">Section Heading</label>
                 <input id="field-section-heading"
                   type="text"
                   value={aboutStoryTitle}
                   onChange={(e) => setAboutStoryTitle(e.target.value)}
-                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none font-semibold"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#121418] rounded-lg px-3 py-2 text-xs outline-none font-semibold"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-story-paragraph-1" className="block font-semibold text-[#22272E] mb-1">Story Paragraph 1</label>
+                <label htmlFor="field-story-paragraph-1" className="block font-semibold text-[#121418] mb-1">Story Paragraph 1</label>
                 <textarea id="field-story-paragraph-1"
                   rows={3}
                   value={aboutStoryP1}
                   onChange={(e) => setAboutStoryP1(e.target.value)}
-                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#121418] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-story-paragraph-2" className="block font-semibold text-[#22272E] mb-1">Story Paragraph 2</label>
+                <label htmlFor="field-story-paragraph-2" className="block font-semibold text-[#121418] mb-1">Story Paragraph 2</label>
                 <textarea id="field-story-paragraph-2"
                   rows={3}
                   value={aboutStoryP2}
                   onChange={(e) => setAboutStoryP2(e.target.value)}
-                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#22272E] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
+                  className="w-full bg-[#FFFFFF] border border-[#DFE6EE] focus:border-[#121418] rounded-lg px-3 py-2 text-xs outline-none leading-relaxed"
                 />
               </div>
             </div>
 
             {/* Section 3: Daily Output Statistics Counters */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#121418]">
                 3. Factory Output Counters (Displayed in Stats Grid)
               </h3>
 
@@ -884,7 +884,7 @@ function OwnerSettingsInner() {
                     value={stat1Val}
                     onChange={(e) => setStat1Val(e.target.value)}
                     placeholder="e.g. 50,000+"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#121418] mb-2 outline-none"
                   />
                   <input
                     type="text"
@@ -902,7 +902,7 @@ function OwnerSettingsInner() {
                     value={stat2Val}
                     onChange={(e) => setStat2Val(e.target.value)}
                     placeholder="e.g. 10,000+ m"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#121418] mb-2 outline-none"
                   />
                   <input
                     type="text"
@@ -920,7 +920,7 @@ function OwnerSettingsInner() {
                     value={stat3Val}
                     onChange={(e) => setStat3Val(e.target.value)}
                     placeholder="e.g. 180+"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#121418] mb-2 outline-none"
                   />
                   <input
                     type="text"
@@ -938,7 +938,7 @@ function OwnerSettingsInner() {
                     value={stat4Val}
                     onChange={(e) => setStat4Val(e.target.value)}
                     placeholder="e.g. 500+"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#22272E] mb-2 outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#121418] mb-2 outline-none"
                   />
                   <input
                     type="text"
@@ -953,7 +953,7 @@ function OwnerSettingsInner() {
 
             {/* Section 4: Quality & Core Production Standards */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#121418]">
                 4. Quality &amp; Core Standards
               </h3>
 
@@ -964,7 +964,7 @@ function OwnerSettingsInner() {
                     value={standard1Title}
                     onChange={(e) => setStandard1Title(e.target.value)}
                     placeholder="Standard 1 Title (e.g. ISO CR-80 Standard Compliance)"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#121418] outline-none"
                   />
                   <textarea
                     rows={2}
@@ -981,7 +981,7 @@ function OwnerSettingsInner() {
                     value={standard2Title}
                     onChange={(e) => setStandard2Title(e.target.value)}
                     placeholder="Standard 2 Title (e.g. Pure Grade Polyvinyl Chloride)"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#121418] outline-none"
                   />
                   <textarea
                     rows={2}
@@ -998,7 +998,7 @@ function OwnerSettingsInner() {
                     value={standard3Title}
                     onChange={(e) => setStandard3Title(e.target.value)}
                     placeholder="Standard 3 Title (e.g. Rigid Hardware Attachments)"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#121418] outline-none"
                   />
                   <textarea
                     rows={2}
@@ -1013,7 +1013,7 @@ function OwnerSettingsInner() {
 
             {/* Section 5: Facilities Strip */}
             <div className="space-y-4 p-4 rounded-md bg-slate-50 border border-slate-200">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#22272E]">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-[#121418]">
                 5. Facility Pillars
               </h3>
 
@@ -1024,7 +1024,7 @@ function OwnerSettingsInner() {
                     value={facility1Title}
                     onChange={(e) => setFacility1Title(e.target.value)}
                     placeholder="Facility 1 Title"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#121418] outline-none"
                   />
                   <textarea
                     rows={3}
@@ -1041,7 +1041,7 @@ function OwnerSettingsInner() {
                     value={facility2Title}
                     onChange={(e) => setFacility2Title(e.target.value)}
                     placeholder="Facility 2 Title"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#121418] outline-none"
                   />
                   <textarea
                     rows={3}
@@ -1058,7 +1058,7 @@ function OwnerSettingsInner() {
                     value={facility3Title}
                     onChange={(e) => setFacility3Title(e.target.value)}
                     placeholder="Facility 3 Title"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#22272E] outline-none"
+                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-bold text-[#121418] outline-none"
                   />
                   <textarea
                     rows={3}
@@ -1076,7 +1076,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleSaveAbout}
                 disabled={saving}
-                className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                className="bg-[#121418] hover:bg-[#2A2F37] text-white px-6 py-2.5 rounded-md font-bold text-xs tracking-wide transition-all shadow-xs disabled:opacity-50 flex items-center gap-2 cursor-pointer"
               >
                 {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
                 <span>{saving ? "Saving About Us..." : "Save About Us CMS"}</span>
@@ -1090,53 +1090,53 @@ function OwnerSettingsInner() {
       {activeTab === "identity" && (
         <form onSubmit={handleSaveIdentity} className="space-y-6 text-xs">
           <div className="surface-card p-6 rounded-lg space-y-5">
-            <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-[#3F4A56]" />
+            <h2 className="text-sm font-semibold text-[#121418] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-[#353C45]" />
               Store Legal Identity &amp; Branding
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="field-business-name" className="block font-semibold text-[#22272E] mb-1">Business Name *</label>
+                <label htmlFor="field-business-name" className="block font-semibold text-[#121418] mb-1">Business Name *</label>
                 <input id="field-business-name"
                   type="text"
                   required
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-bold text-[#22272E]"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-bold text-[#121418]"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-tagline" className="block font-semibold text-[#22272E] mb-1">Tagline</label>
+                <label htmlFor="field-tagline" className="block font-semibold text-[#121418] mb-1">Tagline</label>
                 <input id="field-tagline"
                   type="text"
                   value={tagline}
                   onChange={(e) => setTagline(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="field-official-gst-number" className="block font-semibold text-[#22272E] mb-1">Official GST Number</label>
+                <label htmlFor="field-official-gst-number" className="block font-semibold text-[#121418] mb-1">Official GST Number</label>
                 <input id="field-official-gst-number"
                   type="text"
                   value={gstNumber}
                   onChange={(e) => setGstNumber(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono font-bold"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono font-bold"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-custom-logo-url-optional" className="block font-semibold text-[#22272E] mb-1">Custom Logo URL (optional)</label>
+                <label htmlFor="field-custom-logo-url-optional" className="block font-semibold text-[#121418] mb-1">Custom Logo URL (optional)</label>
                 <input id="field-custom-logo-url-optional"
                   type="url"
                   value={logoUrl}
                   onChange={(e) => setLogoUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
@@ -1144,60 +1144,60 @@ function OwnerSettingsInner() {
 
           {/* Contact Strip Details */}
           <div className="surface-card p-6 rounded-lg space-y-5">
-            <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
+            <h2 className="text-sm font-semibold text-[#121418] border-b border-[#DFE6EE] pb-2 flex items-center gap-2">
               <Phone className="w-4 h-4 text-[#217A4B]" />
               Trade Contact &amp; Dispatch Desk
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label htmlFor="field-primary-phone" className="block font-semibold text-[#22272E] mb-1">Primary Phone</label>
+                <label htmlFor="field-primary-phone" className="block font-semibold text-[#121418] mb-1">Primary Phone</label>
                 <input id="field-primary-phone"
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-semibold"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-semibold"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-whatsapp-trade-line" className="block font-semibold text-[#22272E] mb-1">WhatsApp Trade Line</label>
+                <label htmlFor="field-whatsapp-trade-line" className="block font-semibold text-[#121418] mb-1">WhatsApp Trade Line</label>
                 <input id="field-whatsapp-trade-line"
                   type="text"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-semibold text-emerald-700"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-semibold text-emerald-700"
                 />
               </div>
 
               <div>
-                <label htmlFor="field-official-sales-email" className="block font-semibold text-[#22272E] mb-1">Official Sales Email</label>
+                <label htmlFor="field-official-sales-email" className="block font-semibold text-[#121418] mb-1">Official Sales Email</label>
                 <input id="field-official-sales-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
+                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="field-factory-headquarters-address" className="block font-semibold text-[#22272E] mb-1">Factory &amp; Headquarters Address</label>
+              <label htmlFor="field-factory-headquarters-address" className="block font-semibold text-[#121418] mb-1">Factory &amp; Headquarters Address</label>
               <textarea id="field-factory-headquarters-address"
                 rows={3}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
               />
             </div>
 
             <div>
-              <label htmlFor="field-footer-introduction-text" className="block font-semibold text-[#22272E] mb-1">Footer Introduction Text</label>
+              <label htmlFor="field-footer-introduction-text" className="block font-semibold text-[#121418] mb-1">Footer Introduction Text</label>
               <textarea id="field-footer-introduction-text"
                 rows={3}
                 value={footerText}
                 onChange={(e) => setFooterText(e.target.value)}
-                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#22272E] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
+                className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
               />
             </div>
           </div>
@@ -1206,7 +1206,7 @@ function OwnerSettingsInner() {
             <button
               type="submit"
               disabled={saving}
-              className="bg-[#22272E] hover:bg-[#363D47] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-2"
+              className="bg-[#121418] hover:bg-[#2A2F37] text-white px-8 py-3 rounded-md font-bold text-xs tracking-wide transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-2"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               <span>{saving ? "Saving Identity..." : "Save Identity Settings"}</span>
@@ -1219,7 +1219,7 @@ function OwnerSettingsInner() {
       {activeTab === "database" && (
         <div className="surface-card p-6 rounded-lg space-y-6 text-xs anim-fade-up">
           <div className="border-b border-[#DFE6EE] pb-4">
-            <h2 className="text-sm font-semibold text-[#22272E] flex items-center gap-2">
+            <h2 className="text-sm font-semibold text-[#121418] flex items-center gap-2">
               <Database className="w-4 h-4 text-slate-400" />
               Backup &amp; recovery
             </h2>
@@ -1261,7 +1261,7 @@ function OwnerSettingsInner() {
                   <Mail className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-[#22272E] text-xs sm:text-sm">
+                  <h3 className="font-semibold text-[#121418] text-xs sm:text-sm">
                     Transactional email
                   </h3>
                   <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
@@ -1273,7 +1273,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleTestEmail}
                 disabled={emailTestLoading}
-                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#22272E] hover:bg-[#363D47] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#121418] hover:bg-[#2A2F37] text-white rounded-lg font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer shrink-0"
               >
                 {emailTestLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1307,19 +1307,19 @@ function OwnerSettingsInner() {
               <div className="space-y-2">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#3F4A56]">Provider</div>
-                    <div className="font-bold text-[#22272E] mt-0.5 uppercase">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#353C45]">Provider</div>
+                    <div className="font-bold text-[#121418] mt-0.5 uppercase">
                       {emailDiagnostics.config?.provider || "none"}
                     </div>
                   </div>
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#3F4A56]">Sender</div>
-                    <div className="font-bold text-[#22272E] mt-0.5 truncate">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#353C45]">Sender</div>
+                    <div className="font-bold text-[#121418] mt-0.5 truncate">
                       {emailDiagnostics.config?.active_sender_email || emailDiagnostics.config?.brevo_sender_email || emailDiagnostics.config?.resend_from_email || "Not set"}
                     </div>
                   </div>
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#3F4A56]">Sender Status</div>
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#353C45]">Sender Status</div>
                     <div className={`font-bold mt-0.5 ${emailDiagnostics.sender_verified ? "text-[#217A4B]" : "text-red-600"}`}>
                       {emailDiagnostics.sender_verified ? "Verified" : "Not verified"}
                     </div>
@@ -1328,10 +1328,10 @@ function OwnerSettingsInner() {
                 {emailDiagnostics.resend && (
                   <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-2.5 text-[11px] text-slate-600 space-y-1">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <span className="font-medium text-[#22272E]">Resend</span>
+                      <span className="font-medium text-[#121418]">Resend</span>
                       <span>Key: {emailDiagnostics.resend.key_valid ? "valid" : "not validated"}</span>
                       <span>Domains: {emailDiagnostics.resend.domains?.length || 0}</span>
-                      {emailDiagnostics.resend.sandbox && <span className="text-[#36404B]">Sandbox sender</span>}
+                      {emailDiagnostics.resend.sandbox && <span className="text-[#2B323B]">Sandbox sender</span>}
                     </div>
                     {emailDiagnostics.resend.note && (
                       <p className="text-slate-500 leading-relaxed">{emailDiagnostics.resend.note}</p>
@@ -1360,7 +1360,7 @@ function OwnerSettingsInner() {
                   <CloudUpload className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-[#22272E] text-xs sm:text-sm flex items-center gap-2">
+                  <h3 className="font-semibold text-[#121418] text-xs sm:text-sm flex items-center gap-2">
                     Cloud auto-persistence
                     <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#217A4B]">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#217A4B]" />
@@ -1377,7 +1377,7 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={() => handleCloudSync("backup")}
                   disabled={cloudSyncLoading || cloudRestoreLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#22272E] hover:bg-[#363D47] text-white rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] hover:bg-[#2A2F37] text-white rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {cloudSyncLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1390,7 +1390,7 @@ function OwnerSettingsInner() {
                   type="button"
                   onClick={() => handleCloudSync("restore")}
                   disabled={cloudSyncLoading || cloudRestoreLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFFFFF] hover:bg-slate-50 text-[#22272E] border border-[#DFE6EE] rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFFFFF] hover:bg-slate-50 text-[#121418] border border-[#DFE6EE] rounded-lg font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {cloudRestoreLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1406,11 +1406,11 @@ function OwnerSettingsInner() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
             <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
-                <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
+                <div className="flex items-center gap-1.5 text-[#121418] font-bold mb-1">
                   <Mail className="w-4 h-4 text-[#217A4B]" />
                   <span>Email Full DB Backup</span>
                 </div>
-                <p className="text-[11px] text-[#3F4A56] leading-relaxed">
+                <p className="text-[11px] text-[#353C45] leading-relaxed">
                   Generates a live database snapshot and emails it as an Excel attachment directly to <strong>{email || "theprintplanet01@gmail.com"}</strong>.
                 </p>
               </div>
@@ -1431,11 +1431,11 @@ function OwnerSettingsInner() {
 
             <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
-                <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
-                  <Download className="w-4 h-4 text-[#22272E]" />
+                <div className="flex items-center gap-1.5 text-[#121418] font-bold mb-1">
+                  <Download className="w-4 h-4 text-[#121418]" />
                   <span>Direct DB Download</span>
                 </div>
-                <p className="text-[11px] text-[#3F4A56] leading-relaxed">
+                <p className="text-[11px] text-[#353C45] leading-relaxed">
                   Immediately compiles and downloads the full multi-sheet database workbook (.xlsx) to your computer.
                 </p>
               </div>
@@ -1443,7 +1443,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleDownloadBackup}
                 disabled={backupDownloadLoading}
-                className="w-full bg-[#22272E] hover:bg-[#363D47] text-white py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
+                className="w-full bg-[#121418] hover:bg-[#2A2F37] text-white py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
               >
                 {backupDownloadLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1456,11 +1456,11 @@ function OwnerSettingsInner() {
 
             <div className="border border-[#DFE6EE] rounded-lg p-4 bg-[#EDF1F6] flex flex-col justify-between space-y-3">
               <div>
-                <div className="flex items-center gap-1.5 text-[#22272E] font-bold mb-1">
-                  <FileSpreadsheet className="w-4 h-4 text-[#3F4A56]" />
+                <div className="flex items-center gap-1.5 text-[#121418] font-bold mb-1">
+                  <FileSpreadsheet className="w-4 h-4 text-[#353C45]" />
                   <span>Catalog &amp; Images Export</span>
                 </div>
-                <p className="text-[11px] text-[#3F4A56] leading-relaxed">
+                <p className="text-[11px] text-[#353C45] leading-relaxed">
                   Exports all catalog products with SKU, category, trade pricing, and image URLs formatted for client onboarding.
                 </p>
               </div>
@@ -1468,7 +1468,7 @@ function OwnerSettingsInner() {
                 type="button"
                 onClick={handleExportCatalog}
                 disabled={exportCatalogLoading}
-                className="w-full bg-[#FFFFFF] border border-[#DFE6EE] hover:bg-[#EDF1F6] text-[#22272E] py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-2xs"
+                className="w-full bg-[#FFFFFF] border border-[#DFE6EE] hover:bg-[#EDF1F6] text-[#121418] py-2 rounded-lg font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-2xs"
               >
                 {exportCatalogLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1485,8 +1485,8 @@ function OwnerSettingsInner() {
       {/* TAB 5: SECURITY CREDENTIALS */}
       {activeTab === "security" && (
         <div className="surface-card p-6 rounded-lg space-y-5 text-xs">
-          <h2 className="text-sm font-semibold text-[#22272E] border-b border-[#DFE6EE] pb-2 flex items-center gap-1.5">
-            <Lock className="w-4 h-4 text-[#3F4A56]" />
+          <h2 className="text-sm font-semibold text-[#121418] border-b border-[#DFE6EE] pb-2 flex items-center gap-1.5">
+            <Lock className="w-4 h-4 text-[#353C45]" />
             Change Owner Master Password
           </h2>
 
@@ -1506,7 +1506,7 @@ function OwnerSettingsInner() {
 
           <form onSubmit={handleChangePassword} className="space-y-4 max-w-md">
             <div>
-              <label htmlFor="field-current-password" className="block font-semibold text-[#22272E] mb-1">Current Password *</label>
+              <label htmlFor="field-current-password" className="block font-semibold text-[#121418] mb-1">Current Password *</label>
               <input id="field-current-password"
                 type="password"
                 required
@@ -1517,7 +1517,7 @@ function OwnerSettingsInner() {
             </div>
 
             <div>
-              <label htmlFor="field-new-master-password-min" className="block font-semibold text-[#22272E] mb-1">
+              <label htmlFor="field-new-master-password-min" className="block font-semibold text-[#121418] mb-1">
                 New Master Password (min 8 characters) *
               </label>
               <input id="field-new-master-password-min"
@@ -1533,7 +1533,7 @@ function OwnerSettingsInner() {
             <button
               type="submit"
               disabled={passSubmitting}
-              className="bg-[#22272E] hover:bg-[#363D47] text-white px-6 py-2.5 rounded-md font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
+              className="bg-[#121418] hover:bg-[#2A2F37] text-white px-6 py-2.5 rounded-md font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
             >
               {passSubmitting ? "Updating Password..." : "Update Owner Password"}
             </button>
@@ -1546,7 +1546,7 @@ function OwnerSettingsInner() {
 
 export default function OwnerSettingsPage() {
   return (
-    <Suspense fallback={<div className="py-20 text-center text-xs text-[#3F4A56]">Loading configuration...</div>}>
+    <Suspense fallback={<div className="py-20 text-center text-xs text-[#353C45]">Loading configuration...</div>}>
       <OwnerSettingsInner />
     </Suspense>
   );
