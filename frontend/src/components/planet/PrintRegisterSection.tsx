@@ -60,7 +60,7 @@ export default function PrintRegisterSection() {
       ref={rootRef}
       data-no-reveal
       aria-labelledby="register-heading"
-      className="relative bg-[#121418] text-white overflow-hidden min-h-svh flex items-center"
+      className="relative bg-[#0E2238] text-white overflow-hidden min-h-svh flex items-center"
     >
       <div aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-center">

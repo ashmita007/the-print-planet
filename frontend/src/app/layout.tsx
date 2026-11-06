@@ -1,21 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Bricolage Grotesque gives hero headlines and headings a bold, industrial print-shop voice;
+// Outfit delivers a next-level modern geometric voice with flawless kerning and punchy display presence;
 // Plus Jakarta Sans keeps body copy and forms exceptionally crisp; JetBrains Mono sets numbers and SKUs.
-const heroFont = Bricolage_Grotesque({
+const heroFont = Outfit({
   subsets: ["latin"],
   variable: "--font-hero",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["600", "700", "800", "900"],
 });
 
-const heading = Bricolage_Grotesque({
+const heading = Outfit({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["600", "700", "800", "900"],
 });
 
 const body = Plus_Jakarta_Sans({
@@ -39,7 +39,7 @@ import MotionBridge from "@/components/animations/MotionBridge";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const viewport: Viewport = {
-  themeColor: "#121418",
+  themeColor: "#0E2238",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,

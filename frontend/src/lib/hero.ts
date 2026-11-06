@@ -26,10 +26,10 @@ export function heroCopy(settings?: Partial<SiteSettings> | null): HeroCopy {
   };
 }
 
-/** One rule for the public hero and the owner preview, so both always match. */
+/** One rule for the public hero and the owner preview, so both always match with next-level scale. */
 export function heroHeadlineClass(copy: HeroCopy) {
   const length = copy.title.length + copy.subtitle.length;
-  if (length > 90) return "text-[1.625rem] sm:text-[2rem] lg:text-[2.25rem]";
-  if (length > HERO_LIMITS.headline) return "text-[2rem] sm:text-4xl lg:text-[2.75rem]";
-  return "text-[2.5rem] sm:text-5xl lg:text-[4rem]";
+  if (length > 90) return "text-[1.875rem] sm:text-[2.25rem] lg:text-[2.75rem] xl:text-[3.125rem]";
+  if (length > HERO_LIMITS.headline) return "text-3xl sm:text-4xl lg:text-[3.25rem]";
+  return "text-4xl sm:text-5xl lg:text-6xl";
 }

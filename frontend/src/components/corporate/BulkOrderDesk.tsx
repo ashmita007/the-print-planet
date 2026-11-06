@@ -459,7 +459,7 @@ export default function BulkOrderDesk() {
   return (
     <div ref={rootRef} className="overflow-x-clip">
       {/* Hero */}
-      <section data-no-reveal className="relative bg-[#121418] text-white overflow-hidden">
+      <section data-no-reveal className="relative bg-[#0E2238] text-white overflow-hidden">
         <div data-hero-dots aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
         <PrintPlanet
           dots={7000}
@@ -1144,7 +1144,7 @@ export default function BulkOrderDesk() {
           </div>
 
           {/* Live summary */}
-          <aside data-desk aria-label="Order summary" className="lg:col-span-4 lg:sticky lg:top-20 bg-[#121418] text-white">
+          <aside data-desk aria-label="Order summary" className="lg:col-span-4 lg:sticky lg:top-20 bg-[#0E2238] text-white">
             <div className="p-5 sm:p-6">
               <p className="font-mono text-xs text-slate-300">Your order</p>
               <p className="mt-1 text-lg font-bold">{product.label}</p>

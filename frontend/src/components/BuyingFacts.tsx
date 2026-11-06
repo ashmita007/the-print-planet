@@ -14,7 +14,7 @@ const WHATSAPP = "https://wa.me/919741808034?text=Hi%20The%20Print%20Planet%2C%2
 
 export default function BuyingFacts() {
   return (
-    <section className="relative bg-[#121418] text-white overflow-hidden">
+    <section className="relative bg-[#0E2238] text-white overflow-hidden">
       <div aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <ColorBar className="mb-6" />

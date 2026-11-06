@@ -130,7 +130,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section aria-label="Key numbers" className="bg-[#121418] text-white">
+      <section aria-label="Key numbers" className="bg-[#0E2238] text-white">
         <dl className="max-w-7xl mx-auto px-4 sm:px-6 py-9 sm:py-12 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
           {stats.map((stat) => (
             <div key={stat.label}>

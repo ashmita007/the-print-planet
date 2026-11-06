@@ -57,7 +57,7 @@ export default function Footer({ settings }: FooterProps) {
   const gst = settings?.gst_number || "29AAQFT3909B1ZZ";
 
   return (
-    <footer className="relative bg-[#121418] text-white overflow-hidden pt-12 sm:pt-16 pb-24 sm:pb-8">
+    <footer className="relative bg-[#0E2238] text-white overflow-hidden pt-12 sm:pt-16 pb-24 sm:pb-8">
       <div aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 pb-10 border-b border-white/10">

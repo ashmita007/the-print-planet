@@ -12,22 +12,22 @@
   --text-xs: 0.8125rem;
   --text-xs--line-height: 1.5;
 
-  --color-brand-navy: #121418;
-  --color-brand-deepNavy: #2A2F37;
-  --color-brand-orange: #B9C3CF;
-  --color-brand-orangeHover: #A9B5C3;
+  --color-brand-navy: #16324F;
+  --color-brand-deepNavy: #0E2238;
+  --color-brand-orange: #F26B1D;
+  --color-brand-orangeHover: #FF8A3D;
   --color-brand-bgMain: #FAFBFD;
   --color-brand-bgAlt: #EDF1F6;
-  --color-brand-textMain: #121418;
+  --color-brand-textMain: #16324F;
   --color-brand-textSecondary: #353C45;
   --color-brand-border: #DFE6EE;
   --color-brand-success: #217A4B;
   --color-brand-error: #C0392B;
 
-  /* Slate palette (#FAFBFD, #DFE6EE, #B9C3CF, #6C7A89, #121418) with an orange accent for actions. */
+  /* Previous signature deep navy blue palette (#0E2238) with bright action accents */
   --color-page: #FAFBFD;
   --color-surface: #FFFFFF;
-  --color-ink: #121418;
+  --color-ink: #0E2238;
   --color-accent: #F26B1D;
   --color-accent-hover: #FF8A3D;
   --color-accent-text: #353C45;
@@ -36,13 +36,13 @@
 }
 
 :root {
-  --color-brand-navy: #121418;
-  --color-brand-deepNavy: #2A2F37;
-  --color-brand-orange: #B9C3CF;
-  --color-brand-orangeHover: #A9B5C3;
+  --color-brand-navy: #16324F;
+  --color-brand-deepNavy: #0E2238;
+  --color-brand-orange: #F26B1D;
+  --color-brand-orangeHover: #FF8A3D;
   --color-brand-bgMain: #FAFBFD;
   --color-brand-bgAlt: #EDF1F6;
-  --color-brand-textMain: #121418;
+  --color-brand-textMain: #16324F;
   --color-brand-textSecondary: #353C45;
   --color-brand-border: #DFE6EE;
   --color-brand-success: #217A4B;

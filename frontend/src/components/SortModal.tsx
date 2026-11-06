@@ -100,7 +100,7 @@ export default function SortModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Responsive Header */}
-        <div className="bg-[#121418] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
+        <div className="bg-[#0E2238] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-2.5">
             <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#353C45]" />
             <h3 id="sort-modal-title" className="text-xs sm:text-base font-bold tracking-tight">
