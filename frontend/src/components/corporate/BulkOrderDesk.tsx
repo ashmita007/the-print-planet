@@ -477,10 +477,10 @@ export default function BulkOrderDesk() {
               <TextReveal text="from our factory." />
             </span>
           </h1>
-          <p data-hero data-hero-item className="mt-4 text-base text-slate-300 max-w-xl leading-relaxed">
+          <p data-hero data-hero-item className="mt-4 text-base text-slate-100 font-normal max-w-xl leading-relaxed drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
             Lanyards, ID cards, holders and RFID for companies, schools and print shops. Tell us what you need and get a formal GST quotation in your own order portal.
           </p>
-          <ul data-hero data-hero-item className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[13px] text-slate-300">
+          <ul data-hero data-hero-item className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[13px] text-slate-200">
             {["No broker fees", "Digital proof included", "GST invoice and e-way bill", "Pan-India dispatch"].map((fact) => (
               <li key={fact} className="flex items-center gap-2">
                 <span aria-hidden="true" className="w-1 h-1 bg-[#121418]" />

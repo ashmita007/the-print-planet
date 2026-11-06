@@ -282,21 +282,21 @@ export default function ProductHeroShowcase({
           <div className="lg:col-span-6">
             <div data-hero data-hero-item className="flex items-center gap-3 mb-5">
               <ColorBar />
-              <span className="font-mono text-xs text-slate-300">{copy.badge}</span>
+              <span className="font-mono text-xs text-slate-200 font-medium tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">{copy.badge}</span>
             </div>
 
-            <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.025em] leading-[1.08] text-white`}>
+            <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.025em] leading-[1.08] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`}>
               <TextReveal text={copy.title} />
-              <span className="block text-[#FF8A3D] font-hero mt-1 sm:mt-1.5 font-extrabold tracking-[-0.02em]">
+              <span className="block text-[#FF8A3D] font-hero mt-1 sm:mt-1.5 font-extrabold tracking-[-0.02em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
                 <TextReveal text={copy.subtitle} />
               </span>
             </p>
 
-            <h1 data-hero data-hero-item className="mt-4 text-sm sm:text-base font-semibold text-white">
+            <h1 data-hero data-hero-item className="mt-4 text-sm sm:text-base font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
               The Print Planet: PVC cards, lanyards and ID card machines, Bengaluru
             </h1>
 
-            <p data-hero data-hero-item className="mt-2 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
+            <p data-hero data-hero-item className="mt-3 text-base sm:text-lg text-slate-100 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
               {copy.caption}
             </p>
 

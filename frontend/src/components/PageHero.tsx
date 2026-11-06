@@ -54,7 +54,7 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
               <CropMarks />
             </h1>
             {lead && (
-              <p data-hero-item className="mt-5 text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
+              <p data-hero-item className="mt-5 text-sm sm:text-base text-slate-100 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
                 {lead}
               </p>
             )}
