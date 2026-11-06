@@ -26,6 +26,7 @@ const COMPANY_LINKS = [
   { href: "/corporate", label: "Bulk orders" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
+  { href: "/pricing.md", label: "Wholesale Tariff (Pricing.md)" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -155,7 +156,16 @@ export default function Footer({ settings }: FooterProps) {
           <p suppressHydrationWarning>
             © {new Date().getFullYear()} {businessName}. GSTIN {gst}
           </p>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center gap-5">
+            <Link href="/pricing.md" className="hover:text-white transition-colors">
+              Pricing Tariff
+            </Link>
+            <Link href="/llms.txt" className="hover:text-white transition-colors">
+              llms.txt
+            </Link>
+            <Link href="/okf/index.md" className="hover:text-white transition-colors">
+              OKF
+            </Link>
             <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy
             </Link>

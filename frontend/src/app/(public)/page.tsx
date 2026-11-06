@@ -61,25 +61,34 @@ export const revalidate = 120;
 // One source for the visible accordion and the FAQPage schema, which must match.
 const FAQS: FaqItem[] = [
   {
-    question: "What does The Print Planet supply?",
+    question: "What products and machinery does The Print Planet manufacture and supply?",
     answer:
-      "PVC cards, fusing sheets, satin lanyard rolls, ID card holders, hooks and clips, RFID cards, and card manufacturing machines.",
+      "The Print Planet is India's direct factory manufacturer of virgin polyester satin lanyard rolls (12mm–25mm), rigid PVC ID card holders, dog hooks and crocodile clips, RFID 13.56MHz Mifare and 125kHz EM-Marin smart cards, CR-80 PVC core fusing sheets, motorized electric card die cutters, and dual-plate heating laminators.",
   },
   {
-    question: "How do I get a price?",
-    answer: "Use Get a quote on any product, or message us on WhatsApp at +91 97418 08034.",
+    question: "Where is The Print Planet located and can I inspect machinery before purchase?",
+    answer:
+      "Our central manufacturing and warehousing facility is located at No. 33, 34, Srigandhadakaval, Sunkadakatte, Bangalore - 560091, Karnataka. Commercial buyers can visit in person or request a live WhatsApp video inspection (+91 97418 08034) to test motorized die-cutters and fusing machines live before crating and dispatch.",
   },
   {
-    question: "Do you deliver across India?",
-    answer: "Yes. We ship to every state and union territory from Bengaluru by courier and cargo.",
+    question: "What is the minimum order quantity (MOQ) and pricing for wholesale orders?",
+    answer:
+      "Consumables start with flexible minimums: 1 roll (100m spool) for satin lanyards and 100 pieces for PVC card holders. Bulk factory slabs start from ₹185/roll for lanyards and ₹2.65/piece for holders. Detailed quantity breaks are published in our open machine-readable tariff at /pricing.md.",
   },
   {
-    question: "Do you give GST invoices?",
-    answer: "Yes. Every wholesale order comes with a GST invoice for input tax credit.",
+    question: "How fast do you deliver across India, and which logistics partners do you use?",
+    answer:
+      "Orders are dispatched within 24 to 48 hours directly from our Bengaluru central hub via DTDC, Blue Dart, VRL Logistics, and TCI Express. Shipments reach tier-1 metros within 24–48 hours with real-time consignment tracking.",
   },
   {
-    question: "Can you print lanyards with my logo?",
-    answer: "Yes. Sublimation and screen printing in 12, 16, 20 and 25 mm with Pantone colour matching.",
+    question: "Do you provide official GST tax invoices for Input Tax Credit (ITC)?",
+    answer:
+      "Yes. 100% of commercial consignments include formal HSN-coded GST tax invoices issued under GSTIN 29AAQFT3909B1ZZ, allowing verified businesses to claim complete 18% Input Tax Credit.",
+  },
+  {
+    question: "Can you print custom multicolour lanyards with corporate logos?",
+    answer:
+      "Yes. We operate industrial heat-transfer sublimation and rotary screen printing lines in 12mm, 16mm, 20mm, and 25mm widths with accurate Pantone hexachrome color reproduction and safety breakaway fittings.",
   },
 ];
 
