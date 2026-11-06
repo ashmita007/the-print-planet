@@ -26,17 +26,17 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const metadata: Metadata = {
   title: {
-    absolute: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
+    absolute: "The Print Planet Bangalore | PVC Cards, Satin Lanyards & ID Card Machines Wholesale",
   },
   description:
-    "The Print Planet, Bengaluru: PVC cards, ID card holders, satin lanyard rolls, RFID cards and ID card machines. Factory-direct wholesale across India.",
+    "Official site of The Print Planet (theprintplanet.co.in) Bangalore. Direct manufacturer of PVC cards, satin lanyard rolls, rigid ID card holders, RFID cards & ID card die cutting machines with 24–48h pan-India dispatch from Sunkadakatte. 100% GST invoice.",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
+    title: "The Print Planet Bangalore | PVC Cards, Satin Lanyards & ID Card Machines Wholesale",
     description:
-      "India's leading specialist in PVC cards, CR-80 fusing sheets, rigid ID card holders, and card manufacturing machinery. Direct B2B wholesale rates from Sunkadakatte, Bangalore.",
+      "India's leading factory direct specialist in PVC cards, CR-80 fusing sheets, rigid ID card holders, and card manufacturing machinery. Direct B2B wholesale rates from Sunkadakatte, Bangalore.",
     url: SITE_URL,
     siteName: "The Print Planet",
     images: [

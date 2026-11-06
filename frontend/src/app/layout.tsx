@@ -227,7 +227,14 @@ const jsonLdOrg = {
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: "The Print Planet",
-      alternateName: ["Print Planet", "ThePrintPlanet"],
+      alternateName: [
+        "Print Planet",
+        "The Print Planet Bangalore",
+        "The Print Planet Bengaluru",
+        "The Print Planet Sunkadakatte",
+        "Print Planet Bangalore",
+        "ThePrintPlanet"
+      ],
       publisher: {
         "@id": `${SITE_URL}/#organization`,
       },

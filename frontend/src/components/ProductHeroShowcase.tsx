@@ -285,16 +285,16 @@ export default function ProductHeroShowcase({
               <span className="font-mono text-xs text-slate-200 font-medium tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">{copy.badge}</span>
             </div>
 
-            <p data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.025em] leading-[1.08] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`}>
+            <h1 data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.025em] leading-[1.08] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`}>
               <TextReveal text={copy.title} />
               <span className="block text-[#FF8A3D] font-hero mt-1 sm:mt-1.5 font-extrabold tracking-[-0.02em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
                 <TextReveal text={copy.subtitle} />
               </span>
-            </p>
-
-            <h1 data-hero data-hero-item className="mt-4 text-sm sm:text-base font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-              The Print Planet: PVC cards, lanyards and ID card machines, Bengaluru
             </h1>
+
+            <h2 data-hero data-hero-item className="mt-4 text-sm sm:text-base font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+              The Print Planet: PVC cards, lanyards and ID card machines, Bengaluru
+            </h2>
 
             <p data-hero data-hero-item className="mt-3 text-base sm:text-lg text-slate-100 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
               {copy.caption}
