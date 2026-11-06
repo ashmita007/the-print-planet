@@ -100,6 +100,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   }
 
   const totalPages = Math.ceil(productsData.count / 24);
+  const seo = CATEGORY_SEO[category.slug];
 
   const categoryJsonLd = {
     "@context": "https://schema.org",
@@ -144,6 +145,22 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           },
         ],
       },
+      ...(seo?.questions && seo.questions.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${SITE_URL}/categories/${category.slug}#faq`,
+              mainEntity: seo.questions.map((q) => ({
+                "@type": "Question",
+                name: q.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: q.answer,
+                },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -151,8 +168,6 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   const childSubcategories = allCategories.filter((c) => c.parent === category.id);
   const mainCategories = allCategories.filter((c) => !c.parent);
   const siblingSubcategories = parentCategory ? allCategories.filter((c) => c.parent === parentCategory.id) : [];
-
-  const seo = CATEGORY_SEO[category.slug];
 
   return (
     <div>

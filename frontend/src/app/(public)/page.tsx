@@ -66,6 +66,26 @@ const FAQS: FaqItem[] = [
       "The Print Planet is India's direct factory manufacturer of virgin polyester satin lanyard rolls (12mm–25mm), rigid PVC ID card holders, dog hooks and crocodile clips, RFID 13.56MHz Mifare and 125kHz EM-Marin smart cards, CR-80 PVC core fusing sheets, motorized electric card die cutters, and dual-plate heating laminators.",
   },
   {
+    question: "What is a standard CR-80 PVC ID card size in mm and inches?",
+    answer:
+      "A standard ISO CR-80 ID card measures exactly 85.60 mm × 53.98 mm (3.375 × 2.125 inches) with a 30 mil (0.76 mm) thickness and 3.18 mm rounded corners—identical to a bank ATM card or driving license. The Print Planet manufactures fusing sheets, pre-cut PVC cards, and die cutters strictly conforming to this ISO/IEC 7810 standard.",
+  },
+  {
+    question: "What machines are needed to start a commercial PVC ID card manufacturing business?",
+    answer:
+      "To manufacture laminated PVC ID cards commercially, you need two core machines: an automatic heated PVC fusing laminator (to bond printed core sheets with front and back overlay films under 135°C–155°C heat and hydraulic pressure) and a motorized PVC card die cutter (to punch out finished CR-80 cards at up to 1,200 cards/hour). Both machines are ready in stock at our Bangalore facility with 1-year warranty and WhatsApp live video testing.",
+  },
+  {
+    question: "Which satin ribbon roll is best for sublimation lanyard heat-transfer printing?",
+    answer:
+      "White Digital Sublimation Lanyard Rolls woven from 100% continuous-filament virgin polyester with a calendar-pressed smooth surface. They withstand 200°C–215°C heat press exposure without melting or shrinking, delivering deep ink absorption, photographic resolution, and Pantone hexachrome color fidelity in 12mm, 16mm, 20mm, and 25mm widths.",
+  },
+  {
+    question: "What is the difference between Mifare 1K smart cards and EM-Marin proximity cards?",
+    answer:
+      "Mifare 1K operates at 13.56 MHz high frequency with 1KB EEPROM read/write memory organized into 16 secure sectors with dual encryption keys, making it suitable for multi-application campus IDs, cashless payments, and secure access. EM-Marin operates at 125 kHz low frequency with a 64-bit factory pre-programmed read-only ID, primarily used for basic building entry turnstiles.",
+  },
+  {
     question: "Where is The Print Planet located and can I inspect machinery before purchase?",
     answer:
       "Our central manufacturing and warehousing facility is located at No. 33, 34, Srigandhadakaval, Sunkadakatte, Bangalore - 560091, Karnataka. Commercial buyers can visit in person or request a live WhatsApp video inspection (+91 97418 08034) to test motorized die-cutters and fusing machines live before crating and dispatch.",
