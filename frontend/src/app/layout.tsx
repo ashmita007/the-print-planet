@@ -1,28 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Sora, DM_Sans, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Sora gives crisp geometric voice; Plus Jakarta Sans sets punchy, authoritative hero headlines;
-// DM Sans keeps body copy clear; JetBrains Mono sets order numbers and SKUs.
-const heroFont = Plus_Jakarta_Sans({
+// Bricolage Grotesque gives hero headlines and headings a bold, industrial print-shop voice;
+// Plus Jakarta Sans keeps body copy and forms exceptionally crisp; JetBrains Mono sets numbers and SKUs.
+const heroFont = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-hero",
   display: "swap",
   weight: ["500", "600", "700", "800"],
 });
 
-const heading = Sora({
+const heading = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
   weight: ["500", "600", "700", "800"],
 });
 
-const body = DM_Sans({
+const body = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const mono = JetBrains_Mono({

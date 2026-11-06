@@ -29,6 +29,50 @@ const HERO_CATEGORIES = [
 
 const ROTATE_SECONDS = 5;
 
+const DEFAULT_FLAGSHIP: Product = {
+  id: 0,
+  name: "CR-80 Premium PVC Cards & Sheets",
+  slug: "cr80-premium-pvc-card-sheets",
+  sku: "PP-PVC-CR80",
+  category: {
+    id: 0,
+    name: "PVC Cards",
+    slug: "pvc-cards",
+    description: "Premium PVC Cards and Sheets",
+    is_active: true,
+    display_order: 0,
+    products_count: 10,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  description: "Factory direct CR-80 cards and fusing sheets.",
+  specifications: {},
+  material: "Super-white virgin PVC",
+  price_display: "Wholesale direct",
+  price: "18.50",
+  currency: "INR",
+  price_visibility: true,
+  is_featured: true,
+  display_order: 0,
+  minimum_order_quantity: 100,
+  is_active: true,
+  verification_status: "verified",
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+  images: [
+    {
+      id: 0,
+      cloudinary_public_id: "placeholder",
+      secure_url: "/placeholder-product.svg",
+      alt_text: "CR-80 Premium PVC Cards & Sheets",
+      display_order: 0,
+      is_primary: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    },
+  ],
+};
+
 export default function ProductHeroShowcase({
   flagshipProducts,
   totalProductsCount,
@@ -52,33 +96,89 @@ export default function ProductHeroShowcase({
   // All hero text comes from Owner Settings, with short defaults if a field is empty.
   const copy = heroCopy(settings);
 
-  // Entrance: the markup starts hidden via [data-hero] in globals.css, so there is no flash.
+  // Entrance: words stagger upward with spring easing, items fade in smoothly.
   useGSAP(
     () => {
       gsap.set("[data-hero]", { opacity: 1 });
       if (prefersReducedMotion()) return;
 
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-word]", { yPercent: 115, duration: 0.85, stagger: 0.05 }, 0)
-        .from("[data-hero-item]", { autoAlpha: 0, y: 18, duration: 0.65, stagger: 0.08 }, 0.2)
-        .from("[data-swatch]", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.4, stagger: 0.05 }, 0.3)
-        .from("[data-hero-stage]", { autoAlpha: 0, y: 28, duration: 0.9 }, 0.15)
-        .from("[data-crop]", { autoAlpha: 0, scale: 1.8, duration: 0.5, stagger: 0.07, ease: "back.out(2)" }, 0.75);
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      const words = heroRef.current?.querySelectorAll("[data-word]");
+      if (words && words.length > 0) {
+        tl.fromTo(
+          words,
+          { yPercent: 125, opacity: 0 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.85,
+            stagger: 0.045,
+            ease: "back.out(1.5)",
+          },
+          0
+        );
+      }
+
+      const items = heroRef.current?.querySelectorAll("[data-hero-item]");
+      if (items && items.length > 0) {
+        tl.fromTo(
+          items,
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.65, stagger: 0.08, ease: "power3.out" },
+          0.2
+        );
+      }
+
+      const swatches = heroRef.current?.querySelectorAll("[data-swatch]");
+      if (swatches && swatches.length > 0) {
+        tl.fromTo(
+          swatches,
+          { scaleY: 0, transformOrigin: "50% 100%" },
+          { scaleY: 1, duration: 0.45, stagger: 0.05, ease: "power2.out" },
+          0.25
+        );
+      }
+
+      const stage = heroRef.current?.querySelector("[data-hero-stage]");
+      if (stage) {
+        tl.fromTo(
+          stage,
+          { autoAlpha: 0, y: 24 },
+          { autoAlpha: 1, y: 0, duration: 0.85, ease: "power3.out" },
+          0.15
+        );
+      }
+
+      const crops = heroRef.current?.querySelectorAll("[data-crop]");
+      if (crops && crops.length > 0) {
+        tl.fromTo(
+          crops,
+          { autoAlpha: 0, scale: 1.6 },
+          { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.06, ease: "back.out(2)" },
+          0.7
+        );
+      }
 
       // The proof sheet drifts up slightly against the page as the hero scrolls away.
-      gsap.to("[data-hero-sheet]", {
-        y: -36,
-        ease: "none",
-        scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
-      });
+      const sheet = heroRef.current?.querySelector("[data-hero-sheet]");
+      if (sheet) {
+        gsap.to(sheet, {
+          y: -36,
+          ease: "none",
+          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
+        });
+      }
 
       // Subtle parallax drift for the precision background dots
-      gsap.to("[data-hero-dots]", {
-        yPercent: 15,
-        ease: "none",
-        scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
-      });
+      const dots = heroRef.current?.querySelector("[data-hero-dots]");
+      if (dots) {
+        gsap.to(dots, {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
+        });
+      }
     },
     { scope: heroRef }
   );
@@ -104,7 +204,7 @@ export default function ProductHeroShowcase({
     setActiveIndex(0);
   }, [selectedHeroCategory]);
 
-  const activeProduct = activeProducts[activeIndex] || activeProducts[0];
+  const activeProduct = activeProducts[activeIndex] || activeProducts[0] || DEFAULT_FLAGSHIP;
 
   const primaryUrl = getProductImageUrl(activeProduct);
 

@@ -13,7 +13,7 @@ export default function TextReveal({ text, className = "" }: TextRevealProps) {
       {text.split(" ").map((word, index) => (
         <React.Fragment key={index}>
           {index > 0 && " "}
-          <span className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]">
+          <span className="inline-block overflow-hidden align-bottom pb-[0.2em] -mb-[0.2em]">
             <span data-word className="inline-block will-change-transform">
               {word}
             </span>
