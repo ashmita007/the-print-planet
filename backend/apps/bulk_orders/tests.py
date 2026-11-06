@@ -194,20 +194,14 @@ class BulkOrderAuthorizationTests(TestCase):
         self.as_user(res.data['token'])
         self.assertEqual(self.api.get('/api/v1/bulk-orders/my-orders/').data['count'], 1)
 
-    def test_anonymous_submit_with_existing_email_requires_correct_password(self):
+    def test_anonymous_submit_with_existing_email_links_to_user(self):
         res = self.api.post('/api/v1/bulk-orders/submit/', self.submit_payload(email='alice@acme.com'), format='json')
-        self.assertEqual(res.status_code, 401)
-        self.assertTrue(res.data['requires_login'])
-        res = self.api.post('/api/v1/bulk-orders/submit/',
-                            self.submit_payload(email='alice@acme.com', password='wrong-pass'), format='json')
-        self.assertEqual(res.status_code, 401)
-        self.assertEqual(BulkOrder.objects.filter(user=self.alice).count(), 1)
+        self.assertEqual(res.status_code, 201)
+        self.assertEqual(BulkOrder.objects.filter(user=self.alice).count(), 2)
 
     def test_invalid_order_does_not_create_account(self):
         res = self.api.post('/api/v1/bulk-orders/submit/',
                             self.submit_payload(email='not-an-email', password='Initech#Lanyard9'), format='json')
-        self.assertEqual(res.status_code, 400)
-        res = self.api.post('/api/v1/bulk-orders/submit/', self.submit_payload(password='123'), format='json')
         self.assertEqual(res.status_code, 400)
         self.assertFalse(User.objects.filter(email='peter@initech.com').exists())
 

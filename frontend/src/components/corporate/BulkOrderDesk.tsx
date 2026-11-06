@@ -128,7 +128,7 @@ export default function BulkOrderDesk() {
     gstNumber: validators.gst(form.gstNumber),
   };
   const quantityError = quantity < MIN_QUANTITY ? `Minimum bulk quantity is ${MIN_QUANTITY} units` : "";
-  const passwordError = validators.password(password);
+  const passwordError = password.trim() ? validators.password(password) : "";
   const shownError = (name: FieldName) => (touched[name] ? errors[name] : "");
 
   const applyUser = (user: { email?: string; first_name?: string; last_name?: string; username?: string }) => {
@@ -273,7 +273,7 @@ export default function BulkOrderDesk() {
     e.preventDefault();
     setSubmitError("");
 
-    if (!currentUser && passwordError) {
+    if (!currentUser && password.trim() && passwordError) {
       touch("password");
       setAttempt((n) => n + 1);
       document.getElementById("password")?.focus();
@@ -1072,8 +1072,9 @@ export default function BulkOrderDesk() {
                             {!currentUser && (
                               <Field
                                 id="password"
-                                label="Create a password"
-                                hint="Your account lets you see quotations, approve proofs and message our team."
+                                label="Create an account password (optional)"
+                                optional
+                                hint="Create a password if you wish to sign in later to review quotes, approve proofs, and chat with our team."
                                 error={touched.password ? passwordError : ""}
                                 attempt={attempt}
                               >
@@ -1082,7 +1083,7 @@ export default function BulkOrderDesk() {
                                   type={showPassword ? "text" : "password"}
                                   autoComplete="new-password"
                                   value={password}
-                                  placeholder="At least 8 characters"
+                                  placeholder="At least 8 characters (optional)"
                                   aria-invalid={!!(touched.password && passwordError)}
                                   aria-describedby={touched.password && passwordError ? "password-error" : "password-hint"}
                                   onChange={(e) => setPassword(e.target.value)}
@@ -1119,7 +1120,7 @@ export default function BulkOrderDesk() {
                                     }}
                                     className="text-sm font-semibold text-[#2B323B] hover:underline underline-offset-2"
                                   >
-                                    I already have an account
+                                    Already have an account? Sign in
                                   </button>
                                 )}
                                 <button

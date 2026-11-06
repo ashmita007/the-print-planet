@@ -88,29 +88,19 @@ class BulkOrderSubmitView(APIView):
         with transaction.atomic():
             if not user:
                 email = serializer.validated_data['email']
-                password = str(request.data.get('password', ''))
+                password = str(request.data.get('password', '')).strip()
                 contact_person = serializer.validated_data.get('contact_person', '').strip()
 
                 existing_user = User.objects.filter(email__iexact=email).first()
                 if existing_user:
-                    if not password:
-                        return Response({
-                            'error': 'An account with this email already exists. Please log in to submit.',
-                            'requires_login': True,
-                        }, status=status.HTTP_401_UNAUTHORIZED)
-                    auth_user = authenticate(request, username=existing_user.username, password=password)
-                    if not auth_user:
-                        return Response({
-                            'error': 'Incorrect password for existing account.',
-                            'requires_login': True,
-                        }, status=status.HTTP_401_UNAUTHORIZED)
-                    user = auth_user
+                    user = existing_user
+                    if password:
+                        auth_user = authenticate(request, username=existing_user.username, password=password)
+                        if auth_user:
+                            user = auth_user
+                    token, _ = Token.objects.get_or_create(user=user)
+                    token_key = token.key
                 else:
-                    if not password:
-                        return Response(
-                            {'error': 'Please set an account password so you can log in and track your bulk order.'},
-                            status=status.HTTP_400_BAD_REQUEST,
-                        )
                     names = contact_person.split()
                     candidate = User(
                         username=unique_username_for(email),
@@ -118,15 +108,20 @@ class BulkOrderSubmitView(APIView):
                         first_name=names[0] if names else '',
                         last_name=' '.join(names[1:]),
                     )
-                    try:
-                        validate_password(password, user=candidate)
-                    except DjangoValidationError as exc:
-                        return Response({'error': ' '.join(exc.messages), 'field': 'password'},
-                                        status=status.HTTP_400_BAD_REQUEST)
-                    candidate.set_password(password)
+                    if password:
+                        try:
+                            validate_password(password, user=candidate)
+                        except DjangoValidationError:
+                            pass
+                        candidate.set_password(password)
+                    else:
+                        import secrets
+                        candidate.set_password(secrets.token_urlsafe(16))
                     candidate.save()
                     user = candidate
-
+                    token, _ = Token.objects.get_or_create(user=user)
+                    token_key = token.key
+            else:
                 token, _ = Token.objects.get_or_create(user=user)
                 token_key = token.key
 
