@@ -22,6 +22,7 @@ export default function robots(): MetadataRoute.Robots {
     '/llms-full.txt',
     '/okf/',
     '/sitemap.xml',
+    '/c3909b1zztheprintplanet2026index.txt',
     '/manifest.webmanifest',
     '/icon.png',
   ];

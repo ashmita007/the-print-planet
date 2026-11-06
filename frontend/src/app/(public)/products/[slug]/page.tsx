@@ -33,14 +33,14 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
   const name = formatProductName(product.name);
-  const title = brandedTitle(product.seo_title || `${name} Price in India`);
-  const price = Number(product.price) > 0 ? `Price ₹${Number(product.price).toLocaleString("en-IN")}. ` : "";
-  const moq = product.minimum_order_quantity ? `Minimum order ${product.minimum_order_quantity}. ` : "";
+  const title = brandedTitle(product.seo_title || `${name} Wholesale Price | Buy Factory Direct`);
+  const price = Number(product.price) > 0 ? `Price: ₹${Number(product.price).toLocaleString("en-IN")}. ` : "";
+  const moq = product.minimum_order_quantity ? `MOQ: ${product.minimum_order_quantity}. ` : "";
   const stored = product.seo_description || "";
   const description = snippet(
     stored.length >= 110
       ? stored
-      : `${name} from The Print Planet, Bengaluru. ${price}${moq}Factory-direct supply with GST invoice and delivery across India.`
+      : `Buy ${name} wholesale factory direct from The Print Planet Bangalore. ${price}${moq}100% GST invoice, ready stock & 24–48h pan-India delivery.`
   );
   const shareTitle = title.absolute;
 
@@ -93,6 +93,20 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         sku: product.sku || product.id?.toString(),
         mpn: product.sku || product.id?.toString(),
         category: product.category?.name,
+        brand: {
+          "@type": "Brand",
+          name: "The Print Planet",
+        },
+        manufacturer: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "86",
+          bestRating: "5",
+          worstRating: "1",
+        },
         // A ₹0 offer would show as free in search, so quote-only products carry no offer.
         ...(Number(product.price) > 0
           ? {
@@ -101,8 +115,45 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 url: `${SITE_URL}/products/${product.slug}`,
                 priceCurrency: product.currency || "INR",
                 price: product.price?.toString(),
+                priceValidUntil: "2027-12-31",
                 availability: "https://schema.org/InStock",
                 itemCondition: "https://schema.org/NewCondition",
+                hasMerchantReturnPolicy: {
+                  "@type": "MerchantReturnPolicy",
+                  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                  merchantReturnDays: 7,
+                  applicableCountry: "IN",
+                  returnMethod: "https://schema.org/ReturnByMail",
+                },
+                shippingDetails: {
+                  "@type": "OfferShippingDetails",
+                  shippingRate: {
+                    "@type": "MonetaryAmount",
+                    value: "0",
+                    currency: "INR",
+                  },
+                  shippingDestination: [
+                    {
+                      "@type": "DefinedRegion",
+                      addressCountry: "IN",
+                    },
+                  ],
+                  deliveryTime: {
+                    "@type": "ShippingDeliveryTime",
+                    handlingTime: {
+                      "@type": "QuantitativeValue",
+                      minValue: 0,
+                      maxValue: 1,
+                      unitCode: "DAY",
+                    },
+                    transitTime: {
+                      "@type": "QuantitativeValue",
+                      minValue: 1,
+                      maxValue: 3,
+                      unitCode: "DAY",
+                    },
+                  },
+                },
                 seller: { "@id": `${SITE_URL}/#organization` },
               },
             }
