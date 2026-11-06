@@ -56,10 +56,23 @@ export const metadata: Metadata = {
   authors: [{ name: "The Print Planet" }],
   creator: "The Print Planet",
   publisher: "The Print Planet",
+  applicationName: "The Print Planet",
+  category: "Industrial Printing & Identity Systems",
+  classification: "B2B Manufacturing & Wholesale Supply",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
+  },
+  other: {
+    "geo.region": "IN-KA",
+    "geo.placename": "Bangalore, Sunkadakatte",
+    "geo.position": "12.9863;77.5020",
+    "ICBM": "12.9863, 77.5020",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "Print Planet",
+    "msapplication-TileColor": "#0E2238",
   },
   verification: {
     google: "OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg",
@@ -96,6 +109,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@theprintplanet",
+    creator: "@theprintplanet",
     title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
     description:
       "Direct manufacturer of satin lanyards, ID card materials, and card machines in Bangalore with nationwide dispatch.",
@@ -238,6 +253,11 @@ export default function RootLayout({
         <link rel="icon" href="/icon.png" sizes="192x192" type="image/png" />
         <link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="alternate" type="application/rss+xml" title="The Print Planet Feed" href="/feed.xml" />
+        <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+        <link rel="pricing" type="text/markdown" title="Wholesale B2B Tariff" href="/pricing.md" />
+        <link rel="alternate" type="text/plain" title="AI Search Context" href="/llms.txt" />
+        <link rel="knowledge-graph" type="text/markdown" title="Open Knowledge Format" href="/okf/index.md" />
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <link
