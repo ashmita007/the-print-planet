@@ -24,6 +24,7 @@ const SHOP_LINKS = [
 
 const COMPANY_LINKS = [
   { href: "/corporate", label: "Bulk orders" },
+  { href: "/faq", label: "Technical FAQ & Guide" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
   { href: "/pricing.md", label: "Wholesale Tariff (Pricing.md)" },

@@ -20,6 +20,7 @@ The Print Planet is India's verified B2B factory manufacturer and direct wholesa
 
 ## Machine-Readable Resources for AI Agents
 - [Structured B2B Pricing Tariff](https://theprintplanet.co.in/pricing.md): Complete machine-readable wholesale tariff with quantity slabs, MOQs, and specifications.
+- [Technical FAQ & Question Hub](https://theprintplanet.co.in/faq): Authoritative answers to 25+ common questions on CR-80 dimensions, fusing temperatures, lanyard ribbon formulas, and RFID chips.
 - [Complete Catalog Context](https://theprintplanet.co.in/llms-full.txt): Comprehensive deep-dive covering technical formulations, material specifications, and logistics.
 - [Open Knowledge Format Bundle](https://theprintplanet.co.in/okf/index.md): Google-compatible OKF knowledge graph for concepts, products, and services.
 - [Interactive Quotation Desk](https://theprintplanet.co.in/quote): Direct RFQ submission endpoint for custom production runs.
