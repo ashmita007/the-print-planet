@@ -73,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Image Container with 1:1 Aspect Ratio */}
         <div className="relative w-full pt-[100%] bg-[#FFFFFF] overflow-hidden block">
           {!imgLoaded && !hasError && (
-            <div className="absolute inset-0 skeleton" />
+            <div className="absolute inset-0 skeleton !rounded-none pointer-events-none z-10" />
           )}
 
           {/* Clickable Image Surface */}

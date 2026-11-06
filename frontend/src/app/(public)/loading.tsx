@@ -4,7 +4,7 @@ import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 export default function PublicLoading() {
   return (
     <div className="w-full space-y-10 sm:space-y-14 pb-16 anim-fade-in">
-      <section className="bg-[#121418] py-10 sm:py-16">
+      <section className="bg-[#0E2238] py-10 sm:py-16 border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-5 space-y-4">
@@ -19,13 +19,13 @@ export default function PublicLoading() {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="bg-[#121418]/70 rounded-lg p-5 sm:p-7 border border-white/[0.08] space-y-5">
+              <div className="bg-[#162A45]/80 rounded-xl p-5 sm:p-7 border border-white/[0.12] shadow-2xl space-y-5">
                 <div className="flex justify-between items-center pb-4 border-b border-white/[0.08]">
                   <div className="h-3.5 w-32 skeleton skeleton-dark" />
                   <div className="h-3.5 w-16 skeleton skeleton-dark" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
-                  <div className="sm:col-span-5 aspect-square w-44 sm:w-full mx-auto skeleton skeleton-dark rounded-md" />
+                  <div className="sm:col-span-5 aspect-square w-44 sm:w-full mx-auto skeleton skeleton-dark rounded-lg" />
                   <div className="sm:col-span-7 space-y-3">
                     <div className="h-5 w-4/5 skeleton skeleton-dark" />
                     <div className="flex gap-2">
@@ -48,7 +48,7 @@ export default function PublicLoading() {
           <div className="h-8 w-72 skeleton" />
         </div>
 
-        <div className="bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg p-3 sm:p-4 space-y-3">
+        <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 sm:p-4 space-y-3">
           <div className="flex gap-2 overflow-hidden">
             <div className="h-8 w-28 skeleton rounded-lg shrink-0" />
             <div className="h-8 w-36 skeleton rounded-lg shrink-0" />

@@ -143,7 +143,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             title="Click to zoom high-resolution preview"
           >
             {!imgLoaded && !imgError && (
-              <div className="absolute inset-0 skeleton" />
+              <div className="absolute inset-0 skeleton pointer-events-none z-10" />
             )}
 
             {!imgError && selectedImage ? (
