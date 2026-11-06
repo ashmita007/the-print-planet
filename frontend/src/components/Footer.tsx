@@ -23,11 +23,12 @@ const SHOP_LINKS = [
 ];
 
 const COMPANY_LINKS = [
+  { href: "/pricing", label: "Wholesale Tariff" },
   { href: "/corporate", label: "Bulk orders" },
   { href: "/faq", label: "Technical FAQ & Guide" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
-  { href: "/pricing.md", label: "Wholesale Tariff (Pricing.md)" },
+  { href: "/pricing.md", label: "Pricing.md (Raw Tariff)" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -38,13 +39,31 @@ function FooterLinks({ title, links }: { title: string; links: { href: string; l
     <div>
       <h2 className="text-xs font-bold text-white mb-3.5">{title}</h2>
       <ul className="space-y-2.5 text-sm text-slate-300">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link href={link.href} className="hover:text-[#B9C3CF] transition-colors">
-              {link.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((link) => {
+          const isFileOrExternal =
+            link.href.endsWith(".md") ||
+            link.href.endsWith(".txt") ||
+            link.href.startsWith("http");
+
+          return (
+            <li key={link.href}>
+              {isFileOrExternal ? (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#B9C3CF] transition-colors"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link href={link.href} className="hover:text-[#B9C3CF] transition-colors">
+                  {link.label}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -158,15 +177,18 @@ export default function Footer({ settings }: FooterProps) {
             © {new Date().getFullYear()} {businessName}. GSTIN {gst}
           </p>
           <div className="flex flex-wrap items-center gap-5">
-            <Link href="/pricing.md" className="hover:text-white transition-colors">
+            <Link href="/pricing" className="hover:text-white transition-colors">
               Pricing Tariff
             </Link>
-            <Link href="/llms.txt" className="hover:text-white transition-colors">
+            <a href="/pricing.md" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              pricing.md
+            </a>
+            <a href="/llms.txt" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               llms.txt
-            </Link>
-            <Link href="/okf/index.md" className="hover:text-white transition-colors">
+            </a>
+            <a href="/okf/index.md" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               OKF
-            </Link>
+            </a>
             <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy
             </Link>
