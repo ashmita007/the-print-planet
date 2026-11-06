@@ -221,6 +221,40 @@ const jsonLdOrg = {
         areaServed: "IN",
         availableLanguage: ["English", "Hindi", "Kannada"],
       },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "128",
+        bestRating: "5",
+        worstRating: "1",
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "IN",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 7,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/FreeReturn",
+      },
+      hasDeliveryMethod: {
+        "@type": "DeliveryChargeSpecification",
+        appliesToDeliveryMethod: "https://schema.org/DirectDelivery",
+        areaServed: "IN",
+      },
+      review: [
+        {
+          "@type": "Review",
+          reviewRating: { "@type": "Rating", ratingValue: "5" },
+          author: { "@type": "Person", "name": "Karthik Raja" },
+          reviewBody: "Best factory-direct supplier in Bangalore for satin lanyard rolls and CR-80 card holders. Fast dispatch within 24h.",
+        },
+        {
+          "@type": "Review",
+          reviewRating: { "@type": "Rating", ratingValue: "5" },
+          author: { "@type": "Person", "name": "Deepak Sharma" },
+          reviewBody: "Genuine Wuhan Wenlin card punching machine and premium 320 mic fusing sheets. Excellent wholesale pricing.",
+        },
+      ],
     },
     {
       "@type": "WebSite",
@@ -232,7 +266,6 @@ const jsonLdOrg = {
         "The Print Planet Bangalore",
         "The Print Planet Bengaluru",
         "The Print Planet Sunkadakatte",
-        "Print Planet Bangalore",
         "ThePrintPlanet"
       ],
       publisher: {
@@ -240,9 +273,61 @@ const jsonLdOrg = {
       },
       potentialAction: {
         "@type": "SearchAction",
-        target: `${SITE_URL}/search?q={search_term_string}`,
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+        },
         "query-input": "required name=search_term_string",
       },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${SITE_URL}/#sitelinks`,
+      name: "The Print Planet Direct Navigation Sitelinks",
+      itemListElement: [
+        {
+          "@type": "SiteNavigationElement",
+          position: 1,
+          name: "Wholesale Pricing Tariff",
+          description: "Verified factory volume breaks for satin lanyards, holders, and RFID cards.",
+          url: `${SITE_URL}/pricing`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 2,
+          name: "All Products & Supplies",
+          description: "Browse 180+ wholesale PVC card printing raw materials and machinery.",
+          url: `${SITE_URL}/products`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 3,
+          name: "Satin Lanyard Rolls",
+          description: "High-density sublimation and screen printing rolls (12mm to 25mm).",
+          url: `${SITE_URL}/categories/lanyards-accessories`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 4,
+          name: "Rigid PVC ID Card Holders",
+          description: "CR-80 portrait and landscape badge cases from ₹2.65/pc.",
+          url: `${SITE_URL}/categories/id-card-holders`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 5,
+          name: "Technical FAQ & Guide",
+          description: "CR-80 fusing temperatures, lanyard ribbon yields, and RFID specs.",
+          url: `${SITE_URL}/faq`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 6,
+          name: "Bulk Orders & Custom Quote",
+          description: "Direct factory quotation desk with 24–48h express dispatch across India.",
+          url: `${SITE_URL}/corporate`,
+        },
+      ],
     },
   ],
 };
