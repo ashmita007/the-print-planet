@@ -238,16 +238,22 @@ class Command(BaseCommand):
             # Owner 1 (Developer / Primary Admin)
             owner_user = os.environ.get('OWNER_USERNAME', 'admin')
             owner_email = os.environ.get('OWNER_EMAIL', 'theprintplanet01@gmail.com')
-            owner_pass = os.environ.get('OWNER_PASSWORD', 'AdminPass123!Secure')
+            owner_pass = os.environ.get('OWNER_PASSWORD', '')
 
-            u1, created1 = User.objects.get_or_create(username=owner_user)
-            u1.email = owner_email
-            u1.is_staff = True
-            u1.is_superuser = True
-            u1.set_password(owner_pass)
-            u1.save()
-            action_text1 = "Created" if created1 else "Updated credentials for"
-            self.stdout.write(self.style.SUCCESS(f"{action_text1} primary owner '{owner_user}'."))
+            # No built-in default: a password in the source code is a password anyone can read.
+            if owner_pass:
+                u1, created1 = User.objects.get_or_create(username=owner_user)
+                u1.email = owner_email
+                u1.is_staff = True
+                u1.is_superuser = True
+                u1.set_password(owner_pass)
+                u1.save()
+                action_text1 = "Created" if created1 else "Updated credentials for"
+                self.stdout.write(self.style.SUCCESS(f"{action_text1} primary owner '{owner_user}'."))
+            else:
+                self.stdout.write(self.style.WARNING(
+                    "OWNER_PASSWORD is not set: primary owner account not created or changed."
+                ))
 
             # Owner 2 (Client / Business Owner)
             client_user = os.environ.get('CLIENT_USERNAME', '')

@@ -101,4 +101,4 @@ docker compose -f docker-compose.single.yml up --build
 Access the application at `http://localhost:8080`.
 Admin credentials:
 - **Username**: `admin`
-- **Password**: `AdminPass123!Secure`
+- **Password**: the `OWNER_PASSWORD` you set in `.env` (no default)

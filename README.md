@@ -76,7 +76,7 @@ docker compose -f docker-compose.single.yml up --build
 
 **Unified Endpoints (Single Port):**
 - **Public Website & Catalogue:** `http://localhost/` (or `http://localhost:8080/`)
-- **Owner Admin Portal:** `http://localhost/owner/login` (`admin` / `AdminPass123!Secure`)
+- **Owner Admin Portal:** `http://localhost/owner/login` (`admin` / the `OWNER_PASSWORD` from your `.env`)
 - **REST API:** `http://localhost/api/v1/`
 - **Swagger Documentation:** `http://localhost/api/docs/`
 - **Direct Media Assets:** `http://localhost/media/products/...`
@@ -111,7 +111,7 @@ Docker Compose orchestrates:
 ### Owner Admin Portal
 - **Owner Login:** `http://localhost:3000/owner/login`
   - **Username:** `admin`
-  - **Password:** `AdminPass123!Secure`
+  - **Password:** the `OWNER_PASSWORD` you set (no default)
 - **Owner Dashboard:** `http://localhost:3000/owner/dashboard`
 - **Catalogue Manager:** `http://localhost:3000/owner/products`
 - **Category Manager:** `http://localhost:3000/owner/categories`

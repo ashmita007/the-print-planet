@@ -15,7 +15,7 @@ services:
       - DJANGO_SECRET_KEY=production-secret-single-unit-key-2026
       - DJANGO_ALLOWED_HOSTS=*
       - OWNER_USERNAME=admin
-      - OWNER_PASSWORD=AdminPass123!Secure
+      - OWNER_PASSWORD=${OWNER_PASSWORD:-}
       - OWNER_EMAIL=admin@theprintplanet.in
       # Cloudinary CDN:
       - CLOUDINARY_URL=${CLOUDINARY_URL:-}

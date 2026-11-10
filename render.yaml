@@ -90,8 +90,10 @@ services:
         value: "admin"
       - key: OWNER_EMAIL
         value: "theprintplanet01@gmail.com"
+      # Set in the Render dashboard only (never commit it). Applied on every start;
+      # if empty, the existing owner account is left unchanged.
       - key: OWNER_PASSWORD
-        value: "AdminPass123!Secure"
+        sync: false
 
       # Client Owner Account (Second Admin)
       - key: CLIENT_USERNAME
