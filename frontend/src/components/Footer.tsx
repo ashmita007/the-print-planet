@@ -173,9 +173,19 @@ export default function Footer({ settings }: FooterProps) {
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
-          <p suppressHydrationWarning>
-            © {new Date().getFullYear()} {businessName}. GSTIN {gst}
-          </p>
+          <div className="flex flex-col gap-1.5">
+            <p suppressHydrationWarning>
+              © {new Date().getFullYear()} {businessName}. GSTIN {gst}
+            </p>
+            <a
+              href="https://kashiiupdatez.online/"
+              target="_blank"
+              rel="noopener"
+              className="hover:text-white transition-colors underline-offset-4 hover:underline"
+            >
+              Designed &amp; developed by updatezbykashi
+            </a>
+          </div>
           <div className="flex flex-wrap items-center gap-5">
             <Link href="/pricing" className="hover:text-white transition-colors">
               Pricing Tariff
