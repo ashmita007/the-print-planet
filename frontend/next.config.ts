@@ -30,22 +30,6 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/pricing.md",
-        headers: [
-          { key: "Content-Type", value: "text/markdown; charset=utf-8" },
-          { key: "X-Robots-Tag", value: "all" },
-          { key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" },
-        ],
-      },
-      {
-        source: "/pricing.txt",
-        headers: [
-          { key: "Content-Type", value: "text/plain; charset=utf-8" },
-          { key: "X-Robots-Tag", value: "all" },
-          { key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" },
-        ],
-      },
-      {
         source: "/llms.txt",
         headers: [
           { key: "Content-Type", value: "text/plain; charset=utf-8" },
