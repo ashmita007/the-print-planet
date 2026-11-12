@@ -56,7 +56,8 @@ export default function BulkImportPage() {
     setIsExecuting(true);
     setErrorMsg("");
 
-    const rowsToImport = validationResult.preview.map((r: any) => r.raw_data);
+    // `rows` holds every valid row; `preview` is capped at 50 for display only.
+    const rowsToImport = validationResult.rows ?? validationResult.preview.map((r: any) => r.raw_data);
     const res = await ownerExecuteBulkImport(rowsToImport, strategy);
     setIsExecuting(false);
 

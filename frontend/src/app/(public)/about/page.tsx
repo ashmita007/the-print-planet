@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/about`,
   },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: "About Us: ID Card & Lanyard Manufacturer in Bengaluru | The Print Planet",
     description: "Dedicated B2B production and wholesale distribution facility in Bengaluru, Karnataka.",
     url: `${SITE_URL}/about`,

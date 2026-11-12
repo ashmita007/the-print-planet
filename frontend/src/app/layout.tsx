@@ -35,6 +35,7 @@ const mono = JetBrains_Mono({
 import { CartProvider } from "@/lib/cart";
 import CartDrawer from "@/components/CartDrawer";
 import MotionBridge from "@/components/animations/MotionBridge";
+import Analytics from "@/components/Analytics";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -340,7 +341,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="google-site-verification" content="OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg" />
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/icon.png" sizes="192x192" type="image/png" />
         <link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png" />
@@ -373,6 +373,7 @@ export default function RootLayout({
           <CartDrawer />
           <MotionBridge />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );

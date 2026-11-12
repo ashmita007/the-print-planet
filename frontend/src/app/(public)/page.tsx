@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     absolute: "The Print Planet Bangalore | PVC Cards, Satin Lanyards & ID Card Machines Wholesale",
   },
   description:
-    "Official site of The Print Planet (theprintplanet.co.in) Bangalore. Direct manufacturer of PVC cards, satin lanyard rolls, rigid ID card holders, RFID cards & ID card die cutting machines with 24–48h pan-India dispatch from Sunkadakatte. 100% GST invoice.",
+    "The Print Planet, Bangalore: direct manufacturer of PVC cards, satin lanyard rolls, ID card holders, RFID cards and ID card machines. 24 to 48h pan-India dispatch.",
   alternates: {
     canonical: SITE_URL,
   },

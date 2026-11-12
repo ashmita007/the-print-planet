@@ -13,6 +13,10 @@ RUN npm install
 COPY frontend/ ./
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+# Analytics IDs are inlined at build time; Render passes env vars as build args.
+ARG NEXT_PUBLIC_GA_ID=""
+ARG NEXT_PUBLIC_CLARITY_ID=""
+ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID NEXT_PUBLIC_CLARITY_ID=$NEXT_PUBLIC_CLARITY_ID
 RUN npm run build
 
 # STAGE 2: Unified Production Runner

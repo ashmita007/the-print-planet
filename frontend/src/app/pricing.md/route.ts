@@ -1,24 +1,19 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { buildPricingMarkdown } from "@/lib/pricingTariff";
 
-export const dynamic = "force-static";
+// Generated from the live catalogue on each request (cached by the CDN), so the
+// published prices always match the product pages. The DB is not reachable at build time.
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const filePath = path.join(process.cwd(), "public", "pricing.md");
-  let content = "";
-  try {
-    content = fs.readFileSync(filePath, "utf-8");
-  } catch {
-    content = `# Wholesale B2B Pricing Tariff — The Print Planet™\n\nPlease visit https://theprintplanet.co.in/corporate or WhatsApp +91 97418 08034 for live tariff.`;
-  }
-
+  const content = await buildPricingMarkdown();
   return new NextResponse(content, {
     status: 200,
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
-      "X-Robots-Tag": "all",
-      "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+      // AI assistants may read it; Google should rank /pricing instead of this raw file.
+      "X-Robots-Tag": "noindex, follow",
+      "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
     },
   });
 }

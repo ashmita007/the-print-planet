@@ -1,4 +1,13 @@
 import React from "react";
+import type { Metadata } from "next";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How The Print Planet, Bengaluru collects, uses and protects the details you share when you request quotes, place orders or contact our trade desk.",
+  alternates: { canonical: `${SITE_URL}/privacy-policy` },
+};
 import PageHero from "@/components/PageHero";
 
 export default function PrivacyPolicyPage() {

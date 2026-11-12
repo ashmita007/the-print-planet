@@ -365,3 +365,7 @@ if not DEBUG:
 
 
 
+
+# Bulk catalogue import posts every row as one JSON body; Django's 2.5 MB default
+# rejects large catalogues with "Request body exceeded DATA_UPLOAD_MAX_MEMORY_SIZE".
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024

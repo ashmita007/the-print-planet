@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     absolute: "ID Card & Lanyard FAQ — Technical Knowledge Base | The Print Planet",
   },
   description:
-    "Frequently asked questions about PVC cards, CR-80 dimensions, fusing laminators, motorized die cutters, satin lanyard rolls, RFID smart cards, and wholesale pricing from The Print Planet Bangalore.",
+    "Answers on PVC cards, CR-80 sizes, fusing laminators, die cutters, satin lanyard rolls, RFID cards and wholesale pricing from The Print Planet, Bangalore.",
   alternates: {
     canonical: `${SITE_URL}/faq`,
   },

@@ -33,6 +33,11 @@ services:
       # Next.js Production Canonical Domain Configuration
       - key: NEXT_PUBLIC_SITE_URL
         value: "https://theprintplanet.co.in"
+      # Google Analytics 4 (G-XXXXXXXXXX) and Microsoft Clarity project ID
+      - key: NEXT_PUBLIC_GA_ID
+        sync: false
+      - key: NEXT_PUBLIC_CLARITY_ID
+        sync: false
 
       # Next.js Node Memory Optimization for 512MB Free Tier
       - key: NODE_OPTIONS

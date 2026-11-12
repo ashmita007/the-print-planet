@@ -1,4 +1,13 @@
 import React from "react";
+import type { Metadata } from "next";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions",
+  description: "Terms for wholesale orders from The Print Planet, Bengaluru: quotations and GST pricing, minimum order quantities, machinery warranty and dispatch.",
+  alternates: { canonical: `${SITE_URL}/terms` },
+};
 import PageHero from "@/components/PageHero";
 
 export default function TermsPage() {

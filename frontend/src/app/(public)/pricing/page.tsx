@@ -6,7 +6,7 @@ import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
   title: "Wholesale B2B Pricing Tariff (2026) | The Print Planet Bangalore",
-  description: "Official factory-direct B2B wholesale pricing tariff for satin lanyard rolls, rigid PVC ID card holders, metal lanyard hardware, RFID cards, and industrial card machinery in Bangalore.",
+  description: "Factory-direct wholesale price list for satin lanyard rolls, PVC ID card holders, lanyard hardware, RFID cards and ID card machines from Bangalore.",
   keywords: [
     "lanyard wholesale price",
     "PVC card holder wholesale price bangalore",

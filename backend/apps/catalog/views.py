@@ -1,9 +1,11 @@
 import os
 import io
 import csv
+import re
 import json
 import logging
 from django.db.models import Q
+from django.utils.text import slugify
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, viewsets, status, permissions
@@ -425,6 +427,69 @@ class OwnerImageUploadView(APIView):
 # BULK CSV/JSON IMPORT VIEWS
 # ==========================================
 
+PRICE_KEYS = (
+    'client_revised_price_(inr)', 'client_revised_price', 'trade_price_(inr)',
+    'trade_price', 'price_(inr)', 'price_inr', 'price',
+)
+
+
+def _normalize_key(key):
+    """'Product Name' / 'Price (INR)' / BOM-prefixed headers -> 'product_name' / 'price_(inr)'."""
+    return (
+        str(key or '').replace('\ufeff', '').strip().lower()
+        .replace(' ', '_').replace('/', '_').replace('-', '_')
+    )
+
+
+def _normalize_row(row):
+    if not isinstance(row, dict):
+        return {}
+    out = {}
+    for k, v in row.items():
+        nk = _normalize_key(k)
+        if nk:
+            out[nk] = '' if v is None else (v.strip() if isinstance(v, str) else v)
+    return out
+
+
+def _raw_price(data):
+    for key in PRICE_KEYS:
+        val = data.get(key)
+        if val is not None and str(val).strip():
+            return val
+    return None
+
+
+def _parse_price(val):
+    """Accepts 280, '280.50', '1,250', '₹ 280', '280/roll'. Returns float or None."""
+    if val is None:
+        return None
+    if isinstance(val, (int, float)):
+        return float(val)
+    match = re.search(r'\d+(?:\.\d+)?', str(val).replace(',', ''))
+    return float(match.group(0)) if match else None
+
+
+def _parse_moq(val):
+    """MOQ is an integer column: '1 Roll' -> 1, '50 pcs' -> 50, '' -> None."""
+    if val is None or isinstance(val, bool):
+        return None
+    if isinstance(val, (int, float)):
+        return int(val) if val >= 0 else None
+    match = re.search(r'\d+', str(val).replace(',', ''))
+    return int(match.group(0)) if match else None
+
+
+def _decode_upload(uploaded_file):
+    raw = uploaded_file.read()
+    for enc in ('utf-8-sig', 'cp1252'):
+        try:
+            return raw.decode(enc)
+        except UnicodeDecodeError:
+            continue
+    return raw.decode('utf-8', errors='ignore')
+
+
 class OwnerBulkImportValidateView(APIView):
     """Validate CSV or JSON payload before importing."""
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
@@ -453,23 +518,32 @@ class OwnerBulkImportValidateView(APIView):
                 except Exception as e:
                     return Response({'error': f'Invalid Excel file: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
             elif filename.endswith('.json'):
-                content = uploaded_file.read().decode('utf-8', errors='ignore')
+                content = _decode_upload(uploaded_file)
                 try:
                     data = json.loads(content)
                     rows = data.get('products', data) if isinstance(data, dict) else data
                 except Exception as e:
                     return Response({'error': f'Invalid JSON: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
             elif filename.endswith('.csv'):
-                content = uploaded_file.read().decode('utf-8', errors='ignore')
-                reader = csv.DictReader(io.StringIO(content))
+                content = _decode_upload(uploaded_file)
+                try:
+                    dialect = csv.Sniffer().sniff(content[:4096], delimiters=',;\t')
+                except csv.Error:
+                    dialect = csv.excel
+                reader = csv.DictReader(io.StringIO(content), dialect=dialect)
                 for r in reader:
-                    rows.append(r)
+                    if any(str(v or '').strip() for v in r.values() if not isinstance(v, list)):
+                        rows.append(r)
             else:
                 return Response({'error': 'Unsupported file format. Provide .xlsx, .csv or .json'}, status=status.HTTP_400_BAD_REQUEST)
         elif 'products' in request.data:
             rows = request.data['products']
         else:
             return Response({'error': 'No file or products data provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not isinstance(rows, list):
+            return Response({'error': 'Expected a list of products'}, status=status.HTTP_400_BAD_REQUEST)
+        rows = [_normalize_row(r) for r in rows]
 
         # Validate rows
         valid_rows = []
@@ -491,13 +565,10 @@ class OwnerBulkImportValidateView(APIView):
                 slugify(str(row.get('category') or '').strip()) or
                 'general-supplies'
             )
-            price_val = (
-                row.get('client_revised_price_(inr)') or
-                row.get('client_revised_price') or
-                row.get('trade_price_(inr)') or
-                row.get('trade_price') or
-                row.get('price')
-            )
+            price_val = _raw_price(row)
+            if price_val is not None and _parse_price(price_val) is None:
+                errors.append({'row': idx + 1, 'sku': sku, 'error': f'Price "{price_val}" is not a number'})
+                continue
 
             if not name:
                 errors.append({'row': idx + 1, 'sku': sku, 'error': 'Product name is required'})
@@ -528,7 +599,9 @@ class OwnerBulkImportValidateView(APIView):
             'existing_count': sum(1 for r in valid_rows if r['status'].startswith('existing')),
             'error_count': len(errors),
             'errors': errors,
-            'preview': valid_rows[:50]
+            'preview': valid_rows[:50],
+            # Full list for the execute step; preview is only what the UI shows.
+            'rows': [r['raw_data'] for r in valid_rows],
         })
 
 
@@ -549,7 +622,7 @@ class OwnerBulkImportExecuteView(APIView):
         errors = []
 
         for item in rows:
-            data = item.get('raw_data', item)
+            data = _normalize_row(item.get('raw_data', item) if isinstance(item, dict) else {})
             name = (
                 str(data.get('client_revised_name') or '').strip() or
                 str(data.get('product_name') or '').strip() or
@@ -581,20 +654,12 @@ class OwnerBulkImportExecuteView(APIView):
                     existing_prod.category = category
                     if data.get('short_description'):
                         existing_prod.short_description = data['short_description']
-                    if data.get('description'):
-                        existing_prod.description = data['description']
-                    price_raw = (
-                        data.get('client_revised_price_(inr)') or
-                        data.get('client_revised_price') or
-                        data.get('trade_price_(inr)') or
-                        data.get('trade_price') or
-                        data.get('price')
-                    )
-                    if price_raw is not None and str(price_raw).strip():
-                        try:
-                            existing_prod.price = float(str(price_raw).replace(',', ''))
-                        except ValueError:
-                            pass
+                    full_desc = data.get('description') or data.get('full_description')
+                    if full_desc:
+                        existing_prod.description = full_desc
+                    parsed_price = _parse_price(_raw_price(data))
+                    if parsed_price is not None:
+                        existing_prod.price = parsed_price
                     if data.get('material'):
                         existing_prod.material = data['material']
                     if data.get('dimensions'):
@@ -604,9 +669,13 @@ class OwnerBulkImportExecuteView(APIView):
                     price_display_val = data.get('display_price_text') or data.get('price_display') or data.get('display_price')
                     if price_display_val:
                         existing_prod.price_display = price_display_val
-                    moq_val = data.get('minimum_order_quantity') or data.get('moq')
-                    if moq_val:
+                    moq_val = _parse_moq(data.get('minimum_order_quantity') or data.get('moq'))
+                    if moq_val is not None:
                         existing_prod.minimum_order_quantity = moq_val
+                    if data.get('seo_title'):
+                        existing_prod.seo_title = str(data['seo_title'])[:255]
+                    if data.get('seo_description'):
+                        existing_prod.seo_description = data['seo_description']
                     specs_raw = data.get('specifications_(json)') or data.get('specifications_json') or data.get('specs') or data.get('specifications')
                     if specs_raw:
                         if isinstance(specs_raw, dict):
@@ -622,22 +691,11 @@ class OwnerBulkImportExecuteView(APIView):
                     skipped_count += 1
             else:
                 try:
-                    price_val = None
-                    price_raw = (
-                        data.get('client_revised_price_(inr)') or
-                        data.get('client_revised_price') or
-                        data.get('trade_price_(inr)') or
-                        data.get('trade_price') or
-                        data.get('price')
-                    )
-                    if price_raw is not None and str(price_raw).strip():
-                        try:
-                            price_val = float(str(price_raw).replace(',', ''))
-                        except ValueError:
-                            pass
+                    price_raw = _raw_price(data)
+                    price_val = _parse_price(price_raw)
 
                     price_display_val = data.get('display_price_text') or data.get('price_display') or data.get('display_price') or (f"₹ {price_raw}" if price_raw else '')
-                    moq_val = data.get('minimum_order_quantity') or data.get('moq')
+                    moq_val = _parse_moq(data.get('minimum_order_quantity') or data.get('moq'))
                     specs_dict = {}
                     specs_raw = data.get('specifications_(json)') or data.get('specifications_json') or data.get('specs') or data.get('specifications')
                     if specs_raw:
@@ -654,7 +712,7 @@ class OwnerBulkImportExecuteView(APIView):
                         sku=sku or f"SKU-{Product.objects.count()+1:04d}",
                         category=category,
                         short_description=data.get('short_description', ''),
-                        description=data.get('description', ''),
+                        description=data.get('description') or data.get('full_description') or '',
                         material=data.get('material'),
                         dimensions=data.get('dimensions'),
                         color=data.get('color'),
@@ -662,12 +720,14 @@ class OwnerBulkImportExecuteView(APIView):
                         price_display=price_display_val,
                         minimum_order_quantity=moq_val,
                         specifications=specs_dict,
+                        seo_title=str(data.get('seo_title') or '')[:255],
+                        seo_description=data.get('seo_description') or '',
                         reference_source_url=data.get('url') or data.get('reference_source_url'),
                         verification_status=data.get('verification_status', 'verified')
                     )
 
                     # Add image if provided
-                    img_url = data.get('image_url') or data.get('image')
+                    img_url = data.get('image_url') or data.get('primary_image_url') or data.get('image')
                     if not img_url and data.get('image_filename'):
                         img_url = f"/media/products/{data.get('image_filename')}"
                     if img_url:

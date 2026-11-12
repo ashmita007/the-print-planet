@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/contact`,
   },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: "Contact Us in Bengaluru | The Print Planet",
     description: "Official contact portal of The Print Planet. Factory sales desk, Sunkadakatte, Bengaluru.",
     url: `${SITE_URL}/contact`,

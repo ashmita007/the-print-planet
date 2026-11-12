@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/categories`,
   },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: "ID Card Product Categories | The Print Planet",
     description:
       "Explore all product categories from The Print Planet. Wholesale satin lanyard rolls, PVC ID card holders, RFID cards, and machinery.",

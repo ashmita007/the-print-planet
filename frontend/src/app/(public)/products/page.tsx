@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/products`,
   },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: "ID Card Supplies & Machines Wholesale | The Print Planet",
     description: "Factory direct catalog of satin lanyards, ID holders, RFID cards, and machinery.",
     url: `${SITE_URL}/products`,
