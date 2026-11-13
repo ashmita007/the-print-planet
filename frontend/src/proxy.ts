@@ -14,7 +14,8 @@ import { getGuide } from "@/lib/guides";
 const API = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 const TTL_MS = 10 * 60 * 1000;
 const cache = new Map<string, { exists: boolean; at: number }>();
-const SLUG = /^[a-z0-9][a-z0-9-]{0,200}$/;
+// Same characters Django's SlugField accepts; some catalogue slugs contain "_".
+const SLUG = /^[A-Za-z0-9_-]{1,255}$/;
 
 async function exists(kind: "products" | "categories", slug: string): Promise<boolean> {
   const key = `${kind}/${slug}`;
