@@ -37,7 +37,14 @@ async function exists(kind: "products" | "categories", slug: string): Promise<bo
 }
 
 function notFound(request: NextRequest) {
-  return NextResponse.rewrite(new URL("/__not-found", request.url));
+  // Clone nextUrl rather than new URL(path, request.url): behind Nginx the request URL says
+  // https (X-Forwarded-Proto) while Node listens on plain http, and an origin mismatch turns
+  // the rewrite into an external proxy call over TLS that fails with a 500.
+  const url = request.nextUrl.clone();
+  url.protocol = "http:"; // Node itself only speaks http; Nginx terminates TLS in front of it
+  url.pathname = "/__not-found";
+  url.search = "";
+  return NextResponse.rewrite(url);
 }
 
 export async function proxy(request: NextRequest) {
