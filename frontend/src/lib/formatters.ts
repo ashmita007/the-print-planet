@@ -28,6 +28,7 @@ const ACRONYMS = new Set([
   "ABS",
   "PP",
   "NFC",
+  "UHF",
   "IC",
   "ISO",
   "V4",
@@ -80,6 +81,7 @@ const UNIT_MAP: Record<string, string> = {
   kg: "kg",
   g: "g",
   mhz: "MHz",
+  khz: "kHz",
   ghz: "GHz",
   v: "V",
   w: "W",
@@ -113,6 +115,12 @@ export function formatProductName(name?: string | null): string {
 
   // Replace underscores and clean multiple whitespaces
   let cleaned = name.replace(/[_\s]+/g, " ").trim();
+
+  // Spelling mistakes that came in with the supplier catalogue.
+  cleaned = cleaned
+    .replace(/\bMirare\b/gi, "Mifare")
+    .replace(/Pro[χx]υ/gi, "Prox")
+    .replace(/\bOvel\b/gi, "Oval");
 
   // Fix spaced brackets like "( 300 +100 )" -> "(300 + 100)"
   cleaned = cleaned.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");

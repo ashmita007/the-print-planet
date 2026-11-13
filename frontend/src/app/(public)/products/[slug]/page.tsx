@@ -34,7 +34,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
   const name = formatProductName(product.name);
-  const title = brandedTitle(product.seo_title || `${name} Wholesale Price | Buy Factory Direct`);
+  // Google shows about 60 characters: add the price wording only while the title still fits.
+  const fallbackTitle =
+    `${name} Wholesale Price`.length <= 60 ? `${name} Wholesale Price` : `${name} Price`.length <= 60 ? `${name} Price` : name;
+  const title = brandedTitle(product.seo_title || fallbackTitle);
   const stored = product.seo_description || "";
   const description = snippet(
     stored.length >= 110 && !isBoilerplate(stored) && !/^Buy .+ wholesale factory direct/i.test(stored)
