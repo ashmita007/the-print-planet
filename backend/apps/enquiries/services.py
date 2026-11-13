@@ -346,6 +346,130 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
     return False
 
 
+def build_owner_email_html(ctx):
+    """
+    Owner alert for a new enquiry. Table layout so it renders the same in Gmail, Outlook and phone
+    mail apps. Every value the buyer typed is escaped: an enquiry must never inject links into the inbox.
+    """
+    e = lambda v: html.escape(str(v if v is not None else ''), quote=True)
+    try:
+        from zoneinfo import ZoneInfo
+        from django.utils import timezone as dj_tz
+        received = dj_tz.now().astimezone(ZoneInfo('Asia/Kolkata')).strftime('%d %b %Y, %I:%M %p IST')
+    except Exception:
+        received = ''
+
+    name, company = ctx['full_name'], ctx['company_name']
+    product, qty = ctx['prod_name'], ctx['requested_quantity']
+    phone, email = ctx['phone'], ctx['email']
+    qty_label = f"{qty} units" if str(qty).isdigit() else str(qty)
+    mail_subject = urllib.parse.quote(f"Your enquiry for {product} - The Print Planet")
+    mail_body = urllib.parse.quote(f"Hello {name},\n\nThank you for your enquiry for {product} ({qty_label}).\n\n")
+    preheader = f"{name}{' (' + company + ')' if company and company != 'Individual' else ''} wants {qty_label} of {product}"
+
+    def row(label, value_html, last=False):
+        border = '' if last else 'border-bottom:1px solid #EEF1F5;'
+        return (
+            f'<tr><td style="padding:11px 0;{border}font-size:13px;color:#6B7280;width:120px;vertical-align:top;">{label}</td>'
+            f'<td style="padding:11px 0;{border}font-size:14px;color:#111827;font-weight:600;">{value_html}</td></tr>'
+        )
+
+    def button(href, label, bg, fg='#FFFFFF', border=None):
+        b = f'border:1px solid {border};' if border else ''
+        return (
+            '<tr><td style="padding:0 0 10px 0;">'
+            f'<a href="{e(href)}" target="_blank" style="display:block;background:{bg};color:{fg};{b}text-decoration:none;'
+            f'text-align:center;font-weight:700;font-size:15px;padding:14px 16px;border-radius:10px;">{label}</a>'
+            '</td></tr>'
+        )
+
+    details = ''.join([
+        row('Name', e(name)),
+        row('Company', e(company or 'Not given')),
+        row('Phone', f'<a href="tel:{e(phone)}" style="color:#111827;text-decoration:none;">{e(phone)}</a>'),
+        row('Email', f'<a href="mailto:{e(email)}" style="color:#111827;text-decoration:none;">{e(email)}</a>'),
+        row('Came from', f'<span style="background:#FFF1E8;color:#C2410C;padding:3px 10px;border-radius:999px;font-size:12px;">{e(ctx["lead_source"] or "direct")}</span>'
+            + (f'<div style="font-size:12px;color:#6B7280;font-weight:400;margin-top:4px;">First page: {e(ctx["landing_page"])}</div>' if ctx.get('landing_page') else '')),
+        row('Enquiry page', f'<span style="font-family:Menlo,Consolas,monospace;font-size:12px;color:#374151;font-weight:400;">{e(ctx["source_page"])}</span>', last=True),
+    ])
+
+    attachment = ''
+    if ctx.get('attachment_url'):
+        attachment = f'''
+        <tr><td style="padding:0 28px 20px 28px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;">
+            <tr><td style="padding:14px 16px;font-size:14px;color:#92400E;">
+              <strong>Attachment:</strong> {e(ctx.get('attachment_name') or 'Customer file')}<br>
+              <a href="{e(ctx['attachment_url'])}" target="_blank" style="display:inline-block;margin-top:8px;color:#92400E;font-weight:700;">Download file</a>
+            </td></tr>
+          </table>
+        </td></tr>'''
+
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>New enquiry #{e(ctx['enquiry_id'])}</title>
+</head>
+<body style="margin:0;padding:0;background:#F3F4F6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">{e(preheader)}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F3F4F6;">
+    <tr><td align="center" style="padding:24px 12px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;">
+
+        <tr><td style="background:#121418;padding:14px 28px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td style="color:#FFFFFF;font-size:13px;font-weight:800;letter-spacing:0.08em;">THE PRINT PLANET</td>
+            <td align="right" style="color:#F26B1D;font-size:12px;font-weight:700;">New enquiry #{e(ctx['enquiry_id'])}</td>
+          </tr></table>
+        </td></tr>
+        <tr><td style="height:4px;background:#F26B1D;line-height:4px;font-size:0;">&nbsp;</td></tr>
+
+        <tr><td style="padding:26px 28px 8px 28px;">
+          <div style="font-size:12px;color:#6B7280;">{e(received)}</div>
+          <h1 style="margin:6px 0 0 0;font-size:22px;line-height:1.3;color:#111827;font-weight:800;">{e(product)}</h1>
+          <p style="margin:10px 0 0 0;font-size:15px;color:#374151;">
+            <span style="display:inline-block;background:#121418;color:#FFFFFF;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:700;">{e(qty_label)}</span>
+            &nbsp;from <strong>{e(name)}</strong>{(' &middot; ' + e(company)) if company and company != 'Individual' else ''}
+          </p>
+        </td></tr>
+
+        <tr><td style="padding:18px 28px 6px 28px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            {button(f"https://wa.me/{ctx['clean_phone']}?text={ctx['wa_lead_text']}", 'Reply on WhatsApp', '#25D366')}
+            {button(f'tel:{phone}', f'Call {e(phone)}', '#121418')}
+            {button(f'mailto:{email}?subject={mail_subject}&body={mail_body}', 'Reply by email', '#FFFFFF', '#111827', '#D1D5DB')}
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:8px 28px 20px 28px;">
+          <div style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Message</div>
+          <div style="background:#F9FAFB;border:1px solid #EEF1F5;border-left:4px solid #F26B1D;border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;color:#111827;white-space:pre-wrap;">{e(ctx['message'])}</div>
+        </td></tr>
+
+        {attachment}
+
+        <tr><td style="padding:0 28px 8px 28px;">
+          <div style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">Buyer details</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">{details}</table>
+        </td></tr>
+
+        <tr><td style="padding:18px 28px 26px 28px;">
+          <a href="https://theprintplanet.co.in/owner/enquiries" target="_blank" style="color:#F26B1D;font-weight:700;font-size:14px;text-decoration:none;">Open all enquiries in the owner panel &rarr;</a>
+        </td></tr>
+
+        <tr><td style="background:#F9FAFB;border-top:1px solid #EEF1F5;padding:14px 28px;font-size:11px;color:#9CA3AF;">
+          Sent automatically by theprintplanet.co.in when a buyer submits an enquiry.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>'''
+
+
 def _send_enquiry_emails_worker(payload):
     """
     Worker executed in a non-blocking background thread.
@@ -408,7 +532,7 @@ def _send_enquiry_emails_worker(payload):
         # =========================================================================
         # 1. Executive HTML Email to Owner / Technical Sales Desk (Spacious 680px)
         # =========================================================================
-        owner_subject = f"🔔 [NEW RFQ LEAD #{enquiry_id}] {prod_name} ({requested_quantity} qty) - {full_name}"
+        owner_subject = f"🔔 New enquiry #{enquiry_id}: {prod_name} ({requested_quantity} qty) from {full_name}"
         owner_text = f"""
 ===============================================================================
 🔔 PRIORITY RFQ LEAD #{enquiry_id} - THE PRINT PLANET WHOLESALE PORTAL
@@ -438,110 +562,13 @@ INSTANT QUICK ACTIONS:
 ===============================================================================
 """
 
-        owner_html = f"""
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; padding: 25px 10px; color: #1e293b; margin: 0;">
-  <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 14px; border: 1px solid #cbd5e1; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
-    
-    <!-- Header -->
-    <div style="background-color: #0d1f36; padding: 30px 28px; text-align: left; border-bottom: 5px solid #e87832;">
-      <div style="display: inline-block; background-color: #e87832; color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding: 5px 12px; border-radius: 4px; margin-bottom: 12px;">
-        🚨 Priority RFQ Lead #{enquiry_id}
-      </div>
-      <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.25;">
-        {prod_name}
-      </h1>
-      <p style="color: #94a3b8; margin: 8px 0 0 0; font-size: 14px;">
-        Direct Wholesale Quotation Request from <strong>{full_name}</strong>
-      </p>
-    </div>
-
-    <div style="padding: 32px 28px;">
-      
-      <!-- Primary 1-Click Action Bar -->
-      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 26px; text-align: center;">
-        <div style="font-size: 12px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
-          ⚡ Rapid Response Quick Actions
-        </div>
-        <div>
-          <a href="https://wa.me/{clean_phone}?text={wa_lead_text}" target="_blank" style="background-color: #25d366; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; display: inline-block; margin: 4px 6px;">
-            💬 Reply on WhatsApp
-          </a>
-          <a href="tel:{phone}" style="background-color: #0284c7; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; display: inline-block; margin: 4px 6px;">
-            📞 Call Customer Now
-          </a>
-          <a href="https://theprintplanet.co.in/owner/enquiries" style="background-color: #0d1f36; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 13px; display: inline-block; margin: 4px 6px;">
-            ⚙️ Open in Owner Portal
-          </a>
-        </div>
-      </div>
-
-      <!-- Customer Details Table -->
-      <h2 style="color: #0d1f36; margin: 0 0 14px 0; font-size: 16px; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px;">
-        Order &amp; Client Overview
-      </h2>
-      <table style="width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b; width: 150px;">Customer Name:</td>
-          <td style="padding: 10px 0; font-weight: 800; color: #0f172a; font-size: 15px;">{full_name}</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Company / Studio:</td>
-          <td style="padding: 10px 0; font-weight: 600; color: #334155;">{company_name}</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Contact Phone:</td>
-          <td style="padding: 10px 0;"><a href="tel:{phone}" style="color: #0284c7; text-decoration: none; font-weight: 800; font-size: 15px;">{phone}</a></td>
-        </tr>
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Email Address:</td>
-          <td style="padding: 10px 0;"><a href="mailto:{email}" style="color: #0d1f36; text-decoration: none; font-weight: 700;">{email}</a></td>
-        </tr>
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Requested Item:</td>
-          <td style="padding: 10px 0; color: #e87832; font-weight: 800; font-size: 15px;">{prod_name}</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Requested Quantity:</td>
-          <td style="padding: 10px 0; font-weight: 800; color: #0d1f36;">
-            <span style="background-color: #e2e8f0; padding: 3px 10px; border-radius: 6px;">{requested_quantity} units</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Page Origin:</td>
-          <td style="padding: 10px 0; color: #64748b; font-family: monospace; font-size: 12px;">{html.escape(str(source_page))}</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Came From:</td>
-          <td style="padding: 10px 0; color: #0d1f36; font-weight: 700;">{html.escape(str(lead_source))}{(' &middot; landed on ' + html.escape(str(landing_page))) if landing_page else ''}</td>
-        </tr>
-      </table>
-
-      <!-- Optional Attachment Section -->
-      {attachment_section_html}
-
-      <!-- Customer Message Block -->
-      <div style="background-color: #f8fafc; border-left: 5px solid #0d1f36; border-radius: 8px; padding: 18px 20px; margin-top: 20px;">
-        <div style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
-          Customer Inquiry &amp; Specifications:
-        </div>
-        <p style="margin: 0; font-size: 14px; color: #1e293b; line-height: 1.6; white-space: pre-wrap;">{message}</p>
-      </div>
-
-      <!-- Footer Info -->
-      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
-        The Print Planet Automated Commercial Sales Dispatcher • Sunkadakatte, Bengaluru 560091
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-"""
+        owner_html = build_owner_email_html({
+            'enquiry_id': enquiry_id, 'full_name': full_name, 'company_name': company_name,
+            'phone': phone, 'email': email, 'prod_name': prod_name, 'requested_quantity': requested_quantity,
+            'message': message, 'source_page': source_page, 'lead_source': lead_source,
+            'landing_page': landing_page, 'attachment_url': attachment_url, 'attachment_name': attachment_name,
+            'clean_phone': clean_phone, 'wa_lead_text': wa_lead_text,
+        })
 
         # Try HTTPS REST dispatch first (bypasses Render SMTP port blocking)
         dispatched_https = _send_email_via_https(
