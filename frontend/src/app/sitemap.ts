@@ -1,6 +1,7 @@
 import { isMaterialCode } from '@/lib/productCopy';
 import { MetadataRoute } from 'next';
 import { getCategories, getProducts } from '@/lib/api';
+import { GUIDES } from '@/lib/guides';
 
 // Built per request: the database is not reachable during the Docker build, so a
 // prerendered sitemap would contain only the static pages.
@@ -71,6 +72,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
+    {
+      url: `${SITE_URL}/guides`,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    ...GUIDES.map((g) => ({
+      url: `${SITE_URL}/guides/${g.slug}`,
+      lastModified: new Date(g.updated),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
     {
       url: `${SITE_URL}/privacy-policy`,
       changeFrequency: 'yearly',

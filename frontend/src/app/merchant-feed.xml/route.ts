@@ -5,7 +5,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://theprintplanet.co.
 
 // Google Merchant Center product feed (RSS 2.0 + g: namespace) for free Shopping listings.
 // Add https://theprintplanet.co.in/merchant-feed.xml as a scheduled feed in Merchant Center.
-export const revalidate = 3600;
+// Built per request: the database is not reachable during the Docker build. Product data is cached for an hour.
+export const dynamic = 'force-dynamic';
 
 const esc = (value: unknown) =>
   String(value ?? '')

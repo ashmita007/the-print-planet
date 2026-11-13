@@ -9,6 +9,7 @@ import { CATEGORY_SEO } from "@/lib/categorySeo";
 import { brandedTitle, snippet } from "@/lib/seo";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
+import { GUIDES } from "@/lib/guides";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
 import { fixCategorySpelling, formatCategoryName, formatProductName } from "@/lib/formatters";
 
@@ -370,6 +371,30 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           <FaqAccordion items={seo.questions} />
         </section>
       )}
+
+      {(() => {
+        const guides = GUIDES.filter((g) => g.related.some((r) => r.href === `/categories/${category.slug}`));
+        if (!guides.length) return null;
+        return (
+          <section aria-labelledby="category-guides" className="border-t border-[#DFE6EE] pt-8">
+            <h2 id="category-guides" className="text-xl font-extrabold tracking-tight text-[#121418]">
+              Guides for buyers
+            </h2>
+            <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {guides.map((g) => (
+                <li key={g.slug}>
+                  <Link
+                    href={`/guides/${g.slug}`}
+                    className="block h-full bg-white border border-[#DFE6EE] rounded-xl p-4 text-sm font-semibold text-[#121418] hover:border-[#121418]"
+                  >
+                    {g.h1}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })()}
       </div>
     </div>
   );
