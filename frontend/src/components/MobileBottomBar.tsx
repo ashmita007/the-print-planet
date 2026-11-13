@@ -38,7 +38,7 @@ export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
     },
     {
       label: "WhatsApp",
-      href: `https://wa.me/${cleanPhone}?text=Hello%20The%20Print%20Planet,%20I%20need%20wholesale%20rates%20for%20custom%20printing%20and%20merchandise`,
+      href: `https://wa.me/${cleanPhone}`,
       icon: MessageCircle,
       isExternal: true,
       isActive: false,

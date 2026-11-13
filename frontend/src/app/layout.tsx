@@ -36,6 +36,7 @@ import { CartProvider } from "@/lib/cart";
 import CartDrawer from "@/components/CartDrawer";
 import MotionBridge from "@/components/animations/MotionBridge";
 import Analytics from "@/components/Analytics";
+import LeadTracker from "@/components/LeadTracker";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -349,6 +350,7 @@ export default function RootLayout({
           <MotionBridge />
         </CartProvider>
         <Analytics />
+        <LeadTracker />
       </body>
     </html>
   );

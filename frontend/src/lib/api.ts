@@ -222,6 +222,22 @@ export async function submitEnquiry(payload: {
       const msg = typeof data === 'object' ? Object.values(data).flat().join(', ') : 'Submission failed';
       return { success: false, error: msg };
     }
+    if (typeof window !== 'undefined') {
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void; clarity?: (...a: unknown[]) => void };
+      const params = {
+        method: 'form',
+        page_path: window.location.pathname,
+        product: payload.product_name_text || undefined,
+        quantity: payload.requested_quantity || undefined,
+      };
+      try {
+        w.gtag?.('event', 'generate_lead', params);
+        w.gtag?.('event', 'lead_form', params);
+        w.clarity?.('event', 'lead_form');
+      } catch {
+        /* analytics must never block an enquiry */
+      }
+    }
     return { success: true, data };
   } catch (err: any) {
     return { success: false, error: err.message || 'Network error' };
