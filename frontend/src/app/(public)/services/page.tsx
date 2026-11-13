@@ -7,7 +7,7 @@ import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://theprintplanet.co.in/services" },
-  title: "Lanyard & ID Card Printing Services in Bengaluru",
+  title: "Lanyard & ID Card Printing, Bengaluru",
   description:
     "Lanyard sublimation and screen printing, RFID card encoding, lens packaging, holographic foil, card die-cutting, lamination and kitting from Bengaluru.",
 };

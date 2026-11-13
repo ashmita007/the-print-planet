@@ -110,8 +110,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@theprintplanet",
-    creator: "@theprintplanet",
     title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
     description:
       "Direct manufacturer of satin lanyards, ID card materials, and card machines in Bangalore with nationwide dispatch.",
@@ -161,10 +159,8 @@ const jsonLdOrg = {
       currenciesAccepted: "INR",
       paymentAccepted: "Cash, NEFT, RTGS, UPI, Bank Transfer",
       sameAs: [
-        "https://www.indiamart.com/theprintplanet/",
-        "https://www.justdial.com/Bangalore/The-Print-Planet",
         "https://www.tradeindia.com/Seller-16599025-THE-PRINT-PLANET/",
-        "https://www.instagram.com/theprintplanet",
+        "https://www.instagram.com/theprintplanet01/",
         "https://www.linkedin.com/company/the-print-planet"
       ],
       knowsAbout: [
@@ -222,13 +218,6 @@ const jsonLdOrg = {
         areaServed: "IN",
         availableLanguage: ["English", "Hindi", "Kannada"],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.9",
-        reviewCount: "128",
-        bestRating: "5",
-        worstRating: "1",
-      },
       hasMerchantReturnPolicy: {
         "@type": "MerchantReturnPolicy",
         applicableCountry: "IN",
@@ -242,20 +231,6 @@ const jsonLdOrg = {
         appliesToDeliveryMethod: "https://schema.org/DirectDelivery",
         areaServed: "IN",
       },
-      review: [
-        {
-          "@type": "Review",
-          reviewRating: { "@type": "Rating", ratingValue: "5" },
-          author: { "@type": "Person", "name": "Karthik Raja" },
-          reviewBody: "Best factory-direct supplier in Bangalore for satin lanyard rolls and CR-80 card holders. Fast dispatch within 24h.",
-        },
-        {
-          "@type": "Review",
-          reviewRating: { "@type": "Rating", ratingValue: "5" },
-          author: { "@type": "Person", "name": "Deepak Sharma" },
-          reviewBody: "Genuine Wuhan Wenlin card punching machine and premium 320 mic fusing sheets. Excellent wholesale pricing.",
-        },
-      ],
     },
     {
       "@type": "WebSite",
@@ -305,14 +280,14 @@ const jsonLdOrg = {
           position: 3,
           name: "Satin Lanyard Rolls",
           description: "High-density sublimation and screen printing rolls (12mm to 25mm).",
-          url: `${SITE_URL}/categories/lanyards-accessories`,
+          url: `${SITE_URL}/categories/indian-satin-digital-lanyard-roll`,
         },
         {
           "@type": "SiteNavigationElement",
           position: 4,
           name: "Rigid PVC ID Card Holders",
           description: "CR-80 portrait and landscape badge cases from ₹2.65/pc.",
-          url: `${SITE_URL}/categories/id-card-holders`,
+          url: `${SITE_URL}/categories/id-card-holder`,
         },
         {
           "@type": "SiteNavigationElement",

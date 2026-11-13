@@ -9,7 +9,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const metadata: Metadata = {
   title: {
-    absolute: "ID Card & Lanyard FAQ — Technical Knowledge Base | The Print Planet",
+    absolute: "ID Card & Lanyard FAQ | The Print Planet",
   },
   description:
     "Answers on PVC cards, CR-80 sizes, fusing laminators, die cutters, satin lanyard rolls, RFID cards and wholesale pricing from The Print Planet, Bangalore.",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/faq`,
   },
   openGraph: {
-    title: "ID Card & Lanyard FAQ — Technical Knowledge Base | The Print Planet",
+    title: "ID Card & Lanyard FAQ | The Print Planet",
     description:
       "Comprehensive answers to top Google questions regarding PVC ID card making, machine temperatures, sublimation ribbon widths, Mifare vs proximity cards, and wholesale procurement.",
     url: `${SITE_URL}/faq`,

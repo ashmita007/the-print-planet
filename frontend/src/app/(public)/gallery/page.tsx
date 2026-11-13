@@ -6,7 +6,7 @@ import GalleryWall, { GalleryPiece } from "@/components/GalleryWall";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://theprintplanet.co.in/gallery" },
-  title: "Product Gallery: Lanyards, ID Cards & Machines",
+  title: "Product Gallery: Lanyards & ID Cards",
   description:
     "Photos of our sublimation lanyards, PVC holders, RFID cards, lamination plates and card manufacturing machines.",
 };

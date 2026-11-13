@@ -5,7 +5,7 @@ import PageHero from "@/components/PageHero";
 import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
-  title: "Wholesale B2B Pricing Tariff (2026) | The Print Planet Bangalore",
+  title: { absolute: "Wholesale Price List 2026 | The Print Planet" },
   description: "Factory-direct wholesale price list for satin lanyard rolls, PVC ID card holders, lanyard hardware, RFID cards and ID card machines from Bangalore.",
   keywords: [
     "lanyard wholesale price",

@@ -34,6 +34,7 @@ import { useCart } from "@/lib/cart";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
 import { trackUserCheckedProduct } from "@/lib/api";
+import { productDetails, productSummary } from "@/lib/productCopy";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -48,7 +49,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   // Customization & Ordering options
   const moq = product.minimum_order_quantity || 1;
   const [quantity, setQuantity] = useState<number>(moq);
-  const [selectedMaterial, setSelectedMaterial] = useState<string>(product.material || "Standard Grade");
+  const [selectedMaterial, setSelectedMaterial] = useState<string>(product.material || "");
   const [selectedDimensions, setSelectedDimensions] = useState<string>(product.dimensions || "Standard");
   const [customText, setCustomText] = useState<string>("");
   const [artworkFile, setArtworkFile] = useState<File | null>(null);
@@ -102,7 +103,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   const handleAddToCart = () => {
     addItem(product, quantity, {
-      material: selectedMaterial,
+      material: selectedMaterial || undefined,
       size: selectedDimensions,
       customText: customText || undefined,
       artworkName: artworkFile?.name || undefined,
@@ -123,11 +124,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     product.category?.name?.toLowerCase().includes("machine");
 
   // Material alternatives
-  const availableMaterials = [
-    product.material || "Industrial Grade PVC",
-    "Satin Heat-Transfer Fabric",
-    "Rigid Polycarbonate",
-  ].filter((v, i, a) => a.indexOf(v) === i);
+  // Only offer the material this product is actually made in; a generic list showed PVC and satin on machines.
+  const availableMaterials = product.material ? [product.material] : [];
 
   return (
     <>
@@ -252,8 +250,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              {product.short_description || product.description ||
-                "Industrial-grade commercial supply engineered for professional ID card printing, lanyard manufacturing, and identification solutions."}
+              {productSummary(product)}
             </p>
           </div>
 
@@ -301,11 +298,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <div className="p-5 bg-[#FFFFFF] rounded-lg border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <Sliders className="w-4 h-4 text-[#353C45]" />
-              <h3 className="text-sm font-bold text-[#121418]">Configure &amp; Customize</h3>
+              <h2 className="text-sm font-bold text-[#121418]">Configure &amp; Customize</h2>
             </div>
 
             {/* Material & Size Selector */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {availableMaterials.length > 0 && (
               <div>
                 <label htmlFor="field-material-finish" className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Material / Finish
@@ -322,6 +320,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   ))}
                 </select>
               </div>
+              )}
 
               <div>
                 <label htmlFor="field-dimensions-format" className="block text-xs font-semibold text-slate-700 mb-1.5">
@@ -464,7 +463,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 Product details
               </h2>
               <p className="mt-2 whitespace-pre-line leading-relaxed text-sm text-slate-700">
-                {product.description || product.short_description || "Ask us for the full details of this product."}
+                {productDetails(product)}
               </p>
             </section>
 

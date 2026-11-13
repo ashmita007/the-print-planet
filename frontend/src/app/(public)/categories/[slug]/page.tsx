@@ -10,7 +10,7 @@ import { brandedTitle, snippet } from "@/lib/seo";
 import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { fixCategorySpelling, formatCategoryName, formatProductName } from "@/lib/formatters";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -32,15 +32,17 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   const currentPage = Number(page) || 1;
   const category = await getCategoryBySlug(slug);
   if (!category) {
-    return { title: "Category Not Found | The Print Planet" };
+    return { title: { absolute: "Category Not Found | The Print Planet" }, robots: { index: false, follow: true } };
   }
   const seo = CATEGORY_SEO[category.slug];
-  const name = formatProductName(category.name);
+  const name = formatProductName(fixCategorySpelling(category.name));
   // Stored copy of this shape was bulk generated and says nothing specific.
   const generic = /wholesale id supplies|high quality industrial/i;
   const storedTitle = category.seo_title && !generic.test(category.seo_title) ? category.seo_title : "";
   const storedDesc = category.seo_description && !generic.test(category.seo_description) ? category.seo_description : "";
-  const title = brandedTitle(seo?.title || storedTitle || `${name} Wholesale Supplier in India`);
+  // Long category names plus "Wholesale Supplier in India" ran past 60 characters and got cut in results.
+  const fallbackTitle = name.length <= 32 ? `${name} Wholesale Supplier India` : `${name} Wholesale`;
+  const title = brandedTitle(seo?.title || storedTitle || fallbackTitle);
   const desc = snippet(
     seo?.description ||
       storedDesc ||
@@ -67,7 +69,7 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
           url: `${SITE_URL}/media/products/LAN-ROY-20M.png`,
           width: 1200,
           height: 630,
-          alt: `${category.name} - The Print Planet`,
+          alt: `${fixCategorySpelling(category.name)} - The Print Planet`,
         },
       ],
     },
@@ -108,7 +110,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {
         "@type": "CollectionPage",
         "@id": `${SITE_URL}/categories/${category.slug}#collection`,
-        name: `${category.name} - The Print Planet`,
+        name: `${fixCategorySpelling(category.name)} - The Print Planet`,
         description: category.description,
         url: `${SITE_URL}/categories/${category.slug}`,
         mainEntity: {
@@ -140,7 +142,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           {
             "@type": "ListItem",
             position: 3,
-            name: category.name,
+            name: fixCategorySpelling(category.name),
             item: `${SITE_URL}/categories/${category.slug}`,
           },
         ],
@@ -165,6 +167,29 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   };
 
   const parentCategory = category.parent ? allCategories.find((c) => c.id === category.parent) : null;
+
+  // Subcategories without written copy were a bare product grid. Summarise the real catalogue data instead.
+  const listed = productsData.results || [];
+  const prices = listed.map((p) => Number(p.price)).filter((n) => n > 0);
+  const moqs = listed.map((p) => p.minimum_order_quantity || 0).filter((n) => n > 0);
+  const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+  const displayName = formatProductName(fixCategorySpelling(category.name));
+  const subcategoryIntro =
+    !seo && listed.length > 0
+      ? [
+          `We stock ${productsData.count} ${productsData.count === 1 ? "product" : "products"} in ${displayName}, sold wholesale from our Bengaluru unit with a GST invoice on every order.`,
+          prices.length > 0
+            ? `Listed prices run from ${inr(Math.min(...prices))} to ${inr(Math.max(...prices))} per unit before GST${
+                prices.length < listed.length ? "; the rest are priced on request by quantity" : ""
+              }.`
+            : "Prices depend on quantity, so every item here is quoted on request.",
+          moqs.length > 0 ? `Minimum orders start at ${Math.min(...moqs)} units.` : "",
+          `Models in this range: ${listed
+            .slice(0, 8)
+            .map((p) => formatProductName(p.name))
+            .join(", ")}${listed.length > 8 ? " and more" : ""}.`,
+        ].filter(Boolean)
+      : [];
   const childSubcategories = allCategories.filter((c) => c.parent === category.id);
   const mainCategories = allCategories.filter((c) => !c.parent);
   const siblingSubcategories = parentCategory ? allCategories.filter((c) => c.parent === parentCategory.id) : [];
@@ -180,8 +205,8 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
         lead={seo?.lead || category.description || undefined}
         crumbs={[
           { label: "Products", href: "/products" },
-          ...(parentCategory ? [{ label: parentCategory.name, href: `/categories/${parentCategory.slug}` }] : []),
-          { label: category.name },
+          ...(parentCategory ? [{ label: fixCategorySpelling(parentCategory.name), href: `/categories/${parentCategory.slug}` }] : []),
+          { label: fixCategorySpelling(category.name) },
         ]}
       />
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-8">
@@ -216,7 +241,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {/* Sibling Subcategories Selector (if viewing Subcategory) */}
       {siblingSubcategories.length > 1 && (
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="font-bold text-[#353C45] shrink-0">Related in {parentCategory?.name}:</span>
+          <span className="font-bold text-[#353C45] shrink-0">Related in {fixCategorySpelling(parentCategory?.name)}:</span>
           {siblingSubcategories.map((sib) => (
             <Link
               key={sib.id}
@@ -227,7 +252,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
                   : "bg-[#EDF1F6] text-[#121418] hover:bg-slate-200 border border-[#DFE6EE]"
               }`}
             >
-              {sib.name}
+              {fixCategorySpelling(sib.name)}
             </Link>
           ))}
         </div>
@@ -260,9 +285,9 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
       {/* Products Grid */}
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3 gap-2">
-          <span className="text-xs font-bold text-[#353C45]">
+          <h2 className="text-xs font-bold text-[#353C45]">
             Showing <strong className="text-[#121418]">{productsData.results.length}</strong> products in <span className="uppercase">{formatCategoryName(category.name)}</span>
-          </span>
+          </h2>
           <MobileFilterSortBar
             categories={allCategories}
             activeCategory={slug}
@@ -296,6 +321,39 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           }}
         />
       </section>
+
+      {subcategoryIntro.length > 0 && (
+        <section aria-labelledby="category-about" className="border-t border-[#DFE6EE] pt-8 max-w-3xl">
+          <h2 id="category-about" className="text-xl font-extrabold tracking-tight text-[#121418]">
+            About {displayName}
+          </h2>
+          <div className="mt-3 space-y-3 text-sm text-[#121418] leading-relaxed">
+            {subcategoryIntro.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+            <p>
+              Not sure which one matches what you use now? Send a photo on{" "}
+              <a href="https://wa.me/919741808034" className="font-semibold underline" target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>{" "}
+              or{" "}
+              <Link href="/quote" className="font-semibold underline">
+                request a quote
+              </Link>
+              {parentCategory ? (
+                <>
+                  , or browse the full{" "}
+                  <Link href={`/categories/${parentCategory.slug}`} className="font-semibold underline">
+                    {formatProductName(fixCategorySpelling(parentCategory.name))}
+                  </Link>{" "}
+                  range
+                </>
+              ) : null}
+              .
+            </p>
+          </div>
+        </section>
+      )}
 
       {seo && (
         <section aria-labelledby="category-guide" className="border-t border-[#DFE6EE] pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">

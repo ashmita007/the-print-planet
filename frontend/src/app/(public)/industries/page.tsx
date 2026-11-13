@@ -17,7 +17,7 @@ import PageCta from "@/components/PageCta";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://theprintplanet.co.in/industries" },
-  title: "ID Cards & Lanyards for Schools, Offices and Hospitals",
+  title: "ID Cards & Lanyards for Schools & Offices",
   description:
     "ID badges, lanyards, RFID cards and packaging for offices, schools, hospitals, optical makers, government, events, factories and banks.",
 };

@@ -88,9 +88,20 @@ const UNIT_MAP: Record<string, string> = {
 /**
  * Format category name strictly in UPPERCASE.
  */
-export function formatCategoryName(name?: string | null): string {
+// Spelling mistakes in category names stored in the database; the slugs stay as they are.
+const CATEGORY_TYPOS: [RegExp, string][] = [
+  [/\bCANSUMABLES\b/gi, "CONSUMABLES"],
+  [/\bACCESSORIE\b/gi, "ACCESSORIES"],
+  [/\bGAMING ROLL\b/gi, "GUMMING ROLL"],
+];
+
+export function fixCategorySpelling(name?: string | null): string {
   if (!name) return "";
-  return name.replace(/\s+/g, " ").trim().toUpperCase();
+  return CATEGORY_TYPOS.reduce((acc, [re, fix]) => acc.replace(re, fix), name.replace(/\s+/g, " ").trim());
+}
+
+export function formatCategoryName(name?: string | null): string {
+  return fixCategorySpelling(name).toUpperCase();
 }
 
 /**

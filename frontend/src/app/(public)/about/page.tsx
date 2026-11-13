@@ -9,7 +9,7 @@ import { getSiteSettings } from "@/lib/api";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "About Us: ID Card & Lanyard Manufacturer in Bengaluru",
+  title: { absolute: "About The Print Planet | ID Card Maker, Bengaluru" },
   description:
     "The Print Planet makes and supplies ID card products, lanyards and card machines from Sunkadakatte, Bengaluru, for buyers across India.",
   alternates: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: DEFAULT_OG_IMAGES,
-    title: "About Us: ID Card & Lanyard Manufacturer in Bengaluru | The Print Planet",
+    title: "About The Print Planet | ID Card Maker, Bengaluru",
     description: "Dedicated B2B production and wholesale distribution facility in Bengaluru, Karnataka.",
     url: `${SITE_URL}/about`,
     siteName: "The Print Planet",

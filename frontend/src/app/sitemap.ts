@@ -1,3 +1,4 @@
+import { isMaterialCode } from '@/lib/productCopy';
 import { MetadataRoute } from 'next';
 import { getCategories, getProducts } from '@/lib/api';
 
@@ -71,21 +72,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/llms.txt`,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${SITE_URL}/llms-full.txt`,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/okf/index.md`,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
       url: `${SITE_URL}/privacy-policy`,
       changeFrequency: 'yearly',
       priority: 0.3,
@@ -108,7 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // 3. Dynamic Products (Fetch all pages to guarantee 100% of catalogue products are indexed)
-  const allProducts: { slug: string; updated_at?: string }[] = [];
+  const allProducts: { slug: string; name?: string; updated_at?: string }[] = [];
   let page = 1;
   let hasMore = true;
   while (hasMore && page <= 10) {
@@ -125,7 +111,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  const productRoutes: MetadataRoute.Sitemap = allProducts.map((prod) => ({
+  // Bare material-code products are noindexed (see productCopy), so they are left out here too.
+  const productRoutes: MetadataRoute.Sitemap = allProducts.filter((prod) => !isMaterialCode(prod.name)).map((prod) => ({
     url: `${SITE_URL}/products/${prod.slug}`,
     lastModified: prod.updated_at ? new Date(prod.updated_at) : undefined,
     changeFrequency: 'weekly',

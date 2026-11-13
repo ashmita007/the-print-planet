@@ -204,10 +204,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <section className="lg:col-span-9 space-y-6">
           {/* Top Sort & Count Bar */}
           <div className="bg-[#FFFFFF] p-3.5 rounded-md border border-[#DFE6EE] flex flex-wrap items-center justify-between gap-4">
-            <div className="text-xs text-[#353C45]">
+            <h2 className="text-xs font-normal text-[#353C45]">
               Showing <strong className="text-[#121418]">{productsData.results.length}</strong> of{" "}
               <strong className="text-[#121418]">{productsData.count}</strong> products
-            </div>
+            </h2>
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2 text-xs">

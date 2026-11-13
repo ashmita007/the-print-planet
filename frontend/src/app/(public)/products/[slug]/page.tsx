@@ -7,6 +7,7 @@ import ProductDetailClient from "@/components/ProductDetailClient";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import { getProductBySlug } from "@/lib/api";
 import { brandedTitle, snippet } from "@/lib/seo";
+import { isBoilerplate, isMaterialCode, productMetaDescription, productSummary } from "@/lib/productCopy";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -28,19 +29,17 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) {
-    return { title: "Product Not Found | The Print Planet" };
+    return { title: { absolute: "Product Not Found | The Print Planet" }, robots: { index: false, follow: true } };
   }
 
   const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
   const name = formatProductName(product.name);
   const title = brandedTitle(product.seo_title || `${name} Wholesale Price | Buy Factory Direct`);
-  const price = Number(product.price) > 0 ? `Price: ₹${Number(product.price).toLocaleString("en-IN")}. ` : "";
-  const moq = product.minimum_order_quantity ? `MOQ: ${product.minimum_order_quantity}. ` : "";
   const stored = product.seo_description || "";
   const description = snippet(
-    stored.length >= 110
+    stored.length >= 110 && !isBoilerplate(stored) && !/^Buy .+ wholesale factory direct/i.test(stored)
       ? stored
-      : `Buy ${name} wholesale factory direct from The Print Planet Bangalore. ${price}${moq}100% GST invoice, ready stock & 24–48h pan-India delivery.`
+      : productMetaDescription(product)
   );
   const shareTitle = title.absolute;
 
@@ -50,6 +49,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     alternates: {
       canonical: `${SITE_URL}/products/${product.slug}`,
     },
+    ...(isMaterialCode(product.name) ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: shareTitle,
       description,
@@ -89,7 +89,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         "@id": `${SITE_URL}/products/${product.slug}#product`,
         name: product.name,
         image: getAbsoluteImageUrl(product.primary_image?.secure_url),
-        description: product.short_description || product.description || `Industrial ${product.name} supplied by The Print Planet India.`,
+        description: productSummary(product),
         sku: product.sku || product.id?.toString(),
         mpn: product.sku || product.id?.toString(),
         category: product.category?.name,
@@ -99,13 +99,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         },
         manufacturer: {
           "@id": `${SITE_URL}/#organization`,
-        },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "4.9",
-          reviewCount: "86",
-          bestRating: "5",
-          worstRating: "1",
         },
         // A ₹0 offer would show as free in search, so quote-only products carry no offer.
         ...(Number(product.price) > 0
@@ -178,8 +171,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           {
             "@type": "ListItem",
             position: 3,
-            name: product.category?.name || "Category",
-            item: `${SITE_URL}/categories/${product.category?.slug || ""}`,
+            name: product.category?.name || "Products",
+            item: product.category?.slug ? `${SITE_URL}/categories/${product.category.slug}` : `${SITE_URL}/products`,
           },
           {
             "@type": "ListItem",
