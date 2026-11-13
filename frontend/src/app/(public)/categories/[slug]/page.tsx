@@ -191,9 +191,20 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
             .join(", ")}${listed.length > 8 ? " and more" : ""}.`,
         ].filter(Boolean)
       : [];
-  const childSubcategories = allCategories.filter((c) => c.parent === category.id);
-  const mainCategories = allCategories.filter((c) => !c.parent);
-  const siblingSubcategories = parentCategory ? allCategories.filter((c) => c.parent === parentCategory.id) : [];
+  const validCategories = allCategories.filter((c) => (c.products_count ?? 0) > 0);
+  const childSubcategories = validCategories
+    .filter((c) => c.parent === category.id)
+    .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
+  const mainCategories = (
+    validCategories.filter((c) => !c.parent).length > 0
+      ? validCategories.filter((c) => !c.parent)
+      : validCategories
+  ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
+  const siblingSubcategories = parentCategory
+    ? validCategories
+        .filter((c) => c.parent === parentCategory.id)
+        .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0))
+    : [];
 
   return (
     <div>

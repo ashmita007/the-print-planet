@@ -198,7 +198,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
   const fetchFreshCategories = async () => {
     try {
-      const res = await fetch(`${getApiUrl()}/api/v1/categories/`, {
+      const res = await fetch(`${getApiUrl()}/api/v1/categories/?hide_empty=true&ordering=count`, {
         cache: "no-store",
         headers: { Accept: "application/json" },
       });
@@ -280,6 +280,12 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
   const phone = settings?.phone || "+91 97418 08034";
   const email = settings?.email || "theprintplanet01@gmail.com";
   const safeCategories = Array.isArray(liveCategories) ? liveCategories : [];
+  const validCategories = safeCategories.filter((c) => (c.products_count ?? 0) > 0);
+  const mainCategoriesList = (
+    validCategories.filter((c) => !c.parent).length > 0
+      ? validCategories.filter((c) => !c.parent)
+      : validCategories
+  ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
 
   return (
     <header
@@ -431,11 +437,10 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                     </div>
 
                     <div className="max-h-[460px] overflow-y-auto p-4 grid grid-cols-2 gap-3">
-                      {(safeCategories.filter((c) => !c.parent).length > 0
-                        ? safeCategories.filter((c) => !c.parent)
-                        : safeCategories.slice(0, 8)
-                      ).map((mainCat) => {
-                        const subs = safeCategories.filter((c) => c.parent === mainCat.id);
+                      {mainCategoriesList.map((mainCat) => {
+                        const subs = validCategories
+                          .filter((c) => c.parent === mainCat.id)
+                          .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
                         return (
                           <div
                             key={mainCat.id}
@@ -444,32 +449,35 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                             <Link
                               href={`/products?category=${mainCat.slug}`}
                               onClick={() => setCategoriesDropdownOpen(false)}
-                              className="flex items-center justify-between text-xs font-bold text-[#121418] hover:text-[#353C45] transition-colors mb-1.5 uppercase tracking-wide"
+                              className="flex items-center justify-between text-xs font-bold text-[#121418] hover:text-[#353C45] transition-colors mb-1.5 uppercase tracking-wide group"
                             >
-                              <span className="truncate pr-1">{formatCategoryName(mainCat.name)}</span>
-                              <span className="text-[10px] text-slate-500 bg-[#FFFFFF] border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-normal">
-                                {mainCat.products_count || 0}
+                              <span className="truncate pr-1 group-hover:text-[#2B323B]">{formatCategoryName(mainCat.name)}</span>
+                              <span className="text-[10px] text-slate-600 bg-[#FFFFFF] border border-slate-200 px-1.5 py-0.5 rounded-full shrink-0 font-medium group-hover:border-slate-400">
+                                {mainCat.products_count}
                               </span>
                             </Link>
                             {subs.length > 0 && (
                               <div className="space-y-1 pl-2 border-l-2 border-slate-200">
-                                {subs.slice(0, 3).map((sub) => (
+                                {subs.slice(0, 4).map((sub) => (
                                   <Link
                                     key={sub.id}
                                     href={`/products?category=${sub.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
-                                    className="block text-[11px] text-slate-600 hover:text-[#353C45] truncate transition-colors font-medium"
+                                    className="flex items-center justify-between text-[11px] text-slate-600 hover:text-[#353C45] transition-colors font-medium group/sub"
                                   >
-                                    {formatCategoryName(sub.name)}
+                                    <span className="truncate pr-1.5 group-hover/sub:text-[#121418]">{formatCategoryName(sub.name)}</span>
+                                    <span className="text-[9px] text-slate-400 group-hover/sub:text-slate-600 shrink-0 font-normal">
+                                      {sub.products_count}
+                                    </span>
                                   </Link>
                                 ))}
-                                {subs.length > 3 && (
+                                {subs.length > 4 && (
                                   <Link
                                     href={`/products?category=${mainCat.slug}`}
                                     onClick={() => setCategoriesDropdownOpen(false)}
                                     className="block text-[10px] font-bold text-[#353C45] hover:underline pt-0.5"
                                   >
-                                    +{subs.length - 3} more &rarr;
+                                    +{subs.length - 4} more &rarr;
                                   </Link>
                                 )}
                               </div>
@@ -816,16 +824,21 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
                       >
                         View All 180+ Products
                       </Link>
-                      {safeCategories.map((c) => (
-                        <Link
-                          key={c.id}
-                          href={`/products?category=${c.slug}`}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="block px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#353C45] truncate"
-                        >
-                          {formatCategoryName(c.name)}
-                        </Link>
-                      ))}
+                      {validCategories
+                        .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0))
+                        .map((c) => (
+                          <Link
+                            key={c.id}
+                            href={`/products?category=${c.slug}`}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-slate-700 hover:bg-slate-50 hover:text-[#353C45] transition-colors"
+                          >
+                            <span className="truncate pr-2">{formatCategoryName(c.name)}</span>
+                            <span className="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full shrink-0 font-medium">
+                              {c.products_count}
+                            </span>
+                          </Link>
+                        ))}
                     </div>
                   )}
                 </div>

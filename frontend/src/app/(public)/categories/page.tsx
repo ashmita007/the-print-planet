@@ -29,8 +29,13 @@ export const metadata: Metadata = {
 
 export default async function CategoriesIndexPage() {
   const allCategories = await getCategories();
+  const validCategories = allCategories.filter((c) => (c.products_count ?? 0) > 0);
 
-  const mainCategories = allCategories.filter((c) => !c.parent);
+  const mainCategories = (
+    validCategories.filter((c) => !c.parent).length > 0
+      ? validCategories.filter((c) => !c.parent)
+      : validCategories
+  ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
 
   const categoriesJsonLd = {
     "@context": "https://schema.org",
@@ -43,7 +48,7 @@ export default async function CategoriesIndexPage() {
         url: `${SITE_URL}/categories`,
         mainEntity: {
           "@type": "ItemList",
-          itemListElement: allCategories.map((c, idx) => ({
+          itemListElement: validCategories.map((c, idx) => ({
             "@type": "ListItem",
             position: idx + 1,
             url: `${SITE_URL}/categories/${c.slug}`,
@@ -83,7 +88,9 @@ export default async function CategoriesIndexPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#DFE6EE] border border-[#DFE6EE] rounded-lg overflow-hidden">
           {mainCategories.map((cat) => {
-            const subcategories = allCategories.filter((sub) => sub.parent === cat.id);
+            const subcategories = validCategories
+              .filter((sub) => sub.parent === cat.id)
+              .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
             return (
               <li key={cat.id} className="bg-[#FFFFFF] p-5 sm:p-6">
                 <Link href={`/categories/${cat.slug}`} className="group flex items-center justify-between gap-4">
@@ -91,9 +98,7 @@ export default async function CategoriesIndexPage() {
                     <span className="block text-xl font-bold tracking-tight text-[#121418] group-hover:text-[#2B323B] transition-colors">
                       {formatCategoryName(cat.name)}
                     </span>
-                    {cat.products_count > 0 && (
-                      <span className="block text-sm text-[#353C45] mt-0.5">{cat.products_count} products</span>
-                    )}
+                    <span className="block text-sm text-[#353C45] mt-0.5">{cat.products_count} products</span>
                   </span>
                   <ArrowRight className="w-5 h-5 shrink-0 text-[#2B323B] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
@@ -103,9 +108,10 @@ export default async function CategoriesIndexPage() {
                       <Link
                         key={sub.id}
                         href={`/categories/${sub.slug}`}
-                        className="text-xs font-medium text-[#121418] bg-[#EDF1F6] hover:bg-[#EDF1F6] hover:text-[#2B323B] px-2.5 py-1.5 rounded transition-colors"
+                        className="text-xs font-medium text-[#121418] bg-[#EDF1F6] hover:bg-slate-200 hover:text-[#2B323B] px-2.5 py-1.5 rounded transition-colors inline-flex items-center gap-1.5"
                       >
-                        {formatCategoryName(sub.name)}
+                        <span>{formatCategoryName(sub.name)}</span>
+                        <span className="text-[10px] text-slate-500 font-normal">({sub.products_count})</span>
                       </Link>
                     ))}
                   </div>

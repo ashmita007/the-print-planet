@@ -84,9 +84,19 @@ const getAuthHeaders = (): Record<string, string> => {
 // PUBLIC API CALLS
 // ==========================================
 
-export async function getCategories(): Promise<Category[]> {
+export async function getCategories(params?: { hide_empty?: boolean; ordering?: string }): Promise<Category[]> {
   try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/`, CATALOGUE_READ);
+    const query = new URLSearchParams();
+    if (params?.hide_empty !== false) {
+      query.set('hide_empty', 'true');
+    }
+    if (params?.ordering) {
+      query.set('ordering', params.ordering);
+    } else {
+      query.set('ordering', 'count');
+    }
+    const qs = query.toString() ? `?${query.toString()}` : '';
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${qs}`, CATALOGUE_READ);
     if (!res.ok) throw new Error(`Failed to fetch categories: ${res.status}`);
     return await res.json();
   } catch (err) {

@@ -57,10 +57,17 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     }),
   ]);
 
-  const activeCategory = categories.find((c) => c.slug === params.category);
+  const validCategories = (categories || []).filter((c) => (c.products_count ?? 0) > 0);
+  const mainCategories = (
+    validCategories.filter((c) => !c.parent).length > 0
+      ? validCategories.filter((c) => !c.parent)
+      : validCategories
+  ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
+
+  const activeCategory = (categories || []).find((c) => c.slug === params.category);
   const totalPages = Math.ceil(productsData.count / 24);
   const totalCatalogCount =
-    categories.filter((c) => !c.parent).reduce((sum, c) => sum + (c.products_count || 0), 0) ||
+    validCategories.filter((c) => !c.parent).reduce((sum, c) => sum + (c.products_count || 0), 0) ||
     productsData.count;
 
   return (
@@ -76,7 +83,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-6">
       {/* Mobile-Only Filter & Sort Bar with Small Modal Trigger */}
       <MobileFilterSortBar
-        categories={categories}
+        categories={validCategories}
         activeCategory={params.category}
         activeOrdering={params.ordering}
         activeSearch={params.search}
@@ -129,7 +136,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           <div>
             <label className="block text-xs font-bold text-slate-800 mb-2 flex items-center justify-between">
               <span>Category Sector</span>
-              <span className="text-[10px] text-slate-400 font-semibold">{categories.length} lines</span>
+              <span className="text-[10px] text-slate-400 font-semibold">{validCategories.length} lines</span>
             </label>
             <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1 text-xs">
               <Link
@@ -144,12 +151,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 </span>
               </Link>
 
-              {(categories.filter((c) => !c.parent).length > 0
-                ? categories.filter((c) => !c.parent)
-                : categories
-              ).map((mainCat) => {
+              {mainCategories.map((mainCat) => {
                 const isMainSelected = params.category === mainCat.slug;
-                const childSubs = categories.filter((c) => c.parent === mainCat.id);
+                const childSubs = validCategories
+                  .filter((c) => c.parent === mainCat.id)
+                  .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
                 const hasSelectedChild = childSubs.some((s) => s.slug === params.category);
 
                 return (

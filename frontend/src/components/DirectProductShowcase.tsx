@@ -41,6 +41,12 @@ export default function DirectProductShowcase({
   categories = [],
 }: DirectProductShowcaseProps) {
   const safeCategories = Array.isArray(categories) ? categories : [];
+  const validCategories = safeCategories.filter((c) => (c.products_count ?? 0) > 0);
+  const showcaseCategories = (
+    validCategories.filter((c) => !c.parent).length > 0
+      ? validCategories.filter((c) => !c.parent)
+      : validCategories
+  ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
@@ -323,10 +329,7 @@ export default function DirectProductShowcase({
                 <span>All Products</span>
               </button>
 
-              {(safeCategories.filter((c) => !c.parent).length > 0
-                ? safeCategories.filter((c) => !c.parent)
-                : safeCategories
-              ).map((cat) => (
+              {showcaseCategories.map((cat) => (
                 <button
                   key={cat.id}
                   type="button"

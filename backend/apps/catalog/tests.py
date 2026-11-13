@@ -48,6 +48,23 @@ class CatalogApiTests(TestCase):
         self.assertGreaterEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['slug'], 'test-lanyard-rolls')
 
+    def test_public_category_list_hide_empty_and_ordering(self):
+        # Create an empty category with 0 products
+        empty_cat = Category.objects.create(name='EMPTY CATEGORY', is_active=True, display_order=99)
+        
+        # Default includes empty category
+        res_default = self.client.get('/api/v1/categories/')
+        self.assertTrue(any(c['id'] == empty_cat.id for c in res_default.data))
+        
+        # hide_empty=true excludes it
+        res_hidden = self.client.get('/api/v1/categories/?hide_empty=true')
+        self.assertFalse(any(c['id'] == empty_cat.id for c in res_hidden.data))
+
+        # ordering=count sorts descending by products_count
+        res_sorted = self.client.get('/api/v1/categories/?hide_empty=true&ordering=count')
+        counts = [c['products_count'] for c in res_sorted.data]
+        self.assertEqual(counts, sorted(counts, reverse=True))
+
     def test_public_category_detail(self):
         response = self.client.get(f'/api/v1/categories/{self.category.slug}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

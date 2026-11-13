@@ -40,6 +40,12 @@ export default function ProductsFilterModal({
   const [categoryVal, setCategoryVal] = useState(currentCategory);
   const [orderingVal, setOrderingVal] = useState(currentOrdering);
   const safeCategories = Array.isArray(categories) ? categories : [];
+  const validCategories = safeCategories.filter((c) => (c.products_count ?? 0) > 0);
+  const mainCategories = (
+    validCategories.filter((c) => !c.parent).length > 0
+      ? validCategories.filter((c) => !c.parent)
+      : validCategories
+  ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
 
   useEffect(() => {
     setMounted(true);
@@ -153,11 +159,10 @@ export default function ProductsFilterModal({
               className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg sm:rounded-md px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-[#121418] outline-none transition-colors"
             >
               <option value="">All Wholesale Categories</option>
-              {(safeCategories.filter((c) => !c.parent).length > 0
-                ? safeCategories.filter((c) => !c.parent)
-                : safeCategories
-              ).map((mainCat) => {
-                const childSubs = safeCategories.filter((c) => c.parent === mainCat.id);
+              {mainCategories.map((mainCat) => {
+                const childSubs = validCategories
+                  .filter((c) => c.parent === mainCat.id)
+                  .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
                 if (childSubs.length === 0) {
                   return (
                     <option key={mainCat.id} value={mainCat.slug}>

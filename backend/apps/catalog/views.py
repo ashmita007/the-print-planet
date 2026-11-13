@@ -62,6 +62,26 @@ class CategoryListView(generics.ListAPIView):
     def get_queryset(self):
         return Category.objects.filter(is_active=True).order_by('display_order', 'name')
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        context = self.get_serializer_context()
+        counts = context.get('category_product_counts', {})
+
+        hide_empty = request.query_params.get('hide_empty', 'false').lower() in ('true', '1')
+        ordering = request.query_params.get('ordering', '')
+
+        categories = list(queryset)
+
+        if hide_empty:
+            categories = [c for c in categories if counts.get(c.id, 0) > 0]
+
+        if ordering in ('products_count', '-products_count', 'count', '-count'):
+            reverse = True if ordering in ('-products_count', 'products_count', 'count') else False
+            categories.sort(key=lambda c: counts.get(c.id, 0), reverse=reverse)
+
+        serializer = self.get_serializer(categories, many=True)
+        return Response(serializer.data)
+
 
 class CategoryDetailView(generics.RetrieveAPIView):
     """Get category details by slug."""
