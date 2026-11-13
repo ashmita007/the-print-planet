@@ -354,6 +354,9 @@ EMAIL_WEBHOOK_URL = os.environ.get('EMAIL_WEBHOOK_URL', '').strip()
 # Public storefront origin, used for links in outgoing emails (password reset etc.)
 FRONTEND_URL = (os.environ.get('FRONTEND_URL') or os.environ.get('NEXT_PUBLIC_SITE_URL') or '').strip().rstrip('/')
 
+# Password reset links expire after an hour and stop working once the password changes.
+PASSWORD_RESET_TIMEOUT = 60 * 60
+
 # Security Headers & Cookie Policies
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'

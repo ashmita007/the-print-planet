@@ -45,6 +45,8 @@ from apps.settings_app.views import (
 from apps.authentication.views import (
     LoginView,
     RegisterView,
+    VerifyEmailOTPView,
+    ResendEmailOTPView,
     LogoutView,
     CurrentUserView,
     ChangePasswordView,
@@ -103,6 +105,8 @@ urlpatterns = [
 
     # Authentication & Registration
     path('api/v1/auth/register/', RegisterView.as_view(), name='auth-register'),
+    path('api/v1/auth/verify-email/', VerifyEmailOTPView.as_view(), name='auth-verify-email'),
+    path('api/v1/auth/resend-otp/', ResendEmailOTPView.as_view(), name='auth-resend-otp'),
     path('api/v1/auth/login/', LoginView.as_view(), name='auth-login'),
     path('api/v1/auth/logout/', LogoutView.as_view(), name='auth-logout'),
     path('api/v1/auth/me/', CurrentUserView.as_view(), name='auth-me'),

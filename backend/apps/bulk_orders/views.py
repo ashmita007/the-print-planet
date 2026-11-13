@@ -93,13 +93,15 @@ class BulkOrderSubmitView(APIView):
 
                 existing_user = User.objects.filter(email__iexact=email).first()
                 if existing_user:
-                    user = existing_user
-                    if password:
-                        auth_user = authenticate(request, username=existing_user.username, password=password)
-                        if auth_user:
-                            user = auth_user
-                    token, _ = Token.objects.get_or_create(user=user)
-                    token_key = token.key
+                    # Only the account's own password may sign in here; typing someone's email
+                    # (the owner's included) must never hand back their login token.
+                    # The order is still accepted and filed under that account, but without the
+                    # right password no token comes back.
+                    auth_user = authenticate(request, username=existing_user.username, password=password) if password else None
+                    user = auth_user or existing_user
+                    if auth_user:
+                        token, _ = Token.objects.get_or_create(user=user)
+                        token_key = token.key
                 else:
                     names = contact_person.split()
                     candidate = User(

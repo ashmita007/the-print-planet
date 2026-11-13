@@ -387,3 +387,60 @@ def customer_enquiry_email(ctx: dict) -> str:
         <a href="{SITE}" target="_blank" style="color:{INK};">theprintplanet.co.in</a><br>
         GSTIN 29AAQFT3909B1ZZ'''
     return _shell(f'Enquiry #{ref} received', f'Ref #{ref}: {product}, {qty}. Your quote comes within 2 to 4 business hours.', body, footer)
+
+
+# ----------------------------------------------------------------------------- account emails
+
+def _account_footer(reason: str) -> str:
+    return (
+        f'{reason}<br><br>'
+        f'<strong style="color:{INK};font-size:13px;">The Print Planet</strong> &middot; {HOURS}<br>'
+        f'Wholesale ID card supplies, Bengaluru &middot; '
+        f'<a href="{SITE}" target="_blank" style="color:{INK};">theprintplanet.co.in</a>'
+    )
+
+
+def verify_email_otp_email(ctx: dict) -> str:
+    """6-digit code a new buyer types on the sign-up page."""
+    code = ''.join(ch for ch in str(ctx.get('code') or '') if ch.isdigit())
+    minutes = int(ctx.get('minutes') or 10)
+    spaced = '&nbsp;'.join(esc(ch) for ch in code)
+    body = f'''
+      <tr><td class="px" style="padding:30px 28px 6px 28px;">
+        <div style="font-size:13px;font-weight:800;color:{ORANGE};letter-spacing:0.04em;">VERIFY YOUR EMAIL</div>
+        <h1 class="h1" style="margin:8px 0 0 0;font-size:26px;line-height:1.25;font-weight:800;color:{INK};">Hi {esc(ctx.get('name') or 'there')}, here&rsquo;s your code</h1>
+        <p style="margin:8px 0 0 0;font-size:15px;line-height:1.6;color:#374151;">Enter this code on the sign-up page to finish creating your account.</p>
+      </td></tr>
+      <tr><td class="px" align="center" style="padding:20px 28px 6px 28px;">
+        <div style="background:{ORANGE_SOFT};border:1px dashed {ORANGE};border-radius:14px;padding:20px 12px;text-align:center;">
+          <div style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;font-size:36px;line-height:42px;font-weight:800;letter-spacing:0.12em;color:{INK};">{spaced}</div>
+          <div style="margin-top:8px;font-size:13px;color:{MUTED};">Expires in {minutes} minutes &middot; works once</div>
+        </div>
+      </td></tr>
+      <tr><td class="px" style="padding:18px 28px 28px 28px;font-size:13px;line-height:1.6;color:{MUTED};">
+        Never share this code. The Print Planet will never ask for it on a call or WhatsApp.
+      </td></tr>'''
+    footer = _account_footer("You got this because someone used this email to create an account on theprintplanet.co.in. If it wasn't you, ignore it and no account will be created.")
+    return _shell('Your verification code', f'Your code is {code}. It expires in {minutes} minutes.', body, footer)
+
+
+def password_reset_email(ctx: dict) -> str:
+    """Single-use link to set a new password."""
+    url = _safe_url(ctx.get('reset_url'))
+    minutes = int(ctx.get('minutes') or 60)
+    body = f'''
+      <tr><td class="px" style="padding:30px 28px 6px 28px;">
+        <div style="font-size:13px;font-weight:800;color:{ORANGE};letter-spacing:0.04em;">PASSWORD RESET</div>
+        <h1 class="h1" style="margin:8px 0 0 0;font-size:26px;line-height:1.25;font-weight:800;color:{INK};">Hi {esc(ctx.get('name') or 'there')}, reset your password</h1>
+        <p style="margin:8px 0 0 0;font-size:15px;line-height:1.6;color:#374151;">We received a request to reset the password for your The Print Planet account. Tap the button to choose a new one.</p>
+      </td></tr>
+      <tr><td class="px" style="padding:22px 28px 6px 28px;">
+        {_button(url, 'Set a new password', ORANGE, big=True)}
+        <div style="margin-top:10px;font-size:13px;color:{MUTED};text-align:center;">The link works once and expires in {minutes} minutes.</div>
+      </td></tr>
+      <tr><td class="px" style="padding:18px 28px 28px 28px;font-size:12px;line-height:1.6;color:{MUTED};word-break:break-all;">
+        Button not working? Paste this into your browser:<br>
+        <a href="{esc(url)}" target="_blank" style="color:{INK};">{esc(url)}</a>
+      </td></tr>'''
+    footer = _account_footer("Didn't ask for this? Ignore this email. Your password stays the same.")
+    return _shell('Reset your password', f'Reset link for your account. It expires in {minutes} minutes.', body, footer)

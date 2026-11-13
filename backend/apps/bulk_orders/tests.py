@@ -198,6 +198,8 @@ class BulkOrderAuthorizationTests(TestCase):
         res = self.api.post('/api/v1/bulk-orders/submit/', self.submit_payload(email='alice@acme.com'), format='json')
         self.assertEqual(res.status_code, 201)
         self.assertEqual(BulkOrder.objects.filter(user=self.alice).count(), 2)
+        self.assertFalse(res.data['token'])  # typing someone's email must not sign you in as them
+        self.assertIsNone(res.data['user'])
 
     def test_invalid_order_does_not_create_account(self):
         res = self.api.post('/api/v1/bulk-orders/submit/',

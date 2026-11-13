@@ -927,13 +927,30 @@ export async function downloadProtectedFile(url: string, as: 'client' | 'owner' 
   }
 }
 
+export type RegisterResult = {
+  success: boolean;
+  verificationRequired?: boolean;
+  email?: string;
+  resendAfter?: number;
+  message?: string;
+  error?: string;
+};
+
+function storeClientSession(token: string, user: any) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('client_token', token);
+  localStorage.setItem('client_user', JSON.stringify(user));
+  window.dispatchEvent(new Event('authChange'));
+}
+
+/** Creates an unverified account; the buyer then enters the 6-digit code from their email. */
 export async function clientRegister(data: {
   full_name: string;
   company_name?: string;
   email: string;
   phone: string;
   password: string;
-}): Promise<{ success: boolean; token?: string; user?: any; error?: string }> {
+}): Promise<RegisterResult> {
   try {
     const res = await fetch(`${getApiUrl()}/api/v1/auth/register/`, {
       method: 'POST',
@@ -942,23 +959,68 @@ export async function clientRegister(data: {
     });
     const resData = await res.json();
     if (!res.ok) {
-      return { success: false, error: resData.error || Object.values(resData)[0] as string || 'Registration failed' };
+      return {
+        success: false,
+        verificationRequired: Boolean(resData.verification_required),
+        email: resData.email,
+        error: resData.error || (Object.values(resData)[0] as string) || 'Registration failed',
+      };
     }
-    if (typeof window !== 'undefined' && resData.token) {
-      localStorage.setItem('client_token', resData.token);
-      localStorage.setItem('client_user', JSON.stringify(resData.user));
-      window.dispatchEvent(new Event('authChange'));
-    }
-    return { success: true, token: resData.token, user: resData.user };
+    return {
+      success: true,
+      verificationRequired: Boolean(resData.verification_required),
+      email: resData.email || data.email,
+      resendAfter: resData.resend_after,
+      message: resData.message,
+    };
   } catch (err: any) {
     return { success: false, error: err.message || 'Registration network failed' };
+  }
+}
+
+export async function verifyEmailOtp(email: string, code: string): Promise<{
+  success: boolean;
+  user?: any;
+  error?: string;
+  errorCode?: string;
+  attemptsLeft?: number;
+}> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/verify-email/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, code }),
+    });
+    const resData = await res.json();
+    if (!res.ok) {
+      return { success: false, error: resData.error || 'Could not verify the code.', errorCode: resData.code, attemptsLeft: resData.attempts_left };
+    }
+    if (resData.token) storeClientSession(resData.token, resData.user);
+    return { success: true, user: resData.user };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network failed.' };
+  }
+}
+
+export async function resendEmailOtp(email: string): Promise<{ success: boolean; resendAfter?: number; message?: string; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/auth/resend-otp/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const resData = await res.json();
+    if (!res.ok) return { success: false, error: resData.error || 'Could not send a new code.', resendAfter: resData.resend_after };
+    return { success: true, resendAfter: resData.resend_after, message: resData.message };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network failed.' };
   }
 }
 
 export async function clientLogin(data: {
   username: string;
   password: string;
-}): Promise<{ success: boolean; token?: string; role?: string; user?: any; error?: string }> {
+}): Promise<{ success: boolean; token?: string; role?: string; user?: any; error?: string; unverifiedEmail?: string }> {
   try {
     const res = await fetch(`${getApiUrl()}/api/v1/auth/login/`, {
       method: 'POST',
@@ -967,7 +1029,11 @@ export async function clientLogin(data: {
     });
     const resData = await res.json();
     if (!res.ok) {
-      return { success: false, error: resData.error || 'Invalid credentials' };
+      return {
+        success: false,
+        error: resData.error || 'Invalid credentials',
+        unverifiedEmail: resData.code === 'email_unverified' ? resData.email : undefined,
+      };
     }
     if (typeof window !== 'undefined' && resData.token) {
       if (resData.role === 'owner') {

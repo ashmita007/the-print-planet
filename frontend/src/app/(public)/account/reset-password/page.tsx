@@ -23,8 +23,8 @@ function ResetPasswordForm() {
     e.preventDefault();
     setErrorMsg("");
 
-    if (newPassword.length < 6) {
-      setErrorMsg("Password must be at least 6 characters long.");
+    if (newPassword.length < 8) {
+      setErrorMsg("Password must be at least 8 characters long.");
       return;
     }
     if (newPassword !== confirmPassword) {
@@ -87,7 +87,7 @@ function ResetPasswordForm() {
                 required
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="At least 6 characters"
+                placeholder="At least 8 characters"
                 className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-md pl-9 pr-3 py-2.5 text-[#121418] outline-none"
               />
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -112,6 +112,7 @@ function ResetPasswordForm() {
           <button
             type="submit"
             disabled={loading || !uid || !token}
+            title={!uid || !token ? "Open the link from your reset email" : undefined}
             className="w-full bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] py-3 rounded-md font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? <span>Updating password...</span> : <span>Save New Password</span>}

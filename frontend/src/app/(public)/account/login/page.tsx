@@ -31,6 +31,10 @@ export default function ClientLoginPage() {
       } else {
         router.push(redirectUrl);
       }
+    } else if (res.unverifiedEmail) {
+      const params = new URLSearchParams({ verify: res.unverifiedEmail });
+      if (redirectUrl !== "/orders") params.set("redirect", redirectUrl);
+      router.push(`/account/register?${params.toString()}`);
     } else {
       setErrorMsg(res.error || "Invalid email or password.");
     }
