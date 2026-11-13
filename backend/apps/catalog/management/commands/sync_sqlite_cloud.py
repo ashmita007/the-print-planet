@@ -1,5 +1,6 @@
 import io
 import os
+import sys
 import ssl
 import json
 import sqlite3
@@ -15,15 +16,43 @@ CLOUDINARY_RAW_URL = "https://res.cloudinary.com/pmq4rert/raw/upload/the_print_p
 CLOUDINARY_ENQUIRIES_URL = "https://res.cloudinary.com/pmq4rert/raw/upload/the_print_planet/enquiries_backup.json"
 
 
+def cloud_sync_allowed():
+    """
+    Cloud backup/restore talks to the ONE file production restores from on every start, so it may only
+    run on the production server. A laptop or a test run uploading its own database there replaces the
+    live shop's data on the next deploy (this happened on 13 Nov 2026).
+
+    Allowed when running on Render (it sets RENDER=true and RENDER_SERVICE_ID on every service), or when
+    CLOUD_BACKUP_ENABLED=true is set explicitly. Never during tests or when CLOUD_BACKUP_ENABLED=false.
+    """
+    flag = os.environ.get('CLOUD_BACKUP_ENABLED', '').strip().lower()
+    if flag in ('0', 'false', 'no', 'off'):
+        return False
+    if getattr(settings, 'TESTING', False) or (len(sys.argv) > 1 and sys.argv[1] == 'test'):
+        return False
+    if flag in ('1', 'true', 'yes', 'on'):
+        return True
+    return os.environ.get('RENDER', '').lower() == 'true' or bool(os.environ.get('RENDER_SERVICE_ID'))
+
+
 class Command(BaseCommand):
     help = 'Automatically backs up or restores the SQLite database and customer enquiries to/from Cloudinary raw cloud storage.'
 
     def add_arguments(self, parser):
         parser.add_argument('--restore', action='store_true', help='Restore SQLite database and enquiries from Cloudinary')
         parser.add_argument('--backup', action='store_true', help='Backup SQLite database and enquiries to Cloudinary')
+        parser.add_argument('--force', action='store_true',
+                            help='Run even off the production server (only to deliberately restore or seed production).')
 
     def handle(self, *args, **options):
         db_path = str(settings.BASE_DIR / 'db.sqlite3')
+
+        if not options.get('force') and not cloud_sync_allowed():
+            self.stdout.write(self.style.WARNING(
+                "Cloud sync skipped: not running on the production server. "
+                "Pass --force only if you really mean to overwrite the production backup."
+            ))
+            return
 
         if options.get('restore'):
             self.restore_database(db_path)

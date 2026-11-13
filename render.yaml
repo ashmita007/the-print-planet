@@ -75,6 +75,9 @@ services:
         sync: false
       - key: RESEND_FROM_EMAIL
         sync: false
+      # Cloud SQLite backup/restore may only run on this server (see sync_sqlite_cloud.cloud_sync_allowed).
+      - key: CLOUD_BACKUP_ENABLED
+        value: "true"
       - key: EMAIL_WEBHOOK_URL
         sync: false
       # Optional: Places API (New) key for real Google rating/reviews on the homepage.

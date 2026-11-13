@@ -99,5 +99,14 @@ else
     echo "-> Using local high-speed Nginx media storage (zero cost, zero external service dependency)."
 fi
 
+# 9. Keep the free Render instance awake. It sleeps after 15 idle minutes and the next visitor
+#    (or Googlebot) waits for a cold start. GitHub's scheduled keepalive runs only every few hours,
+#    so the server requests its own public URL every 10 minutes. Render only; never locally.
+if [ "$RENDER" = "true" ] && [ "${SELF_KEEPALIVE:-true}" = "true" ]; then
+    KEEPALIVE_URL="${RENDER_EXTERNAL_URL:-https://theprintplanet.co.in}/healthz"
+    echo "-> Self keep-alive enabled: ${KEEPALIVE_URL} every 10 minutes."
+    ( sleep 120; while true; do curl -s -o /dev/null --max-time 20 "$KEEPALIVE_URL" || true; sleep 600; done ) &
+fi
+
 echo "=== All services prepared! Launching supervisor (Django + Next.js + Nginx) ==="
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
