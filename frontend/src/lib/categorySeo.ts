@@ -17,9 +17,9 @@ const DELIVERY = {
 export const CATEGORY_SEO: Record<string, CategorySeo> = {
   machines: {
     h1: "ID card and lanyard machines",
-    title: "ID Card Making Machines & Lanyard Machines Wholesale India",
+    title: "ID Card Fusing Machine, PVC Card Cutter & Heat Press India",
     description:
-      "Commercial ID card fusing laminators, motorized CR-80 die cutters, manual slot punches and lanyard heat press machines from The Print Planet, Bengaluru. Factory-direct prices.",
+      "ID card fusing machines, PVC card cutters (manual and motorized) and lanyard heat press machines from The Print Planet, Bengaluru. Live video demo before dispatch.",
     lead: "Heavy-duty fusing laminators, motorized card cutters, hot foil stamping, and rotary lanyard press machinery.",
     about: [
       "A commercial ID card manufacturing line consists of two core units: a heated fusing laminator to bond multi-layer printed PVC sheets under pressure, and an industrial die-cutter to punch burr-free ISO CR-80 cards with standard 3.18mm rounded corners.",
@@ -48,6 +48,11 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
           "A manual desktop punch uses a hand lever to cut one card at a time (suitable for 50–200 cards/day). A motorized electric die cutter uses a hardened alloy punch powered by an electric motor with foot pedal operation, punching up to 1,200 cards per hour with consistent ISO-standard burr-free edge quality and zero operator fatigue.",
       },
       {
+        question: "Which heat press machine is used for lanyard printing?",
+        answer:
+          "Lanyards are printed by sublimation: the design is printed on sublimation paper, then a heat press transfers it onto white satin ribbon. A flatbed press such as the DCT250 suits smaller batches, while a continuous roll press such as the DCT450 prints long ribbon runs for bulk lanyard orders. Both use the same sublimation paper rolls and inks we stock.",
+      },
+      {
         question: "Can I inspect the machine working on live video before dispatch?",
         answer:
           "Yes. The Print Planet conducts live WhatsApp video machine testing (+91 97418 08034) with every buyer prior to packaging, demonstrating operational heating, smooth hydraulic pressure, and sample card punch accuracy before timber crating.",
@@ -57,10 +62,10 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
   },
 
   "id-card-holder": {
-    h1: "ID card holders",
-    title: "ID Card Holder Manufacturer & Wholesale Supplier India",
+    h1: "ID card holders and covers",
+    title: "ID Card Holder & ID Card Cover Wholesale Supplier India",
     description:
-      "Wholesale rigid PVC ID card holders from The Print Planet, Bengaluru: crystal clear, semi-transparent frosted, thumb-notch sliding, and dual-pocket badge holders.",
+      "Wholesale ID card holders and ID card covers from The Print Planet, Bengaluru: crystal clear, frosted, thumb-notch and dual-pocket. Bulk cartons for schools and offices.",
     lead: "Crystal clear, semi-transparent frosted, thumb-notch sliding, and dual-slot proximity card holders.",
     about: [
       "Our ID card holders are injection-molded from virgin optical-grade polymer and shatterproof polycarbonate, strictly engineered to fit standard ISO/IEC 7810 ID-1 (CR-80) credentials measuring 85.60 mm by 53.98 mm.",
@@ -68,6 +73,11 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
       "Manufactured in high-volume production batches for schools, IT corporate campuses, hospitals, and security contractors across India.",
     ],
     questions: [
+      {
+        question: "Is an ID card holder the same as an ID card cover?",
+        answer:
+          "Yes. Buyers in India use both names for the same thing: a clear or frosted case that holds a CR-80 ID card and hangs from a lanyard or clips to clothing. Rigid holders protect the card best; soft covers are cheaper for short-term use such as events. A retractable yoyo reel can be added for staff who tap or swipe their card often.",
+      },
       {
         question: "What is the standard size for rigid PVC ID card holders?",
         answer:
@@ -129,10 +139,10 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
   },
 
   "pvc-id-card-consumable": {
-    h1: "PVC ID card sheets and materials",
-    title: "PVC Core Fusing Sheets & Coated Overlay Film Supplier India",
+    h1: "PVC ID card sheets (dragon sheets) and materials",
+    title: "PVC Card Sheets, Dragon Sheets & Overlay Film Supplier India",
     description:
-      "Printable PVC core sheets, coated overlay films, magnetic stripe rolls, and lamination stainless steel plates from The Print Planet, Bengaluru. Factory-direct supply.",
+      "Inkjet PVC card sheets (dragon sheets), PVC core sheets, overlay films and lamination plates for ID card fusing, from The Print Planet, Bengaluru. Bulk packs.",
     lead: "Inkjet and digital printable PVC core sheets, coated magnetic overlays, and mirror/frosted lamination plates.",
     about: [
       "A standard 0.76 mm (30 mil) laminated PVC ID card is engineered as a multi-layer composite: a printed PVC core sheet (typically 300 to 460 microns) sandwiched between two transparent protective coated overlay films (60 to 100 microns each), fused under heat and pressure.",
@@ -140,6 +150,11 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
       "We supply high-coercivity (Hi-Co 2750 Oe) and low-coercivity (Lo-Co 300 Oe) magnetic stripe overlay sheets and hardened stainless steel lamination plates in mirror and frosted finishes.",
     ],
     questions: [
+      {
+        question: "What is a dragon sheet for ID cards?",
+        answer:
+          "\"Dragon sheet\" is the common trade name in India for A4 inkjet printable PVC sheets. You print the card design on the sheet with an inkjet printer, cover it with overlay film, fuse it in an ID card fusing machine, and punch out finished cards with a PVC card cutter. One A4 sheet gives 10 standard CR-80 cards.",
+      },
       {
         question: "What is the layer structure of a standard 0.76mm (30 mil) PVC ID card?",
         answer:
@@ -168,7 +183,7 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
     h1: "RFID cards and prelam sheets",
     title: "RFID Smart Cards, Mifare 1K & Proximity Cards Supplier India",
     description:
-      "13.56MHz Mifare 1K Classic ISO cards, 125kHz EM-Marin proximity cards, and RFID inlay prelam sheets from The Print Planet, Bengaluru. Factory prices.",
+      "RFID cards: 13.56MHz Mifare 1K, 125kHz EM proximity cards, RFID and NTAG216 NFC prelam sheets from The Print Planet, Bengaluru. Bulk supply with GST invoice.",
     lead: "High-frequency Mifare 1K smart cards, 125kHz proximity access cards, and embedded antenna prelam sheets.",
     about: [
       "The Print Planet supplies finished contactless smart cards compliant with ISO/IEC 14443 Type A (13.56MHz) and EM4100/EM4200 (125kHz) standards for enterprise physical access, attendance turnstiles, and cashless campus management.",
