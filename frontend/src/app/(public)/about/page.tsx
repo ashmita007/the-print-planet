@@ -99,7 +99,7 @@ export default async function AboutPage() {
     "@type": "AboutPage",
     name: "About The Print Planet",
     url: `${SITE_URL}/about`,
-    description: "Learn about The Print Planet (theprintplanet.co.in), India's leading B2B factory manufacturer and wholesale distributor of satin lanyard rolls, PVC ID card holders, and card machinery.",
+    description: "Learn about The Print Planet (theprintplanet.co.in), a Bengaluru B2B wholesale supplier of satin lanyard rolls, PVC ID card holders, and card machinery.",
     mainEntity: {
       "@type": "Organization",
       name: "The Print Planet",

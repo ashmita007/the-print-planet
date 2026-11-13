@@ -25,7 +25,7 @@ export default function PricingPage() {
     "@context": "https://schema.org",
     "@type": "PriceSpecification",
     "name": "The Print Planet B2B Wholesale Tariff 2026",
-    "description": "Verified manufacturer pricing for satin lanyard rolls, PVC ID card holders, and card machinery.",
+    "description": "Wholesale pricing for satin lanyard rolls, PVC ID card holders, and card machinery.",
     "priceCurrency": "INR",
     "validFrom": "2026-01-01",
     "seller": {

@@ -104,7 +104,7 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
 
   "indian-satin-digital-lanyard-roll": {
     h1: "Satin lanyard rolls",
-    title: "Satin Lanyard Roll Manufacturer & Wholesale Supplier India",
+    title: "Satin Lanyard Roll Wholesale Supplier India",
     description:
       "12mm, 16mm, 20mm, 25mm virgin polyester satin lanyard ribbon rolls for sublimation heat transfer and screen printing from The Print Planet, Bengaluru. Factory prices.",
     lead: "Ultra-white sublimation rolls and pre-dyed Indian satin ribbon rolls in 12mm, 16mm, 20mm, and 25mm widths.",
@@ -179,7 +179,7 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
     ],
   },
 
-  "rfid-cansumables": {
+  "rfid-consumables": {
     h1: "RFID cards and prelam sheets",
     title: "RFID Smart Cards, Mifare 1K & Proximity Cards Supplier India",
     description:
@@ -251,3 +251,279 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
     ],
   },
 };
+
+/**
+ * Categories added after the first batch. Every price, size, MOQ and model named here comes from
+ * the live catalogue; general facts (CR-80 card size, RFID frequencies) are industry standards.
+ */
+const MORE_CATEGORY_SEO: Record<string, CategorySeo> = {
+  "id-card-manufacturing-machines": {
+    h1: "ID card manufacturing machines",
+    title: "ID Card Making Machines: Fusing, Cutting, Lamination",
+    description:
+      "PVC card fusing machines, ID card cutters, industrial card laminators, punching and hot stamping machines. Prices from ₹48,000. Bengaluru supplier, GST invoice.",
+    lead: "From a ₹48,000 A4+ fusing machine for a new ID card shop to fully automatic laminators and punchers for card factories.",
+    about: [
+      "A PVC ID card is made in two machine steps: the printed core sheet and overlay film are fused into one solid sheet in a fusing machine (laminator), and the sheet is then cut or punched into CR-80 cards (85.6 × 54 mm). Lanyard units add a heat press to transfer sublimation prints onto ribbon.",
+      "For a starting ID card shop, the DCT150 A4+ fusing machine (up to 10 cards per sheet) pairs with the DCT2000 double-die cutter (up to 2,000 cards an hour) or the DCT4500 automatic cutter (up to 4,500 cards an hour).",
+      "For card factories we supply WENLIN industrial laminators with 7 to 10 hot and cold daylights, servo and hydraulic card punching machines, hot stamping, magnetic stripe mounting, sheet collating machines and water chillers. Each listing shows the maker's rated speed, platen size and power supply.",
+    ],
+    questions: [
+      {
+        question: "Which machines do I need to start making PVC ID cards?",
+        answer:
+          "Two: a fusing machine to laminate the printed core sheet with overlay film, and a cutter to punch the sheet into CR-80 cards. A small shop can start with the DCT150 A4+ fusing machine and the DCT2000 double-die cutter.",
+      },
+      {
+        question: "What is the price range of ID card machines?",
+        answer:
+          "Listed prices run from ₹48,000 for the DCT150 A4+ fusing machine and ₹65,000 for the DCT2000 cutter up to ₹28,50,000 for a fully automatic 10-daylight industrial laminator. Prices are before GST.",
+      },
+      {
+        question: "How do I choose between a manual and an automatic card cutter?",
+        answer:
+          "Go by daily volume. The DCT2000 double-die cutter is rated up to 2,000 cards an hour; the DCT4500 automatic cutter up to 4,500. Industrial servo punchers in this range are rated from 3,000 to 18,000 cards an hour.",
+      },
+      {
+        question: "Do industrial laminators need three-phase power?",
+        answer:
+          "Most of the large WENLIN laminators listed here run on 380V three-phase supply at 26 to 36 kW. Check the power rating on each product page against your site supply before ordering.",
+      },
+    ],
+  },
+  "aluminium-metal-holder": {
+    h1: "Aluminium metal ID card holders",
+    title: "Aluminium Metal ID Card Holder Wholesale, ₹17.50",
+    description:
+      "Aluminium ID card holders in silver, gold, black, blue and red, horizontal and vertical. ₹17.50 per piece, MOQ 100. Wholesale from Bengaluru with GST invoice.",
+    lead: "Metal ID card holders in five colours and both orientations, at ₹17.50 a piece from 100 pieces.",
+    about: [
+      "Aluminium holders give an ID card a rigid metal frame, so they suit staff badges where a plastic pouch looks too plain: offices, hotels, hospitals and front-desk teams.",
+      "We stock them in silver, gold, black, blue and red, each in a horizontal and a vertical version, at ₹17.50 per piece with a minimum order of 100 pieces.",
+      "Order the orientation that matches how your cards are printed, and pair the holder with a lanyard or clip from our hooks and fittings range.",
+    ],
+    questions: [
+      {
+        question: "What is the price of an aluminium ID card holder?",
+        answer: "₹17.50 per piece before GST, with a minimum order of 100 pieces. Larger quantities can be quoted on WhatsApp.",
+      },
+      {
+        question: "Which colours are available?",
+        answer: "Silver, gold, black, blue and red, each in horizontal and vertical versions.",
+      },
+      {
+        question: "Can I mix colours in one order?",
+        answer: "Send the split you need with your enquiry and we will confirm what can be combined against the minimum order.",
+      },
+    ],
+  },
+  "crystal-clear-pvc-id-card-holder": {
+    h1: "Crystal clear PVC ID card holders",
+    title: "Crystal Clear ID Card Holder Wholesale Price India",
+    description:
+      "Transparent PVC ID card holders, horizontal and vertical, with lanyard slot. From ₹4.43 a piece in bulk. Models H2T, V2T, HS2T, VS2T and more. Bengaluru supplier.",
+    lead: "Fully transparent holders that show the whole card, in horizontal and vertical models with a lanyard slot.",
+    about: [
+      "Crystal clear holders are the most common choice for school and office ID cards because nothing hides the photo or the printed details. They take a standard CR-80 card (85.6 × 54 mm).",
+      "Models include H2T, H4T and HS2T (horizontal) and V2T, V4T and VS2T (vertical), plus sticker-pasting versions (HST-B, VST-B) for self-adhesive cards. Listed prices run from ₹4.43 to ₹5.58 per piece, with minimum orders from 1,000 pieces on most models.",
+      "Not sure which model you use now? Send a photo of your current holder on WhatsApp and we will match it.",
+    ],
+    questions: [
+      {
+        question: "What is the wholesale price of a transparent ID card holder?",
+        answer: "Listed prices run from ₹4.43 to ₹5.58 per piece before GST, depending on the model. Most models have a minimum order of 1,000 to 1,500 pieces.",
+      },
+      {
+        question: "What is the difference between H and V models?",
+        answer: "H models hold the card horizontally (landscape) and V models vertically (portrait). Order the one that matches your card layout.",
+      },
+      {
+        question: "What size card fits these holders?",
+        answer: "They are made for the standard CR-80 ID card, 85.6 × 54 mm.",
+      },
+    ],
+  },
+  "color-id-card-lanyard-roll": {
+    h1: "Colour satin lanyard rolls",
+    title: "Colour Satin Lanyard Roll 16mm & 20mm, 100 m",
+    description:
+      "Indian satin lanyard rolls in black, red, royal blue, orange, purple and yellow. 16 mm and 20 mm, 100 m per roll, from ₹270. For screen-printed lanyards.",
+    lead: "Coloured satin ribbon on 100 m rolls, in 16 mm and 20 mm widths, for screen-printed lanyards.",
+    about: [
+      "These Indian satin rolls come in solid colours for screen printing: black, red, royal blue, orange, purple and yellow. Each roll is 100 m on a plastic core, in 16 mm or 20 mm width.",
+      "Prices are ₹270 to ₹300 per roll. A 100 m roll makes roughly 100 lanyards at about 90 cm each, before allowing for joins and wastage.",
+      "For full-colour photo printing use white sublimation ribbon instead; coloured satin is for one- or two-colour screen printed logos and text.",
+    ],
+    questions: [
+      {
+        question: "How many lanyards can I make from one 100 m roll?",
+        answer: "About 100 at roughly 90 cm per lanyard, a little less once you allow for joins and trimming.",
+      },
+      {
+        question: "Which widths and colours are in stock?",
+        answer: "16 mm and 20 mm, in black, red, royal blue, orange, purple and yellow.",
+      },
+      {
+        question: "Can coloured satin be sublimation printed?",
+        answer: "These rolls are listed for screen printing. For sublimation, use white digital satin ribbon so the printed colours come out true.",
+      },
+    ],
+  },
+  "coated-overlay-sheets-for-pvc-id-card": {
+    h1: "Coated overlay sheets for PVC ID cards",
+    title: "Coated Overlay Sheet for PVC ID Card, A4 & A3",
+    description:
+      "Coated overlay film for PVC ID card fusing in 60, 80 and 100 micron, A4, A3 and large formats. From ₹3.50 a sheet, MOQ 500 to 1,000. Bengaluru supplier.",
+    lead: "Clear overlay film in 60, 80 and 100 micron, fused over the printed core to protect the card face.",
+    about: [
+      "Overlay is the clear top and bottom layer of a fused PVC card. It goes over the printed core sheet in the fusing machine and protects the print from scratches and wear.",
+      "We stock coated overlay in 60, 80 and 100 micron, in A4 and A3, plus 310 × 470 mm and 297 × 480 mm sheets for larger laminators. Listed prices run from ₹3.50 (60 micron A4) to ₹9.50 (80 micron large sheets), with minimum orders of 500 or 1,000 sheets.",
+      "Thicker overlay gives a stiffer, longer-lasting card. Match the sheet size to your laminator plates and core sheets.",
+    ],
+    questions: [
+      {
+        question: "Which overlay thickness should I use?",
+        answer: "60, 80 and 100 micron are all stocked. Thicker overlay makes a stiffer, more durable card; match it to the total card thickness you want.",
+      },
+      {
+        question: "What sheet sizes are available?",
+        answer: "A4, A3, 310 × 470 mm and 297 × 480 mm.",
+      },
+      {
+        question: "What is the price of overlay sheets?",
+        answer: "From ₹3.50 per sheet for 60 micron A4 up to ₹9.50 for 80 micron large-format sheets, before GST.",
+      },
+    ],
+  },
+  "semi-transparent-pvc-id-card-holder": {
+    h1: "Semi-transparent PVC ID card holders",
+    title: "Semi Transparent ID Card Holder Wholesale India",
+    description:
+      "Frosted semi-transparent PVC ID card holders, horizontal and vertical, with lanyard slot. Models H2, H4, V2, V4, C2. Wholesale from Bengaluru with GST invoice.",
+    lead: "Frosted holders with a clear window, in horizontal and vertical models with a lanyard slot.",
+    about: [
+      "Semi-transparent holders have a frosted body, so the card edges look neat while the window shows the photo and name. They are a budget option for schools, events and factories.",
+      "Models include H2, H4 and H2H (horizontal), V2, V4 and V2H (vertical) and C2, mostly with a lanyard slot. The V4 is also listed in white at ₹3.50 a piece.",
+      "Send a photo of the holder you use now and we will match the model.",
+    ],
+    questions: [
+      {
+        question: "What is a semi-transparent ID card holder?",
+        answer: "A PVC holder with a frosted body and a clear window over the card, so the photo and details stay visible.",
+      },
+      {
+        question: "Which models are available?",
+        answer: "H2, H4 and H2H (horizontal), V2, V4 and V2H (vertical), and C2.",
+      },
+      {
+        question: "How are they priced?",
+        answer: "By model and quantity. The V4 white is listed at ₹3.50 a piece; send your model and quantity for a quote on the others.",
+      },
+    ],
+  },
+  "executive-pvc-id-card-holder": {
+    h1: "Executive ID card holders",
+    title: "Executive ID Card Holder Wholesale, Crystal & Pasting",
+    description:
+      "Executive ID card holders with badge clip: crystal clear (₹11.10) and pasting (₹5.22) models, horizontal and vertical. MOQ from 700. Bengaluru wholesale.",
+    lead: "Rigid executive holders with a badge clip, in crystal clear and pasting versions.",
+    about: [
+      "Executive holders are stiffer and clearer than standard pouches and clip straight onto a shirt pocket or lanyard. They suit corporate staff, management and visitor badges.",
+      "The EH-T and EV-T crystal clear models are listed at ₹11.10 a piece; the EH-W and EV-W pasting models, for self-adhesive cards, at ₹5.22. H models are horizontal and V models vertical. Minimum orders start at 700 pieces.",
+    ],
+    questions: [
+      {
+        question: "What is the difference between EH-T and EH-W?",
+        answer: "T models are crystal clear holders the card slides into; W models are pasting holders for self-adhesive sticker cards.",
+      },
+      {
+        question: "What is the price of executive ID card holders?",
+        answer: "₹11.10 per piece for crystal clear models and ₹5.22 for pasting models, before GST. Minimum orders start at 700 pieces.",
+      },
+      {
+        question: "How do executive holders attach?",
+        answer: "They are listed with a badge clip, so they clip onto clothing or a lanyard.",
+      },
+    ],
+  },
+  "rfid-inlay-prelam-sheet-for-smart-id-card": {
+    h1: "RFID inlay prelam sheets",
+    title: "RFID Prelam Sheet A4: MIFARE 1K, NFC, UHF, 125 kHz",
+    description:
+      "A4 RFID prelam sheets, 5×2 layout (10 cards): 13.56 MHz 1K and 4K, NTAG216 NFC, 125 kHz proximity, UHF and combo chips. From ₹57 a sheet, MOQ 50 to 100.",
+    lead: "A4 prelam sheets with 10 chips each (5 × 2 layout), for making RFID and NFC cards in your own fusing machine.",
+    about: [
+      "A prelam sheet has the RFID chips and antennas already sealed inside a PVC layer. You put it between your printed core and overlay, fuse, and punch out finished smart cards, without handling bare chips.",
+      "Every sheet here is A4 with a 5 × 2 layout, so 10 cards per sheet. Chip options: 13.56 MHz 1K (₹57), 13.56 MHz 4K (₹170), NTAG216 NFC (₹120), 125 kHz proximity (₹58), UHF (₹105), and UHF combined with 1K or with 125 kHz proximity (₹154 to ₹155). Minimum orders are 50 to 100 sheets.",
+      "Match the chip to the reader: 125 kHz for older proximity access systems, 13.56 MHz 1K or 4K for most modern access and attendance systems, NFC for phone-readable cards, and UHF for long-range reading such as vehicle or warehouse gates.",
+    ],
+    questions: [
+      {
+        question: "How many cards does one prelam sheet make?",
+        answer: "10. Every sheet listed is A4 with a 5 × 2 layout.",
+      },
+      {
+        question: "Which chip should I choose?",
+        answer: "Use the frequency your reader supports: 125 kHz proximity, 13.56 MHz (1K, 4K or NFC) or UHF. Combo sheets carry two chips per card for sites running two systems.",
+      },
+      {
+        question: "What is the price of RFID prelam sheets?",
+        answer: "From ₹57 per sheet for 13.56 MHz 1K up to ₹170 for 4K, before GST. Minimum orders are 50 to 100 sheets.",
+      },
+    ],
+  },
+  "sublimation-paper-roll-for-lanyard-printing": {
+    h1: "Sublimation paper rolls for lanyard printing",
+    title: "Sublimation Paper Roll 80 GSM for Lanyard Printing",
+    description:
+      "80 GSM sublimation paper rolls in 8, 12, 24, 40, 48 and 72 inch widths, 50 to 150 m long. From ₹380 a roll. For lanyard heat press printing. Bengaluru supplier.",
+    lead: "80 GSM transfer paper in widths from 8 to 72 inches, for printing lanyard designs before heat transfer.",
+    about: [
+      "In sublimation lanyard printing the design is first printed in mirror image onto sublimation paper, then the heat press transfers the ink from the paper into white polyester ribbon.",
+      "All rolls listed are 80 GSM, in 8, 12, 24, 40, 48 and 72 inch widths and 50, 100 or 150 m lengths, from ₹380 (8 inch × 100 m) to ₹2,505 (72 inch × 150 m).",
+      "Pick a width that fits your printer and lets you print several lanyard lanes side by side; narrow rolls suit dedicated lanyard printers.",
+    ],
+    questions: [
+      {
+        question: "What GSM sublimation paper is used for lanyards?",
+        answer: "The rolls we stock are 80 GSM.",
+      },
+      {
+        question: "Which widths are available?",
+        answer: "8, 12, 24, 40, 48 and 72 inch, in 50, 100 or 150 m lengths depending on width.",
+      },
+      {
+        question: "What is the price of a sublimation paper roll?",
+        answer: "From ₹380 for an 8 inch × 100 m roll up to ₹2,505 for 72 inch × 150 m, before GST.",
+      },
+    ],
+  },
+  "pvc-id-card-sticker-pasting-holder": {
+    h1: "PVC sticker pasting ID card holders",
+    title: "Sticker Pasting ID Card Holder Wholesale, from ₹2.48",
+    description:
+      "PVC sticker pasting ID card holders, horizontal and vertical (HS, VS, VS-L). From ₹2.48 a piece, MOQ 1,500 to 1,800. Low-cost school ID cards. Bengaluru.",
+    lead: "The lowest-cost ID card format: a printed sticker pasted onto a PVC holder.",
+    about: [
+      "Sticker pasting holders are used for low-cost school and event ID cards. The card is printed on self-adhesive sticker paper and pasted onto the holder, so no fusing machine is needed.",
+      "Models include HS (horizontal), VS (vertical) and VS-L (single side). Listed prices run from ₹2.48 to ₹2.81 per piece, with minimum orders of 1,500 to 1,800 pieces.",
+      "Pair them with gumming rolls for the adhesive sticker sheets.",
+    ],
+    questions: [
+      {
+        question: "How does a sticker pasting ID card work?",
+        answer: "You print the card on self-adhesive sticker sheet, cut it to size and paste it onto the PVC holder. No fusing machine is needed.",
+      },
+      {
+        question: "What is the price of sticker pasting holders?",
+        answer: "₹2.48 to ₹2.81 per piece before GST, depending on the model, with minimum orders of 1,500 to 1,800 pieces.",
+      },
+      {
+        question: "What does VS-L mean?",
+        answer: "VS-L is the single-side vertical sticker holder, listed at ₹2.48 a piece.",
+      },
+    ],
+  },
+};
+
+Object.assign(CATEGORY_SEO, MORE_CATEGORY_SEO);

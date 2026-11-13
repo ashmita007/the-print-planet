@@ -7,11 +7,14 @@ import ProductDetailClient from "@/components/ProductDetailClient";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import { getProductBySlug } from "@/lib/api";
 import { brandedTitle, snippet } from "@/lib/seo";
-import { isBoilerplate, isMaterialCode, productMetaDescription, productSummary } from "@/lib/productCopy";
+import { isBoilerplate, isMaterialCode, productFaqs, productMetaDescription, productSummary } from "@/lib/productCopy";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const revalidate = 120;
+
+const KNOWN_BRANDS: Array<[RegExp, string]> = [[/\bwenlin\b/i, "Wenlin"]];
+const productBrand = (name: string) => KNOWN_BRANDS.find(([re]) => re.test(name))?.[1] || "";
 
 const getAbsoluteImageUrl = (url?: string) => {
   if (!url) return `${SITE_URL}/media/products/LAN-ROY-20M.png`;
@@ -84,6 +87,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const faqs = isMaterialCode(product.name) ? [] : productFaqs(product);
+
   const productJsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -94,15 +99,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         image: getAbsoluteImageUrl(product.primary_image?.secure_url),
         description: productSummary(product),
         sku: product.sku || product.id?.toString(),
-        mpn: product.sku || product.id?.toString(),
         category: product.category?.name,
-        brand: {
-          "@type": "Brand",
-          name: "The Print Planet",
-        },
-        manufacturer: {
-          "@id": `${SITE_URL}/#organization`,
-        },
+        // Only state a brand the product name itself gives; we do not claim to make third-party machines.
+        ...(productBrand(product.name) ? { brand: { "@type": "Brand", name: productBrand(product.name) } } : {}),
         // A ₹0 offer would show as free in search, so quote-only products carry no offer.
         ...(Number(product.price) > 0
           ? {
@@ -111,45 +110,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 url: `${SITE_URL}/products/${product.slug}`,
                 priceCurrency: product.currency || "INR",
                 price: product.price?.toString(),
-                priceValidUntil: "2027-12-31",
+                priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
                 availability: "https://schema.org/InStock",
                 itemCondition: "https://schema.org/NewCondition",
-                hasMerchantReturnPolicy: {
-                  "@type": "MerchantReturnPolicy",
-                  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-                  merchantReturnDays: 7,
-                  applicableCountry: "IN",
-                  returnMethod: "https://schema.org/ReturnByMail",
-                },
-                shippingDetails: {
-                  "@type": "OfferShippingDetails",
-                  shippingRate: {
-                    "@type": "MonetaryAmount",
-                    value: "0",
-                    currency: "INR",
-                  },
-                  shippingDestination: [
-                    {
-                      "@type": "DefinedRegion",
-                      addressCountry: "IN",
-                    },
-                  ],
-                  deliveryTime: {
-                    "@type": "ShippingDeliveryTime",
-                    handlingTime: {
-                      "@type": "QuantitativeValue",
-                      minValue: 0,
-                      maxValue: 1,
-                      unitCode: "DAY",
-                    },
-                    transitTime: {
-                      "@type": "QuantitativeValue",
-                      minValue: 1,
-                      maxValue: 3,
-                      unitCode: "DAY",
-                    },
-                  },
-                },
                 seller: { "@id": `${SITE_URL}/#organization` },
               },
             }
@@ -185,6 +148,19 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           },
         ],
       },
+      ...(faqs.length
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${SITE_URL}/products/${product.slug}#faq`,
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -205,6 +181,25 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
       {/* Main Product Presentation */}
       <ProductDetailClient product={product} />
+
+      {faqs.length > 0 && (
+        <section aria-labelledby="product-faq" className="pt-8 sm:pt-10 border-t border-[#DFE6EE] space-y-4">
+          <h2 id="product-faq" className="text-base sm:text-xl font-bold text-[#121418]">
+            Questions buyers ask about {formatProductName(product.name)}
+          </h2>
+          <div className="divide-y divide-[#DFE6EE] rounded-xl border border-[#DFE6EE] bg-white">
+            {faqs.map((f) => (
+              <details key={f.q} className="group p-4 sm:p-5">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-sm sm:text-base font-semibold text-[#121418]">
+                  <h3 className="font-semibold">{f.q}</h3>
+                  <span aria-hidden="true" className="mt-0.5 text-[#F26B1D] transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-2 text-sm leading-relaxed text-[#2B323B]">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Related Products Section */}
       {product.related_products && product.related_products.length > 0 && (

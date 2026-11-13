@@ -29,12 +29,12 @@ import {
   Paperclip,
 } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
+import { formatCategoryName, formatProductName, getProductImageUrl, cloudinarySized } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
 import { trackUserCheckedProduct } from "@/lib/api";
-import { productDetails, productSummary } from "@/lib/productCopy";
+import { formatSpecValue, productDetails, productSummary } from "@/lib/productCopy";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -147,7 +147,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {!imgError && selectedImage ? (
               <img
                 ref={mainImageRef}
-                src={selectedImage}
+                src={cloudinarySized(selectedImage, 900)}
+                fetchPriority="high"
                 alt={formatProductName(product.name)}
                 onLoad={() => setImgLoaded(true)}
                 onError={() => {
@@ -196,7 +197,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   aria-label={`Select product image ${idx + 1}`}
                 >
                   <img
-                    src={imgUrl}
+                    src={cloudinarySized(imgUrl, 160)}
+                    loading="lazy"
                     alt={`${formatProductName(product.name)} view ${idx + 1}`}
                     className="w-full h-full object-contain"
                   />
@@ -507,7 +509,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                           Size
                         </td>
                         <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
-                          {product.dimensions}
+                          {formatSpecValue(product.dimensions)}
                         </td>
                       </tr>
                     )}
@@ -531,7 +533,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                             {key}
                           </td>
                           <td className="py-2.5 px-4 font-bold text-slate-800 border-b border-slate-200">
-                            {String(val)}
+                            {formatSpecValue(val)}
                           </td>
                         </tr>
                       ))}

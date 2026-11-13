@@ -9,7 +9,7 @@ const LINES: { slug: string; label: string; span: string; photo?: RegExp }[] = [
   { slug: "id-card-holder", label: "ID card holders", span: "" },
   { slug: "indian-satin-digital-lanyard-roll", label: "Lanyard rolls", span: "" },
   { slug: "pvc-id-card-consumable", label: "PVC card sheets", span: "" },
-  { slug: "rfid-cansumables", label: "RFID cards", span: "", photo: /mifare|rfid/i },
+  { slug: "rfid-consumables", label: "RFID cards", span: "", photo: /mifare|rfid/i },
 ];
 
 /** The catalogue by product family: real product photos, names and live counts. */

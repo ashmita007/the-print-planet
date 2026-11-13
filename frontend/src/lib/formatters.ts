@@ -239,3 +239,13 @@ export function getProductImageUrl(product?: any): string {
   return "/placeholder-product.svg";
 }
 
+
+/**
+ * Serve a right-sized, modern-format copy of a Cloudinary image (WebP/AVIF, auto quality).
+ * Original uploads run to ~370 KB; a 900px auto-format copy is ~100 KB. Other URLs pass through.
+ */
+export function cloudinarySized(url: string, width: number): string {
+  if (!url || !url.includes("res.cloudinary.com") || !url.includes("/image/upload/")) return url;
+  if (/\/image\/upload\/[^/]*\b(w_|f_auto)/.test(url)) return url; // already transformed
+  return url.replace("/image/upload/", `/image/upload/f_auto,q_auto,c_limit,w_${width}/`);
+}

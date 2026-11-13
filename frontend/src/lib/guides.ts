@@ -229,7 +229,7 @@ export const GUIDES: Guide[] = [
     related: [
       { href: "/categories/id-card-holder", label: "ID card holders and covers" },
       { href: "/categories/id-card-lanyard-consumables", label: "Hooks, clips and badge accessories" },
-      { href: "/categories/rfid-cansumables", label: "RFID cards" },
+      { href: "/categories/rfid-consumables", label: "RFID cards" },
     ],
     whatsappText: "Hi The Print Planet, I need ID card holders / covers in bulk. Please share types and prices.",
   },
@@ -286,7 +286,7 @@ export const GUIDES: Guide[] = [
     ],
     related: [
       { href: "/categories/pvc-id-card-consumable", label: "PVC card sheets and overlays" },
-      { href: "/categories/rfid-cansumables", label: "RFID and Mifare cards" },
+      { href: "/categories/rfid-consumables", label: "RFID and Mifare cards" },
       { href: "/categories/id-card-holder", label: "ID card holders" },
     ],
     whatsappText: "Hi The Print Planet, I need materials for employee ID cards. Please share price for bulk quantity.",

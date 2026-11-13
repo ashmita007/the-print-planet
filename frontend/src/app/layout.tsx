@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     siteName: "The Print Planet",
     title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
     description:
-      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Leading wholesale manufacturer and supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial card machinery.",
+      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial card machinery.",
     images: [
       {
         url: `${SITE_URL}/logo.png`,
@@ -113,7 +113,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
     description:
-      "Direct manufacturer of satin lanyards, ID card materials, and card machines in Bangalore with nationwide dispatch.",
+      "Wholesale supplier of satin lanyards, ID card materials and card machines in Bangalore, with dispatch across India.",
     images: [`${SITE_URL}/logo.png`],
   },
   robots: {
@@ -152,7 +152,7 @@ const jsonLdOrg = {
         `${SITE_URL}/icon.png`,
       ],
       description:
-        "B2B factory manufacturer and specialist in PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
+        "B2B wholesale supplier of PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
       telephone: "+919741808034",
       email: "theprintplanet01@gmail.com",
       taxID: "29AAQFT3909B1ZZ",
@@ -219,14 +219,6 @@ const jsonLdOrg = {
         areaServed: "IN",
         availableLanguage: ["English", "Hindi", "Kannada"],
       },
-      hasMerchantReturnPolicy: {
-        "@type": "MerchantReturnPolicy",
-        applicableCountry: "IN",
-        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-        merchantReturnDays: 7,
-        returnMethod: "https://schema.org/ReturnByMail",
-        returnFees: "https://schema.org/FreeReturn",
-      },
       hasDeliveryMethod: {
         "@type": "DeliveryChargeSpecification",
         appliesToDeliveryMethod: "https://schema.org/DirectDelivery",
@@ -256,55 +248,6 @@ const jsonLdOrg = {
         },
         "query-input": "required name=search_term_string",
       },
-    },
-    {
-      "@type": "ItemList",
-      "@id": `${SITE_URL}/#sitelinks`,
-      name: "The Print Planet Direct Navigation Sitelinks",
-      itemListElement: [
-        {
-          "@type": "SiteNavigationElement",
-          position: 1,
-          name: "Wholesale Pricing Tariff",
-          description: "Verified factory volume breaks for satin lanyards, holders, and RFID cards.",
-          url: `${SITE_URL}/pricing`,
-        },
-        {
-          "@type": "SiteNavigationElement",
-          position: 2,
-          name: "All Products & Supplies",
-          description: "Browse 180+ wholesale PVC card printing raw materials and machinery.",
-          url: `${SITE_URL}/products`,
-        },
-        {
-          "@type": "SiteNavigationElement",
-          position: 3,
-          name: "Satin Lanyard Rolls",
-          description: "High-density sublimation and screen printing rolls (12mm to 25mm).",
-          url: `${SITE_URL}/categories/indian-satin-digital-lanyard-roll`,
-        },
-        {
-          "@type": "SiteNavigationElement",
-          position: 4,
-          name: "Rigid PVC ID Card Holders",
-          description: "CR-80 portrait and landscape badge cases from ₹2.65/pc.",
-          url: `${SITE_URL}/categories/id-card-holder`,
-        },
-        {
-          "@type": "SiteNavigationElement",
-          position: 5,
-          name: "Technical FAQ & Guide",
-          description: "CR-80 fusing temperatures, lanyard ribbon yields, and RFID specs.",
-          url: `${SITE_URL}/faq`,
-        },
-        {
-          "@type": "SiteNavigationElement",
-          position: 6,
-          name: "Bulk Orders & Custom Quote",
-          description: "Direct factory quotation desk with 24–48h express dispatch across India.",
-          url: `${SITE_URL}/corporate`,
-        },
-      ],
     },
   ],
 };

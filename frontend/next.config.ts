@@ -81,6 +81,19 @@ const nextConfig: NextConfig = {
         destination: "/gallery",
         permanent: true,
       },
+      // Misspelled catalogue URLs renamed in catalog migration 0003 (Nov 2026).
+      { source: "/categories/rfid-cansumables", destination: "/categories/rfid-consumables", permanent: true },
+      {
+        source: "/categories/plastic-lanyard-hook-clip-accessorie",
+        destination: "/categories/plastic-lanyard-hook-clip-accessories",
+        permanent: true,
+      },
+      { source: "/categories/gaming-roll", destination: "/categories/gumming-roll", permanent: true },
+      {
+        source: "/products/clamp-feeting-machine-single-side",
+        destination: "/products/clamp-fitting-machine-single-side",
+        permanent: true,
+      },
     ];
   },
 };

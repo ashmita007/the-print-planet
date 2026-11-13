@@ -18,7 +18,7 @@ const SHOP_LINKS = [
   { href: "/categories/indian-satin-digital-lanyard-roll", label: "Satin lanyard rolls" },
   { href: "/categories/id-card-holder", label: "ID card holders" },
   { href: "/categories/pvc-id-card-consumable", label: "PVC fusing sheets" },
-  { href: "/categories/rfid-cansumables", label: "RFID cards" },
+  { href: "/categories/rfid-consumables", label: "RFID cards" },
   { href: "/products", label: "All products" },
 ];
 

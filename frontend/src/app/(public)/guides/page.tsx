@@ -5,6 +5,7 @@ import { ArrowRight, Clock } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import PageCta from "@/components/PageCta";
 import { GUIDES } from "@/lib/guides";
+import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
     description: "How PVC ID cards and printed lanyards are made, and what you need to make them.",
     url: `${SITE_URL}/guides`,
     siteName: "The Print Planet",
+    images: DEFAULT_OG_IMAGES,
   },
+  twitter: { card: "summary_large_image", images: DEFAULT_OG_IMAGES.map((i) => i.url) },
 };
 
 export default function GuidesIndex() {

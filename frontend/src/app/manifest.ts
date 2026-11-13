@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'The Print Planet™ Bangalore | PVC Cards, Lanyards & ID Machines',
     short_name: 'The Print Planet',
     description:
-      "Official portal of The Print Planet, Bangalore (theprintplanet.co.in). India's direct B2B manufacturer and wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and card machinery.",
+      "Official portal of The Print Planet, Bangalore (theprintplanet.co.in). B2B wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and card machinery.",
     start_url: '/',
     display: 'standalone',
     background_color: '#0E2238',

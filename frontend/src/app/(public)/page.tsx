@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     absolute: "The Print Planet Bangalore | ID Cards, Lanyards & Machines",
   },
   description:
-    "The Print Planet, Bangalore: manufacturer of PVC cards, satin lanyard rolls, ID card holders, RFID cards and ID card machines. 24–48h pan-India dispatch.",
+    "The Print Planet, Bangalore: wholesale supplier of PVC cards, satin lanyard rolls, ID card holders, RFID cards and ID card machines. 24–48h pan-India dispatch.",
   alternates: {
     canonical: SITE_URL,
   },
@@ -63,7 +63,7 @@ const FAQS: FaqItem[] = [
   {
     question: "What products and machinery does The Print Planet manufacture and supply?",
     answer:
-      "The Print Planet is India's direct factory manufacturer of virgin polyester satin lanyard rolls (12mm–25mm), rigid PVC ID card holders, dog hooks and crocodile clips, RFID 13.56MHz Mifare and 125kHz EM-Marin smart cards, CR-80 PVC core fusing sheets, motorized electric card die cutters, and dual-plate heating laminators.",
+      "The Print Planet is a Bengaluru wholesale supplier of virgin polyester satin lanyard rolls (12mm–25mm), rigid PVC ID card holders, dog hooks and crocodile clips, RFID 13.56MHz Mifare and 125kHz EM-Marin smart cards, CR-80 PVC core fusing sheets, motorized electric card die cutters, and dual-plate heating laminators.",
   },
   {
     question: "What is a standard CR-80 PVC ID card size in mm and inches?",

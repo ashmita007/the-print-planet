@@ -25,7 +25,7 @@ POPULAR = (
     ('PVC ID card sheets', '/categories/pvc-id-card-consumable'),
     ('Lanyard rolls', '/categories/indian-satin-digital-lanyard-roll'),
     ('ID card holders', '/categories/id-card-holder'),
-    ('RFID cards', '/categories/rfid-cansumables'),
+    ('RFID cards', '/categories/rfid-consumables'),
     ('Machines', '/categories/machines'),
     ('Sample kit', '/categories/sample-kit'),
 )

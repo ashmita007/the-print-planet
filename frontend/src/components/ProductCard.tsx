@@ -9,7 +9,7 @@ import {
   Check,
 } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatProductName, getProductImageUrl } from "@/lib/formatters";
+import { cloudinarySized, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import QuickViewModal from "./QuickViewModal";
 
@@ -87,7 +87,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {/* Primary Image */}
                 <img
                   ref={imgRef}
-                  src={imgSrc}
+                  src={cloudinarySized(imgSrc, 480)}
                   alt={formatProductName(product.name)}
                   onLoad={() => setImgLoaded(true)}
                   onError={() => {
@@ -107,7 +107,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {/* Secondary Image on Hover (if available) */}
                 {secondaryUrl && (
                   <img
-                    src={secondaryUrl}
+                    src={cloudinarySized(secondaryUrl, 480)}
                     alt={`${formatProductName(product.name)} alternate view`}
                     className={`absolute inset-0 w-full h-full object-contain p-2.5 sm:p-4 transition-all duration-300 ease-out will-change-transform ${
                       isHovered ? "opacity-100 scale-105" : "opacity-0 scale-95 pointer-events-none"
