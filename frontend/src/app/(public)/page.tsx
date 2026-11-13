@@ -220,7 +220,7 @@ export default async function HomePage() {
       {/* Why buy here, in four facts */}
       <BuyingFacts />
 
-      {/* 6.5. Verified Google Customer Reviews with Indian B2B Bureaus */}
+      {/* 6.5. Real Google reviews (hidden until connected in Settings → Reviews) */}
       <GoogleReviews />
 
       {/* 7. Frequently Asked Questions (FAQ) Section - High Search Intent & Buyer Assurance */}

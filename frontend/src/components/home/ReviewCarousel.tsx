@@ -3,7 +3,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 
-export type Review = { id: string; author: string; role: string; city: string; rating: number; text: string };
+export type Review = {
+  id: string;
+  author: string;
+  /** Secondary line under the name, e.g. "2 weeks ago". */
+  meta?: string;
+  /** Link to the reviewer's Google profile (required attribution for Google reviews). */
+  authorUrl?: string;
+  rating: number;
+  text: string;
+};
 
 const INKS = ["#F26B1D", "#121418", "#353C45", "#B9C3CF"];
 
@@ -91,8 +100,12 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1" style={{ background: ink }} />
               <div className="flex items-center justify-between">
                 <div className="flex gap-0.5" role="img" aria-label={`${review.rating} out of 5 stars`}>
-                  {[...Array(review.rating)].map((_, s) => (
-                    <Star key={s} className="w-4 h-4 fill-[#F26B1D] text-[#F26B1D]" aria-hidden="true" />
+                  {[...Array(5)].map((_, s) => (
+                    <Star
+                      key={s}
+                      className={`w-4 h-4 ${s < review.rating ? "fill-[#F26B1D] text-[#F26B1D]" : "text-[#B9C3CF]"}`}
+                      aria-hidden="true"
+                    />
                   ))}
                 </div>
                 <Quote className="w-8 h-8 opacity-90" style={{ color: ink }} aria-hidden="true" />
@@ -104,11 +117,24 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
                   className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-extrabold text-sm"
                   style={{ background: ink, color: ink === "#B9C3CF" || ink === "#F26B1D" ? "#121418" : "#FFFFFF" }}
                 >
-                  {review.author.split(" ").map((part) => part[0]).slice(0, 2).join("")}
+                  {review.author.split(" ").filter(Boolean).map((part) => part[0]).slice(0, 2).join("").toUpperCase() || "G"}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-[#121418] truncate">{review.author}</p>
-                  <p className="text-xs text-[#353C45] truncate">{review.role} · {review.city}</p>
+                  <p className="text-sm font-bold text-[#121418] truncate">
+                    {review.authorUrl ? (
+                      <a
+                        href={review.authorUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="hover:underline underline-offset-2"
+                      >
+                        {review.author}
+                      </a>
+                    ) : (
+                      review.author
+                    )}
+                  </p>
+                  {review.meta && <p className="text-xs text-[#353C45] truncate">{review.meta}</p>}
                 </div>
               </div>
             </li>

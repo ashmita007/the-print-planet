@@ -148,3 +148,56 @@ class OwnerCloudDatabaseSyncView(APIView):
                 return Response({'status': 'success', 'message': 'Database successfully backed up to Cloudinary!'})
         except Exception as e:
             return Response({'status': 'error', 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+from .models import GoogleReviewConnection  # noqa: E402
+from .serializers import OwnerGoogleReviewSerializer, PublicGoogleReviewSerializer  # noqa: E402
+from .google_reviews import refresh_if_stale, sync_reviews  # noqa: E402
+
+
+class PublicGoogleReviewView(APIView):
+    """Review link and cached Google rating for the storefront. Refreshes from Google at most daily."""
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        conn = GoogleReviewConnection.get_solo()
+        refresh_if_stale(conn)
+        return Response(PublicGoogleReviewSerializer(conn).data)
+
+
+class OwnerGoogleReviewView(APIView):
+    """Owner connection settings for Google reviews."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def get(self, request):
+        return Response(OwnerGoogleReviewSerializer(GoogleReviewConnection.get_solo()).data)
+
+    def put(self, request):
+        conn = GoogleReviewConnection.get_solo()
+        serializer = OwnerGoogleReviewSerializer(conn, data=request.data, partial=True)
+        if not serializer.is_valid():
+            msgs = [f"{k}: {' '.join(str(m) for m in v)}" for k, v in serializer.errors.items()]
+            return Response({'error': ' | '.join(msgs), 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        try:
+            from apps.catalog.backup_service import trigger_auto_backup_async
+            trigger_auto_backup_async(force=True)
+        except Exception:
+            pass
+        return Response(OwnerGoogleReviewSerializer(conn).data)
+
+    def patch(self, request):
+        return self.put(request)
+
+
+class OwnerGoogleReviewSyncView(APIView):
+    """Pull the latest rating and reviews from Google now."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def post(self, request):
+        conn = GoogleReviewConnection.get_solo()
+        ok, message = sync_reviews(conn)
+        conn.refresh_from_db()
+        body = {'ok': ok, 'message': message, 'connection': OwnerGoogleReviewSerializer(conn).data}
+        return Response(body, status=status.HTTP_200_OK if ok else status.HTTP_400_BAD_REQUEST)

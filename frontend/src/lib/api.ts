@@ -260,6 +260,88 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   }
 }
 
+export type GoogleReview = {
+  author_name: string;
+  author_url: string;
+  author_photo: string;
+  rating: number;
+  text: string;
+  relative_time: string;
+  publish_time: string;
+};
+
+export type PublicGoogleReviews = {
+  review_url: string;
+  maps_url: string;
+  rating: string | number | null;
+  review_count: number | null;
+  reviews: GoogleReview[];
+  last_synced_at: string | null;
+};
+
+export type OwnerGoogleReviews = PublicGoogleReviews & {
+  place_id: string;
+  show_on_site: boolean;
+  has_api_key: boolean;
+  api_key_source: '' | 'server' | 'saved';
+  last_sync_error: string;
+  updated_at: string;
+};
+
+/** Real Google rating and reviews, cached by the backend. Null when the backend is unreachable. */
+export async function getGoogleReviews(): Promise<PublicGoogleReviews | null> {
+  try {
+    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/google-reviews/`, CATALOGUE_READ, 12000);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function ownerGetGoogleReviews(): Promise<OwnerGoogleReviews | null> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/google-reviews/`, {
+      headers: getAuthHeaders(),
+      cache: 'no-store',
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function ownerSaveGoogleReviews(
+  data: Partial<Pick<OwnerGoogleReviews, 'review_url' | 'maps_url' | 'place_id' | 'show_on_site'>> & { places_api_key?: string }
+): Promise<{ success: boolean; data?: OwnerGoogleReviews; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/google-reviews/`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+      body: JSON.stringify(data),
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) return { success: false, error: body.error || body.detail || 'Could not save Google review settings' };
+    return { success: true, data: body };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Network error' };
+  }
+}
+
+export async function ownerSyncGoogleReviews(): Promise<{ success: boolean; message: string; data?: OwnerGoogleReviews }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/owner/google-reviews/sync/`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const body = await res.json().catch(() => ({}));
+    return { success: res.ok && !!body.ok, message: body.message || body.detail || 'Sync failed', data: body.connection };
+  } catch (err: any) {
+    return { success: false, message: err.message || 'Network error' };
+  }
+}
+
 export async function getHomePageSections(): Promise<HomePageSection[]> {
   try {
     const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/homepage-sections/`, { cache: 'no-store' });

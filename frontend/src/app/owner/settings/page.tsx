@@ -30,7 +30,9 @@ import {
   Award,
   Factory,
   Truck,
+  Star,
 } from "lucide-react";
+import GoogleReviewsSettings from "@/components/owner/GoogleReviewsSettings";
 import {
   getSiteSettings,
   ownerUpdateSettings,
@@ -44,7 +46,7 @@ import {
 } from "@/lib/api";
 import { SiteSettings } from "@/lib/types";
 
-type TabKey = "hero" | "about" | "identity" | "database" | "security";
+type TabKey = "hero" | "about" | "identity" | "reviews" | "database" | "security";
 
 type EmailDiagnostics = {
   config?: {
@@ -86,7 +88,7 @@ function OwnerSettingsInner() {
   // Sync tab with URL
   useEffect(() => {
     const tabFromUrl = searchParams.get("tab") as TabKey;
-    if (tabFromUrl && ["hero", "about", "identity", "database", "security"].includes(tabFromUrl)) {
+    if (tabFromUrl && ["hero", "about", "identity", "reviews", "database", "security"].includes(tabFromUrl)) {
       setActiveTab(tabFromUrl);
     }
   }, [searchParams]);
@@ -639,6 +641,7 @@ function OwnerSettingsInner() {
           { id: "hero", label: "Hero", icon: Sparkles },
           { id: "about", label: "About", icon: Info },
           { id: "identity", label: "Identity", icon: Building2 },
+          { id: "reviews", label: "Reviews", icon: Star },
           { id: "database", label: "Database", icon: Database },
           { id: "security", label: "Security", icon: Lock },
         ].map((tab) => {
@@ -1214,6 +1217,9 @@ function OwnerSettingsInner() {
           </div>
         </form>
       )}
+
+      {/* GOOGLE REVIEWS */}
+      {activeTab === "reviews" && <GoogleReviewsSettings />}
 
       {/* TAB 4: DATABASE & CLOUD SYNC */}
       {activeTab === "database" && (

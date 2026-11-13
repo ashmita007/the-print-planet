@@ -60,3 +60,45 @@ class HomePageSection(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.section_type})"
+
+
+class GoogleReviewConnection(models.Model):
+    """
+    Singleton holding the business's Google Business Profile review link and,
+    optionally, a Places API connection used to show the real Google rating.
+    """
+    review_url = models.URLField(max_length=500, blank=True, default='')
+    maps_url = models.URLField(max_length=500, blank=True, default='')
+    place_id = models.CharField(max_length=255, blank=True, default='')
+    # Prefer the GOOGLE_PLACES_API_KEY environment variable; this field is a fallback
+    # for owners who cannot edit server env vars. It is never returned by any API.
+    places_api_key = models.CharField(max_length=255, blank=True, default='')
+    show_on_site = models.BooleanField(default=True)
+
+    rating = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
+    review_count = models.PositiveIntegerField(null=True, blank=True)
+    reviews = models.JSONField(default=list, blank=True)
+    last_synced_at = models.DateTimeField(null=True, blank=True)
+    last_sync_error = models.TextField(blank=True, default='')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Google Review Connection'
+        verbose_name_plural = 'Google Review Connection'
+
+    def __str__(self):
+        return 'Google Review Connection'
+
+    @classmethod
+    def get_solo(cls):
+        obj = cls.objects.first()
+        if not obj:
+            obj = cls.objects.create(id=1)
+        return obj
+
+    def save(self, *args, **kwargs):
+        if not self.pk and GoogleReviewConnection.objects.exists():
+            self.pk = GoogleReviewConnection.objects.first().pk
+        super().save(*args, **kwargs)

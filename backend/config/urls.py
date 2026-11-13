@@ -38,6 +38,9 @@ from apps.settings_app.views import (
     OwnerDashboardStatsView,
     OwnerCloudDatabaseSyncView,
     OwnerEmailDiagnosticsView,
+    PublicGoogleReviewView,
+    OwnerGoogleReviewView,
+    OwnerGoogleReviewSyncView,
 )
 from apps.authentication.views import (
     LoginView,
@@ -95,6 +98,7 @@ urlpatterns = [
     path('api/v1/search/', GlobalSearchView.as_view(), name='global-search'),
     path('api/v1/enquiries/', PublicEnquiryCreateView.as_view(), name='public-enquiry'),
     path('api/v1/site-settings/', PublicSiteSettingsView.as_view(), name='public-site-settings'),
+    path('api/v1/google-reviews/', PublicGoogleReviewView.as_view(), name='public-google-reviews'),
     path('api/v1/homepage-sections/', PublicHomePageSectionsView.as_view(), name='public-homepage-sections'),
 
     # Authentication & Registration
@@ -111,6 +115,8 @@ urlpatterns = [
 
     # Owner Management APIs
     path('api/v1/owner/site-settings/', OwnerSiteSettingsView.as_view(), name='owner-site-settings'),
+    path('api/v1/owner/google-reviews/', OwnerGoogleReviewView.as_view(), name='owner-google-reviews'),
+    path('api/v1/owner/google-reviews/sync/', OwnerGoogleReviewSyncView.as_view(), name='owner-google-reviews-sync'),
     path('api/v1/owner/stats/', OwnerDashboardStatsView.as_view(), name='owner-stats'),
     path('api/v1/owner/images/upload/', OwnerImageUploadView.as_view(), name='owner-image-upload'),
     path('api/v1/owner/import/validate/', OwnerBulkImportValidateView.as_view(), name='owner-import-validate'),

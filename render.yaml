@@ -77,6 +77,9 @@ services:
         sync: false
       - key: EMAIL_WEBHOOK_URL
         sync: false
+      # Optional: Places API (New) key for real Google rating/reviews on the homepage.
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false
 
       # Cloudinary Media Storage (Optional Secondary CDN)
       - key: CLOUDINARY_URL
