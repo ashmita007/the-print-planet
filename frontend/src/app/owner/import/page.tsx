@@ -112,7 +112,7 @@ export default function BulkImportPage() {
         <label className="border border-dashed border-[#B9C3CF] hover:border-[#6C7A89] hover:bg-[#EDF1F6] rounded-lg p-8 text-center space-y-3 bg-[#EDF1F6] transition-all cursor-pointer block select-none group">
           <input
             type="file"
-            accept=".xlsx,.csv,.json"
+            accept=".xlsx,.xlsm,.xls,.csv,.json"
             onChange={handleFileChange}
             className="hidden"
           />

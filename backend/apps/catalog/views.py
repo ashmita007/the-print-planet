@@ -441,6 +441,31 @@ def _normalize_key(key):
     )
 
 
+# Column names owners use in their own price lists, mapped onto the importer's keys.
+HEADER_ALIASES = {
+    'product_name': ('item_name', 'item', 'product', 'products', 'product_title', 'particulars',
+                     'name_of_product', 'name_of_item', 'item_description', 'description_of_goods'),
+    'price': ('rate', 'mrp', 'selling_price', 'sale_price', 'unit_price', 'price_per_unit', 'rate_(inr)',
+              'mrp_(inr)', 'rate_(rs)', 'price_(rs)', 'price_(rs.)', 'rate_(rs.)', 'wholesale_price', 'dealer_price'),
+    'sku': ('code', 'product_code', 'model', 'model_no', 'model_number', 'part_no', 'part_number', 'item_no'),
+    'category_name': ('product_category', 'group', 'product_group', 'item_group'),
+    'minimum_order_quantity': ('min_qty', 'min_order', 'minimum_qty', 'min_order_qty', 'minimum_order'),
+}
+NAME_KEYS = ('client_revised_name', 'product_name', 'name', 'title')
+
+
+def _clean_cell(v):
+    if v is None:
+        return ''
+    if isinstance(v, str):
+        return v.strip()
+    if isinstance(v, float) and v.is_integer():
+        return int(v)  # 1001.0 from Excel -> 1001, so SKUs and MOQs read naturally
+    if hasattr(v, 'isoformat'):
+        return v.isoformat()  # dates must survive the JSON round trip to the execute step
+    return v
+
+
 def _normalize_row(row):
     if not isinstance(row, dict):
         return {}
@@ -448,8 +473,35 @@ def _normalize_row(row):
     for k, v in row.items():
         nk = _normalize_key(k)
         if nk:
-            out[nk] = '' if v is None else (v.strip() if isinstance(v, str) else v)
+            out[nk] = _clean_cell(v)
+    for canonical, aliases in HEADER_ALIASES.items():
+        if str(out.get(canonical, '')).strip():
+            continue
+        for alias in aliases:
+            if str(out.get(alias, '')).strip():
+                out[canonical] = out[alias]
+                break
     return out
+
+
+def _is_header_row(cells):
+    keys = {_normalize_key(c) for c in cells if c not in (None, '')}
+    name_like = set(NAME_KEYS) | set(HEADER_ALIASES['product_name'])
+    return bool(keys & name_like)
+
+
+def _rows_from_table(table):
+    """Turn a list of row lists into dicts, finding the header row within the first 20 rows."""
+    for idx, cells in enumerate(table[:20]):
+        if _is_header_row(cells):
+            headers = [_normalize_key(c) for c in cells]
+            rows = []
+            for cells_row in table[idx + 1:]:
+                if not any(str(c).strip() for c in cells_row if c is not None):
+                    continue
+                rows.append({h: (cells_row[i] if i < len(cells_row) else '') for i, h in enumerate(headers) if h})
+            return rows
+    return None
 
 
 def _raw_price(data):
@@ -501,22 +553,31 @@ class OwnerBulkImportValidateView(APIView):
             uploaded_file = request.FILES['file']
             filename = uploaded_file.name.lower()
 
-            if filename.endswith('.xlsx'):
+            if filename.endswith('.xls'):
+                return Response(
+                    {'error': 'This is an old Excel .xls file. Open it in Excel or Google Sheets and save it as .xlsx, then upload again.'},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            if filename.endswith(('.xlsx', '.xlsm')):
                 try:
                     import openpyxl
-                    wb = openpyxl.load_workbook(uploaded_file, data_only=True)
-                    ws = wb.active
-                    header_cells = [cell.value for cell in ws[1]]
-                    headers = [str(h or '').strip().lower().replace(' ', '_').replace('/', '_').replace('-', '_') for h in header_cells]
-                    for row in ws.iter_rows(min_row=2, values_only=True):
-                        if any(row):
-                            row_dict = {}
-                            for col_idx, val in enumerate(row):
-                                if col_idx < len(headers) and headers[col_idx]:
-                                    row_dict[headers[col_idx]] = val if val is not None else ''
-                            rows.append(row_dict)
+                    wb = openpyxl.load_workbook(uploaded_file, data_only=True, read_only=True)
+                    # Use the active sheet first, then any other sheet that has a product-name column.
+                    sheets = [wb.active] + [ws for ws in wb.worksheets if ws is not wb.active]
+                    found = None
+                    for ws in sheets:
+                        found = _rows_from_table([list(r) for r in ws.iter_rows(values_only=True)])
+                        if found is not None:
+                            break
+                    wb.close()
                 except Exception as e:
-                    return Response({'error': f'Invalid Excel file: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({'error': f'Could not read this Excel file: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+                if found is None:
+                    return Response(
+                        {'error': 'No product name column found. Add a header such as "Product Name", "Item Name" or "Name" above your rows.'},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                rows = found
             elif filename.endswith('.json'):
                 content = _decode_upload(uploaded_file)
                 try:
@@ -530,10 +591,14 @@ class OwnerBulkImportValidateView(APIView):
                     dialect = csv.Sniffer().sniff(content[:4096], delimiters=',;\t')
                 except csv.Error:
                     dialect = csv.excel
-                reader = csv.DictReader(io.StringIO(content), dialect=dialect)
-                for r in reader:
-                    if any(str(v or '').strip() for v in r.values() if not isinstance(v, list)):
-                        rows.append(r)
+                table = list(csv.reader(io.StringIO(content), dialect=dialect))
+                found = _rows_from_table(table)
+                if found is None:
+                    return Response(
+                        {'error': 'No product name column found. Add a header such as "Product Name", "Item Name" or "Name" above your rows.'},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                rows = found
             else:
                 return Response({'error': 'Unsupported file format. Provide .xlsx, .csv or .json'}, status=status.HTTP_400_BAD_REQUEST)
         elif 'products' in request.data:
