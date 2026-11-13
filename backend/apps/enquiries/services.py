@@ -15,6 +15,52 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
+
+def _email_thumb(url, size=400):
+    """Square JPEG thumbnail that every mail client can show (Cloudinary transform when possible)."""
+    if not url:
+        return ''
+    if url.startswith('/'):
+        url = f"https://theprintplanet.co.in{url}"
+    if 'res.cloudinary.com' in url and '/image/upload/' in url:
+        return url.replace('/image/upload/', f'/image/upload/f_jpg,q_auto,w_{size},h_{size},c_pad,b_white/', 1)
+    return url
+
+
+def _primary_image_url(product):
+    images = list(product.images.all())
+    primary = next((img for img in images if img.is_primary), None) or (images[0] if images else None)
+    return primary.secure_url if primary else ''
+
+
+def _product_email_extras(product):
+    """Photo, link, price and a few related products for the enquiry emails."""
+    if not product:
+        return {}
+    site = 'https://theprintplanet.co.in'
+    extras = {
+        'product_url': f"{site}/products/{product.slug}",
+        'product_image': _email_thumb(_primary_image_url(product)),
+        'product_sku': product.sku or '',
+        'product_category': product.category.name if product.category_id else '',
+        'product_price': (product.price_display or (f"\u20b9{product.price:,.0f}" if product.price else ''))
+                         if product.price_visibility else '',
+        'product_moq': product.minimum_order_quantity or '',
+        'related_products': [],
+    }
+    try:
+        from apps.catalog.models import Product
+        related = (Product.objects.filter(category_id=product.category_id, is_active=True)
+                   .exclude(id=product.id).prefetch_related('images').order_by('-is_featured', 'display_order')[:3])
+        extras['related_products'] = [
+            {'name': r.name, 'url': f"{site}/products/{r.slug}", 'image': _email_thumb(_primary_image_url(r), 240)}
+            for r in related
+        ]
+    except Exception as rel_err:
+        logger.warning(f"Could not load related products for email: {rel_err}")
+    return extras
+
+
 def build_enquiry_payload(enquiry_or_id):
     """Safely extracts all email fields while still in the main request/database context."""
     if isinstance(enquiry_or_id, dict):
@@ -84,6 +130,7 @@ def build_enquiry_payload(enquiry_or_id):
         'site_phone': s_phone,
         'site_email': s_email,
         'site_address': s_address,
+        **(_product_email_extras(enquiry.product) if enquiry.product_id else {}),
     }
 
 
@@ -378,6 +425,9 @@ def _send_enquiry_emails_worker(payload):
         attachment_name = payload.get('attachment_name', '')
         site_phone = payload.get('site_phone', '+91 97418 08034')
         site_email = payload.get('site_email', 'theprintplanet01@gmail.com')
+        product_extras = {k: payload.get(k) for k in (
+            'product_url', 'product_image', 'product_sku', 'product_category',
+            'product_price', 'product_moq', 'related_products') if payload.get(k)}
         site_address = payload.get('site_address', 'No. 33, 34, Srigandhadakaval, Byraveshwaranagar, Near Hanumanthnagar, Sunkadakatte, Bangalore - 560091')
 
         # Clean phone for WhatsApp international link
@@ -431,6 +481,7 @@ INSTANT QUICK ACTIONS:
             'message': message, 'source_page': source_page, 'lead_source': lead_source,
             'landing_page': landing_page, 'attachment_url': attachment_url, 'attachment_name': attachment_name,
             'clean_phone': clean_phone, 'wa_lead_text': wa_lead_text,
+            **product_extras,
         })
 
         # Try HTTPS REST dispatch first (bypasses Render SMTP port blocking)
@@ -491,6 +542,7 @@ GSTIN        : 29AAQFT3909B1ZZ
                 'requested_quantity': requested_quantity, 'site_phone': site_phone,
                 'site_email': site_email, 'site_address': site_address,
                 'company_name': company_name, 'phone': phone, 'email': email, 'message': message,
+                **product_extras,
             })
 
             dispatched_cust_https = _send_email_via_https(email, cust_subject, cust_text, cust_html)
