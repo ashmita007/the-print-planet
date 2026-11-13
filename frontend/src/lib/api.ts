@@ -182,7 +182,22 @@ export async function submitEnquiry(payload: {
   attachment?: File | null;
   attachment_url?: string;
   source_page?: string;
+  lead_source?: string;
+  landing_page?: string;
+  referrer?: string;
 }): Promise<{ success: boolean; data?: any; error?: string }> {
+  // Attach where the buyer first came from (stored by LeadTracker) to every enquiry form.
+  if (typeof window !== 'undefined' && !payload.lead_source) {
+    try {
+      const raw = localStorage.getItem('tpp_attr');
+      const a = raw ? JSON.parse(raw) : null;
+      if (a && Date.now() - a.ts < 30 * 864e5) {
+        payload = { ...payload, lead_source: a.lead_source, landing_page: a.landing_page, referrer: a.referrer };
+      }
+    } catch {
+      /* no attribution available */
+    }
+  }
   try {
     let res: Response;
     if (payload.attachment) {
@@ -196,6 +211,9 @@ export async function submitEnquiry(payload: {
       if (payload.requested_quantity) formData.append('requested_quantity', payload.requested_quantity.toString());
       formData.append('message', payload.message);
       if (payload.source_page) formData.append('source_page', payload.source_page);
+      if (payload.lead_source) formData.append('lead_source', payload.lead_source);
+      if (payload.landing_page) formData.append('landing_page', payload.landing_page);
+      if (payload.referrer) formData.append('referrer', payload.referrer);
       formData.append('attachment', payload.attachment);
       if (payload.attachment_url) formData.append('attachment_url', payload.attachment_url);
 
@@ -226,6 +244,7 @@ export async function submitEnquiry(payload: {
       const w = window as unknown as { gtag?: (...a: unknown[]) => void; clarity?: (...a: unknown[]) => void };
       const params = {
         method: 'form',
+        lead_source: payload.lead_source || 'direct',
         page_path: window.location.pathname,
         product: payload.product_name_text || undefined,
         quantity: payload.requested_quantity || undefined,

@@ -41,3 +41,25 @@ def schedule_auto_cloud_sync():
 @receiver(post_save, sender=Enquiry)
 def auto_sync_on_database_mutation(sender, **kwargs):
     schedule_auto_cloud_sync()
+
+
+@receiver(post_save, sender=Product)
+@receiver(post_delete, sender=Product)
+def indexnow_on_product_change(sender, instance, **kwargs):
+    """Ask Bing and other IndexNow engines to recrawl the changed product and its listings."""
+    try:
+        from .indexnow import queue_paths
+        category_slug = getattr(getattr(instance, 'category', None), 'slug', '')
+        queue_paths(f'/products/{instance.slug}', f'/categories/{category_slug}' if category_slug else '', '/products')
+    except Exception:
+        pass
+
+
+@receiver(post_save, sender=Category)
+@receiver(post_delete, sender=Category)
+def indexnow_on_category_change(sender, instance, **kwargs):
+    try:
+        from .indexnow import queue_paths
+        queue_paths(f'/categories/{instance.slug}', '/categories')
+    except Exception:
+        pass

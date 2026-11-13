@@ -77,6 +77,9 @@ export interface Enquiry {
   attachment?: string | null;
   attachment_url?: string;
   source_page?: string;
+  lead_source?: string;
+  landing_page?: string;
+  referrer?: string;
   status: 'new' | 'in_progress' | 'quoted' | 'closed' | 'spam';
   admin_notes?: string;
   created_at: string;

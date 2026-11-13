@@ -35,6 +35,10 @@ class Enquiry(models.Model):
     attachment = models.FileField(upload_to='enquiries/%Y/%m/', blank=True, null=True)
     attachment_url = models.CharField(max_length=1000, blank=True, default='')
     source_page = models.CharField(max_length=255, blank=True, default='')
+    # Where the buyer came from on their first visit (UTM tags, or the referring site).
+    lead_source = models.CharField(max_length=120, blank=True, default='', db_index=True)
+    landing_page = models.CharField(max_length=255, blank=True, default='')
+    referrer = models.CharField(max_length=255, blank=True, default='')
     status = models.CharField(max_length=50, default='new', choices=STATUS_CHOICES, db_index=True)
     admin_notes = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)

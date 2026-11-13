@@ -259,6 +259,12 @@ export default function OwnerEnquiriesPage() {
                     <span className="truncate max-w-[150px]">{enq.email}</span>
                   </div>
 
+                  {enq.lead_source && (
+                    <span className="inline-block text-[10px] font-semibold text-[#2B323B] bg-white border border-[#DFE6EE] rounded-full px-2 py-0.5">
+                      From: {enq.lead_source}
+                    </span>
+                  )}
+
                   <p className="text-[#121418] line-clamp-2 text-xs italic bg-[#EDF1F6] p-2 rounded border border-[#DFE6EE]/50">
                     &ldquo;{enq.message}&rdquo;
                   </p>
@@ -344,6 +350,10 @@ export default function OwnerEnquiriesPage() {
                   <span suppressHydrationWarning className="text-[11px] text-slate-400">
                     Received on {new Date(activeEnquiry.created_at).toLocaleString()}
                   </span>
+                  <p className="text-[11px] text-[#353C45] mt-0.5">
+                    Came from: <strong>{activeEnquiry.lead_source || "unknown (before tracking)"}</strong>
+                    {activeEnquiry.landing_page && <> · first page {activeEnquiry.landing_page}</>}
+                  </p>
                 </div>
               </div>
 

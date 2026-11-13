@@ -27,9 +27,23 @@ class EnquiryCreateSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'full_name', 'company_name', 'email', 'phone',
             'product', 'product_name_text', 'requested_quantity',
-            'message', 'attachment', 'attachment_url', 'source_page'
+            'message', 'attachment', 'attachment_url', 'source_page',
+            'lead_source', 'landing_page', 'referrer',
         ]
         read_only_fields = ['id']
+
+    def _clip(self, value, limit):
+        # Tracking values come from the browser: keep them short, single-line text.
+        return re.sub(r'[\x00-\x1f<>]', '', str(value or '')).strip()[:limit]
+
+    def validate_lead_source(self, value):
+        return self._clip(value, 120)
+
+    def validate_landing_page(self, value):
+        return self._clip(value, 255)
+
+    def validate_referrer(self, value):
+        return self._clip(value, 255)
 
     def validate_phone(self, value):
         cleaned = value.strip()
@@ -84,5 +98,6 @@ class EnquiryDetailSerializer(serializers.ModelSerializer):
             'id', 'full_name', 'company_name', 'email', 'phone',
             'product', 'product_name_text', 'product_details',
             'requested_quantity', 'message', 'attachment', 'attachment_url',
-            'source_page', 'status', 'admin_notes', 'created_at', 'updated_at'
+            'source_page', 'lead_source', 'landing_page', 'referrer',
+            'status', 'admin_notes', 'created_at', 'updated_at'
         ]

@@ -2,6 +2,7 @@ import os
 import json
 import base64
 import logging
+import html
 import threading
 import urllib.request
 import urllib.parse
@@ -71,6 +72,8 @@ def build_enquiry_payload(enquiry_or_id):
         'product_name': prod_name,
         'requested_quantity': enquiry.requested_quantity,
         'source_page': enquiry.source_page or '/',
+        'lead_source': enquiry.lead_source or 'direct',
+        'landing_page': enquiry.landing_page or '',
         'message': enquiry.message,
         'attachment_url': attachment_url,
         'attachment_path': attachment_path,
@@ -365,6 +368,8 @@ def _send_enquiry_emails_worker(payload):
         phone = payload.get('phone', '')
         requested_quantity = payload.get('requested_quantity') or 'Bulk Requirement'
         source_page = payload.get('source_page', '/')
+        lead_source = payload.get('lead_source', 'direct')
+        landing_page = payload.get('landing_page', '')
         message = payload.get('message', 'Please provide bulk quotation and dispatch timelines.')
         attachment_url = payload.get('attachment_url', '')
         attachment_path = payload.get('attachment_path', '')
@@ -418,6 +423,7 @@ CLIENT & INQUIRY OVERVIEW:
 • Product       : {prod_name}
 • Quantity      : {requested_quantity} units
 • Source Page   : {source_page}
+• Came From     : {lead_source}{f' (landed on {landing_page})' if landing_page else ''}
 {f'• Attachment   : {attachment_url}' if attachment_url else ''}
 
 CUSTOMER MESSAGE & SPECIFICATIONS:
@@ -508,7 +514,11 @@ INSTANT QUICK ACTIONS:
         </tr>
         <tr>
           <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Page Origin:</td>
-          <td style="padding: 10px 0; color: #64748b; font-family: monospace; font-size: 12px;">{source_page}</td>
+          <td style="padding: 10px 0; color: #64748b; font-family: monospace; font-size: 12px;">{html.escape(str(source_page))}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0; font-weight: 700; color: #64748b;">Came From:</td>
+          <td style="padding: 10px 0; color: #0d1f36; font-weight: 700;">{html.escape(str(lead_source))}{(' &middot; landed on ' + html.escape(str(landing_page))) if landing_page else ''}</td>
         </tr>
       </table>
 
