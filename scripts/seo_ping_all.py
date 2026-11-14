@@ -30,6 +30,7 @@ SITEMAP_URL = f"https://{HOST}/sitemap.xml"
 # High-priority core URLs to guarantee instant indexation even if sitemap network is unreachable
 CORE_URLS = [
     f"https://{HOST}/",
+    f"https://{HOST}/pvc-cards-wholesale-india",
     f"https://{HOST}/pvc-card-manufacturer-bangalore",
     f"https://{HOST}/lanyard-manufacturer-bangalore",
     f"https://{HOST}/products",
