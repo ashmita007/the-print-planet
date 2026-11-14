@@ -291,6 +291,105 @@ export const GUIDES: Guide[] = [
     ],
     whatsappText: "Hi The Print Planet, I need materials for employee ID cards. Please share price for bulk quantity.",
   },
+  {
+    slug: "inkjet-vs-digital-pvc-sheets",
+    title: "Inkjet vs Digital PVC Sheets: Which Dragon Sheet to Choose?",
+    description:
+      "Comparison guide between inkjet dragon sheets and digital PVC sheets for ID card fusing. Learn thickness (0.76mm), print coatings, temperature, and cost.",
+    h1: "Inkjet vs Digital PVC Sheets: Which Dragon Sheet is Right for You?",
+    lead: "Choosing the wrong PVC card sheet leads to peeling, fading ink, or jammed printers. Here is how inkjet dragon sheets compare to digital/HP Indigo PVC sheets and which one to pick.",
+    updated: "2026-11-14",
+    readMinutes: 6,
+    sections: [
+      {
+        heading: "The fundamental difference in coatings",
+        paragraphs: [
+          "Both inkjet dragon sheets and digital PVC sheets produce standard ISO CR-80 laminated ID cards (85.60 × 53.98 mm, 0.76 mm thickness), but they use completely different chemical coatings engineered for different printer inks.",
+          "Inkjet dragon sheets feature a microporous chemical coating designed to absorb aqueous dye or pigment inks from desktop printers (Epson L8050, L18050, Canon G-series). Digital PVC sheets feature an electrophotographic priming layer formulated for liquid electro-inks (HP Indigo) or dry toners (Konica Minolta, Xerox, Ricoh).",
+        ],
+      },
+      {
+        heading: "Print quality and resolution comparison",
+        paragraphs: [
+          "Inkjet dragon sheets achieve up to 5760 × 1440 DPI, providing photographic gradients, skin tones, and sharp micro-text for small ID card volumes. However, the ink requires 10 to 15 minutes of complete drying time before laminating, or moisture will cause micro-bubbles during heat fusing.",
+          "Digital PVC sheets cure instantly via heat fusers or laser drums. They deliver superior color consistency across long runs of 10,000+ cards and allow instantaneous collation into laminators without drying wait times.",
+        ],
+      },
+      {
+        heading: "Fusing parameters and heat tolerance",
+        paragraphs: [
+          "Both sheet types are fused under hydraulic or manual pressure between stainless steel lamination plates. Standard fusing parameters:",
+        ],
+        bullets: [
+          "Fusing Temperature: 135°C to 150°C (275°F to 302°F) depending on machine plate thickness.",
+          "Fusing Pressure: 0.08 to 0.12 MPa on hydraulic card laminators.",
+          "Cooling Cycle: Must be cooled under pressure down to below 45°C before removing plates to prevent warping.",
+        ],
+      },
+      {
+        heading: "Cost per card and equipment investment",
+        paragraphs: [
+          "For commercial printers starting out, inkjet dragon sheets require minimal upfront investment—a basic 6-color photo printer, a heated fusing machine, and a manual card punch. The raw material cost comes to roughly ₹1.80 to ₹2.50 per finished laminated card.",
+          "Digital press sheets require high-end production digital presses costing tens of lakhs, but scale down unit production time for mega-runs in universities and state government ID projects.",
+        ],
+      },
+    ],
+    related: [
+      { href: "/categories/pvc-id-card-consumable", label: "PVC card dragon sheets and overlays" },
+      { href: "/categories/machines", label: "ID card fusing machines & cutters" },
+      { href: "/pvc-card-manufacturer-bangalore", label: "Bangalore PVC card manufacturing" },
+    ],
+    whatsappText: "Hi The Print Planet, I need wholesale pricing for Inkjet Dragon Sheets and PVC materials.",
+  },
+  {
+    slug: "mifare-1k-vs-125khz-proximity-cards",
+    title: "Mifare 1K vs 125kHz Proximity Cards: RFID Comparison Guide",
+    description:
+      "Understand the difference between 13.56MHz Mifare 1K smart cards and 125kHz EM-Marin proximity cards. Frequency, memory, encryption, and applications.",
+    h1: "Mifare 1K vs 125kHz Proximity Cards: Which RFID Card Do You Need?",
+    lead: "When setting up office attendance, biometric turnstiles, or college campus ID cards, choosing between Mifare 1K and 125kHz RFID is a critical security and hardware decision.",
+    updated: "2026-11-14",
+    readMinutes: 6,
+    sections: [
+      {
+        heading: "Operating frequency: High Frequency vs Low Frequency",
+        paragraphs: [
+          "The core difference is operating frequency: 125 kHz is Low Frequency (LF), while 13.56 MHz (Mifare) is High Frequency (HF).",
+          "125 kHz EM-Marin proximity cards operate like a broadcast beacon. When brought within 5–10 cm of an RFID reader, the card powers up via induction and transmits a factory-burned 64-bit identification number (UID).",
+          "Mifare 1K cards conform to ISO/IEC 14443 Type A at 13.56 MHz. Rather than just transmitting an ID number, they establish a two-way encrypted handshake with the reader before granting access or writing data.",
+        ],
+      },
+      {
+        heading: "Memory architecture and encryption",
+        paragraphs: [
+          "125 kHz cards contain no user-writable memory. The number cannot be changed, encrypted, or reprogrammed. If someone copies the card with an inexpensive handheld cloner, the system cannot distinguish the duplicate from the original.",
+          "Mifare 1K chips feature 1,024 bytes (1 KB) of EEPROM organized into 16 distinct sectors, each protected by two independent secret encryption keys (Key A and Key B). This allows different systems (e.g. canteen payments, library checkouts, and door locks) to access dedicated sectors securely on the same physical card.",
+        ],
+      },
+      {
+        heading: "Which card should you specify for your project?",
+        paragraphs: [
+          "Specification checklist based on application requirements:",
+        ],
+        bullets: [
+          "Choose 125 kHz Proximity Cards for: Basic employee attendance logging, parking barrier boom gates, residential apartment turnstiles, and legacy door controllers where budget is the primary driver.",
+          "Choose 13.56 MHz Mifare 1K for: University multi-application campus cards, cashless cafeteria payments, secure server room access, hotel guest keycards, and transit ticketing.",
+        ],
+      },
+      {
+        heading: "Printing and manufacturing RFID cards",
+        paragraphs: [
+          "Both chip types can be manufactured as pre-laminated plain white glossy CR-80 cards suitable for thermal ID card printers (Zebra, Fargo, Magicard), or supplied as RFID prelams (inlays) that you fuse with printed PVC dragon sheets in-house at The Print Planet.",
+        ],
+      },
+    ],
+    related: [
+      { href: "/categories/rfid-consumables", label: "Mifare 1K and 125kHz RFID cards" },
+      { href: "/categories/pvc-id-card-consumable", label: "CR-80 PVC core sheets and overlays" },
+      { href: "/pricing", label: "Wholesale RFID card price slabs" },
+    ],
+    whatsappText: "Hi The Print Planet, I need a quotation for Mifare 1K / 125kHz proximity cards in bulk.",
+  },
 ];
 
 export const getGuide = (slug: string) => GUIDES.find((g) => g.slug === slug);
