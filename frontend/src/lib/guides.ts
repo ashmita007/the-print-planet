@@ -390,6 +390,72 @@ export const GUIDES: Guide[] = [
     ],
     whatsappText: "Hi The Print Planet, I need a quotation for Mifare 1K / 125kHz proximity cards in bulk.",
   },
+  {
+    slug: "pvc-card-and-lanyard-artwork-templates-dimensions",
+    title: "PVC Card & Lanyard Dimensions: Prepress Artwork Guidelines",
+    description:
+      "Exact CR-80 card dimensions in mm, inches, and 300 DPI pixels (1012x638). Lanyard templates for 12mm, 16mm, 20mm, and 25mm spools with stitching bleed.",
+    h1: "PVC Card & Lanyard Artwork Dimensions & Prepress Template Guide",
+    lead: "Avoid rejected prints and cut-off text. Here are the exact pixel dimensions, bleeds, safe margins, and resolution formulas for standard CR-80 ID cards and satin lanyards.",
+    updated: "2026-11-14",
+    readMinutes: 6,
+    sections: [
+      {
+        heading: "CR-80 PVC ID Card Standard Dimensions (ISO/IEC 7810)",
+        paragraphs: [
+          "Commercial PVC ID cards follow the global ISO/IEC 7810 ID-1 (CR-80) specification—identical to standard bank credit cards, Aadhaar PVC cards, and driving licenses.",
+        ],
+        bullets: [
+          "Physical Trim Size: 85.60 mm × 53.98 mm (3.370 × 2.125 inches).",
+          "Thickness: 0.76 mm (30 mil / 760 microns).",
+          "Corner Radius: 3.18 mm (1/8 inch rounded corners).",
+          "Canvas Resolution: Strictly 300 DPI minimum for crisp text and barcodes.",
+          "Trim Canvas (No Bleed): 1012 × 638 pixels.",
+          "Production Canvas (With 2mm Bleed): 1050 × 675 pixels (89.60 × 57.98 mm).",
+          "Safe Text Margin: Keep all essential text, logos, and photos at least 3.5 mm (42 pixels) inside the trim line.",
+        ],
+      },
+      {
+        heading: "Satin Lanyard Prepress Dimensions & Repeat Step",
+        paragraphs: [
+          "Sublimation and screen printed lanyards require continuous repeat graphic setups calibrated to the physical ribbon width and finished neck loop circumference.",
+        ],
+        bullets: [
+          "Finished Adult Lanyard Length: 900 mm (450 mm folded drop length).",
+          "Total Artwork Strip Length: 920 mm to 940 mm (including 20–40mm sewing and clamp seam allowances).",
+          "12 mm Width Canvas: 12 mm printable width (artwork width 12mm, canvas 14mm with 1mm edge bleed on top and bottom).",
+          "16 mm Width Canvas: 16 mm printable width (artwork width 16mm, canvas 18mm with 1mm bleed).",
+          "20 mm Width Canvas: 20 mm printable width (artwork width 20mm, canvas 22mm with 1mm bleed).",
+          "25 mm Width Canvas: 25 mm printable width (artwork width 25mm, canvas 27mm with 1mm bleed).",
+          "Logo Spacing & Repeat: Typical corporate logo interval is 80 mm to 120 mm center-to-center repeat.",
+        ],
+      },
+      {
+        heading: "Color Modes & Vector Prepress Rules",
+        paragraphs: [
+          "All artwork files submitted for production must adhere to prepress commercial standards:",
+        ],
+        bullets: [
+          "Color Space: Convert all vector files to CMYK mode (FOGRA39 or US Web Coated SWOP). Avoid RGB color spaces to prevent muddy color shifts on press.",
+          "Font Handling: Outline all typography (Convert to Curves in CorelDRAW Ctrl+Q, or Create Outlines in Illustrator Shift+Ctrl+O) to avoid missing font errors.",
+          "Barcodes & QR Codes: Barcodes must be pure 100% Black (K:100, C:0, M:0, Y:0) and generated as vector elements with quiet zones.",
+          "Supported File Types: Vector PDF, Adobe Illustrator (.AI), CorelDRAW (.CDR up to version 2024), or uncompressed TIFF (300 DPI).",
+        ],
+      },
+      {
+        heading: "Multi-Up A4 Dragon Sheet Layout (Inkjet Printing)",
+        paragraphs: [
+          "When printing on A4 inkjet dragon sheets (210 × 297 mm), set up a 10-up layout (2 columns × 5 rows) with 2 mm horizontal and vertical gutter spacing. Always print at 100% scale with printer margins set to 'Zero Margins' or 'Borderless'—never select 'Fit to Printable Area', which shrinks cards by 3–5%.",
+        ],
+      },
+    ],
+    related: [
+      { href: "/categories/pvc-id-card-consumable", label: "PVC card core sheets and overlays" },
+      { href: "/categories/indian-satin-digital-lanyard-roll", label: "Satin lanyard ribbon spools" },
+      { href: "/quote", label: "Submit artwork for quotation" },
+    ],
+    whatsappText: "Hi The Print Planet, I need artwork templates and wholesale material pricing for CR-80 cards and lanyards.",
+  },
 ];
 
 export const getGuide = (slug: string) => GUIDES.find((g) => g.slug === slug);

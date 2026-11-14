@@ -4,6 +4,7 @@ import { Download, FileText, CheckCircle2, Phone, ShieldCheck, ArrowRight, Spark
 import PageHero from "@/components/PageHero";
 import PageCta from "@/components/PageCta";
 import GstCalculator from "@/components/GstCalculator";
+import PrintTariffButton from "@/components/PrintTariffButton";
 
 export const metadata: Metadata = {
   title: { absolute: "Wholesale Price List 2026 | The Print Planet" },
@@ -74,7 +75,8 @@ export default function PricingPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <PrintTariffButton />
             <a
               href="/pricing.md"
               target="_blank"

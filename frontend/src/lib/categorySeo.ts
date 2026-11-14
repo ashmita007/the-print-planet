@@ -524,6 +524,110 @@ const MORE_CATEGORY_SEO: Record<string, CategorySeo> = {
       },
     ],
   },
+  "digital-lanyard-white-roll": {
+    h1: "White digital sublimation lanyard rolls",
+    title: "White Sublimation Lanyard Roll Wholesale Manufacturer Bangalore",
+    description:
+      "Direct manufacturer of 12mm, 16mm, 20mm, 25mm white digital satin lanyard rolls for sublimation heat-transfer printing in Bangalore. Heat resistant to 220°C.",
+    lead: "Virgin continuous-filament polyester sublimation rolls in 12mm, 16mm, 20mm, and 25mm widths.",
+    about: [
+      "White digital sublimation lanyard rolls feature a calendar-pressed continuous polyester weave engineered to withstand heat-press transfer temperatures up to 220°C without melting, yellowing, or shrinking.",
+      "The 99.2% CIE whiteness index ensures vivid Pantone hexachrome reproduction and photographic gradient clarity with zero dye bleeding across long event and corporate lanyard runs.",
+      "Supplied on 100-meter industrial plastic spools with ultrasonic heat-sealed edges preventing fraying during sewing and hardware assembly.",
+    ],
+    questions: [
+      {
+        question: "What is the wholesale price of white digital sublimation lanyard rolls?",
+        answer: "Wholesale factory pricing starts from ₹185 to ₹255 per 100m spool for bulk volume orders, depending on ribbon width (12mm, 16mm, 20mm, or 25mm).",
+      },
+      {
+        question: "What temperature should be used for sublimation transfer?",
+        answer: "Optimal heat press settings are 200°C to 215°C with a dwell time of 25 to 35 seconds under medium-high pneumatic or manual pressure.",
+      },
+      {
+        question: "How many lanyards can be produced from one 100m spool?",
+        answer: "One 100-meter spool produces approximately 100 standard 90 cm adult neck lanyards, allowing for loop stitching and hardware cut-off allowances.",
+      },
+      DELIVERY,
+    ],
+  },
+  "motorized-pvc-id-card-cutting-machine-for-id-card": {
+    h1: "Motorized PVC ID card cutting machines",
+    title: "Motorized Electric PVC Card Die Cutter Machine Bangalore",
+    description:
+      "Commercial motorized electric PVC ID card die-cutters (DCT2000, DCT4500). Up to 1,200 to 4,500 cards/hr burr-free ISO CR-80 punching. Live WhatsApp video demo.",
+    lead: "High-speed electric motorized card die cutters capable of punching burr-free ISO CR-80 cards at production speeds.",
+    about: [
+      "A motorized card cutter replaces slow manual lever punches with high-torque electric gearboxes and hardened tool-steel cutting dies to punch finished cards with standard 3.18mm rounded corners.",
+      "Electric foot pedal or continuous push-button actuation allows the operator to maintain continuous feeding, reaching output speeds from 1,200 cards up to 4,500 cards per hour with zero hand fatigue.",
+      "Every machine is pre-calibrated and tested via live WhatsApp video inspection before wooden crating and pan-India dispatch.",
+    ],
+    questions: [
+      {
+        question: "What is the production capacity of a motorized PVC card die cutter?",
+        answer: "Standard motorized workshop units like the DCT2000 punch up to 1,200–2,000 cards per hour, while high-throughput automatic models like the DCT4500 achieve up to 4,500 cards per hour.",
+      },
+      {
+        question: "Does the motorized cutter create standard rounded corners?",
+        answer: "Yes. The hardened alloy punch and die set strictly cuts the standard ISO/IEC 7810 CR-80 radius of 3.18 mm (1/8 inch), matching bank ATM cards and driving licenses.",
+      },
+      {
+        question: "Can I inspect the machine working live before paying?",
+        answer: "Yes. We arrange a live WhatsApp video call (+91 97418 08034) to test card punching with your preferred PVC sheet thickness before crating.",
+      },
+      DELIVERY,
+    ],
+  },
+  "pvc-id-card-inkjet-fusing-sheets": {
+    h1: "Inkjet PVC card fusing sheets (dragon sheets)",
+    title: "Inkjet PVC ID Card Dragon Sheets Wholesale Supplier Bangalore",
+    description:
+      "A4 inkjet PVC dragon sheets (50 sets/box = 500 cards) for ID card fusing. Direct manufacturer pricing from Sunkadakatte, Bangalore with 24–48h dispatch.",
+    lead: "High-porosity silica-coated A4 PVC core sheets with front and back clear overlay films for desktop inkjet card printing.",
+    about: [
+      "Inkjet dragon sheets feature a chemically treated microporous receiver layer that locks in aqueous dye or pigment inks from desktop Epson or Canon printers without smudging or feathering.",
+      "Each 3-part set consists of one printable PVC core sheet (0.46mm) sandwiched between two clear coated overlay films (0.08mm each). After heat fusing at 135°C–150°C, the composite forms a rock-solid 0.76mm (30 mil) waterproof card.",
+      "Packed in heavy-duty moisture-proof boxes of 50 sets yielding 500 finished CR-80 cards at a raw material cost under ₹2.00 per card.",
+    ],
+    questions: [
+      {
+        question: "How many cards does one box of dragon sheets make?",
+        answer: "One standard box contains 50 sets of A4 sheets. With 10 cards per A4 sheet (2 × 5 layout), one box produces exactly 500 finished CR-80 ID cards.",
+      },
+      {
+        question: "Which desktop printers are compatible with inkjet dragon sheets?",
+        answer: "All standard 4-color and 6-color desktop inkjet printers (including Epson L8050, L18050, L805, L3250, and Canon G-series) using standard dye or pigment inks.",
+      },
+      {
+        question: "What fusing temperature should be used for inkjet PVC sheets?",
+        answer: "Between 135°C and 150°C maintained under pressure for 12–15 minutes, followed by gradual water cooling down to below 45°C to ensure cards stay flat.",
+      },
+      DELIVERY,
+    ],
+  },
+  "sublimation-ink-for-lanyard-printing": {
+    h1: "Sublimation ink for lanyard printing",
+    title: "Sublimation Ink 1000ml for Lanyard Printing Wholesale Bangalore",
+    description:
+      "1000ml bottle dye-sublimation ink (CMYK + Light Cyan) for polyester lanyard printing. High-chroma transfer, zero nozzle clogging, factory rates.",
+    lead: "High-density dye-sublimation inks formulated specifically for continuous polyester lanyard ribbon heat-transfer printing.",
+    about: [
+      "Our dye-sublimation inks utilize micro-encapsulated disperse dyes that convert directly from solid to gas at 190°C–210°C, bonding permanently into the polyester molecular fibers of satin lanyards.",
+      "Formulated with anti-clogging surfactants tested over continuous 8-hour print runs on Epson PrecisionCore and DX5 printheads, preventing nozzle bandings and head cleanings.",
+      "Delivers high optical density for deep corporate blacks, rich Pantone blues, and vibrant school reds that resist skin oils, water, and UV fading.",
+    ],
+    questions: [
+      {
+        question: "What bottle sizes are available for sublimation ink?",
+        answer: "We supply 1000ml (1 Litre) industrial bottles in Cyan, Magenta, Yellow, Black, and Light Cyan for commercial bulk lanyard printing operations.",
+      },
+      {
+        question: "Will this ink clog Epson desktop or wide-format printheads?",
+        answer: "No. The ink is multi-stage nano-filtered below 0.2 microns to guarantee smooth droplet jetting without nozzle deflection or clogging on Epson printheads.",
+      },
+      DELIVERY,
+    ],
+  },
 };
 
 Object.assign(CATEGORY_SEO, MORE_CATEGORY_SEO);

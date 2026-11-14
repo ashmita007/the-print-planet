@@ -498,3 +498,28 @@ html.lenis body {
     display: none;
   }
 }
+
+@media print {
+  header, nav, footer, .cart-drawer, [role="search"], .no-print, [data-hero-dots], .page-hero-dots {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+  }
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+  th, td {
+    border: 1px solid #d1d5db !important;
+    padding: 5px 8px !important;
+    color: #000000 !important;
+  }
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+}
+
