@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Download, FileText, CheckCircle2, Phone, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import PageCta from "@/components/PageCta";
+import GstCalculator from "@/components/GstCalculator";
 
 export const metadata: Metadata = {
   title: { absolute: "Wholesale Price List 2026 | The Print Planet" },
@@ -295,6 +296,9 @@ export default function PricingPage() {
             </ul>
           </div>
         </div>
+
+        {/* Section 4: Interactive GST ITC & Bulk Procurement Calculator */}
+        <GstCalculator />
 
         {/* Commercial Trust & Ordering Terms */}
         <section className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-6">
