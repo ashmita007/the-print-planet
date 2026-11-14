@@ -2,9 +2,9 @@ import { SiteSettings } from "./types";
 
 export const HERO_DEFAULTS = {
   badge: "Factory direct from Bengaluru",
-  title: "Everything for ID cards.",
+  title: "PVC cards, lanyards & ID machines.",
   subtitle: "Factory direct.",
-  caption: "Cards, lanyards, holders, RFID and machines.",
+  caption: "CR-80 PVC cards, dragon sheets, satin lanyard rolls, RFID and card fusing machines.",
 };
 
 /** Word counts that keep the hero tidy. Longer text still shows, at a smaller size. */

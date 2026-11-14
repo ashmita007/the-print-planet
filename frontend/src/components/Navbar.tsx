@@ -46,9 +46,10 @@ const ANNOUNCEMENTS = [
 ];
 
 const NAV_ITEMS = [
+  { href: "/pvc-card-manufacturer-bangalore", label: "PVC Cards" },
+  { href: "/lanyard-manufacturer-bangalore", label: "Lanyards" },
   { href: "/corporate", label: "Corporate & Bulk" },
-  { href: "/services", label: "Custom Printing" },
-  { href: "/about", label: "About Us" },
+  { href: "/pricing", label: "Wholesale Tariff" },
   { href: "/contact", label: "Contact" },
 ];
 

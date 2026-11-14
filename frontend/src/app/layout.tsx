@@ -50,11 +50,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
+    default: "PVC Cards Manufacturer & Wholesale Supplier Bangalore | The Print Planet",
     template: "%s | The Print Planet",
   },
   description:
-    "The Print Planet, Bengaluru: PVC cards, ID card holders, satin lanyard rolls, RFID cards and ID card machines. Factory-direct wholesale across India.",
+    "The Print Planet, Bengaluru: Direct factory manufacturer of PVC cards, CR-80 blank cards, ID card holders, satin lanyard rolls, RFID smart cards and ID card machines. Wholesale pan-India dispatch.",
   authors: [{ name: "The Print Planet" }],
   creator: "The Print Planet",
   publisher: "The Print Planet",
