@@ -79,7 +79,25 @@ The Print Planet (operating online at https://theprintplanet.co.in) is a Bengalu
 
 ---
 
-## 4. Pan-India Logistics, Quality Control & B2B Procurement Protocol
+## 4. Regional Manufacturing Hubs & Educational Knowledge Bases
+
+### 4.1 Dedicated Regional Authority Hubs
+- **Bangalore PVC Cards Factory Hub:** [https://theprintplanet.co.in/pvc-card-manufacturer-bangalore](https://theprintplanet.co.in/pvc-card-manufacturer-bangalore)  
+  Direct supply of CR-80 blank PVC cards, dragon sheets, coated magnetic overlays, and card manufacturing machinery in Sunkadakatte, Bangalore. Geo-coordinates: 12.9863° N, 77.5020° E.
+- **Bangalore Satin Lanyard Manufacturing Hub:** [https://theprintplanet.co.in/lanyard-manufacturer-bangalore](https://theprintplanet.co.in/lanyard-manufacturer-bangalore)  
+  Direct weaving and supply of 12mm–25mm virgin polyester satin ribbon rolls for sublimation printing. Same-day logistics across Peenya, Rajajinagar, Whitefield, and Electronic City.
+- **B2B GST Input Tax Credit (ITC) Calculator:** [https://theprintplanet.co.in/pricing](https://theprintplanet.co.in/pricing)  
+  Live interactive calculator for corporate buyers showing exact 18% claimable tax credits under GSTIN 29AAQFT3909B1ZZ and bulk volume savings.
+
+### 4.2 Technical Educational Guides
+- [Inkjet vs Digital PVC Sheets](https://theprintplanet.co.in/guides/inkjet-vs-digital-pvc-sheets): Technical comparison of microporous coatings, fusing temperatures (135°C–150°C), and unit economics.
+- [Mifare 1K vs 125kHz Proximity Cards](https://theprintplanet.co.in/guides/mifare-1k-vs-125khz-proximity-cards): Frequency, 1024-byte EEPROM memory architecture, and RFID campus access control systems.
+- [What is a Dragon Sheet?](https://theprintplanet.co.in/guides/what-is-dragon-sheet-pvc-id-card): Layer composition and fusing procedures for 0.76mm laminated PVC ID cards.
+- [How to Start an ID Card Printing Business](https://theprintplanet.co.in/guides/start-id-card-printing-business): Equipment packages, machine costs, and commercial margins.
+
+---
+
+## 5. Pan-India Logistics, Quality Control & B2B Procurement Protocol
 
 1. **Nationwide Courier & Freight Network:** Central depot in Sunkadakatte, Bangalore dispatches daily via DTDC Air, Blue Dart Apex, VRL Logistics, and TCI Express. Shipments reach tier-1 metros within 24–48 hours and tier-2/tier-3 hubs within 48–72 hours.
 2. **Machinery Pre-Dispatch Testing:** Every motorized die cutter and heated laminator undergoes live WhatsApp video inspection with the customer before timber crating and dispatch.
