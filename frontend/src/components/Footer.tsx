@@ -23,6 +23,8 @@ const SHOP_LINKS = [
 ];
 
 const COMPANY_LINKS = [
+  { href: "/pvc-card-manufacturer-bangalore", label: "PVC Cards Bangalore" },
+  { href: "/lanyard-manufacturer-bangalore", label: "Lanyards Bangalore" },
   { href: "/pricing", label: "Wholesale Tariff" },
   { href: "/corporate", label: "Bulk orders" },
   { href: "/guides", label: "Buyer guides" },

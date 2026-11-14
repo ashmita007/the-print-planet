@@ -30,12 +30,14 @@ SITEMAP_URL = f"https://{HOST}/sitemap.xml"
 # High-priority core URLs to guarantee instant indexation even if sitemap network is unreachable
 CORE_URLS = [
     f"https://{HOST}/",
+    f"https://{HOST}/pvc-card-manufacturer-bangalore",
+    f"https://{HOST}/lanyard-manufacturer-bangalore",
     f"https://{HOST}/products",
     f"https://{HOST}/categories",
     f"https://{HOST}/quote",
     f"https://{HOST}/corporate",
     f"https://{HOST}/categories/machines",
-    f"https://{HOST}/categories/white-satin-digital-lanyard-roll",
+    f"https://{HOST}/categories/digital-lanyard-white-roll",
     f"https://{HOST}/categories/semi-transparent-pvc-id-card-holder",
     f"https://{HOST}/categories/id-card-lanyard-hooks",
     f"https://{HOST}/categories/rfid-smart-cards-and-consumables",

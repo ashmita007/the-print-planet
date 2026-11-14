@@ -84,6 +84,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     })),
     {
+      url: `${SITE_URL}/pvc-card-manufacturer-bangalore`,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/lanyard-manufacturer-bangalore`,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${SITE_URL}/privacy-policy`,
       changeFrequency: 'yearly',
       priority: 0.3,

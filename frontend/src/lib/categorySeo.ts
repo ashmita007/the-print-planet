@@ -17,9 +17,9 @@ const DELIVERY = {
 export const CATEGORY_SEO: Record<string, CategorySeo> = {
   machines: {
     h1: "ID card and lanyard machines",
-    title: "ID Card Fusing Machine, PVC Card Cutter & Heat Press India",
+    title: "ID Card Fusing Machine, PVC Card Cutter Manufacturer Bangalore",
     description:
-      "ID card fusing machines, PVC card cutters (manual and motorized) and lanyard heat press machines from The Print Planet, Bengaluru. Live video demo before dispatch.",
+      "Direct factory supplier of ID card fusing machines, motorized PVC card die-cutters, and lanyard heat press machinery in Bangalore. Live WhatsApp video demo before dispatch.",
     lead: "Heavy-duty fusing laminators, motorized card cutters, hot foil stamping, and rotary lanyard press machinery.",
     about: [
       "A commercial ID card manufacturing line consists of two core units: a heated fusing laminator to bond multi-layer printed PVC sheets under pressure, and an industrial die-cutter to punch burr-free ISO CR-80 cards with standard 3.18mm rounded corners.",
@@ -104,9 +104,9 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
 
   "indian-satin-digital-lanyard-roll": {
     h1: "Satin lanyard rolls",
-    title: "Satin Lanyard Roll Wholesale Supplier India",
+    title: "Satin Lanyard Roll Wholesale Manufacturer Bangalore & India",
     description:
-      "12mm, 16mm, 20mm, 25mm virgin polyester satin lanyard ribbon rolls for sublimation heat transfer and screen printing from The Print Planet, Bengaluru. Factory prices.",
+      "Direct manufacturer of 12mm, 16mm, 20mm, 25mm virgin polyester satin lanyard rolls for sublimation heat-transfer printing in Bangalore. Bulk factory rates from ₹185/roll.",
     lead: "Ultra-white sublimation rolls and pre-dyed Indian satin ribbon rolls in 12mm, 16mm, 20mm, and 25mm widths.",
     about: [
       "White digital sublimation lanyard rolls feature a high-density, calendar-finished virgin continuous polyester weave that resists heat up to 220°C, ensuring sharp line definition and brilliant Pantone color reproduction with zero dye migration.",
@@ -140,9 +140,9 @@ export const CATEGORY_SEO: Record<string, CategorySeo> = {
 
   "pvc-id-card-consumable": {
     h1: "PVC ID card sheets (dragon sheets) and materials",
-    title: "PVC Card Sheets, Dragon Sheets & Overlay Film Supplier India",
+    title: "PVC Cards, Dragon Sheets & ID Card Materials Wholesale Bangalore",
     description:
-      "Inkjet PVC card sheets (dragon sheets), PVC core sheets, overlay films and lamination plates for ID card fusing, from The Print Planet, Bengaluru. Bulk packs.",
+      "Direct factory wholesale supplier of PVC cards, CR-80 blank card sheets, dragon sheets, magnetic overlays, and card fusing materials in Bangalore. 24–48h pan-India dispatch.",
     lead: "Inkjet and digital printable PVC core sheets, coated magnetic overlays, and mirror/frosted lamination plates.",
     about: [
       "A standard 0.76 mm (30 mil) laminated PVC ID card is engineered as a multi-layer composite: a printed PVC core sheet (typically 300 to 460 microns) sandwiched between two transparent protective coated overlay films (60 to 100 microns each), fused under heat and pressure.",

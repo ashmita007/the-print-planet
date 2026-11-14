@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     "msapplication-TileColor": "#0E2238",
   },
   verification: {
-    google: "OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg",
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "OnOlyPW4sLJfwVBxaGRnqOJE3vM8eLf5Gw58d-_nWmg",
     other: {
       "msvalidate.01": process.env.BING_SITE_VERIFICATION || "",
     },
