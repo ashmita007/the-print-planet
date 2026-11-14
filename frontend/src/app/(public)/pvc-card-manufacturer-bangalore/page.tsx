@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
+import PrintShopCalculator from "@/components/PrintShopCalculator";
 import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
@@ -375,6 +376,9 @@ export default function PvcCardManufacturerBangalorePage() {
             ))}
           </div>
         </section>
+
+        {/* Print Shop & Cyber Cafe Profit Calculator */}
+        <PrintShopCalculator />
 
         {/* Frequently Asked Questions */}
         <section className="space-y-6">

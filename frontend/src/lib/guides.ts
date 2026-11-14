@@ -456,6 +456,65 @@ export const GUIDES: Guide[] = [
     ],
     whatsappText: "Hi The Print Planet, I need artwork templates and wholesale material pricing for CR-80 cards and lanyards.",
   },
+  {
+    slug: "how-to-print-pvc-id-cards-epson-printer-settings",
+    title: "How to Print PVC ID Cards on Epson Printers: Settings Guide",
+    description:
+      "Complete guide to printing PVC ID cards and dragon sheets on Epson L8050, L18050, and L805. Paper type, driver settings, tray vs fusing, and resolution.",
+    h1: "How to Print PVC ID Cards on Epson Printers: Driver Settings & Paper Guide",
+    lead: "Whether printing on direct PVC card trays or A4 dragon sheets for lamination, these exact Epson driver settings prevent smudging, faded colors, and card misalignment.",
+    updated: "2026-11-14",
+    readMinutes: 6,
+    sections: [
+      {
+        heading: "Two Methods: Direct PVC Card Tray vs A4 Fusing Dragon Sheets",
+        paragraphs: [
+          "Commercial print shops and cyber cafes print PVC cards using one of two methods on Epson 6-colour EcoTank printers (such as Epson L8050, L18050, and L805):",
+          "Method 1: Direct PVC Card Tray Printing. You insert a dedicated PVC card tray holding two pre-cut inkjet-coated PVC cards directly into the printer's CD/DVD tray slot.",
+          "Method 2: Multi-Layer A4 Dragon Sheet Fusing. You print a 10-up card layout onto an A4 inkjet PVC core sheet, laminate it with protective overlay film in a heated fusing machine (140°C), and punch out finished cards with a die-cutter. This method produces cards that are 100% waterproof, scratch-proof, and identical to bank ATM cards.",
+        ],
+      },
+      {
+        heading: "Recommended Epson Driver Settings for Dragon Sheets",
+        paragraphs: [
+          "When printing on A4 inkjet dragon sheets (printable PVC core), configure your Epson printer driver as follows:",
+        ],
+        bullets: [
+          "Paper Type: Select 'Epson Ultra Glossy' or 'Epson Premium Glossy'. Do not select 'Plain Paper' (which deposits too little ink) or 'Matte' (which oversaturates and causes ink bleeding).",
+          "Print Quality: Set to 'High' or 'Best Photo' (Photo RPM 5760 × 1440 DPI).",
+          "Mirror Image: Leave OFF unless your specific brand of reverse-print overlay instructs mirror printing. (The Print Planet dragon sheets print right-reading on the coated side).",
+          "High Speed / Bi-Directional: Turn OFF 'High Speed' in More Options. Unidirectional printing prevents micro-banding and ensures crisp micro-text on employee ID badges.",
+          "Color Correction: Select 'Color Controls' → 'Adobe RGB' or 'Epson Vivid' with Gamma 2.2 for photographic skin tone reproduction.",
+        ],
+      },
+      {
+        heading: "Drying Time and Fusing Temperature Protocol",
+        paragraphs: [
+          "After printing on the dragon sheet, allow the ink to dry completely for 10 to 15 minutes in a low-humidity room. Rushing the sheet into the fusing laminator while ink moisture remains will cause micro-bubbles and cloudy patches under the overlay.",
+          "Set the heated fusing laminator to 135°C to 148°C. Maintain pressure for 12 to 14 minutes, then transfer to the water-cooled platen under continuous pressure down to 40°C to guarantee mirror-flat finished cards.",
+        ],
+      },
+      {
+        heading: "Epson Direct PVC Card Tray Printing Settings",
+        paragraphs: [
+          "If using a 2-card PVC tray on Epson L8050 or L805:",
+        ],
+        bullets: [
+          "Document Size: Select 'A4' or custom tray layout matching your PVC tray software.",
+          "Paper Source: Select 'CD/DVD Tray'.",
+          "Media Type: 'CD/DVD Premium Surface' or 'Epson Matte'.",
+          "Card Surface Requirement: Only pre-cut PVC cards with a factory-applied inkjet receiver coating can be used. Thermal or plain blank plastic cards will not hold inkjet ink and will smudge immediately.",
+        ],
+      },
+    ],
+    related: [
+      { href: "/categories/pvc-id-card-inkjet-fusing-sheets", label: "A4 inkjet dragon sheets (50 sets/box)" },
+      { href: "/categories/motorized-pvc-id-card-cutting-machine-for-id-card", label: "Motorized PVC card die cutters" },
+      { href: "/categories/machines", label: "ID card fusing laminator machines" },
+      { href: "/pvc-card-manufacturer-bangalore", label: "Bangalore PVC card manufacturing facility" },
+    ],
+    whatsappText: "Hi The Print Planet, I need wholesale pricing for inkjet dragon sheets and ID card printing consumables.",
+  },
 ];
 
 export const getGuide = (slug: string) => GUIDES.find((g) => g.slug === slug);
