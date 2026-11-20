@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import { submitEnquiry } from "@/lib/api";
+import { trackLead } from "@/components/LeadTracker";
 import { useCart } from "@/lib/cart";
 
 function QuoteFormContent() {
@@ -109,6 +110,7 @@ function QuoteFormContent() {
     setIsSubmitting(false);
 
     if (res.success) {
+      trackLead("form", { form: "/quote" });
       setIsSubmitted(true);
       if (typeof window !== "undefined") {
         const waText = encodeURIComponent(

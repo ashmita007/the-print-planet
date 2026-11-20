@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle, AlertCircle, Paperclip, UploadCloud, FileText } from "lucide-react";
 import { submitEnquiry } from "@/lib/api";
+import { trackLead } from "@/components/LeadTracker";
 
 export default function ContactFormClient() {
   const router = useRouter();
@@ -57,6 +58,7 @@ export default function ContactFormClient() {
     setIsSubmitting(false);
 
     if (res.success) {
+      trackLead("form", { form: "/contact" });
       if (typeof window !== "undefined") {
         const waText = encodeURIComponent(
           `🔔 *New Website Enquiry - The Print Planet*\n\n` +

@@ -8,10 +8,11 @@ declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
     clarity?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
-/** Sends one lead event to GA4 (as the recommended `generate_lead`) and Clarity. Safe when neither is loaded. */
+/** Sends one lead event to GA4 (`generate_lead`), Clarity and the Meta Pixel (`Lead` for forms, `Contact` otherwise). Safe when none is loaded. */
 export function trackLead(method: LeadMethod, detail: Record<string, string | number | undefined> = {}) {
   if (typeof window === "undefined") return;
   const params = {
@@ -25,6 +26,7 @@ export function trackLead(method: LeadMethod, detail: Record<string, string | nu
     window.gtag?.("event", "generate_lead", params);
     window.gtag?.("event", `lead_${method}`, params);
     window.clarity?.("event", `lead_${method}`);
+    window.fbq?.("track", method === "form" ? "Lead" : "Contact", { content_name: params.page_path, lead_method: method });
   } catch {
     /* analytics must never break the page */
   }
