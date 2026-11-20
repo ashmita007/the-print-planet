@@ -20,7 +20,8 @@ class Enquiry(models.Model):
     )
     full_name = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255, blank=True, default='')
-    email = models.EmailField()
+    # Optional: the quick callback popup collects only a name and mobile number.
+    email = models.EmailField(blank=True, default='')
     phone = models.CharField(max_length=50)
     product = models.ForeignKey(
         'catalog.Product',

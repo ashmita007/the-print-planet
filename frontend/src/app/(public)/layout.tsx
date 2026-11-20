@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileBottomBar from "@/components/MobileBottomBar";
+import LeadPopup from "@/components/LeadPopup";
 import RouteWipe from "@/components/animations/RouteWipe";
 import SmoothScroll from "@/components/animations/SmoothScroll";
 import { getCategories, getSiteSettings } from "@/lib/api";
@@ -25,6 +26,7 @@ export default async function PublicLayout({
       <main className="flex-1 pb-16 sm:pb-0">{children}</main>
       <Footer categories={categories} settings={settings} />
       <MobileBottomBar settings={settings} />
+      <LeadPopup />
       <RouteWipe />
       <SmoothScroll />
     </div>

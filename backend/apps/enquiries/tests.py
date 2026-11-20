@@ -49,6 +49,27 @@ class EnquiryApiTests(TestCase):
         response = self.client.post('/api/v1/enquiries/', payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_callback_enquiry_without_email(self):
+        payload = {
+            'full_name': 'Suresh',
+            'phone': '+91 98450 12345',
+            'message': 'Callback request from website popup',
+            'source_page': '/products/m_chip',
+        }
+        response = self.client.post('/api/v1/enquiries/', payload)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Enquiry.objects.get().email, '')
+
+    def test_enquiry_rejects_invalid_email(self):
+        payload = {
+            'full_name': 'Test User',
+            'email': 'not-an-email',
+            'phone': '+91 98450 12345',
+            'message': 'Quote please',
+        }
+        response = self.client.post('/api/v1/enquiries/', payload)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_unauthorized_user_cannot_view_enquiries(self):
         response = self.client.get('/api/v1/owner/enquiries/')
         self.assertIn(response.status_code, [status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN])

@@ -31,6 +31,7 @@ class EnquiryCreateSerializer(serializers.ModelSerializer):
             'lead_source', 'landing_page', 'referrer',
         ]
         read_only_fields = ['id']
+        extra_kwargs = {'email': {'required': False, 'allow_blank': True}}
 
     def _clip(self, value, limit):
         # Tracking values come from the browser: keep them short, single-line text.
@@ -52,7 +53,9 @@ class EnquiryCreateSerializer(serializers.ModelSerializer):
         return cleaned
 
     def validate_email(self, value):
-        cleaned = value.strip().lower()
+        cleaned = (value or '').strip().lower()
+        if not cleaned:
+            return ''
         if not re.match(r'^[^@]+@[^@]+\.[^@]+$', cleaned):
             raise serializers.ValidationError("Please provide a valid email address.")
         return cleaned
