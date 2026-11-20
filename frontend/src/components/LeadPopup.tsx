@@ -3,19 +3,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X, Phone, CheckCircle } from "lucide-react";
+import { Phone, CheckCircle } from "lucide-react";
 import { submitEnquiry } from "@/lib/api";
 import { trackLead } from "@/components/LeadTracker";
 
 /**
- * Quick callback form: asks for a name and mobile number after a visitor has
- * spent DELAY_MS on a page. It can be closed, but returns on a later page
- * (up to MAX_SHOWS per visit) until the visitor sends it once.
+ * Quick callback form: after a visitor has spent DELAY_MS on a page it asks for
+ * a name and mobile number. The owner wants it mandatory: it cannot be closed
+ * and appears on every page until the visitor sends it once.
  */
 const DELAY_MS = 12_000;
-const MAX_SHOWS = 3;
 const DONE_KEY = "tpp_callback_done";
-const SHOWS_KEY = "tpp_callback_shows";
 // Pages that already are a contact form, or where a popup would get in the way.
 const SKIP = [/^\/quote/, /^\/contact/, /^\/enquiry/, /^\/login/, /^\/register/, /^\/account/, /^\/cart/, /^\/checkout/, /^\/privacy-policy/, /^\/terms/];
 
@@ -43,10 +41,7 @@ export default function LeadPopup() {
   useEffect(() => {
     if (SKIP.some((re) => re.test(pathname))) return;
     if (storage("local")?.getItem(DONE_KEY)) return;
-    const shows = Number(storage("session")?.getItem(SHOWS_KEY) || 0);
-    if (shows >= MAX_SHOWS) return;
     const timer = window.setTimeout(() => {
-      storage("session")?.setItem(SHOWS_KEY, String(shows + 1));
       setError("");
       setOpen(true);
     }, DELAY_MS);
@@ -56,12 +51,15 @@ export default function LeadPopup() {
     };
   }, [pathname]);
 
+  // Focus the form and stop the page behind it from scrolling while it is open.
   useEffect(() => {
     if (!open) return;
     nameRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [open]);
 
   if (!open) return null;
@@ -98,15 +96,6 @@ export default function LeadPopup() {
         aria-labelledby="callback-title"
         className="relative w-full sm:max-w-sm bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl border border-[#DFE6EE] p-5 pb-6"
       >
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          aria-label="Close"
-          className="absolute right-3 top-3 p-1.5 rounded-full text-[#353C45] hover:bg-[#EDF1F6] focus-visible:outline-2 focus-visible:outline-[#F26B1D]"
-        >
-          <X className="w-4 h-4" />
-        </button>
-
         {sent ? (
           <div className="text-center py-6 space-y-2" role="status">
             <CheckCircle className="w-10 h-10 mx-auto text-[#217A4B]" />
@@ -115,7 +104,7 @@ export default function LeadPopup() {
           </div>
         ) : (
           <form onSubmit={onSubmit} noValidate className="space-y-3">
-            <div className="pr-6">
+            <div>
               <h2 id="callback-title" className="text-lg font-extrabold text-[#121418] leading-snug">
                 Get wholesale prices on WhatsApp
               </h2>

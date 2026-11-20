@@ -22,7 +22,7 @@ import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "PVC Card Manufacturer in Bangalore | Wholesale ID Cards & Materials",
+  title: "Wholesale PVC Cards in Bangalore",
   description:
     "Direct factory manufacturer and wholesale distributor of PVC ID cards, CR-80 blank cards, RFID cards, dragon sheets, and fusing machinery in Sunkadakatte, Bangalore. Pan-India dispatch with GST invoice.",
   alternates: {

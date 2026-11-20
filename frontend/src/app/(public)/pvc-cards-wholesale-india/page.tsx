@@ -24,7 +24,7 @@ import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "PVC Cards Wholesale India | B2B Manufacturer & Raw Material Supplier",
+  title: "PVC Cards Wholesale India | B2B Supplier",
   description:
     "Direct factory wholesale supplier of PVC cards, CR-80 blank cards, A4 dragon sheets, RFID prelams, and ID card fusing machines across India. 24–48h dispatch to Mumbai, Delhi, Chennai, Hyderabad, and Kolkata with 100% IGST invoice.",
   alternates: {

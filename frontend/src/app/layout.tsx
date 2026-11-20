@@ -50,7 +50,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "PVC Cards Manufacturer & Wholesale Supplier Bangalore | The Print Planet",
+    default: "PVC Cards Wholesale Supplier Bangalore | The Print Planet",
     template: "%s | The Print Planet",
   },
   description:

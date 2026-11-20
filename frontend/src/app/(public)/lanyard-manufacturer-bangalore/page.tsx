@@ -21,7 +21,7 @@ import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "Lanyard Manufacturer in Bangalore | Wholesale Satin Lanyard Rolls",
+  title: "Satin Lanyard Rolls Wholesale Bangalore",
   description:
     "Direct manufacturer of virgin polyester satin lanyard rolls (12mm–25mm), sublimation printed lanyards, and ID attachments in Bangalore. Sunkadakatte factory dispatch with 100% GST invoice.",
   alternates: {

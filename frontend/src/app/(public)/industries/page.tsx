@@ -21,7 +21,7 @@ import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "ID Cards & Lanyards by Industry | Corporate, School & Hospital Badges",
+  title: "ID Cards & Lanyards by Industry",
   description:
     "Factory-direct ID card systems, custom satin lanyards, RFID access cards, and badge holders tailored for IT parks, schools, universities, hospitals, and industrial manufacturing plants in Bangalore and across India.",
   alternates: { canonical: `${SITE_URL}/industries` },
