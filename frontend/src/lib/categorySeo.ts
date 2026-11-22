@@ -507,7 +507,6 @@ const MORE_CATEGORY_SEO: Record<string, CategorySeo> = {
     about: [
       "Sticker pasting holders are used for low-cost school and event ID cards. The card is printed on self-adhesive sticker paper and pasted onto the holder, so no fusing machine is needed.",
       "Models include HS (horizontal), VS (vertical) and VS-L (single side). Listed prices run from ₹2.48 to ₹2.81 per piece, with minimum orders of 1,500 to 1,800 pieces.",
-      "Pair them with gumming rolls for the adhesive sticker sheets.",
     ],
     questions: [
       {

@@ -27,7 +27,7 @@ POPULAR = (
     ('ID card holders', '/categories/id-card-holder'),
     ('RFID cards', '/categories/rfid-consumables'),
     ('Machines', '/categories/machines'),
-    ('Sample kit', '/categories/sample-kit'),
+    ('Lanyards', '/categories/lanyards'),
 )
 
 

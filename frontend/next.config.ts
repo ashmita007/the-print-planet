@@ -88,12 +88,30 @@ const nextConfig: NextConfig = {
         destination: "/categories/plastic-lanyard-hook-clip-accessories",
         permanent: true,
       },
-      { source: "/categories/gaming-roll", destination: "/categories/gumming-roll", permanent: true },
       {
         source: "/products/clamp-feeting-machine-single-side",
         destination: "/products/clamp-fitting-machine-single-side",
         permanent: true,
       },
+      // Products and categories outside the owner's product sheet, removed in catalog migration 0007.
+      ...[
+        "shrikanth",
+        "m_chip",
+        "pc",
+        "hiph",
+        "pp-r",
+        "gpps",
+        "yarn-75",
+        "yarn-150",
+        "yarn-450",
+        "sample-kit-holder",
+        "sensui-12-inch-x-50-mitter-roll",
+        "solvent-gumming-roll-12-x-50-mitter-inch",
+        "transparent-crystal-liquid-for-id-cards",
+      ].map((slug) => ({ source: `/products/${slug}`, destination: "/products", permanent: true })),
+      ...["gaming-roll", "gumming-roll", "sample-kit", "gumming-roll-for-sticker-card", "transparent-crystal-liquid-for-id-cards"].map(
+        (slug) => ({ source: `/categories/${slug}`, destination: "/categories", permanent: true }),
+      ),
     ];
   },
 };
