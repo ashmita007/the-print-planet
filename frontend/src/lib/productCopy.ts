@@ -14,6 +14,8 @@ const BOILERPLATE = new RegExp(
     "manufactured specifically for professional ID card systems",
     "Professional wholesale catalogue item",
     "High performance production grade equipment",
+    // Product-sheet import (Nov 2026): names only, one shared closing line.
+    "Share the quantity, size and print or branding details to get a quote",
   ].join("|"),
   "i"
 );
@@ -22,12 +24,69 @@ export function isBoilerplate(text?: string | null) {
   return !text || BOILERPLATE.test(text);
 }
 
-type Family = {
-  test: RegExp;
+type Copy = {
   use: string;
   buyer: string;
   /** One practical thing to confirm before ordering this kind of product. */
   check: string;
+  /** Printing and finishing jobs: titled and answered as a service, not stock. */
+  service?: { title: string };
+};
+
+type Family = Copy & { test: RegExp };
+
+// Ranges added from the owner's product sheet. Their names overlap older families
+// ("Business Cards" would read as PVC card sheets, "Foiling" as a stamping machine),
+// so these categories pick their copy by category instead of by name.
+const CATEGORY_FAMILIES: Record<string, Copy> = {
+  "pvc-and-smart-cards": {
+    use: "a PVC card supplied blank or printed for ID, access, membership, loyalty, gift or warranty use",
+    buyer: "offices, schools, clubs, retailers and ID card printers",
+    check: "Tell us the card type (plain, printed, RFID or NFC), the quantity and whether you need numbering, a QR code or a photo on each card.",
+  },
+  "lens-packaging-products": {
+    use: "packaging that holds and protects spectacle lenses in the shop, the lab and in transit",
+    buyer: "optical stores, lens labs and opticians",
+    check: "Share the lens size you pack, the quantity, and your shop name or logo if you want them printed.",
+  },
+  "lens-cleaning-solutions": {
+    use: "a lens care item for cleaning spectacles, sunglasses and other optical lenses",
+    buyer: "optical stores, opticians and companies buying branded giveaways",
+    check: "Tell us the quantity, the pack size you want and whether it should carry your brand.",
+  },
+  "id-card-printers-and-consumables": {
+    use: "part of a desktop ID card printing setup, from the printer itself to ribbons, overlays, software and card encoding",
+    buyer: "offices, schools, institutions and card printing shops",
+    check: "Tell us how many cards you print, single or dual sided, and whether the cards carry RFID or a magnetic stripe, so the printer, ribbon and cards match.",
+  },
+  lanyards: {
+    use: "a finished neck lanyard for carrying an ID card, badge or key",
+    buyer: "offices, schools, conferences and event organisers",
+    check: "Share the width, colour, attachment (hook, clip, buckle or badge reel), quantity and your logo artwork if it should be printed.",
+  },
+  "id-card-accessories": {
+    use: "an accessory for wearing, attaching or protecting an ID card",
+    buyer: "offices, schools and event organisers, and ID card printers who supply them",
+    check: "Tell us the quantity and the card or lanyard it has to fit.",
+  },
+  "offset-printing": {
+    use: "an offset printing job, suited to larger quantities where the cost per piece drops as the run grows",
+    buyer: "businesses, schools, publishers and brands",
+    check: "Send the size, paper, quantity, number of colours and your print-ready artwork (PDF) for a quote.",
+    service: { title: "Offset Printing Bangalore" },
+  },
+  "digital-printing": {
+    use: "a digital printing job, suited to short runs, quick turnaround and personalised prints",
+    buyer: "businesses, event organisers and anyone who needs small quantities",
+    check: "Send the size, paper, quantity and your print-ready artwork (PDF) for a quote.",
+    service: { title: "Digital Printing Bangalore" },
+  },
+  "finishing-and-conversion": {
+    use: "a print finishing step done after printing, before the job is packed and delivered",
+    buyer: "businesses and print buyers who want a finished product, not just printed sheets",
+    check: "Tell us what is being finished (cards, brochures, boxes, books), the quantity and the size.",
+    service: { title: "Service in Bangalore" },
+  },
 };
 
 // Ordered: the first match wins, so specific families come before broad ones.
@@ -169,8 +228,10 @@ export function isMaterialCode(name?: string | null) {
   return !!name && MATERIAL_CODE.test(name.trim());
 }
 
-function familyFor(product: Product): Family | undefined {
+function familyFor(product: Product): Copy | undefined {
   if (isMaterialCode(product.name)) return undefined;
+  const byCategory = CATEGORY_FAMILIES[product.category?.slug || ""];
+  if (byCategory) return byCategory;
   // The product's own name is the stronger signal; the category name only breaks ties.
   return (
     FAMILIES.find((f) => f.test.test(product.name)) ||
@@ -321,11 +382,29 @@ export function productFaqs(product: Product): Faq[] {
     });
   }
   if (family) faqs.push({ q: `What should I check before ordering ${name}?`, a: family.check });
-  faqs.push({
-    q: `Do you deliver ${name} outside Bengaluru?`,
-    a: "Yes. Orders ship from Sunkadakatte, Bengaluru to anywhere in India, with a GST invoice.",
-  });
+  faqs.push(
+    family?.service
+      ? {
+          q: `Do you take ${name} orders from outside Bengaluru?`,
+          a: "Yes. Send your artwork on WhatsApp or by email, and the finished job ships from Sunkadakatte, Bengaluru to anywhere in India, with a GST invoice.",
+        }
+      : {
+          q: `Do you deliver ${name} outside Bengaluru?`,
+          a: "Yes. Orders ship from Sunkadakatte, Bengaluru to anywhere in India, with a GST invoice.",
+        }
+  );
   return faqs;
+}
+
+/** Page title before branding: services read as a printing service, stock items as a wholesale price. */
+export function productTitleBase(product: Product) {
+  const name = formatProductName(product.name);
+  const service = familyFor(product)?.service;
+  const options = service
+    ? [`${name} ${service.title}`, `${name} Printing Bangalore`]
+    : [`${name} Wholesale Price`, `${name} Price`];
+  // Google shows about 60 characters: keep the longest wording that still fits.
+  return options.find((t) => t.length <= 60) || name;
 }
 
 /** Meta description: specific to the product, under ~155 characters after snippet(). */

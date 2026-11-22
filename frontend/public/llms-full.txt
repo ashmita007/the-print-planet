@@ -60,6 +60,14 @@ The Print Planet (operating online at https://theprintplanet.co.in) is a Bengalu
 
 ---
 
+### 2.6 Product Ranges Quoted Per Order
+Prices for these ranges are quoted on request by quantity and specification.
+- [PVC and Smart Cards](https://theprintplanet.co.in/categories/pvc-and-smart-cards): blank and pre-printed PVC cards, RFID, NFC and proximity cards, ID, membership, loyalty, gift, warranty, QR-coded and serial-numbered cards.
+- [ID Card Printers and Consumables](https://theprintplanet.co.in/categories/id-card-printers-and-consumables): direct-to-card and retransfer printers, ribbons, overlays, laminators, encoders, card readers, software, installation and support.
+- [Lanyards](https://theprintplanet.co.in/categories/lanyards) and [ID Card Accessories](https://theprintplanet.co.in/categories/id-card-accessories): printed and plain lanyards, sleeves, clips, hooks, reels and straps.
+- [Lens Packaging Products](https://theprintplanet.co.in/categories/lens-packaging-products) and [Lens Cleaning Solutions](https://theprintplanet.co.in/categories/lens-cleaning-solutions): lens envelopes, optical bags, pouches, wipes, sprays, microfiber cloths and cleaning kits for optical stores.
+- [Commercial Printing](https://theprintplanet.co.in/categories/commercial-printing-solutions): offset printing, digital printing and finishing (lamination, UV, foiling, die-cutting, binding).
+
 ## 3. Machine-Readable B2B Wholesale Pricing Summary
 
 *For complete quantity breaks and real-time updates, consult [https://theprintplanet.co.in/pricing.md](https://theprintplanet.co.in/pricing.md).*

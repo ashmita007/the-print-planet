@@ -7,7 +7,7 @@ import ProductDetailClient from "@/components/ProductDetailClient";
 import { formatCategoryHeading, formatCategoryName, formatProductName } from "@/lib/formatters";
 import { getProductBySlug } from "@/lib/api";
 import { brandedTitle, snippet } from "@/lib/seo";
-import { isBoilerplate, isMaterialCode, productFaqs, productMetaDescription, productSummary } from "@/lib/productCopy";
+import { isBoilerplate, isMaterialCode, productFaqs, productMetaDescription, productSummary, productTitleBase } from "@/lib/productCopy";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -36,11 +36,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
-  const name = formatProductName(product.name);
-  // Google shows about 60 characters: add the price wording only while the title still fits.
-  const fallbackTitle =
-    `${name} Wholesale Price`.length <= 60 ? `${name} Wholesale Price` : `${name} Price`.length <= 60 ? `${name} Price` : name;
-  const title = brandedTitle(product.seo_title || fallbackTitle);
+  const title = brandedTitle(product.seo_title || productTitleBase(product));
   const stored = product.seo_description || "";
   const description = snippet(
     stored.length >= 110 && !isBoilerplate(stored) && !/^Buy .+ wholesale factory direct/i.test(stored)

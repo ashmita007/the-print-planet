@@ -35,6 +35,14 @@ The Print Planet is a Bengaluru-based B2B direct manufacturer and wholesale dist
 - [ID Card Machinery](https://theprintplanet.co.in/categories/machines): Motorized electric CR-80 PVC card die-cutters (up to 1,200 cards/hour), dual-plate automatic fusing laminators for digital inkjet sheets, and heavy-duty desktop slot punches.
 - [RFID & Smart Cards](https://theprintplanet.co.in/categories/rfid-consumables): High-frequency 13.56MHz Mifare 1K Classic ISO contactless cards and 125kHz EM-Marin proximity cards with high-gloss printable PVC surface.
 
+- [PVC and Smart Cards](https://theprintplanet.co.in/categories/pvc-and-smart-cards): Blank and pre-printed PVC cards, RFID, NFC and proximity cards, employee, student, membership, loyalty, gift and warranty cards, QR-coded and serial-numbered cards.
+- [ID Card Printers and Consumables](https://theprintplanet.co.in/categories/id-card-printers-and-consumables): Direct-to-card and retransfer ID card printers, ribbons, blank cards, holographic overlays, laminators, encoders, USB card readers, design software, installation and support.
+- [Lanyards](https://theprintplanet.co.in/categories/lanyards): Polyester, nylon, satin, woven and eco-friendly lanyards, printed or plain, with hook, clip, buckle, breakaway and badge reel options.
+- [ID Card Accessories](https://theprintplanet.co.in/categories/id-card-accessories): ID card sleeves, badge clips, metal, snap and swivel hooks, card reels, neck and wrist straps.
+- [Lens Packaging Products](https://theprintplanet.co.in/categories/lens-packaging-products): M-fold lens envelopes (plain, printed, glassine lined), optical bags, lens pouches and biodegradable ziplock covers for optical stores.
+- [Lens Cleaning Solutions](https://theprintplanet.co.in/categories/lens-cleaning-solutions): Pre-moistened lens wipes, lens cleaning and anti-fog sprays, custom-branded microfiber cloths, optical tissues and cleaning kits.
+- [Commercial Printing](https://theprintplanet.co.in/categories/commercial-printing-solutions): Offset and digital printing for brochures, business cards, stationery, packaging, labels and event material, plus lamination, spot UV, foiling, die-cutting and binding.
+
 ## Buyer Guides & Technical Documentation
 - [Inkjet vs Digital PVC Sheets](https://theprintplanet.co.in/guides/inkjet-vs-digital-pvc-sheets): Technical comparison of microporous coatings, fusing temperatures (135°C–150°C), and unit economics.
 - [Mifare 1K vs 125kHz Proximity Cards](https://theprintplanet.co.in/guides/mifare-1k-vs-125khz-proximity-cards): RFID frequency (13.56MHz vs 125kHz), 1024-byte EEPROM memory architecture, and campus security applications.
