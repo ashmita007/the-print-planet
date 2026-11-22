@@ -24,6 +24,7 @@ import {
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { clientGetBulkOrderDetail, clientPostBulkOrderMessage, getClientAuthHeaders } from "@/lib/api";
 import AttachmentLink from "@/components/orders/AttachmentLink";
+import PayQuoteButton from "@/components/orders/PayQuoteButton";
 import { BulkOrder, BulkOrderMessage } from "@/lib/types";
 
 export default function OrderDetailPage() {
@@ -150,7 +151,15 @@ export default function OrderDetailPage() {
                 <span className="text-lg font-extrabold text-[#2ECC71]">
                   ₹{Number(order.quoted_amount).toLocaleString("en-IN")}
                 </span>
+                {order.is_paid && (
+                  <span className="mt-0.5 flex items-center justify-end gap-1 text-[11px] font-bold text-emerald-700">
+                    <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Paid ₹{Number(order.paid_amount).toLocaleString("en-IN")}
+                  </span>
+                )}
               </div>
+            )}
+            {order.can_pay_online && order.quoted_amount && (
+              <PayQuoteButton orderNumber={order.order_number} amount={Number(order.quoted_amount)} onPaid={fetchDetail} />
             )}
             {order.tracking_consignment_number && (
               <div className="bg-[#E8F8F5] border border-[#A3E4D7] p-2.5 rounded-md text-xs">

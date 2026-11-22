@@ -1,6 +1,7 @@
 import os
 import re
 from rest_framework import serializers
+from . import razorpay
 from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive, UserCheckedProduct
 from apps.catalog.serializers import ProductListSerializer
 
@@ -83,6 +84,8 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
     status_label = serializers.CharField(source='get_status_display', read_only=True)
     organization_type_label = serializers.CharField(source='get_organization_type_display', read_only=True)
     attachment = serializers.SerializerMethodField()
+    is_paid = serializers.BooleanField(read_only=True)
+    can_pay_online = serializers.SerializerMethodField()
 
     class Meta:
         model = BulkOrder
@@ -94,15 +97,26 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
             'estimated_quantity', 'specifications', 'requirements', 'attachment',
             'attachment_url', 'status', 'status_label', 'quoted_amount', 'quote_notes',
             'tracking_consignment_number', 'tracking_courier_partner',
+            'is_paid', 'paid_amount', 'paid_at', 'razorpay_payment_id', 'can_pay_online',
             'messages', 'created_at', 'updated_at'
         ]
         read_only_fields = [
             'id', 'order_number', 'user', 'attachment', 'attachment_url', 'messages',
+            'paid_amount', 'paid_at', 'razorpay_payment_id',
             'created_at', 'updated_at',
         ]
 
     def get_attachment(self, obj):
         return obj.attachment_url or None if obj.attachment else None
+
+    def get_can_pay_online(self, obj):
+        return (razorpay.is_configured() and not obj.is_paid and obj.status != 'cancelled'
+                and obj.quote_paise() is not None and not obj.payment_under_review)
+
+    def validate_quoted_amount(self, value):
+        if self.instance and self.instance.is_paid and value != self.instance.quoted_amount:
+            raise serializers.ValidationError('This quote has already been paid online and cannot be changed.')
+        return value
 
 
 class UserCheckedProductSerializer(serializers.ModelSerializer):
@@ -125,7 +139,7 @@ class BulkOrderListSerializer(serializers.ModelSerializer):
             'organization_name', 'contact_person', 'email', 'phone', 'city',
             'category_type', 'estimated_quantity', 'status', 'status_label',
             'quoted_amount', 'tracking_consignment_number', 'tracking_courier_partner',
-            'messages_count', 'created_at', 'updated_at'
+            'is_paid', 'paid_amount', 'messages_count', 'created_at', 'updated_at'
         ]
 
     def get_messages_count(self, obj):

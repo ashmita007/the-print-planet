@@ -1,4 +1,5 @@
 import random
+from decimal import Decimal
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
@@ -77,6 +78,11 @@ class BulkOrder(models.Model):
     tracking_consignment_number = models.CharField(max_length=100, blank=True, default='')
     tracking_courier_partner = models.CharField(max_length=100, blank=True, default='')
 
+    # Set when an online payment (see QuotePayment) settles the current quote.
+    razorpay_payment_id = models.CharField(max_length=64, blank=True, default='')
+    paid_amount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -88,6 +94,22 @@ class BulkOrder(models.Model):
     def __str__(self):
         return f"{self.order_number} — {self.organization_name} ({self.get_organization_type_display()})"
 
+    @property
+    def is_paid(self):
+        return self.paid_at is not None
+
+    @property
+    def payment_under_review(self):
+        """An online payment arrived that did not settle the quote; the owner must resolve it."""
+        return not self.is_paid and self.quote_payments.filter(captured_at__isnull=False).exists()
+
+    def quote_paise(self):
+        """The quote in paise, or None when there is nothing to pay."""
+        if self.quoted_amount is None:
+            return None
+        amount = Decimal(str(self.quoted_amount))
+        return int((amount * 100).to_integral_value()) if amount > 0 else None
+
     def save(self, *args, **kwargs):
         if not self.order_number:
             year = datetime.now().year
@@ -98,6 +120,26 @@ class BulkOrder(models.Model):
                 rand_suffix = random.randint(1000, 9999)
                 self.order_number = f"PP-{prefix}-{year}-{rand_suffix}"
         super().save(*args, **kwargs)
+
+
+class QuotePayment(models.Model):
+    """
+    One Razorpay order opened to pay a bulk order's quote. Rows are never overwritten, so a
+    payment Razorpay reports can always be matched to its bulk order, even if the quote
+    changed or the customer opened checkout twice.
+    """
+    order = models.ForeignKey(BulkOrder, on_delete=models.CASCADE, related_name='quote_payments')
+    razorpay_order_id = models.CharField(max_length=64, unique=True)
+    amount_paise = models.PositiveBigIntegerField()
+    razorpay_payment_id = models.CharField(max_length=64, blank=True, default='')
+    captured_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.razorpay_order_id} for {self.order.order_number} ({self.amount_paise / 100:.2f} INR)"
 
 
 class BulkOrderMessage(models.Model):

@@ -184,6 +184,11 @@ export interface BulkOrder {
   quote_notes?: string;
   tracking_consignment_number?: string;
   tracking_courier_partner?: string;
+  is_paid?: boolean;
+  paid_amount?: number | string | null;
+  paid_at?: string | null;
+  razorpay_payment_id?: string;
+  can_pay_online?: boolean;
   messages?: BulkOrderMessage[];
   messages_count?: number;
   created_at: string;

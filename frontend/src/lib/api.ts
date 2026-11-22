@@ -1169,6 +1169,50 @@ export async function clientPostBulkOrderMessage(orderNumber: string, message: s
   }
 }
 
+export interface QuoteCheckout {
+  key_id: string;
+  razorpay_order_id: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  prefill: { name: string; email: string; contact: string };
+}
+
+/** Starts online payment of the order's quote; the amount is set by the server. */
+export async function clientStartQuotePayment(orderNumber: string): Promise<{ checkout?: QuoteCheckout; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${encodeURIComponent(orderNumber)}/pay/`, {
+      method: 'POST',
+      headers: getClientAuthHeaders(),
+    });
+    const data = await res.json();
+    if (!res.ok) return { error: data.error || 'Could not start the payment.' };
+    return { checkout: data };
+  } catch {
+    return { error: 'Could not reach the server. Please try again.' };
+  }
+}
+
+export async function clientVerifyQuotePayment(
+  orderNumber: string,
+  result: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string },
+): Promise<{ paid: boolean; error?: string }> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/${encodeURIComponent(orderNumber)}/pay/verify/`, {
+      method: 'POST',
+      headers: { ...getClientAuthHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(result),
+    });
+    const data = await res.json();
+    if (!res.ok) return { paid: false, error: data.error || 'Payment could not be verified.' };
+    if (!data.paid) return { paid: false, error: 'Payment received. It does not match the current quote, so our team will review it and contact you.' };
+    return { paid: true };
+  } catch {
+    return { paid: false, error: 'Could not confirm the payment. If money was taken it will be confirmed automatically.' };
+  }
+}
+
 export async function clientLogout(): Promise<void> {
   try {
     const headers = getClientAuthHeaders();
