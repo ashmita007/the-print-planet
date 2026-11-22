@@ -8,6 +8,9 @@ from .views import (
     ClientBulkOrderPayView,
     ClientBulkOrderPayVerifyView,
     RazorpayWebhookView,
+    OwnerPaymentSettingsView,
+    OwnerPaymentSettingsTestView,
+    OwnerPaymentsListView,
     BulkOrderAttachmentDownloadView,
     BulkOrderMessageAttachmentDownloadView,
     TrackCheckedProductView,
@@ -37,5 +40,8 @@ urlpatterns = [
     # Owner management and backup endpoints
     path('owner/backup/download/', OwnerConversationBackupDownloadView.as_view(), name='owner-conversation-backup-download'),
     path('owner/backup/snapshot/', OwnerConversationBackupCreateSnapshotView.as_view(), name='owner-conversation-backup-snapshot'),
+    path('owner/payment-settings/', OwnerPaymentSettingsView.as_view(), name='owner-payment-settings'),
+    path('owner/payment-settings/test/', OwnerPaymentSettingsTestView.as_view(), name='owner-payment-settings-test'),
+    path('owner/payments/', OwnerPaymentsListView.as_view(), name='owner-payments'),
     path('owner/', include(owner_bulk_router.urls)),
 ]

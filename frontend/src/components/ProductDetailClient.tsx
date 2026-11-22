@@ -83,10 +83,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
   }, [product?.id]);
 
-  const imagesList =
-    product.images && product.images.length > 0
-      ? product.images.map((img) => getProductImageUrl(img))
-      : [getProductImageUrl(product)];
+  // Image rows carry their own secure_url; getProductImageUrl expects a product, not an image row.
+  const galleryUrls = (product.images ?? [])
+    .map((img) => img.secure_url?.trim())
+    .filter((url): url is string => Boolean(url));
+  const imagesList = galleryUrls.length > 0 ? galleryUrls : [getProductImageUrl(product)];
 
   const whatsappMessage = encodeURIComponent(
     `Hello The Print Planet, I want to order ${formatProductName(product.name)} (SKU: ${product.sku}, Qty: ${quantity}${

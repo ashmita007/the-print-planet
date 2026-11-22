@@ -189,6 +189,7 @@ export interface BulkOrder {
   paid_at?: string | null;
   razorpay_payment_id?: string;
   can_pay_online?: boolean;
+  payment_under_review?: boolean;
   messages?: BulkOrderMessage[];
   messages_count?: number;
   created_at: string;

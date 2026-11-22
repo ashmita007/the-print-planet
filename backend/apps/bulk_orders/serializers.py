@@ -85,6 +85,7 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
     organization_type_label = serializers.CharField(source='get_organization_type_display', read_only=True)
     attachment = serializers.SerializerMethodField()
     is_paid = serializers.BooleanField(read_only=True)
+    payment_under_review = serializers.BooleanField(read_only=True)
     can_pay_online = serializers.SerializerMethodField()
 
     class Meta:
@@ -97,7 +98,7 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
             'estimated_quantity', 'specifications', 'requirements', 'attachment',
             'attachment_url', 'status', 'status_label', 'quoted_amount', 'quote_notes',
             'tracking_consignment_number', 'tracking_courier_partner',
-            'is_paid', 'paid_amount', 'paid_at', 'razorpay_payment_id', 'can_pay_online',
+            'is_paid', 'paid_amount', 'paid_at', 'razorpay_payment_id', 'can_pay_online', 'payment_under_review',
             'messages', 'created_at', 'updated_at'
         ]
         read_only_fields = [

@@ -112,6 +112,13 @@ export default function OwnerOrdersPage() {
     setDetailLoading(false);
   };
 
+  // Deep link from the payments page: /owner/orders?order=<order number>
+  useEffect(() => {
+    const linked = new URLSearchParams(window.location.search).get("order");
+    if (linked) handleOpenDetail(linked);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSendReply = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOrder) return;
@@ -344,6 +351,11 @@ export default function OwnerOrdersPage() {
                       {o.quoted_amount ? (
                         <span className="text-emerald-700 font-bold">
                           ₹{Number(o.quoted_amount).toLocaleString("en-IN")}
+                          {o.is_paid && (
+                            <span className="ml-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">
+                              Paid
+                            </span>
+                          )}
                         </span>
                       ) : (
                         <span className="text-slate-400 italic">Not set</span>
@@ -389,6 +401,19 @@ export default function OwnerOrdersPage() {
                     #{selectedOrder.order_number}
                   </span>
                   {getStatusBadge(selectedOrder.status, selectedOrder.status_label)}
+                  {selectedOrder.is_paid ? (
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-200">
+                      Paid online ₹{Number(selectedOrder.paid_amount).toLocaleString("en-IN")} · {selectedOrder.razorpay_payment_id}
+                    </span>
+                  ) : selectedOrder.payment_under_review ? (
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-200">
+                      Payment needs review
+                    </span>
+                  ) : selectedOrder.can_pay_online ? (
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-md bg-white/10 text-[#B9C3CF]">
+                      Awaiting online payment
+                    </span>
+                  ) : null}
                 </div>
                 <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2">
                   <span>{selectedOrder.organization_name}</span>

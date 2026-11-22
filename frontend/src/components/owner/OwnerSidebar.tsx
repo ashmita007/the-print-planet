@@ -20,6 +20,7 @@ import {
   Info,
   Database,
   Briefcase,
+  CreditCard,
 } from "lucide-react";
 import { ownerLogout, ownerGetMe } from "@/lib/api";
 import { AuthUser } from "@/lib/types";
@@ -80,6 +81,7 @@ function OwnerSidebarInner() {
         { label: "Dashboard Overview", href: "/owner/dashboard", icon: LayoutDashboard },
         { label: "Bulk Orders & Chats", href: "/owner/orders", icon: Briefcase },
         { label: "Customer Enquiries", href: "/owner/enquiries", icon: Inbox },
+        { label: "Online Payments", href: "/owner/payments", icon: CreditCard },
       ],
     },
     {

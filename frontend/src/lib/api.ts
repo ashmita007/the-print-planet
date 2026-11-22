@@ -1396,3 +1396,92 @@ export async function ownerUpdateBulkOrder(
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// Owner: online payments (Razorpay)
+// ---------------------------------------------------------------------------
+
+export interface PaymentGatewaySummary {
+  enabled: boolean;
+  key_id: string;
+  mode: '' | 'test' | 'live';
+  has_key_secret: boolean;
+  key_secret_last4: string;
+  has_webhook_secret: boolean;
+  secrets_unreadable: boolean;
+  active_source: 'admin' | 'environment' | 'none';
+  active_mode: '' | 'test' | 'live';
+  webhook_url: string;
+  webhook_events: string[];
+  webhook_ready: boolean;
+  can_store_secrets: boolean;
+  updated_at: string | null;
+}
+
+export interface OwnerPaymentRow {
+  id: number;
+  order_number: string;
+  organization_name: string;
+  amount: number;
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  status: 'paid' | 'needs_review' | 'not_paid';
+  captured_at: string | null;
+  created_at: string;
+}
+
+const PAYMENT_SETTINGS_URL = () => `${getApiUrl()}/api/v1/bulk-orders/owner/payment-settings/`;
+
+export async function ownerGetPaymentSettings(): Promise<PaymentGatewaySummary | null> {
+  try {
+    const res = await fetch(PAYMENT_SETTINGS_URL(), { headers: getAuthHeaders(), cache: 'no-store' });
+    return res.ok ? await res.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function ownerSavePaymentSettings(data: {
+  key_id?: string;
+  key_secret?: string;
+  webhook_secret?: string;
+  enabled?: boolean;
+  clear_secrets?: boolean;
+}): Promise<{ settings?: PaymentGatewaySummary; error?: string }> {
+  try {
+    const res = await fetch(PAYMENT_SETTINGS_URL(), {
+      method: 'PUT',
+      headers: { ...getAuthHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const body = await res.json();
+    return res.ok ? { settings: body } : { error: body.error || 'Could not save the settings.' };
+  } catch {
+    return { error: 'Could not reach the server.' };
+  }
+}
+
+export async function ownerTestPaymentKeys(data: { key_id?: string; key_secret?: string }): Promise<{ ok: boolean; mode?: string; error?: string }> {
+  try {
+    const res = await fetch(`${PAYMENT_SETTINGS_URL()}test/`, {
+      method: 'POST',
+      headers: { ...getAuthHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return await res.json();
+  } catch {
+    return { ok: false, error: 'Could not reach the server.' };
+  }
+}
+
+export async function ownerGetPayments(page = 1): Promise<{ results: OwnerPaymentRow[]; count: number } | null> {
+  try {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/owner/payments/?page=${page}`, {
+      headers: getAuthHeaders(),
+      cache: 'no-store',
+    });
+    return res.ok ? await res.json() : null;
+  } catch {
+    return null;
+  }
+}

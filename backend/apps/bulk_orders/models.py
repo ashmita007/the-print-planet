@@ -222,3 +222,28 @@ class UserCheckedProduct(models.Model):
 
     def __str__(self):
         return f"{self.user.username} checked {self.product.name}"
+
+
+class PaymentGatewaySettings(models.Model):
+    """
+    Razorpay keys entered by the owner in the admin panel (a single row). Secrets are stored
+    encrypted (see secret_box). When disabled or empty, RAZORPAY_* environment variables apply.
+    """
+    enabled = models.BooleanField(default=False)
+    key_id = models.CharField(max_length=64, blank=True, default='')
+    key_secret_encrypted = models.TextField(blank=True, default='')
+    webhook_secret_encrypted = models.TextField(blank=True, default='')
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Payment Gateway Settings'
+        verbose_name_plural = 'Payment Gateway Settings'
+
+    def __str__(self):
+        return f"Razorpay ({'on' if self.enabled else 'off'})"
+
+    @classmethod
+    def load(cls):
+        return cls.objects.order_by('pk').first() or cls()
+

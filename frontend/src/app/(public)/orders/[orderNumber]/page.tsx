@@ -156,6 +156,11 @@ export default function OrderDetailPage() {
                     <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Paid ₹{Number(order.paid_amount).toLocaleString("en-IN")}
                   </span>
                 )}
+                {order.payment_under_review && (
+                  <span className="mt-0.5 block text-[11px] font-semibold text-amber-700">
+                    Payment received, being checked by our team
+                  </span>
+                )}
               </div>
             )}
             {order.can_pay_online && order.quoted_amount && (
