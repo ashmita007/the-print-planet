@@ -296,7 +296,7 @@ export const GUIDES: Guide[] = [
     title: "Inkjet vs Digital PVC Sheets: Which Dragon Sheet to Choose?",
     description:
       "Comparison guide between inkjet dragon sheets and digital PVC sheets for ID card fusing. Learn thickness (0.76mm), print coatings, temperature, and cost.",
-    h1: "Inkjet vs Digital PVC Sheets: Which Dragon Sheet is Right for You?",
+    h1: "Inkjet vs digital PVC sheets: which dragon sheet is right for you?",
     lead: "Choosing the wrong PVC card sheet leads to peeling, fading ink, or jammed printers. Here is how inkjet dragon sheets compare to digital/HP Indigo PVC sheets and which one to pick.",
     updated: "2026-11-14",
     readMinutes: 6,
@@ -346,7 +346,7 @@ export const GUIDES: Guide[] = [
     title: "Mifare 1K vs 125kHz Proximity Cards: RFID Comparison Guide",
     description:
       "Understand the difference between 13.56MHz Mifare 1K smart cards and 125kHz EM-Marin proximity cards. Frequency, memory, encryption, and applications.",
-    h1: "Mifare 1K vs 125kHz Proximity Cards: Which RFID Card Do You Need?",
+    h1: "Mifare 1K vs 125kHz proximity cards: which RFID card do you need?",
     lead: "When setting up office attendance, biometric turnstiles, or college campus ID cards, choosing between Mifare 1K and 125kHz RFID is a critical security and hardware decision.",
     updated: "2026-11-14",
     readMinutes: 6,
@@ -395,7 +395,7 @@ export const GUIDES: Guide[] = [
     title: "PVC Card & Lanyard Dimensions: Prepress Artwork Guidelines",
     description:
       "Exact CR-80 card dimensions in mm, inches, and 300 DPI pixels (1012x638). Lanyard templates for 12mm, 16mm, 20mm, and 25mm spools with stitching bleed.",
-    h1: "PVC Card & Lanyard Artwork Dimensions & Prepress Template Guide",
+    h1: "PVC card and lanyard artwork sizes: a prepress template guide",
     lead: "Avoid rejected prints and cut-off text. Here are the exact pixel dimensions, bleeds, safe margins, and resolution formulas for standard CR-80 ID cards and satin lanyards.",
     updated: "2026-11-14",
     readMinutes: 6,
@@ -461,7 +461,7 @@ export const GUIDES: Guide[] = [
     title: "How to Print PVC ID Cards on Epson Printers: Settings Guide",
     description:
       "Complete guide to printing PVC ID cards and dragon sheets on Epson L8050, L18050, and L805. Paper type, driver settings, tray vs fusing, and resolution.",
-    h1: "How to Print PVC ID Cards on Epson Printers: Driver Settings & Paper Guide",
+    h1: "How to print PVC ID cards on Epson printers: driver settings and paper",
     lead: "Whether printing on direct PVC card trays or A4 dragon sheets for lamination, these exact Epson driver settings prevent smudging, faded colors, and card misalignment.",
     updated: "2026-11-14",
     readMinutes: 6,

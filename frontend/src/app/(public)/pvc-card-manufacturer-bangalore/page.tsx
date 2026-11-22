@@ -24,7 +24,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "Wholesale PVC Cards in Bangalore",
   description:
-    "Direct factory manufacturer and wholesale distributor of PVC ID cards, CR-80 blank cards, RFID cards, dragon sheets, and fusing machinery in Sunkadakatte, Bangalore. Pan-India dispatch with GST invoice.",
+    "PVC ID cards, CR-80 blank cards, RFID cards, dragon sheets and fusing machines, wholesale from Sunkadakatte, Bangalore. GST invoice, pan-India dispatch.",
   alternates: {
     canonical: `${SITE_URL}/pvc-card-manufacturer-bangalore`,
   },
@@ -194,7 +194,7 @@ export default function PvcCardManufacturerBangalorePage() {
               <span>Bangalore Factory Hub • Sunkadakatte Facility</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              PVC Card Manufacturer &amp; Wholesale Supplier in Bangalore
+              PVC card manufacturer and wholesale supplier in Bangalore
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               Factory-direct wholesale supplier of ISO CR-80 PVC cards, inkjet printable dragon sheets, RFID proximity smart cards, and commercial card fusing machinery. Sunkadakatte warehouse pickup or 24-hour delivery across Bengaluru.

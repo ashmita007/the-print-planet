@@ -15,6 +15,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
+import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import PageCta from "@/components/PageCta";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 
@@ -23,9 +24,10 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "ID Cards & Lanyards by Industry",
   description:
-    "Factory-direct ID card systems, custom satin lanyards, RFID access cards, and badge holders tailored for IT parks, schools, universities, hospitals, and industrial manufacturing plants in Bangalore and across India.",
+    "ID cards, printed lanyards, RFID access cards and holders for IT parks, schools, hospitals and factories in Bangalore and across India.",
   alternates: { canonical: `${SITE_URL}/industries` },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: "ID Cards & Lanyards by Industry | The Print Planet Bangalore",
     description:
       "Sector-specific ID badge solutions, RFID turnstile integrations, safety breakaways, and wholesale lanyard supplies with 100% GST invoicing.",
@@ -184,7 +186,7 @@ const SECTORS: IndustrySector[] = [
     recommendedProducts: [
       { label: "Magnetic Overlays & Sheets", href: "/categories/pvc-id-card-consumable" },
       { label: "Card Cutters & Punches", href: "/categories/machines" },
-      { label: "Wholesale Pricing Tariff", href: "/pricing" },
+      { label: "Wholesale price list", href: "/pricing" },
     ],
     moq: "1,000 Units",
     leadTime: "4–6 Days",
@@ -236,7 +238,7 @@ export default function IndustriesPage() {
       />
 
       <PageHero
-        title="ID Cards & Lanyards for Every Industry"
+        title="ID cards and lanyards for every industry"
         lead="Factory-direct identification systems engineered for corporate IT corridors, educational universities, healthcare centers, and industrial shop floors with 100% GST ITC compliance."
         crumbs={[
           { label: "Home", href: "/" },

@@ -235,7 +235,7 @@ export default function FaqPage() {
       />
 
       <PageHero
-        title="Frequently Asked Questions & B2B Knowledge Hub"
+        title="Frequently asked questions"
         lead="Authoritative technical answers to Google's most searched questions regarding PVC cards, CR-80 standards, fusing machinery, lanyard printing ribbons, and RFID credentials."
         crumbs={[{ label: "Technical FAQ" }]}
       />

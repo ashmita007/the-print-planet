@@ -23,7 +23,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "Satin Lanyard Rolls Wholesale Bangalore",
   description:
-    "Direct manufacturer of virgin polyester satin lanyard rolls (12mm–25mm), sublimation printed lanyards, and ID attachments in Bangalore. Sunkadakatte factory dispatch with 100% GST invoice.",
+    "Satin lanyard rolls (12 to 25 mm), sublimation printed lanyards, hooks and clamps, wholesale from Sunkadakatte, Bangalore, with a GST invoice.",
   alternates: {
     canonical: `${SITE_URL}/lanyard-manufacturer-bangalore`,
   },
@@ -187,7 +187,7 @@ export default function LanyardManufacturerBangalorePage() {
               <span>Bangalore Weaving &amp; Printing Hub • Sunkadakatte Facility</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              Satin Lanyard Manufacturer &amp; Wholesale Supplier in Bangalore
+              Satin lanyard manufacturer and wholesale supplier in Bangalore
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               Wholesale manufacturer of 100% virgin polyester satin lanyard rolls, multicolour sublimation printed neck lanyards, and ID accessories. Factory pickup from Sunkadakatte or express delivery across Bengaluru.

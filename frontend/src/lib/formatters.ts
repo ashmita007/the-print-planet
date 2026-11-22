@@ -106,6 +106,25 @@ export function formatCategoryName(name?: string | null): string {
   return fixCategorySpelling(name).toUpperCase();
 }
 
+const HEADING_ACRONYMS = new Set(["PVC", "ID", "RFID", "NFC", "UHF", "GST", "A3", "A4", "CR-80", "CR80", "USB", "LED", "UV"]);
+
+/**
+ * Sentence case for category headings (H1, "About ..."), matching the curated headings in
+ * categorySeo.ts: "ID CARD PRINTERS AND CONSUMABLES" -> "ID card printers and consumables".
+ * Labels and badges keep formatCategoryName's uppercase.
+ */
+export function formatCategoryHeading(name?: string | null): string {
+  const words = fixCategorySpelling(name).split(" ").filter(Boolean);
+  return words
+    .map((word, index) => {
+      const upper = word.toUpperCase();
+      if (HEADING_ACRONYMS.has(upper)) return upper;
+      const lower = word.toLowerCase();
+      return index === 0 ? lower.charAt(0).toUpperCase() + lower.slice(1) : lower;
+    })
+    .join(" ");
+}
+
 /**
  * Format product name into clean, professional Title Case while preserving
  * technical abbreviations, dimension multipliers, and unit casing.

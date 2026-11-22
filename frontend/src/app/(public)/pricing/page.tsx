@@ -52,7 +52,7 @@ export default function PricingPage() {
       />
 
       <PageHero
-        title="Factory-Direct Wholesale Pricing Tariff"
+        title="Wholesale price list"
         lead="Official B2B volume breaks for satin lanyard rolls, rigid CR-80 card holders, metal fittings, RFID smart cards, and Wuhan Wenlin industrial card equipment with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
         crumbs={[
           { label: "Home", href: "/" },

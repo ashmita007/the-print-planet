@@ -11,7 +11,7 @@ import MobileFilterSortBar from "@/components/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { GUIDES } from "@/lib/guides";
 import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
-import { fixCategorySpelling, formatCategoryName, formatProductName } from "@/lib/formatters";
+import { fixCategorySpelling, formatCategoryHeading, formatCategoryName, formatProductName } from "@/lib/formatters";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -174,7 +174,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   const prices = listed.map((p) => Number(p.price)).filter((n) => n > 0);
   const moqs = listed.map((p) => p.minimum_order_quantity || 0).filter((n) => n > 0);
   const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
-  const displayName = formatProductName(fixCategorySpelling(category.name));
+  const displayName = formatCategoryHeading(category.name);
   const subcategoryIntro =
     !seo && listed.length > 0
       ? [
@@ -213,7 +213,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
       />
       <PageHero
-        title={seo?.h1 || formatCategoryName(category.name)}
+        title={seo?.h1 || displayName}
         lead={seo?.lead || category.description || undefined}
         crumbs={[
           { label: "Products", href: "/products" },

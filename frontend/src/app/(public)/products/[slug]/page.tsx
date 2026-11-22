@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductCard from "@/components/ProductCard";
 import ProductDetailClient from "@/components/ProductDetailClient";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import { formatCategoryHeading, formatCategoryName, formatProductName } from "@/lib/formatters";
 import { getProductBySlug } from "@/lib/api";
 import { brandedTitle, snippet } from "@/lib/seo";
 import { isBoilerplate, isMaterialCode, productFaqs, productMetaDescription, productSummary } from "@/lib/productCopy";
@@ -207,7 +207,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-base sm:text-xl font-bold text-[#121418]">
-                Related Products in {formatCategoryName(product.category.name)}
+                Related products in {formatCategoryHeading(product.category.name)}
               </h2>
               <p className="text-xs sm:text-sm text-[#2B323B]">
                 Frequently purchased together for bulk institutional & trade supply

@@ -306,7 +306,7 @@ export function productFaqs(product: Product): Faq[] {
   const price = Number(product.price);
   const faqs: Faq[] = [];
 
-  if (family) faqs.push({ q: `What is ${name} used for?`, a: `It is ${family.use}. Most orders come from ${family.buyer}.` });
+  if (family) faqs.push({ q: `What can I use ${name} for?`, a: `It is ${family.use}. Most orders come from ${family.buyer}.` });
   faqs.push({
     q: `What is the wholesale price of ${name}?`,
     a: product.price_visibility && (product.price_display || price > 0)

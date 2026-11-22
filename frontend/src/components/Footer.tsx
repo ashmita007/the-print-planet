@@ -41,7 +41,7 @@ const COMPANY_LINKS = [
 function FooterLinks({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   return (
     <div>
-      <h2 className="text-xs font-bold text-white mb-3.5">{title}</h2>
+      <p className="text-xs font-bold text-white mb-3.5">{title}</p>
       <ul className="space-y-2.5 text-sm text-slate-300">
         {links.map((link) => {
           const isFileOrExternal =
@@ -145,7 +145,7 @@ export default function Footer({ settings }: FooterProps) {
           </div>
 
           <div className="col-span-2 lg:col-span-4 space-y-3 text-sm text-slate-300">
-            <h2 className="text-xs font-bold text-white mb-3.5">Reach us</h2>
+            <p className="text-xs font-bold text-white mb-3.5">Reach us</p>
             <a href={`tel:${phone.replace(/\s+/g, "")}`} className="flex items-center gap-2.5 hover:text-white">
               <Phone className="w-4 h-4 text-[#FF8A3D] shrink-0" />
               {phone}

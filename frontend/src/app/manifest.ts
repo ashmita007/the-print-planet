@@ -42,7 +42,7 @@ export default function manifest(): MetadataRoute.Manifest {
         icons: [{ src: '/icon.png', sizes: '192x192' }],
       },
       {
-        name: 'Wholesale Pricing Tariff',
+        name: 'Wholesale price list',
         short_name: 'Tariff',
         description: 'Official factory volume breaks and wholesale slabs',
         url: '/pricing',

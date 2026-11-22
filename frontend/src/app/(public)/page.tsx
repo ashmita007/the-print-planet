@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     absolute: "PVC Cards Wholesale Supplier Bangalore | The Print Planet",
   },
   description:
-    "Direct factory manufacturer and wholesale supplier of PVC cards, CR-80 blank cards, RFID smart cards, dragon sheets, satin lanyard rolls, and ID card machines in Bangalore. 24–48h pan-India dispatch.",
+    "Wholesale PVC cards, RFID cards, dragon sheets, satin lanyard rolls, ID card holders and machines from Bengaluru. GST invoice and pan-India dispatch.",
   alternates: {
     canonical: SITE_URL,
   },

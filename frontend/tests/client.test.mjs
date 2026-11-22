@@ -475,3 +475,12 @@ test("Cart quote order serialization matches WhatsApp inquiry format", () => {
 
 
 
+
+test("Category headings use sentence case and keep acronyms", async () => {
+  const { formatCategoryHeading } = await import("../src/lib/formatters.ts");
+  assert.strictEqual(formatCategoryHeading("ID CARD PRINTERS AND CONSUMABLES"), "ID card printers and consumables");
+  assert.strictEqual(formatCategoryHeading("PVC AND SMART CARDS"), "PVC and smart cards");
+  assert.strictEqual(formatCategoryHeading("RFID CANSUMABLES"), "RFID consumables");
+  assert.strictEqual(formatCategoryHeading("  LANYARDS "), "Lanyards");
+  assert.strictEqual(formatCategoryHeading(null), "");
+});
