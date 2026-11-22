@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
-  "total_categories": 39,
-  "total_products": 186,
+  "total_categories": 36,
+  "total_products": 174,
   "categories": [
     {
       "id": 46,
@@ -54,15 +54,6 @@
       "slug": "fitting-metal-clamp-for-id-card-lanyards",
       "description": "Metal Clamp for ID Card Lanyards – Supplied by The Print Planet, Bengaluru & Pan-India. Premium-quality metal clamp designed for secure fastening of hooks, clips, and accessories to ID card lanyards. Manufactured from durable metal for a strong grip, reliable performance, and long service life. Suitable for satin, polyester, woven, and customized lanyards used in corporate, educational, industrial, event, and promotional applications. Available in multiple sizes to accommodate various lanyard widths.",
       "parent_slug": "id-card-lanyard-consumables",
-      "display_order": 0,
-      "is_active": true
-    },
-    {
-      "id": 34,
-      "name": "Gumming Roll For Sticker Card",
-      "slug": "gaming-roll",
-      "description": "Commercial grade Gumming Roll For Sticker Card from The Print Planet.",
-      "parent_slug": "pvc-id-card-consumable",
       "display_order": 0,
       "is_active": true
     },
@@ -229,15 +220,6 @@
       "is_active": true
     },
     {
-      "id": 36,
-      "name": "Sample Kit",
-      "slug": "sample-kit",
-      "description": "Commercial grade Sample Kit from The Print Planet.",
-      "parent_slug": "id-card-holder",
-      "display_order": 0,
-      "is_active": true
-    },
-    {
       "id": 39,
       "name": "Sublimation Ink for Lanyard Printing",
       "slug": "sublimation-ink-for-lanyard-printing",
@@ -252,15 +234,6 @@
       "slug": "sublimation-paper-roll-for-lanyard-printing",
       "description": "Sublimation Paper Roll for Lanyard Printing – Supplied by The Print Planet, Bengaluru & Pan-India. Premium-quality sublimation transfer paper rolls specially designed for digital lanyard printing. Engineered for high ink transfer efficiency, vibrant color reproduction, sharp image quality, and fast drying performance. Compatible with sublimation inks and suitable for satin, polyester, and other lanyard fabrics. Ideal for manufacturing customized corporate, school, event, promotional, and branded lanyards. Available in multiple roll widths and GSM options for professional and bulk production requirements.",
       "parent_slug": "id-card-lanyard-consumables",
-      "display_order": 0,
-      "is_active": true
-    },
-    {
-      "id": 49,
-      "name": "TRANSPARENT CRYSTAL LIQUID FOR ID CARDS",
-      "slug": "transparent-crystal-liquid-for-id-cards",
-      "description": "Commercial grade TRANSPARENT CRYSTAL LIQUID FOR ID CARDS from The Print Planet.",
-      "parent_slug": "pvc-id-card-consumable",
       "display_order": 0,
       "is_active": true
     },
@@ -461,58 +434,6 @@
       "is_featured": false
     },
     {
-      "id": 311,
-      "sku": "PC-9AMC",
-      "name": "PC",
-      "slug": "pc",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade PC supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade PC supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "HSN Code": "3920",
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 310,
-      "sku": "HIPH-XO1H",
-      "name": "HIPH",
-      "slug": "hiph",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade HIPH supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade HIPH supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "HSN Code": "3920",
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
       "id": 309,
       "sku": "ZB-2942712000000060277",
       "name": "24 Inch x 100 M X 80 Gsm SUBLIMATION PAPER ROLL",
@@ -587,32 +508,6 @@
         "GST Rate": "18.0%"
       },
       "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335340/the_print_planet/products/V4-WHITE-COL-00JV.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 306,
-      "sku": "PP-R-KDY5",
-      "name": "PP R",
-      "slug": "pp-r",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade PP R supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade PP R supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "HSN Code": "3020",
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
       "is_active": true,
       "is_featured": false
     },
@@ -796,31 +691,6 @@
         "GST Rate": "5.0%"
       },
       "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335329/the_print_planet/products/GOLD-HORIZON-C639.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 298,
-      "sku": "YAAN-150-GJGH",
-      "name": "Yarn 150",
-      "slug": "yarn-150",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade Yarn 150 supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade Yarn 150 supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
       "is_active": true,
       "is_featured": false
     },
@@ -2445,31 +2315,6 @@
       "is_featured": false
     },
     {
-      "id": 235,
-      "sku": "YARN-450-DFR3",
-      "name": "Yarn 450",
-      "slug": "yarn-450",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade Yarn 450 supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade Yarn 450 supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
       "id": 234,
       "sku": "VS-L-SINGLE--807R",
       "name": "VS-L Single Side Sticker Holder",
@@ -2627,32 +2472,6 @@
       "is_featured": false
     },
     {
-      "id": 228,
-      "sku": "SENSUI-12-IN-B5G0",
-      "name": "Sensui 12 inch x 50 Mitter Roll",
-      "slug": "sensui-12-inch-x-50-mitter-roll",
-      "category_slug": "gaming-roll",
-      "category_name": "Gumming Roll For Sticker Card",
-      "parent_category_slug": "pvc-id-card-consumable",
-      "price": 1290.0,
-      "price_display": "₹ 1,290.00 / Roll",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade Sensui 12 inch x 50 Mitter Roll supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade Sensui 12 inch x 50 Mitter Roll supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "HSN Code": "481141",
-        "Unit": "Roll",
-        "Minimum Order Quantity": "1.0 Roll",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335220/the_print_planet/products/SENSUI-12-IN-B5G0.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
       "id": 227,
       "sku": "M-25MM-CLAMP-5PZG",
       "name": "M- 25MM CLAMP FOR LANYARDS",
@@ -2732,31 +2551,6 @@
       "is_featured": false
     },
     {
-      "id": 224,
-      "sku": "GPPS-NF66",
-      "name": "GPPS",
-      "slug": "gpps",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade GPPS supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade GPPS supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
       "id": 223,
       "sku": "SS-PLATES-22-9S2T",
       "name": "SS PLATES 220 X310",
@@ -2808,83 +2602,6 @@
       "is_featured": false
     },
     {
-      "id": 221,
-      "sku": "TRANSPARENT--X49X",
-      "name": "TRANSPARENT CRYSTAL LIQUID FOR ID CARDS",
-      "slug": "transparent-crystal-liquid-for-id-cards",
-      "category_slug": "transparent-crystal-liquid-for-id-cards",
-      "category_name": "TRANSPARENT CRYSTAL LIQUID FOR ID CARDS",
-      "parent_category_slug": "pvc-id-card-consumable",
-      "price": 3300.0,
-      "price_display": "₹ 3,300.00 / SET",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Liquid Lamination for ID Cards, Belts, and Keychains: A Comprehensive Guide",
-      "description": "Liquid Lamination for ID Cards, Belts, and Keychains: A Comprehensive Guide",
-      "specifications": {
-        "HSN Code": "39073010",
-        "Unit": "SET",
-        "Minimum Order Quantity": "1.0 SET",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335214/the_print_planet/products/TRANSPARENT--X49X.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 220,
-      "sku": "SOLVENT-GUMM-C2XZ",
-      "name": "Solvent Gumming Roll 12 x 50 Mitter inch",
-      "slug": "solvent-gumming-roll-12-x-50-mitter-inch",
-      "category_slug": "gaming-roll",
-      "category_name": "Gumming Roll For Sticker Card",
-      "parent_category_slug": "pvc-id-card-consumable",
-      "price": 1050.0,
-      "price_display": "₹ 1,050.00 / Roll",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade Solvent Gumming Roll 12 x 50 Mitter inch supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade Solvent Gumming Roll 12 x 50 Mitter inch supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "HSN Code": "481141",
-        "Unit": "Roll",
-        "Minimum Order Quantity": "1.0 Roll",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335211/the_print_planet/products/SOLVENT-GUMM-C2XZ.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 219,
-      "sku": "SAMPLE-KIT-VV0R",
-      "name": "Sample Kit holder",
-      "slug": "sample-kit-holder",
-      "category_slug": "sample-kit",
-      "category_name": "Sample Kit",
-      "parent_category_slug": "id-card-holder",
-      "price": 200.0,
-      "price_display": "₹ 200.00 / pcs",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade Sample Kit holder supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade Sample Kit holder supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "Unit": "pcs",
-        "Minimum Order Quantity": "1.0 pcs",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335209/the_print_planet/products/SAMPLE-KIT-VV0R.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
       "id": 218,
       "sku": "DCT400-A4-CA-SYAX",
       "name": "DCT400 A4+ CARD FUSING MACHINE",
@@ -2932,57 +2649,6 @@
         "GST Rate": "18.0%"
       },
       "image_url": "https://res.cloudinary.com/pmq4rert/image/upload/v1792335208/the_print_planet/products/LIGHT-MAGENT-L8VW.jpg",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 216,
-      "sku": "YARN-75-Q7O6",
-      "name": "Yarn 75",
-      "slug": "yarn-75",
-      "category_slug": "aluminium-metal-holder",
-      "category_name": "Aluminium Metal Holder",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": null,
-      "price_display": "Get Wholesale Quote",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade Yarn 75 supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade Yarn 75 supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "Unit": "KG",
-        "Minimum Order Quantity": "1.0 KG",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
-      "is_active": true,
-      "is_featured": false
-    },
-    {
-      "id": 215,
-      "sku": "M-CHIP-LLR0",
-      "name": "M_CHIP",
-      "slug": "m_chip",
-      "category_slug": "sublimation-ink-for-lanyard-printing",
-      "category_name": "Sublimation Ink for Lanyard Printing",
-      "parent_category_slug": "id-card-lanyard-consumables",
-      "price": 150.0,
-      "price_display": "₹ 150.00 / pcs",
-      "minimum_order_quantity": 1,
-      "material": null,
-      "dimensions": null,
-      "color": null,
-      "short_description": "Commercial grade M_CHIP supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "description": "Commercial grade M_CHIP supplied by The Print Planet for corporate, school, event, and industrial applications.",
-      "specifications": {
-        "HSN Code": "32151990",
-        "Unit": "pcs",
-        "Minimum Order Quantity": "1.0 pcs",
-        "GST Rate": "18.0%"
-      },
-      "image_url": "/images/placeholder-product.png",
       "is_active": true,
       "is_featured": false
     },

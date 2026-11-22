@@ -1,3 +1,4 @@
+import os
 from importlib import import_module
 
 from django.apps import apps
@@ -84,3 +85,13 @@ class RemoveProductsNotInSheetMigrationTests(TestCase):
         self.assertFalse(Category.objects.filter(slug='sample-kit').exists())
         self.assertTrue(Category.objects.filter(slug='gumming-roll-for-sticker-card').exists())
         self.assertTrue(Product.objects.filter(pk=kept.pk).exists())
+
+
+class SeedReferenceDataTests(TestCase):
+    def test_seed_does_not_recreate_removed_categories(self):
+        from django.core.management import call_command
+
+        call_command('seed_reference_data', stdout=open(os.devnull, 'w'))
+
+        self.assertFalse(Category.objects.filter(slug__in=remove_unlisted.EMPTIED_CATEGORY_SLUGS).exists())
+        self.assertFalse(Product.objects.filter(slug__in=remove_unlisted.REMOVED_PRODUCT_SLUGS).exists())
