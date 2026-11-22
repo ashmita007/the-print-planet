@@ -37,14 +37,18 @@ EMPTIED_CATEGORY_SLUGS = [
 ]
 
 
-def forwards(apps, schema_editor):
+def remove(apps, product_slugs, category_slugs):
     Category = apps.get_model('catalog', 'Category')
     Product = apps.get_model('catalog', 'Product')
 
-    Product.objects.filter(slug__in=REMOVED_PRODUCT_SLUGS).delete()
-    for category in Category.objects.filter(slug__in=EMPTIED_CATEGORY_SLUGS):
+    Product.objects.filter(slug__in=product_slugs).delete()
+    for category in Category.objects.filter(slug__in=category_slugs):
         if not Product.objects.filter(category=category).exists() and not category.subcategories.exists():
             category.delete()
+
+
+def forwards(apps, schema_editor):
+    remove(apps, REMOVED_PRODUCT_SLUGS, EMPTIED_CATEGORY_SLUGS)
 
 
 class Migration(migrations.Migration):

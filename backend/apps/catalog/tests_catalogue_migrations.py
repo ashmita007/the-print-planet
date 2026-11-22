@@ -62,6 +62,7 @@ class AiProductImagesMigrationTests(TestCase):
 
 
 remove_unlisted = import_module('apps.catalog.migrations.0007_remove_products_not_in_sheet')
+remove_old_holders = import_module('apps.catalog.migrations.0009_remove_old_holders_and_cards')
 
 
 class RemoveProductsNotInSheetMigrationTests(TestCase):
@@ -93,5 +94,26 @@ class SeedReferenceDataTests(TestCase):
 
         call_command('seed_reference_data', stdout=open(os.devnull, 'w'))
 
-        self.assertFalse(Category.objects.filter(slug__in=remove_unlisted.EMPTIED_CATEGORY_SLUGS).exists())
-        self.assertFalse(Product.objects.filter(slug__in=remove_unlisted.REMOVED_PRODUCT_SLUGS).exists())
+        for migration in (remove_unlisted, remove_old_holders):
+            self.assertFalse(Category.objects.filter(slug__in=migration.EMPTIED_CATEGORY_SLUGS).exists())
+            self.assertFalse(Product.objects.filter(slug__in=migration.REMOVED_PRODUCT_SLUGS).exists())
+
+
+class RemoveOldHoldersAndCardsMigrationTests(TestCase):
+    def test_removes_old_models_and_keeps_sheet_items(self):
+        parent, _ = Category.objects.get_or_create(slug='id-card-holder', defaults={'name': 'ID Card Holder'})
+        executive, _ = Category.objects.update_or_create(
+            slug='executive-pvc-id-card-holder', defaults={'name': 'Executive', 'parent': parent},
+        )
+        cards, _ = Category.objects.get_or_create(slug='pvc-and-smart-cards', defaults={'name': 'Cards'})
+        Product.objects.create(name='EH-T', slug='eh-t-executive-pvc-id-card-holder', sku='H-1', category=executive)
+        Product.objects.create(name='MIFARE', slug='mifare-1k-classic-rfid-iso-smart-cards', sku='H-2', category=cards)
+        sheet_holder = Product.objects.create(name='Vertical', slug='vertical-card-holders', sku='H-3', category=parent)
+        sheet_card = Product.objects.create(name='RFID and NFC Cards', slug='rfid-and-nfc-cards', sku='H-4', category=cards)
+
+        remove_old_holders.forwards(apps, None)
+
+        self.assertFalse(Product.objects.filter(slug__in=remove_old_holders.REMOVED_PRODUCT_SLUGS).exists())
+        self.assertFalse(Category.objects.filter(slug='executive-pvc-id-card-holder').exists())
+        self.assertTrue(Category.objects.filter(slug='id-card-holder').exists())
+        self.assertEqual(Product.objects.filter(pk__in=[sheet_holder.pk, sheet_card.pk]).count(), 2)

@@ -291,58 +291,6 @@ const MORE_CATEGORY_SEO: Record<string, CategorySeo> = {
       },
     ],
   },
-  "aluminium-metal-holder": {
-    h1: "Aluminium metal ID card holders",
-    title: "Aluminium Metal ID Card Holder Wholesale, ₹17.50",
-    description:
-      "Aluminium ID card holders in silver, gold, black, blue and red, horizontal and vertical. ₹17.50 per piece, MOQ 100. Wholesale from Bengaluru with GST invoice.",
-    lead: "Metal ID card holders in five colours and both orientations, at ₹17.50 a piece from 100 pieces.",
-    about: [
-      "Aluminium holders give an ID card a rigid metal frame, so they suit staff badges where a plastic pouch looks too plain: offices, hotels, hospitals and front-desk teams.",
-      "We stock them in silver, gold, black, blue and red, each in a horizontal and a vertical version, at ₹17.50 per piece with a minimum order of 100 pieces.",
-      "Order the orientation that matches how your cards are printed, and pair the holder with a lanyard or clip from our hooks and fittings range.",
-    ],
-    questions: [
-      {
-        question: "What is the price of an aluminium ID card holder?",
-        answer: "₹17.50 per piece before GST, with a minimum order of 100 pieces. Larger quantities can be quoted on WhatsApp.",
-      },
-      {
-        question: "Which colours are available?",
-        answer: "Silver, gold, black, blue and red, each in horizontal and vertical versions.",
-      },
-      {
-        question: "Can I mix colours in one order?",
-        answer: "Send the split you need with your enquiry and we will confirm what can be combined against the minimum order.",
-      },
-    ],
-  },
-  "crystal-clear-pvc-id-card-holder": {
-    h1: "Crystal clear PVC ID card holders",
-    title: "Crystal Clear ID Card Holder Wholesale Price India",
-    description:
-      "Transparent PVC ID card holders, horizontal and vertical, with lanyard slot. From ₹4.43 a piece in bulk. Models H2T, V2T, HS2T, VS2T and more. Bengaluru supplier.",
-    lead: "Fully transparent holders that show the whole card, in horizontal and vertical models with a lanyard slot.",
-    about: [
-      "Crystal clear holders are the most common choice for school and office ID cards because nothing hides the photo or the printed details. They take a standard CR-80 card (85.6 × 54 mm).",
-      "Models include H2T, H4T and HS2T (horizontal) and V2T, V4T and VS2T (vertical), plus sticker-pasting versions (HST-B, VST-B) for self-adhesive cards. Listed prices run from ₹4.43 to ₹5.58 per piece, with minimum orders from 1,000 pieces on most models.",
-      "Not sure which model you use now? Send a photo of your current holder on WhatsApp and we will match it.",
-    ],
-    questions: [
-      {
-        question: "What is the wholesale price of a transparent ID card holder?",
-        answer: "Listed prices run from ₹4.43 to ₹5.58 per piece before GST, depending on the model. Most models have a minimum order of 1,000 to 1,500 pieces.",
-      },
-      {
-        question: "What is the difference between H and V models?",
-        answer: "H models hold the card horizontally (landscape) and V models vertically (portrait). Order the one that matches your card layout.",
-      },
-      {
-        question: "What size card fits these holders?",
-        answer: "They are made for the standard CR-80 ID card, 85.6 × 54 mm.",
-      },
-    ],
-  },
   "color-id-card-lanyard-roll": {
     h1: "Colour satin lanyard rolls",
     title: "Colour Satin Lanyard Roll 16mm & 20mm, 100 m",
@@ -395,57 +343,6 @@ const MORE_CATEGORY_SEO: Record<string, CategorySeo> = {
       },
     ],
   },
-  "semi-transparent-pvc-id-card-holder": {
-    h1: "Semi-transparent PVC ID card holders",
-    title: "Semi Transparent ID Card Holder Wholesale India",
-    description:
-      "Frosted semi-transparent PVC ID card holders, horizontal and vertical, with lanyard slot. Models H2, H4, V2, V4, C2. Wholesale from Bengaluru with GST invoice.",
-    lead: "Frosted holders with a clear window, in horizontal and vertical models with a lanyard slot.",
-    about: [
-      "Semi-transparent holders have a frosted body, so the card edges look neat while the window shows the photo and name. They are a budget option for schools, events and factories.",
-      "Models include H2, H4 and H2H (horizontal), V2, V4 and V2H (vertical) and C2, mostly with a lanyard slot. The V4 is also listed in white at ₹3.50 a piece.",
-      "Send a photo of the holder you use now and we will match the model.",
-    ],
-    questions: [
-      {
-        question: "What is a semi-transparent ID card holder?",
-        answer: "A PVC holder with a frosted body and a clear window over the card, so the photo and details stay visible.",
-      },
-      {
-        question: "Which models are available?",
-        answer: "H2, H4 and H2H (horizontal), V2, V4 and V2H (vertical), and C2.",
-      },
-      {
-        question: "How are they priced?",
-        answer: "By model and quantity. The V4 white is listed at ₹3.50 a piece; send your model and quantity for a quote on the others.",
-      },
-    ],
-  },
-  "executive-pvc-id-card-holder": {
-    h1: "Executive ID card holders",
-    title: "Executive ID Card Holder Wholesale, Crystal & Pasting",
-    description:
-      "Executive ID card holders with badge clip: crystal clear (₹11.10) and pasting (₹5.22) models, horizontal and vertical. MOQ from 700. Bengaluru wholesale.",
-    lead: "Rigid executive holders with a badge clip, in crystal clear and pasting versions.",
-    about: [
-      "Executive holders are stiffer and clearer than standard pouches and clip straight onto a shirt pocket or lanyard. They suit corporate staff, management and visitor badges.",
-      "The EH-T and EV-T crystal clear models are listed at ₹11.10 a piece; the EH-W and EV-W pasting models, for self-adhesive cards, at ₹5.22. H models are horizontal and V models vertical. Minimum orders start at 700 pieces.",
-    ],
-    questions: [
-      {
-        question: "What is the difference between EH-T and EH-W?",
-        answer: "T models are crystal clear holders the card slides into; W models are pasting holders for self-adhesive sticker cards.",
-      },
-      {
-        question: "What is the price of executive ID card holders?",
-        answer: "₹11.10 per piece for crystal clear models and ₹5.22 for pasting models, before GST. Minimum orders start at 700 pieces.",
-      },
-      {
-        question: "How do executive holders attach?",
-        answer: "They are listed with a badge clip, so they clip onto clothing or a lanyard.",
-      },
-    ],
-  },
   "rfid-inlay-prelam-sheet-for-smart-id-card": {
     h1: "RFID inlay prelam sheets",
     title: "RFID Prelam Sheet A4: MIFARE 1K, NFC, UHF, 125 kHz",
@@ -495,31 +392,6 @@ const MORE_CATEGORY_SEO: Record<string, CategorySeo> = {
       {
         question: "What is the price of a sublimation paper roll?",
         answer: "From ₹380 for an 8 inch × 100 m roll up to ₹2,505 for 72 inch × 150 m, before GST.",
-      },
-    ],
-  },
-  "pvc-id-card-sticker-pasting-holder": {
-    h1: "PVC sticker pasting ID card holders",
-    title: "Sticker Pasting ID Card Holder Wholesale, from ₹2.48",
-    description:
-      "PVC sticker pasting ID card holders, horizontal and vertical (HS, VS, VS-L). From ₹2.48 a piece, MOQ 1,500 to 1,800. Low-cost school ID cards. Bengaluru.",
-    lead: "The lowest-cost ID card format: a printed sticker pasted onto a PVC holder.",
-    about: [
-      "Sticker pasting holders are used for low-cost school and event ID cards. The card is printed on self-adhesive sticker paper and pasted onto the holder, so no fusing machine is needed.",
-      "Models include HS (horizontal), VS (vertical) and VS-L (single side). Listed prices run from ₹2.48 to ₹2.81 per piece, with minimum orders of 1,500 to 1,800 pieces.",
-    ],
-    questions: [
-      {
-        question: "How does a sticker pasting ID card work?",
-        answer: "You print the card on self-adhesive sticker sheet, cut it to size and paste it onto the PVC holder. No fusing machine is needed.",
-      },
-      {
-        question: "What is the price of sticker pasting holders?",
-        answer: "₹2.48 to ₹2.81 per piece before GST, depending on the model, with minimum orders of 1,500 to 1,800 pieces.",
-      },
-      {
-        question: "What does VS-L mean?",
-        answer: "VS-L is the single-side vertical sticker holder, listed at ₹2.48 a piece.",
       },
     ],
   },

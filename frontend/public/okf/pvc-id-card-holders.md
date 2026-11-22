@@ -2,7 +2,7 @@
 type: Product
 title: Rigid PVC ID Card Holders & Badge Protectors
 description: Injection molded virgin polymer ID card holders in vertical and horizontal orientations for standard ISO CR-80 cards.
-resource: https://theprintplanet.co.in/categories/semi-transparent-pvc-id-card-holder
+resource: https://theprintplanet.co.in/categories/id-card-holder
 tags: [id-card-holder, rigid-pvc-holder, cr80-badge-case, frosted-holder, double-card-holder]
 timestamp: 2026-11-06
 ---

@@ -39,7 +39,7 @@ CORE_URLS = [
     f"https://{HOST}/corporate",
     f"https://{HOST}/categories/machines",
     f"https://{HOST}/categories/digital-lanyard-white-roll",
-    f"https://{HOST}/categories/semi-transparent-pvc-id-card-holder",
+    f"https://{HOST}/categories/id-card-holder",
     f"https://{HOST}/categories/id-card-lanyard-hooks",
     f"https://{HOST}/categories/rfid-smart-cards-and-consumables",
     f"https://{HOST}/pricing.md",
