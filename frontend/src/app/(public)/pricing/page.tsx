@@ -205,15 +205,6 @@ export default function PricingPage() {
                   <td className="py-4 px-4 text-right">100 pcs</td>
                 </tr>
                 <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-4 sm:px-6 font-semibold">Frosted Slider (Thumb-Notch)</td>
-                  <td className="py-4 px-4 text-slate-600">Card Slider Notch</td>
-                  <td className="py-4 px-4 font-mono">₹5.20</td>
-                  <td className="py-4 px-4 font-mono">₹4.40</td>
-                  <td className="py-4 px-4 font-mono">₹3.75</td>
-                  <td className="py-4 px-4 font-mono text-[#FF8A3D] font-bold">₹3.10</td>
-                  <td className="py-4 px-4 text-right">100 pcs</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
                   <td className="py-4 px-4 sm:px-6 font-semibold">Heavy-Duty Polycarbonate Case</td>
                   <td className="py-4 px-4 text-slate-600">Armored Security Case</td>
                   <td className="py-4 px-4 font-mono">₹9.50</td>
@@ -276,16 +267,16 @@ export default function PricingPage() {
             </h3>
             <ul className="divide-y divide-slate-100 text-sm">
               <li className="py-3 flex justify-between items-center">
-                <span className="font-medium text-slate-800">Mifare 1K Classic ISO (13.56 MHz)</span>
-                <span className="font-mono font-bold text-slate-900">₹9.80 – ₹14.50 / pc</span>
+                <span className="font-medium text-slate-800">RFID and NFC cards</span>
+                <span className="font-mono font-bold text-slate-900">Price on request</span>
               </li>
               <li className="py-3 flex justify-between items-center">
-                <span className="font-medium text-slate-800">EM-Marin Thin Card (125 kHz)</span>
-                <span className="font-mono font-bold text-slate-900">₹7.40 – ₹11.50 / pc</span>
+                <span className="font-medium text-slate-800">Proximity and access-control cards</span>
+                <span className="font-mono font-bold text-slate-900">Price on request</span>
               </li>
               <li className="py-3 flex justify-between items-center">
-                <span className="font-medium text-slate-800">EM-Marin Clamshell (Pre-slotted)</span>
-                <span className="font-mono font-bold text-slate-900">₹8.10 – ₹12.50 / pc</span>
+                <span className="font-medium text-slate-800">Custom-designed smart cards</span>
+                <span className="font-mono font-bold text-slate-900">Price on request</span>
               </li>
               <li className="py-3 flex justify-between items-center">
                 <span className="font-medium text-slate-800">Inkjet Printable PVC Sheet (50 Sets)</span>

@@ -299,7 +299,7 @@ export default function PvcCardManufacturerBangalorePage() {
                 </p>
               </div>
               <Link
-                href="/categories/rfid-consumables"
+                href="/categories/pvc-and-smart-cards"
                 className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#121418] hover:text-[#FF8A3D] transition-colors"
               >
                 <span>View Smart Cards &rarr;</span>

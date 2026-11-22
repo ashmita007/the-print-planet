@@ -82,7 +82,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       // Misspelled catalogue URLs renamed in catalog migration 0003 (Nov 2026).
-      { source: "/categories/rfid-cansumables", destination: "/categories/rfid-consumables", permanent: true },
+      { source: "/categories/rfid-cansumables", destination: "/categories/pvc-and-smart-cards", permanent: true },
+      { source: "/categories/rfid-consumables", destination: "/categories/pvc-and-smart-cards", permanent: true },
       {
         source: "/categories/plastic-lanyard-hook-clip-accessorie",
         destination: "/categories/plastic-lanyard-hook-clip-accessories",

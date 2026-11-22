@@ -229,7 +229,7 @@ export const GUIDES: Guide[] = [
     related: [
       { href: "/categories/id-card-holder", label: "ID card holders and covers" },
       { href: "/categories/id-card-lanyard-consumables", label: "Hooks, clips and badge accessories" },
-      { href: "/categories/rfid-consumables", label: "RFID cards" },
+      { href: "/categories/pvc-and-smart-cards", label: "RFID cards" },
     ],
     whatsappText: "Hi The Print Planet, I need ID card holders / covers in bulk. Please share types and prices.",
   },
@@ -286,7 +286,7 @@ export const GUIDES: Guide[] = [
     ],
     related: [
       { href: "/categories/pvc-id-card-consumable", label: "PVC card sheets and overlays" },
-      { href: "/categories/rfid-consumables", label: "RFID and Mifare cards" },
+      { href: "/categories/pvc-and-smart-cards", label: "RFID and Mifare cards" },
       { href: "/categories/id-card-holder", label: "ID card holders" },
     ],
     whatsappText: "Hi The Print Planet, I need materials for employee ID cards. Please share price for bulk quantity.",
@@ -384,7 +384,7 @@ export const GUIDES: Guide[] = [
       },
     ],
     related: [
-      { href: "/categories/rfid-consumables", label: "Mifare 1K and 125kHz RFID cards" },
+      { href: "/categories/pvc-and-smart-cards", label: "Mifare 1K and 125kHz RFID cards" },
       { href: "/categories/pvc-id-card-consumable", label: "CR-80 PVC core sheets and overlays" },
       { href: "/pricing", label: "Wholesale RFID card price slabs" },
     ],

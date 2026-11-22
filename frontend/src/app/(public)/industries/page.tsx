@@ -59,7 +59,7 @@ const SECTORS: IndustrySector[] = [
     ],
     recommendedProducts: [
       { label: "Satin Lanyard Rolls", href: "/categories/indian-satin-digital-lanyard-roll" },
-      { label: "RFID Smart Cards", href: "/categories/rfid-consumables" },
+      { label: "RFID Smart Cards", href: "/categories/pvc-and-smart-cards" },
       { label: "ID Card Holders", href: "/categories/id-card-holder" },
     ],
     moq: "100 Units",
@@ -113,7 +113,7 @@ const SECTORS: IndustrySector[] = [
     ],
     recommendedProducts: [
       { label: "Metal Fittings & Hooks", href: "/categories/id-card-lanyard-hooks" },
-      { label: "Proximity Cards", href: "/categories/rfid-consumables" },
+      { label: "Proximity Cards", href: "/categories/pvc-and-smart-cards" },
       { label: "Card Machinery", href: "/categories/machines" },
     ],
     moq: "200 Units",

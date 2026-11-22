@@ -99,7 +99,7 @@ const WHOLESALE_SLABS = [
     specs: "13.56 MHz ISO 14443A Contactless 1KB EEPROM Smart Cards",
     moq: "100 Cards",
     slabRate: "₹9.80 – ₹14.50 / card (Factory direct pre-encoded)",
-    link: "/categories/rfid-consumables",
+    link: "/categories/pvc-and-smart-cards",
   },
   {
     category: "Motorized PVC Card Die Cutters",
