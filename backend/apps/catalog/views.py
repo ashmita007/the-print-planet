@@ -430,11 +430,23 @@ class OwnerImageUploadView(APIView):
                 logger.error(f"Cloudinary upload error: {e}")
                 return Response({'error': f"Cloudinary upload failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            # 3. Fallback to local storage (zero cost, served by Nginx)
+            # 3. Fallback to local storage (zero cost, served by Nginx). Raster images get the
+            # sized WebP copies the storefront asks for; anything Pillow cannot read (SVG) is
+            # stored as uploaded.
             from django.core.files.storage import default_storage
             from django.core.files.base import ContentFile
-            saved_path = default_storage.save(f"uploads/{upload_name}", ContentFile(upload_payload.read() if hasattr(upload_payload, 'read') else upload_payload))
-            url = request.build_absolute_uri(settings.MEDIA_URL + saved_path)
+            from PIL import Image as PILImage
+            from .local_images import save_product_image
+            file_obj.seek(0)
+            original = file_obj.read()
+            try:
+                url = save_product_image(original, slugify(upload_name.rsplit('.', 1)[0])[:80] or 'image')
+                saved_path = url.split(settings.MEDIA_URL, 1)[1]
+                if not url.startswith(('http://', 'https://')):
+                    url = request.build_absolute_uri(url)
+            except (OSError, ValueError, SyntaxError, PILImage.DecompressionBombError):
+                saved_path = default_storage.save(f"uploads/{upload_name}", ContentFile(original))
+                url = request.build_absolute_uri(settings.MEDIA_URL + saved_path)
             return Response({
                 'secure_url': url,
                 'public_id': saved_path,

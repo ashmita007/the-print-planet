@@ -14,7 +14,7 @@ cd /app/backend
 echo "-> Validating SQLite database integrity..."
 python -c "
 import sqlite3, os
-db_path = 'db.sqlite3'
+db_path = os.environ.get('SQLITE_PATH') or 'db.sqlite3'
 if os.path.exists(db_path):
     is_corrupt = False
     reason = ''
@@ -55,9 +55,16 @@ else:
     print('==> Clean environment: No db.sqlite3 found. Will initialize fresh.')
 "
 
-# 3. Restore Persistent SQLite Cloud Backup from Cloudinary (if available)
-echo "-> Checking Cloudinary for persistent SQLite database backup..."
-python manage.py sync_sqlite_cloud --restore || true
+# 3. Restore Persistent SQLite Cloud Backup from Cloudinary (if available).
+# A server that keeps the database on a persistent disk (SQLITE_PATH set) restores only
+# when that disk has no database yet; restoring over it would drop changes made since the
+# last cloud backup. Without SQLITE_PATH (Render, no disk) it restores on every start.
+if [ -n "$SQLITE_PATH" ] && [ -s "$SQLITE_PATH" ]; then
+    echo "-> Local SQLite database found, skipping Cloudinary restore."
+else
+    echo "-> Checking Cloudinary for persistent SQLite database backup..."
+    python manage.py sync_sqlite_cloud --restore || true
+fi
 
 # 4. Run database migrations with resilient retry loop
 echo "-> Applying database migrations..."

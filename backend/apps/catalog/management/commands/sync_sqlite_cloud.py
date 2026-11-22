@@ -45,7 +45,8 @@ class Command(BaseCommand):
                             help='Run even off the production server (only to deliberately restore or seed production).')
 
     def handle(self, *args, **options):
-        db_path = str(settings.BASE_DIR / 'db.sqlite3')
+        db = settings.DATABASES['default']
+        db_path = str(db['NAME'] if db['ENGINE'].endswith('sqlite3') else settings.BASE_DIR / 'db.sqlite3')
 
         if not options.get('force') and not cloud_sync_allowed():
             self.stdout.write(self.style.WARNING(

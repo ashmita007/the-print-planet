@@ -30,7 +30,7 @@ import {
   Video,
 } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatCategoryName, formatProductName, getProductImageUrl, cloudinarySized } from "@/lib/formatters";
+import { formatCategoryName, formatProductName, getProductImageUrl, sizedImage } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import EnquiryModal from "./EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
@@ -148,7 +148,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {!imgError && selectedImage ? (
               <img
                 ref={mainImageRef}
-                src={cloudinarySized(selectedImage, 900)}
+                src={sizedImage(selectedImage, 900)}
                 fetchPriority="high"
                 alt={formatProductName(product.name)}
                 onLoad={() => setImgLoaded(true)}
@@ -198,7 +198,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   aria-label={`Select product image ${idx + 1}`}
                 >
                   <img
-                    src={cloudinarySized(imgUrl, 160)}
+                    src={sizedImage(imgUrl, 160)}
                     loading="lazy"
                     alt={`${formatProductName(product.name)} view ${idx + 1}`}
                     className="w-full h-full object-contain"
