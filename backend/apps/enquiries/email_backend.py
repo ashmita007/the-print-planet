@@ -1,5 +1,8 @@
+import logging
 import ssl
 from django.core.mail.backends.smtp import EmailBackend
+
+logger = logging.getLogger(__name__)
 
 
 class CertifiEmailBackend(EmailBackend):
@@ -12,5 +15,6 @@ class CertifiEmailBackend(EmailBackend):
         try:
             import certifi
             return ssl.create_default_context(cafile=certifi.where())
-        except Exception:
+        except Exception:  # certifi missing or unreadable: fall back to system CAs
+            logger.exception('certifi CA bundle unavailable, using system CAs')
             return ssl.create_default_context()

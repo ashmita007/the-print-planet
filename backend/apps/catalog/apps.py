@@ -1,3 +1,5 @@
+import logging
+
 from django.apps import AppConfig
 
 class CatalogConfig(AppConfig):
@@ -7,5 +9,5 @@ class CatalogConfig(AppConfig):
     def ready(self):
         try:
             import apps.catalog.signals  # noqa
-        except Exception:
-            pass
+        except Exception:  # keep startup alive if signal wiring fails; the cause is logged
+            logging.getLogger(__name__).exception('Could not load catalog signals')

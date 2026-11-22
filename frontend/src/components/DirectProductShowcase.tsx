@@ -16,9 +16,8 @@ import {
 import { Product, Category } from "@/lib/types";
 import { formatProductName } from "@/lib/formatters";
 import { getProducts } from "@/lib/api";
-import ProductCard from "./ProductCard";
-import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
-import SortModal, { SortOptionValue } from "./SortModal";
+import ProductCard from "@/components/product/ProductCard";
+import SortModal, { SortOptionValue } from "@/components/product/SortModal";
 
 interface DirectProductShowcaseProps {
   products?: Product[];
@@ -126,23 +125,7 @@ export default function DirectProductShowcase({
     isDraggingRef.current = false;
   };
 
-  // New results stagger in. The server-rendered first page is handled by PageReveal.
   const gridRef = useRef<HTMLDivElement>(null);
-  const hasFetched = useRef(false);
-  useGSAP(
-    () => {
-      if (loading || !hasFetched.current || !gridRef.current || prefersReducedMotion()) return;
-      gsap.from(gridRef.current.children, {
-        autoAlpha: 0,
-        y: 18,
-        duration: 0.5,
-        stagger: 0.035,
-        ease: "power3.out",
-        clearProps: "transform,opacity,visibility",
-      });
-    },
-    { dependencies: [loading, items] }
-  );
 
   // Debounce search query so backend isn't spammed while typing
   useEffect(() => {
@@ -156,7 +139,6 @@ export default function DirectProductShowcase({
   const fetchProductsFromBackend = useCallback(
     async (page: number, cat: string, search: string, sort: SortOptionValue) => {
       setLoading(true);
-      hasFetched.current = true;
       try {
         const res = await getProducts({
           page,

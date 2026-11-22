@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import { clientLogin, safeRedirectPath } from "@/lib/api";
 
 export default function ClientLoginPage() {

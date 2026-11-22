@@ -214,46 +214,48 @@ export function formatProductName(name?: string | null): string {
  * Guarantees a valid, displayable image URL across all catalog formats,
  * falling back safely to the official branded placeholder asset.
  */
-export function getProductImageUrl(product?: any): string {
+interface ImageObject {
+  secure_url?: string | null;
+  url?: string | null;
+  image?: string | null;
+}
+
+type ImageLike = string | ImageObject | null | undefined;
+
+interface ProductImageSource {
+  primary_image?: ImageLike;
+  images?: ImageLike[] | null;
+  image?: string | null;
+}
+
+const cleanUrl = (value: unknown): string => (typeof value === "string" ? value.trim() : "");
+
+// Order matters: secure_url, then url, then image, as callers expect the first usable one.
+const imageUrlOf = (img: ImageLike, withImageKey: boolean): string => {
+  if (typeof img === "string") return cleanUrl(img);
+  if (!img) return "";
+  return cleanUrl(img.secure_url) || cleanUrl(img.url) || (withImageKey ? cleanUrl(img.image) : "");
+};
+
+export function getProductImageUrl(product?: ProductImageSource | ImageObject | null): string {
   if (!product) return "/placeholder-product.svg";
+  const source = product as ProductImageSource;
 
-  // 1. Direct primary_image object with secure_url or url
-  if (product.primary_image?.secure_url && typeof product.primary_image.secure_url === "string") {
-    const url = product.primary_image.secure_url.trim();
-    if (url) return url;
-  }
-  if (product.primary_image?.url && typeof product.primary_image.url === "string") {
-    const url = product.primary_image.url.trim();
-    if (url) return url;
-  }
-
-  // 2. Direct primary_image string
-  if (typeof product.primary_image === "string" && product.primary_image.trim()) {
-    return product.primary_image.trim();
-  }
+  // 1-2. primary_image object (secure_url or url) or string
+  const primary = imageUrlOf(source.primary_image, false);
+  if (primary) return primary;
 
   // 3. images array
-  if (Array.isArray(product.images) && product.images.length > 0) {
-    for (const img of product.images) {
-      if (typeof img === "string" && img.trim()) {
-        return img.trim();
-      }
-      if (img?.secure_url && typeof img.secure_url === "string" && img.secure_url.trim()) {
-        return img.secure_url.trim();
-      }
-      if (img?.url && typeof img.url === "string" && img.url.trim()) {
-        return img.url.trim();
-      }
-      if (img?.image && typeof img.image === "string" && img.image.trim()) {
-        return img.image.trim();
-      }
+  if (Array.isArray(source.images)) {
+    for (const img of source.images) {
+      const url = imageUrlOf(img, true);
+      if (url) return url;
     }
   }
 
   // 4. product.image property
-  if (typeof product.image === "string" && product.image.trim()) {
-    return product.image.trim();
-  }
+  const direct = cleanUrl(source.image);
+  if (direct) return direct;
 
   return "/placeholder-product.svg";
 }

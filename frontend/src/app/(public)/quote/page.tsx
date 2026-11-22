@@ -12,7 +12,7 @@ import {
   Paperclip,
   UploadCloud,
 } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 import { submitEnquiry } from "@/lib/api";
 import { trackLead } from "@/components/LeadTracker";
 import { useCart } from "@/lib/cart";

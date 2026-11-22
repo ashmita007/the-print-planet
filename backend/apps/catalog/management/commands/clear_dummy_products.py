@@ -3,7 +3,7 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from apps.catalog.models import Product, ProductImage, Category
-from apps.catalog.management.commands.backup_database_email import generate_full_database_excel_bytes
+from apps.catalog.excel_backup import generate_full_database_excel_bytes
 
 class Command(BaseCommand):
     help = 'Safely clears dummy/mock products before client production launch, after generating an automatic safety backup.'

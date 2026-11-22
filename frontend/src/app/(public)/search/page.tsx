@@ -2,9 +2,9 @@ import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Search, Layers, Box } from "lucide-react";
-import ProductCard from "@/components/ProductCard";
-import PageHero from "@/components/PageHero";
-import MobileFilterSortBar from "@/components/MobileFilterSortBar";
+import ProductCard from "@/components/product/ProductCard";
+import PageHero from "@/components/storefront/PageHero";
+import MobileFilterSortBar from "@/components/product/MobileFilterSortBar";
 import { globalSearch, getCategories } from "@/lib/api";
 
 interface SearchPageProps {

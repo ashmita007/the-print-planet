@@ -2,7 +2,7 @@ import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import React from "react";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 import ContactFormClient from "@/components/ContactFormClient";
 import { getSiteSettings } from "@/lib/api";
 

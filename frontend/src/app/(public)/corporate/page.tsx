@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import BulkOrderDesk from "@/components/corporate/BulkOrderDesk";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 

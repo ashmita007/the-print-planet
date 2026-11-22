@@ -14,9 +14,9 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 import { DEFAULT_OG_IMAGES } from "@/lib/seo";
-import PageCta from "@/components/PageCta";
+import PageCta from "@/components/storefront/PageCta";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";

@@ -17,7 +17,7 @@ import {
   Sparkles,
   Plane,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 

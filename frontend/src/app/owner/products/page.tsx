@@ -32,10 +32,13 @@ import {
   ownerDeleteProduct,
   ownerGetCategories,
   ownerToggleProductStatus,
+  authedFetch,
 } from "@/lib/api";
 import { Product, Category } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
 import ConfirmModal from "@/components/owner/ConfirmModal";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
+import Image from "next/image";
 
 
 export default function OwnerProductsListPage() {
@@ -151,13 +154,8 @@ export default function OwnerProductsListPage() {
   const handleExportExcel = async () => {
     try {
       setIsExporting(true);
-      const token = typeof window !== "undefined" ? localStorage.getItem("owner_token") : null;
       const backendUrl = process.env.NEXT_PUBLIC_API_URL || "";
-      const res = await fetch(`${backendUrl}/api/v1/owner/export/excel/`, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
+      const res = await authedFetch(`${backendUrl}/api/v1/owner/export/excel/`);
       setIsExporting(false);
 
       if (!res.ok) {
@@ -222,17 +220,7 @@ export default function OwnerProductsListPage() {
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
-            Catalogue
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
-            Products
-            <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
-              {totalCount}
-            </span>
-          </h1>
-        </div>
+        <OwnerPageHeader eyebrow="Catalogue" title="Products" count={totalCount} />
 
         <div className="flex flex-wrap items-center gap-2">
           <button
@@ -483,12 +471,15 @@ export default function OwnerProductsListPage() {
                       {/* Product Thumbnail & Title */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-md bg-[#EDF1F6] border border-[#DFE6EE] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#121418]/30 transition-colors">
+                          <div className="relative w-12 h-12 rounded-md bg-[#EDF1F6] border border-[#DFE6EE] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#121418]/30 transition-colors">
                             {img ? (
-                              <img
+                              <Image
                                 src={img}
+                                fill
+                                sizes="48px"
+                                unoptimized
                                 alt={formatProductName(p.name)}
-                                className="w-full h-full object-contain"
+                                className="w-full h-full object-contain p-1"
                               />
                             ) : (
                               <Package className="w-5 h-5 text-slate-300" />

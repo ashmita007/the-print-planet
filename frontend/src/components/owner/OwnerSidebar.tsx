@@ -21,6 +21,9 @@ import {
   Database,
   Briefcase,
   CreditCard,
+  Star,
+  Lock,
+  type LucideIcon,
 } from "lucide-react";
 import { ownerLogout, ownerGetMe } from "@/lib/api";
 import { AuthUser } from "@/lib/types";
@@ -28,7 +31,7 @@ import { AuthUser } from "@/lib/types";
 interface NavLinkItem {
   label: string;
   href: string;
-  icon: any;
+  icon: LucideIcon;
   tab?: string;
 }
 
@@ -36,6 +39,38 @@ interface NavSection {
   title: string;
   links: NavLinkItem[];
 }
+
+const navSections: NavSection[] = [
+  {
+    title: "Overview",
+    links: [
+      { label: "Dashboard Overview", href: "/owner/dashboard", icon: LayoutDashboard },
+      { label: "Bulk Orders & Chats", href: "/owner/orders", icon: Briefcase },
+      { label: "Customer Enquiries", href: "/owner/enquiries", icon: Inbox },
+      { label: "Online Payments", href: "/owner/payments", icon: CreditCard },
+    ],
+  },
+  {
+    title: "Catalogue & Inventory",
+    links: [
+      { label: "Product Management", href: "/owner/products", icon: Package },
+      { label: "Add New Product", href: "/owner/products/new", icon: PlusCircle },
+      { label: "Category Hierarchy", href: "/owner/categories", icon: Layers },
+      { label: "Bulk CSV/JSON Import", href: "/owner/import", icon: FileSpreadsheet },
+    ],
+  },
+  {
+    title: "Content & Storefront CMS",
+    links: [
+      { label: "Homepage Hero & Caption", href: "/owner/settings?tab=hero", icon: Sparkles, tab: "hero" },
+      { label: "About Us Content CMS", href: "/owner/settings?tab=about", icon: Info, tab: "about" },
+      { label: "Store Identity & Address", href: "/owner/settings?tab=identity", icon: Settings, tab: "identity" },
+      { label: "Google Reviews", href: "/owner/settings?tab=reviews", icon: Star, tab: "reviews" },
+      { label: "Cloud Sync & Backups", href: "/owner/settings?tab=database", icon: Database, tab: "database" },
+      { label: "Security & Password", href: "/owner/settings?tab=security", icon: Lock, tab: "security" },
+    ],
+  },
+];
 
 function OwnerSidebarInner() {
   const pathname = usePathname();
@@ -73,36 +108,6 @@ function OwnerSidebarInner() {
     await ownerLogout();
     router.push("/owner/login");
   };
-
-  const navSections: NavSection[] = [
-    {
-      title: "Overview",
-      links: [
-        { label: "Dashboard Overview", href: "/owner/dashboard", icon: LayoutDashboard },
-        { label: "Bulk Orders & Chats", href: "/owner/orders", icon: Briefcase },
-        { label: "Customer Enquiries", href: "/owner/enquiries", icon: Inbox },
-        { label: "Online Payments", href: "/owner/payments", icon: CreditCard },
-      ],
-    },
-    {
-      title: "Catalogue & Inventory",
-      links: [
-        { label: "Product Management", href: "/owner/products", icon: Package },
-        { label: "Add New Product", href: "/owner/products/new", icon: PlusCircle },
-        { label: "Category Hierarchy", href: "/owner/categories", icon: Layers },
-        { label: "Bulk CSV/JSON Import", href: "/owner/import", icon: FileSpreadsheet },
-      ],
-    },
-    {
-      title: "Content & Storefront CMS",
-      links: [
-        { label: "Homepage Hero & Caption", href: "/owner/settings?tab=hero", icon: Sparkles, tab: "hero" },
-        { label: "About Us Content CMS", href: "/owner/settings?tab=about", icon: Info, tab: "about" },
-        { label: "Store Identity & Address", href: "/owner/settings?tab=identity", icon: Settings, tab: "identity" },
-        { label: "Cloud Sync & Backups", href: "/owner/settings?tab=database", icon: Database, tab: "database" },
-      ],
-    },
-  ];
 
   useEffect(() => {
     if (!mobileOpen) return;

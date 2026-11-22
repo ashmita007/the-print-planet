@@ -2,67 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
-
-from apps.catalog.views import (
-    CategoryListView,
-    CategoryDetailView,
-    ProductListView,
-    ProductDetailView,
-    FeaturedProductsView,
-    GlobalSearchView,
-    OwnerProductViewSet,
-    OwnerCategoryViewSet,
-    OwnerProductImageViewSet,
-    OwnerImageUploadView,
-    OwnerBulkImportValidateView,
-    OwnerBulkImportExecuteView,
-    OwnerCatalogExportExcelView,
-    OwnerDatabaseBackupEmailView,
-    OwnerDatabaseBackupDownloadView,
-)
-from apps.enquiries.views import (
-    PublicEnquiryCreateView,
-    OwnerEnquiryViewSet,
-)
-from apps.bulk_orders.views import (
-    OwnerConversationBackupDownloadView,
-    OwnerBulkOrderViewSet,
-)
-from apps.settings_app.views import (
-    PublicSiteSettingsView,
-    PublicHomePageSectionsView,
-    OwnerSiteSettingsView,
-    OwnerHomePageSectionViewSet,
-    OwnerDashboardStatsView,
-    OwnerCloudDatabaseSyncView,
-    OwnerEmailDiagnosticsView,
-    PublicGoogleReviewView,
-    OwnerGoogleReviewView,
-    OwnerGoogleReviewSyncView,
-)
-from apps.authentication.views import (
-    LoginView,
-    RegisterView,
-    VerifyEmailOTPView,
-    ResendEmailOTPView,
-    LogoutView,
-    CurrentUserView,
-    ChangePasswordView,
-    RequestPasswordResetView,
-    ConfirmPasswordResetView,
-)
-
-# Router for owner ViewSets
-owner_router = DefaultRouter()
-owner_router.register(r'products', OwnerProductViewSet, basename='owner-products')
-owner_router.register(r'categories', OwnerCategoryViewSet, basename='owner-categories')
-owner_router.register(r'images', OwnerProductImageViewSet, basename='owner-images')
-owner_router.register(r'enquiries', OwnerEnquiryViewSet, basename='owner-enquiries')
-owner_router.register(r'homepage-sections', OwnerHomePageSectionViewSet, basename='owner-homepage-sections')
-owner_router.register(r'bulk-orders', OwnerBulkOrderViewSet, basename='owner-bulk-orders')
-owner_router.register(r'orders', OwnerBulkOrderViewSet, basename='owner-orders')
 
 from django.http import JsonResponse
 from django.db import connection
@@ -91,47 +31,14 @@ urlpatterns = [
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
-    # Public API v1 endpoints
-    path('api/v1/categories/', CategoryListView.as_view(), name='category-list'),
-    path('api/v1/categories/<slug:slug>/', CategoryDetailView.as_view(), name='category-detail'),
-    path('api/v1/products/', ProductListView.as_view(), name='product-list'),
-    path('api/v1/products/featured/', FeaturedProductsView.as_view(), name='featured-products'),
-    path('api/v1/products/<slug:slug>/', ProductDetailView.as_view(), name='product-detail'),
-    path('api/v1/search/', GlobalSearchView.as_view(), name='global-search'),
-    path('api/v1/enquiries/', PublicEnquiryCreateView.as_view(), name='public-enquiry'),
-    path('api/v1/site-settings/', PublicSiteSettingsView.as_view(), name='public-site-settings'),
-    path('api/v1/google-reviews/', PublicGoogleReviewView.as_view(), name='public-google-reviews'),
-    path('api/v1/homepage-sections/', PublicHomePageSectionsView.as_view(), name='public-homepage-sections'),
-
-    # Authentication & Registration
-    path('api/v1/auth/register/', RegisterView.as_view(), name='auth-register'),
-    path('api/v1/auth/verify-email/', VerifyEmailOTPView.as_view(), name='auth-verify-email'),
-    path('api/v1/auth/resend-otp/', ResendEmailOTPView.as_view(), name='auth-resend-otp'),
-    path('api/v1/auth/login/', LoginView.as_view(), name='auth-login'),
-    path('api/v1/auth/logout/', LogoutView.as_view(), name='auth-logout'),
-    path('api/v1/auth/me/', CurrentUserView.as_view(), name='auth-me'),
-    path('api/v1/auth/change-password/', ChangePasswordView.as_view(), name='auth-change-password'),
-    path('api/v1/auth/forgot-password/', RequestPasswordResetView.as_view(), name='auth-forgot-password'),
-    path('api/v1/auth/reset-password/', ConfirmPasswordResetView.as_view(), name='auth-reset-password'),
-
-    # Bulk Orders & Dedicated Conversation System App
+    # API v1: each app owns its routes. The shared owner router comes last because its
+    # detail routes (e.g. images/<pk>/) would otherwise swallow explicit owner paths.
+    path('api/v1/', include('apps.catalog.urls')),
+    path('api/v1/', include('apps.enquiries.urls')),
+    path('api/v1/', include('apps.settings_app.urls')),
+    path('api/v1/', include('apps.authentication.urls')),
     path('api/v1/bulk-orders/', include('apps.bulk_orders.urls')),
-
-    # Owner Management APIs
-    path('api/v1/owner/site-settings/', OwnerSiteSettingsView.as_view(), name='owner-site-settings'),
-    path('api/v1/owner/google-reviews/', OwnerGoogleReviewView.as_view(), name='owner-google-reviews'),
-    path('api/v1/owner/google-reviews/sync/', OwnerGoogleReviewSyncView.as_view(), name='owner-google-reviews-sync'),
-    path('api/v1/owner/stats/', OwnerDashboardStatsView.as_view(), name='owner-stats'),
-    path('api/v1/owner/images/upload/', OwnerImageUploadView.as_view(), name='owner-image-upload'),
-    path('api/v1/owner/import/validate/', OwnerBulkImportValidateView.as_view(), name='owner-import-validate'),
-    path('api/v1/owner/import/execute/', OwnerBulkImportExecuteView.as_view(), name='owner-import-execute'),
-    path('api/v1/owner/export/excel/', OwnerCatalogExportExcelView.as_view(), name='owner-export-excel'),
-    path('api/v1/owner/backup/email/', OwnerDatabaseBackupEmailView.as_view(), name='owner-backup-email'),
-    path('api/v1/owner/email/diagnostics/', OwnerEmailDiagnosticsView.as_view(), name='owner-email-diagnostics'),
-    path('api/v1/owner/backup/download/', OwnerDatabaseBackupDownloadView.as_view(), name='owner-backup-download'),
-    path('api/v1/owner/backup/conversations/', OwnerConversationBackupDownloadView.as_view(), name='owner-backup-conversations'),
-    path('api/v1/owner/backup/cloud/', OwnerCloudDatabaseSyncView.as_view(), name='owner-backup-cloud'),
-    path('api/v1/owner/', include(owner_router.urls)),
+    path('api/v1/owner/', include('apps.core.urls')),
 ]
 
 from django.views.static import serve

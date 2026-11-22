@@ -14,7 +14,7 @@ import {
   Scissors,
   Building2,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 import PrintShopCalculator from "@/components/PrintShopCalculator";
 import { DEFAULT_OG_IMAGES } from "@/lib/seo";

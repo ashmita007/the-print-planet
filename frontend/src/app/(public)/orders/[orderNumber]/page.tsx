@@ -21,7 +21,7 @@ import {
   Mail,
   Sparkles,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import { clientGetBulkOrderDetail, clientPostBulkOrderMessage, getClientAuthHeaders } from "@/lib/api";
 import AttachmentLink from "@/components/orders/AttachmentLink";
 import PayQuoteButton from "@/components/orders/PayQuoteButton";

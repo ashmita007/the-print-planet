@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Clock } from "lucide-react";
-import PageHero from "@/components/PageHero";
-import PageCta from "@/components/PageCta";
+import PageHero from "@/components/storefront/PageHero";
+import PageCta from "@/components/storefront/PageCta";
 import { GUIDES, getGuide } from "@/lib/guides";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";

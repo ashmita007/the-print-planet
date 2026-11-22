@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Download, FileText, CheckCircle2, Phone, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
-import PageHero from "@/components/PageHero";
-import PageCta from "@/components/PageCta";
+import PageHero from "@/components/storefront/PageHero";
+import PageCta from "@/components/storefront/PageCta";
 import GstCalculator from "@/components/GstCalculator";
 import PrintTariffButton from "@/components/PrintTariffButton";
 

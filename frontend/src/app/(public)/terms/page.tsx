@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Terms for wholesale orders from The Print Planet, Bengaluru: quotations and GST pricing, minimum order quantities, machinery warranty and dispatch.",
   alternates: { canonical: `${SITE_URL}/terms` },
 };
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 
 export default function TermsPage() {
   return (

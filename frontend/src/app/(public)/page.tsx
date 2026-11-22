@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import ProductCard from "@/components/ProductCard";
-import ProductHeroShowcase from "@/components/ProductHeroShowcase";
+import ProductCard from "@/components/product/ProductCard";
+import ProductHeroShowcase from "@/components/product/ProductHeroShowcase";
 import PrintRegisterSection from "@/components/planet/PrintRegisterSection";
 import BuyingFacts from "@/components/BuyingFacts";
 import DirectProductShowcase from "@/components/DirectProductShowcase";
@@ -129,7 +129,7 @@ export default async function HomePage() {
           p.category?.slug === "machines" ||
           p.category?.slug === "id-card-manufacturing-machines" ||
           p.category?.slug?.includes("machine") ||
-          (p as any).category?.parent_slug === "machines"
+          p.category?.parent_slug === "machines"
       );
 
   // Curate a diverse selection of flagship products across all distinct categories

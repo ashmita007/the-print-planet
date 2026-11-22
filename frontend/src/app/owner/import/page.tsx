@@ -14,17 +14,19 @@ import {
   Package,
 } from "lucide-react";
 import { ownerValidateBulkImport, ownerExecuteBulkImport } from "@/lib/api";
+import type { ImportExecutionResult, ImportValidationResult } from "@/lib/types";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 
 export default function BulkImportPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isValidating, setIsValidating] = useState(false);
-  const [validationResult, setValidationResult] = useState<any>(null);
+  const [validationResult, setValidationResult] = useState<ImportValidationResult | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const [strategy, setStrategy] = useState<"skip" | "update">("skip");
 
   const [isExecuting, setIsExecuting] = useState(false);
-  const [executionResult, setExecutionResult] = useState<any>(null);
+  const [executionResult, setExecutionResult] = useState<ImportExecutionResult | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,7 +47,7 @@ export default function BulkImportPage() {
     setIsValidating(false);
 
     if (res.success) {
-      setValidationResult(res.data);
+      setValidationResult(res.data ?? null);
     } else {
       setErrorMsg(res.error || "File validation failed.");
     }
@@ -57,12 +59,12 @@ export default function BulkImportPage() {
     setErrorMsg("");
 
     // `rows` holds every valid row; `preview` is capped at 50 for display only.
-    const rowsToImport = validationResult.rows ?? validationResult.preview.map((r: any) => r.raw_data);
+    const rowsToImport = validationResult.rows ?? validationResult.preview.map((r) => r.raw_data ?? {});
     const res = await ownerExecuteBulkImport(rowsToImport, strategy);
     setIsExecuting(false);
 
     if (res.success) {
-      setExecutionResult(res.data);
+      setExecutionResult(res.data ?? null);
     } else {
       setErrorMsg(res.error || "Import execution failed.");
     }
@@ -72,7 +74,7 @@ export default function BulkImportPage() {
     if (!validationResult?.errors?.length) return;
     const csvContent =
       "data:text/csv;charset=utf-8," +
-      ["Row,SKU,Error", ...validationResult.errors.map((e: any) => `${e.row},"${e.sku || ""}","${e.error}"`)].join("\n");
+      ["Row,SKU,Error", ...validationResult.errors.map((e) => `${e.row},"${e.sku || ""}","${e.error}"`)].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -84,17 +86,11 @@ export default function BulkImportPage() {
 
   return (
     <div className="space-y-8 max-w-5xl">
-      <div>
-        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
-          Catalogue
-        </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#121418] mt-1">
-          Bulk import
-        </h1>
+      <OwnerPageHeader eyebrow="Catalogue" title="Bulk import">
         <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
           Import reference catalogues, detect existing SKUs, preview rows, then update or skip duplicates.
         </p>
-      </div>
+      </OwnerPageHeader>
 
       {errorMsg && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-xs flex items-center gap-2">
@@ -231,7 +227,7 @@ export default function BulkImportPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {validationResult.preview?.map((row: any) => (
+                {validationResult.preview?.map((row) => (
                   <tr key={row.row_index} className="hover:bg-slate-50">
                     <td className="p-2.5 font-bold text-slate-400">{row.row_index}</td>
                     <td className="p-2.5 font-semibold text-[#121418] truncate max-w-xs">{row.name}</td>

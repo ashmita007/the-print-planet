@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Loader2, ShieldCheck } from "lucide-react";
 import OwnerSidebar from "@/components/owner/OwnerSidebar";
-import { ownerGetMe } from "@/lib/api";
+import { ownerGetMe, getOwnerToken, clearOwnerToken } from "@/lib/api";
 
 export default function OwnerLayout({
   children,
@@ -24,7 +24,7 @@ export default function OwnerLayout({
 
     if (isLoginPage) {
       // If already logged in, seamlessly forward to dashboard
-      const token = typeof window !== "undefined" ? localStorage.getItem("owner_token") : null;
+      const token = getOwnerToken();
       if (token) {
         ownerGetMe().then((user) => {
           if (isMounted && user) {
@@ -36,7 +36,7 @@ export default function OwnerLayout({
     }
 
     // Protected owner route
-    const token = typeof window !== "undefined" ? localStorage.getItem("owner_token") : null;
+    const token = getOwnerToken();
     if (!token) {
       if (isMounted) {
         setHasAuthToken(false);
@@ -54,7 +54,7 @@ export default function OwnerLayout({
     ownerGetMe().then((user) => {
       if (!isMounted) return;
       if (user === null) {
-        localStorage.removeItem("owner_token");
+        clearOwnerToken();
         localStorage.removeItem("owner_user");
         setHasAuthToken(false);
         router.replace("/owner/login?reason=expired");

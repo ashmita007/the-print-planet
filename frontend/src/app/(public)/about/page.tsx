@@ -2,8 +2,8 @@ import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import PageHero from "@/components/PageHero";
-import PageCta from "@/components/PageCta";
+import PageHero from "@/components/storefront/PageHero";
+import PageCta from "@/components/storefront/PageCta";
 import { getSiteSettings } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";

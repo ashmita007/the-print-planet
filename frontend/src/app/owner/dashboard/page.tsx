@@ -24,6 +24,7 @@ import {
 } from "@/lib/api";
 import { DashboardMetrics, Enquiry, Product } from "@/lib/types";
 import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 
 export default function OwnerDashboardPage() {
@@ -202,12 +203,7 @@ export default function OwnerDashboardPage() {
 
       {/* Page Title & Quick Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
-            Owner dashboard
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">Overview</h1>
-        </div>
+        <OwnerPageHeader eyebrow="Owner dashboard" title="Overview" />
 
         <div className="flex flex-wrap items-center gap-2">
           <button
@@ -275,10 +271,10 @@ export default function OwnerDashboardPage() {
         {[
           {
             label: "Bulk Orders",
-            value: (metrics as any)?.total_bulk_orders || 0,
+            value: metrics?.total_bulk_orders || 0,
             icon: Briefcase,
             href: "/owner/orders",
-            note: `${(metrics as any)?.pending_bulk_orders || 0} need quotes`,
+            note: `${metrics?.pending_bulk_orders || 0} need quotes`,
             noteTone: "text-[#353C45] font-bold",
             accent: true,
           },

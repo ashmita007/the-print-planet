@@ -1,14 +1,19 @@
+import logging
 import os
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from django.db import DatabaseError
 from django.db.models import Q
 from django.http import FileResponse, Http404
-from apps.catalog.views import StandardResultsSetPagination
+from apps.core.pagination import StandardResultsSetPagination
 from .models import Enquiry
 from .serializers import EnquiryCreateSerializer, EnquiryDetailSerializer
 from .services import trigger_enquiry_notifications
+
+
+logger = logging.getLogger(__name__)
 
 
 class PublicEnquiryCreateView(generics.CreateAPIView):
@@ -32,8 +37,8 @@ class PublicEnquiryCreateView(generics.CreateAPIView):
             try:
                 enquiry.attachment_url = f"/api/v1/owner/enquiries/{enquiry.id}/attachment/"
                 enquiry.save(update_fields=['attachment_url'])
-            except Exception:
-                pass
+            except DatabaseError:
+                logger.exception('Could not save attachment url for enquiry %s', enquiry.id)
         trigger_enquiry_notifications(enquiry)
         from apps.catalog.backup_service import trigger_auto_backup_async
         trigger_auto_backup_async(force=True)

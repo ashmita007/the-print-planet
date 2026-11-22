@@ -1,9 +1,9 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import ProductCard from "@/components/ProductCard";
-import ProductDetailClient from "@/components/ProductDetailClient";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
+import ProductCard from "@/components/product/ProductCard";
+import ProductDetailClient from "@/components/product/ProductDetailClient";
 import { formatCategoryHeading, formatCategoryName, formatProductName } from "@/lib/formatters";
 import { getProductBySlug } from "@/lib/api";
 import { brandedTitle, snippet } from "@/lib/seo";

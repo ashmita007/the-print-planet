@@ -22,7 +22,7 @@ import {
   Send,
   Paperclip,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import {
   clientGetBulkOrders,
   clientGetCheckedProducts,
@@ -30,13 +30,14 @@ import {
   clientVerifySession,
   clientSubmitBulkOrder,
 } from "@/lib/api";
-import { BulkOrder } from "@/lib/types";
+import { BulkOrder, BulkOrderSummaryMetrics, CheckedProduct, ClientProfile } from "@/lib/types";
+import Image from "next/image";
 
 export default function ClientOrdersDashboardPage() {
   const router = useRouter();
   const [orders, setOrders] = useState<BulkOrder[]>([]);
-  const [checkedProducts, setCheckedProducts] = useState<any[]>([]);
-  const [metrics, setMetrics] = useState<any>({
+  const [checkedProducts, setCheckedProducts] = useState<CheckedProduct[]>([]);
+  const [metrics, setMetrics] = useState<BulkOrderSummaryMetrics>({
     total: 0,
     submitted: 0,
     reviewing: 0,
@@ -46,7 +47,7 @@ export default function ClientOrdersDashboardPage() {
   });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<ClientProfile | null>(null);
   const [loadError, setLoadError] = useState("");
 
   // New Inquiry / Conversation Modal state
@@ -376,8 +377,8 @@ export default function ClientOrdersDashboardPage() {
                   href={`/products/${p.slug}`}
                   className="p-2.5 rounded-md border border-[#DFE6EE] hover:border-[#121418] hover:shadow-sm bg-[#EDF1F6] transition-all group flex flex-col justify-between"
                 >
-                  <div className="w-full aspect-square bg-[#FFFFFF] rounded-lg p-1.5 mb-2 overflow-hidden flex items-center justify-center border border-slate-100">
-                    <img src={imgUrl} alt={p.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform" />
+                  <div className="relative w-full aspect-square bg-[#FFFFFF] rounded-lg p-1.5 mb-2 overflow-hidden flex items-center justify-center border border-slate-100">
+                    <Image src={imgUrl} alt={p.name} fill sizes="(min-width: 1024px) 20vw, 50vw" unoptimized className="object-contain p-1.5 group-hover:scale-105 transition-transform" />
                   </div>
                   <div>
                     <span className="text-[9px] font-mono text-slate-400 uppercase block">{p.sku}</span>

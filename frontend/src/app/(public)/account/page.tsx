@@ -16,14 +16,15 @@ import {
   PlusCircle,
   FileText,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import { clientVerifySession, clientLogout, clientGetBulkOrders } from "@/lib/api";
+import type { ClientProfile } from "@/lib/types";
 
 export default function ClientAccountPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<ClientProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [orderMetrics, setOrderMetrics] = useState<any>({ total: 0 });
+  const [orderMetrics, setOrderMetrics] = useState<{ total: number }>({ total: 0 });
 
   useEffect(() => {
     let cancelled = false;

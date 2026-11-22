@@ -22,8 +22,9 @@ import {
   ExternalLink,
   Download,
 } from "lucide-react";
-import { ownerGetEnquiries, ownerUpdateEnquiry, getApiUrl } from "@/lib/api";
+import { ownerGetEnquiries, ownerUpdateEnquiry, getApiUrl, authedFetch } from "@/lib/api";
 import { Enquiry } from "@/lib/types";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 
 export default function OwnerEnquiriesPage() {
@@ -101,10 +102,7 @@ export default function OwnerEnquiriesPage() {
     try {
       setDownloadingAtt(true);
       const apiUrl = getApiUrl();
-      const token = typeof window !== "undefined" ? localStorage.getItem("owner_token") : null;
-      const res = await fetch(`${apiUrl}/api/v1/owner/enquiries/${enquiryId}/attachment/`, {
-        headers: token ? { Authorization: `Token ${token}` } : {},
-      });
+      const res = await authedFetch(`${apiUrl}/api/v1/owner/enquiries/${enquiryId}/attachment/`);
       if (!res.ok) {
         alert("Could not download attachment. File may have been removed or access denied.");
         return;
@@ -138,17 +136,7 @@ export default function OwnerEnquiriesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
-          Sales inbox
-        </span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
-          Enquiries
-          <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
-            {totalCount}
-          </span>
-        </h1>
-      </div>
+      <OwnerPageHeader eyebrow="Sales inbox" title="Enquiries" count={totalCount} />
 
       {/* Filter / Search Bar */}
       <div className="surface-card p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">

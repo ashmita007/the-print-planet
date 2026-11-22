@@ -9,8 +9,7 @@ type Props = {
 };
 
 /**
- * A strip of large words that runs with the scroll (PageReveal drives it through
- * data-marquee). Without JavaScript, or with reduced motion, it simply sits still.
+ * A static strip of large words.
  */
 export default function Marquee({ items, reverse = false, speed = 28, className = "", label }: Props) {
   return (

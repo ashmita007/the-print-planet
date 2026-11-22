@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
-import PageHero from "@/components/PageHero";
-import PageCta from "@/components/PageCta";
+import PageHero from "@/components/storefront/PageHero";
+import PageCta from "@/components/storefront/PageCta";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://theprintplanet.co.in/services" },

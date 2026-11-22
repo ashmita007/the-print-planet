@@ -1,5 +1,4 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from .views import (
     BulkOrderSubmitView,
     ClientBulkOrdersListView,
@@ -20,8 +19,19 @@ from .views import (
     OwnerConversationBackupCreateSnapshotView,
 )
 
-owner_bulk_router = DefaultRouter()
-owner_bulk_router.register(r'orders', OwnerBulkOrderViewSet, basename='owner-bulk-orders')
+# Registered on the shared owner router (apps.core.urls) at api/v1/owner/bulk-orders/.
+owner_routes = [
+    ('bulk-orders', OwnerBulkOrderViewSet, 'owner-bulk-orders'),
+]
+
+# Extra owner paths, mounted at api/v1/owner/ ahead of the router.
+owner_urlpatterns = [
+    path('backup/conversations/', OwnerConversationBackupDownloadView.as_view(), name='owner-backup-conversations'),
+    path('backup/snapshot/', OwnerConversationBackupCreateSnapshotView.as_view(), name='owner-conversation-backup-snapshot'),
+    path('payment-settings/', OwnerPaymentSettingsView.as_view(), name='owner-payment-settings'),
+    path('payment-settings/test/', OwnerPaymentSettingsTestView.as_view(), name='owner-payment-settings-test'),
+    path('payments/', OwnerPaymentsListView.as_view(), name='owner-payments'),
+]
 
 urlpatterns = [
     # Public & Buyer client endpoints
@@ -37,11 +47,11 @@ urlpatterns = [
     path('track-checked-product/<int:product_id>/', TrackCheckedProductView.as_view(), name='track-checked-product'),
     path('checked-products/', ClientCheckedProductsListView.as_view(), name='client-checked-products'),
 
-    # Owner management and backup endpoints
-    path('owner/backup/download/', OwnerConversationBackupDownloadView.as_view(), name='owner-conversation-backup-download'),
-    path('owner/backup/snapshot/', OwnerConversationBackupCreateSnapshotView.as_view(), name='owner-conversation-backup-snapshot'),
-    path('owner/payment-settings/', OwnerPaymentSettingsView.as_view(), name='owner-payment-settings'),
-    path('owner/payment-settings/test/', OwnerPaymentSettingsTestView.as_view(), name='owner-payment-settings-test'),
-    path('owner/payments/', OwnerPaymentsListView.as_view(), name='owner-payments'),
-    path('owner/', include(owner_bulk_router.urls)),
+    # Legacy owner aliases (same views). The deployed frontend still calls these during a
+    # rollout; the canonical paths are in owner_urlpatterns under /api/v1/owner/.
+    path('owner/backup/download/', OwnerConversationBackupDownloadView.as_view(), name='owner-conversation-backup-download-legacy'),
+    path('owner/backup/snapshot/', OwnerConversationBackupCreateSnapshotView.as_view(), name='owner-conversation-backup-snapshot-legacy'),
+    path('owner/payment-settings/', OwnerPaymentSettingsView.as_view(), name='owner-payment-settings-legacy'),
+    path('owner/payment-settings/test/', OwnerPaymentSettingsTestView.as_view(), name='owner-payment-settings-test-legacy'),
+    path('owner/payments/', OwnerPaymentsListView.as_view(), name='owner-payments-legacy'),
 ]

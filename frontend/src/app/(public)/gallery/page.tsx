@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
-import PageHero from "@/components/PageHero";
-import PageCta from "@/components/PageCta";
+import PageHero from "@/components/storefront/PageHero";
+import PageCta from "@/components/storefront/PageCta";
 import GalleryWall, { GalleryPiece } from "@/components/GalleryWall";
 
 export const metadata: Metadata = {

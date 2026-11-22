@@ -5,6 +5,7 @@ export interface Category {
   description: string;
   image?: string | null;
   parent?: number | null;
+  parent_slug?: string | null;
   display_order: number;
   is_active: boolean;
   seo_title?: string;
@@ -101,7 +102,7 @@ export interface SiteSettings {
   hero_title?: string;
   hero_subtitle?: string;
   hero_caption?: string;
-  about_data?: Record<string, any>;
+  about_data?: Record<string, string | undefined>;
   social_links: Record<string, string>;
   footer_text: string;
   seo_defaults: Record<string, string>;
@@ -115,7 +116,7 @@ export interface HomePageSection {
   subtitle: string;
   display_order: number;
   is_active: boolean;
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   featured_categories: Category[];
   featured_products: Product[];
 }
@@ -143,6 +144,8 @@ export interface DashboardMetrics {
   total_enquiries: number;
   new_enquiries: number;
   in_progress_enquiries: number;
+  total_bulk_orders?: number;
+  pending_bulk_orders?: number;
 }
 
 export interface BulkOrderMessage {
@@ -170,11 +173,12 @@ export interface BulkOrder {
   state?: string;
   gst_number?: string;
   category_type?: string;
+  checked_products?: { id: number; name: string; sku?: string }[];
   product?: number | null;
   product_details?: Product | null;
   product_name_text?: string;
   estimated_quantity: number;
-  specifications?: Record<string, any>;
+  specifications?: Record<string, unknown>;
   requirements: string;
   attachment?: string | null;
   attachment_url?: string;
@@ -196,6 +200,11 @@ export interface BulkOrder {
   updated_at: string;
 }
 
+export interface CheckedProduct {
+  id: number;
+  product_details?: Product;
+}
+
 export interface BulkOrderSummaryMetrics {
   total: number;
   submitted: number;
@@ -203,4 +212,149 @@ export interface BulkOrderSummaryMetrics {
   quoted: number;
   in_production: number;
   completed: number;
+}
+
+export type GoogleReview = {
+  author_name: string;
+  author_url: string;
+  author_photo: string;
+  rating: number;
+  text: string;
+  relative_time: string;
+  publish_time: string;
+};
+
+export type PublicGoogleReviews = {
+  review_url: string;
+  maps_url: string;
+  rating: string | number | null;
+  review_count: number | null;
+  reviews: GoogleReview[];
+  last_synced_at: string | null;
+};
+
+export type OwnerGoogleReviews = PublicGoogleReviews & {
+  place_id: string;
+  show_on_site: boolean;
+  has_api_key: boolean;
+  api_key_source: '' | 'server' | 'saved';
+  last_sync_error: string;
+  updated_at: string;
+};
+
+export type ClientProfile = {
+  id?: number;
+  username?: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+};
+
+export type RegisterResult = {
+  success: boolean;
+  verificationRequired?: boolean;
+  email?: string;
+  resendAfter?: number;
+  message?: string;
+  error?: string;
+};
+
+export interface QuoteCheckout {
+  key_id: string;
+  razorpay_order_id: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  prefill: { name: string; email: string; contact: string };
+}
+
+export interface PaymentGatewaySummary {
+  enabled: boolean;
+  key_id: string;
+  mode: '' | 'test' | 'live';
+  has_key_secret: boolean;
+  key_secret_last4: string;
+  has_webhook_secret: boolean;
+  secrets_unreadable: boolean;
+  active_source: 'admin' | 'environment' | 'none';
+  active_mode: '' | 'test' | 'live';
+  webhook_url: string;
+  webhook_events: string[];
+  webhook_ready: boolean;
+  can_store_secrets: boolean;
+  updated_at: string | null;
+}
+
+export interface OwnerPaymentRow {
+  id: number;
+  order_number: string;
+  organization_name: string;
+  amount: number;
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  status: 'paid' | 'needs_review' | 'not_paid';
+  captured_at: string | null;
+  created_at: string;
+}
+
+export type EmailDiagnostics = {
+  config?: {
+    provider?: string;
+    preferred_provider?: string;
+    brevo_key_configured?: boolean;
+    brevo_key_preview?: string;
+    brevo_sender_email?: string;
+    resend_key_configured?: boolean;
+    resend_key_preview?: string;
+    resend_from_email?: string;
+    active_sender_email?: string;
+    owner_recipient?: string;
+    smtp_backend?: string;
+  };
+  account?: { email?: string; company_name?: string; plan?: string };
+  senders?: { email?: string; name?: string; active?: boolean }[];
+  sender_verified?: boolean;
+  brevo_sender_verified?: boolean;
+  resend_sender_verified?: boolean;
+  resend?: {
+    key_valid?: boolean;
+    sender_domain?: string;
+    sandbox?: boolean;
+    sender_verified?: boolean;
+    note?: string;
+    domains?: { name?: string; status?: string }[];
+  } | null;
+  problems?: string[];
+};
+
+export interface ImportPreviewRow {
+  row_index: number;
+  name?: string;
+  sku?: string;
+  category_slug?: string;
+  price?: number | string | null;
+  status?: string;
+  raw_data?: Record<string, unknown>;
+}
+
+export interface ImportValidationResult {
+  preview?: ImportPreviewRow[];
+  rows?: Record<string, unknown>[];
+  errors?: { row: number; sku?: string; error: string }[];
+  error_count: number;
+  total_rows: number;
+  new_count: number;
+  existing_count: number;
+}
+
+export interface ImportExecutionResult {
+  imported_count: number;
+  updated_count: number;
+  skipped_count: number;
+}
+
+export interface ProductSavePayload extends Omit<Partial<Product>, 'category' | 'images'> {
+  category?: number;
+  images?: { secure_url: string; is_primary: boolean; display_order: number; alt_text: string }[];
 }

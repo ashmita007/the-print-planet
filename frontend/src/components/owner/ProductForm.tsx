@@ -1,30 +1,18 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+} from "next/navigation";
 import Link from "next/link";
 import {
   Upload,
-  Plus,
-  Trash2,
   CheckCircle,
   AlertCircle,
   ArrowLeft,
-  Image as ImageIcon,
-  Star,
-  Sparkles,
   Eye,
   EyeOff,
-  FolderPlus,
   RefreshCw,
-  Layers,
-  Tag,
-  DollarSign,
-  Package,
-  Sliders,
-  Shield,
-  ExternalLink,
-  Box,
 } from "lucide-react";
 import {
   ownerSaveProduct,
@@ -32,8 +20,23 @@ import {
   ownerSaveCategory,
   ownerUploadImage,
 } from "@/lib/api";
-import { Product, Category } from "@/lib/types";
-import { formatCategoryName, formatProductName } from "@/lib/formatters";
+import {
+  Product,
+  Category,
+  ProductSavePayload,
+} from "@/lib/types";
+import {
+  formatProductName,
+} from "@/lib/formatters";
+import IdentitySection from "./product-form/IdentitySection";
+import PricingSection from "./product-form/PricingSection";
+import MaterialSection from "./product-form/MaterialSection";
+import SpecsSection from "./product-form/SpecsSection";
+import MediaSection from "./product-form/MediaSection";
+import LivePreview from "./product-form/LivePreview";
+import {
+  SPEC_PRESETS,
+} from "./product-form/shared";
 
 interface ProductFormProps {
   initialProduct?: Product | null;
@@ -41,61 +44,6 @@ interface ProductFormProps {
 }
 
 // Preset technical specification packages for industrial ID lines
-const SPEC_PRESETS = [
-  {
-    name: "Lanyard Roll",
-    badge: "Ribbon",
-    specs: [
-      { key: "Roll Length", value: "100 Meters Continuous" },
-      { key: "Ribbon Width", value: "20 mm" },
-      { key: "Weave Pattern", value: "Fine Satin Smooth Weave" },
-      { key: "GSM", value: "180 GSM" },
-      { key: "Print Compatibility", value: "Heat Transfer / Screen Print" },
-    ],
-  },
-  {
-    name: "ID Badge Holder",
-    badge: "PVC Holder",
-    specs: [
-      { key: "Standard Fit", value: "CR-80 (85.6 × 54 mm)" },
-      { key: "Orientation", value: "Vertical & Horizontal Slot" },
-      { key: "Material Grade", value: "Optical High-Clarity PVC" },
-      { key: "Thickness", value: "0.40 mm Rigid" },
-      { key: "UV Resistance", value: "Non-Yellowing Stabilized" },
-    ],
-  },
-  {
-    name: "Industrial Machine",
-    badge: "Machinery",
-    specs: [
-      { key: "Power Voltage", value: "220V / 50Hz AC" },
-      { key: "Punch Speed", value: "1,500 – 2,000 Cards/Hour" },
-      { key: "Die Material", value: "Hardened Tungsten Alloy" },
-      { key: "Warranty Support", value: "1 Year Commercial Warranty" },
-      { key: "Operating Weight", value: "48 Kg Heavy-Duty Cast" },
-    ],
-  },
-  {
-    name: "Fittings & Hooks",
-    badge: "Hardware",
-    specs: [
-      { key: "Attachment Style", value: "Side-Lever Dog Hook" },
-      { key: "Tensile Strength", value: "50+ Newton Spring Tension" },
-      { key: "Electroplating", value: "Anti-Rust Nickel Chrome" },
-      { key: "Webbing Width", value: "Compatible with 16mm & 20mm" },
-    ],
-  },
-  {
-    name: "RFID Smart Card",
-    badge: "Cards",
-    specs: [
-      { key: "Operating Frequency", value: "13.56 MHz (ISO 14443A)" },
-      { key: "Chip Type", value: "Mifare 1K S50 Compatible" },
-      { key: "Reading Range", value: "2.5 cm – 5.0 cm" },
-      { key: "Memory Size", value: "1024 Bytes EEPROM" },
-    ],
-  },
-];
 
 export default function ProductForm({ initialProduct, isEdit = false }: ProductFormProps) {
   const router = useRouter();
@@ -386,7 +334,7 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       }
     });
 
-    const payload: any = {
+    const payload: ProductSavePayload = {
       name: formatProductName(name.trim()),
       sku: sku.trim().toUpperCase(),
       category: Number(categoryId),
@@ -503,700 +451,100 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
         {/* Left Columns: Dynamic Builder Form */}
         <div className={`space-y-6 ${showLivePreview ? "lg:col-span-8" : "lg:col-span-12"}`}>
           {/* Section 1: Basic Identity & Dynamic Category */}
-          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
-              <h2 className="text-sm font-bold text-[#121418] flex items-center gap-2">
-                <Tag className="w-4 h-4 text-[#353C45]" />
-                <span>1. Core Product Identity & Category</span>
-              </h2>
-            </div>
-
-            <div className="space-y-4 text-xs">
-              {/* Product Name */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-[#121418]">
-                    Product Commercial Name *
-                  </label>
-                  {name && (
-                    <button
-                      type="button"
-                      onClick={() => setName(formatProductName(name))}
-                      className="text-[10px] text-[#353C45] hover:underline font-bold flex items-center gap-0.5"
-                    >
-                      <Sparkles className="w-2.5 h-2.5" />
-                      <span>Format Proper Case</span>
-                    </button>
-                  )}
-                </div>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onBlur={() => setName(formatProductName(name))}
-                  aria-label="Product name"
-              placeholder="e.g. 20MM Indian Royal Blue Colour Satin Lanyard Roll"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 outline-none font-medium text-[#121418] text-sm"
-                />
-                <p className="text-[10px] text-slate-400 mt-1">
-                  Auto-formats on blur to professional Title Case while preserving technical codes (PVC, RFID, ID, GSM, A4).
-                </p>
-              </div>
-
-              {/* Category Assignment with Quick Add Button */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-[#121418]">Category Line *</label>
-                  <button
-                    type="button"
-                    onClick={() => setShowCatCreator(!showCatCreator)}
-                    className="text-[11px] font-bold text-[#353C45] hover:underline flex items-center gap-1"
-                  >
-                    <FolderPlus className="w-3 h-3" />
-                    <span>{showCatCreator ? "Close Creator" : "+ Quick Create Category"}</span>
-                  </button>
-                </div>
-
-                <select
-                  aria-label="Category line"
-                  value={String(categoryId)}
-                  onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-medium text-[#121418] uppercase"
-                >
-                  <option value="" disabled>
-                    -- Select Verified Category --
-                  </option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={String(c.id)}>
-                      {formatCategoryName(c.name)} ({c.products_count || 0} models)
-                    </option>
-                  ))}
-                </select>
-
-                {catFeedback && (
-                  <div
-                    className={`mt-2 p-2.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-all ${
-                      catFeedback.type === "success"
-                        ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                        : "bg-red-50 text-red-800 border border-red-200"
-                    }`}
-                  >
-                    <span>{catFeedback.message}</span>
-                    <button
-                      type="button"
-                      onClick={() => setCatFeedback(null)}
-                      className="text-xs hover:opacity-75"
-                    >
-                      &times;
-                    </button>
-                  </div>
-                )}
-
-                {/* Inline Quick Category Creator */}
-                {showCatCreator && (
-                  <div className="mt-3 p-4 bg-[#EDF1F6] border border-[#B9C3CF]/30 rounded-md space-y-3 anim-fade-up">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[#121418] text-xs">
-                        Create New Category On-The-Fly
-                      </span>
-                      <span className="text-[10px] text-slate-500">Auto-assigns upon creation</span>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      <input
-                        type="text"
-                        placeholder="Category Name (e.g. Silicone Wristbands)"
-                        value={newCatName}
-                        onChange={(e) => setNewCatName(e.target.value)}
-                        className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg px-3 py-1.5 text-xs outline-none"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Description (Optional)"
-                        value={newCatDesc}
-                        onChange={(e) => setNewCatDesc(e.target.value)}
-                        className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg px-3 py-1.5 text-xs outline-none"
-                      />
-                    </div>
-                    <div className="flex justify-end gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setShowCatCreator(false)}
-                        className="px-3 py-1 text-slate-500 text-xs hover:text-slate-700"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        onClick={handleCreateCategory}
-                        disabled={creatingCat || !newCatName.trim()}
-                        className="bg-[#121418] text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-[#2A2F37] disabled:opacity-50"
-                      >
-                        {creatingCat ? "Creating..." : "Save Category"}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* SKU & Generator */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="font-semibold text-[#121418]">SKU (Product Code) *</label>
-                    <button
-                      type="button"
-                      onClick={generateDynamicSKU}
-                      className="text-[11px] font-bold text-[#121418] hover:underline flex items-center gap-1"
-                      title="Auto generate industrial SKU"
-                    >
-                      <Sparkles className="w-3 h-3 text-[#353C45]" />
-                      <span>Auto-Generate</span>
-                    </button>
-                  </div>
-                  <input
-                    type="text"
-                    required
-                    value={sku}
-                    onChange={(e) => setSku(e.target.value)}
-                    aria-label="SKU"
-              placeholder="e.g. LAN-RB-20M"
-                    className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono font-bold text-[#121418]"
-                  />
-                </div>
-
-                {/* Toggles */}
-                <div className="flex items-center gap-6 pt-5">
-                  <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#121418]">
-                    <input
-                      type="checkbox"
-                      checked={isActive}
-                      onChange={(e) => setIsActive(e.target.checked)}
-                      className="rounded border-slate-300 text-[#121418] w-4 h-4"
-                    />
-                    <span>Active in Public Catalogue</span>
-                  </label>
-
-                  <label className="flex items-center gap-2 cursor-pointer font-semibold text-[#121418]">
-                    <input
-                      type="checkbox"
-                      checked={isFeatured}
-                      onChange={(e) => setIsFeatured(e.target.checked)}
-                      className="rounded border-slate-300 text-[#353C45] w-4 h-4"
-                    />
-                    <span>Featured Hero</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Short Description */}
-              <div>
-                <label htmlFor="field-single-line-subtitle-summary" className="block font-semibold text-[#121418] mb-1">
-                  Single-Line Subtitle / Summary
-                </label>
-                <input id="field-single-line-subtitle-summary"
-                  type="text"
-                  value={shortDesc}
-                  onChange={(e) => setShortDesc(e.target.value)}
-                  placeholder="e.g. 20mm premium gloss single satin lanyard roll with heat-transfer capability."
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-
-              {/* Full Description */}
-              <div>
-                <label htmlFor="field-full-application-technical-description" className="block font-semibold text-[#121418] mb-1">
-                  Full Application & Technical Description
-                </label>
-                <textarea id="field-full-application-technical-description"
-                  rows={3}
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
-                  placeholder="Detail industrial specifications, compatible clips, temperature resistance, and packaging units..."
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none resize-none leading-relaxed"
-                />
-              </div>
-            </div>
-          </div>
+          <IdentitySection
+            name={name}
+            setName={setName}
+            setShowCatCreator={setShowCatCreator}
+            showCatCreator={showCatCreator}
+            categoryId={categoryId}
+            setCategoryId={setCategoryId}
+            categories={categories}
+            catFeedback={catFeedback}
+            setCatFeedback={setCatFeedback}
+            newCatName={newCatName}
+            setNewCatName={setNewCatName}
+            newCatDesc={newCatDesc}
+            setNewCatDesc={setNewCatDesc}
+            handleCreateCategory={handleCreateCategory}
+            creatingCat={creatingCat}
+            generateDynamicSKU={generateDynamicSKU}
+            sku={sku}
+            setSku={setSku}
+            isActive={isActive}
+            setIsActive={setIsActive}
+            isFeatured={isFeatured}
+            setIsFeatured={setIsFeatured}
+            shortDesc={shortDesc}
+            setShortDesc={setShortDesc}
+            desc={desc}
+            setDesc={setDesc}
+          />
 
           {/* Section 2: Pricing, MOQ & B2B Visibility */}
-          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
-              <h2 className="text-sm font-bold text-[#121418] flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-[#353C45]" />
-                <span>2. Commercial Pricing & Minimum Order Quantity</span>
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div>
-                <label htmlFor="field-numeric-price-inr" className="block font-semibold text-[#121418] mb-1">
-                  Numeric Price (INR)
-                </label>
-                <input id="field-numeric-price-inr"
-                  type="number"
-                  step="0.01"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  placeholder="e.g. 225.00"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-bold text-[#121418]"
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-[#121418]">Price Display Tag</label>
-                  <button
-                    type="button"
-                    onClick={autoSuggestPriceDisplay}
-                    className="text-[10px] font-bold text-[#353C45] hover:underline"
-                    title="Auto-format display price"
-                  >
-                    Auto-Format
-                  </button>
-                </div>
-                <input
-                  type="text"
-                  value={priceDisplay}
-                  onChange={(e) => setPriceDisplay(e.target.value)}
-                  placeholder="e.g. ₹ 225 / Roll"
-                      aria-label="Price label"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="field-minimum-order-moq" className="block font-semibold text-[#121418] mb-1">
-                  Minimum Order (MOQ)
-                </label>
-                <input id="field-minimum-order-moq"
-                  type="number"
-                  value={moq}
-                  onChange={(e) => setMoq(e.target.value)}
-                  placeholder="e.g. 50"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Visibility Mode */}
-            <div className="pt-2 text-xs">
-              <label className="block font-semibold text-[#121418] mb-1.5">
-                B2B Price Display Mode
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setPriceVisibility(true)}
-                  className={`p-2 rounded-lg border text-center font-semibold transition-all ${
-                    priceVisibility
-                      ? "bg-[#121418] text-white border-[#121418]"
-                      : "bg-[#EDF1F6] text-[#353C45] border-[#DFE6EE] hover:bg-slate-200"
-                  }`}
-                >
-                  Show Live B2B Price
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPriceVisibility(false)}
-                  className={`p-2 rounded-lg border text-center font-semibold transition-all ${
-                    !priceVisibility
-                      ? "bg-[#121418] text-white border-[#121418]"
-                      : "bg-[#EDF1F6] text-[#353C45] border-[#DFE6EE] hover:bg-slate-200"
-                  }`}
-                >
-                  Price on Request (Hide Live Rate)
-                </button>
-              </div>
-            </div>
-          </div>
+          <PricingSection
+            price={price}
+            setPrice={setPrice}
+            autoSuggestPriceDisplay={autoSuggestPriceDisplay}
+            priceDisplay={priceDisplay}
+            setPriceDisplay={setPriceDisplay}
+            moq={moq}
+            setMoq={setMoq}
+            setPriceVisibility={setPriceVisibility}
+            priceVisibility={priceVisibility}
+          />
 
           {/* Section 3: Physical & Material Highlights */}
-          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
-              <h2 className="text-sm font-bold text-[#121418] flex items-center gap-2">
-                <Box className="w-4 h-4 text-[#353C45]" />
-                <span>3. Physical Specifications & Dimensions</span>
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div>
-                <label htmlFor="field-primary-material" className="block font-semibold text-[#121418] mb-1">Primary Material</label>
-                <input id="field-primary-material"
-                  type="text"
-                  value={material}
-                  onChange={(e) => setMaterial(e.target.value)}
-                  placeholder="e.g. Polyester / Satin"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="field-dimensions-gauge" className="block font-semibold text-[#121418] mb-1">Dimensions / Gauge</label>
-                <input id="field-dimensions-gauge"
-                  type="text"
-                  value={dimensions}
-                  onChange={(e) => setDimensions(e.target.value)}
-                  placeholder="e.g. 20 mm x 100 m"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="field-color-finish" className="block font-semibold text-[#121418] mb-1">Color / Finish</label>
-                <input id="field-color-finish"
-                  type="text"
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                  placeholder="e.g. Royal Blue"
-                  className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none"
-                />
-              </div>
-            </div>
-          </div>
+          <MaterialSection
+            material={material}
+            setMaterial={setMaterial}
+            dimensions={dimensions}
+            setDimensions={setDimensions}
+            color={color}
+            setColor={setColor}
+          />
 
           {/* Section 4: Dynamic Technical Specifications Builder with Presets */}
-          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DFE6EE] pb-3">
-              <div>
-                <h2 className="text-sm font-bold text-[#121418] flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#353C45]" />
-                  <span>4. Dynamic Technical Specification Key-Values</span>
-                </h2>
-                <p className="text-[11px] text-[#353C45] mt-0.5">
-                  Appears in detailed product technical table on public pages.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleAddSpec}
-                className="text-xs font-bold text-[#353C45] hover:underline flex items-center gap-1 self-start sm:self-auto"
-              >
-                <Plus className="w-3.5 h-3.5" /> Add Attribute
-              </button>
-            </div>
-
-            {/* Quick Presets Injector */}
-            <div className="p-3 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md space-y-1.5">
-              <span className="text-[10px] font-medium text-slate-500 uppercase tracking-[0.14em] block">
-                Quick Industrial Spec Presets (Click to add):
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {SPEC_PRESETS.map((preset) => (
-                  <button
-                    key={preset.name}
-                    type="button"
-                    onClick={() => handleApplyPreset(preset)}
-                    className="text-[11px] font-semibold bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#121418] hover:text-[#121418] text-[#121418] px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1"
-                  >
-                    <Plus className="w-3 h-3 text-[#353C45]" />
-                    <span>{preset.name}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Key-Value Pair Inputs */}
-            <div className="space-y-2.5">
-              {specsList.map((spec, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs">
-                  <input
-                    type="text"
-                    placeholder="Attribute name (e.g. GSM / Voltage)"
-                      aria-label="Attribute name"
-                    value={spec.key}
-                    onChange={(e) => handleSpecChange(idx, "key", e.target.value)}
-                    className="w-2/5 bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3 py-2 outline-none font-semibold text-[#121418]"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Specification value (e.g. 180 GSM)"
-                      aria-label="Attribute value"
-                    value={spec.value}
-                    onChange={(e) => handleSpecChange(idx, "value", e.target.value)}
-                    className="w-3/5 bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3 py-2 outline-none text-[#121418]"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveSpec(idx)}
-                    className="text-slate-400 hover:text-red-600 p-1.5 transition-colors shrink-0"
-                    title="Remove attribute"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <SpecsSection
+            handleAddSpec={handleAddSpec}
+            handleApplyPreset={handleApplyPreset}
+            specsList={specsList}
+            handleSpecChange={handleSpecChange}
+            handleRemoveSpec={handleRemoveSpec}
+          />
 
           {/* Section 5: Cloudinary Image Upload & Media Management */}
-          <div className="bg-[#FFFFFF] p-5 sm:p-6 rounded-lg border border-[#DFE6EE] shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-[#DFE6EE] pb-3">
-              <h2 className="text-sm font-bold text-[#121418] flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#353C45]" />
-                <span>5. High-Resolution Product Images</span>
-              </h2>
-              <span className="text-[11px] text-[#353C45]">
-                {images.length} asset(s) attached
-              </span>
-            </div>
-
-            {/* Upload Modes */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              {/* Cloudinary Drag-and-Drop / File input */}
-              <label
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setIsDragging(true);
-                }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={handleDrop}
-                className={`p-5 border-2 border-dashed rounded-md text-center space-y-2 transition-all cursor-pointer block select-none group ${
-                  isDragging
-                    ? "border-[#B9C3CF] bg-orange-50/50 scale-[1.01]"
-                    : "border-[#DFE6EE] hover:border-[#121418] hover:bg-[#EDF1F6] bg-[#EDF1F6]"
-                }`}
-              >
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                  disabled={uploadingImage}
-                />
-                <Upload
-                  className={`w-7 h-7 mx-auto transition-transform group-hover:scale-110 ${
-                    isDragging ? "text-[#353C45]" : "text-[#121418]"
-                  }`}
-                />
-                <div>
-                  <span className="font-bold text-[#121418] block text-xs group-hover:text-[#353C45] transition-colors">
-                    Upload from Device (Cloudinary)
-                  </span>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    Click anywhere or drop JPG, PNG, WebP up to 10MB
-                  </p>
-                </div>
-                {uploadingImage && (
-                  <div className="pt-1 text-[#353C45] font-semibold flex items-center justify-center gap-1.5 text-xs anim-fade-in">
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                    <span>Uploading asset to Cloudinary CDN...</span>
-                  </div>
-                )}
-              </label>
-
-              {/* Direct Image URL input */}
-              <div className="p-4 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md space-y-2 flex flex-col justify-between">
-                <div>
-                  <span className="font-bold text-[#121418] block">Or Add Image Direct URL</span>
-                  <p className="text-[11px] text-slate-500">Paste an external CDN or Cloudinary URL</p>
-                </div>
-                <div className="flex gap-2">
-                  <input
-                    type="url"
-                    placeholder="https://example.com/item.jpg"
-                      aria-label="Image URL"
-                    value={imageUrlInput}
-                    onChange={(e) => setImageUrlInput(e.target.value)}
-                    className="flex-1 bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg px-3 py-1.5 text-xs outline-none"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddImageUrl}
-                    className="bg-[#121418] text-white px-3.5 py-1.5 rounded-lg font-bold hover:bg-[#2A2F37] shrink-0"
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Uploaded Images Cards */}
-            {images.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                {images.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`relative bg-[#EDF1F6] border rounded-md p-2 flex flex-col items-center gap-2 transition-all ${
-                      img.isPrimary
-                        ? "border-[#B9C3CF] ring-2 ring-[#B9C3CF]/30 shadow-xs"
-                        : "border-[#DFE6EE] hover:border-slate-400"
-                    }`}
-                  >
-                    <div className="w-full pt-[100%] relative rounded-lg overflow-hidden bg-[#FFFFFF] border border-slate-200">
-                      <img
-                        src={img.url}
-                        alt={`Asset ${idx + 1}`}
-                        className="absolute inset-0 w-full h-full object-contain p-1.5"
-                      />
-                      {img.isPrimary && (
-                        <span className="absolute top-1 left-1 bg-[#121418] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-2xs">
-                          Primary
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center justify-between w-full text-[10px] pt-1">
-                      <button
-                        type="button"
-                        onClick={() => handleSetPrimaryImage(idx)}
-                        className={`flex items-center gap-1 font-semibold ${
-                          img.isPrimary ? "text-[#353C45]" : "text-slate-500 hover:text-[#121418]"
-                        }`}
-                      >
-                        <Star className={`w-3 h-3 ${img.isPrimary ? "fill-current" : ""}`} />
-                        {img.isPrimary ? "Primary" : "Set Primary"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveImage(idx)}
-                        className="text-red-500 hover:text-red-700 font-medium"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="p-4 bg-slate-50 border border-dashed border-[#DFE6EE] rounded-md text-center text-xs text-slate-400">
-                No images added yet. Upload an image above or a fallback placeholder will be displayed.
-              </div>
-            )}
-          </div>
+          <MediaSection
+            images={images}
+            setIsDragging={setIsDragging}
+            handleDrop={handleDrop}
+            isDragging={isDragging}
+            handleFileUpload={handleFileUpload}
+            uploadingImage={uploadingImage}
+            imageUrlInput={imageUrlInput}
+            setImageUrlInput={setImageUrlInput}
+            handleAddImageUrl={handleAddImageUrl}
+            handleSetPrimaryImage={handleSetPrimaryImage}
+            handleRemoveImage={handleRemoveImage}
+          />
         </div>
 
         {/* Right Column: Live Interactive Public Preview (4 Cols) */}
         {showLivePreview && (
-          <div className="lg:col-span-4 sticky top-24 space-y-4">
-            <div className="bg-[#121418] text-white p-4 rounded-lg shadow-md space-y-3 border border-white/10">
-              <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                <span className="text-[11px] font-bold text-[#353C45] uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Real-Time Public Preview</span>
-                </span>
-                <span className="text-[10px] text-slate-400">Catalogue Card</span>
-              </div>
-
-              <p className="text-[11px] text-slate-300 leading-snug">
-                This shows exactly how customers see this item in the public store grid.
-              </p>
-
-              {/* Live Rendered Product Card */}
-              <div className="bg-[#FFFFFF] rounded-md overflow-hidden shadow-lg border border-slate-200 text-[#121418]">
-                {/* Image Stage */}
-                <div className="relative w-full pt-[100%] bg-[#EDF1F6] border-b border-[#DFE6EE]">
-                  {primaryPreviewImg ? (
-                    <img
-                      src={primaryPreviewImg}
-                      alt={name || "Product Preview"}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/placeholder-product.svg";
-                      }}
-                      className="absolute inset-0 w-full h-full object-contain p-3"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-slate-400">
-                      <Box className="w-10 h-10 stroke-[1.5] mb-1 text-slate-300" />
-                      <span className="text-[10px] font-semibold text-slate-400">
-                        Asset Preview
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Featured Badge */}
-                  <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    {isFeatured && (
-                      <span className="bg-[#121418] text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shadow-2xs">
-                        Featured
-                      </span>
-                    )}
-                    <span className="bg-[#217A4B] text-white text-[9px] font-semibold px-1.5 py-0.5 rounded shadow-2xs flex items-center gap-1">
-                      <Shield className="w-2.5 h-2.5" /> Verified
-                    </span>
-                  </div>
-
-                  {/* SKU Pill */}
-                  <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-xs border border-slate-200 text-[#121418] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shadow-2xs max-w-[85%] truncate">
-                    {sku || "SKU-AUTO"}
-                  </div>
-                </div>
-
-                {/* Content details */}
-                <div className="p-3 space-y-2">
-                  <div>
-                    <span className="text-[9px] font-semibold text-[#353C45] block truncate">
-                      {activeCategory?.name || "Uncategorized"}
-                    </span>
-                    <h3 className="text-xs font-bold text-[#121418] line-clamp-2 leading-snug min-h-[2rem]">
-                      {name || "Untitled Product"}
-                    </h3>
-                  </div>
-
-                  {/* Badges */}
-                  <div className="flex flex-wrap gap-1">
-                    {material && (
-                      <span className="text-[9px] bg-[#EDF1F6] text-[#121418] border border-[#DFE6EE] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
-                        {material}
-                      </span>
-                    )}
-                    {dimensions && (
-                      <span className="text-[9px] bg-[#EDF1F6] text-[#121418] border border-[#DFE6EE] px-1.5 py-0.5 rounded font-medium truncate max-w-full">
-                        {dimensions}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Pricing */}
-                  <div className="pt-2 border-t border-[#EDF1F6] flex items-baseline justify-between">
-                    <div>
-                      <span className="text-[8px] uppercase font-bold text-[#353C45] block">
-                        B2B Trade Price
-                      </span>
-                      <span className="text-xs font-extrabold text-[#121418] block truncate">
-                        {!priceVisibility
-                          ? "Price on Request"
-                          : priceDisplay ||
-                            (price ? `₹ ${Number(price).toLocaleString("en-IN")}` : "Price on Request")}
-                      </span>
-                    </div>
-
-                    {moq && (
-                      <span className="text-[9px] text-slate-500 font-semibold">
-                        MOQ: {moq}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="grid grid-cols-2 gap-1.5 pt-1">
-                    <span className="text-[10px] font-semibold py-1 rounded-md border border-[#DFE6EE] text-[#121418] text-center bg-[#EDF1F6]">
-                      Details
-                    </span>
-                    <span className="text-[10px] font-bold py-1 rounded-md bg-[#121418] text-white text-center shadow-2xs">
-                      Quote
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Dynamic Summary Stats */}
-              <div className="pt-2 border-t border-white/10 text-[11px] text-slate-300 space-y-1">
-                <div className="flex justify-between">
-                  <span>Custom Attributes:</span>
-                  <strong className="text-white">
-                    {specsList.filter((s) => s.key && s.value).length}
-                  </strong>
-                </div>
-                <div className="flex justify-between">
-                  <span>Gallery Images:</span>
-                  <strong className="text-white">{images.length}</strong>
-                </div>
-              </div>
-            </div>
-          </div>
+          <LivePreview
+            primaryPreviewImg={primaryPreviewImg}
+            name={name}
+            isFeatured={isFeatured}
+            sku={sku}
+            activeCategory={activeCategory}
+            material={material}
+            dimensions={dimensions}
+            priceVisibility={priceVisibility}
+            priceDisplay={priceDisplay}
+            price={price}
+            moq={moq}
+            specsList={specsList}
+            images={images}
+          />
         )}
       </div>
 

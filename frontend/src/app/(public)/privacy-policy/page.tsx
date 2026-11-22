@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "How The Print Planet, Bengaluru collects, uses and protects the details you share when you request quotes, place orders or contact our trade desk.",
   alternates: { canonical: `${SITE_URL}/privacy-policy` },
 };
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 
 export default function PrivacyPolicyPage() {
   return (

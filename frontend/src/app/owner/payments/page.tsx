@@ -11,6 +11,7 @@ import {
   PaymentGatewaySummary,
   OwnerPaymentRow,
 } from "@/lib/api";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 const INPUT =
   "w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded-lg px-3 py-2 text-sm outline-none focus:bg-white focus:border-[#121418] transition-colors";
@@ -104,14 +105,12 @@ export default function OwnerPaymentsPage() {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div>
-        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">Razorpay</span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">Online payments</h1>
+      <OwnerPageHeader eyebrow="Razorpay" title="Online payments">
         <p className="text-sm text-slate-600 mt-1">
           Customers pay a quoted bulk order from their order page by UPI, card, net banking or wallet.
           The amount is always your quote.
         </p>
-      </div>
+      </OwnerPageHeader>
 
       <div className={`surface-card rounded-lg p-4 flex items-start gap-3 border ${live ? "border-emerald-200" : "border-slate-200"}`}>
         {live ? <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" aria-hidden /> : <CreditCard className="h-5 w-5 text-slate-400 shrink-0" aria-hidden />}

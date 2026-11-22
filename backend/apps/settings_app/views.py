@@ -1,3 +1,4 @@
+import logging
 from django.conf import settings
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.views import APIView
@@ -11,6 +12,9 @@ from apps.enquiries.models import Enquiry
 from apps.enquiries.serializers import EnquiryDetailSerializer
 from apps.bulk_orders.models import BulkOrder
 from apps.bulk_orders.serializers import BulkOrderListSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class PublicSiteSettingsView(generics.RetrieveAPIView):
@@ -49,8 +53,8 @@ class OwnerSiteSettingsView(APIView):
             try:
                 from apps.catalog.backup_service import trigger_auto_backup_async
                 trigger_auto_backup_async(force=True)
-            except Exception:
-                pass
+            except Exception:  # best-effort backup must never fail the save
+                logger.exception('Auto backup trigger failed')
             return Response(serializer.data)
         
         # Flatten and humanize validation error messages
@@ -146,7 +150,8 @@ class OwnerCloudDatabaseSyncView(APIView):
             else:
                 call_command('sync_sqlite_cloud', backup=True)
                 return Response({'status': 'success', 'message': 'Database successfully backed up to Cloudinary!'})
-        except Exception as e:
+        except Exception as e:  # sync command wraps cloud SDK errors; owner sees the message
+            logger.exception('Cloud database sync failed')
             return Response({'status': 'error', 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -183,8 +188,8 @@ class OwnerGoogleReviewView(APIView):
         try:
             from apps.catalog.backup_service import trigger_auto_backup_async
             trigger_auto_backup_async(force=True)
-        except Exception:
-            pass
+        except Exception:  # best-effort backup must never fail the save
+            logger.exception('Auto backup trigger failed')
         return Response(OwnerGoogleReviewSerializer(conn).data)
 
     def patch(self, request):

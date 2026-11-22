@@ -66,6 +66,14 @@ else
     python manage.py sync_sqlite_cloud --restore || true
 fi
 
+# 3b. Fail fast on bad settings (e.g. missing DJANGO_SECRET_KEY) instead of serving an unmigrated app.
+echo "-> Checking Django settings..."
+if ! CHECK_OUT=$(python manage.py check --deploy --fail-level ERROR 2>&1 >/dev/null); then
+    echo "!! Django settings check failed:"
+    echo "$CHECK_OUT"
+    exit 1
+fi
+
 # 4. Run database migrations with resilient retry loop
 echo "-> Applying database migrations..."
 for i in {1..5}; do

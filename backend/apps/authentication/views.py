@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
@@ -6,22 +7,17 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.conf import settings
+from django.db import DatabaseError
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
+from apps.core.users import unique_username_for
 from . import otp
 from .otp import OTPResult
 
-
-def unique_username_for(email):
-    base = ''.join(c for c in email.split('@')[0] if c.isalnum() or c in '._-')[:120] or 'buyer'
-    username, idx = base, 1
-    while User.objects.filter(username=username).exists():
-        username = f"{base}{idx}"
-        idx += 1
-    return username
+logger = logging.getLogger(__name__)
 
 
 def user_payload(user):
@@ -54,8 +50,8 @@ def link_guest_enquiries(user, company_name=''):
         if company_name:
             updates['company_name'] = company_name
         past.update(**updates)
-    except Exception:
-        pass
+    except DatabaseError:
+        logger.exception('Could not link past enquiries to user %s', user.pk)
 
 
 def signed_in_payload(user, message):
@@ -286,8 +282,8 @@ class LogoutView(APIView):
             token = Token.objects.filter(user=request.user).first()
             if token:
                 token.delete()
-        except Exception:
-            pass
+        except DatabaseError:
+            logger.exception('Could not delete auth token on logout')
 
         logout(request)
         return Response({'message': 'Logged out successfully'})

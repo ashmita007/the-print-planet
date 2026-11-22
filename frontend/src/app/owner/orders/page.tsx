@@ -34,6 +34,8 @@ import {
   ownerDownloadConversationsBackup,
 } from "@/lib/api";
 import AttachmentLink from "@/components/orders/AttachmentLink";
+import type { BulkOrder } from "@/lib/types";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 const STATUS_OPTIONS = [
   { value: "all", label: "All Statuses" },
@@ -56,7 +58,7 @@ const SECTOR_LABELS: Record<string, string> = {
 };
 
 export default function OwnerOrdersPage() {
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<BulkOrder[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [backupLoading, setBackupLoading] = useState(false);
@@ -68,7 +70,7 @@ export default function OwnerOrdersPage() {
   const [page, setPage] = useState(1);
 
   // Active / selected order for conversation modal
-  const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<BulkOrder | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
 
   // Reply form states
@@ -184,17 +186,11 @@ export default function OwnerOrdersPage() {
     <div className="space-y-6">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
-            Sales
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
-            Bulk orders
-          </h1>
+        <OwnerPageHeader eyebrow="Sales" title="Bulk orders">
           <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
             Chat with buyers, send quotations and add courier tracking.
           </p>
-        </div>
+        </OwnerPageHeader>
 
         <div className="flex flex-wrap items-center gap-2.5">
           <button
@@ -344,7 +340,7 @@ export default function OwnerOrdersPage() {
                         {Number(o.estimated_quantity).toLocaleString("en-IN")} units
                       </div>
                       <div className="text-[10px] text-slate-500 capitalize">
-                        {o.category_type.replace(/_/g, " ")}
+                        {(o.category_type ?? "").replace(/_/g, " ")}
                       </div>
                     </td>
                     <td className="py-3.5 px-4 font-semibold text-[#121418]">
@@ -451,7 +447,7 @@ export default function OwnerOrdersPage() {
                     {Number(selectedOrder.estimated_quantity).toLocaleString("en-IN")} units
                   </div>
                   <div className="text-slate-600 capitalize">
-                    {selectedOrder.category_type.replace(/_/g, " ")}
+                    {(selectedOrder.category_type ?? "").replace(/_/g, " ")}
                   </div>
                   {selectedOrder.city && (
                     <div className="flex items-center gap-1 text-slate-500">
@@ -512,7 +508,7 @@ export default function OwnerOrdersPage() {
                     <span>Products Explored By User Prior to Bulk Inquiry:</span>
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {selectedOrder.checked_products.map((p: any) => (
+                    {selectedOrder.checked_products.map((p) => (
                       <span
                         key={p.id}
                         className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 text-[#121418] text-xs font-medium border border-slate-200"
@@ -536,7 +532,7 @@ export default function OwnerOrdersPage() {
                   {selectedOrder.messages?.length === 0 ? (
                     <p className="text-xs text-slate-400 italic text-center py-4">No conversation messages yet.</p>
                   ) : (
-                    selectedOrder.messages?.map((msg: any) => {
+                    selectedOrder.messages?.map((msg) => {
                       const isOwner = msg.sender_type === "owner";
                       const isSystem = msg.sender_type === "system";
 

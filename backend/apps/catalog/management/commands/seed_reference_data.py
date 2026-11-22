@@ -23,7 +23,6 @@ class Command(BaseCommand):
         candidate_paths = [
             Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'reference-products.json',
             Path(__file__).resolve().parent.parent.parent.parent / 'data' / 'reference-products.json',
-            Path('/Users/kashinath/Desktop/the_print_planet/data/reference-products.json'),
             Path('/app/data/reference-products.json'),
         ]
         json_path = None

@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 import FaqAccordion, { FaqItem } from "@/components/FaqAccordion";
 import { MessageCircle, Phone, ArrowRight, ShieldCheck, Truck, FileText } from "lucide-react";
 

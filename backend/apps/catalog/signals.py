@@ -51,8 +51,8 @@ def indexnow_on_product_change(sender, instance, **kwargs):
         from .indexnow import queue_paths
         category_slug = getattr(getattr(instance, 'category', None), 'slug', '')
         queue_paths(f'/products/{instance.slug}', f'/categories/{category_slug}' if category_slug else '', '/products')
-    except Exception:
-        pass
+    except Exception:  # SEO ping must never break a product/category save
+        logger.exception('IndexNow queue failed')
 
 
 @receiver(post_save, sender=Category)
@@ -61,5 +61,5 @@ def indexnow_on_category_change(sender, instance, **kwargs):
     try:
         from .indexnow import queue_paths
         queue_paths(f'/categories/{instance.slug}', '/categories')
-    except Exception:
-        pass
+    except Exception:  # SEO ping must never break a product/category save
+        logger.exception('IndexNow queue failed')

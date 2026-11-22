@@ -1,8 +1,11 @@
+import logging
 import os
 import re
 from rest_framework import serializers
 from .models import Enquiry
 from apps.catalog.serializers import ProductListSerializer
+
+logger = logging.getLogger(__name__)
 
 ALLOWED_ATTACHMENT_EXTENSIONS = {
     '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.csv', '.txt', '.rtf',
@@ -84,10 +87,11 @@ class EnquiryCreateSerializer(serializers.ModelSerializer):
         try:
             head = file_obj.read(512)
             file_obj.seek(0)
-            if any(marker in head.lower() for marker in [b'<?php', b'<script', b'<%', b'<html']):
-                raise serializers.ValidationError("Unsafe content detected inside uploaded file.")
-        except Exception:
-            pass
+        except OSError:
+            logger.exception('Upload content inspection failed')
+            raise serializers.ValidationError("The uploaded file could not be read.")
+        if any(marker in head.lower() for marker in [b'<?php', b'<script', b'<%', b'<html']):
+            raise serializers.ValidationError("Unsafe content detected inside uploaded file.")
 
         return file_obj
 

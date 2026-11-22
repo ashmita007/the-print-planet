@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Mail, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck, KeyRound } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import { requestForgotPassword } from "@/lib/api";
 
 export default function ForgotPasswordPage() {

@@ -9,10 +9,18 @@ from .email_templates import customer_enquiry_email, owner_enquiry_email
 import urllib.request
 import urllib.parse
 import socket
+import http.client
+import smtplib
+import urllib.error
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from django.db import DatabaseError
 
 logger = logging.getLogger(__name__)
+
+# What urllib / smtplib calls raise on network, TLS, timeout or bad-payload problems.
+_HTTP_ERRORS = (OSError, ValueError, http.client.HTTPException)
+_SMTP_ERRORS = (smtplib.SMTPException, OSError)
 
 
 
@@ -56,7 +64,7 @@ def _product_email_extras(product):
             {'name': r.name, 'url': f"{site}/products/{r.slug}", 'image': _email_thumb(_primary_image_url(r), 240)}
             for r in related
         ]
-    except Exception as rel_err:
+    except Exception as rel_err:  # related products are optional extras; the email must still go out
         logger.warning(f"Could not load related products for email: {rel_err}")
     return extras
 
@@ -86,7 +94,7 @@ def build_enquiry_payload(enquiry_or_id):
         s_phone = site_settings.phone
         s_email = site_settings.email
         s_address = site_settings.address
-    except Exception:
+    except DatabaseError:
         b_name = "The Print Planet"
         s_phone = "+91 97418 08034"
         s_email = "theprintplanet01@gmail.com"
@@ -172,7 +180,7 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
         import ssl
         import certifi
         ssl_context = ssl.create_default_context(cafile=certifi.where())
-    except Exception:
+    except (ImportError, OSError):
         ssl_context = None
 
     # Prepare base64 attachment if available and <= 5MB
@@ -275,9 +283,9 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
                     with urllib.request.urlopen(req_retry, context=ssl_context, timeout=10) as retry_resp:
                         logger.info(f"Dispatched email via Brevo HTTPS API (without attachment) to {to_email}")
                         return True
-                except Exception as retry_err:
+                except _HTTP_ERRORS as retry_err:
                     logger.warning(f"Brevo retry without attachment also failed: {retry_err}")
-        except Exception as e:
+        except _HTTP_ERRORS as e:
             logger.warning(f"Brevo HTTPS dispatch failed: {e}")
 
     # 2. Resend API (HTTPS Port 443)
@@ -335,9 +343,9 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
                 except urllib.error.HTTPError as retry_err:
                     retry_msg = retry_err.read().decode('utf-8', errors='ignore')
                     logger.error(f"Resend sandbox retry HTTP {retry_err.code}: {retry_msg}")
-                except Exception as retry_err:
+                except _HTTP_ERRORS as retry_err:
                     logger.warning(f"Resend sandbox retry failed: {retry_err}")
-        except Exception as e:
+        except _HTTP_ERRORS as e:
             logger.warning(f"Resend HTTPS dispatch failed: {e}")
 
     # 3. Custom Webhook Relay (e.g. Google Apps Script Webhook or Pipedream over HTTPS)
@@ -360,7 +368,7 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
             with urllib.request.urlopen(req, context=ssl_context, timeout=8) as resp:
                 logger.info(f"Dispatched email via Webhook to {to_email}")
                 return True
-        except Exception as e:
+        except _HTTP_ERRORS as e:
             logger.warning(f"Email Webhook dispatch failed: {e}")
 
     # 4. FormSubmit HTTPS Relay (Auto-fallback to theprintplanet01@gmail.com)
@@ -389,7 +397,7 @@ def _send_email_via_https(to_email, subject, text, html, attachment_path='', att
                 logger.info(f"FormSubmit HTTPS relay response: {resp_data}")
                 if '"success":"true"' in resp_data:
                     return True
-        except Exception as e:
+        except _HTTP_ERRORS as e:
             logger.warning(f"FormSubmit relay failed: {e}")
 
     return False
@@ -503,11 +511,11 @@ INSTANT QUICK ACTIONS:
                 if attachment_path and os.path.exists(attachment_path):
                     try:
                         msg_owner.attach_file(attachment_path)
-                    except Exception as att_attach_err:
+                    except OSError as att_attach_err:
                         logger.warning(f"Could not attach file to SMTP email: {att_attach_err}")
                 msg_owner.send(fail_silently=False)
                 logger.info(f"Dispatched owner notification email via SMTP for enquiry #{enquiry_id} to {owner_recipient}")
-            except Exception as e_smtp:
+            except _SMTP_ERRORS as e_smtp:
                 logger.warning(f"SMTP dispatch to owner failed (expected on Render without HTTPS key): {e_smtp}")
 
         # =========================================================================
@@ -553,7 +561,7 @@ GSTIN        : 29AAQFT3909B1ZZ
                     msg_cust.attach_alternative(cust_html, "text/html")
                     msg_cust.send(fail_silently=False)
                     logger.info(f"Dispatched customer confirmation email via SMTP to {email}")
-                except Exception as e_cust_smtp:
+                except _SMTP_ERRORS as e_cust_smtp:
                     logger.warning(f"SMTP dispatch to customer failed: {e_cust_smtp}")
 
         # 3. Automated WhatsApp Dispatch via CallMeBot (if enabled)

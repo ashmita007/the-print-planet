@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Mail, User, Building, Phone, ArrowRight, UserPlus, CheckCircle2, MailCheck, RotateCw } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import { clientRegister, resendEmailOtp, safeRedirectPath, verifyEmailOtp } from "@/lib/api";
 
 export default function ClientRegisterPage() {

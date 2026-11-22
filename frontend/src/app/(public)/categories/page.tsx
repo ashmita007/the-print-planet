@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/storefront/PageHero";
 import { getCategories } from "@/lib/api";
 import { formatCategoryName } from "@/lib/formatters";
 

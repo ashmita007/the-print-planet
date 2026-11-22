@@ -49,9 +49,9 @@ export async function POST(request: Request) {
       },
       { status: response.status }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: error.message || 'Internal IndexNow error' },
+      { success: false, error: (error instanceof Error && error.message) || 'Internal IndexNow error' },
       { status: 500 }
     );
   }

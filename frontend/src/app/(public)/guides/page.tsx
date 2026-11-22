@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
-import PageHero from "@/components/PageHero";
-import PageCta from "@/components/PageCta";
+import PageHero from "@/components/storefront/PageHero";
+import PageCta from "@/components/storefront/PageCta";
 import { GUIDES } from "@/lib/guides";
 import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 

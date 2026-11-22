@@ -19,6 +19,7 @@ import {
 import { Category } from "@/lib/types";
 import { formatCategoryName } from "@/lib/formatters";
 import ConfirmModal from "@/components/owner/ConfirmModal";
+import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 
 export default function OwnerCategoriesPage() {
@@ -109,7 +110,7 @@ export default function OwnerCategoriesPage() {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)+/g, "");
 
-    const payload: any = {
+    const payload: Partial<Category> = {
       name: formatCategoryName(name),
       slug: generatedSlug,
       description: description.trim(),
@@ -152,17 +153,7 @@ export default function OwnerCategoriesPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-medium text-slate-500 uppercase tracking-[0.14em]">
-            Catalogue structure
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121418] mt-1">
-            Categories
-            <span className="ml-2.5 text-sm font-medium text-slate-400 tabular-nums">
-              {categories.length}
-            </span>
-          </h1>
-        </div>
+        <OwnerPageHeader eyebrow="Catalogue structure" title="Categories" count={categories.length} />
 
         {!isCreating && !editingCategory && (
           <button
