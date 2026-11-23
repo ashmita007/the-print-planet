@@ -1,17 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FileText, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { FileText, Menu, Phone, ShoppingCart } from "lucide-react";
 import type { Category, SiteSettings } from "@/lib/types";
 import { useCart } from "@/lib/cart";
 import { catalogueTotal } from "@/lib/catalogueTotal";
 import TopBar from "./TopBar";
-import DesktopNav from "./DesktopNav";
+import CategoryStrip from "./CategoryStrip";
 import SearchBox from "./SearchBox";
 import AccountMenu from "./AccountMenu";
+import MoreMenu from "./MoreMenu";
 import MobileDrawer from "./MobileDrawer";
 import { CDN_LOGO_URL, groupCategories, useClientAuth, useLiveCategories } from "./shared";
 
@@ -21,8 +22,7 @@ interface NavbarProps {
   productTotal?: number;
 }
 
-const ICON_BTN =
-  "relative h-11 w-11 xl:h-10 xl:w-10 flex items-center justify-center rounded-md border border-slate-200 hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-slate-700 hover:text-[#121418] active:scale-95 transition motion-reduce:transition-none motion-reduce:active:scale-100";
+const CONTAINER = "max-w-7xl 2xl:max-w-[1440px] min-[1700px]:max-w-[1600px] mx-auto px-4 sm:px-6";
 
 export default function Navbar({ categories = [], settings, productTotal = 0 }: NavbarProps) {
   const pathname = usePathname();
@@ -34,10 +34,8 @@ export default function Navbar({ categories = [], settings, productTotal = 0 }: 
   const total = catalogueTotal(productTotal, groups.map((g) => g.main.products_count ?? 0));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const searchButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -49,123 +47,118 @@ export default function Navbar({ categories = [], settings, productTotal = 0 }: 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setSearchOpen(false);
-    setDrawerOpen(false);
-  }, [pathname]);
+  useEffect(() => setDrawerOpen(false), [pathname]);
 
-  // Growing the window past a breakpoint hides the drawer and the search bar; drop their open state with it.
+  // Growing the window to desktop hides the drawer; drop its open state with it.
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1280px)");
-    const wide = window.matchMedia("(min-width: 1536px)");
-    const onDesktop = () => desktop.matches && setDrawerOpen(false);
-    const onWide = () => wide.matches && setSearchOpen(false);
-    desktop.addEventListener("change", onDesktop);
-    wide.addEventListener("change", onWide);
-    return () => {
-      desktop.removeEventListener("change", onDesktop);
-      wide.removeEventListener("change", onWide);
-    };
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => desktop.matches && setDrawerOpen(false);
+    desktop.addEventListener("change", onChange);
+    return () => desktop.removeEventListener("change", onChange);
   }, []);
 
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
-  const closeSearch = useCallback(() => {
-    setSearchOpen(false);
-    searchButtonRef.current?.focus();
-  }, []);
-  const openSearch = useCallback(() => setSearchOpen(true), []);
 
   const phone = settings?.phone || "+91 97418 08034";
-  const email = settings?.email || "theprintplanet01@gmail.com";
+  const home = pathname === "/";
   const cartLabel = mounted && totalItems > 0 ? `View cart, ${totalItems} items` : "View cart";
 
   return (
     <>
-      <TopBar phone={phone} email={email} />
+      <TopBar phone={phone} />
 
       <header
         className={`w-full sticky top-0 z-40 bg-white border-b border-slate-200 transition-shadow duration-200 motion-reduce:transition-none ${
           scrolled ? "shadow-md" : "shadow-none"
         }`}
       >
-        <div className="relative max-w-7xl 2xl:max-w-[1440px] min-[1700px]:max-w-[1600px] mx-auto px-4 sm:px-6">
-          <div className="flex items-center h-16 xl:h-[4.5rem] gap-3 2xl:gap-4">
-            <Link href="/" className="flex items-center shrink-0 py-1 mr-auto xl:mr-0" title="The Print Planet Home">
-              <Image
-                src={CDN_LOGO_URL}
-                alt="The Print Planet — Premium Custom Printing & Merchandise"
-                width={240}
-                height={70}
-                className="h-10 sm:h-12 xl:h-10 w-auto object-contain"
-                priority
-                unoptimized
-              />
-            </Link>
-
-            <DesktopNav groups={groups} total={total} onMenuOpen={refresh} />
-
-            {/* Pushes the search field and actions to the right edge on desktop. */}
-            <div className="hidden 2xl:flex flex-1 justify-end min-w-0">
-              <SearchBox variant="field" onShortcutWhenHidden={openSearch} />
-            </div>
-
-            {/* Spacer: keeps the actions on the right edge when the search field is not shown. */}
-            <div className="hidden xl:block 2xl:hidden flex-1 min-w-0" aria-hidden="true" />
-
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                ref={searchButtonRef}
-                type="button"
-                onClick={() => setSearchOpen((v) => !v)}
-                aria-label={searchOpen ? "Close search" : "Search products"}
-                aria-expanded={searchOpen}
-                aria-controls="mobile-search"
-                className={`${ICON_BTN} 2xl:hidden`}
-              >
-                {searchOpen ? <X className="w-5 h-5" aria-hidden /> : <Search className="w-5 h-5" aria-hidden />}
-              </button>
-
-              <button type="button" onClick={toggleCart} aria-label={cartLabel} title="Cart & quote list" className={ICON_BTN}>
-                <ShoppingBag className="w-5 h-5" aria-hidden />
-                {mounted && totalItems > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[19px] h-[19px] px-1 rounded-full bg-[#121418] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm">
-                    {totalItems > 99 ? "99+" : totalItems}
-                  </span>
-                )}
-              </button>
-
-              <AccountMenu loggedIn={loggedIn} user={user} />
-
-              <Link
-                href="/quote"
-                className="hidden xl:inline-flex items-center gap-1.5 h-10 bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-95 text-[#121418] px-4 rounded-md text-sm font-bold transition motion-reduce:transition-none motion-reduce:active:scale-100 whitespace-nowrap"
-              >
-                <FileText className="w-4 h-4" aria-hidden />
-                <span>Request Quote</span>
-              </Link>
-
+        <div className={CONTAINER}>
+          <div className="flex flex-wrap items-center lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-5 xl:gap-x-8 lg:h-16">
+            <div className="flex items-center h-14 lg:h-auto -ml-2.5 lg:ml-0">
               <button
                 type="button"
                 onClick={() => setDrawerOpen(true)}
                 aria-label="Open navigation menu"
                 aria-expanded={drawerOpen}
-                className={`${ICON_BTN} xl:hidden`}
+                className="lg:hidden w-11 h-11 flex items-center justify-center rounded-md text-[#121418] hover:bg-[#EDF1F6] active:bg-slate-200 transition-colors motion-reduce:transition-none"
               >
-                <Menu className="w-5 h-5" aria-hidden />
+                <Menu className="w-6 h-6" aria-hidden />
               </button>
+              <Link href="/" className="flex items-center shrink-0 py-1" title="The Print Planet Home">
+                <Image
+                  src={CDN_LOGO_URL}
+                  alt="The Print Planet — Premium Custom Printing & Merchandise"
+                  width={240}
+                  height={70}
+                  className="h-9 lg:h-10 w-auto object-contain"
+                  priority
+                  unoptimized
+                />
+              </Link>
+            </div>
+
+            {/* One search field for every width: its own row on phones, centred in row 1 on desktop. */}
+            <div className="order-last basis-full w-full pb-2.5 lg:order-none lg:basis-auto lg:pb-0 lg:max-w-3xl lg:mx-auto">
+              <SearchBox />
+            </div>
+
+            <div className="ml-auto lg:ml-0 flex items-center gap-0.5 lg:gap-1 h-14 lg:h-auto -mr-2.5 lg:mr-0">
+              {/* Phones: Account and Cart live in the bottom bar, so the header offers Call instead. */}
+              <a
+                href={`tel:${phone.replace(/\s+/g, "")}`}
+                aria-label={`Call ${phone}`}
+                className="lg:hidden flex flex-col items-center justify-center w-12 h-11 rounded-md text-[#121418] hover:bg-[#EDF1F6] active:bg-slate-200"
+              >
+                <Phone className="w-5 h-5" aria-hidden />
+                <span className="text-[10px] font-semibold leading-none mt-1">Call</span>
+              </a>
+
+              <div className="hidden lg:flex items-center gap-1">
+                <AccountMenu loggedIn={loggedIn} user={user} />
+                <button
+                  type="button"
+                  onClick={toggleCart}
+                  aria-label={cartLabel}
+                  title="Cart & quote list"
+                  className="flex items-center gap-2 h-10 px-2.5 rounded-md text-sm font-semibold text-[#121418] hover:bg-[#EDF1F6] transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-[#121418]"
+                >
+                  <span className="relative">
+                    <ShoppingCart className="w-5 h-5" aria-hidden />
+                    {mounted && totalItems > 0 && (
+                      <span className="absolute -top-2 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#121418] text-white text-[10px] font-extrabold flex items-center justify-center">
+                        {totalItems > 99 ? "99+" : totalItems}
+                      </span>
+                    )}
+                  </span>
+                  <span>Cart</span>
+                </button>
+                <MoreMenu phone={phone} />
+                <Link
+                  href="/quote"
+                  className="ml-1 inline-flex items-center gap-1.5 h-10 bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-95 text-[#121418] px-4 rounded-md text-sm font-bold transition motion-reduce:transition-none motion-reduce:active:scale-100 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121418]"
+                >
+                  <FileText className="w-4 h-4" aria-hidden />
+                  <span>Request Quote</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Full-width search below 2xl (the inline field needs the room); overlays the page so nothing shifts. */}
-        {searchOpen && (
-          <div id="mobile-search" className="2xl:hidden absolute inset-x-0 top-full bg-white border-b border-slate-200 shadow-md px-4 sm:px-6 py-2.5">
-            <div className="max-w-7xl mx-auto">
-              <SearchBox variant="panel" onDone={() => setSearchOpen(false)} onClose={closeSearch} />
-            </div>
+        {/* Slim text bar under the sticky row on every page except Home. */}
+        {!home && (
+          <div className="hidden lg:block border-t border-slate-200 bg-[#F7F9FC]">
+            <CategoryStrip groups={groups} total={total} onMenuOpen={refresh} tiles={false} />
           </div>
         )}
       </header>
+
+      {/* Home: photo tiles that scroll away with the page. */}
+      {home && (
+        <div className="hidden lg:block bg-white border-b border-slate-200">
+          <CategoryStrip groups={groups} total={total} onMenuOpen={refresh} tiles />
+        </div>
+      )}
 
       <MobileDrawer open={drawerOpen} onClose={closeDrawer} groups={groups} loggedIn={loggedIn} user={user} phone={phone} />
     </>

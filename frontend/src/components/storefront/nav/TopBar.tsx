@@ -1,38 +1,19 @@
-"use client";
+import { Phone } from "lucide-react";
+import { ANNOUNCEMENT } from "./shared";
 
-import { useEffect, useState } from "react";
-import { Mail, Phone } from "lucide-react";
-import { ANNOUNCEMENTS } from "./shared";
-
-/** Dark strip above the header. It is not sticky, so it scrolls away with the page. */
-export default function TopBar({ phone, email }: { phone: string; email: string }) {
-  const [index, setIndex] = useState(0);
-
-  // Plain text swap; people who prefer reduced motion get a still message.
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = setInterval(() => setIndex((i) => (i + 1) % ANNOUNCEMENTS.length), 5000);
-    return () => clearInterval(timer);
-  }, []);
-
+/** Dark strip above the desktop header. Not sticky, so it scrolls away. Phones skip it: the drawer has Call. */
+export default function TopBar({ phone }: { phone: string }) {
   return (
-    <div className="h-9 flex items-center bg-[#121418] text-white text-xs px-3.5 sm:px-6">
-      <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
-        <p className="text-slate-200 truncate font-medium flex-1 min-w-0">{ANNOUNCEMENTS[index]}</p>
-        <div className="flex items-center gap-4 shrink-0 text-slate-300">
-          <a href={`mailto:${email}`} className="hidden md:flex hover:text-[#B9C3CF] transition-colors items-center gap-1.5 whitespace-nowrap">
-            <Mail className="w-3.5 h-3.5 text-[#FF8A3D]" aria-hidden />
-            <span>{email}</span>
-          </a>
-          <span className="hidden md:inline text-white/20" aria-hidden>|</span>
-          <a
-            href={`tel:${phone.replace(/\s+/g, "")}`}
-            className="hover:text-[#B9C3CF] transition-colors flex items-center gap-1.5 font-semibold tabular-nums text-white whitespace-nowrap"
-          >
-            <Phone className="w-3.5 h-3.5 text-[#FF8A3D]" aria-hidden />
-            <span>{phone}</span>
-          </a>
-        </div>
+    <div className="hidden lg:flex h-9 items-center bg-[#121418] text-white text-xs px-6">
+      <div className="w-full max-w-7xl 2xl:max-w-[1440px] min-[1700px]:max-w-[1600px] mx-auto flex items-center justify-between gap-4">
+        <p className="text-slate-200 font-medium">{ANNOUNCEMENT}</p>
+        <a
+          href={`tel:${phone.replace(/\s+/g, "")}`}
+          className="flex items-center gap-1.5 font-semibold tabular-nums text-white whitespace-nowrap hover:text-[#B9C3CF] transition-colors motion-reduce:transition-none"
+        >
+          <Phone className="w-3.5 h-3.5 text-slate-300" aria-hidden />
+          <span>{phone}</span>
+        </a>
       </div>
     </div>
   );

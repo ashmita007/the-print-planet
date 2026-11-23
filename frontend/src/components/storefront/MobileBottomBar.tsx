@@ -1,124 +1,63 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Layers, Phone, FileText, ShoppingBag, MessageCircle } from "lucide-react";
-import { SiteSettings } from "@/lib/types";
+import { FileText, Home, Layers, ShoppingCart, User } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useClientAuth } from "./nav/shared";
 
-interface MobileBottomBarProps {
-  settings?: SiteSettings;
-}
-
-export default function MobileBottomBar({ settings }: MobileBottomBarProps) {
+/** Phone and tablet bottom bar. Account and Cart live here (not in the header), so nothing is duplicated. */
+export default function MobileBottomBar() {
   const pathname = usePathname();
   const { totalItems, toggleCart } = useCart();
+  const { loggedIn } = useClientAuth();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), []);
 
-  const phone = settings?.phone || "+91 97418 08034";
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
-
-  const navItems = [
+  const items = [
+    { label: "Home", href: "/", icon: Home, active: pathname === "/" },
+    { label: "Categories", href: "/categories", icon: Layers, active: pathname.startsWith("/categories") || pathname.startsWith("/products") },
     {
-      label: "Home",
-      href: "/",
-      icon: Home,
-      isActive: pathname === "/",
-    },
-    {
-      label: "Catalog",
-      href: "/products",
-      icon: Layers,
-      isActive: pathname.startsWith("/products") || pathname.startsWith("/categories"),
-    },
-    {
-      label: "WhatsApp",
-      href: `https://wa.me/${cleanPhone}`,
-      icon: MessageCircle,
-      isExternal: true,
-      isActive: false,
+      label: loggedIn ? "Account" : "Sign in",
+      href: loggedIn ? "/account" : "/account/login",
+      icon: User,
+      active: pathname.startsWith("/account"),
     },
   ];
+  const base = "min-w-0 flex flex-col items-center justify-center gap-0.5 min-h-12 rounded-md text-[11px] leading-none active:scale-95 transition-transform motion-reduce:transition-none motion-reduce:active:scale-100 outline-none focus-visible:ring-2 focus-visible:ring-white";
 
   return (
-    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#121418]/95 backdrop-blur-md border-t border-white/10 px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-2xl">
-      <div className="grid grid-cols-5 items-center gap-1 max-w-md mx-auto">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isItemActive = item.isActive;
-          const content = (
-            <div
-              className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-md transition-all duration-200 active:scale-95 ${
-                isItemActive
-                  ? "text-[#FF8A3D] font-bold bg-white/[0.08]"
-                  : "text-slate-300 hover:text-white"
-              }`}
-            >
-              <Icon
-                className={`w-5 h-5 mb-0.5 ${
-                  isItemActive ? "text-[#FF8A3D]" : "text-slate-300"
-                }`}
-              />
-              <span className="text-[10px] tracking-tight">{item.label}</span>
-            </div>
-          );
+    <nav
+      aria-label="Quick links"
+      className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-[#121418] border-t border-white/10 px-2 pt-1.5 pb-[calc(0.375rem+env(safe-area-inset-bottom))]"
+    >
+      <div className="grid grid-cols-5 items-stretch gap-1 max-w-xl mx-auto">
+        {items.map(({ label, href, icon: Icon, active }) => (
+          <Link key={label} href={href} aria-current={active ? "page" : undefined} className={`${base} ${active ? "text-white font-bold bg-white/10" : "text-slate-300"}`}>
+            <Icon className="w-5 h-5" aria-hidden />
+            <span className="truncate max-w-full">{label}</span>
+          </Link>
+        ))}
 
-          if (item.isExternal) {
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-w-0 text-center"
-              >
-                {content}
-              </a>
-            );
-          }
-
-          return (
-            <Link key={item.label} href={item.href} className="min-w-0 text-center">
-              {content}
-            </Link>
-          );
-        })}
-
-        {/* Mobile Cart Trigger */}
-        <button
-          onClick={toggleCart}
-          className="min-w-0 text-center relative"
-          aria-label="Open Cart"
-        >
-          <div className="flex flex-col items-center justify-center py-1 px-0.5 rounded-md text-slate-300 hover:text-white active:scale-95 transition-all">
-            <div className="relative">
-              <ShoppingBag className="w-5 h-5 mb-0.5 text-slate-300" />
-              {mounted && totalItems > 0 && (
-                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 bg-[#F26B1D] text-[#121418] text-[9px] font-bold rounded-full flex items-center justify-center">
-                  {totalItems > 99 ? "99+" : totalItems}
-                </span>
-              )}
-            </div>
-            <span className="text-[10px] tracking-tight">Cart</span>
-          </div>
+        <button type="button" onClick={toggleCart} aria-label={mounted && totalItems > 0 ? `Cart, ${totalItems} items` : "Cart"} className={`${base} text-slate-300`}>
+          <span className="relative">
+            <ShoppingCart className="w-5 h-5" aria-hidden />
+            {mounted && totalItems > 0 && (
+              <span className="absolute -top-2 -right-2.5 min-w-[16px] h-4 px-1 rounded-full bg-white text-[#121418] text-[10px] font-extrabold flex items-center justify-center">
+                {totalItems > 99 ? "99+" : totalItems}
+              </span>
+            )}
+          </span>
+          <span>Cart</span>
         </button>
 
-        {/* Get Quote Action */}
-        <Link
-          href="/quote"
-          className="min-w-0 bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418] py-1.5 px-1 rounded-md flex flex-col items-center justify-center font-bold transition-all active:scale-95 shadow-md"
-        >
-          <FileText className="w-4 h-4 mb-0.5 text-white" />
-          <span className="text-[10px] tracking-tight">
-            Quote
-          </span>
+        <Link href="/quote" className={`${base} bg-[#F26B1D] text-[#121418] font-bold`}>
+          <FileText className="w-5 h-5" aria-hidden />
+          <span>Quote</span>
         </Link>
       </div>
-    </div>
+    </nav>
   );
 }

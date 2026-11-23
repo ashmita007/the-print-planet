@@ -8,11 +8,7 @@ export const CDN_LOGO_URL =
   process.env.NEXT_PUBLIC_LOGO_URL ||
   "https://res.cloudinary.com/pmq4rert/image/upload/v1793343181/the_print_planet/brand/logo_webp.webp";
 
-export const ANNOUNCEMENTS = [
-  "PAN-India Factory-Direct Dispatch | Free Digital Proofs on All Custom Orders",
-  "Corporate & Educational Bulk Enquiries: Custom Sample Kits Available",
-  "PVC Cards, Lanyards & ID Card Holders at Wholesale Rates",
-];
+export const ANNOUNCEMENT = "Factory-direct PAN-India dispatch. Free digital proofs.";
 
 export const NAV_ITEMS = [
   { href: "/pvc-card-manufacturer-bangalore", label: "PVC Cards" },
@@ -127,7 +123,7 @@ export const displayName = (user: ClientProfile | null): string =>
 
 /** Link look shared with the category button: an orange underline that draws in on hover, focus and when active. */
 export const LINK_UNDERLINE =
-  "relative px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap cursor-pointer " +
+  "relative px-2.5 py-2 text-sm font-semibold whitespace-nowrap cursor-pointer " +
   "after:absolute after:left-2.5 after:right-2.5 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-[#F26B1D] " +
   "after:origin-left after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100 " +
   "after:transition-transform after:duration-200 motion-reduce:after:transition-none " +

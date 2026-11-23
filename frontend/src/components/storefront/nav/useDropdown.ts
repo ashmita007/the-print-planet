@@ -78,3 +78,65 @@ export function useDropdown() {
 
   return { open, setOpen, wrapRef, buttonRef, onButtonClick, onKeyDown, onBlur };
 }
+
+const HOVER_OPEN_MS = 150;
+const HOVER_CLOSE_MS = 200;
+const HOVER_CLICK_GUARD_MS = 400;
+
+/**
+ * Mouse hover-intent for a useDropdown menu: opens after a short pause, closes after a short
+ * grace period, and Escape closes it even when focus never entered. Touch and pen use the click handler.
+ */
+export function useHoverIntent(
+  open: boolean,
+  setOpen: (v: boolean) => void,
+  buttonRef: React.RefObject<HTMLElement | null>,
+  wrapRef: React.RefObject<HTMLDivElement | null>,
+  onBeforeOpen?: () => void
+) {
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const hoverOpenedAt = useRef(0);
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      const hadFocus = wrapRef.current?.contains(document.activeElement);
+      setOpen(false);
+      if (hadFocus) buttonRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, setOpen, wrapRef, buttonRef]);
+
+  const onPointerEnter = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    clearTimeout(timer.current);
+    if (openRef.current) return;
+    timer.current = setTimeout(() => {
+      hoverOpenedAt.current = Date.now();
+      onBeforeOpen?.();
+      setOpen(true);
+    }, HOVER_OPEN_MS);
+  };
+  const onPointerLeave = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    clearTimeout(timer.current);
+    if (!openRef.current) return;
+    timer.current = setTimeout(() => setOpen(false), HOVER_CLOSE_MS);
+  };
+  /** True when this click just followed a hover-open and must not flip the menu shut. */
+  const clickFollowsHover = () => {
+    clearTimeout(timer.current);
+    const just = Date.now() - hoverOpenedAt.current < HOVER_CLICK_GUARD_MS;
+    hoverOpenedAt.current = 0;
+    return just;
+  };
+
+  return { onPointerEnter, onPointerLeave, clickFollowsHover };
+}

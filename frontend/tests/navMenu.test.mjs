@@ -20,3 +20,19 @@ test("catalogue total prefers the API count and falls back to category sums", ()
   assert.equal(catalogueTotal(0, [36, 34, 29]), 99);
   assert.equal(catalogueTotal(0, []), 0);
 });
+
+import { searchHref, stepIndex } from "../src/lib/navSearch.ts";
+
+test("header search goes to the products page and ignores blank input", () => {
+  assert.equal(searchHref("  pvc card "), "/products?search=pvc%20card");
+  assert.equal(searchHref("a&b"), "/products?search=a%26b");
+  assert.equal(searchHref("   "), null);
+});
+
+test("suggestion arrows wrap through the input row", () => {
+  assert.equal(stepIndex(-1, 1, 3), 0);
+  assert.equal(stepIndex(2, 1, 3), -1);
+  assert.equal(stepIndex(-1, -1, 3), 2);
+  assert.equal(stepIndex(0, -1, 3), -1);
+  assert.equal(stepIndex(0, 1, 0), -1);
+});
