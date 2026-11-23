@@ -61,7 +61,9 @@ body {
   background-color: #FAFBFD;
   color: #121418;
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* clip, not hidden: hidden makes body a scroll container and breaks the sticky header on iOS. */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -257,17 +259,200 @@ button:disabled,
   }
 }
 
-/* Hero starts hidden for the GSAP entrance. The delayed animation is a failsafe:
-   if JavaScript is slow or blocked the content still appears. */
-@keyframes heroFailsafe {
+/* ------------------------------------------------------------------
+   Motion layer. Motion happens in three places only: the hero's entrance
+   on load, one scroll moment inside its own section, and hover/press.
+   Everything is CSS, so it runs at first paint before any script, and
+   nothing is hidden when script or motion is off.
+   ------------------------------------------------------------------ */
+:root {
+  --m-in: 150ms;
+  --m-out: 120ms;
+  --m-press: 90ms;
+  --m-card: 180ms;
+  --m-image: 600ms;
+  --m-image-out: 400ms;
+  --m-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --m-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes mEnterRise {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes mEnterWord {
+  from { transform: translate3d(0, 115%, 0); }
+  to { transform: none; }
+}
+@keyframes mEnterSettle {
+  from { transform: scale(0.98); }
+  to { transform: none; }
+}
+@keyframes mEnterBar {
+  from { transform: scaleY(0); }
+  to { transform: none; }
+}
+@keyframes mEnterRule {
+  from { transform: scaleX(0); }
+  to { transform: none; }
+}
+@keyframes mEnterFade {
+  from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  [data-hero] {
-    opacity: 0;
-    animation: heroFailsafe 0.01s linear 3s forwards;
+  /* Hero entrance, once on load: words rise, then each item fades up 12px, 60ms apart.
+     "backwards" fill holds the start state only during the delay, so hover transforms still work after. */
+  [data-enter] [data-word] {
+    animation: mEnterWord 700ms var(--m-ease-enter) backwards;
+    animation-delay: calc(var(--w, 0) * 60ms);
   }
+  [data-enter] [data-enter-item] {
+    animation: mEnterRise 560ms var(--m-ease-enter) backwards;
+    animation-delay: calc(240ms + var(--i, 0) * 60ms);
+  }
+  /* The hero's picture is never hidden: it settles from .98 as one block. */
+  [data-enter] [data-enter-media] {
+    animation: mEnterSettle 900ms var(--m-ease-enter) backwards;
+    animation-delay: 120ms;
+  }
+  [data-enter] [data-swatch] {
+    transform-origin: 50% 100%;
+    animation: mEnterBar 400ms var(--m-ease-enter) backwards;
+  }
+  [data-enter] [data-swatch]:nth-child(2) { animation-delay: 50ms; }
+  [data-enter] [data-swatch]:nth-child(3) { animation-delay: 100ms; }
+  [data-enter] [data-swatch]:nth-child(4) { animation-delay: 150ms; }
+  [data-enter] [data-crop] {
+    animation: mEnterFade 500ms ease-out 700ms backwards;
+  }
+  [data-enter] [data-enter-rule] {
+    transform-origin: 0 50%;
+    animation: mEnterRule 700ms var(--m-ease-enter) backwards;
+  }
+}
+
+/* Hover and press layer. Fine pointers only; keyboard focus shows the same states. */
+.m-card,
+.m-btn,
+:is(a, button)[class~="bg-[#F26B1D]"],
+:is(a, button)[class~="bg-[#121418]"],
+:is(a, button)[class~="border-[#121418]"],
+.btn-stamp {
+  transition:
+    transform var(--m-out) var(--m-ease),
+    box-shadow var(--m-out) var(--m-ease),
+    background-color var(--m-out) var(--m-ease),
+    border-color var(--m-out) var(--m-ease),
+    color var(--m-out) var(--m-ease);
+}
+.m-card {
+  transition-duration: var(--m-out);
+}
+.m-zoom-img {
+  transition: transform var(--m-image-out) var(--m-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .m-card:hover,
+  .m-card:focus-within {
+    transform: translateY(-2px);
+    border-color: #B9C3CF;
+    box-shadow: 0 12px 24px -14px rgba(14, 34, 56, 0.22);
+    transition-duration: var(--m-card);
+  }
+  .m-card:hover .m-zoom-img,
+  .m-card:focus-within .m-zoom-img,
+  .m-zoom:hover .m-zoom-img {
+    transform: scale(1.03);
+    transition-duration: var(--m-image);
+  }
+
+  .m-btn:hover:not(:disabled),
+  :is(a, button)[class~="bg-[#F26B1D]"]:hover:not(:disabled),
+  :is(a, button)[class~="bg-[#121418]"]:hover:not(:disabled),
+  :is(a, button)[class~="border-[#121418]"]:hover:not(:disabled),
+  .btn-stamp:hover {
+    transform: translateY(-1px);
+    transition-duration: var(--m-in);
+  }
+}
+
+/* Press: sinks to rest and scales .98, on every pointer. */
+.m-btn:active:not(:disabled),
+:is(a, button)[class~="bg-[#F26B1D]"]:active:not(:disabled),
+:is(a, button)[class~="bg-[#121418]"]:active:not(:disabled),
+:is(a, button)[class~="border-[#121418]"]:active:not(:disabled),
+.btn-stamp:active {
+  transform: scale(0.98);
+  transition-duration: var(--m-press);
+}
+
+/* One visible focus ring for every control. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Text links: a line draws left to right on hover and focus, and leaves to the right. */
+.m-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0 1px;
+  padding-bottom: 1px;
+  transition: background-size var(--m-out) var(--m-ease), color var(--m-out) var(--m-ease);
+}
+.m-link:hover,
+.m-link:focus-visible {
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition-duration: var(--m-in);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m-card:hover,
+  .m-card:focus-within,
+  .m-btn:hover,
+  .m-btn:active,
+  :is(a, button)[class~="bg-[#F26B1D]"]:is(:hover, :active),
+  :is(a, button)[class~="bg-[#121418]"]:is(:hover, :active),
+  :is(a, button)[class~="border-[#121418]"]:is(:hover, :active),
+  .btn-stamp:is(:hover, :active),
+  button:not(:disabled):active,
+  a[class*="rounded-"][class*="bg-"]:active,
+  .m-card:hover .m-zoom-img,
+  .m-card:focus-within .m-zoom-img,
+  .m-zoom:hover .m-zoom-img {
+    transform: none !important;
+  }
+  .m-link { transition: none; }
+}
+
+/* Scroll moment: a statement whose words turn from half ink to ink as it crosses the screen.
+   Without script, under reduced motion and in print every word is full ink. */
+.mo-wh .mo-w {
+  transition: color 160ms ease;
+}
+.mo-wh.is-armed .mo-w {
+  color: color-mix(in oklab, var(--color-ink) 50%, var(--color-page));
+}
+.mo-wh.is-armed .mo-w.is-on {
+  color: var(--color-ink);
+}
+.mo-wh.is-armed .mo-w--accent.is-on {
+  color: #C2410C;
+}
+.mo-wh .mo-w--accent {
+  color: #C2410C;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mo-wh.is-armed .mo-w { color: var(--color-ink); }
+  .mo-wh.is-armed .mo-w--accent { color: #C2410C; }
 }
 
 /* Halftone precision print matrix on dark/blue theme containers - subtle texture, non-interfering */
@@ -320,7 +505,7 @@ button:disabled,
 /* Tactile press on every button and filled link */
 button:not(:disabled):active,
 a[class*="rounded-"][class*="bg-"]:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 /* Global respect for reduced-motion preferences */
@@ -478,18 +663,17 @@ html.lenis body {
     color: var(--color-page);
   }
 
+  /* A still strip of whole words that wraps, never a running line cut at the screen edge. */
   .marquee {
     display: flex;
     overflow: hidden;
-    white-space: nowrap;
     user-select: none;
   }
   .marquee-track {
     display: flex;
-    flex-shrink: 0;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
     padding-right: 2rem;
-    will-change: transform;
   }
 }
 

@@ -69,10 +69,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <>
       <div
-        data-tilt
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="group bg-[#FFFFFF] border border-[#DFE6EE] hover:border-[#121418] rounded-lg overflow-hidden transition-colors duration-200 flex flex-col h-full relative"
+        className="m-card group bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg overflow-hidden flex flex-col h-full relative"
       >
         {/* Image Container with 1:1 Aspect Ratio */}
         <div className="relative w-full pt-[100%] bg-[#FFFFFF] overflow-hidden block">
@@ -110,8 +109,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                       setHasError(true);
                     }
                   }}
-                  className={`absolute inset-0 w-full h-full object-contain p-2.5 sm:p-4 transition-transform duration-300 ease-out will-change-transform ${
-                    isHovered && secondaryUrl ? "opacity-0 scale-95" : "opacity-100 group-hover:scale-105"
+                  className={`absolute inset-0 w-full h-full object-contain p-2.5 sm:p-4 m-zoom-img ${
+                    isHovered && secondaryUrl ? "opacity-0" : "opacity-100"
                   }`}
                   loading="lazy"
                   decoding="async"
@@ -125,8 +124,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                     sizes="(min-width: 1024px) 25vw, 50vw"
                     unoptimized
                     alt={`${formatProductName(product.name)} alternate view`}
-                    className={`absolute inset-0 w-full h-full object-contain p-2.5 sm:p-4 transition-all duration-300 ease-out will-change-transform ${
-                      isHovered ? "opacity-100 scale-105" : "opacity-0 scale-95 pointer-events-none"
+                    className={`absolute inset-0 w-full h-full object-contain p-2.5 sm:p-4 transition-opacity duration-300 ease-out ${
+                      isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
                     }`}
                     loading="lazy"
                     decoding="async"

@@ -2,6 +2,7 @@
 
 import { belowMoqMessage, isOrderable, isOutOfStock, stockBelowMoq } from "@/lib/stock";
 import { quantityMax, quantityStep } from "@/lib/quantity";
+import { enterStep } from "@/lib/motion";
 import QuantityStepper from "@/components/product/QuantityStepper";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -135,13 +136,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <div data-enter className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* ========================================================= */}
         {/* LEFT COLUMN: Gallery & Trust Highlights (5 Cols)          */}
         {/* ========================================================= */}
         <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-24 lg:self-start">
           {/* Main Hero Image */}
           <div
+            data-enter-media
             onClick={() => setLightboxOpen(true)}
             className="relative w-full pt-[90%] sm:pt-[100%] bg-slate-50 rounded-lg border border-slate-200 overflow-hidden cursor-zoom-in group select-none shadow-xs"
             title="Click to zoom high-resolution preview"
@@ -164,7 +166,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     setImgError(true);
                   }
                 }}
-                className={`absolute inset-0 w-full h-full object-contain p-4 sm:p-8 group-hover:scale-105 transition-all duration-500 ease-out ${
+                className={`absolute inset-0 w-full h-full object-contain p-4 sm:p-8 group-hover:scale-[1.03] transition-[transform,opacity] duration-500 ease-out ${
                   imgLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 decoding="async"
@@ -229,7 +231,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <div className="lg:col-span-7 space-y-6">
           {/* Header & Title */}
           <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2 text-xs">
+            <div data-enter-item style={enterStep(0)} className="flex flex-wrap items-center gap-2 text-xs">
               <Link
                 href={`/categories/${product.category.slug}`}
                 className="text-[11px] font-bold uppercase tracking-wider text-[#353C45] hover:underline"
@@ -253,7 +255,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </button>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight leading-snug">
+            <h1 data-enter-item style={enterStep(1)} className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight leading-snug">
               {formatProductName(product.name)}
             </h1>
             {belowMoq && (

@@ -46,6 +46,12 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
   return fetchItem<Category>(`${getApiUrl()}/api/v1/categories/${encodeURIComponent(slug)}/`, fetchWithTimeout, CATALOGUE_READ);
 }
 
+/** Live catalogue size for the navbar badge; 0 when the API is unreachable. */
+export async function getProductTotal(): Promise<number> {
+  const { count } = await getProducts({ page_size: 1 });
+  return count;
+}
+
 export async function getProducts(params?: {
   category?: string;
   search?: string;

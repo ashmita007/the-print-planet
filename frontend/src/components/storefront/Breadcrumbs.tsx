@@ -12,7 +12,7 @@ interface BreadcrumbsProps {
 
 export default function Breadcrumbs({ items, tone = "light" }: BreadcrumbsProps) {
   const dark = tone === "dark";
-  const link = dark ? "hover:text-white" : "hover:text-[#121418]";
+  const link = `m-link ${dark ? "hover:text-white" : "hover:text-[#121418]"}`;
 
   return (
     <nav aria-label="Breadcrumb" className={`py-3 text-xs ${dark ? "text-slate-400" : "text-[#353C45]"}`}>

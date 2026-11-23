@@ -37,7 +37,7 @@ export default function GuidesIndex() {
           <Link
             key={g.slug}
             href={`/guides/${g.slug}`}
-            className="group bg-white border border-[#DFE6EE] rounded-2xl p-6 flex flex-col hover:-translate-y-0.5 transition-transform"
+            className="m-card group bg-white border border-[#DFE6EE] rounded-2xl p-6 flex flex-col"
           >
             <h2 className="text-xl font-extrabold tracking-tight text-[#121418] group-hover:text-[#F26B1D]">{g.h1}</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[#2B323B] flex-1">{g.lead}</p>

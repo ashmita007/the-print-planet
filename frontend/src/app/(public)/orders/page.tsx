@@ -376,10 +376,10 @@ export default function ClientOrdersDashboardPage() {
                 <Link
                   key={item.id}
                   href={`/products/${p.slug}`}
-                  className="p-2.5 rounded-md border border-[#DFE6EE] hover:border-[#121418] hover:shadow-sm bg-[#EDF1F6] transition-all group flex flex-col justify-between"
+                  className="m-card p-2.5 rounded-md border border-[#DFE6EE] bg-[#EDF1F6] group flex flex-col justify-between"
                 >
                   <div className="relative w-full aspect-square bg-[#FFFFFF] rounded-lg p-1.5 mb-2 overflow-hidden flex items-center justify-center border border-slate-100">
-                    <Image src={imgUrl} alt={p.name} fill sizes="(min-width: 1024px) 20vw, 50vw" unoptimized className="object-contain p-1.5 group-hover:scale-105 transition-transform" />
+                    <Image src={imgUrl} alt={p.name} fill sizes="(min-width: 1024px) 20vw, 50vw" unoptimized className="m-zoom-img object-contain p-1.5" />
                   </div>
                   <div>
                     <span className="text-[9px] font-mono text-slate-400 uppercase block">{p.sku}</span>

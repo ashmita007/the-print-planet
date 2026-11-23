@@ -56,12 +56,12 @@ function FooterLinks({ title, links }: { title: string; links: { href: string; l
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#B9C3CF] transition-colors"
+                  className="m-link hover:text-[#B9C3CF] transition-colors"
                 >
                   {link.label}
                 </a>
               ) : (
-                <Link href={link.href} className="hover:text-[#B9C3CF] transition-colors">
+                <Link href={link.href} className="m-link hover:text-[#B9C3CF] transition-colors">
                   {link.label}
                 </Link>
               )}
@@ -182,31 +182,31 @@ export default function Footer({ settings }: FooterProps) {
             </a>
           </div>
           <div className="flex flex-wrap items-center gap-5">
-            <Link href="/pricing" className="hover:text-white transition-colors">
+            <Link href="/pricing" className="m-link hover:text-white transition-colors">
               Pricing Tariff
             </Link>
-            <a href="/pricing.md" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="/pricing.md" target="_blank" rel="noopener noreferrer" className="m-link hover:text-white transition-colors">
               pricing.md
             </a>
-            <a href="/llms.txt" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="/llms.txt" target="_blank" rel="noopener noreferrer" className="m-link hover:text-white transition-colors">
               llms.txt
             </a>
-            <a href="/okf/index.md" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="/okf/index.md" target="_blank" rel="noopener noreferrer" className="m-link hover:text-white transition-colors">
               OKF
             </a>
-            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+            <Link href="/privacy-policy" className="m-link hover:text-white transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
+            <Link href="/terms" className="m-link hover:text-white transition-colors">
               Terms
             </Link>
-            <Link href="/return-policy" className="hover:text-white transition-colors">
+            <Link href="/return-policy" className="m-link hover:text-white transition-colors">
               Returns
             </Link>
-            <Link href="/refund-policy" className="hover:text-white transition-colors">
+            <Link href="/refund-policy" className="m-link hover:text-white transition-colors">
               Refunds
             </Link>
-            <Link href="/shipping-policy" className="hover:text-white transition-colors">
+            <Link href="/shipping-policy" className="m-link hover:text-white transition-colors">
               Shipping
             </Link>
           </div>

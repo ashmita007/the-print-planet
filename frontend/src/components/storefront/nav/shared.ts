@@ -127,9 +127,9 @@ export const displayName = (user: ClientProfile | null): string =>
 
 /** Link look shared with the category button: an orange underline that draws in on hover, focus and when active. */
 export const LINK_UNDERLINE =
-  "relative px-2 2xl:px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap cursor-pointer " +
-  "after:absolute after:left-2 after:right-2 2xl:after:left-2.5 2xl:after:right-2.5 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-[#F26B1D] " +
+  "relative px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap cursor-pointer " +
+  "after:absolute after:left-2.5 after:right-2.5 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-[#F26B1D] " +
   "after:origin-left after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100 " +
   "after:transition-transform after:duration-200 motion-reduce:after:transition-none " +
-  "rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-[#121418]/40";
+  "rounded-sm";
 

@@ -106,6 +106,11 @@ export function formatCategoryName(name?: string | null): string {
   return fixCategorySpelling(name).toUpperCase();
 }
 
+/** Title Case label for menus: "ID CARD LANYARD OVAL FISH HOOK" -> "ID Card Lanyard Oval Fish Hook". */
+export function formatCategoryLabel(name?: string | null): string {
+  return formatProductName(fixCategorySpelling(name));
+}
+
 const HEADING_ACRONYMS = new Set(["PVC", "ID", "RFID", "NFC", "UHF", "GST", "A3", "A4", "CR-80", "CR80", "USB", "LED", "UV"]);
 
 /**

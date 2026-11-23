@@ -72,10 +72,9 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
           <Link
             key={piece.title}
             data-piece={piece.group}
-            data-tilt
-            href={`/quote?product=${encodeURIComponent(piece.title)}`}
+                        href={`/quote?product=${encodeURIComponent(piece.title)}`}
             style={active === "All" || active === piece.group ? undefined : { display: "none" }}
-            className={`group flex flex-col overflow-hidden rounded-lg bg-[#EDF1F6] border border-[#DFE6EE] hover:border-[#121418] transition-colors ${
+            className={`m-card group flex flex-col overflow-hidden rounded-lg bg-[#EDF1F6] border border-[#DFE6EE] ${
               index === 0 ? "col-span-2 lg:row-span-2" : ""
             }`}
           >
@@ -85,7 +84,7 @@ export default function GalleryWall({ pieces }: { pieces: GalleryPiece[] }) {
                 alt={piece.title}
                 fill
                 sizes={index === 0 ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"}
-                className="object-contain p-4 sm:p-8 transition-transform duration-300 group-hover:scale-105"
+                className="m-zoom-img object-contain p-4 sm:p-8"
                 unoptimized
               />
             </div>

@@ -12,6 +12,7 @@ import BulkInkBand from "@/components/home/BulkInkBand";
 import Marquee from "@/components/home/Marquee";
 import CategoryShowcase from "@/components/home/CategoryShowcase";
 import HowItWorks from "@/components/home/HowItWorks";
+import WordHighlight from "@/components/animations/WordHighlight";
 import StatsStrip from "@/components/home/StatsStrip";
 
 const PRODUCT_WORDS = ["PVC cards", "Satin lanyards", "ID card holders", "RFID cards", "Badge reels", "Card machines"];
@@ -213,6 +214,15 @@ export default async function HomePage() {
 
       {/* Quote, proof, print, dispatch */}
       <HowItWorks />
+
+      {/* The page's one scroll moment: this statement lights up word by word as it crosses the screen */}
+      <section data-moment="word-highlight" aria-labelledby="statement-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <h2 id="statement-heading" className="eyebrow text-[#C2410C] mb-5">What you get</h2>
+        <WordHighlight
+          text="We make and supply PVC cards, satin lanyards and ID card machines from our own unit in Bengaluru. Every order ships with a GST invoice, custom work gets a free digital proof first, and dispatch leaves within 24 to 48 hours."
+          accent={["Bengaluru", "GST", "free"]}
+        />
+      </section>
 
       {/* Bulk orders: ink band that opens with a circle wipe */}
       <BulkInkBand whatsapp={settings?.whatsapp} />

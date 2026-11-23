@@ -17,11 +17,9 @@ import {
   prefersReducedMotion,
   useGSAP,
 } from "@/lib/gsap";
-import TextReveal from "@/components/animations/TextReveal";
 import {
   CropMarks,
 } from "@/components/animations/PrintMarks";
-import PrintPlanet from "@/components/planet/PrintPlanet";
 import type { PrintPlanet as PlanetScene } from "@/components/planet/printPlanetScene";
 import {
   ATTACHMENT_EXTENSIONS,
@@ -334,22 +332,6 @@ export default function BulkOrderDesk() {
     }
   };
 
-  // Hero entrance.
-  useGSAP(
-    () => {
-      gsap.set("[data-hero]", { opacity: 1 });
-      if (prefersReducedMotion()) return;
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-word]", { yPercent: 115, duration: 0.8, stagger: 0.04 }, 0)
-        .from("[data-swatch]", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.4, stagger: 0.05 }, 0.2)
-        .from("[data-hero-item]", { autoAlpha: 0, y: 16, duration: 0.6, stagger: 0.08 }, 0.25)
-        .from("[data-desk]", { autoAlpha: 0, y: 36, duration: 0.85, stagger: 0.1 }, 0.3)
-        .from("[data-crop]", { autoAlpha: 0, scale: 1.8, duration: 0.45, stagger: 0.06, ease: "power3.out" }, 0.8);
-    },
-    { scope: rootRef }
-  );
-
   // Step change: progress line, then slide the new step in and move focus to it.
   useLayoutEffect(() => {
     const direction = step >= previousStep.current ? 1 : -1;
@@ -463,7 +445,7 @@ export default function BulkOrderDesk() {
       {/* Order desk */}
       <section data-no-reveal className="relative max-w-7xl mx-auto px-4 sm:px-6 -mt-20 pb-14">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div data-desk ref={sheetRef} className="lg:col-span-8 relative scroll-mt-24 min-w-0">
+          <div ref={sheetRef} className="lg:col-span-8 relative scroll-mt-24 min-w-0">
             <CropMarks color="rgba(244,163,107,0.8)" />
             <div className="bg-[#FFFFFF] shadow-[0_24px_60px_-28px_rgba(14,34,56,0.45)] border border-[#DFE6EE]">
               {orderNumber !== null ? (

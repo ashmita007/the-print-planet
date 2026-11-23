@@ -20,7 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { clientLogout } from "@/lib/api";
-import { formatCategoryName } from "@/lib/formatters";
+import { formatCategoryLabel } from "@/lib/formatters";
 import type { ClientProfile } from "@/lib/types";
 import { useOverlay } from "@/lib/useOverlay";
 import { CDN_LOGO_URL, DRAWER_EXTRA_ITEMS, displayName, isActivePath, NAV_ITEMS, type CategoryGroup } from "./shared";
@@ -103,13 +103,13 @@ export default function MobileDrawer({ open, onClose, groups, loggedIn, user, ph
                 </Link>
                 {groups.map(({ main, subs }) => (
                   <div key={main.id}>
-                    <Link href={`/products?category=${main.slug}`} onClick={onClose} className="flex items-center justify-between min-h-11 px-3 rounded-md text-xs font-semibold text-slate-800 hover:bg-slate-50">
-                      <span className="truncate pr-2">{formatCategoryName(main.name)}</span>
+                    <Link href={`/categories/${main.slug}`} onClick={onClose} className="flex items-center justify-between min-h-11 px-3 rounded-md text-sm font-semibold text-slate-800 hover:bg-slate-50">
+                      <span className="pr-2 text-sm">{formatCategoryLabel(main.name)}</span>
                       <span className="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full shrink-0">{main.products_count}</span>
                     </Link>
                     {subs.map((sub) => (
-                      <Link key={sub.id} href={`/products?category=${sub.slug}`} onClick={onClose} className="flex items-center justify-between min-h-11 pl-6 pr-3 rounded-md text-xs text-slate-600 hover:bg-slate-50">
-                        <span className="truncate pr-2">{formatCategoryName(sub.name)}</span>
+                      <Link key={sub.id} href={`/categories/${sub.slug}`} onClick={onClose} className="flex items-center justify-between min-h-11 pl-6 pr-3 py-2 rounded-md text-sm text-slate-600 hover:bg-slate-50">
+                        <span className="pr-2 text-sm">{formatCategoryLabel(sub.name)}</span>
                         <span className="text-[10px] text-slate-400 shrink-0">{sub.products_count}</span>
                       </Link>
                     ))}

@@ -55,7 +55,7 @@ export default async function CategoryShowcase() {
         {families.map((family) => (
           <li
             key={family.slug}
-            className="group relative flex flex-col bg-white border border-[#DFE6EE] rounded-lg overflow-hidden transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            className="m-card group relative flex flex-col bg-white border border-[#DFE6EE] rounded-lg overflow-hidden"
           >
             <div className="relative aspect-[4/3] bg-[#EDF1F6] overflow-hidden">
               {family.image && (
@@ -64,7 +64,7 @@ export default async function CategoryShowcase() {
                   src={family.image}
                   alt=""
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-contain p-5 transition-transform duration-300 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                  className="m-zoom-img absolute inset-0 w-full h-full object-contain p-5"
                 />
               )}
             </div>

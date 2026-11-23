@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { FileText, Menu, Search, ShoppingBag, X } from "lucide-react";
 import type { Category, SiteSettings } from "@/lib/types";
 import { useCart } from "@/lib/cart";
+import { catalogueTotal } from "@/lib/catalogueTotal";
 import TopBar from "./TopBar";
 import DesktopNav from "./DesktopNav";
 import SearchBox from "./SearchBox";
@@ -17,17 +18,20 @@ import { CDN_LOGO_URL, groupCategories, useClientAuth, useLiveCategories } from 
 interface NavbarProps {
   categories?: Category[];
   settings?: SiteSettings;
+  productTotal?: number;
 }
 
 const ICON_BTN =
   "relative h-11 w-11 xl:h-10 xl:w-10 flex items-center justify-center rounded-md border border-slate-200 hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-slate-700 hover:text-[#121418] active:scale-95 transition motion-reduce:transition-none motion-reduce:active:scale-100";
 
-export default function Navbar({ categories = [], settings }: NavbarProps) {
+export default function Navbar({ categories = [], settings, productTotal = 0 }: NavbarProps) {
   const pathname = usePathname();
   const { totalItems, toggleCart } = useCart();
   const { categories: live, refresh } = useLiveCategories(categories);
   const { loggedIn, user } = useClientAuth();
   const groups = useMemo(() => groupCategories(live), [live]);
+  // Prefer the live catalogue size; fall back to the top-level counts if the API gave none.
+  const total = catalogueTotal(productTotal, groups.map((g) => g.main.products_count ?? 0));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -84,8 +88,8 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
           scrolled ? "shadow-md" : "shadow-none"
         }`}
       >
-        <div className="max-w-7xl 2xl:max-w-[1440px] min-[1700px]:max-w-[1600px] mx-auto px-3.5 sm:px-6">
-          <div className="flex items-center h-16 xl:h-[4.5rem] gap-2 2xl:gap-3">
+        <div className="relative max-w-7xl 2xl:max-w-[1440px] min-[1700px]:max-w-[1600px] mx-auto px-4 sm:px-6">
+          <div className="flex items-center h-16 xl:h-[4.5rem] gap-3 2xl:gap-4">
             <Link href="/" className="flex items-center shrink-0 py-1 mr-auto xl:mr-0" title="The Print Planet Home">
               <Image
                 src={CDN_LOGO_URL}
@@ -98,7 +102,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
               />
             </Link>
 
-            <DesktopNav groups={groups} onMenuOpen={refresh} />
+            <DesktopNav groups={groups} total={total} onMenuOpen={refresh} />
 
             {/* Pushes the search field and actions to the right edge on desktop. */}
             <div className="hidden 2xl:flex flex-1 justify-end min-w-0">
@@ -108,7 +112,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
             {/* Spacer: keeps the actions on the right edge when the search field is not shown. */}
             <div className="hidden xl:block 2xl:hidden flex-1 min-w-0" aria-hidden="true" />
 
-            <div className="flex items-center gap-1.5 xl:gap-2 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 ref={searchButtonRef}
                 type="button"
@@ -134,7 +138,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
               <Link
                 href="/quote"
-                className="hidden xl:inline-flex items-center gap-1.5 h-10 bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-95 text-[#121418] px-3 2xl:px-4 rounded-md text-sm font-bold transition motion-reduce:transition-none motion-reduce:active:scale-100 whitespace-nowrap"
+                className="hidden xl:inline-flex items-center gap-1.5 h-10 bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-95 text-[#121418] px-4 rounded-md text-sm font-bold transition motion-reduce:transition-none motion-reduce:active:scale-100 whitespace-nowrap"
               >
                 <FileText className="w-4 h-4" aria-hidden />
                 <span>Request Quote</span>
@@ -155,7 +159,7 @@ export default function Navbar({ categories = [], settings }: NavbarProps) {
 
         {/* Full-width search below 2xl (the inline field needs the room); overlays the page so nothing shifts. */}
         {searchOpen && (
-          <div id="mobile-search" className="2xl:hidden absolute inset-x-0 top-full bg-white border-b border-slate-200 shadow-md px-3.5 sm:px-6 py-2.5">
+          <div id="mobile-search" className="2xl:hidden absolute inset-x-0 top-full bg-white border-b border-slate-200 shadow-md px-4 sm:px-6 py-2.5">
             <div className="max-w-7xl mx-auto">
               <SearchBox variant="panel" onDone={() => setSearchOpen(false)} onClose={closeSearch} />
             </div>

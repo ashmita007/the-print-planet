@@ -6,6 +6,7 @@ import { ArrowRight, ShoppingBag, Check } from "lucide-react";
 import { Product, SiteSettings } from "@/lib/types";
 import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
+import { enterStep } from "@/lib/motion";
 import TextReveal from "@/components/animations/TextReveal";
 import { ColorBar, CropMarks } from "@/components/animations/PrintMarks";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
@@ -92,73 +93,6 @@ export default function ProductHeroShowcase({
   // All hero text comes from Owner Settings, with short defaults if a field is empty.
   const copy = heroCopy(settings);
 
-  // The one entrance on load: words rise, items fade in.
-  useGSAP(
-    () => {
-      gsap.set("[data-hero]", { opacity: 1 });
-      if (prefersReducedMotion()) return;
-
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      const words = heroRef.current?.querySelectorAll("[data-word]");
-      if (words && words.length > 0) {
-        tl.fromTo(
-          words,
-          { yPercent: 125, opacity: 0 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.85,
-            stagger: 0.045,
-            ease: "power3.out",
-          },
-          0
-        );
-      }
-
-      const items = heroRef.current?.querySelectorAll("[data-hero-item]");
-      if (items && items.length > 0) {
-        tl.fromTo(
-          items,
-          { autoAlpha: 0, y: 16 },
-          { autoAlpha: 1, y: 0, duration: 0.65, stagger: 0.08, ease: "power3.out" },
-          0.2
-        );
-      }
-
-      const swatches = heroRef.current?.querySelectorAll("[data-swatch]");
-      if (swatches && swatches.length > 0) {
-        tl.fromTo(
-          swatches,
-          { scaleY: 0, transformOrigin: "50% 100%" },
-          { scaleY: 1, duration: 0.45, stagger: 0.05, ease: "power2.out" },
-          0.25
-        );
-      }
-
-      const stage = heroRef.current?.querySelector("[data-hero-stage]");
-      if (stage) {
-        tl.fromTo(
-          stage,
-          { autoAlpha: 0, y: 24 },
-          { autoAlpha: 1, y: 0, duration: 0.85, ease: "power3.out" },
-          0.15
-        );
-      }
-
-      const crops = heroRef.current?.querySelectorAll("[data-crop]");
-      if (crops && crops.length > 0) {
-        tl.fromTo(
-          crops,
-          { autoAlpha: 0, scale: 1.6 },
-          { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.06, ease: "power3.out" },
-          0.7
-        );
-      }
-    },
-    { scope: heroRef }
-  );
-
   // Filter pool by active hero category
   const activeProducts = useMemo(() => {
     if (selectedHeroCategory === "all") {
@@ -197,7 +131,7 @@ export default function ProductHeroShowcase({
     setTimeout(() => setHeroAdded(false), 1500);
   };
 
-  // Slide change, skipping the first render so it doesn't fight the entrance timeline.
+  // Fade the stage image on slide change; the first render is skipped so nothing flickers on load.
   const activeProductId = activeProduct?.id;
   const firstSlide = useRef(true);
   useGSAP(
@@ -227,6 +161,7 @@ export default function ProductHeroShowcase({
   return (
     <section
       ref={heroRef}
+      data-enter
       data-no-reveal
       className="relative bg-[#0E2238] text-white overflow-hidden border-b border-white/10"
     >
@@ -235,27 +170,27 @@ export default function ProductHeroShowcase({
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           <div className="lg:col-span-6">
-            <div data-hero data-hero-item className="flex items-center gap-3 mb-5">
+            <div data-enter-item style={enterStep(0)} className="flex items-center gap-3 mb-5">
               <ColorBar />
               <span className="font-mono text-xs text-slate-200 font-medium tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">{copy.badge}</span>
             </div>
 
-            <h1 data-hero data-hero-headline className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.025em] leading-[1.08] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`}>
+            <h1 className={`${heroHeadlineClass(copy)} font-hero font-extrabold tracking-[-0.025em] leading-[1.08] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`}>
               <TextReveal text={copy.title} />
               <span className="block text-[#FF8A3D] font-hero mt-1 sm:mt-1.5 font-extrabold tracking-[-0.02em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
-                <TextReveal text={copy.subtitle} />
+                <TextReveal text={copy.subtitle} offset={copy.title.split(" ").length} />
               </span>
             </h1>
 
-            <h2 data-hero data-hero-item className="mt-4 text-sm sm:text-base font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+            <h2 data-enter-item style={enterStep(1)} className="mt-4 text-sm sm:text-base font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
               The Print Planet: PVC cards, lanyards and ID card machines, Bengaluru
             </h2>
 
-            <p data-hero data-hero-item className="mt-3 text-base sm:text-lg text-slate-100 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
+            <p data-enter-item style={enterStep(2)} className="mt-3 text-base sm:text-lg text-slate-100 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
               {copy.caption}
             </p>
 
-            <div data-hero data-hero-item className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mt-7">
+            <div data-enter-item style={enterStep(3)} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mt-7">
               <Link
                 href="/products"
                 data-magnetic
@@ -274,11 +209,7 @@ export default function ProductHeroShowcase({
           </div>
 
           {activeProduct && (
-            <div
-              data-hero
-              data-hero-stage
-              className="lg:col-span-6 w-full min-w-0"
-            >
+            <div data-enter-media className="lg:col-span-6 w-full min-w-0">
               <div className="flex gap-5 overflow-x-auto scrollbar-none border-b border-white/15 mb-6">
                 {HERO_CATEGORIES.map((cat) => (
                   <button

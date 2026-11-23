@@ -20,7 +20,7 @@ export default function AccountMenu({ loggedIn, user }: { loggedIn: boolean; use
     return (
       <Link
         href="/account/login"
-        className="hidden xl:flex items-center gap-1.5 h-10 px-2.5 2xl:px-3 rounded-md border border-slate-200 hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#121418] text-sm font-semibold transition-colors"
+        className="hidden xl:flex items-center gap-1.5 h-10 px-3 rounded-md border border-slate-200 hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#121418] text-sm font-semibold transition-colors"
       >
         <User className="w-4 h-4 text-[#353C45]" aria-hidden />
         <span>Sign In</span>
@@ -38,7 +38,7 @@ export default function AccountMenu({ loggedIn, user }: { loggedIn: boolean; use
         aria-haspopup="true"
         aria-controls="account-menu"
         aria-label={`Account menu, ${name}`}
-        className="flex items-center gap-1.5 h-10 px-2.5 2xl:px-3 rounded-md border border-slate-200 hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#121418] text-sm font-semibold transition-colors"
+        className="flex items-center gap-1.5 h-10 px-3 rounded-md border border-slate-200 hover:border-[#B9C3CF] hover:bg-[#EDF1F6] text-[#121418] text-sm font-semibold transition-colors"
       >
         <User className="w-4 h-4 text-[#353C45]" aria-hidden />
         {/* Between 1536 and 1700px the search field takes the room, so only the icon shows. */}
