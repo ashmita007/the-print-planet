@@ -29,7 +29,6 @@ import {
   Sliders,
   Sparkles,
   Paperclip,
-  Video,
 } from "lucide-react";
 import { Product } from "@/lib/types";
 import { formatCategoryName, formatProductName, getProductImageUrl, sizedImage } from "@/lib/formatters";
@@ -124,11 +123,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       setArtworkFile(e.target.files[0]);
     }
   };
-
-  // Highlights
-  const isMachine =
-    product.category?.slug?.includes("machine") ||
-    product.category?.name?.toLowerCase().includes("machine");
 
   // Material alternatives
   // Only offer the material this product is actually made in; a generic list showed PVC and satin on machines.
@@ -457,34 +451,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <span>WhatsApp</span>
               </a>
             </div>
-
-            {/* Machinery Video Demo Trigger */}
-            {(product.category?.slug === "machines" ||
-              product.category?.slug?.includes("machine") ||
-              product.name?.toLowerCase().includes("machine") ||
-              product.name?.toLowerCase().includes("cutter") ||
-              product.name?.toLowerCase().includes("fusing")) && (
-              <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-[#121418] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                    <Video className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-[#121418]">Live WhatsApp Video Demo Available</p>
-                    <p className="text-[11px] text-[#353C45]">Inspect this machine operating live before crating & dispatch.</p>
-                  </div>
-                </div>
-                <a
-                  href={`https://wa.me/919741808034?text=${encodeURIComponent(`Hi The Print Planet, I would like to schedule a live WhatsApp video demo for ${product.name} (SKU: ${product.sku}).`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0E2238] hover:bg-[#1A365D] text-white text-xs font-bold shrink-0 transition-colors"
-                >
-                  <Video className="w-3.5 h-3.5 text-[#FF8A3D]" />
-                  <span>Request Video Demo</span>
-                </a>
-              </div>
-            )}
 
             {/* CR-80 Standard Compliance Note */}
             {(product.category?.slug === "pvc-id-card-consumable" ||

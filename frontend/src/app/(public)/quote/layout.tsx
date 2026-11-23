@@ -6,7 +6,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "Get a Wholesale Quote",
   description:
-    "Get wholesale prices for lanyard rolls, PVC ID card holders, RFID cards and card machines from The Print Planet, Bengaluru.",
+    "Get wholesale prices for lanyards, PVC ID card holders and RFID cards from The Print Planet, Bengaluru.",
   alternates: {
     canonical: `${SITE_URL}/quote`,
   },

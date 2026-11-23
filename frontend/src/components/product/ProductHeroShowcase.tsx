@@ -21,8 +21,7 @@ interface ProductHeroShowcaseProps {
 
 const HERO_CATEGORIES = [
   { id: "all", label: "Flagships" },
-  { id: "machines", label: "Machines", keywords: ["machine", "cutter", "fusing", "press"] },
-  { id: "lanyards", label: "Lanyard rolls", keywords: ["lanyard", "satin", "roll", "ribbon"] },
+  { id: "lanyards", label: "Lanyards", keywords: ["lanyard", "satin", "roll", "ribbon"] },
   { id: "holders", label: "Card holders", keywords: ["holder", "pvc", "acrylic", "clear"] },
   { id: "rfid", label: "RFID cards", keywords: ["rfid", "smart", "inlay", "prelam", "mifare"] },
   { id: "hooks", label: "Hooks & clips", keywords: ["hook", "clip", "fitting", "clamp"] },
@@ -183,7 +182,7 @@ export default function ProductHeroShowcase({
             </h1>
 
             <h2 data-enter-item style={enterStep(1)} className="mt-4 text-sm sm:text-base font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-              The Print Planet: PVC cards, lanyards and ID card machines, Bengaluru
+              The Print Planet: PVC cards, lanyards and ID card holders, Bengaluru
             </h2>
 
             <p data-enter-item style={enterStep(2)} className="mt-3 text-base sm:text-lg text-slate-100 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">

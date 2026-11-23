@@ -4,14 +4,12 @@ import Link from "next/link";
 import {
   ShieldCheck,
   Truck,
-  CheckCircle2,
   Phone,
   MessageCircle,
   FileText,
   MapPin,
   Layers,
   Cpu,
-  Scissors,
   Building2,
 } from "lucide-react";
 import Breadcrumbs from "@/components/storefront/Breadcrumbs";
@@ -24,7 +22,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "Wholesale PVC Cards in Bangalore",
   description:
-    "PVC ID cards, CR-80 blank cards, RFID cards, dragon sheets and fusing machines, wholesale from Sunkadakatte, Bangalore. GST invoice, pan-India dispatch.",
+    "PVC ID cards, CR-80 blank cards, RFID cards, dragon sheets, wholesale from Sunkadakatte, Bangalore. GST invoice, pan-India dispatch.",
   alternates: {
     canonical: `${SITE_URL}/pvc-card-manufacturer-bangalore`,
   },
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
     images: DEFAULT_OG_IMAGES,
     title: "PVC Card Manufacturer in Bangalore | The Print Planet",
     description:
-      "Factory-direct wholesale supplier of PVC ID cards, RFID smart cards, printable core sheets, and card machinery in Sunkadakatte, Bengaluru.",
+      "Factory-direct wholesale supplier of PVC ID cards, RFID smart cards, and printable core sheets in Sunkadakatte, Bengaluru.",
     url: `${SITE_URL}/pvc-card-manufacturer-bangalore`,
     siteName: "The Print Planet",
     type: "website",
@@ -90,17 +88,12 @@ const LOCAL_FAQS: FaqItem[] = [
   {
     question: "What is the minimum order quantity (MOQ) for wholesale PVC cards?",
     answer:
-      "We provide flexible wholesale slabs for print bureaus: blank PVC cards start from packs of 100 pieces, printable A4 PVC fusing dragon sheets start from 50-sheet boxes (yielding 500 CR-80 cards), and satin lanyards start from 1 single 100m spool.",
+      "We provide flexible wholesale slabs for print bureaus: blank PVC cards start from packs of 100 pieces, printable A4 PVC fusing dragon sheets start from 50-sheet boxes (yielding 500 CR-80 cards).",
   },
   {
     question: "How fast do you deliver across Bangalore and Karnataka?",
     answer:
       "Orders placed before 2:00 PM are dispatched same-day directly from our Sunkadakatte facility. Delivery across Bangalore industrial zones (Peenya, Rajajinagar, Electronic City, Whitefield) takes 4 to 24 hours via local courier or express porter.",
-  },
-  {
-    question: "Do you supply PVC card manufacturing machines with local warranty in Bangalore?",
-    answer:
-      "Yes. We stock motorized card die-cutters, dual-plate heating/water-cooling fusing laminators, and lanyard heat press machines with 1-year mechanical warranty, replacement parts, and technician support in Bangalore.",
   },
   {
     question: "Do you issue official GST invoices for Input Tax Credit (ITC)?",
@@ -197,7 +190,7 @@ export default function PvcCardManufacturerBangalorePage() {
               PVC card manufacturer and wholesale supplier in Bangalore
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Factory-direct wholesale supplier of ISO CR-80 PVC cards, inkjet printable dragon sheets, RFID proximity smart cards, and commercial card fusing machinery. Sunkadakatte warehouse pickup or 24-hour delivery across Bengaluru.
+              Factory-direct wholesale supplier of ISO CR-80 PVC cards, inkjet printable dragon sheets, and RFID proximity smart cards. Sunkadakatte warehouse pickup or 24-hour delivery across Bengaluru.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
@@ -224,7 +217,7 @@ export default function PvcCardManufacturerBangalorePage() {
       {/* 4 Trust Pillars */}
       <section className="bg-white border-b border-[#DFE6EE] py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-xs sm:text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-xs sm:text-sm">
             <div className="flex items-center gap-3">
               <ShieldCheck className="w-6 h-6 text-[#121418] shrink-0" />
               <div>
@@ -246,13 +239,6 @@ export default function PvcCardManufacturerBangalorePage() {
                 <span className="text-slate-500">Claim 18% ITC on GSTIN 29</span>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-6 h-6 text-[#121418] shrink-0" />
-              <div>
-                <strong className="block text-[#121418] font-bold">Live Video Testing</strong>
-                <span className="text-slate-500">Inspect machines before crating</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -269,7 +255,7 @@ export default function PvcCardManufacturerBangalorePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-6 shadow-xs hover:border-[#121418] transition-all flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="w-10 h-10 rounded-lg bg-[#EDF1F6] flex items-center justify-between p-2.5">
@@ -303,24 +289,6 @@ export default function PvcCardManufacturerBangalorePage() {
                 className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#121418] hover:text-[#FF8A3D] transition-colors"
               >
                 <span>View Smart Cards &rarr;</span>
-              </Link>
-            </div>
-
-            <div className="bg-[#FFFFFF] border border-[#DFE6EE] rounded-lg p-6 shadow-xs hover:border-[#121418] transition-all flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-lg bg-[#EDF1F6] flex items-center justify-between p-2.5">
-                  <Scissors className="w-5 h-5 text-[#121418]" />
-                </div>
-                <h3 className="text-lg font-bold text-[#121418]">Card Fusing &amp; Die Cutting Machinery</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Heavy-duty dual-plate heated laminators (135°C–155°C) and motorized electric CR-80 card die-cutters capable of punching up to 1,200 cards/hour with burr-free rounded edges.
-                </p>
-              </div>
-              <Link
-                href="/categories/machines"
-                className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#121418] hover:text-[#FF8A3D] transition-colors"
-              >
-                <span>View Machinery &rarr;</span>
               </Link>
             </div>
           </div>
@@ -387,7 +355,7 @@ export default function PvcCardManufacturerBangalorePage() {
               Frequently Asked Questions (Bangalore B2B Buyers)
             </h2>
             <p className="text-sm text-slate-600 mt-2">
-              Common procurement questions regarding minimum orders, machinery testing, and GST compliance.
+              Common procurement questions regarding minimum orders and GST compliance.
             </p>
           </div>
           <FaqAccordion items={LOCAL_FAQS} />
@@ -397,7 +365,7 @@ export default function PvcCardManufacturerBangalorePage() {
         <section className="bg-[#121418] text-white rounded-xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
             <h3 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Need a Custom Bulk Quotation or Machine Demo?
+              Need a Custom Bulk Quotation?
             </h3>
             <p className="text-sm text-slate-300">
               Speak directly with our senior application engineers. We provide sample packs, wholesale price breakdowns, and live video crating inspections.

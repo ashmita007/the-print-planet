@@ -446,11 +446,9 @@ export default function ClientOrdersDashboardPage() {
                     onChange={(e) => setCategoryType(e.target.value)}
                     className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded-md px-3 py-2 text-xs text-[#121418] outline-none"
                   >
-                    <option value="custom_lanyards">Custom Satin Lanyards &amp; Ribbons</option>
+                    <option value="custom_lanyards">Custom Printed Lanyards</option>
                     <option value="student_pvc_cards">Student / Employee PVC ID Cards</option>
                     <option value="rfid_smart_cards">1K / 4K RFID &amp; Smart Cards</option>
-                    <option value="id_card_machinery">ID Card &amp; Fusing Machinery</option>
-                    <option value="lanyard_raw_materials">Lanyard Hooks, Clips &amp; Raw Materials</option>
                     <option value="custom_printing">Custom Printing / Packaging</option>
                   </select>
                 </div>
@@ -514,7 +512,7 @@ export default function ClientOrdersDashboardPage() {
                   required
                   value={requirements}
                   onChange={(e) => setRequirements(e.target.value)}
-                  placeholder="Tell us what size, width (16mm/20mm), fittings (dog hook/quick release), or specifications you need..."
+                  placeholder="Tell us what size, lanyard width, fittings, or specifications you need..."
                   className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded-md p-2.5 text-xs text-[#121418] outline-none"
                 />
               </div>

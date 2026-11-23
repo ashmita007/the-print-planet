@@ -58,7 +58,7 @@ const SECTORS: IndustrySector[] = [
       "Dual-pocket clear polycarbonate card holders for ID + RFID pass",
     ],
     recommendedProducts: [
-      { label: "Satin Lanyard Rolls", href: "/categories/indian-satin-digital-lanyard-roll" },
+      { label: "Lanyards", href: "/categories/lanyards" },
       { label: "RFID Smart Cards", href: "/categories/pvc-and-smart-cards" },
       { label: "ID Card Holders", href: "/categories/id-card-holder" },
     ],
@@ -77,7 +77,7 @@ const SECTORS: IndustrySector[] = [
     ],
     recommendedProducts: [
       { label: "PVC Cards & Dragon Sheets", href: "/categories/pvc-id-card-consumable" },
-      { label: "Lanyard Hooks & Clips", href: "/categories/id-card-lanyard-hooks" },
+      { label: "Lanyards", href: "/categories/lanyards" },
       { label: "PVC Cards Bangalore", href: "/pvc-card-manufacturer-bangalore" },
     ],
     moq: "250 Units",
@@ -112,9 +112,9 @@ const SECTORS: IndustrySector[] = [
       "125 kHz EM-Marin proximity cards for perimeter gate turnstiles and time-clocks",
     ],
     recommendedProducts: [
-      { label: "Metal Fittings & Hooks", href: "/categories/id-card-lanyard-hooks" },
+      { label: "Lanyards", href: "/categories/lanyards" },
       { label: "Proximity Cards", href: "/categories/pvc-and-smart-cards" },
-      { label: "Card Machinery", href: "/categories/machines" },
+      { label: "ID Card Accessories", href: "/categories/id-card-accessories" },
     ],
     moq: "200 Units",
     leadTime: "2–4 Days",
@@ -130,8 +130,8 @@ const SECTORS: IndustrySector[] = [
       "Full compliance with GeM portal billing specifications and GST e-invoicing",
     ],
     recommendedProducts: [
-      { label: "PVC Core Fusing Sheets", href: "/categories/pvc-id-card-consumable" },
-      { label: "ID Card Fusing Machines", href: "/categories/machines" },
+      { label: "PVC Core Sheets", href: "/categories/pvc-id-card-consumable" },
+      { label: "PVC & Smart Cards", href: "/categories/pvc-and-smart-cards" },
       { label: "Corporate Bulk Enquiry", href: "/corporate" },
     ],
     moq: "500 Units",
@@ -148,8 +148,8 @@ const SECTORS: IndustrySector[] = [
       "Rapid turnaround production capacity of 10,000+ lanyards per week",
     ],
     recommendedProducts: [
-      { label: "Sublimation Lanyard Rolls", href: "/categories/indian-satin-digital-lanyard-roll" },
-      { label: "Double Hooks & Fittings", href: "/categories/id-card-lanyard-hooks" },
+      { label: "Lanyards", href: "/categories/lanyards" },
+      { label: "ID Card Accessories", href: "/categories/id-card-accessories" },
       { label: "Custom Quotation", href: "/quote" },
     ],
     moq: "200 Units",
@@ -185,7 +185,7 @@ const SECTORS: IndustrySector[] = [
     ],
     recommendedProducts: [
       { label: "Magnetic Overlays & Sheets", href: "/categories/pvc-id-card-consumable" },
-      { label: "Card Cutters & Punches", href: "/categories/machines" },
+      { label: "PVC & Smart Cards", href: "/categories/pvc-and-smart-cards" },
       { label: "Wholesale price list", href: "/pricing" },
     ],
     moq: "1,000 Units",
@@ -207,7 +207,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Can you handle emergency or large-volume rush orders for upcoming conferences?",
     answer:
-      "Yes. With continuous weaving spools in stock and automated sublimation print lines running at our Bangalore facility, we can manufacture and dispatch event lanyards and badge pouches within 24 to 48 hours for urgent deliveries across South India.",
+      "Yes. We can print and dispatch event lanyards and badge pouches within 24 to 48 hours for urgent deliveries across South India.",
   },
   {
     question: "What formats do you need for corporate logos and ID card artwork?",

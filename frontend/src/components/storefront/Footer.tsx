@@ -14,10 +14,9 @@ interface FooterProps {
 }
 
 const SHOP_LINKS = [
-  { href: "/categories/machines", label: "ID card machines" },
-  { href: "/categories/indian-satin-digital-lanyard-roll", label: "Satin lanyard rolls" },
+  { href: "/categories/lanyards", label: "Lanyards" },
   { href: "/categories/id-card-holder", label: "ID card holders" },
-  { href: "/categories/pvc-id-card-consumable", label: "PVC fusing sheets" },
+  { href: "/categories/pvc-id-card-consumable", label: "PVC card sheets" },
   { href: "/categories/pvc-and-smart-cards", label: "RFID cards" },
   { href: "/products", label: "All products" },
 ];

@@ -5,11 +5,11 @@ import { getProducts } from "@/lib/api";
 import { getProductImageUrl } from "@/lib/formatters";
 
 const LINES: { slug: string; label: string; span: string; photo?: RegExp }[] = [
-  { slug: "machines", label: "Machines", span: "col-span-2 lg:row-span-2" },
+  { slug: "lanyards", label: "Lanyards", span: "col-span-2 lg:row-span-2" },
   { slug: "id-card-holder", label: "ID card holders", span: "" },
-  { slug: "indian-satin-digital-lanyard-roll", label: "Lanyard rolls", span: "" },
   { slug: "pvc-id-card-consumable", label: "PVC card sheets", span: "" },
-  { slug: "rfid-consumables", label: "RFID cards", span: "", photo: /mifare|rfid/i },
+  { slug: "pvc-and-smart-cards", label: "PVC and smart cards", span: "", photo: /mifare|rfid/i },
+  { slug: "id-card-accessories", label: "ID card accessories", span: "" },
 ];
 
 /** The catalogue by product family: real product photos, names and live counts. */

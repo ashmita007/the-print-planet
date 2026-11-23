@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     template: "%s | The Print Planet",
   },
   description:
-    "The Print Planet, Bengaluru: Direct factory manufacturer of PVC cards, CR-80 blank cards, ID card holders, satin lanyard rolls, RFID smart cards and ID card machines. Wholesale pan-India dispatch.",
+    "The Print Planet, Bengaluru: Direct factory manufacturer of PVC cards, CR-80 blank cards, ID card holders, satin lanyards and RFID smart cards. Wholesale pan-India dispatch.",
   authors: [{ name: "The Print Planet" }],
   creator: "The Print Planet",
   publisher: "The Print Planet",
@@ -97,9 +97,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "The Print Planet",
-    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
+    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Holders",
     description:
-      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and industrial card machinery.",
+      "Official website of Print Planet (The Print Planet, Bangalore — theprintplanet.co.in). Wholesale supplier of PVC ID card raw materials, and multicolour heat-transfer lanyards.",
     images: [
       {
         url: `${SITE_URL}/logo.png`,
@@ -111,9 +111,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Machines",
+    title: "The Print Planet Bangalore | PVC Cards, Lanyards & ID Holders",
     description:
-      "Wholesale supplier of satin lanyards, ID card materials and card machines in Bangalore, with dispatch across India.",
+      "Wholesale supplier of satin lanyards and ID card materials in Bangalore, with dispatch across India.",
     images: [`${SITE_URL}/logo.png`],
   },
   robots: {
@@ -152,7 +152,7 @@ const jsonLdOrg = {
         `${SITE_URL}/icon.png`,
       ],
       description:
-        "B2B wholesale supplier of PVC cards, ID card raw materials, inkjet & digital fusing sheets, thermal lamination machines, digital cutting plotters, badge reels, and card punching machinery.",
+        "B2B wholesale supplier of PVC cards, ID card raw materials and badge reels.",
       telephone: "+919741808034",
       email: "theprintplanet01@gmail.com",
       taxID: "29AAQFT3909B1ZZ",
@@ -167,13 +167,9 @@ const jsonLdOrg = {
       knowsAbout: [
         "Specialist in PVC Cards and ID Systems",
         "PVC ID Card Manufacturing & Raw Materials",
-        "PVC Core Fusing Sheets & Coated Overlays",
+        "PVC Core Sheets & Coated Overlays",
         "Multicolour Heat-Transfer Lanyards",
-        "Industrial Thermal Lamination Machines",
-        "Digital Cutting Plotters & Die Cutters",
         "Badge Reels & Lanyard Fittings",
-        "Sublimation Inks and Raw Materials",
-        "Satin Lanyard Rolls",
         "PVC ID Card Holders",
         "Dog Hooks and Alligator Clips",
         "RFID Smart Cards"

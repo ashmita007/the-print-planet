@@ -8,14 +8,11 @@ import PrintTariffButton from "@/components/PrintTariffButton";
 
 export const metadata: Metadata = {
   title: { absolute: "Wholesale Price List 2026 | The Print Planet" },
-  description: "Factory-direct wholesale price list for satin lanyard rolls, PVC ID card holders, lanyard hardware, RFID cards and ID card machines from Bangalore.",
+  description: "Factory-direct wholesale price list for PVC ID card holders, lanyard hardware and RFID cards from Bangalore.",
   keywords: [
     "lanyard wholesale price",
     "PVC card holder wholesale price bangalore",
-    "satin ribbon rolls bulk price",
-    "dog hook lanyard clips wholesale",
-    "Mifare RFID card wholesale price india",
-    "ID card die cutting machine price"
+    "Mifare RFID card wholesale price india"
   ],
   alternates: {
     canonical: "https://theprintplanet.co.in/pricing",
@@ -27,7 +24,7 @@ export default function PricingPage() {
     "@context": "https://schema.org",
     "@type": "PriceSpecification",
     "name": "The Print Planet B2B Wholesale Tariff 2026",
-    "description": "Wholesale pricing for satin lanyard rolls, PVC ID card holders, and card machinery.",
+    "description": "Wholesale pricing for PVC ID card holders and RFID cards.",
     "priceCurrency": "INR",
     "validFrom": "2026-01-01",
     "seller": {
@@ -53,7 +50,7 @@ export default function PricingPage() {
 
       <PageHero
         title="Wholesale price list"
-        lead="Official B2B volume breaks for satin lanyard rolls, rigid CR-80 card holders, metal fittings, RFID smart cards, and Wuhan Wenlin industrial card equipment with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
+        lead="Official B2B volume breaks for rigid CR-80 card holders, metal fittings and RFID smart cards with 24–48h pan-India dispatch from Sunkadakatte, Bangalore."
         crumbs={[
           { label: "Home", href: "/" },
           { label: "Wholesale Tariff" },
@@ -98,72 +95,10 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* Section 1: Lanyard Rolls */}
-        <section className="space-y-6">
-          <div className="border-b border-slate-200 pb-4">
-            <span className="text-xs font-bold tracking-wider uppercase text-[#FF8A3D]">Section 01</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-              Satin Lanyard Rolls (Sublimation & Screen Printing)
-            </h2>
-            <p className="text-slate-600 text-sm mt-1">
-              Continuous virgin polyester woven rolls calibrated for heat transfer & silk screen printing. 100-meter standard spools.
-            </p>
-          </div>
-
-          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-xs bg-white">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
-                  <th className="py-3.5 px-4 sm:px-6">Width</th>
-                  <th className="py-3.5 px-4">Sample (1–9 Rolls)</th>
-                  <th className="py-3.5 px-4">Tier 1 (10–49 Rolls)</th>
-                  <th className="py-3.5 px-4">Tier 2 (50–199 Rolls)</th>
-                  <th className="py-3.5 px-4 text-[#FF8A3D] font-extrabold">Bulk (200+ Rolls)</th>
-                  <th className="py-3.5 px-4 text-right">MOQ</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-800">
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-4 sm:px-6 font-semibold">12 mm Digital White Roll</td>
-                  <td className="py-4 px-4 font-mono">₹280</td>
-                  <td className="py-4 px-4 font-mono">₹245</td>
-                  <td className="py-4 px-4 font-mono">₹215</td>
-                  <td className="py-4 px-4 font-mono text-[#FF8A3D] font-bold">₹185</td>
-                  <td className="py-4 px-4 text-right">1 Roll</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-4 sm:px-6 font-semibold">16 mm Digital White Roll</td>
-                  <td className="py-4 px-4 font-mono">₹340</td>
-                  <td className="py-4 px-4 font-mono">₹295</td>
-                  <td className="py-4 px-4 font-mono">₹260</td>
-                  <td className="py-4 px-4 font-mono text-[#FF8A3D] font-bold">₹225</td>
-                  <td className="py-4 px-4 text-right">1 Roll</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-4 sm:px-6 font-semibold">20 mm Digital White Roll (Top Seller)</td>
-                  <td className="py-4 px-4 font-mono">₹390</td>
-                  <td className="py-4 px-4 font-mono">₹340</td>
-                  <td className="py-4 px-4 font-mono">₹295</td>
-                  <td className="py-4 px-4 font-mono text-[#FF8A3D] font-bold">₹255</td>
-                  <td className="py-4 px-4 text-right">1 Roll</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-4 sm:px-6 font-semibold">25 mm Digital White Roll</td>
-                  <td className="py-4 px-4 font-mono">₹470</td>
-                  <td className="py-4 px-4 font-mono">₹410</td>
-                  <td className="py-4 px-4 font-mono">₹360</td>
-                  <td className="py-4 px-4 font-mono text-[#FF8A3D] font-bold">₹315</td>
-                  <td className="py-4 px-4 text-right">1 Roll</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
         {/* Section 2: PVC Card Holders */}
         <section className="space-y-6">
           <div className="border-b border-slate-200 pb-4">
-            <span className="text-xs font-bold tracking-wider uppercase text-[#FF8A3D]">Section 02</span>
+            <span className="text-xs font-bold tracking-wider uppercase text-[#FF8A3D]">Section 01</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
               Rigid PVC ID Card Holders & Badge Cases
             </h2>
@@ -237,24 +172,12 @@ export default function PricingPage() {
             </h3>
             <ul className="divide-y divide-slate-100 text-sm">
               <li className="py-3 flex justify-between items-center">
-                <span className="font-medium text-slate-800">Dog Hook (360° Swivel, Nickel)</span>
-                <span className="font-mono font-bold text-slate-900">₹1.08 – ₹1.85 / pc</span>
-              </li>
-              <li className="py-3 flex justify-between items-center">
-                <span className="font-medium text-slate-800">Oval Fish Hook (Heavy Spring)</span>
-                <span className="font-mono font-bold text-slate-900">₹1.28 – ₹2.20 / pc</span>
-              </li>
-              <li className="py-3 flex justify-between items-center">
                 <span className="font-medium text-slate-800">Alligator Clip with Vinyl Strap</span>
                 <span className="font-mono font-bold text-slate-900">₹1.20 – ₹2.10 / pc</span>
               </li>
               <li className="py-3 flex justify-between items-center">
                 <span className="font-medium text-slate-800">Safety Breakaway Buckle (16/20mm)</span>
                 <span className="font-mono font-bold text-slate-900">₹0.92 – ₹1.60 / pc</span>
-              </li>
-              <li className="py-3 flex justify-between items-center">
-                <span className="font-medium text-slate-800">Metal Crimp Clamps (Pack of 1,000)</span>
-                <span className="font-mono font-bold text-slate-900">₹265 – ₹420 / pack</span>
               </li>
             </ul>
           </div>
@@ -323,7 +246,7 @@ export default function PricingPage() {
                 Live Video Dispatch Proof
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                High-volume orders and machine purchases can be verified via live WhatsApp video before carton strapping and logistics handover.
+                High-volume orders can be verified via live WhatsApp video before carton strapping and logistics handover.
               </p>
             </div>
           </div>

@@ -12,14 +12,14 @@ export const metadata: Metadata = {
     absolute: "ID Card & Lanyard FAQ | The Print Planet",
   },
   description:
-    "Answers on PVC cards, CR-80 sizes, fusing laminators, die cutters, satin lanyard rolls, RFID cards and wholesale pricing from The Print Planet, Bangalore.",
+    "Answers on PVC cards, CR-80 sizes, RFID cards and wholesale pricing from The Print Planet, Bangalore.",
   alternates: {
     canonical: `${SITE_URL}/faq`,
   },
   openGraph: {
     title: "ID Card & Lanyard FAQ | The Print Planet",
     description:
-      "Comprehensive answers to top Google questions regarding PVC ID card making, machine temperatures, sublimation ribbon widths, Mifare vs proximity cards, and wholesale procurement.",
+      "Comprehensive answers to top Google questions regarding PVC ID card making, RFID vs proximity cards, and wholesale procurement.",
     url: `${SITE_URL}/faq`,
     siteName: "The Print Planet",
     images: [
@@ -45,7 +45,7 @@ const FAQ_GROUPS: QuestionGroup[] = [
       {
         question: "What is a standard CR-80 PVC ID card size in mm and inches?",
         answer:
-          "A standard ISO CR-80 ID card measures exactly 85.60 mm × 53.98 mm (3.375 × 2.125 inches) with a 30 mil (0.76 mm) thickness and 3.18 mm rounded corners—identical to a standard bank ATM card or driver's license. The Print Planet manufactures fusing sheets, pre-cut PVC cards, and die cutters strictly conforming to this ISO/IEC 7810 standard.",
+          "A standard ISO CR-80 ID card measures exactly 85.60 mm × 53.98 mm (3.375 × 2.125 inches) with a 30 mil (0.76 mm) thickness and 3.18 mm rounded corners—identical to a standard bank ATM card or driver's license. The Print Planet manufactures pre-cut PVC cards strictly conforming to this ISO/IEC 7810 standard.",
       },
       {
         question: "What is the exact pixel resolution for a CR-80 card at 300 DPI?",
@@ -70,62 +70,12 @@ const FAQ_GROUPS: QuestionGroup[] = [
     ],
   },
   {
-    category: "ID Card Manufacturing Machinery",
-    items: [
-      {
-        question: "What machines are needed to start a commercial PVC ID card printing business?",
-        answer:
-          "To manufacture laminated PVC ID cards commercially, you need two core machines: an automatic heated PVC fusing laminator (to bond printed core sheets with front and back overlay films under 135°C–155°C heat and hydraulic pressure) and a motorized PVC card die cutter (to punch out finished CR-80 cards at up to 1,200 cards/hour). Both machines are ready in stock at our Bangalore facility with 1-year warranty and WhatsApp live video testing.",
-      },
-      {
-        question: "What is an ID card fusing machine and what temperature should be used?",
-        answer:
-          "An ID card fusing machine bonds multi-layer PVC sandwich sheets (printed core plus front and back magnetic or clear overlay films) into a solid 0.76mm (30 mil) composite card. The optimal fusing temperature is between 135°C and 155°C maintained for 12–15 minutes under 6–8 MPa pressure, followed by a water-cooled plate cycle to prevent card distortion.",
-      },
-      {
-        question: "How many cards can an A4 PVC fusing machine produce per cycle?",
-        answer:
-          "An industrial A4 fusing laminator accommodates multiple steel lamination trays simultaneously (typically 5 to 10 openings). Each A4 sheet yields 10 standard CR-80 cards. A standard 10-layer machine therefore produces up to 100 finished ID cards per 25–30 minute heating and cooling cycle.",
-      },
-      {
-        question: "What is the difference between a manual hand cutter and a motorized PVC card die cutter?",
-        answer:
-          "A manual desktop punch uses a hand lever to cut one card at a time (suitable for 50–200 cards/day). A motorized electric die cutter uses a hardened alloy punch powered by an electric motor with foot pedal operation, punching up to 1,200 cards per hour with consistent ISO-standard burr-free edge quality and zero operator fatigue.",
-      },
-      {
-        question: "Can I inspect the machine working on live video before dispatch?",
-        answer:
-          "Yes. The Print Planet conducts live WhatsApp video machine testing (+91 97418 08034) with every buyer prior to packaging, demonstrating operational heating, smooth hydraulic pressure, and sample card punch accuracy before timber crating.",
-      },
-    ],
-  },
-  {
-    category: "Satin Lanyards & Sublimation Printing",
+    category: "Lanyards & Printing",
     items: [
       {
         question: "What is the standard ribbon width for corporate and student lanyards?",
         answer:
           "The industry standard widths are: 12 mm and 16 mm (ideal for lightweight visitor badges and school neckbands), 20 mm (the most popular corporate standard for multi-color company logos), and 25 mm (wide format for premium executive lanyards and conference branding).",
-      },
-      {
-        question: "How many finished neck lanyards can be produced from a 100-meter spool?",
-        answer:
-          "A standard adult lanyard measures 90 cm (36 inches) in finished ribbon length. Allowing for heat-cutting, stitching, and hardware fold margins (approx. 92–94 cm per lanyard), a single 100-meter continuous spool yields approximately 105 to 110 completed lanyards.",
-      },
-      {
-        question: "Which satin ribbon roll is best for sublimation lanyard heat-transfer printing?",
-        answer:
-          "White Digital Sublimation Lanyard Rolls woven from 100% continuous-filament virgin polyester with a calendar-pressed smooth surface. They withstand 200°C–215°C heat press exposure without melting or shrinking, delivering deep ink absorption, photographic resolution, and Pantone hexachrome color fidelity in 12mm, 16mm, 20mm, and 25mm widths.",
-      },
-      {
-        question: "Can you match specific Pantone Hexachrome brand colours?",
-        answer:
-          "Yes. Our digital sublimation grade ribbon has a 99.2% CIE whiteness index, calibrated specifically for accurate Pantone color matching when paired with quality sublimation transfer inks.",
-      },
-      {
-        question: "What equipment is required to start a custom lanyard printing business?",
-        answer:
-          "To print and assemble custom lanyards, you need: 1) a dye-sublimation printer with transfer paper, 2) a flatbed or rotary roll-to-roll lanyard heat press machine (running at 200°C for 25–35 seconds), 3) blank white satin lanyard rolls, 4) swivel dog hooks or fish hooks, and 5) an electric hot-knife ribbon cutter or ultrasonic sewing unit.",
       },
     ],
   },
@@ -133,19 +83,19 @@ const FAQ_GROUPS: QuestionGroup[] = [
     category: "RFID Smart Cards & Access Control",
     items: [
       {
-        question: "What is the difference between a Mifare 1K card and an EM-Marin proximity card?",
+        question: "What is the difference between RFID and NFC cards and proximity cards?",
         answer:
-          "Mifare 1K operates at 13.56 MHz high frequency with 1KB EEPROM read/write memory organized into 16 secure sectors with dual encryption keys, making it suitable for multi-application campus IDs, cashless payments, and secure access. EM-Marin operates at 125 kHz low frequency with a 64-bit factory pre-programmed read-only ID, primarily used for basic building entry turnstiles.",
+          "RFID and NFC cards work at 13.56 MHz and carry read/write memory with encryption keys, which suits multi-application campus IDs, cashless payments and secure access. Proximity cards work at 125 kHz and carry a factory pre-programmed read-only ID, mostly used for basic building entry turnstiles.",
       },
       {
         question: "Can I print directly on RFID smart cards using desktop ID card printers?",
         answer:
-          "Yes. Our Mifare 1K and EM-Marin proximity cards are manufactured with flawless, mirror-smooth laminated PVC surfaces specifically engineered for thermal dye-sublimation and reverse-transfer card printers like Zebra ZC300, Fargo HDP5000, and Evolis Primacy without printhead damage.",
+          "Yes. Our RFID, NFC and proximity cards are manufactured with flawless, mirror-smooth laminated PVC surfaces specifically engineered for thermal dye-sublimation and reverse-transfer card printers like Zebra ZC300, Fargo HDP5000, and Evolis Primacy without printhead damage.",
       },
       {
         question: "What is the typical read range of contactless RFID cards?",
         answer:
-          "For 13.56 MHz Mifare 1K ISO cards, the typical read range is 2.5 cm to 10 cm. For 125 kHz EM-Marin proximity cards, standard read range is 5 cm to 12 cm depending on the reader antenna power and environment.",
+          "For 13.56 MHz RFID and NFC cards, the typical read range is 2.5 cm to 10 cm. For 125 kHz proximity cards, standard read range is 5 cm to 12 cm depending on the reader antenna power and environment.",
       },
       {
         question: "What is an RFID inlay prelam sheet and how is it used by card factories?",
@@ -190,7 +140,7 @@ const FAQ_GROUPS: QuestionGroup[] = [
       {
         question: "What is the minimum order quantity (MOQ) and pricing for wholesale orders?",
         answer:
-          "Consumables start with flexible minimums: 1 roll (100m spool) for satin lanyards and 100 pieces for PVC card holders. Bulk factory slabs start from ₹185/roll for lanyards and ₹2.65/piece for holders. Detailed quantity breaks are published in our open machine-readable tariff at /pricing.md.",
+          "Consumables start with flexible minimums: 100 pieces for PVC card holders. Bulk factory slabs start from ₹2.65/piece for holders. Detailed quantity breaks are published in our open machine-readable tariff at /pricing.md.",
       },
       {
         question: "How fast do you deliver across India, and which logistics partners do you use?",
@@ -216,7 +166,7 @@ export default function FaqPage() {
     "@id": `${SITE_URL}/faq#faq`,
     name: "The Print Planet Technical FAQ & Knowledge Base",
     description:
-      "Authoritative answers to common questions about PVC cards, CR-80 dimensions, fusing laminators, card die cutters, satin lanyard rolls, and RFID access credentials.",
+      "Authoritative answers to common questions about PVC cards, CR-80 dimensions, lanyards and RFID access credentials.",
     mainEntity: ALL_FAQS.map((faq) => ({
       "@type": "Question",
       name: faq.question,
@@ -236,7 +186,7 @@ export default function FaqPage() {
 
       <PageHero
         title="Frequently asked questions"
-        lead="Authoritative technical answers to Google's most searched questions regarding PVC cards, CR-80 standards, fusing machinery, lanyard printing ribbons, and RFID credentials."
+        lead="Authoritative technical answers to Google's most searched questions regarding PVC cards, CR-80 standards, lanyard printing, and RFID credentials."
         crumbs={[{ label: "Technical FAQ" }]}
       />
 
@@ -259,7 +209,7 @@ export default function FaqPage() {
             </div>
             <div>
               <p className="text-xs font-bold text-[#121418]">Factory Direct & Tested</p>
-              <p className="text-[11px] text-slate-500">Live WhatsApp video machine demo</p>
+              <p className="text-[11px] text-slate-500">GST invoice on every order</p>
             </div>
           </div>
 
@@ -300,7 +250,7 @@ export default function FaqPage() {
           <div className="space-y-2 max-w-xl text-center md:text-left">
             <h3 className="text-2xl font-bold font-hero">Have a question not listed here?</h3>
             <p className="text-sm text-slate-300">
-              Our sales engineers in Sunkadakatte, Bangalore are ready to answer your questions on card thickness, machine setup, or bulk trade pricing.
+              Our sales engineers in Sunkadakatte, Bangalore are ready to answer your questions on card thickness or bulk trade pricing.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3.5 shrink-0">

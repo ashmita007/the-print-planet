@@ -2,7 +2,7 @@
 type: Consumable
 title: Contactless RFID Smart Cards & Printable PVC Fusing Consumables
 description: High-frequency Mifare 1K 13.56MHz and EM-Marin 125kHz proximity cards, plus inkjet printable PVC fusing sheets for on-demand badge production.
-resource: https://theprintplanet.co.in/categories/rfid-smart-cards-and-consumables
+resource: https://theprintplanet.co.in/categories/pvc-and-smart-cards
 tags: [rfid-cards, mifare-1k, proximity-cards, 125khz-cards, pvc-fusing-sheets]
 timestamp: 2026-11-06
 ---
@@ -21,4 +21,3 @@ See the complete [Wholesale B2B Pricing Tariff](../pricing.md) for volume rates 
 
 ## Related Concepts
 - [PVC ID Card Holders](pvc-id-card-holders.md)
-- [ID Card Machinery](id-card-manufacturing-machinery.md)

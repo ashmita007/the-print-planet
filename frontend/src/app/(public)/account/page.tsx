@@ -169,7 +169,7 @@ export default function ClientAccountPage() {
               <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
             </div>
             <p className="text-xs text-[#353C45]">
-              Submit specifications for customized lanyards, student PVC cards, RFID keys, or machinery.
+              Submit specifications for customized lanyards, student PVC cards, or RFID keys.
             </p>
           </Link>
 

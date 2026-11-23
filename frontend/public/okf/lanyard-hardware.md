@@ -2,7 +2,7 @@
 type: Product
 title: Metal Lanyard Hardware, Swivel Dog Hooks & Breakaway Buckles
 description: Precision zinc alloy swivel dog hooks, oval fish hooks, crocodile clips, and safety breakaway buckles for custom lanyard assembly.
-resource: https://theprintplanet.co.in/categories/id-card-lanyard-hooks
+resource: https://theprintplanet.co.in/categories/id-card-accessories
 tags: [dog-hooks, fish-hooks, crocodile-clips, lanyard-fittings, breakaway-buckles]
 timestamp: 2026-11-06
 ---
@@ -18,8 +18,7 @@ Essential mechanical fittings used to connect printed satin ribbons to ID card h
 - **Clips:** Alligator clips with transparent flexible vinyl strap for slotted cards.
 
 ## Pricing & Quantity Slabs
-Check [Wholesale B2B Pricing Tariff](../pricing.md) for breaks starting from ₹1.08 per piece for dog hooks.
+Check [Wholesale B2B Pricing Tariff](../pricing.md) for current quantity slabs.
 
 ## Related Concepts
-- [Satin Lanyard Rolls](satin-lanyard-rolls.md)
 - [PVC ID Card Holders](pvc-id-card-holders.md)

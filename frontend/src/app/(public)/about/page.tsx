@@ -11,7 +11,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: { absolute: "About The Print Planet | ID Card Maker, Bengaluru" },
   description:
-    "The Print Planet makes and supplies ID card products, lanyards and card machines from Sunkadakatte, Bengaluru, for buyers across India.",
+    "The Print Planet makes and supplies ID card products and lanyards from Sunkadakatte, Bengaluru, for buyers across India.",
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
@@ -31,15 +31,15 @@ export default async function AboutPage() {
   const about = settings?.about_data || {};
 
   const heroTitle = about.hero_title || "About The Print Planet";
-  const heroSubtitle = about.hero_subtitle || "Makers of ID card products, lanyards and card machines in Bengaluru.";
+  const heroSubtitle = about.hero_subtitle || "Makers of ID card products and lanyards in Bengaluru.";
   const storyTitle = about.story_title || "Engineering Precision in Identification Systems";
-  const storyP1 = about.story_p1 || `At ${businessName}, our operations combine high-capacity polymer molding, ribbon slitting, and ultrasonic tooling to produce uniform badge accessories designed to meet strict institutional requirements.`;
-  const storyP2 = about.story_p2 || "Whether fulfilling recurring orders of 20mm Indian Royal Blue satin rolls or delivering heavy-duty DCT4500 automatic card punch cutters, our manufacturing processes prioritize dimensional consistency, burr-free edge finishing, and reliable mechanical tensile strength.";
+  const storyP1 = about.story_p1 || `At ${businessName}, our operations combine high-capacity polymer molding and ultrasonic tooling to produce uniform badge accessories designed to meet strict institutional requirements.`;
+  const storyP2 = about.story_p2 || "Whether fulfilling recurring orders of rigid PVC card holders or printed lanyards, our manufacturing processes prioritize dimensional consistency, burr-free edge finishing, and reliable mechanical tensile strength.";
   
   const stat1Val = about.stat_1_val || "50,000+";
   const stat1Label = about.stat_1_label || "Holders Produced Daily";
-  const stat2Val = about.stat_2_val || "10,000+ m";
-  const stat2Label = about.stat_2_label || "Daily Satin Ribbon Output";
+  const stat2Val = about.stat_2_val || "10,000+";
+  const stat2Label = about.stat_2_label || "Lanyards Printed Weekly";
   const stat3Val = about.stat_3_val || "180+";
   const stat3Label = about.stat_3_label || "Active Commercial SKUs";
   const stat4Val = about.stat_4_val || "500+";
@@ -50,14 +50,14 @@ export default async function AboutPage() {
   const standard2Title = about.standard_2_title || "Pure Grade Polyvinyl Chloride (PVC)";
   const standard2Desc = about.standard_2_desc || "High optical clarity, crack resistance under UV exposure, and smooth rounded corners.";
   const standard3Title = about.standard_3_title || "Rigid Hardware Attachments";
-  const standard3Desc = about.standard_3_desc || "Nickel-plated dog hooks and zinc alloy side levers tested for over 50N spring tension.";
+  const standard3Desc = about.standard_3_desc || "Metal hooks and zinc alloy side levers tested for over 50N spring tension.";
 
   const facility1Title = about.facility_1_title || "Modern Bengaluru Facility";
   const facility1Desc = about.facility_1_desc || "Strategically located at Byraveshwaranagar, Sunkadakatte, Bengaluru for expedited pan-India transit and logistics.";
   const facility2Title = about.facility_2_title || "Verified Trade Compliance";
   const facility2Desc = about.facility_2_desc || "Full tax compliance, registered GST billing, and secure electronic trade payment workflows.";
   const facility3Title = about.facility_3_title || "High-Capacity Inventory";
-  const facility3Desc = about.facility_3_desc || "Large-scale warehouse buffer with continuous availability of core lanyard rolls and crystal holders.";
+  const facility3Desc = about.facility_3_desc || "Large-scale warehouse buffer with continuous availability of core lanyards and crystal holders.";
 
   const stats = [
     { value: stat1Val, label: stat1Label },
@@ -99,7 +99,7 @@ export default async function AboutPage() {
     "@type": "AboutPage",
     name: "About The Print Planet",
     url: `${SITE_URL}/about`,
-    description: "Learn about The Print Planet (theprintplanet.co.in), a Bengaluru B2B wholesale supplier of satin lanyard rolls, PVC ID card holders, and card machinery.",
+    description: "Learn about The Print Planet (theprintplanet.co.in), a Bengaluru B2B wholesale supplier of lanyards and PVC ID card holders.",
     mainEntity: {
       "@type": "Organization",
       name: "The Print Planet",

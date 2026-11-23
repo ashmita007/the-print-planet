@@ -24,6 +24,5 @@ Protective encasements designed for corporate staff badges, student identity car
 See the complete [Wholesale B2B Pricing Tariff](../pricing.md) for volume discounts starting at ₹2.65 per piece.
 
 ## Related Concepts
-- [Satin Lanyard Rolls](satin-lanyard-rolls.md)
 - [Lanyard Hardware & Clips](lanyard-hardware.md)
 - [RFID Smart Cards](rfid-smart-cards.md)

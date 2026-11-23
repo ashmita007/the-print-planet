@@ -202,7 +202,7 @@ export default function OwnerCategoriesPage() {
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 onBlur={() => setName(formatCategoryName(name))}
-                placeholder="e.g. COLOR ID CARD LANYARD ROLL"
+                placeholder="e.g. ID CARD HOLDER"
                 className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none text-xs font-bold uppercase tracking-wide"
               />
             </div>
@@ -231,7 +231,7 @@ export default function OwnerCategoriesPage() {
                 type="text"
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
-                placeholder="color-id-card-lanyard-roll"
+                placeholder="id-card-holder"
                 className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3 py-2 outline-none font-mono text-xs"
               />
             </div>

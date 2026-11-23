@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
           <p>
             Information collected through The Print Planet is used solely to generate itemized proforma
             invoices, calculate freight costs, provide dispatch tracking, and address technical queries
-            regarding ID accessories and machinery. We do not sell or rent commercial buyer information.
+            regarding ID accessories. We do not sell or rent commercial buyer information.
           </p>
         </section>
 

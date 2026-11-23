@@ -2,10 +2,10 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'The Print Planet™ Bangalore | PVC Cards, Lanyards & ID Machines',
+    name: 'The Print Planet™ Bangalore | PVC Cards, Lanyards & ID Holders',
     short_name: 'The Print Planet',
     description:
-      "Official portal of The Print Planet, Bangalore (theprintplanet.co.in). B2B wholesale supplier of PVC ID card raw materials, multicolour heat-transfer lanyards, and card machinery.",
+      "Official portal of The Print Planet, Bangalore (theprintplanet.co.in). B2B wholesale supplier of PVC ID card raw materials, and multicolour heat-transfer lanyards.",
     start_url: '/',
     display: 'standalone',
     background_color: '#0E2238',
@@ -56,9 +56,9 @@ export default function manifest(): MetadataRoute.Manifest {
         icons: [{ src: '/icon.png', sizes: '192x192' }],
       },
       {
-        name: 'All Products & Machinery',
+        name: 'All Products',
         short_name: 'Products',
-        description: 'Browse factory-direct printing raw materials and machinery',
+        description: 'Browse factory-direct printing raw materials',
         url: '/products',
         icons: [{ src: '/icon.png', sizes: '192x192' }],
       },

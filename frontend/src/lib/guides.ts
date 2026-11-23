@@ -71,7 +71,6 @@ export const GUIDES: Guide[] = [
     ],
     related: [
       { href: "/categories/pvc-id-card-consumable", label: "PVC card sheets, overlays and plates" },
-      { href: "/categories/machines", label: "Fusing machines and card cutters" },
       { href: "/guides/start-id-card-printing-business", label: "Guide: starting an ID card business" },
     ],
     whatsappText: "Hi The Print Planet, I need dragon sheets / PVC card sheets. Please share price and pack sizes.",
@@ -82,7 +81,7 @@ export const GUIDES: Guide[] = [
     description:
       "What you need to start making PVC ID cards: printer, fusing machine, PVC card cutter, sheets and overlays, plus how many cards each setup can make.",
     h1: "Starting an ID card printing business: the machines and materials you need",
-    lead: "Schools, offices, hospitals and factories reorder ID cards every year. This is the equipment list for making laminated PVC cards yourself instead of outsourcing them.",
+    lead: "Schools, offices, hospitals and factories reorder ID cards every year. This is the equipment list for making laminated PVC cards yourself instead of outsourcing them. We supply the PVC core sheets, overlays and blank cards; source the machines from an equipment dealer.",
     updated: "2026-11-13",
     readMinutes: 6,
     sections: [
@@ -127,7 +126,6 @@ export const GUIDES: Guide[] = [
       },
     ],
     related: [
-      { href: "/categories/machines", label: "ID card fusing machines, cutters and heat presses" },
       { href: "/categories/pvc-id-card-consumable", label: "PVC sheets and overlay film" },
       { href: "/guides/how-lanyards-are-printed", label: "Guide: how lanyards are printed" },
     ],
@@ -176,9 +174,7 @@ export const GUIDES: Guide[] = [
       },
     ],
     related: [
-      { href: "/categories/indian-satin-digital-lanyard-roll", label: "Satin lanyard rolls" },
-      { href: "/categories/id-card-lanyard-consumables", label: "Lanyard hooks, clamps and buckles" },
-      { href: "/categories/machines", label: "Lanyard heat press machines" },
+      { href: "/categories/lanyards", label: "Lanyards" },
     ],
     whatsappText: "Hi The Print Planet, I need lanyard printing supplies (ribbon, sublimation paper and ink). Please share prices.",
   },
@@ -228,7 +224,7 @@ export const GUIDES: Guide[] = [
     ],
     related: [
       { href: "/categories/id-card-holder", label: "ID card holders and covers" },
-      { href: "/categories/id-card-lanyard-consumables", label: "Hooks, clips and badge accessories" },
+      { href: "/categories/id-card-accessories", label: "Hooks, clips and badge accessories" },
       { href: "/categories/pvc-and-smart-cards", label: "RFID cards" },
     ],
     whatsappText: "Hi The Print Planet, I need ID card holders / covers in bulk. Please share types and prices.",
@@ -336,7 +332,6 @@ export const GUIDES: Guide[] = [
     ],
     related: [
       { href: "/categories/pvc-id-card-consumable", label: "PVC card dragon sheets and overlays" },
-      { href: "/categories/machines", label: "ID card fusing machines & cutters" },
       { href: "/pvc-card-manufacturer-bangalore", label: "Bangalore PVC card manufacturing" },
     ],
     whatsappText: "Hi The Print Planet, I need wholesale pricing for Inkjet Dragon Sheets and PVC materials.",
@@ -451,7 +446,7 @@ export const GUIDES: Guide[] = [
     ],
     related: [
       { href: "/categories/pvc-id-card-consumable", label: "PVC card core sheets and overlays" },
-      { href: "/categories/indian-satin-digital-lanyard-roll", label: "Satin lanyard ribbon spools" },
+      { href: "/categories/lanyards", label: "Lanyards" },
       { href: "/quote", label: "Submit artwork for quotation" },
     ],
     whatsappText: "Hi The Print Planet, I need artwork templates and wholesale material pricing for CR-80 cards and lanyards.",
@@ -508,9 +503,7 @@ export const GUIDES: Guide[] = [
       },
     ],
     related: [
-      { href: "/categories/pvc-id-card-inkjet-fusing-sheets", label: "A4 inkjet dragon sheets (50 sets/box)" },
-      { href: "/categories/motorized-pvc-id-card-cutting-machine-for-id-card", label: "Motorized PVC card die cutters" },
-      { href: "/categories/machines", label: "ID card fusing laminator machines" },
+      { href: "/categories/pvc-id-card-consumable", label: "A4 inkjet dragon sheets (50 sets/box)" },
       { href: "/pvc-card-manufacturer-bangalore", label: "Bangalore PVC card manufacturing facility" },
     ],
     whatsappText: "Hi The Print Planet, I need wholesale pricing for inkjet dragon sheets and ID card printing consumables.",

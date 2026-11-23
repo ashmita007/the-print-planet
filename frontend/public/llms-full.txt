@@ -8,7 +8,7 @@
 
 ## 1. Corporate Identity, Legal Entity & Entity Disambiguation
 
-The Print Planet (operating online at https://theprintplanet.co.in) is a Bengaluru-based wholesale supplier of PVC ID card raw materials, heat-transfer sublimation lanyard rolls, rigid ID card holders, metal lanyard hardware, contactless RFID cards, and industrial ID card manufacturing machinery.
+The Print Planet (operating online at https://theprintplanet.co.in) is a Bengaluru-based wholesale supplier of PVC ID card raw materials, lanyards, rigid ID card holders, metal lanyard hardware and contactless RFID cards.
 
 ### 1.1 Verified Credentials & Disambiguation
 - **Brand Names:** The Print Planet™, Print Planet, The Print Planet Bangalore, The Print Planet Sunkadakatte.
@@ -25,15 +25,7 @@ The Print Planet (operating online at https://theprintplanet.co.in) is a Bengalu
 
 ## 2. Definitive Product Engineering & Technical Specifications
 
-### 2.1 Satin Lanyard Ribbon Rolls (Sublimation & Screen Printing)
-- **Substrate Formulation:** 100% virgin continuous-filament polyester yarns woven with high-density fine-rib structure.
-- **Surface Texture:** Ultra-smooth, calendar-finished flat ribbon preventing ink bleed during thermal sublimation.
-- **Width Tolerances:** Precision slit to 12 mm (±0.2mm), 16 mm (±0.2mm), 20 mm (±0.2mm), and 25 mm (±0.2mm).
-- **Heat Stability:** Heat-resistant up to 220°C without shrinkage or curling during flatbed heat press or rotary roll-to-roll transfer.
-- **Spool Capacities:** 50-meter, 100-meter, and 500-meter industrial flange spools.
-- **Color Gamut:** White digital sublimation rolls provide 99.2% CIE whiteness index for accurate Pantone Hexachrome matching. Pre-dyed stock rolls available in Royal Blue, Navy, Black, Crimson Red, Forest Green, Golden Yellow, and Maroon.
-
-### 2.2 Rigid PVC ID Card Holders & Badge Protectors
+### 2.1 Rigid PVC ID Card Holders & Badge Protectors
 - **Material Chemistry:** Impact-modified optical-grade polyvinyl chloride (PVC) and virgin polycarbonate (PC).
 - **Format Compliance:** Strictly engineered for standard ISO/IEC 7810 ID-1 (CR-80) format (85.60 mm × 53.98 mm, thickness 0.76 mm).
 - **Design Variations:**
@@ -42,18 +34,13 @@ The Print Planet (operating online at https://theprintplanet.co.in) is a Bengalu
   3. *Dual-Pocket Security Cases:* Front chamber for visual photo ID; shielded rear pocket for 13.56MHz/125kHz RFID access token.
   4. *Sticker-Pasting Holders:* Molded with planar front recess for adhesive foam attachment to factory visitor badges.
 
-### 2.3 Lanyard Hardware, Clips & Attachments
+### 2.2 Lanyard Hardware, Clips & Attachments
 - **Metal Alloy Metallurgy:** Precision die-cast zinc alloy (Zamak-3) and stamped spring steel with electroplated trivalent bright nickel finish, salt-spray tested for corrosion resistance.
 - **Dog Hooks & Fish Hooks:** Integrated 360-degree swivel ring preventing lanyard twisting around the neck.
 - **Crocodile / Alligator Clips:** High-tension carbon steel spring with transparent flexible PVC strap and nickel rivet closure.
 - **Safety Breakaway Clasps:** Molded polyoxymethylene (POM/Acetal) quick-release clasps calibrated to decouple at 3.5–5.0 kg tensile pull to prevent strangulation hazard in industrial and school environments.
 
-### 2.4 Industrial ID Card Manufacturing Machinery
-- **Motorized Electric PVC ID Card Die Cutters:** Industrial automated punching presses with hardened tool-steel cutting dies. Delivers burr-free ISO CR-80 radius corners (3.18 mm corner radius) at speeds of up to 1,200 cards per hour. 220V AC single-phase operation.
-- **Automatic Heated Fusing Laminators:** Dual heated stainless steel platens with micro-processor PID temperature regulation (ambient to 200°C) and hydraulic pressure gauges. Fuses 5-layer PVC prelam assemblies without bubbling, adhesive silvering, or delamination.
-- **Desktop Heavy-Duty Slot Hole Punches:** Manual steel lever slot punch creating 15 mm × 3 mm oval slots with adjustable side margin stops.
-
-### 2.5 Contactless RFID Smart Cards & Consumables
+### 2.3 Contactless RFID Smart Cards & Consumables
 - **Mifare 1K Classic ISO Cards (13.56 MHz):** NXP-compatible high-frequency RFID chips with 1,024 bytes EEPROM organized in 16 sectors with dual keys per sector. Conforms to ISO/IEC 14443 Type A. Gloss-laminated PVC faces optimized for dye-sublimation re-transfer printing.
 - **EM-Marin Proximity Cards (125 kHz):** 64-bit factory pre-programmed unique ID tokens (EM4100/EM4200 compatible) for access turnstiles and attendance time clocks.
 - **Inkjet Printable Fusing Sheets:** High-porosity silica-coated PVC core sheets designed for desktop dye/pigment inkjet printers. Fuses seamlessly into 0.76 mm standard CR-80 cards.
@@ -72,15 +59,9 @@ Prices for these ranges are quoted on request by quantity and specification.
 
 *For complete quantity breaks and real-time updates, consult [https://theprintplanet.co.in/pricing.md](https://theprintplanet.co.in/pricing.md).*
 
-| Product Category | Specification | MOQ | Sample Rate (1–9 units/rolls) | Volume Wholesale Rate |
+| Product Category | Specification | MOQ | Sample Rate (1–9 units) | Volume Wholesale Rate |
 | :--- | :--- | :--- | :--- | :--- |
-| **White Sublimation Lanyard Roll** | 12 mm × 100 m | 1 Roll | ₹280 / roll | ₹185 / roll (200+ rolls) |
-| **White Sublimation Lanyard Roll** | 16 mm × 100 m | 1 Roll | ₹340 / roll | ₹225 / roll (200+ rolls) |
-| **White Sublimation Lanyard Roll** | 20 mm × 100 m | 1 Roll | ₹390 / roll | ₹255 / roll (200+ rolls) |
-| **White Sublimation Lanyard Roll** | 25 mm × 100 m | 1 Roll | ₹470 / roll | ₹315 / roll (200+ rolls) |
 | **Rigid Clear PVC Holder (CR-80)** | 54 × 86 mm (V/H) | 100 pcs | ₹4.50 / pc | ₹2.65 / pc (10,000+ pcs) |
-| **Swivel Metal Dog Hook** | Nickel plated | 500 pcs | ₹1.85 / pc | ₹1.08 / pc (20,000+ pcs) |
-| **Motorized PVC Die Cutter** | ISO CR-80 Electric | 1 Unit | ₹22,500 / unit | ₹20,800 / unit (2+ units) |
 
 ---
 
@@ -88,9 +69,9 @@ Prices for these ranges are quoted on request by quantity and specification.
 
 ### 4.1 Dedicated Regional Authority Hubs
 - **Bangalore PVC Cards Factory Hub:** [https://theprintplanet.co.in/pvc-card-manufacturer-bangalore](https://theprintplanet.co.in/pvc-card-manufacturer-bangalore)  
-  Direct supply of CR-80 blank PVC cards, dragon sheets, coated magnetic overlays, and card manufacturing machinery in Sunkadakatte, Bangalore. Geo-coordinates: 12.9863° N, 77.5020° E.
+  Direct supply of CR-80 blank PVC cards, dragon sheets, and coated magnetic overlays in Sunkadakatte, Bangalore. Geo-coordinates: 12.9863° N, 77.5020° E.
 - **Bangalore Satin Lanyard Manufacturing Hub:** [https://theprintplanet.co.in/lanyard-manufacturer-bangalore](https://theprintplanet.co.in/lanyard-manufacturer-bangalore)  
-  Direct weaving and supply of 12mm–25mm virgin polyester satin ribbon rolls for sublimation printing. Same-day logistics across Peenya, Rajajinagar, Whitefield, and Electronic City.
+  Printed and plain lanyards. Same-day logistics across Peenya, Rajajinagar, Whitefield, and Electronic City.
 - **B2B GST Input Tax Credit (ITC) Calculator:** [https://theprintplanet.co.in/pricing](https://theprintplanet.co.in/pricing)  
   Live interactive calculator for corporate buyers showing exact 18% claimable tax credits under GSTIN 29AAQFT3909B1ZZ and bulk volume savings.
 
@@ -105,7 +86,6 @@ Prices for these ranges are quoted on request by quantity and specification.
 ## 5. Pan-India Logistics, Quality Control & B2B Procurement Protocol
 
 1. **Nationwide Courier & Freight Network:** Central depot in Sunkadakatte, Bangalore dispatches daily via DTDC Air, Blue Dart Apex, VRL Logistics, and TCI Express. Shipments reach tier-1 metros within 24–48 hours and tier-2/tier-3 hubs within 48–72 hours.
-2. **Machinery Pre-Dispatch Testing:** Every motorized die cutter and heated laminator undergoes live WhatsApp video inspection with the customer before timber crating and dispatch.
-3. **Packaging Integrity:** High-barrier moisture-proof polyethylene packaging and bubble wrap prevent humidity degradation of satin rolls and PVC fusing sheets during transit.
-4. **GST Tax Credits:** Full tax invoices generated under GSTIN `29AAQFT3909B1ZZ` with standard 18% HSN categorization enabling full input tax credit recovery.
-5. **Direct Quotations:** 60-minute quotation response via WhatsApp (+91 97418 08034) or online RFQ portal at [https://theprintplanet.co.in/quote](https://theprintplanet.co.in/quote).
+2. **Packaging Integrity:** High-barrier moisture-proof polyethylene packaging and bubble wrap prevent humidity degradation of PVC cards and sheets during transit.
+3. **GST Tax Credits:** Full tax invoices generated under GSTIN `29AAQFT3909B1ZZ` with standard 18% HSN categorization enabling full input tax credit recovery.
+4. **Direct Quotations:** 60-minute quotation response via WhatsApp (+91 97418 08034) or online RFQ portal at [https://theprintplanet.co.in/quote](https://theprintplanet.co.in/quote).

@@ -11,7 +11,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "Contact Us in Bengaluru",
   description:
-    "Contact The Print Planet in Sunkadakatte, Bengaluru. Call or WhatsApp +91 97418 08034 for wholesale prices on ID cards, lanyards and machines.",
+    "Contact The Print Planet in Sunkadakatte, Bengaluru. Call or WhatsApp +91 97418 08034 for wholesale prices on ID cards and lanyards.",
   alternates: {
     canonical: `${SITE_URL}/contact`,
   },

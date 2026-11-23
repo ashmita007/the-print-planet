@@ -147,7 +147,7 @@ export default function ContactFormClient() {
 
       <div>
         <label htmlFor="field-estimated-order-quantity-units" className="block font-semibold text-[#121418] mb-1">
-          Estimated Order Quantity (Units / Rolls)
+          Estimated Order Quantity (Units)
         </label>
         <input id="field-estimated-order-quantity-units"
           type="number"
@@ -168,7 +168,7 @@ export default function ContactFormClient() {
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Please describe required models (e.g. V2, V4 holders, 20mm Royal Blue satin rolls, DCT2000 cutter), custom printing, destination pincode..."
+          placeholder="Please describe required models (e.g. V2, V4 holders, printed lanyards), custom printing, destination pincode..."
           className="w-full bg-[#EDF1F6] border border-[#DFE6EE] focus:border-[#121418] focus:bg-[#FFFFFF] rounded-lg px-3.5 py-2.5 text-xs outline-none resize-none"
         />
       </div>

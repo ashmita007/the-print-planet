@@ -110,7 +110,7 @@ export default function CartDrawer() {
                   <div className="space-y-1">
                     <h3 className="font-semibold text-[#121418] text-base">Your cart is currently empty</h3>
                     <p className="text-xs text-[#353C45] max-w-xs">
-                      Explore our catalogue of ID cards, lanyards, custom apparel, machinery, and promotional gifts.
+                      Explore our catalogue of ID cards, lanyards, custom apparel and promotional gifts.
                     </p>
                   </div>
                   <Link

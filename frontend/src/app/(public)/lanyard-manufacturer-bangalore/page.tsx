@@ -21,9 +21,9 @@ import { DEFAULT_OG_IMAGES } from "@/lib/seo";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
 export const metadata: Metadata = {
-  title: "Satin Lanyard Rolls Wholesale Bangalore",
+  title: "Lanyard Manufacturer Wholesale Bangalore",
   description:
-    "Satin lanyard rolls (12 to 25 mm), sublimation printed lanyards, hooks and clamps, wholesale from Sunkadakatte, Bangalore, with a GST invoice.",
+    "Printed lanyards, badge clips, hooks and card reels, wholesale from Sunkadakatte, Bangalore, with a GST invoice.",
   alternates: {
     canonical: `${SITE_URL}/lanyard-manufacturer-bangalore`,
   },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     images: DEFAULT_OG_IMAGES,
     title: "Lanyard Manufacturer in Bangalore | The Print Planet",
     description:
-      "Factory-direct wholesale supplier of satin lanyard rolls, custom corporate lanyards, and metal clips in Sunkadakatte, Bengaluru.",
+      "Factory-direct wholesale supplier of custom corporate lanyards and ID card accessories in Sunkadakatte, Bengaluru.",
     url: `${SITE_URL}/lanyard-manufacturer-bangalore`,
     siteName: "The Print Planet",
     type: "website",
@@ -52,43 +52,11 @@ const BANGALORE_AREAS = [
   "Sunkadakatte Hub",
 ];
 
-const LANYARD_SPECS = [
-  {
-    parameter: "Available Ribbon Widths",
-    specification: "12 mm, 16 mm, 20 mm, and 25 mm continuous spools",
-  },
-  {
-    parameter: "Material Composition",
-    specification: "100% Virgin Continuous-Filament Polyester Satin with calendar-pressed smooth finish",
-  },
-  {
-    parameter: "Thermal Heat Resistance",
-    specification: "Withstands 200°C–220°C heat press exposure with zero melting or shrinkage",
-  },
-  {
-    parameter: "Edge Finish",
-    specification: "Ultrasonically sealed, burr-free edges that resist fraying during automated cutting",
-  },
-  {
-    parameter: "Color Reproduction",
-    specification: "Calibrated 99.2% CIE whiteness index for accurate Pantone Hexachrome color fidelity",
-  },
-  {
-    parameter: "Standard Spool Yield",
-    specification: "100-meter continuous spool yields approximately 105 to 110 completed adult lanyards (90 cm length)",
-  },
-];
-
 const LOCAL_FAQS: FaqItem[] = [
   {
     question: "Do you manufacture custom printed lanyards with corporate logos in Bangalore?",
     answer:
-      "Yes. We operate high-speed digital heat-transfer sublimation and rotary screen printing lines in Bangalore, producing multi-color custom lanyards in 12mm, 16mm, 20mm, and 25mm widths with corporate logos, employee names, and safety breakaway fittings.",
-  },
-  {
-    question: "Can I buy plain white satin lanyard rolls in bulk for sublimation printing?",
-    answer:
-      "Yes. We supply raw continuous-filament polyester white satin rolls (100-meter spools) in 12mm, 16mm, 20mm, and 25mm widths directly to commercial printing studios, sublimation shops, and ID bureaus across Bangalore at factory-direct rates.",
+      "Yes. We print custom lanyards in Bangalore with corporate logos, employee names and safety breakaway fittings.",
   },
   {
     question: "What is the turnaround time for bulk custom lanyard orders?",
@@ -98,7 +66,7 @@ const LOCAL_FAQS: FaqItem[] = [
   {
     question: "Do you supply matching clips, hooks, and ID card holders?",
     answer:
-      "Yes. We maintain complete factory stock of dog hooks, oval fish hooks, crocodile clips, metal crimp clamps, safety breakaways, and rigid PVC card holders so you can source entire employee ID kits from a single source.",
+      "Yes. We supply badge clips, metal, snap and swivel hooks, card reels, neck and wrist straps and rigid PVC card holders, so you can source entire employee ID kits from a single source.",
   },
 ];
 
@@ -187,10 +155,10 @@ export default function LanyardManufacturerBangalorePage() {
               <span>Bangalore Weaving &amp; Printing Hub • Sunkadakatte Facility</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              Satin lanyard manufacturer and wholesale supplier in Bangalore
+              Lanyard manufacturer and wholesale supplier in Bangalore
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Wholesale manufacturer of 100% virgin polyester satin lanyard rolls, multicolour sublimation printed neck lanyards, and ID accessories. Factory pickup from Sunkadakatte or express delivery across Bengaluru.
+              Wholesale manufacturer of printed neck lanyards and ID accessories. Factory pickup from Sunkadakatte or express delivery across Bengaluru.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
@@ -201,7 +169,7 @@ export default function LanyardManufacturerBangalorePage() {
                 <span>Request Lanyard Price List</span>
               </Link>
               <a
-                href="https://wa.me/919741808034?text=Hi%2C%20I%20am%20looking%20for%20wholesale%20satin%20lanyards%20and%20printing%20in%20Bangalore."
+                href="https://wa.me/919741808034?text=Hi%2C%20I%20am%20looking%20for%20wholesale%20lanyards%20and%20printing%20in%20Bangalore."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-semibold px-5 py-3 rounded-md text-sm border border-white/20 transition-all"
@@ -222,7 +190,7 @@ export default function LanyardManufacturerBangalorePage() {
               <ShieldCheck className="w-6 h-6 text-[#121418] shrink-0" />
               <div>
                 <strong className="block text-[#121418] font-bold">Factory-Direct Pricing</strong>
-                <span className="text-slate-500">From ₹185/spool wholesale</span>
+                <span className="text-slate-500">GST invoice on every order</span>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -268,16 +236,16 @@ export default function LanyardManufacturerBangalorePage() {
                 <div className="w-10 h-10 rounded-lg bg-[#EDF1F6] flex items-center justify-between p-2.5">
                   <Layers className="w-5 h-5 text-[#121418]" />
                 </div>
-                <h3 className="text-lg font-bold text-[#121418]">White Sublimation Lanyard Rolls</h3>
+                <h3 className="text-lg font-bold text-[#121418]">Lanyards</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Ultra-white virgin polyester rolls (12mm, 16mm, 20mm, 25mm) engineered specifically for digital heat-transfer printing. Resists heat up to 220°C with zero dye migration.
+                  Polyester, nylon, satin, woven and eco-friendly lanyards, printed with your logo.
                 </p>
               </div>
               <Link
-                href="/categories/indian-satin-digital-lanyard-roll"
+                href="/categories/lanyards"
                 className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#121418] hover:text-[#FF8A3D] transition-colors"
               >
-                <span>View Lanyard Rolls &rarr;</span>
+                <span>View Lanyards &rarr;</span>
               </Link>
             </div>
 
@@ -288,7 +256,7 @@ export default function LanyardManufacturerBangalorePage() {
                 </div>
                 <h3 className="text-lg font-bold text-[#121418]">Custom Printed Corporate Lanyards</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Full-color corporate logo printing on premium double-face satin ribbons. Paired with sturdy zinc-alloy dog hooks, safety breakaways, and executive card holders.
+                  Full-color corporate logo printing on lanyards. Paired with metal hooks, safety breakaways, and executive card holders.
                 </p>
               </div>
               <Link
@@ -304,49 +272,18 @@ export default function LanyardManufacturerBangalorePage() {
                 <div className="w-10 h-10 rounded-lg bg-[#EDF1F6] flex items-center justify-between p-2.5">
                   <Tag className="w-5 h-5 text-[#121418]" />
                 </div>
-                <h3 className="text-lg font-bold text-[#121418]">Lanyard Fittings, Clips &amp; Hooks</h3>
+                <h3 className="text-lg font-bold text-[#121418]">ID Card Accessories</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Chrome-plated metal crimp clamps (12mm, 16mm, 20mm), oval fish hooks, plastic clips, and safety buckle releases ready in stock in bulk cartons.
+                  Badge clips, metal, snap and swivel hooks, card reels, neck and wrist straps and sleeves.
                 </p>
               </div>
               <Link
-                href="/categories/id-card-lanyard-consumables"
+                href="/categories/id-card-accessories"
                 className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#121418] hover:text-[#FF8A3D] transition-colors"
               >
-                <span>View Fittings &rarr;</span>
+                <span>View Accessories &rarr;</span>
               </Link>
             </div>
-          </div>
-        </section>
-
-        {/* Technical Specification Matrix */}
-        <section className="space-y-6">
-          <div className="max-w-2xl">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight">
-              Satin Ribbon Technical Specifications
-            </h2>
-            <p className="text-sm text-slate-600 mt-2">
-              Every ribbon spool is manufactured to exact dimensional tolerances for automatic heat-cutters and rotary printers.
-            </p>
-          </div>
-
-          <div className="overflow-x-auto border border-[#DFE6EE] rounded-lg shadow-2xs">
-            <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-[#EDF1F6] border-b border-[#DFE6EE] text-[#121418] font-bold">
-                <tr>
-                  <th className="py-3 px-4">Parameter</th>
-                  <th className="py-3 px-4">Standard Factory Specification</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 bg-[#FFFFFF]">
-                {LANYARD_SPECS.map((spec, i) => (
-                  <tr key={i} className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3 px-4 font-semibold text-[#121418]">{spec.parameter}</td>
-                    <td className="py-3 px-4 text-slate-600">{spec.specification}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </section>
 
@@ -377,7 +314,7 @@ export default function LanyardManufacturerBangalorePage() {
               Frequently Asked Questions (Lanyards &amp; Printing)
             </h2>
             <p className="text-sm text-slate-600 mt-2">
-              Key details regarding ribbon width selection, spool yield, and delivery timelines.
+              Key details regarding printing, accessories and delivery timelines.
             </p>
           </div>
           <FaqAccordion items={LOCAL_FAQS} />

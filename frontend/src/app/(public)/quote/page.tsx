@@ -30,7 +30,7 @@ function QuoteFormContent() {
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [productCategory, setProductCategory] = useState("Lanyards & Ribbons");
+  const [productCategory, setProductCategory] = useState("Custom Printed Lanyards");
   const [quantity, setQuantity] = useState("1000");
   const [deliveryDate, setDeliveryDate] = useState("");
   const [customRequirements, setCustomRequirements] = useState("");
@@ -263,12 +263,9 @@ function QuoteFormContent() {
                     onChange={(e) => setProductCategory(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#121418] focus:ring-1 focus:ring-[#121418] bg-[#FFFFFF] text-xs sm:text-sm"
                   >
-                    <option value="Color & Satin Lanyard Rolls">Color & Satin Lanyard Rolls</option>
-                    <option value="Custom Sublimation Printed Lanyards">Custom Sublimation Printed Lanyards</option>
+                    <option value="Custom Printed Lanyards">Custom Printed Lanyards</option>
                     <option value="PVC ID Card Holders & Sleeves">PVC ID Card Holders & Sleeves</option>
-                    <option value="Metal Clamps, Hooks & Fittings">Metal Clamps, Hooks & Fittings</option>
-                    <option value="RFID Smart Cards & Inlays">RFID Smart Cards & Inlays</option>
-                    <option value="ID Card Manufacturing Machines">ID Card Manufacturing Machines</option>
+                    <option value="RFID Smart Cards">RFID Smart Cards</option>
                     <option value="Lens Packaging & Optical Boxes">Lens Packaging & Optical Boxes</option>
                     <option value="Complete Employee ID Kits">Complete Employee ID Kits (Lanyard + Holder)</option>
                     <option value="Other Commercial Printing">Other Custom Printing Requirement</option>
@@ -313,7 +310,7 @@ function QuoteFormContent() {
                   rows={4}
                   value={customRequirements}
                   onChange={(e) => setCustomRequirements(e.target.value)}
-                  placeholder="Specify ribbon width (16mm/20mm), hook type (Dog hook/Fish hook), Pantone shades, single/double sided printing, chip types (Mifare 1K), or special packaging instructions."
+                  placeholder="Specify lanyard width, Pantone shades, single/double sided printing, chip types (Mifare 1K), or special packaging instructions."
                   className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:outline-none focus:border-[#121418] focus:ring-1 focus:ring-[#121418] text-xs sm:text-sm leading-relaxed"
                 />
               </div>

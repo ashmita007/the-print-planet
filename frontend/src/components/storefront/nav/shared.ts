@@ -11,7 +11,7 @@ export const CDN_LOGO_URL =
 export const ANNOUNCEMENTS = [
   "PAN-India Factory-Direct Dispatch | Free Digital Proofs on All Custom Orders",
   "Corporate & Educational Bulk Enquiries: Custom Sample Kits Available",
-  "High-Speed Card Manufacturing Machinery & Satin Lanyards at Wholesale Rates",
+  "PVC Cards, Lanyards & ID Card Holders at Wholesale Rates",
 ];
 
 export const NAV_ITEMS = [

@@ -78,7 +78,7 @@ export async function GET() {
   <channel>
     <title>The Print Planet product feed</title>
     <link>${SITE_URL}</link>
-    <description>ID card, lanyard and card machine supplies from The Print Planet, Bengaluru.</description>${items}
+    <description>ID card and lanyard supplies from The Print Planet, Bengaluru.</description>${items}
   </channel>
 </rss>`;
 

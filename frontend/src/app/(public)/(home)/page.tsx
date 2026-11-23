@@ -1,7 +1,5 @@
 import React from "react";
-import Link from "next/link";
 import { Metadata } from "next";
-import ProductCard from "@/components/product/ProductCard";
 import ProductHeroShowcase from "@/components/product/ProductHeroShowcase";
 import PrintRegisterSection from "@/components/planet/PrintRegisterSection";
 import BuyingFacts from "@/components/BuyingFacts";
@@ -15,7 +13,7 @@ import HowItWorks from "@/components/home/HowItWorks";
 import WordHighlight from "@/components/animations/WordHighlight";
 import StatsStrip from "@/components/home/StatsStrip";
 
-const PRODUCT_WORDS = ["PVC cards", "Satin lanyards", "ID card holders", "RFID cards", "Badge reels", "Card machines"];
+const PRODUCT_WORDS = ["PVC cards", "Satin lanyards", "ID card holders", "RFID cards", "Badge reels"];
 import {
   getCategories,
   getFeaturedProducts,
@@ -30,14 +28,14 @@ export const metadata: Metadata = {
     absolute: "PVC Cards Wholesale Supplier Bangalore | The Print Planet",
   },
   description:
-    "Wholesale PVC cards, RFID cards, dragon sheets, satin lanyard rolls, ID card holders and machines from Bengaluru. GST invoice and pan-India dispatch.",
+    "Wholesale PVC cards, RFID cards, dragon sheets, satin lanyards and ID card holders from Bengaluru. GST invoice and pan-India dispatch.",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
     title: "PVC Cards Wholesale Supplier Bangalore | The Print Planet",
     description:
-      "India's leading factory direct specialist in PVC cards, CR-80 blank cards, fusing sheets, rigid ID card holders, and card manufacturing machinery. Direct B2B wholesale rates from Sunkadakatte, Bangalore.",
+      "India's leading factory direct specialist in PVC cards, CR-80 blank cards and rigid ID card holders. Direct B2B wholesale rates from Sunkadakatte, Bangalore.",
     url: SITE_URL,
     siteName: "The Print Planet",
     images: [
@@ -62,24 +60,14 @@ export const revalidate = 120;
 // One source for the visible accordion and the FAQPage schema, which must match.
 const FAQS: FaqItem[] = [
   {
-    question: "What products and machinery does The Print Planet manufacture and supply?",
+    question: "What products does The Print Planet manufacture and supply?",
     answer:
-      "The Print Planet is a Bengaluru wholesale supplier of virgin polyester satin lanyard rolls (12mm–25mm), rigid PVC ID card holders, dog hooks and crocodile clips, RFID 13.56MHz Mifare and 125kHz EM-Marin smart cards, CR-80 PVC core fusing sheets, motorized electric card die cutters, and dual-plate heating laminators.",
+      "The Print Planet is a Bengaluru wholesale supplier of satin lanyards, rigid PVC ID card holders, RFID 13.56MHz Mifare and 125kHz EM-Marin smart cards, and CR-80 PVC cards.",
   },
   {
     question: "What is a standard CR-80 PVC ID card size in mm and inches?",
     answer:
-      "A standard ISO CR-80 ID card measures exactly 85.60 mm × 53.98 mm (3.375 × 2.125 inches) with a 30 mil (0.76 mm) thickness and 3.18 mm rounded corners—identical to a bank ATM card or driving license. The Print Planet manufactures fusing sheets, pre-cut PVC cards, and die cutters strictly conforming to this ISO/IEC 7810 standard.",
-  },
-  {
-    question: "What machines are needed to start a commercial PVC ID card manufacturing business?",
-    answer:
-      "To manufacture laminated PVC ID cards commercially, you need two core machines: an automatic heated PVC fusing laminator (to bond printed core sheets with front and back overlay films under 135°C–155°C heat and hydraulic pressure) and a motorized PVC card die cutter (to punch out finished CR-80 cards at up to 1,200 cards/hour). Both machines are ready in stock at our Bangalore facility with 1-year warranty and WhatsApp live video testing.",
-  },
-  {
-    question: "Which satin ribbon roll is best for sublimation lanyard heat-transfer printing?",
-    answer:
-      "White Digital Sublimation Lanyard Rolls woven from 100% continuous-filament virgin polyester with a calendar-pressed smooth surface. They withstand 200°C–215°C heat press exposure without melting or shrinking, delivering deep ink absorption, photographic resolution, and Pantone hexachrome color fidelity in 12mm, 16mm, 20mm, and 25mm widths.",
+      "A standard ISO CR-80 ID card measures exactly 85.60 mm × 53.98 mm (3.375 × 2.125 inches) with a 30 mil (0.76 mm) thickness and 3.18 mm rounded corners—identical to a bank ATM card or driving license. The Print Planet manufactures pre-cut PVC cards strictly conforming to this ISO/IEC 7810 standard.",
   },
   {
     question: "What is the difference between Mifare 1K smart cards and EM-Marin proximity cards?",
@@ -87,14 +75,14 @@ const FAQS: FaqItem[] = [
       "Mifare 1K operates at 13.56 MHz high frequency with 1KB EEPROM read/write memory organized into 16 secure sectors with dual encryption keys, making it suitable for multi-application campus IDs, cashless payments, and secure access. EM-Marin operates at 125 kHz low frequency with a 64-bit factory pre-programmed read-only ID, primarily used for basic building entry turnstiles.",
   },
   {
-    question: "Where is The Print Planet located and can I inspect machinery before purchase?",
+    question: "Where is The Print Planet located and can I visit before purchase?",
     answer:
-      "Our central manufacturing and warehousing facility is located at No. 33, 34, Srigandhadakaval, Sunkadakatte, Bangalore - 560091, Karnataka. Commercial buyers can visit in person or request a live WhatsApp video inspection (+91 97418 08034) to test motorized die-cutters and fusing machines live before crating and dispatch.",
+      "Our central manufacturing and warehousing facility is located at No. 33, 34, Srigandhadakaval, Sunkadakatte, Bangalore - 560091, Karnataka. Commercial buyers can visit in person or message us on WhatsApp (+91 97418 08034) to see products before dispatch.",
   },
   {
     question: "What is the minimum order quantity (MOQ) and pricing for wholesale orders?",
     answer:
-      "Consumables start with flexible minimums: 1 roll (100m spool) for satin lanyards and 100 pieces for PVC card holders. Bulk factory slabs start from ₹185/roll for lanyards and ₹2.65/piece for holders. Detailed quantity breaks are published in our open machine-readable tariff at /pricing.md.",
+      "Consumables start with flexible minimums: 100 pieces for PVC card holders. Bulk factory slabs start from ₹2.65/piece for holders. Detailed quantity breaks are published in our open machine-readable tariff at /pricing.md.",
   },
   {
     question: "How fast do you deliver across India, and which logistics partners do you use?",
@@ -109,30 +97,19 @@ const FAQS: FaqItem[] = [
   {
     question: "Can you print custom multicolour lanyards with corporate logos?",
     answer:
-      "Yes. We operate industrial heat-transfer sublimation and rotary screen printing lines in 12mm, 16mm, 20mm, and 25mm widths with accurate Pantone hexachrome color reproduction and safety breakaway fittings.",
+      "Yes. We print custom lanyards with your logo and fit safety breakaway fittings.",
   },
 ];
 
 export default async function HomePage() {
-  const [categories, productsData, featuredProducts, machineryData, settings] = await Promise.all([
+  const [categories, productsData, featuredProducts, settings] = await Promise.all([
     getCategories(),
     getProducts({ page: 1, page_size: 24, ordering: "featured" }),
     getFeaturedProducts(),
-    getProducts({ category: "id-card-manufacturing-machines", page_size: 8 }),
     getSiteSettings(),
   ]);
 
   const productsList = productsData?.results || [];
-  const machineryList = (machineryData?.results && machineryData.results.length > 0)
-    ? machineryData.results
-    : productsList.filter(
-        (p) =>
-          p.category?.slug === "machines" ||
-          p.category?.slug === "id-card-manufacturing-machines" ||
-          p.category?.slug?.includes("machine") ||
-          p.category?.parent_slug === "machines"
-      );
-
   // Curate a diverse selection of flagship products across all distinct categories
   const diverseFlagships: typeof productsList = [];
   const seenCatIds = new Set<number>();
@@ -192,26 +169,6 @@ export default async function HomePage() {
       {/* Three.js: the four ink plates, shown in register */}
       <PrintRegisterSection />
 
-      {/* Machines */}
-      <section aria-labelledby="machines-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="flex items-baseline justify-between gap-4 mb-6">
-          <h2 id="machines-heading" className="text-3xl sm:text-4xl font-extrabold text-[#121418] tracking-tight">
-            Card and lanyard machines
-          </h2>
-          <Link
-            href="/categories/machines"
-            className="shrink-0 text-sm font-semibold text-[#2B323B] hover:underline underline-offset-4"
-          >
-            View all
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
-          {machineryList.slice(0, 4).map((machine) => (
-            <ProductCard key={machine.id} product={machine} />
-          ))}
-        </div>
-      </section>
-
       {/* Quote, proof, print, dispatch */}
       <HowItWorks />
 
@@ -219,7 +176,7 @@ export default async function HomePage() {
       <section data-moment="word-highlight" aria-labelledby="statement-heading" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <h2 id="statement-heading" className="eyebrow text-[#C2410C] mb-5">What you get</h2>
         <WordHighlight
-          text="We make and supply PVC cards, satin lanyards and ID card machines from our own unit in Bengaluru. Every order ships with a GST invoice, custom work gets a free digital proof first, and dispatch leaves within 24 to 48 hours."
+          text="We make and supply PVC cards, satin lanyards and ID card holders from our own unit in Bengaluru. Every order ships with a GST invoice, custom work gets a free digital proof first, and dispatch leaves within 24 to 48 hours."
           accent={["Bengaluru", "GST", "free"]}
         />
       </section>

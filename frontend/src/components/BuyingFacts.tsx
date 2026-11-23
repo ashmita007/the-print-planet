@@ -6,7 +6,7 @@ import { ColorBar } from "./animations/PrintMarks";
 const FACTS = [
   { value: "24-48h", label: "Pan-India dispatch" },
   { value: "GST", label: "Invoice and e-way bill" },
-  { value: "Live video", label: "Machine demo before you pay" },
+  { value: "Free proof", label: "Digital proof on custom work" },
   { value: "Sample kit", label: "Test before bulk" },
 ];
 

@@ -5,7 +5,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 
 export const metadata: Metadata = {
   title: "Terms and Conditions",
-  description: "Terms for wholesale orders from The Print Planet, Bengaluru: quotations and GST pricing, minimum order quantities, machinery warranty and dispatch.",
+  description: "Terms for wholesale orders from The Print Planet, Bengaluru: quotations and GST pricing, minimum order quantities and dispatch.",
   alternates: { canonical: `${SITE_URL}/terms` },
 };
 import PageHero from "@/components/storefront/PageHero";
@@ -28,19 +28,9 @@ export default function TermsPage() {
         <section className="space-y-2">
           <h2 className="text-base font-bold text-[#121418]">2. Minimum Order Quantities (MOQ)</h2>
           <p>
-            Standard ID card holders, satin rolls, and hardware fittings are supplied in designated
-            pack sizes (e.g. rolls of 100 meters, holder packs of 50/100 units). Custom Pantone
-            dyed rolls and branded sublimation ribbons are subject to negotiated batch thresholds.
-          </p>
-        </section>
-
-        <section className="space-y-2">
-          <h2 className="text-base font-bold text-[#121418]">3. Machinery Warranty & Testing</h2>
-          <p>
-            Card cutting units (DCT4500, DCT2000), card fusing laminators (DCT150), and lanyard
-            printing heat presses undergo operational inspection prior to factory dispatch.
-            Warranty terms, spare die availability, and technical setup guidance are specified in
-            product documentation.
+            Standard ID card holders and accessories are supplied in designated pack sizes
+            (e.g. holder packs of 50/100 units). Custom printed lanyards are subject to negotiated
+            batch thresholds.
           </p>
         </section>
       </div>

@@ -12,7 +12,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: "ID Card Product Categories",
   description:
-    "Browse ID card holders, lanyard rolls, PVC sheets, RFID cards and card machines by category. Wholesale supply from The Print Planet, Bengaluru.",
+    "Browse ID card holders, lanyards, PVC sheets and RFID cards by category. Wholesale supply from The Print Planet, Bengaluru.",
   alternates: {
     canonical: `${SITE_URL}/categories`,
   },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     images: DEFAULT_OG_IMAGES,
     title: "ID Card Product Categories | The Print Planet",
     description:
-      "Explore all product categories from The Print Planet. Wholesale satin lanyard rolls, PVC ID card holders, RFID cards, and machinery.",
+      "Explore all product categories from The Print Planet. Wholesale lanyards, PVC ID card holders and RFID cards.",
     url: `${SITE_URL}/categories`,
     siteName: "The Print Planet",
     type: "website",

@@ -11,9 +11,9 @@ const FAMILIES = [
     blurb: "Inkjet and laser fusing sheets, overlays and core sheets for ID cards that do not peel or fade.",
   },
   {
-    slug: "indian-satin-digital-lanyard-roll",
-    title: "Lanyard rolls",
-    blurb: "Indian satin rolls in 12 to 25 mm for sublimation printing, in white and solid colours.",
+    slug: "lanyards",
+    title: "Lanyards",
+    blurb: "Printed and plain lanyards for staff, schools and events.",
   },
   {
     slug: "id-card-holder",
@@ -21,9 +21,9 @@ const FAMILIES = [
     blurb: "Crystal, semi-transparent and executive holders in vertical and horizontal formats.",
   },
   {
-    slug: "machines",
-    title: "Card machines",
-    blurb: "Fusing, cutting and lanyard heat press machines, with a live video demo before you pay.",
+    slug: "pvc-and-smart-cards",
+    title: "PVC and smart cards",
+    blurb: "CR-80 PVC cards and RFID smart cards for ID, access and membership.",
   },
 ];
 

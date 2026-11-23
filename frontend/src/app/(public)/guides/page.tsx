@@ -12,7 +12,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.
 export const metadata: Metadata = {
   title: { absolute: "ID Card & Lanyard Guides | The Print Planet" },
   description:
-    "Practical guides on dragon sheets, PVC ID card making, ID card machines, lanyard sublimation printing and choosing ID card holders.",
+    "Practical guides on dragon sheets, PVC ID card making, lanyard sublimation printing and choosing ID card holders.",
   alternates: { canonical: `${SITE_URL}/guides` },
   openGraph: {
     title: "ID Card & Lanyard Guides | The Print Planet",
@@ -29,7 +29,7 @@ export default function GuidesIndex() {
     <>
       <PageHero
         title="ID card and lanyard guides"
-        lead="How PVC ID cards and printed lanyards are made, which machines and materials you need, and how to choose holders."
+        lead="How PVC ID cards and printed lanyards are made, which materials you need, and how to choose holders."
         crumbs={[{ label: "Guides" }]}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 grid sm:grid-cols-2 gap-5">

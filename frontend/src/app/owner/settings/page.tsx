@@ -149,21 +149,21 @@ function OwnerSettingsInner() {
       setAboutHeroTitle(about.hero_title || `About ${s.business_name || "THE PRINT PLANET"}`);
       setAboutHeroSubtitle(
         about.hero_subtitle ||
-          "Established as a dedicated production and wholesale distribution facility in Bengaluru, Karnataka, specializing in high-capacity ID card identification products, premium satin rolls, lens packaging, hardware fittings, and card fabrication machinery."
+          "Established as a dedicated production and wholesale distribution facility in Bengaluru, Karnataka, specializing in high-capacity ID card identification products, lanyards, lens packaging and hardware fittings."
       );
       setAboutStoryTitle(about.story_title || "Engineering Precision in Identification Systems");
       setAboutStoryP1(
         about.story_p1 ||
-          `At ${s.business_name || "THE PRINT PLANET"}, our operations combine high-capacity polymer molding, ribbon slitting, and ultrasonic tooling to produce uniform badge accessories designed to meet strict institutional requirements.`
+          `At ${s.business_name || "THE PRINT PLANET"}, our operations combine high-capacity polymer molding and ultrasonic tooling to produce uniform badge accessories designed to meet strict institutional requirements.`
       );
       setAboutStoryP2(
         about.story_p2 ||
-          "Whether fulfilling recurring orders of 20mm Indian Royal Blue satin rolls or delivering heavy-duty DCT4500 automatic card punch cutters, our manufacturing processes prioritize dimensional consistency, burr-free edge finishing, and reliable mechanical tensile strength."
+          "Whether fulfilling recurring orders of rigid PVC card holders or printed lanyards, our manufacturing processes prioritize dimensional consistency, burr-free edge finishing, and reliable mechanical tensile strength."
       );
       setStat1Val(about.stat_1_val || "50,000+");
       setStat1Label(about.stat_1_label || "Holders Produced Daily");
-      setStat2Val(about.stat_2_val || "10,000+ m");
-      setStat2Label(about.stat_2_label || "Daily Satin Ribbon Output");
+      setStat2Val(about.stat_2_val || "10,000+");
+      setStat2Label(about.stat_2_label || "Lanyards Printed Weekly");
       setStat3Val(about.stat_3_val || "180+");
       setStat3Label(about.stat_3_label || "Active Commercial SKUs");
       setStat4Val(about.stat_4_val || "500+");
@@ -174,14 +174,14 @@ function OwnerSettingsInner() {
       setStandard2Title(about.standard_2_title || "Pure Grade Polyvinyl Chloride (PVC)");
       setStandard2Desc(about.standard_2_desc || "High optical clarity, crack resistance under UV exposure, and smooth rounded corners.");
       setStandard3Title(about.standard_3_title || "Rigid Hardware Attachments");
-      setStandard3Desc(about.standard_3_desc || "Nickel-plated dog hooks and zinc alloy side levers tested for over 50N spring tension.");
+      setStandard3Desc(about.standard_3_desc || "Metal hooks and zinc alloy side levers tested for over 50N spring tension.");
 
       setFacility1Title(about.facility_1_title || "Modern Bengaluru Facility");
       setFacility1Desc(about.facility_1_desc || "Strategically located at Byraveshwaranagar, Sunkadakatte, Bengaluru for expedited pan-India transit and logistics.");
       setFacility2Title(about.facility_2_title || "Verified Trade Compliance");
       setFacility2Desc(about.facility_2_desc || "Full tax compliance, registered GST billing, and secure electronic trade payment workflows.");
       setFacility3Title(about.facility_3_title || "High-Capacity Inventory");
-      setFacility3Desc(about.facility_3_desc || "Large-scale warehouse buffer with continuous availability of core lanyard rolls and crystal holders.");
+      setFacility3Desc(about.facility_3_desc || "Large-scale warehouse buffer with continuous availability of core lanyards and crystal holders.");
 
       setLoading(false);
     });

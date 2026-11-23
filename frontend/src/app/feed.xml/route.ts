@@ -36,7 +36,7 @@ export async function GET() {
   <channel>
     <title>The Print Planet — Wholesale ID Card Solutions &amp; Lanyards</title>
     <link>${SITE_URL}</link>
-    <description>Latest wholesale ID accessories, satin lanyard rolls, and machinery catalog from The Print Planet.</description>
+    <description>Latest wholesale ID cards, lanyards and ID accessories catalog from The Print Planet.</description>
     <language>en-in</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>

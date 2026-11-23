@@ -23,10 +23,8 @@ SHOP_WHATSAPP = '919741808034'
 HOURS = 'Mon to Sat, 10 AM to 7 PM IST'
 POPULAR = (
     ('PVC ID card sheets', '/categories/pvc-id-card-consumable'),
-    ('Lanyard rolls', '/categories/indian-satin-digital-lanyard-roll'),
     ('ID card holders', '/categories/id-card-holder'),
     ('RFID cards', '/categories/pvc-and-smart-cards'),
-    ('Machines', '/categories/machines'),
     ('Lanyards', '/categories/lanyards'),
 )
 

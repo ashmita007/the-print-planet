@@ -113,7 +113,6 @@ const CORPORATE_LINES: ProductLine[] = [
   { value: "corporate_lanyards", label: "Branded lanyards", detail: "Custom printed satin lanyards", specs: LANYARD_SPECS },
   { value: "corporate_holders", label: "Badge holders", detail: "Executive PVC and acrylic", specs: HOLDER_SPECS },
   { value: "rfid_corporate", label: "Access cards", detail: "13.56 MHz Mifare and turnstile", specs: [{ label: "Frequency", options: ["125 kHz", "13.56 MHz", "Not sure"] }] },
-  { value: "die_cutters", label: "Card machines", detail: "ID card cutters and fusing units", specs: [] },
   { value: "commercial_printing", label: "Commercial print", detail: "Printing and lens packaging", specs: [] },
 ];
 

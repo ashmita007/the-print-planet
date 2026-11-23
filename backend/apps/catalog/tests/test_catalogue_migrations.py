@@ -63,6 +63,7 @@ class AiProductImagesMigrationTests(TestCase):
 
 remove_unlisted = import_module('apps.catalog.migrations.0007_remove_products_not_in_sheet')
 remove_old_holders = import_module('apps.catalog.migrations.0009_remove_old_holders_and_cards')
+named_only = import_module('apps.catalog.migrations.0011_keep_only_named_sheet_items')
 
 
 class RemoveProductsNotInSheetMigrationTests(TestCase):
@@ -94,7 +95,7 @@ class SeedReferenceDataTests(TestCase):
 
         call_command('seed_reference_data', stdout=open(os.devnull, 'w'))
 
-        for migration in (remove_unlisted, remove_old_holders):
+        for migration in (remove_unlisted, remove_old_holders, named_only):
             self.assertFalse(Category.objects.filter(slug__in=migration.EMPTIED_CATEGORY_SLUGS).exists())
             self.assertFalse(Product.objects.filter(slug__in=migration.REMOVED_PRODUCT_SLUGS).exists())
 
@@ -117,3 +118,28 @@ class RemoveOldHoldersAndCardsMigrationTests(TestCase):
         self.assertFalse(Category.objects.filter(slug='executive-pvc-id-card-holder').exists())
         self.assertTrue(Category.objects.filter(slug='id-card-holder').exists())
         self.assertEqual(Product.objects.filter(pk__in=[sheet_holder.pk, sheet_card.pk]).count(), 2)
+
+
+class KeepOnlyNamedSheetItemsMigrationTests(TestCase):
+    def test_removes_blanket_group_products_and_emptied_parent_categories(self):
+        machines, _ = Category.objects.update_or_create(slug='machines', defaults={'name': 'Machines'})
+        id_machines, _ = Category.objects.update_or_create(
+            slug='id-card-manufacturing-machines', defaults={'name': 'ID Machines', 'parent': machines},
+        )
+        consumables, _ = Category.objects.get_or_create(slug='pvc-id-card-consumable', defaults={'name': 'Consumables'})
+        core, _ = Category.objects.update_or_create(
+            slug='pvc-core-sheets-for-id-card-printing', defaults={'name': 'Core sheets', 'parent': consumables},
+        )
+        Product.objects.create(
+            name='DCT150', slug='dct150-a4-pvc-card-making-fusing-machine', sku='M-1', category=id_machines,
+        )
+        named_sheet = Product.objects.create(
+            name='PVC Core Sheet', slug='pvc-core-sheet-483-x-305-x-032-mm', sku='M-2', category=core,
+        )
+
+        named_only.forwards(apps, None)
+
+        self.assertFalse(Product.objects.filter(slug='dct150-a4-pvc-card-making-fusing-machine').exists())
+        self.assertFalse(Category.objects.filter(slug__in=['machines', 'id-card-manufacturing-machines']).exists())
+        self.assertTrue(Product.objects.filter(pk=named_sheet.pk).exists())
+        self.assertEqual(Category.objects.filter(slug__in=['pvc-id-card-consumable', core.slug]).count(), 2)
