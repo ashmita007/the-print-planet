@@ -1,6 +1,7 @@
 "use client";
 
-import { isOutOfStock } from "./stock";
+import { isOrderable } from "./stock";
+import { clampQuantity, nextCartQuantity, quantityMax } from "./quantity";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product } from "./types";
 import { getProductImageUrl } from "./formatters";
@@ -16,6 +17,7 @@ export interface CartItem {
   priceDisplay?: string | null;
   quantity: number;
   minimumOrderQuantity: number;
+  stockQuantity?: number | null;
   options?: {
     material?: string;
     size?: string;
@@ -38,6 +40,8 @@ interface CartContextType {
   totalItems: number;
   subtotal: number;
   formattedSubtotal: string;
+  /** Brief message when a quantity was capped by stock; empty when there is none. */
+  stockNotice: string;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -48,13 +52,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [stockNotice, setStockNotice] = useState("");
 
   // Load cart from localStorage on client mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem(CART_STORAGE_KEY);
       if (stored) {
-        setItems(JSON.parse(stored));
+        const saved: CartItem[] = JSON.parse(stored);
+        // Stock may have dropped since the cart was saved.
+        setItems(saved.map((item) => ({ ...item, quantity: nextCartQuantity(item, item.quantity).quantity })));
       }
     } catch (e) {
       console.warn("Failed to read cart from localStorage", e);
@@ -73,12 +80,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, mounted]);
 
+  // The note clears itself so it is announced once and does not linger.
+  useEffect(() => {
+    if (!stockNotice) return;
+    const timer = setTimeout(() => setStockNotice(""), 4000);
+    return () => clearTimeout(timer);
+  }, [stockNotice]);
+
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
   const toggleCart = () => setIsOpen((prev) => !prev);
 
   const addItem = (product: Product, quantity = 1, options?: CartItem["options"]) => {
-    if (isOutOfStock(product)) return;
+    if (!isOrderable(product)) return;
     const rawPrice = product.price ? Number(product.price) : 0;
     const moq = product.minimum_order_quantity || 1;
     const finalQty = Math.max(quantity, moq);
@@ -88,13 +102,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const optionKey = options ? Object.entries(options).map(([k, v]) => `${k}:${v}`).sort().join("|") : "default";
     const itemId = `${product.id}-${optionKey}`;
 
+    const cap = quantityMax(product.stock_quantity);
+    const inCart = items.find((i) => i.id === itemId);
+    if (cap !== undefined && (inCart ? inCart.quantity : 0) + finalQty > cap) {
+      setStockNotice(`Only ${cap} of ${product.name} in stock, so the quantity was set to ${cap}.`);
+    }
+
     setItems((prev) => {
       const existingIndex = prev.findIndex((i) => i.id === itemId);
       if (existingIndex > -1) {
         const next = [...prev];
         next[existingIndex] = {
           ...next[existingIndex],
-          quantity: next[existingIndex].quantity + finalQty,
+          quantity: clampQuantity(
+            next[existingIndex].quantity + finalQty,
+            moq,
+            quantityMax(product.stock_quantity)
+          ),
+          stockQuantity: product.stock_quantity,
         };
         return next;
       }
@@ -108,8 +133,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         image: imageUrl,
         price: rawPrice,
         priceDisplay: product.price_display,
-        quantity: finalQty,
+        quantity: clampQuantity(finalQty, moq, quantityMax(product.stock_quantity)),
         minimumOrderQuantity: moq,
+        stockQuantity: product.stock_quantity,
         options,
       };
       return [...prev, newItem];
@@ -123,19 +149,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateQuantity = (id: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeItem(id);
-      return;
-    }
-    setItems((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          const finalQty = Math.max(quantity, item.minimumOrderQuantity || 1);
-          return { ...item, quantity: finalQty };
-        }
-        return item;
-      })
-    );
+    if (!Number.isFinite(quantity)) return;
+    const current = items.find((i) => i.id === id);
+    if (!current) return;
+    const next = nextCartQuantity(current, quantity);
+    if (next.cappedByStock) setStockNotice(`Only ${next.quantity} of ${current.name} in stock, so the quantity was set to ${next.quantity}.`);
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, quantity: next.quantity } : item)));
   };
 
   const clearCart = () => setItems([]);
@@ -163,6 +182,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         totalItems,
         subtotal,
         formattedSubtotal,
+        stockNotice,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import {
   Briefcase,
   Search,
@@ -419,7 +420,15 @@ export default function OwnerOrdersPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-[#EDF1F6] border border-[#DFE6EE] p-4 rounded-md space-y-1 text-xs">
                   <span className="text-[10px] uppercase font-bold text-slate-400">Client Contact</span>
-                  <div className="font-bold text-[#121418]">{selectedOrder.contact_person}</div>
+                  <div className="font-bold text-[#121418]">
+                    {selectedOrder.user ? (
+                      <Link href={`/owner/customers/${selectedOrder.user}`} className="underline underline-offset-2 hover:text-[#353C45]">
+                        {selectedOrder.contact_person}
+                      </Link>
+                    ) : (
+                      selectedOrder.contact_person
+                    )}
+                  </div>
                   <div className="flex items-center gap-1 text-slate-500">
                     <Phone className="w-3 h-3 text-[#353C45]" />
                     <span>{selectedOrder.phone}</span>

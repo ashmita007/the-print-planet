@@ -15,6 +15,8 @@ import type {
   OwnerGoogleReviews,
   PaymentGatewaySummary,
   OwnerPaymentRow,
+  OwnerCustomerRow,
+  OwnerCustomerDetail,
 } from '../types';
 import {
   getApiUrl,
@@ -22,6 +24,7 @@ import {
   setOwnerToken,
   clearOwnerToken,
   getAuthHeaders,
+  authedFetch,
 } from './core';
 
 export async function ownerGetGoogleReviews(): Promise<OwnerGoogleReviews | null> {
@@ -689,3 +692,27 @@ export async function ownerGetPayments(page = 1): Promise<{ results: OwnerPaymen
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// Owner: customer history
+// ---------------------------------------------------------------------------
+
+export async function ownerGetCustomers(search = '', page = 1): Promise<PaginatedResponse<OwnerCustomerRow> | null> {
+  try {
+    const q = new URLSearchParams({ page: String(page) });
+    if (search.trim()) q.set('search', search.trim());
+    const res = await authedFetch(`${getApiUrl()}/api/v1/owner/customers/?${q}`, { cache: 'no-store' });
+    return res.ok ? await res.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function ownerGetCustomer(id: number): Promise<OwnerCustomerDetail | null> {
+  try {
+    const res = await authedFetch(`${getApiUrl()}/api/v1/owner/customers/${id}/`, { cache: 'no-store' });
+    return res.ok ? await res.json() : null;
+  } catch {
+    return null;
+  }
+}

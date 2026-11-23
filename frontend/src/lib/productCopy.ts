@@ -295,10 +295,14 @@ export function hsnCode(product: Product) {
   return /^(\d{4}|\d{6}|\d{8})$/.test(code) ? code : "";
 }
 
+/** "1 unit", "50 units". */
+export function unitCount(n: number) {
+  return `${n} ${n === 1 ? "unit" : "units"}`;
+}
+
 export function moqText(product: Product) {
   if (product.minimum_order_quantity) {
-    const n = product.minimum_order_quantity;
-    return `${n} ${n === 1 ? "unit" : "units"}`;
+    return unitCount(product.minimum_order_quantity);
   }
   return spec(product, "Minimum Order Quantity");
 }
@@ -405,6 +409,16 @@ export function productTitleBase(product: Product) {
     : [`${name} Wholesale Price`, `${name} Price`];
   // Google shows about 60 characters: keep the longest wording that still fits.
   return options.find((t) => t.length <= 60) || name;
+}
+
+/** Stored SEO title with the catalogue's raw uppercase name swapped for the Title Case one the page heading uses. */
+export function productSeoTitle(product: Product) {
+  const stored = (product.seo_title || "").trim();
+  if (!stored) return productTitleBase(product);
+  const raw = product.name.trim();
+  if (!raw) return stored;
+  const escaped = raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return stored.replace(new RegExp(escaped, "i"), formatProductName(raw));
 }
 
 /** Meta description: specific to the product, under ~155 characters after snippet(). */

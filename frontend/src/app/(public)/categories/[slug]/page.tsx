@@ -10,7 +10,8 @@ import { brandedTitle, snippet } from "@/lib/seo";
 import MobileFilterSortBar from "@/components/product/MobileFilterSortBar";
 import Pagination from "@/components/Pagination";
 import { GUIDES } from "@/lib/guides";
-import { getCategoryBySlug, getProducts, getCategories } from "@/lib/api";
+import { getProducts, getCategories } from "@/lib/api";
+import { loadCategory } from "@/lib/api/cachedReads";
 import { fixCategorySpelling, formatCategoryHeading, formatCategoryName, formatProductName } from "@/lib/formatters";
 
 interface CategoryPageProps {
@@ -31,7 +32,7 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   const { slug } = await params;
   const { page } = searchParams ? await searchParams : { page: undefined };
   const currentPage = Number(page) || 1;
-  const category = await getCategoryBySlug(slug);
+  const category = await loadCategory(slug);
   if (!category) {
     return { title: { absolute: "Category Not Found | The Print Planet" }, robots: { index: false, follow: true } };
   }
@@ -89,7 +90,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
   const currentPage = sParams.page ? parseInt(sParams.page, 10) : 1;
 
   const [category, productsData, allCategories] = await Promise.all([
-    getCategoryBySlug(slug),
+    loadCategory(slug),
     getProducts({
       category: slug,
       page: currentPage,

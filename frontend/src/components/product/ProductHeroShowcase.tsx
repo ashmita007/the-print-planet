@@ -27,7 +27,6 @@ const HERO_CATEGORIES = [
   { id: "hooks", label: "Hooks & clips", keywords: ["hook", "clip", "fitting", "clamp"] },
 ];
 
-const ROTATE_SECONDS = 5;
 
 const DEFAULT_FLAGSHIP: Product = {
   id: 0,
@@ -84,19 +83,16 @@ export default function ProductHeroShowcase({
 
   const [selectedHeroCategory, setSelectedHeroCategory] = useState<string>("all");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [heroAdded, setHeroAdded] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
   const thumbScrollRef = useRef<HTMLDivElement>(null);
   const stageImageRef = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<HTMLDivElement>(null);
-  const rotationRef = useRef<gsap.core.Tween | null>(null);
 
   // All hero text comes from Owner Settings, with short defaults if a field is empty.
   const copy = heroCopy(settings);
 
-  // Entrance: words stagger upward with spring easing, items fade in smoothly.
+  // The one entrance on load: words rise, items fade in.
   useGSAP(
     () => {
       gsap.set("[data-hero]", { opacity: 1 });
@@ -114,7 +110,7 @@ export default function ProductHeroShowcase({
             opacity: 1,
             duration: 0.85,
             stagger: 0.045,
-            ease: "back.out(1.5)",
+            ease: "power3.out",
           },
           0
         );
@@ -155,29 +151,9 @@ export default function ProductHeroShowcase({
         tl.fromTo(
           crops,
           { autoAlpha: 0, scale: 1.6 },
-          { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.06, ease: "back.out(2)" },
+          { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.06, ease: "power3.out" },
           0.7
         );
-      }
-
-      // The proof sheet drifts up slightly against the page as the hero scrolls away.
-      const sheet = heroRef.current?.querySelector("[data-hero-sheet]");
-      if (sheet) {
-        gsap.to(sheet, {
-          y: -36,
-          ease: "none",
-          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
-        });
-      }
-
-      // Subtle parallax drift for the precision background dots
-      const dots = heroRef.current?.querySelector("[data-hero-dots]");
-      if (dots) {
-        gsap.to(dots, {
-          yPercent: 15,
-          ease: "none",
-          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: true },
-        });
       }
     },
     { scope: heroRef }
@@ -221,27 +197,6 @@ export default function ProductHeroShowcase({
     setTimeout(() => setHeroAdded(false), 1500);
   };
 
-  // Auto-rotation: the progress bar tween is the timer, so hover pauses both together.
-  useGSAP(
-    () => {
-      gsap.set(progressBarRef.current, { scaleX: 0 });
-      if (activeProducts.length <= 1 || prefersReducedMotion()) return;
-
-      rotationRef.current = gsap.to(progressBarRef.current, {
-        scaleX: 1,
-        duration: ROTATE_SECONDS,
-        ease: "none",
-        paused: isPaused,
-        onComplete: () => setActiveIndex((idx) => (idx + 1) % activeProducts.length),
-      });
-    },
-    { dependencies: [activeIndex, activeProducts.length, selectedHeroCategory], scope: heroRef, revertOnUpdate: true }
-  );
-
-  useEffect(() => {
-    rotationRef.current?.paused(isPaused);
-  }, [isPaused]);
-
   // Slide change, skipping the first render so it doesn't fight the entrance timeline.
   const activeProductId = activeProduct?.id;
   const firstSlide = useRef(true);
@@ -254,8 +209,8 @@ export default function ProductHeroShowcase({
       if (prefersReducedMotion()) return;
       gsap.fromTo(
         stageImageRef.current,
-        { autoAlpha: 0, xPercent: 5, scale: 0.97 },
-        { autoAlpha: 1, xPercent: 0, scale: 1, duration: 0.55, ease: "power3.out", clearProps: "transform" }
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.55, ease: "power3.out", clearProps: "transform" }
       );
     },
     { dependencies: [activeProductId], scope: heroRef }
@@ -323,10 +278,6 @@ export default function ProductHeroShowcase({
               data-hero
               data-hero-stage
               className="lg:col-span-6 w-full min-w-0"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onFocusCapture={() => setIsPaused(true)}
-              onBlurCapture={() => setIsPaused(false)}
             >
               <div className="flex gap-5 overflow-x-auto scrollbar-none border-b border-white/15 mb-6">
                 {HERO_CATEGORIES.map((cat) => (
@@ -359,9 +310,6 @@ export default function ProductHeroShowcase({
                         loading="eager"
                         decoding="async"
                       />
-                    </div>
-                    <div className="absolute bottom-0 inset-x-0 h-0.5 bg-[#DFE6EE]">
-                      <div ref={progressBarRef} className="h-full w-full bg-[#F26B1D] origin-left" style={{ transform: "scaleX(0)" }} />
                     </div>
                   </div>
 

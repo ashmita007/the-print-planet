@@ -14,6 +14,7 @@ import {
   getClientAuthHeaders,
   logReadError,
 } from './core';
+import { fetchItem } from './readItem';
 
 // ==========================================
 // PUBLIC API CALLS
@@ -40,15 +41,9 @@ export async function getCategories(params?: { hide_empty?: boolean; ordering?: 
   }
 }
 
+/** null only when the category does not exist (404); any other failure throws. */
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-  try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/categories/${slug}/`, CATALOGUE_READ);
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (err) {
-    logReadError('getCategoryBySlug', err);
-    return null;
-  }
+  return fetchItem<Category>(`${getApiUrl()}/api/v1/categories/${encodeURIComponent(slug)}/`, fetchWithTimeout, CATALOGUE_READ);
 }
 
 export async function getProducts(params?: {
@@ -82,15 +77,9 @@ export async function getProducts(params?: {
   }
 }
 
+/** null only when the product does not exist (404); any other failure throws. */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  try {
-    const res = await fetchWithTimeout(`${getApiUrl()}/api/v1/products/${slug}/`, CATALOGUE_READ);
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (err) {
-    logReadError('getProductBySlug', err);
-    return null;
-  }
+  return fetchItem<Product>(`${getApiUrl()}/api/v1/products/${encodeURIComponent(slug)}/`, fetchWithTimeout, CATALOGUE_READ);
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {

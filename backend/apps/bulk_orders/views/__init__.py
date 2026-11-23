@@ -31,3 +31,7 @@ from .desk import (
     OwnerRequestsListView,
     OwnerRequestDecideView,
 )
+from .customers import (
+    OwnerCustomersListView,
+    OwnerCustomerDetailView,
+)

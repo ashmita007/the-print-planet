@@ -251,7 +251,7 @@ export async function clientGetBulkOrders(): Promise<{
   unauthorized?: boolean;
 }> {
   try {
-    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/`, {
+    const res = await fetch(`${getApiUrl()}/api/v1/bulk-orders/my-orders/?page_size=500`, {
       headers: getClientAuthHeaders(),
       cache: 'no-store',
     });

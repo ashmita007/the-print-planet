@@ -26,16 +26,9 @@ export default function PageHero({ title, lead, crumbs, children }: PageHeroProp
         .timeline({ defaults: { ease: "power3.out" } })
         .from("[data-word]", { yPercent: 115, duration: 0.7, stagger: 0.045 }, 0.05)
         .from("[data-hero-item]", { opacity: 0, y: 14, duration: 0.5, stagger: 0.08 }, 0.25)
-        .from("[data-crop]", { opacity: 0, scale: 1.8, duration: 0.4, stagger: 0.05, ease: "back.out(2)" }, 0.3)
+        .from("[data-crop]", { opacity: 0, scale: 1.8, duration: 0.4, stagger: 0.05, ease: "power3.out" }, 0.3)
         .from("[data-swatch]", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.3, stagger: 0.05 }, 0.45)
         .from("[data-hero-rule]", { scaleX: 0, transformOrigin: "0 50%", duration: 0.9, ease: "power2.inOut" }, 0.1);
-
-      // The halftone sits slower than the page as the band scrolls away.
-      gsap.to("[data-hero-dots]", {
-        yPercent: 18,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-      });
     },
     { scope: root }
   );

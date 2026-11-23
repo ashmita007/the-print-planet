@@ -5,9 +5,9 @@ import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import ProductCard from "@/components/product/ProductCard";
 import ProductDetailClient from "@/components/product/ProductDetailClient";
 import { formatCategoryHeading, formatCategoryName, formatProductName } from "@/lib/formatters";
-import { getProductBySlug } from "@/lib/api";
+import { loadProduct } from "@/lib/api/cachedReads";
 import { brandedTitle, snippet } from "@/lib/seo";
-import { isBoilerplate, isMaterialCode, productFaqs, productMetaDescription, productSummary, productTitleBase } from "@/lib/productCopy";
+import { isBoilerplate, isMaterialCode, productFaqs, productMetaDescription, productSeoTitle, productSummary } from "@/lib/productCopy";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://theprintplanet.co.in";
 
@@ -30,13 +30,13 @@ interface ProductPageProps {
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = await loadProduct(slug);
   if (!product) {
     return { title: { absolute: "Product Not Found | The Print Planet" }, robots: { index: false, follow: true } };
   }
 
   const imgUrl = getAbsoluteImageUrl(product.primary_image?.secure_url);
-  const title = brandedTitle(product.seo_title || productTitleBase(product));
+  const title = brandedTitle(productSeoTitle(product));
   const stored = product.seo_description || "";
   const description = snippet(
     stored.length >= 110 && !isBoilerplate(stored) && !/^Buy .+ wholesale factory direct/i.test(stored)
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = await loadProduct(slug);
 
   if (!product) {
     notFound();

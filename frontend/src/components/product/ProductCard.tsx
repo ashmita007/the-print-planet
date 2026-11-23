@@ -1,6 +1,6 @@
 "use client";
 
-import { isOutOfStock } from "@/lib/stock";
+import { isOrderable, isOutOfStock, stockBelowMoq } from "@/lib/stock";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
@@ -22,6 +22,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const outOfStock = isOutOfStock(product);
+  const cannotOrder = !isOrderable(product);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [added, setAdded] = useState(false);
@@ -206,13 +207,13 @@ export default function ProductCard({ product }: ProductCardProps) {
               <button
                 type="button"
                 onClick={handleQuickAdd}
-                disabled={outOfStock}
+                disabled={cannotOrder}
                 className={`w-9 h-9 rounded-md ${
                   added
                     ? "bg-[#217A4B] text-white"
                     : "bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418]"
                 } flex items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-40`}
-                title={outOfStock ? "Out of stock" : added ? "Added to Quote Cart!" : "Add to Quote Cart"}
+                title={outOfStock ? "Out of stock" : stockBelowMoq(product) ? "Below minimum order: contact us" : added ? "Added to Quote Cart!" : "Add to Quote Cart"}
                 aria-label={`Add ${formatProductName(product.name)} to cart`}
               >
                 {added ? (

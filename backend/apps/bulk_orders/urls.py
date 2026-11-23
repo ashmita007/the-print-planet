@@ -21,6 +21,8 @@ from .views import (
     ClientOrderRequestView,
     OwnerRequestsListView,
     OwnerRequestDecideView,
+    OwnerCustomersListView,
+    OwnerCustomerDetailView,
 )
 
 # Registered on the shared owner router (apps.core.urls) at api/v1/owner/bulk-orders/.
@@ -35,6 +37,8 @@ owner_urlpatterns = [
     path('payment-settings/', OwnerPaymentSettingsView.as_view(), name='owner-payment-settings'),
     path('payment-settings/test/', OwnerPaymentSettingsTestView.as_view(), name='owner-payment-settings-test'),
     path('payments/', OwnerPaymentsListView.as_view(), name='owner-payments'),
+    path('customers/', OwnerCustomersListView.as_view(), name='owner-customers'),
+    path('customers/<int:user_id>/', OwnerCustomerDetailView.as_view(), name='owner-customer-detail'),
     path('requests/', OwnerRequestsListView.as_view(), name='owner-order-requests'),
     path('requests/<int:pk>/decide/', OwnerRequestDecideView.as_view(), name='owner-order-request-decide'),
 ]

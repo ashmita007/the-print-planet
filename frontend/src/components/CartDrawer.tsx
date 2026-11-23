@@ -5,8 +5,6 @@ import Link from "next/link";
 import {
   X,
   Trash2,
-  Plus,
-  Minus,
   ShoppingBag,
   ArrowRight,
   ShieldCheck,
@@ -15,6 +13,8 @@ import {
   FileText,
 } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { quantityMax, quantityStep } from "@/lib/quantity";
+import QuantityStepper from "@/components/product/QuantityStepper";
 import { formatProductName } from "@/lib/formatters";
 import { useOverlay } from "@/lib/useOverlay";
 
@@ -29,6 +29,7 @@ export default function CartDrawer() {
     totalItems,
     subtotal,
     formattedSubtotal,
+    stockNotice,
   } = useCart();
 
   const { mounted, ref } = useOverlay<HTMLDivElement>(isOpen, closeCart, { x: "100%" });
@@ -98,6 +99,9 @@ export default function CartDrawer() {
 
             {/* Items list */}
             <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+              <p role="status" aria-live="polite" className={stockNotice ? "rounded-md bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-900" : "sr-only"}>
+                {stockNotice}
+              </p>
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500 space-y-4">
                   <div className="w-16 h-16 rounded-lg bg-[#EDF1F6] flex items-center justify-center text-[#353C45]">
@@ -120,7 +124,6 @@ export default function CartDrawer() {
                 </div>
               ) : (
                 items.map((item) => {
-                  const step = item.minimumOrderQuantity >= 10 ? 10 : 1;
                   return (
                   <div
                     key={item.id}
@@ -173,25 +176,15 @@ export default function CartDrawer() {
 
                       {/* Quantity & Price row */}
                       <div className="flex items-center justify-between gap-2 pt-2 mt-2 border-t border-[#EDF1F6]">
-                        <div className="flex items-center border border-[#DFE6EE] rounded-lg overflow-hidden bg-[#EDF1F6]">
-                          <button
-                            onClick={() => updateQuantity(item.id, Math.max(item.minimumOrderQuantity || 1, item.quantity - step))}
-                            className="w-8 h-7 flex items-center justify-center text-slate-600 hover:bg-slate-200 text-xs"
-                            aria-label={`Decrease quantity of ${formatProductName(item.name)}`}
-                          >
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="w-10 text-center font-mono text-xs font-semibold text-[#121418]">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + step)}
-                            className="w-8 h-7 flex items-center justify-center text-slate-600 hover:bg-slate-200 text-xs"
-                            aria-label={`Increase quantity of ${formatProductName(item.name)}`}
-                          >
-                            <Plus className="w-3 h-3" />
-                          </button>
-                        </div>
+                        <QuantityStepper
+                          compact
+                          label={`Quantity of ${formatProductName(item.name)}`}
+                          value={item.quantity}
+                          onChange={(q) => updateQuantity(item.id, q)}
+                          min={item.minimumOrderQuantity || 1}
+                          max={quantityMax(item.stockQuantity)}
+                          step={quantityStep(item.minimumOrderQuantity || 1)}
+                        />
 
                         <div className="text-right">
                           {item.price > 0 ? (

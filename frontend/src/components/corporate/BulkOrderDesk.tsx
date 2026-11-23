@@ -345,7 +345,7 @@ export default function BulkOrderDesk() {
         .from("[data-swatch]", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.4, stagger: 0.05 }, 0.2)
         .from("[data-hero-item]", { autoAlpha: 0, y: 16, duration: 0.6, stagger: 0.08 }, 0.25)
         .from("[data-desk]", { autoAlpha: 0, y: 36, duration: 0.85, stagger: 0.1 }, 0.3)
-        .from("[data-crop]", { autoAlpha: 0, scale: 1.8, duration: 0.45, stagger: 0.06, ease: "back.out(2)" }, 0.8);
+        .from("[data-crop]", { autoAlpha: 0, scale: 1.8, duration: 0.45, stagger: 0.06, ease: "power3.out" }, 0.8);
     },
     { scope: rootRef }
   );
@@ -428,7 +428,7 @@ export default function BulkOrderDesk() {
       if (prefersReducedMotion()) return;
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-success-ring]", { scale: 0.6, autoAlpha: 0, duration: 0.5, transformOrigin: "50% 50%", ease: "back.out(2)" })
+        .from("[data-success-ring]", { scale: 0.6, autoAlpha: 0, duration: 0.5, transformOrigin: "50% 50%", ease: "power3.out" })
         .fromTo("[data-success-tick]", { strokeDashoffset: 40 }, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, 0.2)
         .from("[data-success-item]", { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.07 }, 0.35);
     },

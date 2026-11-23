@@ -175,10 +175,10 @@ export default async function HomePage() {
       {/* Live numbers and service badges, overlapping the hero edge */}
       <StatsStrip productCount={productsData?.count || productsList.length} />
 
-      {/* Product words run with the scroll */}
+      {/* Product words */}
       <Marquee items={PRODUCT_WORDS} label="What we make" className="text-[#121418] mt-6" />
 
-      {/* Product families: one print ink each, circle-wipe between them */}
+      {/* Product families */}
       <CategoryShowcase />
 
       {/* 2. Direct Catalogue & Best Sellers with Category Tabs */}
@@ -188,7 +188,7 @@ export default async function HomePage() {
         categories={categories || []}
       />
 
-      {/* Three.js: CMYK plates pull into register as you scroll */}
+      {/* Three.js: the four ink plates, shown in register */}
       <PrintRegisterSection />
 
       {/* Machines */}

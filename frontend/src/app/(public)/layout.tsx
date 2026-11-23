@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "@/components/storefront/Navbar";
+import Navbar from "@/components/storefront/nav/Navbar";
 import Footer from "@/components/storefront/Footer";
 import MobileBottomBar from "@/components/storefront/MobileBottomBar";
 import LeadPopup from "@/components/LeadPopup";

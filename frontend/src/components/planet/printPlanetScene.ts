@@ -390,7 +390,7 @@ export function createPrintPlanet(canvas: HTMLCanvasElement, options: PlanetOpti
   });
 
   const easeIn = gsap.parseEase("power3.inOut");
-  const easeCard = gsap.parseEase("back.out(1.6)");
+  const easeCard = gsap.parseEase("power3.out");
   const span = (value: number, from: number, to: number) => gsap.utils.clamp(0, 1, (value - from) / (to - from));
 
   const keyColor = new Color(INKS[KEY_INDEX].color);

@@ -25,7 +25,7 @@ export function Field({ id, label, optional, hint, error, valid, attempt = 0, ch
   useGSAP(
     () => {
       if (!error || !attempt || prefersReducedMotion()) return;
-      gsap.fromTo(root.current, { x: -5 }, { x: 0, duration: 0.45, ease: "elastic.out(1.2, 0.3)", clearProps: "transform" });
+      gsap.fromTo(root.current, { x: -5 }, { x: 0, duration: 0.3, ease: "power3.out", clearProps: "transform" });
     },
     { dependencies: [attempt] }
   );

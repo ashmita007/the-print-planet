@@ -489,3 +489,81 @@ export interface ProductSavePayload extends Omit<Partial<Product>, 'category' | 
   category?: number;
   images?: { secure_url: string; is_primary: boolean; display_order: number; alt_text: string }[];
 }
+
+export interface OwnerCustomerRow {
+  id: number;
+  email: string;
+  name: string;
+  phone: string;
+  company: string;
+  orders_count: number;
+  paid_total: number;
+  last_activity: string | null;
+}
+
+export interface OwnerCustomerOrder {
+  id: number;
+  order_number: string;
+  status: string;
+  status_label: string;
+  organization_name: string;
+  phone: string;
+  total: number | null;
+  paid: number | null;
+  paid_at: string | null;
+  created_at: string;
+  messages: BulkOrderMessage[];
+  timeline: OrderEvent[];
+}
+
+export interface OwnerCustomerDetail {
+  profile: {
+    id: number;
+    email: string;
+    name: string;
+    phone: string;
+    company: string;
+    joined_at: string;
+    orders_count: number;
+    paid_total: number;
+  };
+  addresses: {
+    id: number;
+    label: string;
+    full_name: string;
+    phone: string;
+    line1: string;
+    line2: string;
+    city: string;
+    state: string;
+    pincode: string;
+    gstin: string;
+  }[];
+  orders: OwnerCustomerOrder[];
+  enquiries: {
+    id: number;
+    full_name: string;
+    company_name: string;
+    phone: string;
+    product_name: string;
+    requested_quantity: number | null;
+    message: string;
+    status: string;
+    created_at: string;
+  }[];
+  payments: {
+    order_number: string;
+    amount: number;
+    razorpay_payment_id: string;
+    captured_at: string | null;
+    created_at: string;
+  }[];
+  refunds: {
+    order_number: string;
+    kind: string;
+    status: string;
+    refund_amount: number | null;
+    razorpay_refund_id: string;
+    decided_at: string | null;
+  }[];
+}

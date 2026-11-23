@@ -1,6 +1,8 @@
 "use client";
 
-import { isOutOfStock } from "@/lib/stock";
+import { belowMoqMessage, isOrderable, isOutOfStock, stockBelowMoq } from "@/lib/stock";
+import { quantityMax, quantityStep } from "@/lib/quantity";
+import QuantityStepper from "@/components/product/QuantityStepper";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +12,7 @@ import {
   Layers,
   Box,
   Truck,
-  Phone,
+  MessageCircle,
   Mail,
   ZoomIn,
   Check,
@@ -25,8 +27,6 @@ import {
   FileText,
   Sliders,
   Sparkles,
-  Plus,
-  Minus,
   Paperclip,
   Video,
 } from "lucide-react";
@@ -36,7 +36,7 @@ import { useCart } from "@/lib/cart";
 import EnquiryModal from "@/components/EnquiryModal";
 import ImageLightboxModal from "./ImageLightboxModal";
 import { trackUserCheckedProduct } from "@/lib/api";
-import { formatSpecValue, productDetails, productSummary } from "@/lib/productCopy";
+import { formatSpecValue, productDetails, productSummary, unitCount } from "@/lib/productCopy";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -45,6 +45,8 @@ interface ProductDetailClientProps {
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addItem } = useCart();
   const outOfStock = isOutOfStock(product);
+  const belowMoq = stockBelowMoq(product);
+  const cannotOrder = !isOrderable(product);
   const [modalOpen, setModalOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copiedSku, setCopiedSku] = useState(false);
@@ -137,7 +139,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         {/* ========================================================= */}
         {/* LEFT COLUMN: Gallery & Trust Highlights (5 Cols)          */}
         {/* ========================================================= */}
-        <div className="lg:col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-24 lg:self-start">
           {/* Main Hero Image */}
           <div
             onClick={() => setLightboxOpen(true)}
@@ -254,6 +256,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight leading-snug">
               {formatProductName(product.name)}
             </h1>
+            {belowMoq && (
+              <p role="status" className="rounded-md bg-amber-50 border border-amber-200 px-3 py-2 text-sm text-amber-900">
+                {belowMoqMessage(product.stock_quantity as number)}
+              </p>
+            )}
             {outOfStock && (
               <p role="status" className="inline-block rounded-full bg-[#121418] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                 Out of stock
@@ -296,7 +303,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   Minimum Order
                 </span>
                 <span className="text-sm sm:text-base font-bold text-slate-800 block">
-                  {moq} Units MOQ
+                  {unitCount(moq)} MOQ
                 </span>
                 <span className="text-[10px] text-emerald-600 font-semibold block">
                   Volume discounts apply
@@ -395,54 +402,36 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <span className="text-xs font-semibold text-slate-700 block">Order Quantity</span>
-                <span className="text-[10px] text-slate-400 block">MOQ: {moq} units</span>
+                <span className="text-[10px] text-slate-400 block">MOQ: {unitCount(moq)}</span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="flex items-center border border-slate-200 rounded-md overflow-hidden bg-slate-50">
-                  <button
-                    onClick={() => setQuantity((q) => Math.max(moq, q - 50))}
-                    className="w-9 h-9 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
-                    title="Decrease quantity"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <input
-                    aria-label="Order quantity"
-                    type="number"
-                    min={moq}
-                    value={quantity}
-                    onChange={(e) => setQuantity(Math.max(moq, parseInt(e.target.value, 10) || moq))}
-                    className="w-16 text-center text-xs font-bold text-slate-900 bg-transparent outline-none tabular-nums"
-                  />
-                  <button
-                    onClick={() => setQuantity((q) => q + 50)}
-                    className="w-9 h-9 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
-                    title="Increase quantity"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              <QuantityStepper
+                value={quantity}
+                onChange={setQuantity}
+                min={moq}
+                max={quantityMax(product.stock_quantity)}
+                step={quantityStep(moq)}
+              />
             </div>
 
             {/* Action Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+              {/* One primary action; the other two are outlines so the order is clear. */}
               <button
                 type="button"
                 onClick={handleAddToCart}
-                disabled={outOfStock}
-                className="bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#121418] py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 disabled:cursor-not-allowed disabled:opacity-40"
+                disabled={cannotOrder}
+                className="sm:col-span-3 h-12 bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-[0.98] text-[#121418] px-4 rounded-md font-bold text-sm transition motion-reduce:transition-none motion-reduce:active:scale-100 flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {addedSuccess ? (
                   <>
-                    <Check className="w-4 h-4 text-white" />
-                    <span>Added to Cart!</span>
+                    <Check className="w-4 h-4" aria-hidden="true" />
+                    <span>Added to quote list</span>
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>{outOfStock ? "Out of stock" : "Add to Order / RFQ"}</span>
+                    <ShoppingBag className="w-4 h-4" aria-hidden="true" />
+                    <span>{outOfStock ? "Out of stock" : belowMoq ? "Contact us to order" : "Add to quote"}</span>
                   </>
                 )}
               </button>
@@ -450,20 +439,20 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="bg-[#121418] hover:bg-slate-800 active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+                className="sm:col-span-2 h-12 border border-[#121418] text-[#121418] hover:bg-[#121418] hover:text-white active:scale-[0.98] px-4 rounded-md font-bold text-sm transition motion-reduce:transition-none motion-reduce:active:scale-100 flex items-center justify-center gap-2"
               >
-                <FileText className="w-4 h-4" />
-                <span>Formal Quotation</span>
+                <FileText className="w-4 h-4" aria-hidden="true" />
+                <span>Formal quotation</span>
               </button>
 
               <a
                 href={`https://wa.me/919741808034?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#217A4B] hover:bg-[#1b633d] active:scale-98 text-white py-3 px-4 rounded-md font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+                className="h-12 border border-[#217A4B] text-[#217A4B] hover:bg-[#217A4B] hover:text-white active:scale-[0.98] px-4 rounded-md font-bold text-sm transition motion-reduce:transition-none motion-reduce:active:scale-100 flex items-center justify-center gap-2"
               >
-                <Phone className="w-4 h-4" />
-                <span>WhatsApp Quote</span>
+                <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                <span>WhatsApp</span>
               </a>
             </div>
 
@@ -616,7 +605,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <button
             type="button"
             onClick={handleAddToCart}
-            disabled={outOfStock}
+            disabled={cannotOrder}
             className="bg-[#121418] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ShoppingBag className="w-3.5 h-3.5" />

@@ -25,6 +25,7 @@ import {
   Lock,
   Receipt,
   Undo2,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 import { ownerLogout, ownerGetMe } from "@/lib/api";
@@ -49,6 +50,7 @@ const navSections: NavSection[] = [
       { label: "Dashboard Overview", href: "/owner/dashboard", icon: LayoutDashboard },
       { label: "Bulk Orders & Chats", href: "/owner/orders", icon: Briefcase },
       { label: "Cancel & Return Requests", href: "/owner/requests", icon: Undo2 },
+      { label: "Customers", href: "/owner/customers", icon: Users },
       { label: "Customer Enquiries", href: "/owner/enquiries", icon: Inbox },
       { label: "Online Payments", href: "/owner/payments", icon: CreditCard },
     ],
@@ -208,7 +210,10 @@ function OwnerSidebarInner() {
                 {sec.links.map((item) => {
                   const Icon = item.icon;
                   const basePath = item.href.split("?")[0];
-                  let isActive = pathname === basePath;
+                  // Nested routes keep their parent lit, unless a longer sibling link matches better.
+                  const nested = pathname.startsWith(`${basePath}/`) &&
+                    !allBasePaths.some((other) => other.length > basePath.length && (pathname === other || pathname.startsWith(`${other}/`)));
+                  let isActive = pathname === basePath || nested;
                   if (basePath === "/owner/settings") {
                     isActive = pathname === basePath && (item.tab ? currentTab === item.tab : !currentTab);
                   }
@@ -280,6 +285,8 @@ function OwnerSidebarInner() {
     </>
   );
 }
+
+const allBasePaths = navSections.flatMap((sec) => sec.links.map((l) => l.href.split("?")[0]));
 
 export default function OwnerSidebar() {
   return (

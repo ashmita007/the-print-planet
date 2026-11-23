@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import PrintPlanet from "./PrintPlanet";
 import type { PrintPlanet as PlanetScene } from "./printPlanetScene";
 
@@ -14,53 +13,15 @@ const INKS = [
   { name: "Key", code: "K", color: "#FFFFFF" },
 ];
 
-/** Scroll pulls four separated ink plates into register, and the planet prints itself. */
+/** Four ink plates shown in register: the planet is drawn fully printed, with no scroll-driven motion. */
 export default function PrintRegisterSection() {
-  const rootRef = useRef<HTMLElement>(null);
-  const sceneRef = useRef<PlanetScene | null>(null);
-  const press = useRef({ progress: 0 });
-
-  const handleScene = (scene: PlanetScene) => {
-    sceneRef.current = scene;
-    scene.setProgress(press.current.progress);
-  };
-
-  useGSAP(
-    () => {
-      if (prefersReducedMotion()) {
-        press.current.progress = 1;
-        sceneRef.current?.setProgress(1);
-        gsap.set("[data-ink-fill]", { scaleX: 1 });
-        return;
-      }
-
-      gsap
-        .timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: { trigger: rootRef.current, start: "top top", end: "+=150%", pin: true, scrub: 0.6 },
-        })
-        .to(press.current, {
-          progress: 1,
-          duration: 1,
-          onUpdate: () => sceneRef.current?.setProgress(press.current.progress),
-        }, 0)
-        .fromTo(
-          "[data-ink-fill]",
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.26, stagger: 0.11, ease: "power2.inOut" },
-          0.02
-        )
-        .from("[data-register-end]", { autoAlpha: 0, y: 14, duration: 0.14, ease: "power2.out" }, 0.84);
-    },
-    { scope: rootRef }
-  );
+  const handleScene = (scene: PlanetScene) => scene.setProgress(1);
 
   return (
     <section
-      ref={rootRef}
       data-no-reveal
       aria-labelledby="register-heading"
-      className="relative bg-[#0E2238] text-white overflow-hidden min-h-svh flex items-center"
+      className="relative bg-[#0E2238] text-white overflow-hidden flex items-center"
     >
       <div aria-hidden="true" className="page-hero-dots absolute inset-0 pointer-events-none" />
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-center">
@@ -79,16 +40,15 @@ export default function PrintRegisterSection() {
                 <span>{ink.name}</span>
                 <span aria-hidden="true" className="block h-0.5 bg-white/15">
                   <span
-                    data-ink-fill
-                    className="block h-full w-full origin-left"
-                    style={{ backgroundColor: ink.color, transform: "scaleX(0)" }}
+                    className="block h-full w-full"
+                    style={{ backgroundColor: ink.color }}
                   />
                 </span>
               </li>
             ))}
           </ul>
 
-          <div data-register-end className="mt-6">
+          <div className="mt-6">
             <Link
               href="/services"
               className="inline-flex items-center gap-2 text-sm font-bold text-white underline decoration-[#B9C3CF] underline-offset-4 hover:text-[#B9C3CF] transition-colors group"

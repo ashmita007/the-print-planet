@@ -1,5 +1,7 @@
 "use client";
 
+import QuantityStepper from "@/components/product/QuantityStepper";
+import { quantityMax, quantityStep } from "@/lib/quantity";
 import React, { useState } from "react";
 import Link from "next/link";
 import { createPortal } from "react-dom";
@@ -16,6 +18,8 @@ import { Product } from "@/lib/types";
 import { formatCategoryName, formatProductName, getProductImageUrl } from "@/lib/formatters";
 import { useCart } from "@/lib/cart";
 import { useOverlay } from "@/lib/useOverlay";
+import { unitCount } from "@/lib/productCopy";
+import { belowMoqMessage, isOrderable, stockBelowMoq } from "@/lib/stock";
 import Image from "next/image";
 
 interface QuickViewModalProps {
@@ -59,7 +63,7 @@ export default function QuickViewModal({
   const whatsappMessage = encodeURIComponent(
     `Hello The Print Planet, I need a quotation for ${formatProductName(product.name)} (SKU: ${
       product.sku
-    }, MOQ: ${moq} units).`
+    }, MOQ: ${unitCount(moq)}).`
   );
 
   return createPortal(
@@ -169,10 +173,23 @@ export default function QuickViewModal({
                   </span>
                   {product.minimum_order_quantity && (
                     <span className="text-[#353C45] font-medium font-mono">
-                      MOQ: {product.minimum_order_quantity} Units
+                      MOQ: {unitCount(product.minimum_order_quantity)}
                     </span>
                   )}
                 </div>
+
+                {stockBelowMoq(product) && (
+                  <p role="status" className="rounded-md bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-900">
+                    {belowMoqMessage(product.stock_quantity as number)}
+                  </p>
+                )}
+                <QuantityStepper
+                  value={quantity}
+                  onChange={setQuantity}
+                  min={moq}
+                  max={quantityMax(product.stock_quantity)}
+                  step={quantityStep(moq)}
+                />
 
                 {/* Price */}
                 <div className="pt-2 pb-1 border-y border-[#EDF1F6]">
@@ -218,8 +235,10 @@ export default function QuickViewModal({
               <div className="space-y-2.5 pt-5 mt-4 border-t border-[#EDF1F6]">
                 <div className="grid grid-cols-2 gap-2">
                   <button
+                    type="button"
                     onClick={handleAddToCart}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#121418] text-xs font-semibold shadow-xs transition-all"
+                    disabled={!isOrderable(product)}
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-md bg-[#F26B1D] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#FF8A3D] active:scale-98 text-[#121418] text-xs font-semibold shadow-xs transition-all"
                   >
                     {added ? (
                       <>
