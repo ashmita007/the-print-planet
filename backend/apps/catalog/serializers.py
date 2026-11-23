@@ -74,7 +74,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'id', 'name', 'slug', 'sku', 'category', 'category_id',
             'short_description', 'material', 'dimensions', 'color',
             'minimum_order_quantity', 'price', 'price_display', 'currency',
-            'price_visibility', 'is_featured', 'is_active', 'display_order',
+            'price_visibility', 'stock_quantity', 'gst_rate', 'hsn_code', 'is_featured', 'is_active', 'display_order',
             'primary_image', 'verification_status', 'created_at', 'updated_at'
         ]
 
@@ -118,6 +118,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'short_description', 'description', 'specifications',
             'material', 'dimensions', 'color', 'minimum_order_quantity',
             'price', 'price_display', 'currency', 'price_visibility',
+            'stock_quantity', 'gst_rate', 'hsn_code',
             'is_featured', 'is_active', 'display_order', 'seo_title',
             'seo_description', 'reference_source_url', 'source_verified_at',
             'verification_status', 'primary_image', 'images', 'related_products',
@@ -155,7 +156,8 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             'id', 'name', 'slug', 'sku', 'category', 'short_description',
             'description', 'specifications', 'material', 'dimensions',
             'color', 'minimum_order_quantity', 'price', 'price_display',
-            'currency', 'price_visibility', 'is_featured', 'is_active',
+            'currency', 'price_visibility', 'stock_quantity', 'gst_rate', 'hsn_code',
+            'is_featured', 'is_active',
             'display_order', 'seo_title', 'seo_description',
             'reference_source_url', 'verification_status', 'images'
         ]

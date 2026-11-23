@@ -44,13 +44,14 @@ def is_configured() -> bool:
     return credentials()[3] != 'none'
 
 
-def _call(method: str, path: str, key: str, secret: str, payload: dict | None = None) -> dict:
+def _call(method: str, path: str, key: str, secret: str, payload: dict | None = None,
+          headers: dict | None = None) -> dict:
     token = base64.b64encode(f'{key}:{secret}'.encode()).decode()
     req = urllib.request.Request(
         f'{API_BASE}{path}',
         data=json.dumps(payload).encode() if payload is not None else None,
         method=method,
-        headers={'Authorization': f'Basic {token}', 'Content-Type': 'application/json'},
+        headers={'Authorization': f'Basic {token}', 'Content-Type': 'application/json', **(headers or {})},
     )
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
@@ -61,11 +62,11 @@ def _call(method: str, path: str, key: str, secret: str, payload: dict | None = 
         raise RazorpayError('Could not reach Razorpay.') from exc
 
 
-def _request(method: str, path: str, payload: dict | None = None) -> dict:
+def _request(method: str, path: str, payload: dict | None = None, headers: dict | None = None) -> dict:
     key, secret, _, source = credentials()
     if source == 'none':
         raise RazorpayError('Online payment is not configured yet.')
-    return _call(method, path, key, secret, payload)
+    return _call(method, path, key, secret, payload, headers)
 
 
 def check_keys(key: str, secret: str) -> None:
@@ -86,6 +87,14 @@ def fetch_payment(payment_id: str) -> dict:
 def capture_payment(payment_id: str, amount_paise: int) -> dict:
     """Capture an 'authorized' payment; accounts on manual capture would otherwise auto-refund it."""
     return _request('POST', f'/payments/{payment_id}/capture', {'amount': amount_paise, 'currency': 'INR'})
+
+
+def refund(payment_id: str, amount_paise: int, idempotency_key: str = '') -> dict:
+    """Refund part or all of a captured payment. A repeated key returns the first refund, not a second one."""
+    if amount_paise <= 0:
+        raise RazorpayError('Refund amount must be positive.')
+    headers = {'X-Refund-Idempotency': idempotency_key[:40]} if idempotency_key else None
+    return _request('POST', f'/payments/{payment_id}/refund', {'amount': amount_paise}, headers)
 
 
 def _hmac(secret: str, message: bytes) -> str:

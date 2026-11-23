@@ -200,6 +200,15 @@ export default function Footer({ settings }: FooterProps) {
             <Link href="/terms" className="hover:text-white transition-colors">
               Terms
             </Link>
+            <Link href="/return-policy" className="hover:text-white transition-colors">
+              Returns
+            </Link>
+            <Link href="/refund-policy" className="hover:text-white transition-colors">
+              Refunds
+            </Link>
+            <Link href="/shipping-policy" className="hover:text-white transition-colors">
+              Shipping
+            </Link>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.text import slugify
 from .formatters import format_category_name, format_product_name
@@ -57,6 +58,12 @@ class Product(models.Model):
     price_display = models.CharField(max_length=100, blank=True, null=True)
     currency = models.CharField(max_length=10, default='INR')
     price_visibility = models.BooleanField(default=True)
+    # null = stock not tracked; 0 = out of stock (quote requests are refused).
+    stock_quantity = models.PositiveIntegerField(null=True, blank=True)
+    gst_rate = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    hsn_code = models.CharField(max_length=8, blank=True, default='', validators=[
+        RegexValidator(r'^(\d{4}|\d{6}|\d{8})?$', 'HSN code must be 4, 6 or 8 digits.'),
+    ])
     is_featured = models.BooleanField(default=False, db_index=True)
     is_active = models.BooleanField(default=True, db_index=True)
     display_order = models.PositiveIntegerField(default=0)

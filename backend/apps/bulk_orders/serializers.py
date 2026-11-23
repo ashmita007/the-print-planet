@@ -2,7 +2,10 @@ import os
 import re
 from rest_framework import serializers
 from . import razorpay
-from .models import BulkOrder, BulkOrderMessage, ConversationBackupArchive, UserCheckedProduct
+from .commerce import TRANSITIONS, can_transition
+from .models import (
+    BulkOrder, BulkOrderMessage, ConversationBackupArchive, Invoice, OrderEvent, OrderRequest, UserCheckedProduct,
+)
 from apps.catalog.serializers import ProductListSerializer
 
 ALLOWED_ATTACHMENT_EXTENSIONS = {
@@ -70,11 +73,50 @@ class BulkOrderCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(error)
         return file_obj
 
+    def validate_product(self, product):
+        if product is not None and product.stock_quantity == 0:
+            raise serializers.ValidationError(f'{product.name} is out of stock.')
+        return product
+
     def validate_email(self, value):
         cleaned = value.strip().lower()
         if not re.match(r'^[^@]+@[^@]+\.[^@]+$', cleaned):
             raise serializers.ValidationError("Please provide a valid email address.")
         return cleaned
+
+
+class OrderEventSerializer(serializers.ModelSerializer):
+    status_label = serializers.SerializerMethodField()
+
+    class Meta:
+        model = OrderEvent
+        fields = ['id', 'status', 'status_label', 'note', 'courier', 'awb', 'actor', 'internal', 'created_at']
+        read_only_fields = fields
+
+    def get_status_label(self, obj):
+        return dict(BulkOrder.STATUS_CHOICES).get(obj.status, obj.status)
+
+
+class OrderRequestSerializer(serializers.ModelSerializer):
+    order_number = serializers.CharField(source='order.order_number', read_only=True)
+    organization_name = serializers.CharField(source='order.organization_name', read_only=True)
+    order_status = serializers.CharField(source='order.status', read_only=True)
+    paid_amount = serializers.DecimalField(source='order.paid_amount', max_digits=12, decimal_places=2, read_only=True)
+
+    class Meta:
+        model = OrderRequest
+        fields = [
+            'id', 'order_number', 'organization_name', 'order_status', 'paid_amount', 'kind', 'reason', 'status',
+            'refund_amount', 'razorpay_refund_id', 'owner_note', 'decided_at', 'created_at',
+        ]
+        read_only_fields = fields
+
+
+class InvoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invoice
+        fields = ['number', 'financial_year', 'issued_at', 'snapshot']
+        read_only_fields = fields
 
 
 class BulkOrderDetailSerializer(serializers.ModelSerializer):
@@ -87,6 +129,10 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
     is_paid = serializers.BooleanField(read_only=True)
     payment_under_review = serializers.BooleanField(read_only=True)
     can_pay_online = serializers.SerializerMethodField()
+    timeline = serializers.SerializerMethodField()
+    allowed_next = serializers.SerializerMethodField()
+    requests = OrderRequestSerializer(many=True, read_only=True)
+    invoice = serializers.SerializerMethodField()
 
     class Meta:
         model = BulkOrder
@@ -99,11 +145,16 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
             'attachment_url', 'status', 'status_label', 'quoted_amount', 'quote_notes',
             'tracking_consignment_number', 'tracking_courier_partner',
             'is_paid', 'paid_amount', 'paid_at', 'razorpay_payment_id', 'can_pay_online', 'payment_under_review',
+            'shipping_address', 'billing_address', 'quote_subtotal', 'quote_shipping', 'quote_gst_rate',
+            'quote_tax', 'quote_cgst', 'quote_sgst', 'quote_igst', 'quote_line_notes',
+            'timeline', 'allowed_next', 'requests', 'invoice',
             'messages', 'created_at', 'updated_at'
         ]
         read_only_fields = [
             'id', 'order_number', 'user', 'attachment', 'attachment_url', 'messages',
-            'paid_amount', 'paid_at', 'razorpay_payment_id',
+            'shipping_address', 'billing_address', 'quote_subtotal', 'quote_shipping', 'quote_gst_rate',
+            'quote_tax', 'quote_cgst', 'quote_sgst', 'quote_igst', 'quote_line_notes',
+            'paid_amount', 'paid_at', 'razorpay_payment_id', 'quoted_amount',
             'created_at', 'updated_at',
         ]
 
@@ -111,12 +162,35 @@ class BulkOrderDetailSerializer(serializers.ModelSerializer):
         return obj.attachment_url or None if obj.attachment else None
 
     def get_can_pay_online(self, obj):
-        return (razorpay.is_configured() and not obj.is_paid and obj.status != 'cancelled'
+        return (razorpay.is_configured() and not obj.is_paid and obj.status == 'quoted'
                 and obj.quote_paise() is not None and not obj.payment_under_review)
 
-    def validate_quoted_amount(self, value):
-        if self.instance and self.instance.is_paid and value != self.instance.quoted_amount:
-            raise serializers.ValidationError('This quote has already been paid online and cannot be changed.')
+    def _is_owner_view(self):
+        request = self.context.get('request')
+        return bool(self.context.get('owner') or (request and request.user.is_authenticated and request.user.is_staff))
+
+    def get_timeline(self, obj):
+        events = list(obj.events.all())  # prefetched; filtered here so the queryset stays shared
+        if not self._is_owner_view():
+            events = [e for e in events if not e.internal]
+        return OrderEventSerializer(events, many=True).data
+
+    def get_allowed_next(self, obj):
+        """Statuses the owner may pick next; 'paid' only ever comes from a captured payment."""
+        order = ['submitted', 'reviewing', 'quoted', 'paid', 'proofing', 'in_production', 'dispatched',
+                 'completed', 'cancelled', 'returned']
+        return [s for s in order if s in TRANSITIONS.get(obj.status, set()) and s != 'paid']
+
+    def get_invoice(self, obj):
+        invoice = getattr(obj, 'invoice', None)
+        return {'number': invoice.number, 'issued_at': invoice.issued_at} if invoice else None
+
+    def validate_status(self, value):
+        if self.instance and value != self.instance.status:
+            if value == 'paid':
+                raise serializers.ValidationError('An order becomes paid only when the online payment is captured.')
+            if not can_transition(self.instance.status, value):
+                raise serializers.ValidationError(f'Cannot move an order from {self.instance.status} to {value}.')
         return value
 
 

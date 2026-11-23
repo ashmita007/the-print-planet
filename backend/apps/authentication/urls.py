@@ -1,4 +1,7 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+
+from .addresses import AddressViewSet
 
 from .views import (
     LoginView,
@@ -23,3 +26,7 @@ urlpatterns = [
     path('auth/forgot-password/', RequestPasswordResetView.as_view(), name='auth-forgot-password'),
     path('auth/reset-password/', ConfirmPasswordResetView.as_view(), name='auth-reset-password'),
 ]
+
+address_router = SimpleRouter()
+address_router.register('account/addresses', AddressViewSet, basename='account-addresses')
+urlpatterns += address_router.urls

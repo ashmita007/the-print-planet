@@ -18,11 +18,13 @@ class BulkOrder(models.Model):
         ('submitted', 'Inquiry Submitted'),
         ('reviewing', 'Under Technical Review'),
         ('quoted', 'Formal Quotation Ready'),
+        ('paid', 'Paid'),
         ('proofing', 'Artwork & Sample Proofing'),
         ('in_production', 'In Production'),
         ('dispatched', 'Dispatched / In Transit'),
         ('completed', 'Delivered & Completed'),
         ('cancelled', 'Cancelled'),
+        ('returned', 'Returned'),
     ]
 
     order_number = models.CharField(max_length=50, unique=True, db_index=True)
@@ -75,6 +77,18 @@ class BulkOrder(models.Model):
     )
     quoted_amount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     quote_notes = models.TextField(blank=True, default='')
+    # Address snapshots taken at request time; later edits to a saved Address never change them.
+    shipping_address = models.JSONField(default=dict, blank=True)
+    billing_address = models.JSONField(default=dict, blank=True)
+    # Quote breakdown computed by the server (see commerce.compute_quote); quoted_amount is the total.
+    quote_subtotal = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quote_shipping = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quote_gst_rate = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    quote_tax = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quote_cgst = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quote_sgst = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quote_igst = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quote_line_notes = models.JSONField(default=list, blank=True)
     tracking_consignment_number = models.CharField(max_length=100, blank=True, default='')
     tracking_courier_partner = models.CharField(max_length=100, blank=True, default='')
 
@@ -120,6 +134,68 @@ class BulkOrder(models.Model):
                 rand_suffix = random.randint(1000, 9999)
                 self.order_number = f"PP-{prefix}-{year}-{rand_suffix}"
         super().save(*args, **kwargs)
+
+
+class OrderEvent(models.Model):
+    """One entry in an order's timeline. Created explicitly by fulfilment services, never by signals."""
+    ACTOR_CHOICES = [('owner', 'Owner'), ('customer', 'Customer'), ('system', 'System')]
+
+    order = models.ForeignKey(BulkOrder, on_delete=models.CASCADE, related_name='events')
+    status = models.CharField(max_length=50)
+    note = models.TextField(blank=True, default='')
+    courier = models.CharField(max_length=100, blank=True, default='')
+    awb = models.CharField(max_length=100, blank=True, default='')
+    actor = models.CharField(max_length=20, choices=ACTOR_CHOICES, default='system')
+    # Owner-only note: hidden from the customer's timeline and never emailed.
+    internal = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at', 'id']
+
+    def __str__(self):
+        return f"{self.order.order_number}: {self.status} by {self.actor}"
+
+
+class OrderRequest(models.Model):
+    """A customer's request to cancel an order or return a completed one."""
+    KIND_CHOICES = [('cancel', 'Cancel'), ('return', 'Return')]
+    STATUS_CHOICES = [('pending', 'Pending'), ('approved', 'Approved'), ('declined', 'Declined')]
+
+    order = models.ForeignKey(BulkOrder, on_delete=models.CASCADE, related_name='requests')
+    kind = models.CharField(max_length=10, choices=KIND_CHOICES)
+    reason = models.TextField(blank=True, default='')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending', db_index=True)
+    refund_amount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    razorpay_refund_id = models.CharField(max_length=64, blank=True, default='')
+    owner_note = models.TextField(blank=True, default='')
+    decided_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.kind} request for {self.order.order_number} ({self.status})"
+
+
+class Invoice(models.Model):
+    """Tax invoice issued once when an order is paid. The snapshot is immutable."""
+    order = models.OneToOneField(BulkOrder, on_delete=models.PROTECT, related_name='invoice')
+    financial_year = models.CharField(max_length=7)
+    sequence = models.PositiveIntegerField()
+    number = models.CharField(max_length=64, unique=True)
+    snapshot = models.JSONField(default=dict)
+    issued_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-issued_at']
+        constraints = [
+            models.UniqueConstraint(fields=['financial_year', 'sequence'], name='uniq_invoice_fy_sequence'),
+        ]
+
+    def __str__(self):
+        return self.number
 
 
 class QuotePayment(models.Model):

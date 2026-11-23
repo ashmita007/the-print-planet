@@ -26,6 +26,7 @@ import type { PrintPlanet as PlanetScene } from "@/components/planet/printPlanet
 import {
   ATTACHMENT_EXTENSIONS,
   MAX_ATTACHMENT_BYTES,
+  INDIAN_STATES,
   MIN_QUANTITY,
   ORG_TYPES,
   OrgType,
@@ -36,6 +37,7 @@ import {
 import Hero from "./bulk-order/Hero";
 import OrderStepDetails from "./bulk-order/OrderStepDetails";
 import OrderStepContact from "./bulk-order/OrderStepContact";
+import AddressPicker, { type AddressChoice } from "@/components/orders/AddressPicker";
 import OrderStepReview from "./bulk-order/OrderStepReview";
 import LiveSummary from "./bulk-order/LiveSummary";
 import SlabComparison from "./bulk-order/SlabComparison";
@@ -84,6 +86,7 @@ export default function BulkOrderDesk() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
 
+  const [addressChoice, setAddressChoice] = useState<AddressChoice>({ shippingId: "", billingId: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
@@ -295,6 +298,8 @@ export default function BulkOrderDesk() {
     payload.append("product_name_text", product.label);
     payload.append("estimated_quantity", String(quantity));
     payload.append("requirements", requirements);
+    if (currentUser && addressChoice.shippingId) payload.append("shipping_address_id", addressChoice.shippingId);
+    if (currentUser && addressChoice.billingId) payload.append("billing_address_id", addressChoice.billingId);
     if (!currentUser) payload.append("password", password);
     if (attachment) payload.append("attachment", attachment);
 
@@ -597,6 +602,19 @@ export default function BulkOrderDesk() {
                         touch={touch}
                         errors={errors}
                         goTo={goTo}
+                        addressPicker={
+                          currentUser ? (
+                            <AddressPicker
+                              value={addressChoice}
+                              onChange={setAddressChoice}
+                              onPickShipping={(address) => {
+                                if (!address) return;
+                                set("city", address.city);
+                                if (INDIAN_STATES.includes(address.state)) set("state", address.state);
+                              }}
+                            />
+                          ) : undefined
+                        }
                       />
                     )}
 

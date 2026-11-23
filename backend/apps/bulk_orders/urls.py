@@ -17,6 +17,10 @@ from .views import (
     OwnerBulkOrderViewSet,
     OwnerConversationBackupDownloadView,
     OwnerConversationBackupCreateSnapshotView,
+    ClientInvoiceView,
+    ClientOrderRequestView,
+    OwnerRequestsListView,
+    OwnerRequestDecideView,
 )
 
 # Registered on the shared owner router (apps.core.urls) at api/v1/owner/bulk-orders/.
@@ -31,6 +35,8 @@ owner_urlpatterns = [
     path('payment-settings/', OwnerPaymentSettingsView.as_view(), name='owner-payment-settings'),
     path('payment-settings/test/', OwnerPaymentSettingsTestView.as_view(), name='owner-payment-settings-test'),
     path('payments/', OwnerPaymentsListView.as_view(), name='owner-payments'),
+    path('requests/', OwnerRequestsListView.as_view(), name='owner-order-requests'),
+    path('requests/<int:pk>/decide/', OwnerRequestDecideView.as_view(), name='owner-order-request-decide'),
 ]
 
 urlpatterns = [
@@ -41,6 +47,8 @@ urlpatterns = [
     path('my-orders/<str:order_number>/pay/', ClientBulkOrderPayView.as_view(), name='client-bulk-order-pay'),
     path('my-orders/<str:order_number>/pay/verify/', ClientBulkOrderPayVerifyView.as_view(), name='client-bulk-order-pay-verify'),
     path('payments/razorpay/webhook/', RazorpayWebhookView.as_view(), name='razorpay-webhook'),
+    path('my-orders/<str:order_number>/invoice/', ClientInvoiceView.as_view(), name='client-bulk-order-invoice'),
+    path('my-orders/<str:order_number>/requests/', ClientOrderRequestView.as_view(), name='client-bulk-order-requests'),
     path('my-orders/<str:order_number>/messages/', ClientBulkOrderMessagePostView.as_view(), name='client-bulk-order-message-post'),
     path('my-orders/<str:order_number>/attachment/', BulkOrderAttachmentDownloadView.as_view(), name='bulk-order-attachment'),
     path('messages/<int:message_id>/attachment/', BulkOrderMessageAttachmentDownloadView.as_view(), name='bulk-order-message-attachment'),

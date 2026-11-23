@@ -34,19 +34,13 @@ import {
   ownerDownloadConversationsBackup,
 } from "@/lib/api";
 import AttachmentLink from "@/components/orders/AttachmentLink";
+import OrderDesk, { STATUS_LABEL } from "@/components/owner/OrderDesk";
 import type { BulkOrder } from "@/lib/types";
 import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
 const STATUS_OPTIONS = [
   { value: "all", label: "All Statuses" },
-  { value: "submitted", label: "Inquiry Submitted" },
-  { value: "reviewing", label: "Technical Review" },
-  { value: "quoted", label: "Quotation Ready" },
-  { value: "proofing", label: "Artwork Proofing" },
-  { value: "in_production", label: "In Production" },
-  { value: "dispatched", label: "Dispatched / In Transit" },
-  { value: "completed", label: "Delivered & Complete" },
-  { value: "cancelled", label: "Cancelled" },
+  ...(Object.keys(STATUS_LABEL) as (keyof typeof STATUS_LABEL)[]).map((value) => ({ value, label: STATUS_LABEL[value] })),
 ];
 
 const SECTOR_LABELS: Record<string, string> = {
@@ -75,10 +69,6 @@ export default function OwnerOrdersPage() {
 
   // Reply form states
   const [replyMessage, setReplyMessage] = useState("");
-  const [updateStatus, setUpdateStatus] = useState("");
-  const [quotedAmount, setQuotedAmount] = useState<string>("");
-  const [courierPartner, setCourierPartner] = useState("");
-  const [trackingNumber, setTrackingNumber] = useState("");
   const [replySubmitting, setReplySubmitting] = useState(false);
   const [replyFeedback, setReplyFeedback] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -105,10 +95,6 @@ export default function OwnerOrdersPage() {
     const detail = await ownerGetBulkOrderDetail(orderIdOrNumber);
     if (detail) {
       setSelectedOrder(detail);
-      setUpdateStatus(detail.status || "submitted");
-      setQuotedAmount(detail.quoted_amount ? String(detail.quoted_amount) : "");
-      setCourierPartner(detail.tracking_courier_partner || "");
-      setTrackingNumber(detail.tracking_consignment_number || "");
       setReplyMessage("");
     }
     setDetailLoading(false);
@@ -124,8 +110,8 @@ export default function OwnerOrdersPage() {
   const handleSendReply = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOrder) return;
-    if (!replyMessage.trim() && !quotedAmount && !updateStatus) {
-      setReplyFeedback({ type: "error", text: "Please enter a message or update the order quotation/status." });
+    if (!replyMessage.trim()) {
+      setReplyFeedback({ type: "error", text: "Please enter a message to send." });
       return;
     }
 
@@ -133,11 +119,7 @@ export default function OwnerOrdersPage() {
     setReplyFeedback(null);
 
     const res = await ownerReplyBulkOrder(selectedOrder.id, {
-      message: replyMessage.trim() || `Order status updated to ${updateStatus}.`,
-      status: updateStatus,
-      quoted_amount: quotedAmount ? parseFloat(quotedAmount) : undefined,
-      tracking_courier_partner: courierPartner.trim() || undefined,
-      tracking_consignment_number: trackingNumber.trim() || undefined,
+      message: replyMessage.trim(),
     });
 
     setReplySubmitting(false);
@@ -171,12 +153,19 @@ export default function OwnerOrdersPage() {
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#121418] border border-[#DFE6EE]">Reviewing</span>;
       case "quoted":
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#121418] border border-[#DFE6EE]">Quotation Ready</span>;
+      case "paid":
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Paid</span>;
       case "proofing":
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#121418] border border-[#DFE6EE]">Artwork Proofing</span>;
       case "in_production":
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF1F6] text-[#121418] border border-[#DFE6EE]">In Production</span>;
       case "dispatched":
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Dispatched</span>;
       case "completed":
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Dispatched / Complete</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Delivered</span>;
+      case "cancelled":
+      case "returned":
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-50 text-red-700 border border-red-200">{label}</span>;
       default:
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">{label}</span>;
     }
@@ -521,6 +510,15 @@ export default function OwnerOrdersPage() {
                 </div>
               )}
 
+              <OrderDesk
+                key={`${selectedOrder.id}-${selectedOrder.updated_at}`}
+                order={selectedOrder}
+                onChanged={(updated) => {
+                  setSelectedOrder(updated);
+                  fetchOrders();
+                }}
+              />
+
               {/* Conversation Messages Thread */}
               <div className="space-y-3">
                 <h4 className="text-xs font-bold text-[#121418] uppercase tracking-wider flex items-center gap-1.5">
@@ -587,7 +585,7 @@ export default function OwnerOrdersPage() {
               {/* Owner Reply & Update Form */}
               <form onSubmit={handleSendReply} className="bg-[#FFFFFF] border border-[#DFE6EE] p-4 sm:p-5 rounded-lg space-y-4 shadow-sm">
                 <h4 className="text-xs font-bold text-[#121418] uppercase tracking-wider">
-                  Post Owner Response &amp; Update Order Status
+                  Message the buyer
                 </h4>
 
                 {replyFeedback && (
@@ -602,74 +600,13 @@ export default function OwnerOrdersPage() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div>
-                    <label htmlFor="field-update-status" className="block text-[11px] font-bold text-[#121418] mb-1">
-                      Update Status:
-                    </label>
-                    <select id="field-update-status"
-                      value={updateStatus}
-                      onChange={(e) => setUpdateStatus(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none"
-                    >
-                      {STATUS_OPTIONS.filter((o) => o.value !== "all").map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="field-quoted-amount-inr" className="block text-[11px] font-bold text-[#121418] mb-1">
-                      Quoted Amount (₹ INR):
-                    </label>
-                    <input id="field-quoted-amount-inr"
-                      type="number"
-                      step="0.01"
-                      placeholder="e.g. 45000"
-                      value={quotedAmount}
-                      onChange={(e) => setQuotedAmount(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="field-courier-partner" className="block text-[11px] font-bold text-[#121418] mb-1">
-                      Courier Partner:
-                    </label>
-                    <input id="field-courier-partner"
-                      type="text"
-                      placeholder="e.g. DTDC Express / Blue Dart"
-                      value={courierPartner}
-                      onChange={(e) => setCourierPartner(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="sm:col-span-3">
-                    <label htmlFor="field-tracking-consignment-awb-number" className="block text-[11px] font-bold text-[#121418] mb-1">
-                      Tracking / Consignment AWB Number:
-                    </label>
-                    <input id="field-tracking-consignment-awb-number"
-                      type="text"
-                      placeholder="e.g. D12345678IN"
-                      value={trackingNumber}
-                      onChange={(e) => setTrackingNumber(e.target.value)}
-                      className="w-full text-xs p-2 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none font-mono"
-                    />
-                  </div>
-                </div>
-
                 <div>
                   <label htmlFor="field-response-message-to-buyer" className="block text-[11px] font-bold text-[#121418] mb-1">
                     Response Message to Buyer:
                   </label>
                   <textarea id="field-response-message-to-buyer"
                     rows={3}
-                    placeholder="Enter formal quote details, timeline specifications, or delivery confirmation to the customer..."
+                    placeholder="Write to the customer about specs, proofs or delivery..."
                     value={replyMessage}
                     onChange={(e) => setReplyMessage(e.target.value)}
                     className="w-full text-xs p-3 bg-[#EDF1F6] border border-[#DFE6EE] rounded-md outline-none focus:border-[#121418] focus:bg-[#FFFFFF] transition-all"
@@ -690,7 +627,7 @@ export default function OwnerOrdersPage() {
                     className="px-5 py-2 rounded-md bg-[#121418] hover:bg-[#2A2F37] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>{replySubmitting ? "Sending..." : "Post Reply & Update Order"}</span>
+                    <span>{replySubmitting ? "Sending..." : "Send message"}</span>
                   </button>
                 </div>
               </form>

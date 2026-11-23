@@ -32,6 +32,7 @@ import {
 } from "@/lib/api";
 import { BulkOrder, BulkOrderSummaryMetrics, CheckedProduct, ClientProfile } from "@/lib/types";
 import Image from "next/image";
+import { formatInr } from "@/lib/formatters";
 
 export default function ClientOrdersDashboardPage() {
   const router = useRouter();
@@ -316,7 +317,7 @@ export default function ClientOrdersDashboardPage() {
                       {getStatusBadge(o.status, o.status_label)}
                     </td>
                     <td className="px-5 py-4 font-semibold text-[#2ECC71]">
-                      {o.quoted_amount ? `₹${Number(o.quoted_amount).toLocaleString("en-IN")}` : <span className="text-slate-400 font-normal">Pending</span>}
+                      {o.quoted_amount ? formatInr(o.quoted_amount) : <span className="text-slate-400 font-normal">Pending</span>}
                     </td>
                     <td className="px-5 py-4 font-mono text-[11px] text-slate-600">
                       {o.tracking_consignment_number ? (

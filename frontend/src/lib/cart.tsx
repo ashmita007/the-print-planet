@@ -1,5 +1,6 @@
 "use client";
 
+import { isOutOfStock } from "./stock";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product } from "./types";
 import { getProductImageUrl } from "./formatters";
@@ -77,6 +78,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const toggleCart = () => setIsOpen((prev) => !prev);
 
   const addItem = (product: Product, quantity = 1, options?: CartItem["options"]) => {
+    if (isOutOfStock(product)) return;
     const rawPrice = product.price ? Number(product.price) : 0;
     const moq = product.minimum_order_quantity || 1;
     const finalQty = Math.max(quantity, moq);

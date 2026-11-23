@@ -5,7 +5,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import SiteSettings, HomePageSection
-from .serializers import SiteSettingsSerializer, HomePageSectionSerializer
+from .serializers import (
+    SiteSettingsSerializer, HomePageSectionSerializer, CommerceSettingsSerializer, PublicCommercePoliciesSerializer,
+)
 from apps.catalog.models import Product, Category
 from apps.catalog.serializers import ProductListSerializer
 from apps.enquiries.models import Enquiry
@@ -206,3 +208,29 @@ class OwnerGoogleReviewSyncView(APIView):
         conn.refresh_from_db()
         body = {'ok': ok, 'message': message, 'connection': OwnerGoogleReviewSerializer(conn).data}
         return Response(body, status=status.HTTP_200_OK if ok else status.HTTP_400_BAD_REQUEST)
+
+
+class OwnerCommerceSettingsView(APIView):
+    """Owner reads and saves tax, shipping, invoice and policy settings. Blank means the feature stays off."""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def get(self, request):
+        return Response(CommerceSettingsSerializer(SiteSettings.get_settings()).data)
+
+    def put(self, request):
+        serializer = CommerceSettingsSerializer(SiteSettings.get_settings(), data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data)
+
+
+class PublicCommercePoliciesView(APIView):
+    """Policy texts for the public policy pages; a blank text means the page shows "Contact us"."""
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        from apps.bulk_orders.commerce import INDIAN_STATES
+        data = PublicCommercePoliciesSerializer(SiteSettings.get_settings()).data
+        # The same list the server validates against, so address forms offer only accepted states.
+        return Response({**data, 'states': sorted(INDIAN_STATES.values())})

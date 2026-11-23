@@ -1,5 +1,6 @@
 "use client";
 
+import { isOutOfStock } from "@/lib/stock";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -43,6 +44,7 @@ interface ProductDetailClientProps {
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addItem } = useCart();
+  const outOfStock = isOutOfStock(product);
   const [modalOpen, setModalOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [copiedSku, setCopiedSku] = useState(false);
@@ -252,6 +254,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#121418] tracking-tight leading-snug">
               {formatProductName(product.name)}
             </h1>
+            {outOfStock && (
+              <p role="status" className="inline-block rounded-full bg-[#121418] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+                Out of stock
+              </p>
+            )}
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
               {productSummary(product)}
@@ -424,7 +431,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#121418] py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+                disabled={outOfStock}
+                className="bg-[#F26B1D] hover:bg-[#FF8A3D] active:scale-98 text-[#121418] py-3 px-4 rounded-md font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {addedSuccess ? (
                   <>
@@ -434,7 +442,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 ) : (
                   <>
                     <ShoppingBag className="w-4 h-4" />
-                    <span>Add to Order / RFQ</span>
+                    <span>{outOfStock ? "Out of stock" : "Add to Order / RFQ"}</span>
                   </>
                 )}
               </button>
@@ -608,7 +616,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <button
             type="button"
             onClick={handleAddToCart}
-            className="bg-[#121418] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs"
+            disabled={outOfStock}
+            className="bg-[#121418] text-white py-2 px-3.5 rounded-md font-bold text-xs flex items-center gap-1 shadow-xs disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             <span>Add to Cart</span>

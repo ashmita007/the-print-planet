@@ -22,10 +22,14 @@ import {
   Sparkles,
 } from "lucide-react";
 import Breadcrumbs from "@/components/storefront/Breadcrumbs";
-import { clientGetBulkOrderDetail, clientPostBulkOrderMessage, getClientAuthHeaders } from "@/lib/api";
+import { clientGetBulkOrderDetail, clientPostBulkOrderMessage, getClientAuthHeaders, getCommercePolicies } from "@/lib/api";
 import AttachmentLink from "@/components/orders/AttachmentLink";
 import PayQuoteButton from "@/components/orders/PayQuoteButton";
-import { BulkOrder, BulkOrderMessage } from "@/lib/types";
+import { formatInr } from "@/lib/formatters";
+import OrderTimeline from "@/components/orders/OrderTimeline";
+import QuoteBreakdown from "@/components/orders/QuoteBreakdown";
+import OrderRequestPanel from "@/components/orders/OrderRequestPanel";
+import { BulkOrder, CommercePolicies } from "@/lib/types";
 
 export default function OrderDetailPage() {
   const params = useParams();
@@ -33,6 +37,7 @@ export default function OrderDetailPage() {
   const orderNumber = params?.orderNumber as string;
 
   const [order, setOrder] = useState<BulkOrder | null>(null);
+  const [policies, setPolicies] = useState<CommercePolicies | null>(null);
   const [loading, setLoading] = useState(true);
   const [newMsg, setNewMsg] = useState("");
   const [sending, setSending] = useState(false);
@@ -59,6 +64,7 @@ export default function OrderDetailPage() {
       return;
     }
     fetchDetail();
+    getCommercePolicies().then(setPolicies);
     const interval = setInterval(() => {
       if (document.visibilityState === "visible") fetchDetail();
     }, 10000);
@@ -149,11 +155,11 @@ export default function OrderDetailPage() {
               <div className="text-right">
                 <span className="text-[10px] text-slate-400 block uppercase">Formal Quote</span>
                 <span className="text-lg font-extrabold text-[#2ECC71]">
-                  ₹{Number(order.quoted_amount).toLocaleString("en-IN")}
+                  {formatInr(order.quoted_amount)}
                 </span>
                 {order.is_paid && (
                   <span className="mt-0.5 flex items-center justify-end gap-1 text-[11px] font-bold text-emerald-700">
-                    <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Paid ₹{Number(order.paid_amount).toLocaleString("en-IN")}
+                    <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Paid {formatInr(order.paid_amount)}
                   </span>
                 )}
                 {order.payment_under_review && (
@@ -338,6 +344,41 @@ export default function OrderDetailPage() {
 
         {/* Right: Order Requirements & Specs Card */}
         <div className="lg:col-span-4 space-y-5">
+          <section aria-labelledby="progress-heading" className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 rounded-lg space-y-4 shadow-2xs">
+            <h4 id="progress-heading" className="font-bold text-sm text-[#121418]">Order progress</h4>
+            <OrderTimeline status={order.status} events={order.timeline ?? []} />
+          </section>
+
+          {order.quote_subtotal && order.quoted_amount ? (
+            <section aria-labelledby="quote-heading" className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 rounded-lg space-y-3 shadow-2xs">
+              <h4 id="quote-heading" className="font-bold text-sm text-[#121418]">Quote breakdown</h4>
+              <QuoteBreakdown
+                data={{
+                  subtotal: order.quote_subtotal, shipping: order.quote_shipping, gst_rate: order.quote_gst_rate,
+                  cgst: order.quote_cgst, sgst: order.quote_sgst, igst: order.quote_igst, tax: order.quote_tax,
+                  total: order.quoted_amount,
+                }}
+              />
+              {order.invoice && (
+                <Link
+                  href={`/orders/${encodeURIComponent(order.order_number)}/invoice`}
+                  className="flex items-center justify-center gap-2 rounded-md border border-[#DFE6EE] py-2 text-xs font-bold text-[#121418] hover:bg-slate-50 transition"
+                >
+                  <FileText className="w-4 h-4" aria-hidden /> View invoice {order.invoice.number}
+                </Link>
+              )}
+            </section>
+          ) : order.invoice ? (
+            <Link
+              href={`/orders/${encodeURIComponent(order.order_number)}/invoice`}
+              className="flex items-center justify-center gap-2 rounded-lg border border-[#DFE6EE] bg-white py-3 text-xs font-bold text-[#121418] hover:bg-slate-50 transition"
+            >
+              <FileText className="w-4 h-4" aria-hidden /> View invoice {order.invoice.number}
+            </Link>
+          ) : null}
+
+          <OrderRequestPanel order={order} policies={policies} onChanged={fetchDetail} />
+
           <div className="bg-[#FFFFFF] border border-[#DFE6EE] p-5 rounded-lg space-y-4 shadow-2xs">
             <h4 className="font-bold text-sm text-[#121418] flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#353C45]" />

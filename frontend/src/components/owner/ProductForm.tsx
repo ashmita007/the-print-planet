@@ -30,6 +30,7 @@ import {
 } from "@/lib/formatters";
 import IdentitySection from "./product-form/IdentitySection";
 import PricingSection from "./product-form/PricingSection";
+import StockTaxSection from "./product-form/StockTaxSection";
 import MaterialSection from "./product-form/MaterialSection";
 import SpecsSection from "./product-form/SpecsSection";
 import MediaSection from "./product-form/MediaSection";
@@ -85,6 +86,11 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       ? Boolean(initialProduct.price_visibility)
       : true
   );
+  const [stock, setStock] = useState<string>(
+    initialProduct?.stock_quantity === null || initialProduct?.stock_quantity === undefined ? "" : String(initialProduct.stock_quantity)
+  );
+  const [gstRate, setGstRate] = useState<string>(initialProduct?.gst_rate ?? "");
+  const [hsnCode, setHsnCode] = useState<string>(initialProduct?.hsn_code ?? "");
   const [isFeatured, setIsFeatured] = useState(initialProduct?.is_featured || false);
   const [isActive, setIsActive] = useState(
     initialProduct !== undefined && initialProduct !== null ? initialProduct.is_active : true
@@ -348,6 +354,9 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
       price: price ? parseFloat(price) : null,
       price_display: priceDisplay.trim() || null,
       price_visibility: priceVisibility,
+      stock_quantity: stock.trim() === "" ? null : parseInt(stock, 10),
+      gst_rate: gstRate.trim() === "" ? null : gstRate.trim(),
+      hsn_code: hsnCode,
       is_featured: isFeatured,
       is_active: isActive,
       specifications: specsDict,
@@ -492,6 +501,8 @@ export default function ProductForm({ initialProduct, isEdit = false }: ProductF
             setPriceVisibility={setPriceVisibility}
             priceVisibility={priceVisibility}
           />
+
+          <StockTaxSection stock={stock} setStock={setStock} gstRate={gstRate} setGstRate={setGstRate} hsnCode={hsnCode} setHsnCode={setHsnCode} />
 
           {/* Section 3: Physical & Material Highlights */}
           <MaterialSection

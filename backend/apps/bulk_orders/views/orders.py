@@ -6,6 +6,8 @@ from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.db.models import Q, Count
 from django.http import FileResponse, Http404
+from apps.authentication.models import Address
+from apps.catalog.models import Product
 from apps.core.pagination import StandardResultsSetPagination
 from apps.bulk_orders.services import (
     QuoteLockedError,
@@ -15,6 +17,8 @@ from apps.bulk_orders.services import (
     post_client_message,
     post_owner_reply,
 )
+from apps.bulk_orders import fulfilment
+from apps.bulk_orders.views import desk
 from apps.bulk_orders.models import BulkOrder, BulkOrderMessage, UserCheckedProduct
 from apps.bulk_orders.serializers import (
     BulkOrderCreateSerializer,
@@ -36,6 +40,22 @@ def _attachment_response(file_field):
     return FileResponse(handle, as_attachment=True, filename=os.path.basename(file_field.name))
 
 
+def _address_snapshots(request):
+    """Copy the chosen saved addresses onto the order. Returns (extra fields, error). Rows must belong to the user."""
+    extra = {}
+    for field in ('shipping_address', 'billing_address'):
+        raw = request.data.get(f'{field}_id')
+        if raw in (None, ''):
+            continue
+        address = None
+        if request.user.is_authenticated and str(raw).isdigit():
+            address = Address.objects.filter(pk=int(raw), user=request.user).first()
+        if not address:
+            return {}, 'Choose one of your saved addresses.'
+        extra[field] = address.snapshot()
+    return extra, ''
+
+
 class BulkOrderSubmitView(APIView):
     """Submits a bulk order. Anonymous buyers must sign in or create their own account."""
     permission_classes = [permissions.AllowAny]
@@ -51,10 +71,18 @@ class BulkOrderSubmitView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        checked_ids = parse_checked_product_ids(request.data.get('checked_product_ids'))
+        sold_out = Product.objects.filter(id__in=checked_ids, stock_quantity=0).values_list('name', flat=True)
+        if sold_out:
+            return Response({'error': f"Out of stock: {', '.join(sold_out)}."}, status=status.HTTP_400_BAD_REQUEST)
+        addresses, error = _address_snapshots(request)
+        if error:
+            return Response({'error': error}, status=status.HTTP_400_BAD_REQUEST)
+
         order, user, token_key = place_order(
             request, serializer, user,
             password=str(request.data.get('password', '')).strip(),
-            checked_ids=parse_checked_product_ids(request.data.get('checked_product_ids')),
+            checked_ids=checked_ids, extra=addresses,
         )
 
         user_payload = {
@@ -142,7 +170,7 @@ class ClientBulkOrderDetailView(generics.RetrieveAPIView):
     lookup_field = 'order_number'
 
     def get_queryset(self):
-        return client_orders_for(self.request.user).select_related('product').prefetch_related('messages')
+        return client_orders_for(self.request.user).select_related('product', 'invoice').prefetch_related('messages', 'events', 'requests__order')
 
 
 class ClientBulkOrderMessagePostView(APIView):
@@ -199,7 +227,8 @@ class BulkOrderMessageAttachmentDownloadView(APIView):
 
 class OwnerBulkOrderViewSet(viewsets.ModelViewSet):
     """Owner management ViewSet for all bulk orders."""
-    queryset = BulkOrder.objects.all().select_related('user', 'product').prefetch_related('messages')
+    queryset = BulkOrder.objects.all().select_related('user', 'product', 'invoice').prefetch_related(
+        'messages', 'events', 'requests__order')
     serializer_class = BulkOrderDetailSerializer
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     pagination_class = StandardResultsSetPagination
@@ -245,10 +274,28 @@ class OwnerBulkOrderViewSet(viewsets.ModelViewSet):
 
         try:
             msg = post_owner_reply(order, request.user, request.data, msg_text)
-        except QuoteLockedError as e:
+        except (QuoteLockedError, fulfilment.InvalidTransition) as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({
             'message': BulkOrderMessageSerializer(msg).data,
-            'order': BulkOrderDetailSerializer(order).data
+            'order': BulkOrderDetailSerializer(order, context={'owner': True}).data
         }, status=status.HTTP_201_CREATED)
+
+    def perform_update(self, serializer):
+        old_status = serializer.instance.status
+        order = serializer.save()
+        if order.status != old_status:
+            fulfilment.record_event(order, 'owner', note=f'Status changed to {order.get_status_display()}.')
+
+    @action(detail=True, methods=['post'], url_path='status')
+    def advance(self, request, pk=None):
+        return desk.advance_status(self.get_object(), request.data if isinstance(request.data, dict) else {}, request.user)
+
+    @action(detail=True, methods=['post'], url_path='quote')
+    def quote(self, request, pk=None):
+        return desk.build_quote(self.get_object(), request.data if isinstance(request.data, dict) else {}, request.user)
+
+    @action(detail=True, methods=['post'], url_path='invoice')
+    def invoice(self, request, pk=None):
+        return desk.issue_invoice(self.get_object(), request.user)

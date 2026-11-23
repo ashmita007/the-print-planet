@@ -167,12 +167,14 @@ class QuotePaymentTests(TestCase):
         self.assertEqual(self.order.quoted_amount, Decimal('999.99'))
 
     def test_owner_cannot_change_a_paid_quote(self):
-        BulkOrder.objects.filter(pk=self.order.pk).update(paid_amount=Decimal('12345.50'), paid_at='2026-11-22T10:00Z')
+        BulkOrder.objects.filter(pk=self.order.pk).update(status='paid', paid_amount=Decimal('12345.50'), paid_at='2026-11-22T10:00Z')
         owner = User.objects.create_superuser('boss', 'boss@example.com', 'pw-123456')
         api = APIClient()
         api.force_authenticate(owner)
         url = f'/api/v1/owner/bulk-orders/{self.order.pk}/'
-        self.assertEqual(api.patch(url, {'quoted_amount': '1.00'}, format='json').status_code, 400)
-        self.assertEqual(api.patch(url, {'status': 'in_production'}, format='json').status_code, 200)
+        api.patch(url, {'quoted_amount': '1.00'}, format='json')
+        self.order.refresh_from_db()
+        self.assertEqual(self.order.quoted_amount, Decimal('12345.50'))
+        self.assertEqual(api.patch(url, {'status': 'proofing'}, format='json').status_code, 200)
         reply = api.post(f'{url}messages/', {'message': 'New price', 'quoted_amount': '1.00'}, format='json')
         self.assertEqual(reply.status_code, 400)

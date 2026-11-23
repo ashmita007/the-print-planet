@@ -25,3 +25,9 @@ from .payments import (
     OwnerPaymentSettingsTestView,
     OwnerPaymentsListView,
 )
+from .desk import (
+    ClientInvoiceView,
+    ClientOrderRequestView,
+    OwnerRequestsListView,
+    OwnerRequestDecideView,
+)

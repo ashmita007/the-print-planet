@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CreditCard, Loader2 } from "lucide-react";
+import { formatInr } from "@/lib/formatters";
 import { clientStartQuotePayment, clientVerifyQuotePayment } from "@/lib/api";
 
 const CHECKOUT_SRC = "https://checkout.razorpay.com/v1/checkout.js";
@@ -83,7 +84,7 @@ export default function PayQuoteButton({ orderNumber, amount, onPaid }: {
         className="inline-flex items-center gap-1.5 rounded-md bg-[#121418] px-3.5 py-2 text-xs font-bold text-white hover:bg-[#2b3038] disabled:opacity-60"
       >
         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden /> : <CreditCard className="h-3.5 w-3.5" aria-hidden />}
-        Pay ₹{amount.toLocaleString("en-IN")} online
+        Pay {formatInr(amount)} online
       </button>
       {error && <p role="alert" className="mt-1 max-w-xs text-[11px] text-red-600">{error}</p>}
     </div>

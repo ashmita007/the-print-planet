@@ -19,6 +19,19 @@ class SiteSettings(models.Model):
     social_links = models.JSONField(default=dict, blank=True)
     footer_text = models.TextField(default='THE PRINT PLANET — Specialist in PVC Cards | Lens Packaging & Cleaning | Commercial Printing | Bulk ID Solutions. ✱ Your Vision is Our Focus ✱. GSTIN: 29AAQFT3909B1ZZ | PAN: AAQFT3909B.')
     seo_defaults = models.JSONField(default=dict, blank=True)
+    # Commerce settings. Empty/null until the owner sets them; dependent features stay off.
+    seller_gstin = models.CharField(max_length=15, blank=True, default='')
+    seller_state = models.CharField(max_length=100, blank=True, default='')
+    invoice_prefix = models.CharField(max_length=10, blank=True, default='')
+    default_gst_rate = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    shipping_flat_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    free_shipping_above = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    return_window_days = models.PositiveIntegerField(null=True, blank=True)
+    # Customers may cancel while the order is still before this status.
+    cancellation_allowed_until = models.CharField(max_length=30, default='in_production')
+    return_policy_text = models.TextField(blank=True, default='')
+    refund_policy_text = models.TextField(blank=True, default='')
+    shipping_policy_text = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

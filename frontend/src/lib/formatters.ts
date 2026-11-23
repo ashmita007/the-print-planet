@@ -281,3 +281,14 @@ export function sizedImage(url: string, width: number): string {
   if (/\/image\/upload\/[^/]*\b(w_|f_auto)/.test(url)) return url; // already transformed
   return url.replace("/image/upload/", `/image/upload/f_auto,q_auto,c_limit,w_${width}/`);
 }
+
+/** Indian rupee amount from a number or the decimal string the API sends, e.g. "₹1,298.00". */
+export function formatInr(value: string | number | null | undefined): string {
+  const amount = Number(value);
+  if (value === null || value === undefined || value === '' || !Number.isFinite(amount)) return '';
+  return `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+export function formatDateTime(value: string | null | undefined): string {
+  return value ? new Date(value).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+}

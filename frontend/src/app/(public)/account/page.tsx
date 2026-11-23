@@ -15,6 +15,7 @@ import {
   ArrowRight,
   PlusCircle,
   FileText,
+  MapPin,
 } from "lucide-react";
 import Breadcrumbs from "@/components/storefront/Breadcrumbs";
 import { clientVerifySession, clientLogout, clientGetBulkOrders } from "@/lib/api";
@@ -137,6 +138,22 @@ export default function ClientAccountPage() {
             </div>
             <p className="text-xs text-[#353C45]">
               Chat directly with our Bangalore factory production specialists and send specification files.
+            </p>
+          </Link>
+
+          <Link
+            href="/account/addresses"
+            className="group block p-5 rounded-lg border border-[#DFE6EE] hover:border-[#121418] bg-slate-50/50 hover:bg-[#FFFFFF] transition-all space-y-2"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-sm text-[#121418]">
+                <MapPin className="w-4 h-4 text-[#353C45]" />
+                <span>Saved Addresses</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
+            </div>
+            <p className="text-xs text-[#353C45]">
+              Keep delivery and billing addresses ready so quotes show the right GST split.
             </p>
           </Link>
 

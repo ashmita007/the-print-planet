@@ -45,6 +45,9 @@ export interface Product {
   price_display?: string | null;
   currency: string;
   price_visibility: boolean;
+  stock_quantity?: number | null;
+  gst_rate?: string | null;
+  hsn_code?: string;
   is_featured: boolean;
   is_active: boolean;
   display_order: number;
@@ -182,7 +185,7 @@ export interface BulkOrder {
   requirements: string;
   attachment?: string | null;
   attachment_url?: string;
-  status: 'submitted' | 'reviewing' | 'quoted' | 'proofing' | 'in_production' | 'dispatched' | 'completed' | 'cancelled';
+  status: OrderStatus;
   status_label?: string;
   quoted_amount?: number | null;
   quote_notes?: string;
@@ -194,10 +197,138 @@ export interface BulkOrder {
   razorpay_payment_id?: string;
   can_pay_online?: boolean;
   payment_under_review?: boolean;
+  shipping_address?: AddressSnapshot;
+  billing_address?: AddressSnapshot;
+  quote_subtotal?: string | null;
+  quote_shipping?: string | null;
+  quote_gst_rate?: string | null;
+  quote_tax?: string | null;
+  quote_cgst?: string | null;
+  quote_sgst?: string | null;
+  quote_igst?: string | null;
+  timeline?: OrderEvent[];
+  allowed_next?: OrderStatus[];
+  requests?: OrderRequest[];
+  invoice?: { number: string; issued_at: string } | null;
   messages?: BulkOrderMessage[];
   messages_count?: number;
   created_at: string;
   updated_at: string;
+}
+
+export type OrderStatus =
+  | 'submitted' | 'reviewing' | 'quoted' | 'paid' | 'proofing' | 'in_production'
+  | 'dispatched' | 'completed' | 'cancelled' | 'returned';
+
+export interface OrderEvent {
+  id: number;
+  status: OrderStatus;
+  status_label: string;
+  note: string;
+  courier: string;
+  awb: string;
+  actor: 'owner' | 'customer' | 'system';
+  internal: boolean;
+  created_at: string;
+}
+
+export interface OrderRequest {
+  id: number;
+  order_number: string;
+  organization_name: string;
+  order_status: OrderStatus;
+  paid_amount: string | null;
+  kind: 'cancel' | 'return';
+  reason: string;
+  status: 'pending' | 'approved' | 'declined';
+  refund_amount: string | null;
+  razorpay_refund_id: string;
+  owner_note: string;
+  decided_at: string | null;
+  created_at: string;
+}
+
+export interface AddressSnapshot {
+  label?: string;
+  full_name?: string;
+  phone?: string;
+  line1?: string;
+  line2?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+  gstin?: string;
+}
+
+export interface Address extends AddressSnapshot {
+  id: number;
+  full_name: string;
+  phone: string;
+  line1: string;
+  city: string;
+  state: string;
+  pincode: string;
+  is_default_shipping: boolean;
+  is_default_billing: boolean;
+}
+
+export type AddressInput = Omit<Address, 'id'>;
+
+export interface InvoiceData {
+  number: string;
+  financial_year: string;
+  issued_at: string;
+  snapshot: {
+    seller: { name: string; gstin: string; address: string; state: string };
+    buyer: { name: string; contact: string; email: string; phone: string; gstin: string };
+    billing_address: AddressSnapshot;
+    shipping_address: AddressSnapshot;
+    order_number: string;
+    lines: { description: string; quantity: number; hsn_code: string; notes: unknown[] }[];
+    subtotal: string;
+    shipping: string;
+    gst_rate: string;
+    cgst: string;
+    sgst: string;
+    igst: string;
+    tax: string;
+    total: string;
+    payment: { razorpay_payment_id: string; paid_at: string };
+  };
+}
+
+export interface CommercePolicies {
+  return_policy_text: string;
+  refund_policy_text: string;
+  shipping_policy_text: string;
+  return_window_days: number | null;
+  cancellation_allowed_until: string;
+  states: string[];
+}
+
+export interface CommerceSettings {
+  seller_gstin: string;
+  seller_state: string;
+  invoice_prefix: string;
+  default_gst_rate: string | null;
+  shipping_flat_fee: string;
+  free_shipping_above: string | null;
+  return_window_days: number | null;
+  cancellation_allowed_until: string;
+  return_policy_text: string;
+  refund_policy_text: string;
+  shipping_policy_text: string;
+}
+
+export interface QuotePreview {
+  subtotal: string;
+  shipping: string;
+  gst_rate: string;
+  tax: string;
+  cgst: string;
+  sgst: string;
+  igst: string;
+  total: string;
 }
 
 export interface CheckedProduct {

@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from apps.core.pagination import StandardResultsSetPagination
-from apps.bulk_orders import razorpay, secret_box
+from apps.bulk_orders import fulfilment, razorpay, secret_box
 from apps.bulk_orders.models import BulkOrder, BulkOrderMessage, PaymentGatewaySettings, QuotePayment
 from apps.bulk_orders.services import client_orders_for
 
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 # to the order conversation for the owner to review, never dropped.
 
 def _payable_paise(order):
-    if order.is_paid or order.status == 'cancelled' or order.payment_under_review:
+    if order.is_paid or order.status != 'quoted' or order.payment_under_review:
         return None
     return order.quote_paise()
 
@@ -57,16 +57,14 @@ def _record_payment(payment):
         quote_payment.save(update_fields=['razorpay_payment_id', 'captured_at'])
 
         amount = Decimal(quote_payment.amount_paise) / 100
-        if order.is_paid or quote_payment.amount_paise != order.quote_paise():
+        if order.is_paid or order.status != 'quoted' or quote_payment.amount_paise != order.quote_paise():
             logger.warning('Payment %s for %s needs review: order paid=%s, quote changed.',
                            payment_id, order.order_number, order.is_paid)
+            fulfilment.record_event(order, 'system', note='A payment arrived that needs owner review.', internal=True)
             text = (f"Payment of ₹{amount:,.2f} received online (Razorpay {payment_id}), but it does not "
                     f"match the current quote. The Print Planet will review it and contact you.")
         else:
-            order.paid_amount = amount
-            order.paid_at = quote_payment.captured_at
-            order.razorpay_payment_id = payment_id
-            order.save(update_fields=['paid_amount', 'paid_at', 'razorpay_payment_id', 'updated_at'])
+            fulfilment.mark_paid(order, payment_id, amount, quote_payment.captured_at)
             text = f"Payment of ₹{amount:,.2f} received online (Razorpay {payment_id})."
         BulkOrderMessage.objects.create(order=order, sender_type='system', sender_name='The Print Planet', message=text)
     return order

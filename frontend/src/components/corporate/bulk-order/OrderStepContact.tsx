@@ -17,6 +17,8 @@ export interface OrderStepContactProps {
   touch: (name: FieldName | "password") => void;
   errors: Record<FieldName, string>;
   goTo: (next: number) => void;
+  /** Saved-address picker, shown only to signed-in buyers. */
+  addressPicker?: React.ReactNode;
 }
 
 export default function OrderStepContact({
@@ -30,6 +32,7 @@ export default function OrderStepContact({
   touch,
   errors,
   goTo,
+  addressPicker,
 }: OrderStepContactProps) {
   return (
     <form onSubmit={continueFromDetails} noValidate className="space-y-5">
@@ -134,6 +137,8 @@ export default function OrderStepContact({
           </select>
         </Field>
       </div>
+
+      {addressPicker && <div data-step-item>{addressPicker}</div>}
 
       <div data-step-item className="sm:max-w-[calc(50%-0.625rem)]">
         <Field

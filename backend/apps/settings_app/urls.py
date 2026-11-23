@@ -11,6 +11,8 @@ from .views import (
     PublicGoogleReviewView,
     OwnerGoogleReviewView,
     OwnerGoogleReviewSyncView,
+    OwnerCommerceSettingsView,
+    PublicCommercePoliciesView,
 )
 
 owner_routes = [
@@ -24,6 +26,8 @@ urlpatterns = [
     path('owner/site-settings/', OwnerSiteSettingsView.as_view(), name='owner-site-settings'),
     path('owner/google-reviews/', OwnerGoogleReviewView.as_view(), name='owner-google-reviews'),
     path('owner/google-reviews/sync/', OwnerGoogleReviewSyncView.as_view(), name='owner-google-reviews-sync'),
+    path('commerce-policies/', PublicCommercePoliciesView.as_view(), name='public-commerce-policies'),
+    path('owner/commerce-settings/', OwnerCommerceSettingsView.as_view(), name='owner-commerce-settings'),
     path('owner/stats/', OwnerDashboardStatsView.as_view(), name='owner-stats'),
     path('owner/email/diagnostics/', OwnerEmailDiagnosticsView.as_view(), name='owner-email-diagnostics'),
     path('owner/backup/cloud/', OwnerCloudDatabaseSyncView.as_view(), name='owner-backup-cloud'),

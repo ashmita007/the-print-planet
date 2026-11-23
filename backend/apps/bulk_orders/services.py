@@ -12,6 +12,7 @@ from rest_framework.authtoken.models import Token
 
 from apps.catalog.models import Product
 from apps.core.users import unique_username_for
+from . import fulfilment
 from .models import BulkOrder, BulkOrderMessage
 from .serializers import safe_link
 
@@ -84,7 +85,7 @@ def _buyer_for_new_order(request, email, contact_person, password):
     return candidate, _token_for(candidate)
 
 
-def place_order(request, serializer, user, password, checked_ids):
+def place_order(request, serializer, user, password, checked_ids, extra=None):
     """Save a validated order with its first two conversation messages. Returns (order, user, token_key)."""
     with transaction.atomic():
         if not user:
@@ -94,7 +95,8 @@ def place_order(request, serializer, user, password, checked_ids):
         else:
             token_key = _token_for(user)
 
-        order = serializer.save(user=user)
+        order = serializer.save(user=user, **(extra or {}))
+        fulfilment.record_event(order, 'customer', note='Quote request submitted.')
 
         if checked_ids:
             order.checked_products.set(Product.objects.filter(id__in=checked_ids, is_active=True))
@@ -148,8 +150,12 @@ def post_owner_reply(order, owner, data, text):
     """Apply the status / quote / tracking changes in `data`, then post the reply. Raises QuoteLockedError."""
     new_status = data.get('status')
     if new_status and new_status in dict(BulkOrder.STATUS_CHOICES):
-        order.status = new_status
+        if new_status == 'paid':
+            raise fulfilment.InvalidTransition('An order becomes paid only when the online payment is captured.')
+    else:
+        new_status = None
     quoted_amt = data.get('quoted_amount')
+    new_quote = None
     if quoted_amt is not None and str(quoted_amt).strip() != '':
         try:
             new_quote = Decimal(str(quoted_amt).strip())
@@ -158,16 +164,24 @@ def post_owner_reply(order, owner, data, text):
         if new_quote is not None and new_quote.is_finite():
             if order.is_paid and new_quote != order.quoted_amount:
                 raise QuoteLockedError('This quote has already been paid online and cannot be changed.')
+        else:
+            new_quote = None
+
+    with transaction.atomic():
+        if new_quote is not None and new_quote != order.quoted_amount:
             order.quoted_amount = new_quote
-    tracking_num = data.get('tracking_consignment_number')
-    if tracking_num:
-        order.tracking_consignment_number = tracking_num
-    courier = data.get('tracking_courier_partner')
-    if courier:
-        order.tracking_courier_partner = courier
-    order.save(update_fields=[
-        'status', 'quoted_amount', 'tracking_consignment_number', 'tracking_courier_partner', 'updated_at',
-    ])
+            # A hand-typed total no longer matches any computed breakdown.
+            for field in ('quote_subtotal', 'quote_shipping', 'quote_gst_rate', 'quote_tax',
+                          'quote_cgst', 'quote_sgst', 'quote_igst'):
+                setattr(order, field, None)
+        order.save(update_fields=[
+            'quoted_amount', 'quote_subtotal', 'quote_shipping', 'quote_gst_rate', 'quote_tax',
+            'quote_cgst', 'quote_sgst', 'quote_igst', 'updated_at',
+        ])
+        courier = data.get('tracking_courier_partner') or ''
+        tracking_num = data.get('tracking_consignment_number') or ''
+        if new_status or courier or tracking_num:
+            fulfilment.change_status(order, new_status or order.status, 'owner', courier=courier, awb=tracking_num)
 
     return BulkOrderMessage.objects.create(
         order=order,

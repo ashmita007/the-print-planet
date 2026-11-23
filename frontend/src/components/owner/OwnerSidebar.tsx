@@ -23,6 +23,8 @@ import {
   CreditCard,
   Star,
   Lock,
+  Receipt,
+  Undo2,
   type LucideIcon,
 } from "lucide-react";
 import { ownerLogout, ownerGetMe } from "@/lib/api";
@@ -46,6 +48,7 @@ const navSections: NavSection[] = [
     links: [
       { label: "Dashboard Overview", href: "/owner/dashboard", icon: LayoutDashboard },
       { label: "Bulk Orders & Chats", href: "/owner/orders", icon: Briefcase },
+      { label: "Cancel & Return Requests", href: "/owner/requests", icon: Undo2 },
       { label: "Customer Enquiries", href: "/owner/enquiries", icon: Inbox },
       { label: "Online Payments", href: "/owner/payments", icon: CreditCard },
     ],
@@ -66,6 +69,7 @@ const navSections: NavSection[] = [
       { label: "About Us Content CMS", href: "/owner/settings?tab=about", icon: Info, tab: "about" },
       { label: "Store Identity & Address", href: "/owner/settings?tab=identity", icon: Settings, tab: "identity" },
       { label: "Google Reviews", href: "/owner/settings?tab=reviews", icon: Star, tab: "reviews" },
+      { label: "Tax, Shipping & Policies", href: "/owner/settings?tab=commerce", icon: Receipt, tab: "commerce" },
       { label: "Cloud Sync & Backups", href: "/owner/settings?tab=database", icon: Database, tab: "database" },
       { label: "Security & Password", href: "/owner/settings?tab=security", icon: Lock, tab: "security" },
     ],

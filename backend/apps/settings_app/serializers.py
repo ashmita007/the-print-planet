@@ -115,3 +115,56 @@ class PublicGoogleReviewSerializer(serializers.ModelSerializer):
             data.update({'rating': None, 'review_count': None, 'reviews': []})
         # Reviews are shown exactly as Google returns them, unfiltered, so the widget is an honest sample.
         return data
+
+
+COMMERCE_FIELDS = [
+    'seller_gstin', 'seller_state', 'invoice_prefix', 'default_gst_rate', 'shipping_flat_fee',
+    'free_shipping_above', 'return_window_days', 'cancellation_allowed_until',
+    'return_policy_text', 'refund_policy_text', 'shipping_policy_text',
+]
+
+
+class CommerceSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SiteSettings
+        fields = COMMERCE_FIELDS + ['updated_at']
+        read_only_fields = ['updated_at']
+        extra_kwargs = {
+            'default_gst_rate': {'min_value': 0, 'max_value': 100},
+            'shipping_flat_fee': {'min_value': 0},
+            'free_shipping_above': {'min_value': 0},
+            'invoice_prefix': {'max_length': 10},
+        }
+
+    def validate_seller_gstin(self, value):
+        from apps.authentication.addresses import validate_gstin
+        return validate_gstin(value)
+
+    def validate_seller_state(self, value):
+        from apps.bulk_orders.commerce import normalize_state
+        if not value.strip():
+            return ''
+        state = normalize_state(value)
+        if not state:
+            raise serializers.ValidationError('Choose a valid Indian state or union territory.')
+        return state
+
+    def validate_invoice_prefix(self, value):
+        import re
+        value = value.strip().upper()
+        if value and not re.fullmatch(r'[A-Z0-9-]{1,10}', value):
+            raise serializers.ValidationError('Use letters, digits or dashes only (for example TPP).')
+        return value
+
+    def validate_cancellation_allowed_until(self, value):
+        from apps.bulk_orders.commerce import FLOW
+        if value not in FLOW:
+            raise serializers.ValidationError('Choose an order status on the normal path, such as in_production.')
+        return value
+
+
+class PublicCommercePoliciesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SiteSettings
+        fields = ['return_policy_text', 'refund_policy_text', 'shipping_policy_text', 'return_window_days',
+                  'cancellation_allowed_until']

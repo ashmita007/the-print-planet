@@ -3,7 +3,7 @@
 import { HERO_DEFAULTS, heroCopy } from "@/lib/hero";
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Save, CheckCircle, AlertCircle, Building2, Lock, Database, Loader2, Sparkles, Info, Star } from "lucide-react";
+import { Save, CheckCircle, AlertCircle, Building2, Lock, Database, Loader2, Sparkles, Info, Star, Receipt } from "lucide-react";
 import GoogleReviewsSettings from "@/components/owner/GoogleReviewsSettings";
 import {
   getSiteSettings,
@@ -24,10 +24,11 @@ import AboutTab from "./_tabs/about";
 import IdentityTab from "./_tabs/identity";
 import DatabaseTab from "./_tabs/database";
 import SecurityTab from "./_tabs/security";
+import CommerceTab from "./_tabs/commerce";
 import type { EmailDiagnostics, Notice } from "./_tabs/types";
 import OwnerPageHeader from "@/components/owner/OwnerPageHeader";
 
-const TAB_KEYS = ["hero", "about", "identity", "reviews", "database", "security"] as const;
+const TAB_KEYS = ["hero", "about", "identity", "reviews", "commerce", "database", "security"] as const;
 type TabKey = (typeof TAB_KEYS)[number];
 
 const isTabKey = (value: string | null): value is TabKey => TAB_KEYS.some((key) => key === value);
@@ -584,6 +585,7 @@ function OwnerSettingsInner() {
           { id: "about", label: "About", icon: Info },
           { id: "identity", label: "Identity", icon: Building2 },
           { id: "reviews", label: "Reviews", icon: Star },
+          { id: "commerce", label: "Commerce", icon: Receipt },
           { id: "database", label: "Database", icon: Database },
           { id: "security", label: "Security", icon: Lock },
         ].map((tab) => {
@@ -714,6 +716,9 @@ function OwnerSettingsInner() {
 
       {/* GOOGLE REVIEWS */}
       {activeTab === "reviews" && <GoogleReviewsSettings />}
+
+      {/* COMMERCE: tax, shipping, returns and policy texts */}
+      {activeTab === "commerce" && <CommerceTab />}
 
       {/* TAB 4: DATABASE & CLOUD SYNC */}
       {activeTab === "database" && (

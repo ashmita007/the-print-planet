@@ -1,5 +1,6 @@
 "use client";
 
+import { isOutOfStock } from "@/lib/stock";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
@@ -20,6 +21,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
+  const outOfStock = isOutOfStock(product);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [added, setAdded] = useState(false);
@@ -75,6 +77,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="relative w-full pt-[100%] bg-[#FFFFFF] overflow-hidden block">
           {!imgLoaded && !hasError && (
             <div className="absolute inset-0 skeleton !rounded-none pointer-events-none z-10" />
+          )}
+
+          {outOfStock && (
+            <span className="absolute left-2 top-2 z-20 rounded-full bg-[#121418] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+              Out of stock
+            </span>
           )}
 
           {/* Clickable Image Surface */}
@@ -198,12 +206,13 @@ export default function ProductCard({ product }: ProductCardProps) {
               <button
                 type="button"
                 onClick={handleQuickAdd}
+                disabled={outOfStock}
                 className={`w-9 h-9 rounded-md ${
                   added
                     ? "bg-[#217A4B] text-white"
                     : "bg-[#F26B1D] hover:bg-[#FF8A3D] text-[#121418]"
-                } flex items-center justify-center transition-colors`}
-                title={added ? "Added to Quote Cart!" : "Add to Quote Cart"}
+                } flex items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-40`}
+                title={outOfStock ? "Out of stock" : added ? "Added to Quote Cart!" : "Add to Quote Cart"}
                 aria-label={`Add ${formatProductName(product.name)} to cart`}
               >
                 {added ? (
