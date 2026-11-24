@@ -47,6 +47,16 @@ export default function DirectProductShowcase({
       : validCategories
   ).sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0));
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  // The main category whose pill is active: the selected one, or the parent of a selected subcategory.
+  const selectedEntry = validCategories.find((c) => c.slug === selectedCategory);
+  const activeMain = selectedEntry
+    ? showcaseCategories.find((c) => c.id === selectedEntry.id || c.id === selectedEntry.parent)
+    : undefined;
+  const activeSubs = activeMain
+    ? validCategories
+        .filter((c) => c.parent === activeMain.id)
+        .sort((a, b) => (b.products_count ?? 0) - (a.products_count ?? 0))
+    : [];
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
   const [sortBy, setSortBy] = useState<SortOptionValue>("featured");
@@ -324,7 +334,7 @@ export default function DirectProductShowcase({
                     });
                   }}
                   className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
-                    selectedCategory === cat.slug
+                    activeMain?.id === cat.id
                       ? "bg-[#121418] text-white shadow-xs"
                       : "bg-[#FFFFFF] text-slate-700 border border-slate-200 hover:border-[#121418]"
                   }`}
@@ -333,7 +343,7 @@ export default function DirectProductShowcase({
                   {cat.products_count !== undefined && (
                     <span
                       className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                        selectedCategory === cat.slug ? "bg-white/20 text-white" : "bg-[#EDF1F6] text-[#353C45]"
+                        activeMain?.id === cat.id ? "bg-white/20 text-white" : "bg-[#EDF1F6] text-[#353C45]"
                       }`}
                     >
                       {cat.products_count}
@@ -342,6 +352,34 @@ export default function DirectProductShowcase({
                 </button>
               ))}
             </div>
+
+            {activeMain && activeSubs.length > 0 && (
+              <div
+                role="group"
+                aria-label={`Subcategories in ${formatProductName(activeMain.name)}`}
+                className="mt-2 flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 scrollbar-thin"
+              >
+                {[activeMain, ...activeSubs].map((sub) => {
+                  const selected = selectedCategory === sub.slug;
+                  return (
+                    <button
+                      key={sub.id}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => handleSelectCategory(sub.slug)}
+                      className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium whitespace-nowrap shrink-0 cursor-pointer transition-colors ${
+                        selected
+                          ? "bg-[#EDF1F6] text-[#121418] border border-[#121418]"
+                          : "bg-white text-slate-600 border border-slate-200 hover:border-[#121418]"
+                      }`}
+                    >
+                      {sub.id === activeMain.id ? "All" : formatProductName(sub.name)}
+                      <span className="ml-1 text-[10px] text-[#353C45]">{sub.products_count}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 

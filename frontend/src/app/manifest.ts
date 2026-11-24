@@ -37,7 +37,7 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         name: 'Search Product Catalog',
         short_name: 'Search',
-        description: 'Instant search across 180+ wholesale PVC card and lanyard supplies',
+        description: 'Instant search across wholesale PVC card and lanyard supplies',
         url: '/search',
         icons: [{ src: '/icon.png', sizes: '192x192' }],
       },

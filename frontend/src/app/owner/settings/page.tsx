@@ -164,7 +164,7 @@ function OwnerSettingsInner() {
       setStat1Label(about.stat_1_label || "Holders Produced Daily");
       setStat2Val(about.stat_2_val || "10,000+");
       setStat2Label(about.stat_2_label || "Lanyards Printed Weekly");
-      setStat3Val(about.stat_3_val || "180+");
+      setStat3Val(about.stat_3_val || "100+");
       setStat3Label(about.stat_3_label || "Active Commercial SKUs");
       setStat4Val(about.stat_4_val || "500+");
       setStat4Label(about.stat_4_label || "Institutional Clients Across India");

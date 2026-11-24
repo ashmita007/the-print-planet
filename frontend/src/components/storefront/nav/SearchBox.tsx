@@ -168,7 +168,7 @@ export default function SearchBox() {
           aria-controls={listId}
           aria-autocomplete="list"
           aria-activedescendant={panelOpen && active >= 0 ? optionId(active) : undefined}
-          placeholder="Search for PVC cards, lanyards, machines and more"
+          placeholder="Search for PVC cards, lanyards, holders and more"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

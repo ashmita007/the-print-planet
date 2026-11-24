@@ -40,7 +40,7 @@ export default async function AboutPage() {
   const stat1Label = about.stat_1_label || "Holders Produced Daily";
   const stat2Val = about.stat_2_val || "10,000+";
   const stat2Label = about.stat_2_label || "Lanyards Printed Weekly";
-  const stat3Val = about.stat_3_val || "180+";
+  const stat3Val = about.stat_3_val || "100+";
   const stat3Label = about.stat_3_label || "Active Commercial SKUs";
   const stat4Val = about.stat_4_val || "500+";
   const stat4Label = about.stat_4_label || "Institutional Clients Across India";

@@ -278,7 +278,7 @@ export default async function CategoryDetailPage({ params, searchParams }: Categ
           href="/products"
           className="px-3 py-1.5 rounded-full shrink-0 font-semibold bg-[#EDF1F6] text-[#121418] hover:bg-slate-200 border border-[#DFE6EE]"
         >
-          All 180+ Products
+          All Products
         </Link>
         {mainCategories.map((c) => (
           <Link

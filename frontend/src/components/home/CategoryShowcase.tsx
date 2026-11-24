@@ -8,7 +8,7 @@ const FAMILIES = [
   {
     slug: "pvc-id-card-consumable",
     title: "PVC card sheets",
-    blurb: "Inkjet and laser fusing sheets, overlays and core sheets for ID cards that do not peel or fade.",
+    blurb: "Coated overlays and PVC core sheets for laminated ID cards that do not peel or fade.",
   },
   {
     slug: "lanyards",
@@ -18,12 +18,12 @@ const FAMILIES = [
   {
     slug: "id-card-holder",
     title: "ID card holders",
-    blurb: "Crystal, semi-transparent and executive holders in vertical and horizontal formats.",
+    blurb: "Vertical, horizontal, single, dual and multi-card holders in rigid and soft PVC.",
   },
   {
     slug: "pvc-and-smart-cards",
     title: "PVC and smart cards",
-    blurb: "CR-80 PVC cards and RFID smart cards for ID, access and membership.",
+    blurb: "CR-80 PVC cards and RFID, NFC and proximity cards for ID, access and membership.",
   },
 ];
 

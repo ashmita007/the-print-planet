@@ -254,7 +254,7 @@ export default function AboutTab({
                 type="text"
                 value={stat3Val}
                 onChange={(e) => setStat3Val(e.target.value)}
-                placeholder="e.g. 180+"
+                placeholder="e.g. 100+"
                 className="w-full bg-[#EDF1F6] border border-[#DFE6EE] rounded px-2.5 py-1.5 text-xs font-mono font-bold text-[#121418] mb-2 outline-none"
               />
               <input

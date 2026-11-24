@@ -141,6 +141,68 @@ function CategoryNavItem({
   );
 }
 
+// Fewer links on narrower desktops so the row never wraps or overlaps. Links hidden at a width are
+// listed under "More" at that width (MORE_VISIBILITY is the inverse), so every category stays one click away.
+// Breakpoints measured on the current labels (Nov 2026): 3 links fit at 1024px, 5 at 1280px, 6 at 1700px.
+const BAR_VISIBILITY = ["", "", "", "hidden xl:block", "hidden xl:block", "hidden min-[1700px]:block", "hidden", "hidden"];
+const MORE_VISIBILITY = ["hidden", "hidden", "hidden", "xl:hidden", "xl:hidden", "min-[1700px]:hidden", "", ""];
+
+/** "More" dropdown for the top categories that do not fit the text bar at the current width. */
+function MoreCategories({ groups }: { groups: CategoryGroup[] }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const hover = useHoverIntent(open, setOpen, buttonRef, wrapRef);
+  const overflow = groups.slice(3);
+  if (overflow.length === 0) return null;
+  // Hide the button itself at the width where every link already fits in the bar.
+  const buttonVisibility = MORE_VISIBILITY[groups.length - 1] ?? "";
+  const close = () => setOpen(false);
+
+  return (
+    <div
+      ref={wrapRef}
+      className={`relative ${buttonVisibility}`}
+      onPointerEnter={hover.onPointerEnter}
+      onPointerLeave={hover.onPointerLeave}
+      onBlur={(e) => open && !wrapRef.current?.contains(e.relatedTarget as Node | null) && setOpen(false)}
+    >
+      <button
+        ref={buttonRef}
+        type="button"
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-label="More categories"
+        onClick={() => {
+          if (open && hover.clickFollowsHover()) return;
+          setOpen(!open);
+        }}
+        className={`flex items-center h-11 px-2.5 text-sm font-semibold whitespace-nowrap rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[#121418] ${open ? "text-[#121418] bg-[#EDF1F6]" : "text-slate-700 hover:text-[#121418] hover:bg-[#EDF1F6]"}`}
+      >
+        More
+      </button>
+      {open && (
+        <div data-menu className="absolute top-full right-0 z-50 pt-1 w-72">
+          <div className="bg-white border border-[#DFE6EE] rounded-lg shadow-[0_16px_40px_-12px_rgba(16,39,66,0.22)] py-1.5 max-h-[70dvh] overflow-y-auto">
+            {overflow.map(({ main, subs }, i) => (
+              <div key={main.id} className={MORE_VISIBILITY[i + 3] ?? ""}>
+                <Link href={`/categories/${main.slug}`} onClick={close} className={`${MENU_ITEM} font-bold text-[#121418]`}>
+                  {formatCategoryLabel(main.name)}
+                </Link>
+                {subs.map((sub) => (
+                  <Link key={sub.id} href={`/categories/${sub.slug}`} onClick={close} className={`${MENU_ITEM} pl-7`}>
+                    {formatCategoryLabel(sub.name)}
+                  </Link>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /**
  * Desktop category row. Home gets photo tiles (scrolls away); every other page gets a slim text bar
  * that stays under the sticky header. Both start with "All Categories", which opens the mega menu.
@@ -158,9 +220,6 @@ export default function CategoryStrip({
 }) {
   const tops = groups.slice(0, TOP_COUNT);
   const thumbs = useCategoryThumbs(tops.map((g) => g.main.slug), tiles);
-  // Fewer links on narrower desktops so the row never wraps or overlaps.
-  const barVisibility = (i: number) =>
-    i < 4 ? "" : i === 4 ? "hidden xl:block" : i === 5 ? "hidden min-[1400px]:block" : "hidden min-[1700px]:block";
 
   return (
     <nav aria-label="Categories" className="hidden lg:block">
@@ -176,9 +235,10 @@ export default function CategoryStrip({
           <div className="flex items-center gap-1 h-11">
             <CategoryMenu groups={groups} total={total} onOpen={onMenuOpen} />
             <span className="w-px h-5 bg-slate-200 mx-1.5" aria-hidden />
-            {tops.slice(0, 7).map((g, i) => (
-              <CategoryNavItem key={g.main.id} group={g} variant="text" alignRight={i >= 3} className={barVisibility(i)} />
+            {tops.map((g, i) => (
+              <CategoryNavItem key={g.main.id} group={g} variant="text" alignRight={i >= 3} className={BAR_VISIBILITY[i] ?? "hidden"} />
             ))}
+            <MoreCategories groups={tops} />
           </div>
         )}
       </div>
